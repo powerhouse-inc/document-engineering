@@ -13,11 +13,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "#assets": path.join(srcPath, "assets"),
-      "#connect": path.join(srcPath, "connect"),
       "#scalars": path.join(srcPath, "scalars"),
       "#ui": path.join(srcPath, "ui"),
-      "#rwa": path.join(srcPath, "rwa"),
-      "#services": path.join(srcPath, "services"),
     },
   },
 });

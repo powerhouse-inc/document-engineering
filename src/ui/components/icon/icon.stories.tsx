@@ -3,7 +3,7 @@ import { iconNames } from "../icon-components/index.js";
 import { Icon } from "./icon.js";
 
 const meta = {
-  title: "Powerhouse/Components/Icon",
+  title: "UI/Icon",
   component: Icon,
   parameters: {
     layout: "centered",

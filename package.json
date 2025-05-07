@@ -29,8 +29,7 @@
     "#assets": "./dist/src/assets/index.js",
     "#assets/*": "./dist/src/assets/*",
     "#scalars": "./dist/src/scalars/index.js",
-    "#ui": "./dist/src/ui/index.js",
-    "#services": "./dist/src/services/index.js"
+    "#ui": "./dist/src/ui/index.js"
   },
   "scripts": {
     "build:tsc": "tsc --build",
