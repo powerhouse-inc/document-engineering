@@ -1,4 +1,4 @@
-import { FormInput } from "#connect";
+import { FormInput } from "@powerhousedao/design-system";
 import { EthereumAddress as EthereumAddressScalar } from "@powerhousedao/scalars";
 import { useState } from "react";
 

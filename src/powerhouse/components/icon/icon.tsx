@@ -3,7 +3,7 @@ import {
   iconComponents,
   type Props,
 } from "../icon-components/index.js";
-import { type Color, getDimensions, type Size } from "#powerhouse";
+import { type Color, getDimensions, type Size } from "@powerhousedao/design-system";
 import {
   type ComponentPropsWithoutRef,
   type ComponentType,
