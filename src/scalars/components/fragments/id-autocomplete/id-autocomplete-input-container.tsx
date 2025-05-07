@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { Command as CommandPrimitive } from "cmdk";
 import React, { useMemo, useState } from "react";

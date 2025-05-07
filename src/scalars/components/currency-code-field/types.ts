@@ -1,4 +1,4 @@
-import type { IconName } from "#powerhouse";
+import type { IconName } from "@powerhousedao/design-system";
 import type React from "react";
 
 export interface Currency {

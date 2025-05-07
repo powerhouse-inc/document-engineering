@@ -41,7 +41,6 @@ const config: StorybookConfig = {
         alias: {
           "#assets": path.join(srcPath, "assets"),
           "#connect": path.join(srcPath, "connect"),
-          "#powerhouse": path.join(srcPath, "powerhouse"),
           "#scalars": path.join(srcPath, "scalars"),
           "#rwa": path.join(srcPath, "rwa"),
           "#services": path.join(srcPath, "services"),

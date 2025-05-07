@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-max-depth */
-import DownloadFile from "../../../powerhouse/components/icon-components/DownloadFile.js";
-import ExportPdf from "../../../powerhouse/components/icon-components/ExportPdf.js";
-import ExportUbl from "../../../powerhouse/components/icon-components/ExportUbl.js";
-import ExportZip from "../../../powerhouse/components/icon-components/ExportZip.js";
+import DownloadFile from "../icon-components/DownloadFile.js";
+import ExportPdf from "../icon-components/ExportPdf.js";
+import ExportUbl from "../icon-components/ExportUbl.js";
+import ExportZip from "../icon-components/ExportZip.js";
 import { Dropdown, DropdownContent, DropdownItem } from "./index.js";
 import { DropdownTrigger } from "./subcomponents/dropdown-trigger.js";
 

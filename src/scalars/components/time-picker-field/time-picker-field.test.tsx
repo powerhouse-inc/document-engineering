@@ -4,7 +4,7 @@ import { vi } from "vitest";
 import { renderWithForm } from "../../lib/testing.js";
 
 import { TimePickerField } from "./time-picker-field.js";
-vi.mock("#powerhouse", () => ({
+vi.mock("@powerhousedao/design-system", () => ({
   Icon: ({ name, className }: { name: string; className?: string }) => (
     <div data-testid={`mock-icon-${name}`} className={className}>
       Mock Icon: {name}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { format } from "date-fns";
 import * as React from "react";

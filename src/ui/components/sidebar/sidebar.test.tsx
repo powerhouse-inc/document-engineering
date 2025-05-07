@@ -1,4 +1,4 @@
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Sidebar } from "./sidebar.js";

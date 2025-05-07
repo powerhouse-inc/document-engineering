@@ -1,4 +1,4 @@
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { forwardRef, useId } from "react";
 import { Input } from "../../../ui/components/index.js";

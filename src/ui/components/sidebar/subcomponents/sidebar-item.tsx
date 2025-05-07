@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-max-depth */
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cloneElement, forwardRef, useCallback, useMemo, useRef } from "react";
-import CaretDown from "../../../../powerhouse/components/icon-components/CaretDown.js";
-import Pin from "../../../../powerhouse/components/icon-components/Pin.js";
-import PinFilled from "../../../../powerhouse/components/icon-components/PinFilled.js";
+import CaretDown from "../../icon-components/CaretDown.js";
+import Pin from "../../icon-components/Pin.js";
+import PinFilled from "../../icon-components/PinFilled.js";
 import { useEllipsis } from "../../../../scalars/hooks/useEllipsis.js";
 import { isEmpty } from "../../../../scalars/lib/is-empty.js";
 import { cn } from "../../../../scalars/lib/utils.js";

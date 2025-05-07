@@ -1,4 +1,4 @@
-import { Icon, type IconName } from "#powerhouse";
+import { Icon, type IconName } from "@powerhousedao/design-system";
 import { cn, type FieldErrorHandling, type InputBaseProps } from "#scalars";
 import React, { type PropsWithChildren } from "react";
 import { Button } from "../../../../scalars/components/fragments/button/index.js";

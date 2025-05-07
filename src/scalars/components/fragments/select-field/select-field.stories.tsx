@@ -1,4 +1,4 @@
-import { Icon, type IconName } from "#powerhouse";
+import { Icon, type IconName } from "@powerhousedao/design-system";
 import type { Meta, StoryObj } from "@storybook/react";
 import { withForm } from "../../../lib/decorators.js";
 import {

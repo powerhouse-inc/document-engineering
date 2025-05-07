@@ -1,9 +1,9 @@
-import Created from "../../../../powerhouse/components/icon-components/Created.js";
-import DescendenceModified from "../../../../powerhouse/components/icon-components/DescendenceModified.js";
-import Duplicated from "../../../../powerhouse/components/icon-components/Duplicated.js";
-import Modified from "../../../../powerhouse/components/icon-components/Modified.js";
-import Moved from "../../../../powerhouse/components/icon-components/Moved.js";
-import Removed from "../../../../powerhouse/components/icon-components/Removed.js";
+import Created from "../../icon-components/Created.js";
+import DescendenceModified from "../../icon-components/DescendenceModified.js";
+import Duplicated from "../../icon-components/Duplicated.js";
+import Modified from "../../icon-components/Modified.js";
+import Moved from "../../icon-components/Moved.js";
+import Removed from "../../icon-components/Removed.js";
 import { NodeStatus } from "../types.js";
 
 interface StatusIconProps {

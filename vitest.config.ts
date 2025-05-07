@@ -14,7 +14,6 @@ export default defineConfig({
     alias: {
       "#assets": path.join(srcPath, "assets"),
       "#connect": path.join(srcPath, "connect"),
-      "#powerhouse": path.join(srcPath, "powerhouse"),
       "#scalars": path.join(srcPath, "scalars"),
       "#ui": path.join(srcPath, "ui"),
       "#rwa": path.join(srcPath, "rwa"),

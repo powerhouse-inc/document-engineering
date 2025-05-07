@@ -3,7 +3,7 @@ import { userEvent } from "@testing-library/user-event";
 import { renderWithForm } from "../../lib/testing.js";
 import { DatePickerField } from "./date-picker-field.js";
 
-vi.mock("#powerhouse", () => ({
+vi.mock("@powerhousedao/design-system", () => ({
   Icon: ({ name, className }: { name: string; className?: string }) => (
     <div data-testid={`mock-icon-${name}`} className={className}>
       Mock Icon: {name}

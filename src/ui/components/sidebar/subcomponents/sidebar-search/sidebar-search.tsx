@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import CrossCircle from "../../../../../powerhouse/components/icon-components/CrossCircle.js";
-import Search from "../../../../../powerhouse/components/icon-components/Search.js";
-import Tabler from "../../../../../powerhouse/components/icon-components/Tabler.js";
+import CrossCircle from "../../../icon-components/CrossCircle.js";
+import Search from "../../../icon-components/Search.js";
+import Tabler from "../../../icon-components/Tabler.js";
 import { cn } from "../../../../../scalars/lib/utils.js";
 import { Input } from "../../../../../ui/components/index.js";
 import { useSidebar } from "../sidebar-provider/index.js";

@@ -1,4 +1,4 @@
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn, type SelectBaseProps, type SelectFieldProps } from "#scalars";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { type Matcher } from "react-day-picker";

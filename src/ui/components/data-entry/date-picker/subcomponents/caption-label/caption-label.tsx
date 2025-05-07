@@ -1,4 +1,4 @@
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
 import { type DatePickerView } from "../../types.js";

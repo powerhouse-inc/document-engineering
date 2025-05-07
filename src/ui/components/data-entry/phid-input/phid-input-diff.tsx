@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-depth */
-import { Icon, type IconName } from "#powerhouse";
+import { Icon, type IconName } from "@powerhousedao/design-system";
 import { cn, FormLabel } from "@powerhousedao/design-system/scalars";
 import React from "react";
 import { SplittedInputDiff } from "../input/splitted-input-diff.js";

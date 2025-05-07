@@ -1,4 +1,4 @@
-import { Icon, type IconName } from "#powerhouse";
+import { Icon, type IconName } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import type React from "react";
 import { type SelectProps } from "../../../enum-field/types.js";

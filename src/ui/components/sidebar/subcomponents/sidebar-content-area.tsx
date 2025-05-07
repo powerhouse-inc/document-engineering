@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { AutoSizer, List } from "react-virtualized";
 import { SidebarItem } from "./sidebar-item.js";

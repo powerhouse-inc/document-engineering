@@ -1,4 +1,4 @@
-import { type IconName } from "#powerhouse";
+import { type IconName } from "@powerhousedao/design-system";
 import React, { useCallback, useId, useMemo } from "react";
 import { Input } from "../../../ui/components/index.js";
 import { sharedValueTransformers } from "../../lib/shared-value-transformers.js";

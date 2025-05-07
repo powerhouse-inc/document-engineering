@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-depth */
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { type SelectProps } from "#scalars";
 import { useCommandState } from "cmdk";
 import type React from "react";

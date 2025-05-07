@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "#powerhouse";
+import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { useCallback, useEffect } from "react";
 import { SidebarContentArea } from "./subcomponents/sidebar-content-area.js";
