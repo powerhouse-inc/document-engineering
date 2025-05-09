@@ -2,16 +2,6 @@ name: NPM Release
 
 on:
   workflow_dispatch:
-    inputs:
-      versionType:
-        description: 'Version bump type'
-        required: true
-        default: 'patch'
-        type: 'choice'
-        options:
-          - patch
-          - minor
-          - major
 
 env:
   NX_ISOLATE_PLUGINS: false
@@ -35,53 +25,14 @@ jobs:
           version: 9
           run_install: false
 
-      - name: git config
-        shell: bash
-        run: |
-          git config user.name "Github Actions Bot"
-          git config user.email "-"
-
-      - name: Set environment variables based on branch
-        run: |
-          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-          
-          if [[ "$BRANCH_NAME" == "prod" ]]; then
-            echo "NPM_TAG=latest" >> $GITHUB_ENV
-            echo "VERSION_CMD=pnpm version ${{ github.event.inputs.versionType || 'patch' }} --no-git-tag-version" >> $GITHUB_ENV
-          elif [[ "$BRANCH_NAME" == "staging" ]]; then
-            echo "NPM_TAG=staging" >> $GITHUB_ENV
-            echo "VERSION_CMD=pnpm version prerelease --preid staging --no-git-tag-version" >> $GITHUB_ENV
-          elif [[ "$BRANCH_NAME" == "dev" ]]; then
-            echo "NPM_TAG=dev" >> $GITHUB_ENV
-            echo "VERSION_CMD=pnpm version prerelease --preid dev --no-git-tag-version" >> $GITHUB_ENV
-          else
-            echo "Unsupported branch: $BRANCH_NAME"
-            exit 1
-          fi
-
-      - name: Bump version
-        run: ${{ env.VERSION_CMD }}
-
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Commit version bump
-        run: |
-          git add ./package.json
-          git add ./pnpm-lock.yaml
-          git commit -m "chore: bump version"
-          git push origin
-        shell: bash
+      - name: Build
+        run: pnpm run build
+  
+      - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Build packages
-      #   run: pnpm build
-
-      # - name: Publish package
-      #   run: |
-      #     pnpm config set //registry.npmjs.org/:_authToken ${NODE_AUTH_TOKEN}
-      #     pnpm publish --access public --tag ${{ env.NPM_TAG }} --no-git-checks
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm run release
