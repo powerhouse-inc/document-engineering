@@ -117,7 +117,7 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.5.6",
-    "@powerhousedao/design-system": "^1.39.24-dev.0",
+    "@powerhousedao/design-system": "1.39.26-dev.2",
     "@powerhousedao/scalars": "^1.33.1-dev.7",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
