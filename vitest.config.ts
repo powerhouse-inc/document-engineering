@@ -9,6 +9,12 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
     setupFiles: ["./setupTests.js"],
+    pool: 'vmThreads',
+    deps: {
+      web: {
+        transformAssets: true,
+      },
+    },
   },
   resolve: {
     alias: {
