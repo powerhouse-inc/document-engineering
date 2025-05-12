@@ -23,13 +23,19 @@
       "types": "./dist/src/ui/index.d.ts",
       "import": "./dist/src/ui/index.js"
     },
+    "./graphql": {
+      "types": "./dist/src/scalars/graphql/index.d.ts",
+      "import": "./dist/src/scalars/graphql/index.js"
+    },
     "./style.css": "./dist/style.css"
   },
   "imports": {
     "#assets": "./dist/src/assets/index.js",
     "#assets/*": "./dist/src/assets/*",
     "#scalars": "./dist/src/scalars/index.js",
-    "#ui": "./dist/src/ui/index.js"
+    "#ui": "./dist/src/ui/index.js",
+    "#graphql": "./dist/src/scalars/graphql/index.js",
+    "#graphql/*": "./dist/src/scalars/graphql/*"
   },
   "scripts": {
     "build:tsc": "tsc --build",
@@ -127,7 +133,6 @@
   "dependencies": {
     "@internationalized/date": "^3.5.6",
     "@powerhousedao/design-system": "1.39.26-dev.2",
-    "@powerhousedao/scalars": "^1.33.1-dev.7",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.5",
