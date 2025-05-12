@@ -5,6 +5,7 @@ on:
 
 env:
   NX_ISOLATE_PLUGINS: false
+  HUSKY: 0
 
 jobs:
   release:
