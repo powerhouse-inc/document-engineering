@@ -1,0 +1,16 @@
+# 1.0.0 (2025-05-12)
+
+
+### chore
+
+* update package version and README ([29db19b](https://github.com/powerhouse-inc/document-engineering/commit/29db19b1616a18ea792ed8457f30d63b5f844237))
+
+
+### Features
+
+* enabled semantic release ([852c50a](https://github.com/powerhouse-inc/document-engineering/commit/852c50a1f522546cf89a3b9f25ae040c0037f76b))
+
+
+### BREAKING CHANGES
+
+* set initial v1.0.0
