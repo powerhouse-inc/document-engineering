@@ -27,6 +27,10 @@
       "types": "./dist/src/scalars/graphql/index.d.ts",
       "import": "./dist/src/scalars/graphql/index.js"
     },
+    "./graphql-utils": {
+      "types": "./dist/src/scalars/graphql/utils.d.ts",
+      "import": "./dist/src/scalars/graphql/utils.js"
+    },
     "./style.css": "./dist/style.css"
   },
   "imports": {

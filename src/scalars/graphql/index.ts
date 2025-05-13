@@ -15,6 +15,7 @@ import * as OID from "./OID.js";
 import * as OLabel from "./OLabel.js";
 import * as PHID from "./PHID.js";
 import * as URLScalar from "./URL.js";
+import { type BasePHScalar } from "./types.js";
 
 // export types -- DO NOT REMOVE OR EDIT THIS COMMENT
 export type { ScalarType as AmountScalarType } from "./Amount.js";
@@ -53,6 +54,25 @@ export {
   PHID,
   URLScalar,
 };
+
+export const customScalars: Record<string, BasePHScalar<any>> = {
+  Amount,
+  AmountCrypto,
+  AmountCurrency,
+  AmountFiat,
+  AmountMoney,
+  AmountPercentage,
+  AmountTokens,
+  Currency,
+  DateScalar,
+  DateTime,
+  EmailAddress,
+  EthereumAddress,
+  OID,
+  OLabel,
+  PHID,
+  URLScalar,
+} as const;
 
 export const resolvers = {
   // export resolvers -- DO NOT REMOVE OR EDIT THIS COMMENT
