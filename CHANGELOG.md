@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.0.0...v1.0.1) (2025-05-13)
+
+
+### Bug Fixes
+
+* added graphql utils ([b92a902](https://github.com/powerhouse-inc/document-engineering/commit/b92a902b732f7e5b081955d25387f241a76d4f22))
+
 # 1.0.0 (2025-05-12)
 
 
