@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/powerhouse-inc/document-engineering/compare/v1.0.1...v1.0.2) (2025-05-13)
+
+
+### Bug Fixes
+
+* update GraphQL scalars structure and exports in index.ts ([e2e5b17](https://github.com/powerhouse-inc/document-engineering/commit/e2e5b17752d77411d8a9f47339cb292bcf23f589))
+
 ## [1.0.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.0.0...v1.0.1) (2025-05-13)
 
 
