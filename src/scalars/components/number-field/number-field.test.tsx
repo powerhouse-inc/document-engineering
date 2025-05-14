@@ -1,4 +1,4 @@
-import { Button } from "@powerhousedao/design-system";
+import { Button } from "../fragments/button/index.js";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { renderWithForm } from "../../lib/testing.js";

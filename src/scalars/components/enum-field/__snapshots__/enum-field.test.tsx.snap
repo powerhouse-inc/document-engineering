@@ -13,7 +13,7 @@ exports[`EnumField Component > should match snapshot 1`] = `
       dir="ltr"
       id=":r1:-radio-group"
       role="radiogroup"
-      style="outline-color: none; outline-style: none; outline-width: initial;"
+      style="outline: none;"
       tabindex="0"
     >
       <div
@@ -142,20 +142,10 @@ exports[`EnumField Component > should match snapshot with Select variant 1`] = `
         <div
           class="mx-auto flex w-full items-center justify-end"
         >
-          <svg
-            class="cursor-pointer text-gray-700 dark:text-gray-400"
-            fill="none"
-            stroke="currentcolor"
+          <div
+            data-testid="icon-fallback"
             style="width: 16px; height: 16px;"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M6 9L12 15L18 9"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            />
-          </svg>
+          />
         </div>
       </button>
     </div>

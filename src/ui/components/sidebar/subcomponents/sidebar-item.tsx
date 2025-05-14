@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-depth */
-import { Icon } from "@powerhousedao/design-system";
+import { Icon } from "../../../components/icon/index.js";
 import { cloneElement, forwardRef, useCallback, useMemo, useRef } from "react";
 import CaretDown from "../../icon-components/CaretDown.js";
 import Pin from "../../icon-components/Pin.js";

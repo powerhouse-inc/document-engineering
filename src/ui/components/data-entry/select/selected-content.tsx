@@ -1,7 +1,7 @@
-import { Icon, type IconName } from "@powerhousedao/design-system";
-import { type SelectProps } from "#scalars";
+import { Icon, type IconName } from "../../../components/icon/index.js";
 import React from "react";
-import { cn } from "../../../lib/utils.js";
+import { cn } from "../../../../scalars/lib/utils.js";
+import type { SelectProps } from "./types.js";
 
 interface SelectedContentProps {
   selectedValues: string[];

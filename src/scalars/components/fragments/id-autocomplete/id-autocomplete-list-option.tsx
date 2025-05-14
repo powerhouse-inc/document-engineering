@@ -1,6 +1,6 @@
-import { Icon, type IconName } from "@powerhousedao/design-system";
+import { Icon, type IconName } from "../../../../ui/components/icon/index.js";
 import React from "react";
-import { cn } from "../../../lib/utils.js";
+import { cn } from "../../../../scalars/lib/index.js";
 import type { IdAutocompleteOption, IdAutocompleteProps } from "./types.js";
 
 const IconRenderer: React.FC<{

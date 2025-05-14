@@ -1,4 +1,4 @@
-import { type IconName } from "@powerhousedao/design-system";
+import { type IconName } from "../../components/icon/index.js";
 
 export enum NodeStatus {
   CREATED = "CREATED",

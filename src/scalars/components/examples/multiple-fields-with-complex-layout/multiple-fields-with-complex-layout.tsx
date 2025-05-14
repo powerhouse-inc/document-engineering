@@ -1,7 +1,7 @@
-import { Button } from "@powerhousedao/design-system";
+import { Button } from "../../../components/fragments/button/index.js";
 import { BooleanField } from "../../boolean-field/index.js";
 import { Form } from "../../form/index.js";
-import { RadioGroupField } from "../../fragments/index.js";
+import { RadioGroupField } from "../../fragments/radio-group-field/index.js";
 import { NumberField } from "../../number-field/index.js";
 import { StringField } from "../../string-field/index.js";
 

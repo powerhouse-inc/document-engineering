@@ -1,3 +1,4 @@
+export * from "./decorators.js";
 export * from "./deep-equal.js";
 export * from "./is-empty.js";
 export * from "./share-number-validations.js";

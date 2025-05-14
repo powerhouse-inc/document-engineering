@@ -1,4 +1,4 @@
-import { cn } from "@powerhousedao/design-system/scalars";
+import { cn } from "../../../../../scalars/lib/index.js";
 
 interface InputDiffProps {
   children: React.ReactNode;

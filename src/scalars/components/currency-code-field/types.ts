@@ -1,4 +1,4 @@
-import type { IconName } from "@powerhousedao/design-system";
+import type { IconName } from "../../../ui/components/icon/index.js";
 import type React from "react";
 
 export interface Currency {
