@@ -1,4 +1,4 @@
-import { Button } from "../../../components/fragments/button/index.js";
+import { Button } from "@powerhousedao/design-system";
 import { EnumField } from "../../enum-field/index.js";
 import { Form } from "../../form/index.js";
 

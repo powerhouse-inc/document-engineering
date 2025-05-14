@@ -1,4 +1,4 @@
-import { Button } from "../../../components/fragments/button/index.js";
+import { Button } from "@powerhousedao/design-system";
 import { Form } from "../../form/index.js";
 import { IdField } from "../../id-field/index.js";
 import { NumberField } from "../../number-field/index.js";

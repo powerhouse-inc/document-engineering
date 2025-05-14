@@ -1,4 +1,4 @@
-import { Button } from "../../scalars/components/fragments/button/index.js";
+import { Button } from "@powerhousedao/design-system";
 import { type Decorator } from "@storybook/react";
 import { type Args, type DecoratorFunction } from "@storybook/types";
 import { format } from "date-fns";
