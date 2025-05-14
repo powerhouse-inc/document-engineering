@@ -1,7 +1,7 @@
 import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { forwardRef, useId } from "react";
-import { Input } from "@powerhousedao/design-system/ui";
+import { Input } from "../../../ui/components/data-entry/input/index.js";
 import { FormDescription } from "../fragments/form-description/index.js";
 import { FormGroup } from "../fragments/form-group/index.js";
 import { FormLabel } from "../fragments/form-label/index.js";

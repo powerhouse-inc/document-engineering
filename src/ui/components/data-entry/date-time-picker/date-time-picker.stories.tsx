@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { withTimestampsAsISOStrings } from "../../../../scalars/lib/decorators";
 import {
   getDefaultArgTypes,
   StorybookControlCategory,
-} from "../../../../scalars/lib/storybook-arg-types";
+} from "../../../../scalars/lib/storybook-arg-types.js";
 import { DateTimePicker } from "./date-time-picker.js";
 import { FORMAT_MAPPING } from "./utils.js";
+import { withTimestampsAsISOStrings } from "../../../../scalars/lib/decorators.js";
 
 /**
  * The `DateTimePicker` component provides an input field for selecting both dates and times.

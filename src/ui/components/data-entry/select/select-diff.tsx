@@ -1,4 +1,4 @@
-import { FormGroup, FormLabel } from "@powerhousedao/design-system/scalars";
+import { FormGroup, FormLabel } from "../../../../scalars/components/fragments/index.js";
 import { SplittedInputDiff } from "../input/splitted-input-diff.js";
 import type { SelectProps, SelectWithDifference } from "./types.js";
 

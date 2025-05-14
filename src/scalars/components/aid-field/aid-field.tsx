@@ -1,7 +1,7 @@
 import { isAddress } from "viem";
-import { AIDInput } from "@powerhousedao/design-system/ui";
 import { withFieldValidation } from "../fragments/with-field-validation/index.js";
 import type { AIDFieldProps } from "./types.js";
+import { AIDInput } from "../../../ui/components/data-entry/aid-input/index.js";
 
 const AIDField = withFieldValidation<AIDFieldProps>(AIDInput, {
   validations: {

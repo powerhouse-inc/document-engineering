@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-max-depth */
 import { Icon, type IconName } from "@powerhousedao/design-system";
-import { cn, FormLabel } from "@powerhousedao/design-system/scalars";
 import React from "react";
 import { SplittedInputDiff } from "../input/splitted-input-diff.js";
 import { TextDiff } from "../input/subcomponent/text-diff.js";
 import type { PHIDInputProps, PHIDInputWithDifference } from "./types.js";
-
+import { cn } from "../../../../scalars/lib/index.js";
+import { FormLabel } from "../../../../scalars/components/fragments/index.js";
 interface IconRendererProps {
   customIcon?: IconName | React.ReactElement;
   asPlaceholder?: boolean;
@@ -100,8 +100,8 @@ const PHIDInputDiff = ({
   return (
     <div className={cn("flex flex-col gap-2")}>
       {label && (
-        <FormLabel disabled={true} required={required}>
-          {label}
+          <FormLabel disabled={true} required={required}>
+            {label}
         </FormLabel>
       )}
 
