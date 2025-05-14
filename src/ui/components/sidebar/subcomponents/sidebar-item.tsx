@@ -1,5 +1,4 @@
 
-import { Icon } from "@powerhousedao/design-system";
 import { cloneElement, forwardRef, useCallback, useMemo, useRef } from "react";
 import CaretDown from "../../icon-components/CaretDown.js";
 import Pin from "../../icon-components/Pin.js";
@@ -10,6 +9,7 @@ import { cn } from "../../../../scalars/lib/utils.js";
 import { Tooltip, TooltipProvider } from "../../tooltip/index.js";
 import { type FlattenedNode, NodeStatus, type SidebarNode } from "../types.js";
 import { StatusIcon } from "./status-icon.js";
+import { Icon } from "../../icon/index.js";
 
 interface SidebarItemProps {
   node: FlattenedNode;

@@ -1,6 +1,6 @@
-import { Icon } from "@powerhousedao/design-system";
+
 import { cn } from "#scalars";
-import { type SelectBaseProps } from "#ui";
+import { Icon, type SelectBaseProps } from "#ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { type Matcher } from "react-day-picker";
 import { type SelectFieldProps } from "../../../../scalars/components/fragments/select-field/index.js";

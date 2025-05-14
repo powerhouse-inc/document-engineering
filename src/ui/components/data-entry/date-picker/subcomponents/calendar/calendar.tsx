@@ -1,6 +1,4 @@
 "use client";
-
-import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { format } from "date-fns";
 import * as React from "react";
@@ -13,6 +11,8 @@ import CaptionLabel from "../caption-label/caption-label.js";
 import { MonthGrid } from "../months-view/month-view.js";
 import { MONTHS } from "../utils.js";
 import { YearGrid } from "../year-view/year-grid.js";
+import { Icon } from "../../../../icon/index.js";
+// import { Icon } from "../../../../icon/icon.js";
 
 export type CalendarProps = DayPickerProps & {
   /**

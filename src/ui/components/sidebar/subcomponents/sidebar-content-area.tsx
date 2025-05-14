@@ -1,10 +1,10 @@
 "use client";
 
-import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { AutoSizer, List } from "react-virtualized";
 import { SidebarItem } from "./sidebar-item.js";
 import { useSidebar } from "./sidebar-provider/index.js";
+import { Icon } from "../../icon/index.js";
 
 interface SidebarContentAreaProps {
   allowPinning?: boolean;

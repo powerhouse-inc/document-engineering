@@ -1,7 +1,7 @@
-import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
 import { type DatePickerView } from "../../types.js";
+import { Icon } from "../../../../icon/index.js";
 interface CaptionLabelProps extends React.PropsWithChildren {
   showYearSwitcher: boolean;
   navView: DatePickerView;

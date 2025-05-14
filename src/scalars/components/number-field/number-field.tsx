@@ -1,4 +1,4 @@
-import { Icon } from "@powerhousedao/design-system";
+
 import { cn } from "#scalars";
 import { forwardRef, useId } from "react";
 import { Input } from "../../../ui/components/data-entry/input/index.js";
@@ -11,6 +11,7 @@ import { validateNumericType } from "./number-field-validations.js";
 import type { InputNumberProps } from "./types.js";
 import { useNumberField } from "./use-number-field.js";
 import { regex } from "./utils.js";
+import { Icon } from "../../../ui/components/icon/icon.js";
 
 export interface NumberFieldProps extends InputNumberProps {
   name: string;

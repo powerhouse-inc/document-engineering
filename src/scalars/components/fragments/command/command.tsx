@@ -1,7 +1,7 @@
-import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { Command as CommandPrimitive } from "cmdk";
 import React from "react";
+import { Icon } from "../../../../ui/components/index.js";
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,

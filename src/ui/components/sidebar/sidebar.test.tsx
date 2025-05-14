@@ -1,8 +1,8 @@
-import { Icon } from "@powerhousedao/design-system";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Sidebar } from "./sidebar.js";
 import { SidebarProvider } from "./subcomponents/sidebar-provider/index.js";
+import { Icon } from "../icon/index.js";
 
 const mockNodes = [
   {

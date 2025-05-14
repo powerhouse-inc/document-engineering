@@ -1,4 +1,3 @@
-import { Icon } from "@powerhousedao/design-system";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import type { WithDifference } from "../../../../scalars/components/types.js";
@@ -9,6 +8,7 @@ import {
 import { InputDiff } from "./subcomponent/input-diff.js";
 import { TextDiff } from "./subcomponent/text-diff.js";
 import { cn } from "../../../../scalars/lib/index.js";
+import { Icon } from "../../icon/index.js";
 
 interface CopyIconProps {
   value: string;

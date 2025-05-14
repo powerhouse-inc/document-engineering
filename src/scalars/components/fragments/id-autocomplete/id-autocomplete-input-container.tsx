@@ -1,4 +1,4 @@
-import { Icon } from "@powerhousedao/design-system";
+import { Icon } from "../../../../ui/components/index.js";
 import { cn } from "#scalars";
 import { Command as CommandPrimitive } from "cmdk";
 import React, { useMemo, useState } from "react";

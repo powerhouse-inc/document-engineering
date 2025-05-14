@@ -1,4 +1,3 @@
-import { Icon } from "@powerhousedao/design-system";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useCallback, useState } from "react";
 // Import JSON directly without import assertions
@@ -6,6 +5,7 @@ import mockedTree from "./mocked_tree.json";
 import { Sidebar } from "./sidebar.js";
 import { SidebarProvider } from "./subcomponents/sidebar-provider/index.js";
 import { type SidebarNode } from "./types.js";
+import { Icon } from "../icon";
 
 /**
  * The `Sidebar` component can be used within a page layout to provide a sidebar navigation.

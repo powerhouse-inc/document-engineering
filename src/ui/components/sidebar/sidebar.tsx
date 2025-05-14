@@ -1,6 +1,4 @@
 "use client";
-
-import { Icon } from "@powerhousedao/design-system";
 import { cn } from "#scalars";
 import { useCallback, useEffect } from "react";
 import { SidebarContentArea } from "./subcomponents/sidebar-content-area.js";
@@ -11,6 +9,7 @@ import { SidebarSearch } from "./subcomponents/sidebar-search/index.js";
 import { type SidebarNode } from "./types.js";
 import { useSidebarResize } from "./use-sidebar-resize.js";
 import { triggerEvent } from "./utils.js";
+import { Icon } from "../icon/index.js";
 
 export interface SidebarProps {
   /**

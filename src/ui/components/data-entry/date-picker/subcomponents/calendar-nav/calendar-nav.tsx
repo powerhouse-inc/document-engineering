@@ -1,4 +1,4 @@
-import { Icon } from "@powerhousedao/design-system";
+
 import { cn } from "#scalars";
 import { differenceInCalendarDays } from "date-fns";
 
@@ -6,6 +6,7 @@ import { useCallback, useMemo } from "react";
 import { useDayPicker } from "react-day-picker";
 import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
 import { type DatePickerView } from "../../types.js";
+import { Icon } from "../../../../icon/index.js";
 
 interface NavProps {
   className?: string;
