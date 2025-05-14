@@ -1,6 +1,6 @@
 import { type IconName } from "@powerhousedao/design-system";
 import React, { useCallback, useId, useMemo } from "react";
-import { Input } from "../../../ui/components/index.js";
+import { Input } from "@powerhousedao/design-system/ui";
 import { sharedValueTransformers } from "../../lib/shared-value-transformers.js";
 import { cn } from "../../lib/utils.js";
 import {
