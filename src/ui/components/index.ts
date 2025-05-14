@@ -78,5 +78,8 @@ export {
   type SidebarProps,
 } from "./sidebar/index.js";
 
+// icon
+export { Icon, type IconProps } from "./icon/index.js";
+
 // TODO: export tooltip once it is ready to be used outside the package
 // DO NOT export tooltip until it is ready to be used outside the package
