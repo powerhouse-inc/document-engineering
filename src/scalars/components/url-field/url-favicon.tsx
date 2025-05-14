@@ -1,4 +1,5 @@
-import { iconNames, type IconName, Icon } from "@powerhousedao/design-system";
+import { iconNames, type IconName } from "@powerhousedao/design-system";
+import { Icon } from "@powerhousedao/design-system";
 import { useMemo } from "react";
 
 interface UrlFaviconProps {

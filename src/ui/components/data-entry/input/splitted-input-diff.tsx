@@ -6,7 +6,7 @@ import type { WithDifference } from "../../../../scalars/components/types.js";
 import {
   Tooltip,
   TooltipProvider,
-} from "../../../../ui/components/tooltip/tooltip.js";
+} from "../../tooltip/tooltip.js";
 import { InputDiff } from "./subcomponent/input-diff.js";
 import { TextDiff } from "./subcomponent/text-diff.js";
 

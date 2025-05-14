@@ -3,7 +3,7 @@ import {
   getDefaultArgTypes,
   StorybookControlCategory,
 } from "../../../../scalars/lib/storybook-arg-types.js";
-import { TimePicker } from "./time-picker";
+import { TimePicker } from "./time-picker.js";
 
 /**
  * The `TimePicker` component provides an input field for selecting times.

@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../../scalars/components/fragments/popover/index.js";
-import { Input } from "../../../components/data-entry/input/input.js";
+import { Input } from "../input/input.js";
 
 export interface BasePickerFieldProps
   extends InputBaseProps<string>,

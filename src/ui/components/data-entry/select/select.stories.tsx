@@ -1,58 +1,67 @@
 import { Icon, type IconName } from "@powerhousedao/design-system";
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { withForm } from "../../lib/decorators.js";
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from "../../lib/storybook-arg-types.js";
-import { EnumField } from "./enum-field.js";
+} from "../../../../scalars/lib/storybook-arg-types.js";
+import { Select } from "./select.js";
 
-const meta: Meta<typeof EnumField> = {
-  title: "Document Engineering/Scalars/Enum Field",
-  component: EnumField,
+/**
+ * The `Select` component provides a dropdown selection field.
+ * It supports multiple configuration properties like:
+ * - label
+ * - description
+ * - placeholder
+ * - options
+ * - multiple
+ * - searchable
+ * - selectionIcon
+ * - selectionIconPosition
+ * - contentAlign
+ *
+ * Features include:
+ * - Single and multiple selection modes
+ * - Option icons
+ * - Searchable dropdown
+ * - Different selection indicators (radio, checkbox, checkmark)
+ * - Customizable content alignment
+ * - Disabled options support
+ *
+ * > **Note:** This component does not have built-in validation. If you need built-in validation
+ * > you can use the [EnumField](?path=/docs/document-engineering-scalars-enum-field--readme)
+ * > component.
+ */
+
+const meta: Meta<typeof Select> = {
+  title: "Document Engineering/Data Entry/Select",
+  component: Select,
+  parameters: {
+    layout: "padded",
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
   decorators: [
-    withForm,
     (Story) => (
-      <div style={{ maxWidth: "280px", margin: "1rem auto 0" }}>
+      <div style={{ width: "280px", margin: "1rem auto 0" }}>
         <Story />
       </div>
     ),
   ],
-  parameters: {
-    layout: "padded",
-  },
   tags: ["autodocs"],
   argTypes: {
     ...getDefaultArgTypes(),
     ...PrebuiltArgTypes.placeholder,
 
-    variant: {
-      control: "radio",
-      options: ["auto", "RadioGroup", "Select"],
-      description:
-        "Enum field variant. " +
-        "auto: uses the most appropriate variant based on the number of options " +
-        "(less than 6 options -> RadioGroup, 6 options or more -> Select). " +
-        "RadioGroup: displays options in a group of radio buttons. " +
-        "Select: displays options in a dropdown menu.",
-      table: {
-        type: { summary: '"auto" | "RadioGroup" | "Select"' },
-        defaultValue: { summary: "auto" },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
     options: {
       control: "object",
-      description:
-        "Array of options with label, value, icon, description and disabled",
+      description: "Array of options to display in the select",
       table: {
         type: {
           summary:
-            "Array<{ label: string; value: string; icon?: IconName | React.ComponentType<{ className?: string }>; description?: string; disabled?: boolean; }>",
+            "Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean }>",
         },
         defaultValue: { summary: "[]" },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -104,7 +113,31 @@ const meta: Meta<typeof EnumField> = {
       },
     },
 
-    ...getValidationArgTypes(),
+    contentAlign: {
+      control: "select",
+      description: "Alignment of the dropdown",
+      options: ["start", "end", "center"],
+      table: {
+        defaultValue: { summary: "start" },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+
+    contentClassName: {
+      control: "text",
+      description: "Custom class name for the dropdown content",
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
 
     ...PrebuiltArgTypes.viewMode,
     diffMode: {
@@ -120,15 +153,14 @@ const meta: Meta<typeof EnumField> = {
     ...PrebuiltArgTypes.baseValue,
   },
   args: {
-    name: "enum-field",
+    name: "select",
     errors: [],
     warnings: [],
   },
-} satisfies Meta<typeof EnumField>;
+} satisfies Meta<typeof Select>;
 
 export default meta;
-
-type Story = StoryObj<typeof EnumField>;
+type Story = StoryObj<typeof Select>;
 
 const IconComponent = (
   name: IconName,
@@ -168,146 +200,140 @@ const defaultOptionsWithIcon = [
   },
 ];
 
-type StoryProps = {
-  variant: "auto" | "RadioGroup" | "Select";
-  [key: string]: any;
-};
-
+// Basic examples
 export const Default: Story = {
   args: {
-    label: "Select an option",
+    label: "Favorite icon name",
     options: defaultOptions,
-    placeholder: "Choose from the list",
+    placeholder: "Select an icon name",
   },
 };
 
 export const WithDescription: Story = {
   args: {
-    label: "Select an option",
-    description: "Choose your preferred option from the list",
-    variant: "RadioGroup",
-    options: defaultOptions.map((opt, index) => ({
-      ...opt,
-      description:
-        index === 2 ? `Description for ${opt.label} option` : undefined,
-    })),
-    placeholder: "Choose from the list",
-  } as StoryProps,
+    label: "Favorite icon name",
+    description: "Choose your favorite icon name",
+    options: defaultOptions,
+    placeholder: "Select an icon name",
+  },
 };
 
 export const Required: Story = {
   args: {
     label: "Required field",
-    variant: "RadioGroup",
     options: defaultOptions,
-    placeholder: "Choose from the list",
+    placeholder: "Must select at least one option",
     required: true,
-  } as StoryProps,
+  },
 };
 
 export const WithDefaultValue: Story = {
   args: {
     label: "Preset selection",
-    variant: "RadioGroup",
     options: defaultOptions,
-    placeholder: "Choose from the list",
+    placeholder: "Select an icon name",
     defaultValue: "Drive",
-  } as StoryProps,
+  },
 };
 
 export const Disabled: Story = {
   args: {
     label: "Disabled field",
-    variant: "RadioGroup",
     options: defaultOptions,
-    placeholder: "Choose from the list",
+    placeholder: "Select an icon name",
     value: "Drive",
     disabled: true,
-  } as StoryProps,
+  },
 };
 
 // Validation states
 export const WithError: Story = {
   args: {
     label: "With error",
-    variant: "RadioGroup",
     options: defaultOptions,
-    placeholder: "Choose from the list",
-    value: "Drive",
-    errors: ["Please select a different option"],
-  } as StoryProps,
+    placeholder: "Select icon names",
+    value: ["Drive"],
+    multiple: true,
+    errors: ["Please select at least two options"],
+  },
 };
 
 export const WithWarning: Story = {
   args: {
     label: "With warning",
-    variant: "RadioGroup",
     options: defaultOptions,
-    placeholder: "Choose from the list",
-    value: "Drive",
-    warnings: ["This option may be deprecated soon"],
-  } as StoryProps,
-};
-
-// Variant examples
-export const Select: Story = {
-  args: {
-    label: "Select variant",
-    variant: "Select",
-    options: defaultOptions,
-    placeholder: "Select an option",
-  },
-};
-
-export const SelectWithDescription: Story = {
-  args: {
-    label: "Select variant with descriptions",
-    description: "Choose your preferred option",
-    variant: "Select",
-    options: defaultOptions,
-    placeholder: "Select an option",
-  },
-};
-
-export const MultiSelect: Story = {
-  args: {
-    label: "Multi Select variant",
-    variant: "Select",
-    options: defaultOptions,
-    placeholder: "Select options",
+    placeholder: "Select icon names",
+    value: ["Drive", "Globe"],
     multiple: true,
+    warnings: ["Some selected options may not be available in the future"],
   },
 };
 
-export const SearchableSelect: Story = {
+// Special features
+export const Searchable: Story = {
   args: {
-    label: "Searchable select variant",
-    variant: "Select",
+    label: "Searchable field",
+    description: "Type to search through options",
     options: defaultOptions,
-    placeholder: "Search and select an option",
+    placeholder: "Select an icon name",
     searchable: true,
   },
 };
 
-export const SelectWithCheckmark: Story = {
+export const WithDisabledOption: Story = {
+  args: {
+    label: "With disabled option",
+    options: [
+      ...defaultOptions,
+      { value: "disabled", label: "Disabled option", disabled: true },
+    ],
+    placeholder: "Select an icon name",
+  },
+};
+
+export const Multiple: Story = {
+  args: {
+    label: "Multi select",
+    description: "You can select multiple options",
+    options: defaultOptions,
+    placeholder: "Select icon names",
+    multiple: true,
+  },
+};
+
+export const WithCheckmark: Story = {
   args: {
     label: "With checkmark",
-    description: "Shows a checkmark for selected options",
-    variant: "Select",
+    description: "This select shows a checkmark icon for selected option",
     options: defaultOptions,
     selectionIcon: "checkmark",
     placeholder: "Select an icon name",
   },
 };
 
-export const SelectWithIcon: Story = {
+export const WithIcon: Story = {
   args: {
     label: "Favorite icon",
     description: "Choose your favorite icon",
-    variant: "Select",
     options: defaultOptionsWithIcon,
     selectionIcon: "checkmark",
     selectionIconPosition: "right",
     placeholder: "Select an icon",
+  },
+};
+
+export const WithLongOptionLabel: Story = {
+  args: {
+    label: "With long option label",
+    description: "The Select handles long option labels",
+    options: [
+      {
+        value: "very-long-option-1",
+        label:
+          "This is a very long option label that might need truncation in the UI",
+      },
+      ...defaultOptions,
+    ],
+    placeholder: "Select an option",
   },
 };
