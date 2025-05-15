@@ -144,6 +144,14 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 type="button"
                 role="combobox"
                 onBlur={onTriggerBlur}
+                onKeyDown={(e) => {
+                  const shouldPreventOpening = isPopoverOpen || /^[0-9]$/.test(e.key) || !/^[a-zA-Z]$/.test(e.key);
+                  // Prevent opening for numbers and non-letter characters (only letters)
+                  if (shouldPreventOpening) {
+                    return;
+                  }
+                  handleOpenChange(true);
+                }}
                 disabled={disabled}
                 aria-invalid={errors.length > 0}
                 aria-label={
