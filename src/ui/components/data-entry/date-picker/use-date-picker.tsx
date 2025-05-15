@@ -13,6 +13,7 @@ import {
   formatDateToValue,
   formatUTCDateToISOStringWithOutTime,
   getDateFromValue,
+  isFormatDisabled,
 } from "./utils.js";
 
 interface DatePickerFieldProps {
@@ -53,6 +54,9 @@ export const useDatePickerField = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
+    if (isFormatDisabled(internalFormat, inputValue)) {
+      return;
+    }
     setInputDisplay(inputValue);
     onChange?.(createChangeEvent(inputValue));
   };
