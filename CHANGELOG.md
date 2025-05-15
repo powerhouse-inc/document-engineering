@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.0.2...v1.1.0) (2025-05-15)
+
+
+### Bug Fixes
+
+* **scalars:** add props in boolean scalars ([f469130](https://github.com/powerhouse-inc/document-engineering/commit/f469130eb93f3a7f96e6c9fdae77e59d8dd050b9))
+* use the correct button in examples ([add9548](https://github.com/powerhouse-inc/document-engineering/commit/add9548804c90a6b538223dbe2391b6f7b35ea54))
+
+
+### Features
+
+* **scalars & ui:** update components ([d499176](https://github.com/powerhouse-inc/document-engineering/commit/d499176c606de8b0a0dd71aab3d2573e031d6a52))
+
 ## [1.0.2](https://github.com/powerhouse-inc/document-engineering/compare/v1.0.1...v1.0.2) (2025-05-13)
 
 
