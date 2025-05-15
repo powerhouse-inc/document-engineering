@@ -33,9 +33,9 @@ const ToggleDiff = ({
       return { hasDiff: false, type: "neutral" as const };
     }
     if (!baseValue && value === true) {
-      return { hasDiff: true, type: "positive" as const };
+      return { hasDiff: true, type: "left" as const };
     }
-    return { hasDiff: true, type: "negative" as const };
+    return { hasDiff: true, type: "right" as const };
   }, [baseValue, value]);
 
   return (
@@ -45,7 +45,7 @@ const ToggleDiff = ({
           "text-gray-700",
           "font-inter text-sm font-semibold leading-[22px]",
           hasDifference.hasDiff && viewMode === "addition"
-            ? hasDifference.type === "positive"
+            ? hasDifference.type === "left"
               ? "bg-green-600/30"
               : undefined
             : undefined,
@@ -68,7 +68,7 @@ const ToggleDiff = ({
           "text-gray-700",
           "text-sm font-semibold leading-[22px]",
           hasDifference.hasDiff && viewMode === "removal"
-            ? hasDifference.type === "negative"
+            ? hasDifference.type === "right"
               ? "bg-red-600/30"
               : undefined
             : undefined,
