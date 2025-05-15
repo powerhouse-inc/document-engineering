@@ -128,3 +128,29 @@ export const formatUTCDateToISOStringWithOutTime = (date: Date): string => {
 export function swapAmbiguousDayMonthFormat(utcDate: Date, separator: string) {
   return `${utcDate.getUTCDate().toString().padStart(2, "0")}${separator}${(utcDate.getUTCMonth() + 1).toString().padStart(2, "0")}${separator}${utcDate.getUTCFullYear()}`;
 }
+
+
+/**
+ * Checks if letter input should be disabled based on the date format.
+ * For specific formats ('yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy'), letter input is not allowed
+ * as these formats only accept numeric values.
+ *
+ * @param internalFormat - The internal date format being used
+ * @param inputValue - The current input value
+ * @returns True if letter input should be disabled (when using numeric-only formats), false otherwise
+ * @example
+ * isFormatDisabled('yyyy-MM-dd', 'abc') // returns true - letters not allowed
+ * isFormatDisabled('dd-MMM-yyyy', 'Jan') // returns false - letters allowed for month names
+ */
+export const isFormatDisabled = (
+  internalFormat: string | undefined,
+  inputValue = "",
+) => {
+  if (!internalFormat) return false;
+  const valuesToCheck = ["yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy"];
+  return (
+    internalFormat &&
+    valuesToCheck.includes(internalFormat) &&
+    /[a-zA-Z]/.test(inputValue)
+  );
+};
