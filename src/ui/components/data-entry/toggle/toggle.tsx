@@ -55,7 +55,7 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
           data-testid="custom-class"
         >
           <div className="flex items-center">
-            {optionalLabel && (
+            {true && (
               <FormLabel
                 className={cn("mr-2")}
                 disabled={disabled}

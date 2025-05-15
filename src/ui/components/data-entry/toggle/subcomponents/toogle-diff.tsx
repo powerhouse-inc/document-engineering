@@ -7,6 +7,7 @@ interface ToggleDiffProps
   value?: boolean;
   label?: React.ReactNode;
   optionalLabel?: React.ReactNode;
+  disabled?: boolean;
   required?: boolean;
   viewMode?: Extract<ViewMode, "edition" | "addition" | "removal">;
   baseValue?: boolean;
@@ -17,7 +18,8 @@ const ToggleDiff = ({
   value,
   label,
   optionalLabel,
-  required,
+    required,
+    disabled,
   baseValue = false,
   viewMode = "edition",
   onChange,
@@ -49,7 +51,7 @@ const ToggleDiff = ({
             : undefined,
         )}
       >
-        {optionalLabel}
+        {"optionalLabel"}
       </span>
       <ToggleBase
         aria-labelledby={`${id}-label`}
