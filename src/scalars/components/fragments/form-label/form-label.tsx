@@ -1,5 +1,5 @@
-import { Icon } from "@powerhousedao/design-system";
-import { cn } from "#scalars";
+import { Icon } from "../../../../ui/components/icon/index.js";
+import { cn } from "../../../../scalars/lib/index.js";
 
 import {
   Tooltip,

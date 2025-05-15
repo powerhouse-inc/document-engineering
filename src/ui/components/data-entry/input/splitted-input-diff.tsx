@@ -1,5 +1,5 @@
-import { Icon } from "@powerhousedao/design-system";
-import { cn } from "@powerhousedao/design-system/scalars";
+import { Icon } from "../../icon/index.js";
+import { cn } from "../../../../scalars/lib/index.js";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import type { WithDifference } from "../../../../scalars/components/types.js";

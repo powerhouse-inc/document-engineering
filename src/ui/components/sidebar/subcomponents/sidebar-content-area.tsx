@@ -1,7 +1,7 @@
 "use client";
 
-import { Icon } from "@powerhousedao/design-system";
-import { cn } from "#scalars";
+import { Icon } from "../../../components/icon/index.js";
+import { cn } from "../../../../scalars/lib/index.js";
 import { AutoSizer, List } from "react-virtualized";
 import { SidebarItem } from "./sidebar-item.js";
 import { useSidebar } from "./sidebar-provider/index.js";

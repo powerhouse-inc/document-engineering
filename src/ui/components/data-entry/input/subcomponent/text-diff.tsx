@@ -1,4 +1,4 @@
-import { cn } from "@powerhousedao/design-system/scalars";
+import { cn } from "../../../../../scalars/lib/index.js";
 import { diffSentences, diffWords } from "diff";
 import { useMemo } from "react";
 import type { WithDifference } from "../../../../../scalars/components/types.js";
