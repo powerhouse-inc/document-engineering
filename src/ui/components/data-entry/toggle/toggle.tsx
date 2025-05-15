@@ -107,7 +107,7 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
           value={value}
           label={label}
           optionalLabel={optionalLabel}
-          disabled={true}
+          disabled={disabled}
         />
       
     );
