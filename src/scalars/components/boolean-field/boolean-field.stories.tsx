@@ -40,9 +40,34 @@ const meta = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    ...PrebuiltArgTypes.diffMode,
-    ...PrebuiltArgTypes.viewMode,
-    ...PrebuiltArgTypes.baseValue,
+
+    optionalLabel: {
+      control: "text",
+      description: "The label of the optional field",
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+      if: { arg: "isToggle", eq: true },
+    },
+    viewMode: {
+      control: "select",
+      description: "The mode of the input field",
+      options: ["edition", "addition", "removal"],
+      table: {
+        type: { summary: "edition | addition | removal" },
+        defaultValue: { summary: "edition" },
+        category: StorybookControlCategory.DIFF,
+      },
+      if: { arg: "isToggle", eq: true },
+    },
+    baseValue: {
+      control: "boolean",
+      description: "The base value of the input field",
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+      if: { arg: "isToggle", eq: true },
+    },
     ...getValidationArgTypes({
       enabledArgTypes: {
         validators: false,
