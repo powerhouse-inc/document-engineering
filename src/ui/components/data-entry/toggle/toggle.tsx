@@ -10,7 +10,7 @@ import {
 import ToggleDiff from "./subcomponents/toogle-diff.js";
 import { ToggleBase } from "./toggle-base.js";
 
-type ToggleBaseProps = Omit<
+export type ToggleBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   keyof InputBaseProps<boolean> | "onChange"
 >;
@@ -101,19 +101,15 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
       );
     }
     return (
-      <div
-        className={cn("flex flex-col gap-1", className)}
-        data-testid="custom-class"
-      >
-        {/* WIP */}
         <ToggleDiff
           viewMode={viewMode}
           baseValue={baseValue}
           value={value}
           label={label}
           optionalLabel={optionalLabel}
+          disabled={disabled}
         />
-      </div>
+      
     );
   },
 );
