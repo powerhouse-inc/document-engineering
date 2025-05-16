@@ -21,7 +21,7 @@ interface ToggleProps
     InputBaseProps<boolean> {
   onChange?: (checked: boolean) => void;
   optionalLabel?: string;
-  viewMode?: Extract<ViewMode, "edition" | "addition" | "removal">;
+  viewMode?: ViewMode;
 }
 
 const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(

@@ -9,7 +9,7 @@ interface ToggleDiffProps
   optionalLabel?: React.ReactNode;
   disabled?: boolean;
   required?: boolean;
-  viewMode?: ViewMode; //Extract<ViewMode, "edition" | "addition" | "removal">;
+  viewMode?: ViewMode;
   baseValue?: boolean;
   name?: string;
   onChange?: (checked: boolean) => void;
