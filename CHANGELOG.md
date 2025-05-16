@@ -1,3 +1,15 @@
+## [1.1.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.1.0...v1.1.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* **scalars:** add disable props and export ToggleBaseProps ([c30e01f](https://github.com/powerhouse-inc/document-engineering/commit/c30e01fbdbee03aeb8a2148dd5ba298b8b1463d8))
+* **scalars:** add representation addition o delete in mixed state ([e41be48](https://github.com/powerhouse-inc/document-engineering/commit/e41be48ada8777eae04d0738a9c13ab02687bed5))
+* **scalars:** avoid letters in date field componente ([f289b70](https://github.com/powerhouse-inc/document-engineering/commit/f289b70fdc61fed08407574edbe891d96022fc87))
+* **scalars:** fix value and add disable props ([3a7680e](https://github.com/powerhouse-inc/document-engineering/commit/3a7680e8c07cd9a4d1f84b710ca7a8009bff7750))
+* **scalars:** focus tab component press letter should be open de popover search ([718f57f](https://github.com/powerhouse-inc/document-engineering/commit/718f57fd9212004ad50f52a0e74ea92b741e9eaa))
+* **scalars:** improve the naming in the comparation ([3124cae](https://github.com/powerhouse-inc/document-engineering/commit/3124cae2d6ae2a86ba4f7dbc1ac255125b4814d6))
+
 # [1.1.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.0.2...v1.1.0) (2025-05-15)
 
 
