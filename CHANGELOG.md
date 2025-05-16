@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/powerhouse-inc/document-engineering/compare/v1.1.1...v1.1.2) (2025-05-16)
+
+
+### Bug Fixes
+
+* **scalars:** fix the type and pass mixed in the toogle ([ee36fe3](https://github.com/powerhouse-inc/document-engineering/commit/ee36fe3c864049865506cd4ba51bf097b4880a0b))
+
 ## [1.1.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.1.0...v1.1.1) (2025-05-16)
 
 
