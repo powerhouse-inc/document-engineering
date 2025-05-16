@@ -9,7 +9,7 @@ interface ToggleDiffProps
   optionalLabel?: React.ReactNode;
   disabled?: boolean;
   required?: boolean;
-  viewMode?: Extract<ViewMode, "edition" | "addition" | "removal">;
+  viewMode?: ViewMode; //Extract<ViewMode, "edition" | "addition" | "removal">;
   baseValue?: boolean;
   name?: string;
   onChange?: (checked: boolean) => void;
@@ -38,13 +38,14 @@ const ToggleDiff = ({
     return { hasDiff: true, type: "right" as const };
   }, [baseValue, value]);
 
+
   return (
     <div className="flex flex-row items-center justify-end gap-2">
       <span
         className={cn(
           "text-gray-700",
           "font-inter text-sm font-semibold leading-[22px]",
-          hasDifference.hasDiff && viewMode === "addition"
+          hasDifference.hasDiff && (viewMode === "addition" || viewMode === "mixed")
             ? hasDifference.type === "left"
               ? "bg-green-600/30"
               : undefined
@@ -67,7 +68,7 @@ const ToggleDiff = ({
         className={cn(
           "text-gray-700",
           "text-sm font-semibold leading-[22px]",
-          hasDifference.hasDiff && viewMode === "removal"
+          hasDifference.hasDiff && (viewMode === "removal" || viewMode === "mixed")
             ? hasDifference.type === "right"
               ? "bg-red-600/30"
               : undefined
