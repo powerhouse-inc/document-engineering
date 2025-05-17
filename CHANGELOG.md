@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.1.2...v1.2.0) (2025-05-17)
+
+
+### Bug Fixes
+
+* **scalars:** fix color in correct label ([8c5826d](https://github.com/powerhouse-inc/document-engineering/commit/8c5826d8c20e6ca4631691ba5b8cfa630a894065))
+
+
+### Features
+
+* **scalars:** add validation in the date-time-field component ([da08626](https://github.com/powerhouse-inc/document-engineering/commit/da08626e385b31aab1ab025e77c94f3ca0df8a65))
+
 ## [1.1.2](https://github.com/powerhouse-inc/document-engineering/compare/v1.1.1...v1.1.2) (2025-05-16)
 
 
