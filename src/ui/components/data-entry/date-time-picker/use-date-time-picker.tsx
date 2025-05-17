@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import React, { useState } from "react";
 import { type DateFieldValue } from "../date-picker/types.js";
 import { useDatePickerField } from "../date-picker/use-date-picker.js";
-import { getDateFromValue, getTimeFromValue } from "../date-picker/utils.js";
+import { getDateFromValue, getTimeFromValue, isFormatDisabled } from "../date-picker/utils.js";
 import { type TimeFieldValue, type TimePeriod } from "../time-picker/type.js";
 import {
   convertTimeFrom24To12Hours,
@@ -327,6 +327,10 @@ export const useDateTimePicker = ({
 
   const handleInputChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
+    
+    if (isFormatDisabled(internalFormat, inputValue)) {
+      return;
+    }
     setDateTimeToDisplay(inputValue);
     const { date, time } = splitDateTimeStringFromInput(inputValue);
     const offset = getOffset(timeZone ?? (selectedTimeZone as string));
