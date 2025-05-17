@@ -32,10 +32,10 @@ const ToggleDiff = ({
     if (baseValue === value) {
       return { hasDiff: false, type: "neutral" as const };
     }
-    if (!baseValue && value === true) {
-      return { hasDiff: true, type: "left" as const };
+    if (baseValue === false && value === true) {
+      return { hasDiff: true, type: "addition" as const };
     }
-    return { hasDiff: true, type: "right" as const };
+    return { hasDiff: true, type: "removal" as const };
   }, [baseValue, value]);
 
 
@@ -45,9 +45,9 @@ const ToggleDiff = ({
         className={cn(
           "text-gray-700",
           "font-inter text-sm font-semibold leading-[22px]",
-          hasDifference.hasDiff && (viewMode === "addition" || viewMode === "mixed")
-            ? hasDifference.type === "left"
-              ? "bg-green-600/30"
+          hasDifference.hasDiff && (viewMode === "removal" || viewMode === "mixed")
+            ? hasDifference.type === "removal"
+              ? "bg-red-600/30"
               : undefined
             : undefined,
         )}
@@ -68,9 +68,9 @@ const ToggleDiff = ({
         className={cn(
           "text-gray-700",
           "text-sm font-semibold leading-[22px]",
-          hasDifference.hasDiff && (viewMode === "removal" || viewMode === "mixed")
-            ? hasDifference.type === "right"
-              ? "bg-red-600/30"
+          hasDifference.hasDiff && (viewMode === "addition" || viewMode === "mixed")
+            ? hasDifference.type === "addition"
+              ? "bg-green-600/30"
               : undefined
             : undefined,
         )}
