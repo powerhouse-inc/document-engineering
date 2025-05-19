@@ -146,10 +146,9 @@ export const isFormatDisabled = (
   internalFormat: string | undefined,
   inputValue = "",
 ) => {
-  if (!internalFormat) return false;
   const valuesToCheck = ["yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy"];
   return (
-    internalFormat &&
+    internalFormat === undefined  ||
     valuesToCheck.includes(internalFormat) &&
     /[a-zA-Z]/.test(inputValue)
   );
