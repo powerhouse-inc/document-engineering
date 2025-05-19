@@ -327,7 +327,7 @@ export const useDateTimePicker = ({
 
   const handleInputChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    
+
     if (isFormatDisabled(internalFormat, inputValue)) {
       return;
     }
