@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.2.0...v1.2.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* **scalars:** fix date-time when not format is set ([52d180c](https://github.com/powerhouse-inc/document-engineering/commit/52d180cb85e5ac308f4eb5d67da7b092ba25b34d))
+
 # [1.2.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.1.2...v1.2.0) (2025-05-17)
 
 
