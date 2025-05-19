@@ -129,7 +129,6 @@ export function swapAmbiguousDayMonthFormat(utcDate: Date, separator: string) {
   return `${utcDate.getUTCDate().toString().padStart(2, "0")}${separator}${(utcDate.getUTCMonth() + 1).toString().padStart(2, "0")}${separator}${utcDate.getUTCFullYear()}`;
 }
 
-
 /**
  * Checks if letter input should be disabled based on the date format.
  * For specific formats ('yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy'), letter input is not allowed
@@ -146,10 +145,13 @@ export const isFormatDisabled = (
   internalFormat: string | undefined,
   inputValue = "",
 ) => {
-  const valuesToCheck = ["yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy"];
-  return (
-    internalFormat === undefined  ||
-    valuesToCheck.includes(internalFormat) &&
-    /[a-zA-Z]/.test(inputValue)
-  );
+  const numericOnlyFormats = ["yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy"];
+  
+  // If undefined or one of the numeric formats, only allow numbers
+  if (internalFormat === undefined || numericOnlyFormats.includes(internalFormat)) {
+    return /[a-zA-Z]/.test(inputValue);
+  }
+  
+  // For other formats, allow both letters and numbers
+  return false;
 };
