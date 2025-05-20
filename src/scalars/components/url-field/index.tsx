@@ -3,4 +3,4 @@ export {
   UrlInput,
   type PlatformIcon,
   type UrlInputProps,
-} from "./url-input.js";
+} from "../../../ui/components/data-entry/url-input/url-input.js";
