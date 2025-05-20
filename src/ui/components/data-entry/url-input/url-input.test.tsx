@@ -1,13 +1,11 @@
-import { Form } from "#scalars";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { renderWithForm } from "../../../../scalars/lib/testing";
 import { UrlInput } from "./url-input.js";
 
 describe("UrlInput", () => {
   it("should match snapshot", () => {
-    const { container } = renderWithForm(
+    const { container } = render(
       <UrlInput
         name="test-url"
         label="Website URL"
@@ -23,7 +21,7 @@ describe("UrlInput", () => {
   });
 
   it("should render with basic props", () => {
-    renderWithForm(
+    render(
       <UrlInput
         data-testid="url-field"
         name="test-url"
@@ -39,7 +37,7 @@ describe("UrlInput", () => {
   });
 
   it("should show required indicator when required", () => {
-    renderWithForm(
+    render(
       <UrlInput
         data-testid="url-field"
         name="test-url"
@@ -53,8 +51,8 @@ describe("UrlInput", () => {
   });
 
   it("should show description when provided", () => {
-    renderWithForm(
-        <UrlInput
+    render(
+      <UrlInput
         name="test-url"
         label="Website URL"
         description="Enter your website URL"
@@ -65,7 +63,7 @@ describe("UrlInput", () => {
   });
 
   it("should show error message when provided", async () => {
-    renderWithForm(
+    render(
       <UrlInput
         name="test-url"
         label="Website URL"
@@ -79,7 +77,7 @@ describe("UrlInput", () => {
   });
 
   it("should show warning message when provided", () => {
-    renderWithForm(
+    render(
       <UrlInput
         name="test-url"
         label="Website URL"
@@ -91,7 +89,7 @@ describe("UrlInput", () => {
   });
 
   it("should be disabled when disabled prop is true", () => {
-    renderWithForm(
+    render(
       <UrlInput
         data-testid="url-field"
         name="test-url"
@@ -103,27 +101,9 @@ describe("UrlInput", () => {
     expect(screen.getByTestId("url-field")).toBeDisabled();
   });
 
-  it("should validate URL format", async () => {
-    const user = userEvent.setup();
-    renderWithForm(
-      <>
-        <UrlInput data-testid="url-field" name="test-url" label="Website URL" />
-        <button type="submit">Submit</button>
-      </>,
-    );
-
-    const input = screen.getByTestId("url-field");
-    await user.type(input, "not-a-url{enter}");
-
-    expect(
-      await screen.findByText("not-a-url must be a valid URL"),
-    ).toBeInTheDocument();
-  });
-
-
   it("should show warning when the URL could be truncated", async () => {
     const user = userEvent.setup();
-    renderWithForm(
+    render(
       <UrlInput data-testid="url-field" name="test-url" label="Website URL" />,
     );
 
@@ -134,9 +114,9 @@ describe("UrlInput", () => {
     expect(await screen.findByText("URL may be truncated")).toBeInTheDocument();
   });
 
-  it("should not show warnings if the prop is set false", async () => {
+  it("should not show warnings if showWarnings prop is false", async () => {
     const user = userEvent.setup();
-    renderWithForm(
+    render(
       <UrlInput
         data-testid="url-field"
         name="test-url"
@@ -152,24 +132,8 @@ describe("UrlInput", () => {
     expect(screen.queryByText("URL may be truncated")).not.toBeInTheDocument();
   });
 
-  it("should be valid when valid", async () => {
-    const user = userEvent.setup();
-    const onSubmit = vi.fn();
-    renderWithForm(
-      <>
-        <UrlInput data-testid="url-field" name="test-url" label="Website URL" />
-        <button type="submit">Submit</button>
-      </>,
-      onSubmit,
-    );
-
-    const input = screen.getByTestId("url-field");
-    await user.type(input, "https://example.com{enter}");
-    expect(onSubmit).toHaveBeenCalled();
-  });
-
   it("should render platform built-in icon when URL matches configured hostname", () => {
-    renderWithForm(
+    render(
       <UrlInput
         data-testid="url-field"
         name="test-url"
@@ -185,7 +149,7 @@ describe("UrlInput", () => {
   });
 
   it("should render a custom icon when hostname has no configured icon", () => {
-    renderWithForm(
+    render(
       <UrlInput
         data-testid="url-field"
         name="test-url"
@@ -201,39 +165,10 @@ describe("UrlInput", () => {
   });
 
   it("should not render any icon when platformIcons prop is not provided", () => {
-    renderWithForm(
+    render(
       <UrlInput data-testid="url-field" name="test-url" label="Website URL" />,
     );
 
     expect(screen.queryByTestId("icon-fallback")).not.toBeInTheDocument();
-  });
-
-  it("should hide warnings when the form is reset", async () => {
-    const user = userEvent.setup();
-    render(
-      <Form onSubmit={() => undefined} defaultValues={{ "test-url": "" }}>
-        {({ reset }) => (
-          <>
-            <UrlInput
-              data-testid="url-field"
-              name="test-url"
-              label="Website URL"
-            />
-            <button type="reset" onClick={reset} data-testid="reset-button">
-              Reset
-            </button>
-          </>
-        )}
-      </Form>,
-    );
-
-    // first show the warnings typing in the input
-    await user.type(screen.getByTestId("url-field"), "https://x.com/test...");
-    await user.tab(); // trigger blur
-    expect(await screen.findByText("URL may be truncated")).toBeInTheDocument();
-
-    // then hide the warnings when the form is reset
-    await user.click(screen.getByTestId("reset-button"));
-    expect(screen.queryByText("URL may be truncated")).toBeNull();
   });
 });

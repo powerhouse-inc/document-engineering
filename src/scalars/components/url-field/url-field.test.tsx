@@ -153,7 +153,7 @@ describe("UrlField", () => {
     expect(await screen.findByText("URL may be truncated")).toBeInTheDocument();
   });
 
-  it("should not show warnings if the prop is set false", async () => {
+  it("should not show warnings if showWarnings prop is false", async () => {
     const user = userEvent.setup();
     renderWithForm(
       <UrlField
@@ -171,7 +171,7 @@ describe("UrlField", () => {
     expect(screen.queryByText("URL may be truncated")).not.toBeInTheDocument();
   });
 
-  it("should be valid when valid", async () => {
+  it("should submit the form when valid", async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
     renderWithForm(

@@ -1,16 +1,18 @@
 import React, { useCallback, useId, useMemo } from "react";
 import UrlFavicon from "./url-favicon.js";
 import { useURLWarnings } from "./useURLWarnings.js";
-import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/index.js";
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import {
+  cn,
+  FormDescription,
+  FormGroup,
+  FormLabel,
+  FormMessageList,
+} from "#scalars";
 import { IconName } from "../../icon/index.js";
 import { InputBaseProps } from "../../../../scalars/components/types.js";
 import { sharedValueTransformers } from "../../../../scalars/lib/shared-value-transformers.js";
-import ValueTransformer from "../../../../scalars/components/fragments/value-transformer/value-transformer.js";
-import { cn } from "../../../../scalars/lib/index.js";
-import { Input } from "../input/input.js";
+import ValueTransformer from "../../../../scalars/components/fragments/value-transformer/index.js";
+import { Input } from "../input/index.js";
 
 type PlatformIcon = IconName | React.ReactElement;
 
@@ -29,14 +31,13 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
     {
       label,
       description,
+      disabled,
       showWarnings = true,
       warnings: warningsProp,
       errors,
       platformIcons,
       value,
       onBlur,
-      // onChange,
-
       ...props
     },
     ref,
@@ -79,7 +80,7 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
         <FormLabel
           htmlFor={id}
           required={props.required}
-          disabled={props.disabled}
+          disabled={disabled}
           hasError={!!errors?.length}
         >
           {label}
@@ -87,12 +88,12 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
         <div className="relative">
           <ValueTransformer transformers={transformers}>
             <Input
+              disabled={disabled}
               id={id}
               ref={ref}
               type="url"
               {...props}
               value={value ?? ""}
-              // onChange={onChange}
               onBlur={handleBlur}
               onKeyDown={handleWarningsOnEnter}
               aria-invalid={hasError}

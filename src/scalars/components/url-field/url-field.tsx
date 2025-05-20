@@ -1,5 +1,5 @@
-import { UrlInput, type UrlInputProps } from "../../../ui/components/data-entry/url-input/url-input.js";
-import { withFieldValidation } from "../fragments/with-field-validation/with-field-validation.js";
+import { UrlInput, type UrlInputProps } from "../../../ui/components/data-entry/url-input/index.js";
+import { withFieldValidation } from "../fragments/with-field-validation/index.js";
 import type { FieldErrorHandling } from "../types.js";
 
 interface UrlFieldProps extends UrlInputProps, FieldErrorHandling {

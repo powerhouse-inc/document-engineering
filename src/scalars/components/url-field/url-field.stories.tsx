@@ -37,6 +37,15 @@ const meta: Meta<typeof UrlField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    showWarnings: {
+      control: "boolean",
+      description: "Controls whether warnings are displayed to the user",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
     platformIcons: {
       control: "object",
       description:

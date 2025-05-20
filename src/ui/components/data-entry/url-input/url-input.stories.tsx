@@ -5,19 +5,56 @@ import {
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from "../../../../scalars/lib/storybook-arg-types.js";
+import { UrlInput } from "./url-input.js";
 
-import {UrlInput } from "./url-input.js"
+/**
+ * The `UrlInput` component provides an input field for web URLs.
+ * It supports multiple configuration properties like:
+ * - label
+ * - description
+ * - platformIcons
+ * - showWarnings
+ *
+ * Features include:
+ * - Platform-specific icons for known websites
+ * - Automatic URL warnings
+ * - Trailing space trimming
+ *
+ * > **Note:** This component does not have built-in validation. If you need built-in validation
+ * > you can use the [UrlField](?path=/docs/document-engineering-scalars-url-field--readme)
+ * > component.
+ */
 
 const meta: Meta<typeof UrlInput> = {
   title: "Document Engineering/Data Entry/Url Input",
   component: UrlInput,
+  decorators: [
+    (Story) => (
+      <div style={{ width: "280px", margin: "1rem auto 0" }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    layout: "centered",
+    layout: "padded",
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
   tags: ["autodocs"],
   argTypes: {
     ...getDefaultArgTypes(),
     ...PrebuiltArgTypes.placeholder,
+
+    showWarnings: {
+      control: "boolean",
+      description: "Controls whether warnings are displayed to the user",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
     platformIcons: {
       control: "object",
       description:
@@ -28,7 +65,13 @@ const meta: Meta<typeof UrlInput> = {
       },
     },
 
-    ...getValidationArgTypes(),
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
   },
   args: {
     name: "url-input",
