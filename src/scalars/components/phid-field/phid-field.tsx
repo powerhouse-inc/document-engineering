@@ -18,7 +18,9 @@ const PHIDField = withFieldValidation<PHIDFieldProps>(PHIDInput, {
         const domain = `${domainSegment}(?:\\.${domainSegment})*`;
         const uuidPattern =
           "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
-        const URLFormat = `^phd://${domain}/${uuidPattern}$`;
+        const genericIDPattern = "[A-Za-z0-9+/={\}\.\~?&]+";
+        const documentIDPattern = `((${genericIDPattern})|(${uuidPattern}))`;
+        const URLFormat = `^phd://${domain}/${documentIDPattern}$`;
 
         // Validate URL format first
         const isValidURLFormat = new RegExp(URLFormat).test(value);
@@ -36,10 +38,10 @@ const PHIDField = withFieldValidation<PHIDFieldProps>(PHIDInput, {
 
         // Valid URI formats
         const URIFormats = [
-          `^phd:${uuidPattern}$`,
-          `^phd:${uuidPattern}:${branchScopePattern}$`,
-          `^phd:${uuidPattern}::${branchScopePattern}$`,
-          `^phd:${uuidPattern}:${branchScopePattern}:${branchScopePattern}$`,
+          `^phd:${documentIDPattern}$`,
+          `^phd:${documentIDPattern}:${branchScopePattern}$`,
+          `^phd:${documentIDPattern}::${branchScopePattern}$`,
+          `^phd:${documentIDPattern}:${branchScopePattern}:${branchScopePattern}$`,
         ];
 
         const isValidURIFormat = URIFormats.some((format) =>
