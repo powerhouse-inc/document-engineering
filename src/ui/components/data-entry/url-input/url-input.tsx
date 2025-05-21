@@ -1,24 +1,23 @@
-import { type IconName } from "../../../ui/components/icon/index.js";
 import React, { useCallback, useId, useMemo } from "react";
-import { Input } from "../../../ui/components/index.js";
-import { sharedValueTransformers } from "../../lib/shared-value-transformers.js";
-import { cn } from "../../../scalars/lib/index.js";
+import UrlFavicon from "./url-favicon.js";
+import { useURLWarnings } from "./useURLWarnings.js";
 import {
+  cn,
   FormDescription,
   FormGroup,
   FormLabel,
   FormMessageList,
-} from "../fragments/index.js";
-import ValueTransformer from "../fragments/value-transformer/index.js";
-import type { InputBaseProps } from "../types.js";
-import UrlFavicon from "./url-favicon.js";
-import { useURLWarnings } from "./useURLWarnings.js";
+} from "#scalars";
+import { IconName } from "../../icon/index.js";
+import { InputBaseProps } from "../../../../scalars/components/types.js";
+import { sharedValueTransformers } from "../../../../scalars/lib/shared-value-transformers.js";
+import ValueTransformer from "../../../../scalars/components/fragments/value-transformer/index.js";
+import { Input } from "../input/index.js";
 
 type PlatformIcon = IconName | React.ReactElement;
 
 interface UrlInputProps
   extends InputBaseProps<string>,
-    // FieldErrorHandling,
     Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       "pattern" | "value" | "defaultValue" | "name" | "maxLength"
@@ -32,13 +31,13 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
     {
       label,
       description,
+      disabled,
       showWarnings = true,
       warnings: warningsProp,
       errors,
       platformIcons,
       value,
       onBlur,
-
       ...props
     },
     ref,
@@ -81,7 +80,7 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
         <FormLabel
           htmlFor={id}
           required={props.required}
-          disabled={props.disabled}
+          disabled={disabled}
           hasError={!!errors?.length}
         >
           {label}
@@ -89,6 +88,7 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
         <div className="relative">
           <ValueTransformer transformers={transformers}>
             <Input
+              disabled={disabled}
               id={id}
               ref={ref}
               type="url"

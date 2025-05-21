@@ -1,4 +1,4 @@
-import { Icon, type IconName, iconNames } from "../../../ui/components/icon/index.js";
+import { Icon, type IconName, iconNames } from "../../icon/index.js";
 import { useMemo } from "react";
 
 interface UrlFaviconProps {

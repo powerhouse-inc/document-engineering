@@ -1,14 +1,12 @@
-import { Form } from "#scalars";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { renderWithForm } from "../../lib/testing.js";
-import { UrlField } from "./url-field.js";
+import { UrlInput } from "./url-input.js";
 
-describe("UrlField", () => {
+describe("UrlInput", () => {
   it("should match snapshot", () => {
-    const { container } = renderWithForm(
-      <UrlField
+    const { container } = render(
+      <UrlInput
         name="test-url"
         label="Website URL"
         description="Enter your website URL"
@@ -23,8 +21,8 @@ describe("UrlField", () => {
   });
 
   it("should render with basic props", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         data-testid="url-field"
         name="test-url"
         label="Website URL"
@@ -39,8 +37,8 @@ describe("UrlField", () => {
   });
 
   it("should show required indicator when required", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         data-testid="url-field"
         name="test-url"
         label="Website URL"
@@ -53,8 +51,8 @@ describe("UrlField", () => {
   });
 
   it("should show description when provided", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         name="test-url"
         label="Website URL"
         description="Enter your website URL"
@@ -65,8 +63,8 @@ describe("UrlField", () => {
   });
 
   it("should show error message when provided", async () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         name="test-url"
         label="Website URL"
         errors={["Invalid URL format"]}
@@ -79,8 +77,8 @@ describe("UrlField", () => {
   });
 
   it("should show warning message when provided", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         name="test-url"
         label="Website URL"
         warnings={["URL may be unreachable"]}
@@ -91,8 +89,8 @@ describe("UrlField", () => {
   });
 
   it("should be disabled when disabled prop is true", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         data-testid="url-field"
         name="test-url"
         label="Website URL"
@@ -103,47 +101,10 @@ describe("UrlField", () => {
     expect(screen.getByTestId("url-field")).toBeDisabled();
   });
 
-  it("should validate URL format", async () => {
-    const user = userEvent.setup();
-    renderWithForm(
-      <>
-        <UrlField data-testid="url-field" name="test-url" label="Website URL" />
-        <button type="submit">Submit</button>
-      </>,
-    );
-
-    const input = screen.getByTestId("url-field");
-    await user.type(input, "not-a-url{enter}");
-
-    expect(
-      await screen.findByText("not-a-url must be a valid URL"),
-    ).toBeInTheDocument();
-  });
-
-  it("should be invalid if URL is to long", async () => {
-    const user = userEvent.setup();
-    renderWithForm(
-      <UrlField
-        data-testid="url-field"
-        name="test-url"
-        label="Website URL"
-        maxURLLength={10}
-      />,
-    );
-
-    const input = screen.getByTestId("url-field");
-    await user.type(input, "https://example.com/{enter}"); // 20 characters (including protocol and domain)
-
-    expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(
-      await screen.findByText("Website URL must not exceed 10 characters"),
-    ).toBeInTheDocument();
-  });
-
   it("should show warning when the URL could be truncated", async () => {
     const user = userEvent.setup();
-    renderWithForm(
-      <UrlField data-testid="url-field" name="test-url" label="Website URL" />,
+    render(
+      <UrlInput data-testid="url-field" name="test-url" label="Website URL" />,
     );
 
     const input = screen.getByTestId("url-field");
@@ -155,8 +116,8 @@ describe("UrlField", () => {
 
   it("should not show warnings if showWarnings prop is false", async () => {
     const user = userEvent.setup();
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         data-testid="url-field"
         name="test-url"
         label="Website URL"
@@ -171,25 +132,9 @@ describe("UrlField", () => {
     expect(screen.queryByText("URL may be truncated")).not.toBeInTheDocument();
   });
 
-  it("should submit the form when valid", async () => {
-    const user = userEvent.setup();
-    const onSubmit = vi.fn();
-    renderWithForm(
-      <>
-        <UrlField data-testid="url-field" name="test-url" label="Website URL" />
-        <button type="submit">Submit</button>
-      </>,
-      onSubmit,
-    );
-
-    const input = screen.getByTestId("url-field");
-    await user.type(input, "https://example.com{enter}");
-    expect(onSubmit).toHaveBeenCalled();
-  });
-
   it("should render platform built-in icon when URL matches configured hostname", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         data-testid="url-field"
         name="test-url"
         label="Website URL"
@@ -204,8 +149,8 @@ describe("UrlField", () => {
   });
 
   it("should render a custom icon when hostname has no configured icon", () => {
-    renderWithForm(
-      <UrlField
+    render(
+      <UrlInput
         data-testid="url-field"
         name="test-url"
         label="Website URL"
@@ -220,39 +165,10 @@ describe("UrlField", () => {
   });
 
   it("should not render any icon when platformIcons prop is not provided", () => {
-    renderWithForm(
-      <UrlField data-testid="url-field" name="test-url" label="Website URL" />,
+    render(
+      <UrlInput data-testid="url-field" name="test-url" label="Website URL" />,
     );
 
     expect(screen.queryByTestId("icon-fallback")).not.toBeInTheDocument();
-  });
-
-  it("should hide warnings when the form is reset", async () => {
-    const user = userEvent.setup();
-    render(
-      <Form onSubmit={() => undefined} defaultValues={{ "test-url": "" }}>
-        {({ reset }) => (
-          <>
-            <UrlField
-              data-testid="url-field"
-              name="test-url"
-              label="Website URL"
-            />
-            <button type="reset" onClick={reset} data-testid="reset-button">
-              Reset
-            </button>
-          </>
-        )}
-      </Form>,
-    );
-
-    // first show the warnings typing in the input
-    await user.type(screen.getByTestId("url-field"), "https://x.com/test...");
-    await user.tab(); // trigger blur
-    expect(await screen.findByText("URL may be truncated")).toBeInTheDocument();
-
-    // then hide the warnings when the form is reset
-    await user.click(screen.getByTestId("reset-button"));
-    expect(screen.queryByText("URL may be truncated")).toBeNull();
   });
 });

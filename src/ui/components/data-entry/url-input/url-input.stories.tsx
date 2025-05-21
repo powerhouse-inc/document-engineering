@@ -1,42 +1,51 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { withForm } from "../../lib/decorators.js";
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from "../../lib/storybook-arg-types.js";
-import { UrlField } from "./url-field.js";
+} from "../../../../scalars/lib/storybook-arg-types.js";
+import { UrlInput } from "./url-input.js";
 
-const meta: Meta<typeof UrlField> = {
-  title: "Document Engineering/Scalars/Url Field",
-  component: UrlField,
-  decorators: [withForm],
+/**
+ * The `UrlInput` component provides an input field for web URLs.
+ * It supports multiple configuration properties like:
+ * - label
+ * - description
+ * - platformIcons
+ * - showWarnings
+ *
+ * Features include:
+ * - Platform-specific icons for known websites
+ * - Automatic URL warnings
+ * - Trailing space trimming
+ *
+ * > **Note:** This component does not have built-in validation. If you need built-in validation
+ * > you can use the [UrlField](?path=/docs/document-engineering-scalars-url-field--readme)
+ * > component.
+ */
+
+const meta: Meta<typeof UrlInput> = {
+  title: "Document Engineering/Data Entry/Url Input",
+  component: UrlInput,
+  decorators: [
+    (Story) => (
+      <div style={{ width: "280px", margin: "1rem auto 0" }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    layout: "centered",
+    layout: "padded",
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
   tags: ["autodocs"],
   argTypes: {
     ...getDefaultArgTypes(),
     ...PrebuiltArgTypes.placeholder,
 
-    allowedProtocols: {
-      control: "object",
-      description: "Allowed protocols for the URL",
-      table: {
-        type: { summary: "Array<string>" },
-        defaultValue: { summary: "['http', 'https']" },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-    maxURLLength: {
-      control: "number",
-      description: "Maximum length of the URL",
-      table: {
-        type: { summary: "number" },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
     showWarnings: {
       control: "boolean",
       description: "Controls whether warnings are displayed to the user",
@@ -56,11 +65,16 @@ const meta: Meta<typeof UrlField> = {
       },
     },
 
-    ...getValidationArgTypes(),
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
   },
   args: {
-    name: "url-field",
-    allowedProtocols: ["https"],
+    name: "url-input",
   },
 };
 
