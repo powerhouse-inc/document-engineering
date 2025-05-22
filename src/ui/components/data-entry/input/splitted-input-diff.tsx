@@ -1,14 +1,15 @@
 import { Icon } from "../../icon/index.js";
-import { cn } from "../../../../scalars/lib/index.js";
+import { cn, type WithDifference } from "#scalars";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import type { WithDifference } from "../../../../scalars/components/types.js";
 import {
   Tooltip,
   TooltipProvider,
 } from "../../../../ui/components/tooltip/tooltip.js";
 import { InputDiff } from "./subcomponent/input-diff.js";
 import { TextDiff } from "./subcomponent/text-diff.js";
+import type { PlatformIcon } from "#ui";
+import UrlFavicon from "../url-input/url-favicon.js";
 
 interface CopyIconProps {
   value: string;
@@ -57,6 +58,8 @@ const CopyIcon = ({
 interface SplittedInputDiffProps extends WithDifference<string> {
   value: string;
   showCopyIcon?: boolean;
+  asLink?: boolean;
+  platformIcons?: Record<string, PlatformIcon>;
 }
 
 const SplittedInputDiff = ({
@@ -65,6 +68,8 @@ const SplittedInputDiff = ({
   viewMode,
   diffMode,
   showCopyIcon = false,
+  asLink = false,
+  platformIcons,
 }: SplittedInputDiffProps) => {
   const [hasCopiedLeft, setHasCopiedLeft] = useState(false);
   const [hasCopiedRight, setHasCopiedRight] = useState(false);
@@ -85,6 +90,8 @@ const SplittedInputDiff = ({
               viewMode="removal"
               diffMode={diffMode}
               className={cn("flex-1")}
+              asLink={asLink}
+              icon={<UrlFavicon url={baseValue ?? ""} platformIcons={platformIcons} />}
             />
             {showCopyIcon && baseValue !== undefined && baseValue !== "" && (
               <CopyIcon
@@ -107,6 +114,8 @@ const SplittedInputDiff = ({
               viewMode="addition"
               diffMode={diffMode}
               className={cn("flex-1")}
+              asLink={asLink}
+              icon={<UrlFavicon url={value ?? ""} platformIcons={platformIcons} />}
             />
             {showCopyIcon && value !== "" && (
               <CopyIcon
@@ -130,6 +139,10 @@ const SplittedInputDiff = ({
             viewMode={viewMode}
             diffMode={diffMode}
             className={cn("flex-1")}
+            asLink={asLink}
+            icon={
+              <UrlFavicon url={viewMode === "removal" ? (baseValue ?? "") : value} platformIcons={platformIcons}
+            />}
           />
           {showCopyIcon &&
             ((viewMode === "removal" &&

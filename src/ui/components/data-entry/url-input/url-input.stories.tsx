@@ -72,6 +72,19 @@ const meta: Meta<typeof UrlInput> = {
         showErrorOnChange: false,
       },
     }),
+
+    ...PrebuiltArgTypes.viewMode,
+    diffMode: {
+      control: "select",
+      description: "The mode of the input field",
+      options: ["sentences"],
+      table: {
+        type: { summary: "sentences" },
+        defaultValue: { summary: "sentences" },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    ...PrebuiltArgTypes.baseValue,
   },
   args: {
     name: "url-input",

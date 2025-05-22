@@ -7,17 +7,25 @@ import {
   FormGroup,
   FormLabel,
   FormMessageList,
+  sharedValueTransformers,
+  type InputBaseProps,
+  type DiffMode,
+  type WithDifference,
 } from "#scalars";
 import { IconName } from "../../icon/index.js";
-import { InputBaseProps } from "../../../../scalars/components/types.js";
-import { sharedValueTransformers } from "../../../../scalars/lib/shared-value-transformers.js";
 import ValueTransformer from "../../../../scalars/components/fragments/value-transformer/index.js";
-import { Input } from "../input/index.js";
+import { Input } from "#ui";
+import { UrlInputDiff } from "./url-input-diff.js";
+
+interface UrlInputWithDifference
+  extends Omit<WithDifference<string>, "diffMode"> {
+  diffMode?: Extract<DiffMode, "sentences">;
+}
 
 type PlatformIcon = IconName | React.ReactElement;
 
 interface UrlInputProps
-  extends InputBaseProps<string>,
+  extends UrlInputWithDifference, InputBaseProps<string>,
     Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       "pattern" | "value" | "defaultValue" | "name" | "maxLength"
@@ -31,13 +39,21 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
     {
       label,
       description,
+      required,
       disabled,
       showWarnings = true,
       warnings: warningsProp,
       errors,
       platformIcons,
       value,
+      defaultValue,
       onBlur,
+
+      // diff props
+      viewMode = "edition",
+      diffMode,
+      baseValue,
+
       ...props
     },
     ref,
@@ -75,44 +91,63 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
       [],
     );
 
+    if (viewMode === "edition") {
+      return (
+        <FormGroup>
+          <FormLabel
+            htmlFor={id}
+            required={required}
+            disabled={disabled}
+            hasError={!!errors?.length}
+          >
+            {label}
+          </FormLabel>
+          <div className="relative">
+            <ValueTransformer transformers={transformers}>
+              <Input
+                disabled={disabled}
+                id={id}
+                ref={ref}
+                type="url"
+                {...props}
+                value={value ?? ""}
+                onBlur={handleBlur}
+                onKeyDown={handleWarningsOnEnter}
+                aria-invalid={hasError}
+                className={cn(showIcon && "pl-8")}
+                data-cast="URLTrim"
+              />
+            </ValueTransformer>
+            <UrlFavicon url={value ?? ""} platformIcons={platformIcons} className="absolute left-2.5 top-0" />
+          </div>
+          {description && <FormDescription>{description}</FormDescription>}
+          {showWarnings && combinedWarnings.length > 0 && (
+            <FormMessageList messages={combinedWarnings} type="warning" />
+          )}
+          {errors && <FormMessageList messages={errors} type="error" />}
+        </FormGroup>
+      );
+    }
+
     return (
-      <FormGroup>
-        <FormLabel
-          htmlFor={id}
-          required={props.required}
-          disabled={disabled}
-          hasError={!!errors?.length}
-        >
-          {label}
-        </FormLabel>
-        <div className="relative">
-          <ValueTransformer transformers={transformers}>
-            <Input
-              disabled={disabled}
-              id={id}
-              ref={ref}
-              type="url"
-              {...props}
-              value={value ?? ""}
-              onBlur={handleBlur}
-              onKeyDown={handleWarningsOnEnter}
-              aria-invalid={hasError}
-              className={cn(showIcon && "pl-8")}
-              data-cast="URLTrim"
-            />
-          </ValueTransformer>
-          <UrlFavicon url={value ?? ""} platformIcons={platformIcons} />
-        </div>
-        {description && <FormDescription>{description}</FormDescription>}
-        {showWarnings && combinedWarnings.length > 0 && (
-          <FormMessageList messages={combinedWarnings} type="warning" />
-        )}
-        {errors && <FormMessageList messages={errors} type="error" />}
-      </FormGroup>
+      <UrlInputDiff
+        value={value ?? defaultValue ?? ""}
+        label={label}
+        required={required}
+        viewMode={viewMode}
+        diffMode={diffMode}
+        baseValue={baseValue}
+        platformIcons={platformIcons}
+      />
     );
   },
 );
 
 UrlInput.displayName = "UrlInput";
 
-export { UrlInput, type PlatformIcon, type UrlInputProps };
+export {
+  UrlInput,
+  type PlatformIcon,
+  type UrlInputProps,
+  type UrlInputWithDifference,
+};

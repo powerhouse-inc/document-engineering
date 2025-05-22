@@ -1,14 +1,16 @@
+import { cn } from "#scalars";
 import { Icon, type IconName, iconNames } from "../../icon/index.js";
 import { useMemo } from "react";
 
 interface UrlFaviconProps {
   url: string;
   platformIcons?: Record<string, React.ReactElement | IconName>;
+  className?: string;
 }
 
 const DEFAULT_ICON_NAME = "GlobeWww";
 
-const UrlFavicon = ({ url, platformIcons }: UrlFaviconProps) => {
+const UrlFavicon = ({ url, platformIcons, className }: UrlFaviconProps) => {
   const IconToUse: React.ReactElement | null = useMemo(() => {
     const defaultIcon = <Icon name={DEFAULT_ICON_NAME} size={18} />;
     try {
@@ -36,7 +38,12 @@ const UrlFavicon = ({ url, platformIcons }: UrlFaviconProps) => {
   if (Object.keys(platformIcons ?? {}).length === 0) return null;
 
   return (
-    <div className="absolute left-2.5 top-0 flex h-full items-center justify-center text-gray-900">
+    <div
+      className={cn(
+        "flex h-full items-center justify-center text-gray-900",
+        className,
+      )}
+    >
       {IconToUse}
     </div>
   );
