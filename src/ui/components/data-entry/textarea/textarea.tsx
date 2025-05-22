@@ -1,4 +1,5 @@
-import { cn, sharedValueTransformers } from "#scalars";
+import { sharedValueTransformers } from "../../../../scalars/index.js";
+import { cn } from "../../../../scalars/lib/utils.js";
 import React, { useEffect, useId, useMemo, useRef } from "react";
 import { useResizeObserver } from "usehooks-ts";
 import { CharacterCounter } from "../../../../scalars/components/fragments/character-counter/index.js";

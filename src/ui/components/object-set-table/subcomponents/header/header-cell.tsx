@@ -1,4 +1,4 @@
-import { cn } from "#scalars";
+import { cn } from "../../../../../scalars/lib/utils.js";
 
 const HeaderCell: React.FC<React.HTMLAttributes<HTMLTableCellElement>> = ({
   children,

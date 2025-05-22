@@ -1,5 +1,5 @@
-import { cn } from "#scalars";
 import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
+import { cn } from "../../../../../../scalars/lib/utils.js";
 import { MONTHS } from "../utils.js";
 
 interface MonthGridProps {

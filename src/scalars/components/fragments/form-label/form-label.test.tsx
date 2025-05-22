@@ -56,7 +56,7 @@ describe("FormLabel Component", () => {
         Label with Description
       </FormLabel>,
     );
-    const icon = screen.getByTestId("icon-fallback");
+    const icon = screen.getByLabelText("Label with Description").querySelector("svg");
     expect(icon).toBeInTheDocument();
   });
 

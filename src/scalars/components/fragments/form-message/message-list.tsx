@@ -1,6 +1,5 @@
-import { cn } from "#scalars";
-
 import { FormMessage, type FormMessageType } from "./form-message.js";
+import { cn } from "../../../../scalars/lib/utils.js";
 
 interface FormMessageListProps {
   messages: string[];

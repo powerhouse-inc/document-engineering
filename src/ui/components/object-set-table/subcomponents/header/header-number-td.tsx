@@ -1,4 +1,4 @@
-import { cn } from "#scalars";
+import { cn } from "../../../../../scalars/lib/utils.js";
 import { useInternalTableState } from "../table-provider/table-provider.js";
 import { HeaderCell } from "./header-cell.js";
 

@@ -1,4 +1,4 @@
-import { cn } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";

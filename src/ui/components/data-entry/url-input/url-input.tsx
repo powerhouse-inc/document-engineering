@@ -2,7 +2,6 @@ import React, { useCallback, useId, useMemo } from "react";
 import UrlFavicon from "./url-favicon.js";
 import { useURLWarnings } from "./useURLWarnings.js";
 import {
-  cn,
   FormDescription,
   FormGroup,
   FormLabel,
@@ -16,6 +15,7 @@ import { IconName } from "../../icon/index.js";
 import ValueTransformer from "../../../../scalars/components/fragments/value-transformer/index.js";
 import { Input } from "#ui";
 import { UrlInputDiff } from "./url-input-diff.js";
+import { cn } from "../../../../scalars/lib/utils.js";
 
 interface UrlInputWithDifference
   extends Omit<WithDifference<string>, "diffMode"> {

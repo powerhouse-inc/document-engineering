@@ -31,9 +31,13 @@ describe("Radio Component", () => {
       </CustomizableRadioGroup>,
     );
     // Check that the info icon fallback is rendered
-    const iconFallback = screen.getByTestId("icon-fallback");
-    expect(iconFallback).toBeInTheDocument();
-    expect(iconFallback).toHaveStyle({ width: "16px", height: "16px" });
+    const label = screen.getByText("Test Label").closest("label");
+    expect(label).toBeInTheDocument();
+    const button = label?.querySelector("button");
+    expect(button).toBeInTheDocument();
+    const icon = button?.querySelector("svg");
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveStyle({ width: "16px", height: "16px" });
   });
 
   it("should apply error styles when hasError is true", () => {

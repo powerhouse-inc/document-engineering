@@ -1,6 +1,6 @@
-import { cn } from "#scalars";
-import { Icon, type IconName, iconNames } from "../../icon/index.js";
 import { useMemo } from "react";
+import { Icon, type IconName, iconNames } from "../../icon/index.js";
+import { cn } from "../../../../scalars/lib/utils.js";
 
 interface UrlFaviconProps {
   url: string;
