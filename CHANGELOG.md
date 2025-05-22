@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.3.0...v1.4.0) (2025-05-22)
+
+
+### Bug Fixes
+
+* partially fixed a set of failing tests ([2a616b7](https://github.com/powerhouse-inc/document-engineering/commit/2a616b7af1db7fa753dad22b333ca01d1eb0049c))
+* **scalars:** add the important rule to avoid override styles ([6843141](https://github.com/powerhouse-inc/document-engineering/commit/6843141e2e38db8849c2f5b4947c8c6ecb528bbe))
+* **scalars:** remove the hover when its selected ([441d9d5](https://github.com/powerhouse-inc/document-engineering/commit/441d9d569cf7e1672374a743f69c3a76376ad2aa))
+
+
+### Features
+
+* **scalars & ui:** add diff support to URLInput & URLField ([d69f690](https://github.com/powerhouse-inc/document-engineering/commit/d69f690f2c50f51719a22c7c00e1e9450636386b))
+
 # [1.3.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.2.2...v1.3.0) (2025-05-22)
 
 
