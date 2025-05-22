@@ -78,5 +78,8 @@ export {
   type SidebarProps,
 } from "./sidebar/index.js";
 
+// export object set table and types
+export * from "./object-set-table/index.js";
+
 // TODO: export tooltip once it is ready to be used outside the package
 // DO NOT export tooltip until it is ready to be used outside the package
