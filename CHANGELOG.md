@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.4.0...v1.4.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* **scalars:** add text color when select value its not hover ([981b7b9](https://github.com/powerhouse-inc/document-engineering/commit/981b7b9e2eed0f28c843d147e69a55df5f7f4dcf))
+
 # [1.4.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.3.0...v1.4.0) (2025-05-22)
 
 
