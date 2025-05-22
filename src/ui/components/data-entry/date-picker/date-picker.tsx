@@ -153,7 +153,11 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               "dark:text-gray-50 dark:hover:bg-gray-900",
               "disabled:text-gray-300",
               // Remove hover when selected
-              "aria-selected:hover:bg-gray-900  dark:aria-selected:hover:bg-gray-50",
+              "aria-selected:hover:bg-gray-900 dark:aria-selected:hover:bg-gray-50",
+              // Selected state
+              "aria-selected:!bg-gray-900 aria-selected:!text-white",
+              // Dark mode selected state
+              "dark:aria-selected:!bg-gray-50 dark:aria-selected:!text-gray-900",
             )}
             buttonPreviousClassName={cn(
               "border border-gray-200",
@@ -179,7 +183,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             )}
             selectedClassName={cn(
               "rounded-[4px]",
-              "bg-gray-900 text-white",
+              "!bg-gray-900 !text-white",
               "hover:bg-gray-900 hover:text-white",
               // dark
               "dark:bg-gray-50 dark:text-gray-900",
