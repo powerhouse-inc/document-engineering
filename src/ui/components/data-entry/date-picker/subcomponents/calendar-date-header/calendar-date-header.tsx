@@ -1,5 +1,5 @@
-import { cn } from "#scalars";
 import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
+import { cn } from "../../../../../../scalars/lib/utils.js";
 import { type DatePickerView } from "../../types.js";
 type CalendarDateHeaderProps = {
   navView: DatePickerView;

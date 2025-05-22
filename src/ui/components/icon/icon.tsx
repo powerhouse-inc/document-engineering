@@ -35,7 +35,7 @@ export function Icon({ name, size = 24, color, style, ...props }: IconProps) {
       fallback={<div data-testid="icon-fallback" style={dimensions} />}
       name="icon-component"
     >
-      <IconComponent {...props} style={_style} />
+      <IconComponent data-testid="icon-fallback" {...props} style={_style} />
     </Suspense>
   );
 }

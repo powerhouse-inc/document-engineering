@@ -82,9 +82,13 @@ describe("RadioGroup Component", () => {
         options={[{ label: "Option 1", value: "1" }]}
       />,
     );
-    const iconFallback = screen.getByTestId("icon-fallback");
-    expect(iconFallback).toBeInTheDocument();
-    expect(iconFallback).toHaveStyle({ width: "16px", height: "16px" });
+    const label = screen.getByText("Group Label").closest("label");
+    expect(label).toBeInTheDocument();
+    const button = label?.querySelector("button");
+    expect(button).toBeInTheDocument();
+    const icon = button?.querySelector("svg");
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveStyle({ width: "16px", height: "16px" });
   });
 
   it("should show a warning when provided", () => {

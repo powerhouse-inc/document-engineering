@@ -1,5 +1,5 @@
-import { cn } from "#scalars";
-import { Button } from "../../../../../scalars/components/fragments/button/button.js";
+import { Button } from "../../../../../scalars/components/fragments/button/index.js";
+import { cn } from "../../../../../scalars/lib/utils.js";
 import { type TimePeriod } from "../type.js";
 
 interface TimePeriodSelectorProps {

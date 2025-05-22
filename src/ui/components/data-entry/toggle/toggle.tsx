@@ -1,4 +1,4 @@
-import { cn } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
 import React, { useId } from "react";
 import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
 import { FormMessageList } from "../../../../scalars/components/fragments/form-message/index.js";

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
 import { useSidebar } from "./sidebar-provider/index.js";
 
 interface SidebarHeaderProps {

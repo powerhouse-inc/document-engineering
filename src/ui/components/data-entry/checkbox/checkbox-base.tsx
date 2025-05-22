@@ -1,6 +1,6 @@
-import { cn } from "#scalars";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import * as React from "react";
+import { cn } from "../../../../scalars/lib/utils.js";
 
 type CheckboxValue = boolean | "indeterminate";
 

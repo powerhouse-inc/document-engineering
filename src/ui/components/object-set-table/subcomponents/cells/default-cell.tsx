@@ -1,4 +1,4 @@
-import { cn } from "#scalars";
+import { cn } from "../../../../../scalars/lib/utils.js";
 import { TableCellBasic } from "./basic-cell.js";
 
 interface DefaultTableCellProps

@@ -1,7 +1,7 @@
 import { Icon, type IconName } from "../../../components/icon/index.js";
-import { cn } from "#scalars";
 import type React from "react";
 import { CommandItem } from "../../../../scalars/components/fragments/command/index.js";
+import { cn } from "../../../../scalars/lib/utils.js";
 import type { SelectProps } from "./types.js";
 
 interface FavoriteOptionsProps {

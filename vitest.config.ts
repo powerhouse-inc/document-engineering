@@ -18,9 +18,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "#assets": path.join(srcPath, "assets"),
-      "#scalars": path.join(srcPath, "scalars"),
-      "#ui": path.join(srcPath, "ui"),
+      "#assets": path.resolve(__dirname, "src", "assets"),
+      "#scalars": path.resolve(__dirname, "src", "scalars"),
+      "#ui": path.resolve(__dirname, "src", "ui"),
     },
   },
 });

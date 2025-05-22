@@ -1,6 +1,6 @@
-import { cn } from "#scalars";
 import type React from "react";
 import { useCallback } from "react";
+import { cn } from "../../../../scalars/lib/utils.js";
 import type { ColumnDef } from "../types.js";
 import { getColumnTitle } from "../utils.js";
 import { HeaderCell } from "./header/header-cell.js";
