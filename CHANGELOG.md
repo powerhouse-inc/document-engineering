@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.2.2...v1.3.0) (2025-05-22)
+
+
+### Bug Fixes
+
+* **scalars & ui:** improve code ([8116aa7](https://github.com/powerhouse-inc/document-engineering/commit/8116aa745cd63376d02cd4818e6f4a0db1ce77c3))
+
+
+### Features
+
+* export object set table ([a4821dd](https://github.com/powerhouse-inc/document-engineering/commit/a4821ddb0e62d79dd5b932e7e24c0ca7548f8718))
+* **scalars:** detached the url fro the form ([8c08867](https://github.com/powerhouse-inc/document-engineering/commit/8c08867976b713d548cc70dafa8198ef61343a6d))
+* support any phid ID format ([95b297c](https://github.com/powerhouse-inc/document-engineering/commit/95b297cebfd0308c8793f725b4e879a876237319))
+
 ## [1.2.2](https://github.com/powerhouse-inc/document-engineering/compare/v1.2.1...v1.2.2) (2025-05-19)
 
 
