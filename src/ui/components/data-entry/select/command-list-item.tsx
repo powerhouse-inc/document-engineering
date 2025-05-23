@@ -13,6 +13,7 @@ interface FavoriteOptionsProps {
   hasAnyIcon: boolean;
   toggleOption: (value: string) => void;
   tabIndex?: number;
+  optionsClassName?: string;
 }
 
 const renderIcon = (
@@ -48,6 +49,7 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
   hasAnyIcon,
   toggleOption,
   tabIndex,
+  optionsClassName,
 }) => {
   return (
     <>
@@ -65,6 +67,8 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
               "data-[selected=true]:bg-gray-100 dark:data-[selected=true]:bg-gray-900",
               opt.disabled &&
                 "!pointer-events-auto cursor-not-allowed hover:bg-transparent dark:hover:bg-transparent",
+              optionsClassName,
+              opt.className
             )}
             role="option"
             aria-selected={isSelected}
@@ -114,6 +118,7 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
                 "flex-1 truncate text-[14px] font-normal leading-4",
                 "text-gray-700 dark:text-gray-500",
                 opt.disabled && "text-gray-600 dark:text-gray-600",
+                opt.className
               )}
             >
               {opt.label}

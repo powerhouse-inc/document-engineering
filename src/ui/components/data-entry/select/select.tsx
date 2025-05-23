@@ -75,8 +75,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       baseValue,
 
       // custom props
-      classTextCustom,
-      classIconCustom,
+      optionsClassName,
 
       ...props
     },
@@ -186,8 +185,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                   searchable={searchable}
                   placeholder={placeholder}
                   handleClear={handleClear}
-                  classTextCustom={classTextCustom}
-                  classIconCustom={classIconCustom}
+                  optionsClassName={optionsClassName}
                 />
               </Button>
             </PopoverTrigger>
@@ -218,6 +216,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                   options={options}
                   toggleAll={toggleAll}
                   toggleOption={toggleOption}
+                  optionsClassName={optionsClassName}
                 />
               </Command>
             </PopoverContent>

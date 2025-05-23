@@ -226,16 +226,20 @@ describe("Select Component", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("should apply custom class to text element", () => {
+  it("should apply custom className to options container", async () => {
+    const user = userEvent.setup();
     render(
       <Select
         name="select"
         options={defaultOptions}
-        value="1"
-        classTextCustom="custom-text-class"
+        optionsClassName="custom-options-class"
       />,
     );
-    const textElement = screen.getByText("Option 1");
-    expect(textElement).toHaveClass("custom-text-class");
+
+    await user.click(screen.getByRole("combobox"));
+    const optionItems = screen.getAllByRole("option");
+    optionItems.forEach(item => {
+      expect(item).toHaveClass("custom-options-class");
+    });
   });
 });

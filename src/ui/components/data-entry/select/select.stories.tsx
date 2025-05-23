@@ -61,7 +61,7 @@ const meta: Meta<typeof Select> = {
       table: {
         type: {
           summary:
-            "Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean }>",
+            "Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean; className?: string }>",
         },
         defaultValue: { summary: "[]" },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -130,6 +130,13 @@ const meta: Meta<typeof Select> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    optionsClassName: {
+      control: "text",
+      description: "Custom class name for the options",
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
 
     ...getValidationArgTypes({
       enabledArgTypes: {
@@ -138,22 +145,6 @@ const meta: Meta<typeof Select> = {
         showErrorOnChange: false,
       },
     }),
-
-    classTextCustom: {
-      control: "text",
-      description: "Custom class name for the text",
-      table: {
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
-    classIconCustom: {
-      control: "text",
-      description: "Custom class name for the icon",
-      table: {
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
 
     ...PrebuiltArgTypes.viewMode,
     diffMode: {
@@ -187,10 +178,10 @@ const IconComponent = (
 };
 
 const defaultOptions = [
-  { value: "Briefcase", label: "Briefcase" },
-  { value: "Drive", label: "Drive" },
-  { value: "Globe", label: "Globe" },
-  { value: "Settings", label: "Settings" },
+  { value: "Briefcase", label: "Briefcase" , className: "text-red-900"},
+  { value: "Drive", label: "Drive" , className: "text-blue-900"},
+  { value: "Globe", label: "Globe" , className: "text-yellow-900"},
+  { value: "Settings", label: "Settings" , className: "text-green-900"},
 ];
 
 const defaultOptionsWithIcon = [
@@ -335,6 +326,7 @@ export const WithIcon: Story = {
     selectionIcon: "checkmark",
     selectionIconPosition: "right",
     placeholder: "Select an icon",
+    optionsClassName: "[&>span]:text-red-400 [&>svg]:text-blue-400 dark:[&>svg]:text-green-400 [&>span]:font-medium [&>svg]:size-5"
   },
 };
 
