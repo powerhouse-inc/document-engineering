@@ -20,32 +20,32 @@ export * from "./url-field/index.js";
 // deprecated components
 export {
   /**
-   * @deprecated Use the `Dropdown` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `Dropdown` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   Dropdown,
   /**
-   * @deprecated Use the `DropdownContent` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `DropdownContent` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   DropdownContent,
   /**
-   * @deprecated Use the `DropdownItem` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `DropdownItem` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   DropdownItem,
   /**
-   * @deprecated Use the `DropdownLabel` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `DropdownLabel` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   DropdownLabel,
   /**
-   * @deprecated Use the `DropdownShortcut` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `DropdownShortcut` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   DropdownShortcut,
   /**
-   * @deprecated Use the `DropdownTrigger` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `DropdownTrigger` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   DropdownTrigger,
@@ -53,42 +53,42 @@ export {
 
 export {
   /**
-   * @deprecated Use the `Sidebar` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `Sidebar` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   Sidebar,
   /**
-   * @deprecated Use the `SidebarProvider` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `SidebarProvider` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   SidebarProvider,
   /**
-   * @deprecated Use the `useSidebar` hook from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `useSidebar` hook from the `@powerhousedao/document-engineering/ui` package instead.
    * This hook is deprecated and will be removed in a future version.
    */
   useSidebar,
   /**
-   * @deprecated Use the `FlattenedNode` type from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `FlattenedNode` type from the `@powerhousedao/document-engineering/ui` package instead.
    * This type is deprecated and will be removed in a future version.
    */
   type FlattenedNode,
   /**
-   * @deprecated Use the `NodeStatus` type from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `NodeStatus` type from the `@powerhousedao/document-engineering/ui` package instead.
    * This type is deprecated and will be removed in a future version.
    */
   type NodeStatus,
   /**
-   * @deprecated Use the `SidebarIcon` type from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `SidebarIcon` type from the `@powerhousedao/document-engineering/ui` package instead.
    * This type is deprecated and will be removed in a future version.
    */
   type SidebarIcon,
   /**
-   * @deprecated Use the `SidebarNode` type from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `SidebarNode` type from the `@powerhousedao/document-engineering/ui` package instead.
    * This type is deprecated and will be removed in a future version.
    */
   type SidebarNode,
   /**
-   * @deprecated Use the `SidebarProps` type from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `SidebarProps` type from the `@powerhousedao/document-engineering/ui` package instead.
    * This type is deprecated and will be removed in a future version.
    */
   type SidebarProps,
@@ -97,12 +97,12 @@ export {
 // deprecated fragments
 export {
   /**
-   * @deprecated Use the `Input` component from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `Input` component from the `@powerhousedao/document-engineering/ui` package instead.
    * This component is deprecated and will be removed in a future version.
    */
   Input,
   /**
-   * @deprecated Use the `InputProps` type from the `@powerhousedao/design-system/ui` package instead.
+   * @deprecated Use the `InputProps` type from the `@powerhousedao/document-engineering/ui` package instead.
    * This type is deprecated and will be removed in a future version.
    */
   type InputProps,
