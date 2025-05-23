@@ -10,6 +10,8 @@ interface SelectedContentProps {
   searchable?: boolean;
   placeholder?: string;
   handleClear: () => void;
+  classTextCustom?: string;
+  classIconCustom?: string;
 }
 
 export const SelectedContent: React.FC<SelectedContentProps> = ({
@@ -19,6 +21,8 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
   searchable,
   placeholder,
   handleClear,
+  classTextCustom,
+  classIconCustom,
 }) => {
   const renderIcon = (
     IconComponent:
@@ -27,9 +31,9 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
       | undefined,
   ) => {
     if (typeof IconComponent === "string") {
-      return <Icon name={IconComponent} size={16} />;
+      return <Icon name={IconComponent} size={16} className={classIconCustom} />;
     }
-    return IconComponent && <IconComponent className="size-4" />;
+    return IconComponent && <IconComponent className={cn("size-4", classIconCustom)} />;
   };
 
   if (selectedValues.length === 0) {
@@ -75,7 +79,12 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
           return !multiple ? (
             <React.Fragment key={value}>
               {renderIcon(option?.icon)}
-              <span className="truncate text-[14px] font-normal leading-5">
+              <span
+                className={cn(
+                  "truncate text-[14px] font-normal leading-5",
+                  classTextCustom
+                )}
+              >
                 {option?.label}
               </span>
             </React.Fragment>
@@ -85,6 +94,7 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
               className={cn(
                 "text-[14px] font-normal leading-5",
                 index !== selectedValues.length - 1 && "mr-1",
+                classTextCustom
               )}
             >
               {index !== selectedValues.length - 1

@@ -18,8 +18,8 @@ import {
 import { Content } from "./content.js";
 import { SelectDiff } from "./select-diff.js";
 import { SelectedContent } from "./selected-content.js";
-import type { SelectProps } from "./types.js";
 import { useSelect } from "./use-select.js";
+import type { SelectProps } from "./types.js";
 
 const processValue = (
   currentValue: string | string[] | undefined,
@@ -73,6 +73,10 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       viewMode = "edition",
       diffMode,
       baseValue,
+
+      // custom props
+      classTextCustom,
+      classIconCustom,
 
       ...props
     },
@@ -182,6 +186,8 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                   searchable={searchable}
                   placeholder={placeholder}
                   handleClear={handleClear}
+                  classTextCustom={classTextCustom}
+                  classIconCustom={classIconCustom}
                 />
               </Button>
             </PopoverTrigger>

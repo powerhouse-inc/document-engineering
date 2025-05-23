@@ -27,6 +27,8 @@ interface SelectBaseProps {
   onChange?: (value: string | string[]) => void;
   contentClassName?: string;
   contentAlign?: "start" | "end" | "center";
+  classTextCustom?: string;
+  classIconCustom?: string;
 }
 
 type SelectConfigProps =

@@ -139,6 +139,22 @@ const meta: Meta<typeof Select> = {
       },
     }),
 
+    classTextCustom: {
+      control: "text",
+      description: "Custom class name for the text",
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+
+    classIconCustom: {
+      control: "text",
+      description: "Custom class name for the icon",
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+
     ...PrebuiltArgTypes.viewMode,
     diffMode: {
       control: "select",
