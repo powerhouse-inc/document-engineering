@@ -10,6 +10,7 @@ interface SelectedContentProps {
   searchable?: boolean;
   placeholder?: string;
   handleClear: () => void;
+  optionsClassName?: string;
 }
 
 export const SelectedContent: React.FC<SelectedContentProps> = ({
@@ -19,6 +20,7 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
   searchable,
   placeholder,
   handleClear,
+  optionsClassName,
 }) => {
   const renderIcon = (
     IconComponent:
@@ -27,9 +29,9 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
       | undefined,
   ) => {
     if (typeof IconComponent === "string") {
-      return <Icon name={IconComponent} size={16} />;
+      return <Icon name={IconComponent} size={16}/>;
     }
-    return IconComponent && <IconComponent className="size-4" />;
+    return IconComponent && <IconComponent className={cn("size-4")} />;
   };
 
   if (selectedValues.length === 0) {
@@ -67,24 +69,34 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
       <div
         className={cn(
           "max-w-full truncate text-gray-900 dark:text-gray-50",
-          !multiple && "flex items-center gap-2",
+          !multiple && "flex items-center gap-2",  
         )}
       >
         {selectedValues.map((value, index) => {
           const option = options.find((o) => o.value === value);
           return !multiple ? (
-            <React.Fragment key={value}>
+            <div key={value} className={cn(
+              "flex items-center gap-2",
+              optionsClassName,
+              option?.className,
+            )}>
               {renderIcon(option?.icon)}
-              <span className="truncate text-[14px] font-normal leading-5">
+              <span
+                className={cn(
+                  "truncate text-[14px] font-normal leading-5",
+            
+                )}
+              >
                 {option?.label}
               </span>
-            </React.Fragment>
+            </div>
           ) : (
             <span
               key={value}
               className={cn(
                 "text-[14px] font-normal leading-5",
                 index !== selectedValues.length - 1 && "mr-1",
+                
               )}
             >
               {index !== selectedValues.length - 1

@@ -25,6 +25,7 @@ interface ContentProps {
   favoriteOptions?: SelectProps["options"];
   toggleAll: () => void;
   toggleOption: (value: string) => void;
+  optionsClassName?: string;
 }
 
 export const Content: React.FC<ContentProps> = ({
@@ -38,6 +39,7 @@ export const Content: React.FC<ContentProps> = ({
   toggleAll,
   toggleOption,
   favoriteOptions = [],
+  optionsClassName,
 }) => {
   const enabledOptions = options.filter((opt) => !opt.disabled);
   const hasAnyIcon = options.some((opt) => opt.icon);
@@ -145,6 +147,7 @@ export const Content: React.FC<ContentProps> = ({
             hasAnyIcon={hasAnyIcon}
             toggleOption={toggleOption}
             tabIndex={!searchable ? 0 : undefined}
+            optionsClassName={optionsClassName}
           />
 
           {favoriteOptions.length > 0 && (
@@ -159,6 +162,7 @@ export const Content: React.FC<ContentProps> = ({
             hasAnyIcon={hasAnyIcon}
             toggleOption={toggleOption}
             tabIndex={!searchable ? 0 : undefined}
+            optionsClassName={optionsClassName}
           />
         </CommandGroup>
       </CommandList>

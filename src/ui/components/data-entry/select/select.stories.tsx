@@ -61,7 +61,7 @@ const meta: Meta<typeof Select> = {
       table: {
         type: {
           summary:
-            "Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean }>",
+            "Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean; className?: string }>",
         },
         defaultValue: { summary: "[]" },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -130,6 +130,13 @@ const meta: Meta<typeof Select> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    optionsClassName: {
+      control: "text",
+      description: "Custom class name for the options",
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
 
     ...getValidationArgTypes({
       enabledArgTypes: {
@@ -175,6 +182,13 @@ const defaultOptions = [
   { value: "Drive", label: "Drive" },
   { value: "Globe", label: "Globe" },
   { value: "Settings", label: "Settings" },
+];
+
+const defaultOptionsWithColors = [
+  { value: "Briefcase", label: "Briefcase" , className: "[&>span]:text-red-900"},
+  { value: "Drive", label: "Drive" , className: "[&>span]:text-blue-900"},
+  { value: "Globe", label: "Globe" , className: "[&>span]:text-yellow-900"},
+  { value: "Settings", label: "Settings" , className: "[&>span]:text-green-900"},
 ];
 
 const defaultOptionsWithIcon = [
@@ -335,5 +349,13 @@ export const WithLongOptionLabel: Story = {
       ...defaultOptions,
     ],
     placeholder: "Select an option",
+  },
+};
+
+export const WithCustomColors: Story = {
+  args: {
+    label: "Favorite icon name",
+    options: defaultOptionsWithColors,
+    placeholder: "Select an icon name",
   },
 };
