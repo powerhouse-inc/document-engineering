@@ -1,4 +1,7 @@
-import { cn, FormGroup, FormLabel, type WithDifference } from "#scalars";
+import { cn } from "../../../../../scalars/lib/utils.js";
+import { FormGroup } from "../../../../../scalars/components/fragments/form-group/form-group.js";
+import { FormLabel } from "../../../../../scalars/components/fragments/form-label/form-label.js";
+import type { WithDifference } from "../../../../../scalars/components/types.js";
 import { InputDiff } from "../../input/subcomponent/input-diff.js";
 import { TextDiff } from "../../input/subcomponent/text-diff.js";
 

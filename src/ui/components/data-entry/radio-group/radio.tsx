@@ -1,4 +1,5 @@
-import { cn, FormLabel } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import React, { useId } from "react";
 

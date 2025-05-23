@@ -1,11 +1,11 @@
 import {
-  cn,
   FormDescription,
   FormGroup,
   FormLabel,
   FormMessageList,
-  type InputBaseProps,
-} from "#scalars";
+} from "../../../../scalars/components/fragments/index.js";
+import { cn } from "../../../../scalars/lib/utils.js";
+import type { InputBaseProps } from "../../../../scalars/components/types.js";
 import type React from "react";
 import { forwardRef } from "react";
 import { type DateFieldValue } from "../date-picker/types.js";

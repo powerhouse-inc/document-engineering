@@ -1,4 +1,4 @@
-import { castValue, deepEqual, isEmpty, type ValueCast } from "#scalars";
+import { castValue, deepEqual, isEmpty, type ValueCast } from "../../index.js";
 import {
   forwardRef,
   useCallback,

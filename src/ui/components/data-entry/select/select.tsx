@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable react/jsx-props-no-spreading */
-import {
-  cn,
-  FormDescription,
-  FormGroup,
-  FormLabel,
-  FormMessageList,
-} from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
+import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
 import React, { useCallback, useId } from "react";
 import { Button } from "../../../../scalars/components/fragments/button/index.js";
 import { Command } from "../../../../scalars/components/fragments/command/index.js";

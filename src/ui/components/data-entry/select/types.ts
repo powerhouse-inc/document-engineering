@@ -1,5 +1,5 @@
 import type { IconName } from "../../../components/icon/index.js";
-import type { InputBaseProps } from "#scalars";
+import type { InputBaseProps } from "../../../../scalars/components/types.js";
 import type React from "react";
 import type {
   DiffMode,

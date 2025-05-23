@@ -1,4 +1,7 @@
-import { cn, FormLabel, FormMessageList, type InputBaseProps } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
+import type { InputBaseProps } from "../../../../scalars/components/types.js";
 import React, { useId } from "react";
 import { CustomizableRadioGroup } from "./customizable-radio-group.js";
 import { Radio } from "./radio.js";

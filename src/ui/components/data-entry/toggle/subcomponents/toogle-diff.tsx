@@ -1,4 +1,5 @@
-import { cn, type ViewMode, type WithDifference } from "#scalars";
+import { cn } from "../../../../../scalars/lib/utils.js";
+import type { ViewMode, WithDifference } from "../../../../../scalars/components/types.js";
 import { useId, useMemo } from "react";
 import { ToggleBase } from "../toggle-base.js";
 

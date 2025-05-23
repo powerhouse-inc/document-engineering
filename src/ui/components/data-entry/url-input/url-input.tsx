@@ -1,19 +1,16 @@
 import React, { useCallback, useId, useMemo } from "react";
 import UrlFavicon from "./url-favicon.js";
 import { useURLWarnings } from "./useURLWarnings.js";
-import {
-  FormDescription,
-  FormGroup,
-  FormLabel,
-  FormMessageList,
-  sharedValueTransformers,
-  type InputBaseProps,
-  type DiffMode,
-  type WithDifference,
-} from "#scalars";
+import { FormDescription } from "../../../../scalars/components/fragments/form-description/form-description.js";
+import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
+import { sharedValueTransformers } from "../../../../scalars/lib/shared-value-transformers.js";
+import type { InputBaseProps } from "../../../../scalars/components/types.js";
+import type { DiffMode, WithDifference } from "../../../../scalars/components/types.js";
 import { IconName } from "../../icon/index.js";
 import ValueTransformer from "../../../../scalars/components/fragments/value-transformer/index.js";
-import { Input } from "#ui";
+import { Input } from "../input/index.js";
 import { UrlInputDiff } from "./url-input-diff.js";
 import { cn } from "../../../../scalars/lib/utils.js";
 
@@ -109,6 +106,7 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
                 id={id}
                 ref={ref}
                 type="url"
+                required={required}
                 {...props}
                 value={value ?? ""}
                 onBlur={handleBlur}

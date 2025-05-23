@@ -1,4 +1,4 @@
-import { type ValidatorResult } from "#scalars";
+import { type ValidatorResult } from "../../../scalars/index.js";
 import {
   type Amount,
   type AmountCrypto,

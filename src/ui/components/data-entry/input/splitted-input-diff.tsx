@@ -1,5 +1,6 @@
 import { Icon } from "../../icon/index.js";
-import { cn, type WithDifference } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import type { WithDifference } from "../../../../scalars/components/types.js";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import {
@@ -8,7 +9,7 @@ import {
 } from "../../../../ui/components/tooltip/tooltip.js";
 import { InputDiff } from "./subcomponent/input-diff.js";
 import { TextDiff } from "./subcomponent/text-diff.js";
-import type { PlatformIcon } from "#ui";
+import type { PlatformIcon } from "../url-input/index.js";
 import UrlFavicon from "../url-input/url-favicon.js";
 
 interface CopyIconProps {

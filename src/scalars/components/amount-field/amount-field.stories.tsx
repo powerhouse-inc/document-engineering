@@ -1,4 +1,4 @@
-import { commonCryptoCurrencies, commonFiatCurrencies } from "#scalars";
+import { commonCryptoCurrencies, commonFiatCurrencies } from "../../index.js";
 import type { Meta, StoryObj } from "@storybook/react";
 import { withForm } from "../../lib/decorators.js";
 import {
