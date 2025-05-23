@@ -1,11 +1,9 @@
-import {
-  cn,
-  FormDescription,
-  FormGroup,
-  FormLabel,
-  FormMessageList,
-  type InputBaseProps,
-} from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
+import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
+import { type InputBaseProps } from "../../../../scalars/components/types.js";
 import { forwardRef } from "react";
 import { type SelectFieldProps } from "../../../../scalars/components/fragments/select-field/index.js";
 import { type InputNumberProps } from "../../../../scalars/components/number-field/types.js";
