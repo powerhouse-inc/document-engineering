@@ -17,7 +17,7 @@ pre-built Scalar Fields components to create efficient and reliable data collect
 
 > **Warning**: The Scalar Fields components are not designed to be used outside of the `Form` component. If you need to
 > use a Scalar Field outside of the `Form` component, you can use the `Data Entry` inputs components from the 
-> `@powerhousedao/design-system/ui` package.
+> `@powerhousedao/document-engineering/ui` package.
 
 ## Form
 
@@ -26,7 +26,7 @@ wrapper (from `react-hook-form`) that enables automatic validation while maintai
 requirements and specific use cases.
 
 <Source language="tsx" code={`
-import { Form } from "@powerhousedao/design-system/scalars"
+import { Form } from "@powerhousedao/document-engineering/scalars"
 
 <Form onSubmit={/* your submit function */}>
  {/* your tsx code/fields goes here */}
@@ -39,7 +39,7 @@ Additionally, the `Form` component exposes a `triggerSubmit` method that can be 
 programmatically and a `formId` prop that can be used to access the form in the DOM.
 
 <Source language="tsx" code={`
-import { Form } from "@powerhousedao/design-system/scalars"
+import { Form } from "@powerhousedao/document-engineering/scalars"
 
 <Form onSubmit={/* your submit function */}>
  {({ formState: { isSubmitting }, triggerSubmit }) => (
@@ -120,7 +120,7 @@ For a complete list of available methods and properties, refer to the [`react-ho
 #### Using Render Props pattern
 
 <Source language="tsx" code={`
-import { Form } from "@powerhousedao/design-system/scalars"
+import { Form } from "@powerhousedao/document-engineering/scalars"
 
 <Form onSubmit={/* your submit function */}>
   {({ /* react-hook-form state/methods are accessible here */ }) => (
@@ -132,7 +132,7 @@ import { Form } from "@powerhousedao/design-system/scalars"
 #### Using react references
 
 <Source language="tsx" code={`
-import { Form } from "@powerhousedao/design-system/scalars"
+import { Form } from "@powerhousedao/document-engineering/scalars"
 import { useRef } from "react";
 import { UseFormReturn } from "react-hook-form";
 

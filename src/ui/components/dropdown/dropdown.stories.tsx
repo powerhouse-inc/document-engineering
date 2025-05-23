@@ -15,7 +15,7 @@ import DropdownExample from "./dropdown-example.js";
  * First import the necessary components:
  *
  * ```tsx
- * import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from "@powerhousedao/design-system/ui";
+ * import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from "@powerhousedao/document-engineering/ui";
  * ```
  *
  * Basic implementation:
