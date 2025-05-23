@@ -146,7 +146,11 @@ describe("Select Component", () => {
   // Edge Cases
   it("should handle empty options array", () => {
     render(<Select name="select" options={[]} />);
-    expect(screen.getByRole("combobox")).toHaveValue("");
+    const select = screen.getByRole("combobox");
+    expect(select).toBeInTheDocument();
+    expect(select).toHaveAttribute("aria-expanded", "false");
+    expect(select).not.toBeDisabled();
+    expect(select).toHaveTextContent("");
   });
 
   it("should handle value when provided", () => {
@@ -220,5 +224,18 @@ describe("Select Component", () => {
       />,
     );
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("should apply custom class to text element", () => {
+    render(
+      <Select
+        name="select"
+        options={defaultOptions}
+        value="1"
+        classTextCustom="custom-text-class"
+      />,
+    );
+    const textElement = screen.getByText("Option 1");
+    expect(textElement).toHaveClass("custom-text-class");
   });
 });
