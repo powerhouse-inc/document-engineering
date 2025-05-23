@@ -1,3 +1,20 @@
+# [1.5.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.4.1...v1.5.0) (2025-05-23)
+
+
+### Bug Fixes
+
+* **scalars:** add class for each item and one per global style ([91b7bee](https://github.com/powerhouse-inc/document-engineering/commit/91b7beea1172b04bc5f1efc8ef02ab33441b13c6))
+* **scalars:** add custom options for the example of colors ([b34505a](https://github.com/powerhouse-inc/document-engineering/commit/b34505a94de6954c0e0dc9938e3cec93ea1e0d37))
+* **scalars:** add default colors as primary in the calendars ([56a9074](https://github.com/powerhouse-inc/document-engineering/commit/56a9074f83a61ce803389b8ac41e69c600f40ed2))
+* **scalars:** fix CR: remove unnecesary class and group props ([882255d](https://github.com/powerhouse-inc/document-engineering/commit/882255dd53268df5dc16c61bb0c58369191ca417))
+
+
+### Features
+
+* **scalars:** add custom storie for show colors ([6706230](https://github.com/powerhouse-inc/document-engineering/commit/6706230d033966f62dde81b6316cf04431183058))
+* **scalars:** add the test for the new two props ([df78d6e](https://github.com/powerhouse-inc/document-engineering/commit/df78d6eb5eb6c4cf25282f685214a0fa2a1c7d03))
+* **scalars:** add two class to customize the icon and text in the select ([ddfff26](https://github.com/powerhouse-inc/document-engineering/commit/ddfff2628fa92aed8f0d3f358f9027dfa146c42a))
+
 ## [1.4.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.4.0...v1.4.1) (2025-05-22)
 
 
