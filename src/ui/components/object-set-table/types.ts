@@ -24,7 +24,7 @@ export interface ObjectSetTableConfig<T> {
   showRowNumbers?: boolean;
 }
 
-export type CellType = "text" | "number";
+export type CellType = "text" | "number" | "boolean";
 
 export interface CellContext<T = any> {
   /**
