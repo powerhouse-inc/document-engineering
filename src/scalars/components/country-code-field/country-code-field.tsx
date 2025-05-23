@@ -1,4 +1,4 @@
-import { Select } from "#ui";
+import { Select } from "../../../ui/components/data-entry/select/index.js";
 import React from "react";
 import { CircleFlag } from "react-circle-flags";
 import countries, { type Countries } from "world-countries";

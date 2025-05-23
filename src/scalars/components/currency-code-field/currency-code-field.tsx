@@ -1,4 +1,4 @@
-import { Select, type SelectOption } from "#ui";
+import { Select, type SelectOption } from "../../../ui/components/data-entry/select/index.js";
 import React, { useMemo } from "react";
 import { FormGroup } from "../fragments/index.js";
 import { withFieldValidation } from "../fragments/with-field-validation/with-field-validation.js";

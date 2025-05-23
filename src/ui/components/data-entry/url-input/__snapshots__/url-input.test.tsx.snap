@@ -26,6 +26,7 @@ exports[`UrlInput > should match snapshot 1`] = `
         id=":r0:"
         name="test-url"
         placeholder="https://example.com"
+        required=""
         type="url"
         value=""
       />
