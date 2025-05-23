@@ -1,4 +1,5 @@
-import { cn, FormMessageList } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
 import { forwardRef, useId, useMemo } from "react";
 import { CharacterCounter } from "../../../../scalars/components/fragments/character-counter/index.js";
 import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
