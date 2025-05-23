@@ -158,7 +158,7 @@ const Calendar = ({
   );
   const _selectedClassName = cn(
     "[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground",
-    "rounded-[4px] bg-green-500",
+    "rounded-[4px] bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900",
     props.selectedClassName,
   );
   const _todayClassName = cn(
