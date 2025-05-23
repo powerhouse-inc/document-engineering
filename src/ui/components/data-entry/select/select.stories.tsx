@@ -184,7 +184,7 @@ const defaultOptions = [
   { value: "Settings", label: "Settings" },
 ];
 
-const defaultOptionsWithClassName = [
+const defaultOptionsWithColors = [
   { value: "Briefcase", label: "Briefcase" , className: "[&>span]:text-red-900"},
   { value: "Drive", label: "Drive" , className: "[&>span]:text-blue-900"},
   { value: "Globe", label: "Globe" , className: "[&>span]:text-yellow-900"},
@@ -218,7 +218,7 @@ const defaultOptionsWithIcon = [
 export const Default: Story = {
   args: {
     label: "Favorite icon name",
-    options: defaultOptionsWithClassName,
+    options: defaultOptions,
     placeholder: "Select an icon name",
   },
 };
@@ -349,5 +349,13 @@ export const WithLongOptionLabel: Story = {
       ...defaultOptions,
     ],
     placeholder: "Select an option",
+  },
+};
+
+export const WithCustomColors: Story = {
+  args: {
+    label: "Favorite icon name",
+    options: defaultOptionsWithColors,
+    placeholder: "Select an icon name",
   },
 };
