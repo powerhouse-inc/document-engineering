@@ -68,15 +68,12 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       className,
       contentClassName,
       contentAlign = "start",
+      optionsClassName,
 
       // diff props
       viewMode = "edition",
       diffMode,
       baseValue,
-
-      // custom props
-      optionsClassName,
-
       ...props
     },
     ref,

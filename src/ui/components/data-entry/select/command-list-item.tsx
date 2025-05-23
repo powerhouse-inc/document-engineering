@@ -118,7 +118,6 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
                 "flex-1 truncate text-[14px] font-normal leading-4",
                 "text-gray-700 dark:text-gray-500",
                 opt.disabled && "text-gray-600 dark:text-gray-600",
-                opt.className
               )}
             >
               {opt.label}

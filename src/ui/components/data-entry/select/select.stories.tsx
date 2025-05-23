@@ -178,10 +178,10 @@ const IconComponent = (
 };
 
 const defaultOptions = [
-  { value: "Briefcase", label: "Briefcase" , className: "text-red-900"},
-  { value: "Drive", label: "Drive" , className: "text-blue-900"},
-  { value: "Globe", label: "Globe" , className: "text-yellow-900"},
-  { value: "Settings", label: "Settings" , className: "text-green-900"},
+  { value: "Briefcase", label: "Briefcase" , className: "[&>span]:text-red-900"},
+  { value: "Drive", label: "Drive" , className: "[&>span]:text-blue-900"},
+  { value: "Globe", label: "Globe" , className: "[&>span]:text-yellow-900"},
+  { value: "Settings", label: "Settings" , className: "[&>span]:text-green-900"},
 ];
 
 const defaultOptionsWithIcon = [
@@ -326,7 +326,6 @@ export const WithIcon: Story = {
     selectionIcon: "checkmark",
     selectionIconPosition: "right",
     placeholder: "Select an icon",
-    optionsClassName: "[&>span]:text-red-400 [&>svg]:text-blue-400 dark:[&>svg]:text-green-400 [&>span]:font-medium [&>svg]:size-5"
   },
 };
 
