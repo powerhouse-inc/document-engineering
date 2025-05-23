@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { cn } from "../../../scalars/index.js";
 import { mockData, type MockedPerson } from "./mock-data.js";
 import { ObjectSetTable } from "./object-set-table.js";
+import { Checkbox } from "../data-entry/checkbox/checkbox.js";
 
 const meta: Meta<typeof ObjectSetTable> = {
   title: "Document Engineering/Data Display/Object Set Table",
@@ -60,6 +61,7 @@ export const Default: Story = {
     columns: [
       { field: "firstName", editable: true },
       { field: "email", editable: true },
+      { field: "isActive", type: "boolean" },
       { field: "walletAddress", editable: true },
       { field: "payment", type: "number", editable: true },
       {
