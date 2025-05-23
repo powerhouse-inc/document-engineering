@@ -1,5 +1,6 @@
 import { Icon } from "../../icon/index.js";
-import { cn, type WithDifference } from "#scalars";
+import { cn } from "../../../../scalars/lib/utils.js";
+import type { WithDifference } from "../../../../scalars/components/types.js";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import {

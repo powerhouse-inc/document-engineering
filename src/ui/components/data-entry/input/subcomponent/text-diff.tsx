@@ -1,4 +1,5 @@
-import { cn, type WithDifference } from "#scalars";
+import { cn } from "../../../../../scalars/lib/utils.js";
+import type { WithDifference } from "../../../../../scalars/components/types.js";
 import { diffSentences, diffWords } from "diff";
 import { useMemo } from "react";
 

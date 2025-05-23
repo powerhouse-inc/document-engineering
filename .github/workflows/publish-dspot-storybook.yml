@@ -41,5 +41,5 @@ jobs:
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_DSPOT_PROJECT_TOKEN }}
-          exitZeroOnChanges: false # fail on changes
+          exitZeroOnChanges: true # fail on changes
           onlyChanged: true # enable TurboSnap https://www.chromatic.com/docs/turbosnap

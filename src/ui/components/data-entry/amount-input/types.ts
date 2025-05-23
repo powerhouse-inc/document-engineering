@@ -1,4 +1,4 @@
-import { type Currency } from "#scalars";
+import { type Currency } from "../../../../scalars/components/currency-code-field/types.js";
 export type Amount = {
   amount?: number;
   unit?: CurrencyTicker;

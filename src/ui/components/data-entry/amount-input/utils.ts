@@ -1,9 +1,9 @@
 import {
   cryptoCurrencies,
   currencies,
-  type Currency,
   fiatCurrencies,
-} from "#scalars";
+} from "../../../../scalars/components/currency-code-field/utils.js";
+import { type Currency } from "../../../../scalars/components/currency-code-field/types.js";
 import type { AmountInputPropsGeneric, AmountValue } from "./types.js";
 
 export const getDefaultUnits = (type: AmountInputPropsGeneric["type"]) => {
