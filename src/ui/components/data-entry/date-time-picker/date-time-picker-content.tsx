@@ -161,19 +161,11 @@ const DateTimePickerContent = ({
               // dark
               "dark:bg-gray-900 dark:text-gray-50",
             )}
-            // selectedClassName={cn(
-            //   "rounded-[4px]",
-            //   "bg-gray-900 text-white",
-            //   "hover:bg-gray-900",
-            //   // dark
-            //   "dark:bg-gray-50 dark:text-gray-900",
-            //   "dark:hover:bg-gray-50 dark:hover:text-gray-900",
-            // )}
             selectedClassName={cn(
               "rounded-[4px]",
-              "!bg-red-900 !text-white",
+              "!bg-gray-900 !text-white",
               "hover:bg-gray-900 hover:text-white",
-              // // dark
+              // dark
               "dark:bg-gray-50 dark:text-gray-900",
               "dark:hover:bg-gray-50 dark:hover:text-gray-900",
             )}

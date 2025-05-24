@@ -38,7 +38,7 @@ interface DateTimePickerProps extends InputBaseProps<DateFieldValue> {
   onChangeDate?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlurDate?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
-const DateTimePicker: React.FC<DateTimePickerProps> = forwardRef<HTMLInputElement, DateTimePickerProps>(
+const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
   (
     {
       name,
