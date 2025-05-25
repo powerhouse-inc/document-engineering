@@ -10,7 +10,7 @@ interface DateTimePickerFieldProps
   extends DateTimePickerProps,
     FieldErrorHandling {}
 
-const DateTimePickerField: React.FC<DateTimePickerFieldProps> = withFieldValidation<DateTimePickerFieldProps>(
+const DateTimePickerField = withFieldValidation<DateTimePickerFieldProps>(
   DateTimePicker,
   {
     validations: {
