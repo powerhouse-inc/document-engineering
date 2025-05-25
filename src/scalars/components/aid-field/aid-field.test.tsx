@@ -195,7 +195,7 @@ describe("AIDField Component", () => {
     );
 
     expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
+    expect(screen.getByText("URL not available")).toBeInTheDocument();
     expect(screen.getByText("Description not available")).toBeInTheDocument();
     expect(screen.getByText("Agent type not available")).toBeInTheDocument();
 
@@ -210,7 +210,7 @@ describe("AIDField Component", () => {
     );
 
     expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
+    expect(screen.getByText("URL not available")).toBeInTheDocument();
     expect(
       screen.queryByText("Description not available"),
     ).not.toBeInTheDocument();
@@ -229,7 +229,7 @@ describe("AIDField Component", () => {
     );
 
     expect(screen.queryByText("Title not available")).not.toBeInTheDocument();
-    expect(screen.queryByText("Path not available")).not.toBeInTheDocument();
+    expect(screen.queryByText("URL not available")).not.toBeInTheDocument();
     expect(
       screen.queryByText("Description not available"),
     ).not.toBeInTheDocument();

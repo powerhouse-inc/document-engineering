@@ -106,7 +106,7 @@ export const Required: Story = {
 export const WithValue: Story = {
   args: {
     label: "With Value",
-    value: "https://exaomple.com",
+    value: "https://example.com",
   },
 };
 

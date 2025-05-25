@@ -1,4 +1,4 @@
-import React, { useCallback, useId, useMemo } from "react";
+import React, { useCallback, useId, useMemo, useState, useEffect } from "react";
 import UrlFavicon from "./url-favicon.js";
 import { useURLWarnings } from "./useURLWarnings.js";
 import { FormDescription } from "../../../../scalars/components/fragments/form-description/form-description.js";
@@ -44,13 +44,14 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
       platformIcons,
       value,
       defaultValue,
+      className,
       onBlur,
-
+      onChange,
+      onKeyDown,
       // diff props
       viewMode = "edition",
       diffMode,
       baseValue,
-
       ...props
     },
     ref,
@@ -58,7 +59,10 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
     const idGenerated = useId();
     const id = props.id ?? idGenerated;
     const hasError = !!errors?.length;
-    const { warnings, checkForWarnings } = useURLWarnings(value ?? "");
+
+    const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? "");
+    const { warnings, checkForWarnings } = useURLWarnings(internalValue);
+
     const showIcon = Object.keys(platformIcons ?? {}).length > 0;
 
     const combinedWarnings = useMemo(() => {
@@ -73,13 +77,22 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
       [checkForWarnings, onBlur],
     );
 
+    const handleChange = useCallback(
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInternalValue(event.target.value);
+        onChange?.(event);
+      },
+      [onChange],
+    );
+
     const handleWarningsOnEnter = useCallback(
       (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
           checkForWarnings();
         }
+        onKeyDown?.(event);
       },
-      [checkForWarnings],
+      [checkForWarnings, onKeyDown],
     );
 
     // prevent url from having trailing spaces
@@ -87,6 +100,12 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
       () => [sharedValueTransformers.trimOnBlur()],
       [],
     );
+
+    useEffect(() => {
+      if (value !== undefined) {
+        setInternalValue(value);
+      }
+    }, [value]);
 
     if (viewMode === "edition") {
       return (
@@ -107,16 +126,17 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
                 ref={ref}
                 type="url"
                 required={required}
-                {...props}
-                value={value ?? ""}
+                value={internalValue}
+                onChange={handleChange}
+                aria-invalid={hasError}
+                className={cn(showIcon && "pl-8", className)}
+                data-cast="URLTrim"
                 onBlur={handleBlur}
                 onKeyDown={handleWarningsOnEnter}
-                aria-invalid={hasError}
-                className={cn(showIcon && "pl-8")}
-                data-cast="URLTrim"
+                {...props}
               />
             </ValueTransformer>
-            <UrlFavicon url={value ?? ""} platformIcons={platformIcons} className="absolute left-2.5 top-0" />
+            <UrlFavicon url={internalValue} platformIcons={platformIcons} className="absolute left-2.5 top-0" />
           </div>
           {description && <FormDescription>{description}</FormDescription>}
           {showWarnings && combinedWarnings.length > 0 && (
@@ -129,7 +149,7 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
 
     return (
       <UrlInputDiff
-        value={value ?? defaultValue ?? ""}
+        value={internalValue}
         label={label}
         required={required}
         viewMode={viewMode}

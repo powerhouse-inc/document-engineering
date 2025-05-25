@@ -36,11 +36,15 @@ exports[`CurrencyCodeField > should match snapshot 1`] = `
             <div
               class="max-w-full truncate text-gray-900 dark:text-gray-50 flex items-center gap-2"
             >
-              <span
-                class="truncate text-[14px] font-normal leading-5"
+              <div
+                class="flex items-center gap-2"
               >
-                USD ($)
-              </span>
+                <span
+                  class="truncate text-[14px] font-normal leading-5"
+                >
+                  USD ($)
+                </span>
+              </div>
             </div>
             <div
               class="flex items-center justify-between gap-2"

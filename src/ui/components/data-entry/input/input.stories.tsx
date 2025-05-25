@@ -40,9 +40,9 @@ export const Default: Story = {
   },
 };
 
-export const WithValue: Story = {
+export const WithDefaultValue: Story = {
   args: {
-    value: "Hello World",
+    defaultValue: "Hello World",
   },
 };
 

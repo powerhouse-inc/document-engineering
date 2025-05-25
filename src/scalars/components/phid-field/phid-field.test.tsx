@@ -188,7 +188,7 @@ describe("PHIDField Component", () => {
     );
 
     expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
+    expect(screen.getByText("Type not available")).toBeInTheDocument();
     expect(screen.getByText("Description not available")).toBeInTheDocument();
 
     rerender(
@@ -202,7 +202,7 @@ describe("PHIDField Component", () => {
     );
 
     expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
+    expect(screen.getByText("Type not available")).toBeInTheDocument();
     expect(
       screen.queryByText("Description not available"),
     ).not.toBeInTheDocument();
