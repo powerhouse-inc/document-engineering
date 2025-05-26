@@ -49,14 +49,21 @@ const meta: Meta<typeof RadioGroup> = {
     options: {
       control: "object",
       description:
-        "Array of options with label, value, description, and disabled state",
+        "Array of options with label, value, description, disabled state and className for custom styling of each option",
       table: {
         type: {
           summary:
-            "Array<{ label: string; value: string; description?: string; disabled?: boolean; }>",
+            "Array<{ label: string; value: string; description?: string; disabled?: boolean; className?: string; }>",
         },
         defaultValue: { summary: "[]" },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    className: {
+      control: "text",
+      description: "Custom css class to style all options in the radio group",
+      table: {
+        type: { summary: "string" },
       },
     },
 
@@ -83,6 +90,13 @@ const defaultOptions = [
   { label: "Option 2", value: "2" },
   { label: "Option 3", value: "3" },
 ];
+
+const defaultOptionsWithStyles = [
+  { label: "Option 1", value: "1" , className: "[&>label]:text-red-500"},
+  { label: "Option 2", value: "2" , className: "[&>label]:text-blue-500"},
+  { label: "Option 3", value: "3" , className: "[&>label]:text-green-500"},
+];
+
 
 // Basic examples
 export const Default: Story = {
@@ -176,5 +190,12 @@ export const WithDisabledOptions: Story = {
         description: "This option is disabled",
       },
     ],
+  },
+};
+export const WithCustomStyles: Story = {
+  args: {
+    label: "Radio Group with custom styles",
+    options: defaultOptionsWithStyles,
+    className: "[&>label]:text-yellow-500 [&_[data-state=checked]_span]:after:!bg-blue-500",
   },
 };
