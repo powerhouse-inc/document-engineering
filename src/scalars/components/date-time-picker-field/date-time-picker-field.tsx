@@ -14,7 +14,7 @@ const DateTimePickerField = withFieldValidation<DateTimePickerFieldProps>(
   DateTimePicker,
   {
     validations: {
-      _timePickerType: dateTimeFieldValidations,
+      _dateTimePickerType: dateTimeFieldValidations,
     },
   },
 );
