@@ -139,10 +139,10 @@ const IconComponent = (
 };
 
 const defaultOptions = [
-  { value: "Briefcase", label: "Briefcase" },
-  { value: "Drive", label: "Drive" },
-  { value: "Globe", label: "Globe" },
-  { value: "Settings", label: "Settings" },
+  { value: "Briefcase", label: "Briefcase"},
+  { value: "Drive", label: "Drive"},
+  { value: "Globe", label: "Globe"},
+  { value: "Settings", label: "Settings"},
 ];
 
 const defaultOptionsWithIcon = [
@@ -178,6 +178,7 @@ export const Default: Story = {
     label: "Select an option",
     options: defaultOptions,
     placeholder: "Choose from the list",
+    // className: "[&>label]:text-red-900 [&_label]:text-blue-600  [&_label]:hover:text-green-600 [&_button]:border-blue-600 [&_button]:hover:border-green-600",
   },
 };
 
@@ -309,5 +310,28 @@ export const SelectWithIcon: Story = {
     selectionIcon: "checkmark",
     selectionIconPosition: "right",
     placeholder: "Select an icon",
+  },
+};
+
+export const WithCustomStylesSelect: Story = {
+  args: {
+    label: "Favorite icon",
+    description: "Choose your favorite icon",
+    variant: "Select",
+    options: defaultOptionsWithIcon,
+    selectionIcon: "checkmark",
+    selectionIconPosition: "right",
+    placeholder: "Select an icon",
+    optionsClassName: "[&>span]:text-blue-900 [&>svg]:text-green-900",
+  },
+};
+export const WithCustomStylesRadioGroup: Story = {
+  args: {
+    label: "Favorite icon",
+    description: "Choose your favorite icon",
+    options: defaultOptions,
+    selectionIcon: "checkmark",
+    selectionIconPosition: "right",
+    className: "[&>label]:text-red-900 [&_label]:text-blue-600 [&_label]:hover:text-green-600 [&_button]:border-blue-600 [&_button]:hover:border-green-600 [&_[data-state=checked]_span]:after:!bg-red-500",
   },
 };
