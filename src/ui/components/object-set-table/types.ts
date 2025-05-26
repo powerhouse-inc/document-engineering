@@ -76,7 +76,10 @@ export type ValueGetterFn<T> = (row: T, context: CellContext<T>) => unknown;
  *
  * @example
  * ```ts
- * const taxRateValueFormatter = (value: number) => `${value * 100}%`;
+ * const taxRateValueFormatter = (value: unknown) => {
+ *  if (typeof value !== "number") return value?.toString() ?? "N/A";
+ *  return `${value * 100}%`;
+ * };
  * ```
  */
 export type ValueFormatterFn<T> = (
@@ -200,7 +203,10 @@ export interface ColumnDef<T = any> {
    *
    * @example
    * ```ts
-   * const taxRateValueFormatter = (value: number) => `${value * 100}%`;
+   * const taxRateValueFormatter = (value: unknown) => {
+   *  if (typeof value !== "number") return value?.toString() ?? "N/A";
+   *  return `${value * 100}%`;
+   * };
    * ```
    */
   valueFormatter?: ValueFormatterFn<T>;

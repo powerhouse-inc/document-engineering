@@ -37,7 +37,7 @@ const TableBody = <T extends DataType>({
   const createSelectRowOnClickHandler = useCallback(
     (index: number) => (e: React.MouseEvent<HTMLTableCellElement>) => {
       if (!allowRowSelection) return;
-      if (e.ctrlKey) {
+      if (e.ctrlKey || e.metaKey) {
         e.stopPropagation();
         api.selection.toggleRow(index);
       } else if (e.shiftKey) {
@@ -59,7 +59,7 @@ const TableBody = <T extends DataType>({
     (index: number) => (e: React.MouseEvent<HTMLTableRowElement>) => {
       if (!allowRowSelection) return;
 
-      if (e.ctrlKey) {
+      if (e.ctrlKey || e.metaKey) {
         api.selection.toggleRow(index);
       } else if (e.shiftKey) {
         // Prevent text selection when shift key is pressed
@@ -96,7 +96,7 @@ const TableBody = <T extends DataType>({
         }
 
         // if shift or ctrl is pressed, the user is probably trying to select rows
-        if (!e.ctrlKey && !e.shiftKey) {
+        if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
           if (e.detail === 2 && columnDef.editable) {
             dispatch?.({
               type: "ENTER_CELL_EDIT_MODE",
