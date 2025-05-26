@@ -30,6 +30,7 @@ exports[`UrlField > should match snapshot 1`] = `
           id=":r1:"
           name="test-url"
           placeholder="https://example.com"
+          required=""
           type="url"
           value=""
         />

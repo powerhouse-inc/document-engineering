@@ -185,7 +185,7 @@ describe("OIDField Component", () => {
     );
 
     expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
+    expect(screen.getByText("Type not available")).toBeInTheDocument();
     expect(screen.getByText("Description not available")).toBeInTheDocument();
 
     rerender(
@@ -199,7 +199,7 @@ describe("OIDField Component", () => {
     );
 
     expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
+    expect(screen.getByText("Type not available")).toBeInTheDocument();
     expect(
       screen.queryByText("Description not available"),
     ).not.toBeInTheDocument();
@@ -215,7 +215,7 @@ describe("OIDField Component", () => {
     );
 
     expect(screen.queryByText("Title not available")).not.toBeInTheDocument();
-    expect(screen.queryByText("Path not available")).not.toBeInTheDocument();
+    expect(screen.queryByText("Type not available")).not.toBeInTheDocument();
     expect(
       screen.queryByText("Description not available"),
     ).not.toBeInTheDocument();
@@ -255,7 +255,7 @@ describe("OIDField Component", () => {
     await user.click(screen.getByText("Submit"));
     await waitFor(() => {
       expect(mockOnSubmit).not.toHaveBeenCalled();
-      expect(screen.getByText(/Invalid OID format/)).toBeInTheDocument();
+      expect(screen.getByText(/Invalid uuid format/)).toBeInTheDocument();
     });
 
     await user.clear(input);

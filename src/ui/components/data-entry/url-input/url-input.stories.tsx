@@ -117,17 +117,17 @@ export const Required: Story = {
   },
 };
 
-export const WithValue: Story = {
+export const WithDefaultValue: Story = {
   args: {
-    label: "With Value",
-    value: "https://exaomple.com",
+    label: "With Default Value",
+    defaultValue: "https://example.com",
   },
 };
 
 export const Disabled: Story = {
   args: {
     label: "Read Only URL",
-    value: "https://example.com",
+    defaultValue: "https://example.com",
     disabled: true,
   },
 };
@@ -135,7 +135,7 @@ export const Disabled: Story = {
 export const WithError: Story = {
   args: {
     label: "Website URL",
-    value: "not-a-valid-url",
+    defaultValue: "not-a-valid-url",
     errors: ["Please enter a valid URL"],
   },
 };
@@ -143,7 +143,7 @@ export const WithError: Story = {
 export const WithWarning: Story = {
   args: {
     label: "Website URL",
-    value: "https://example.com",
+    defaultValue: "https://example.com",
     warnings: ["URL may be unreachable"],
   },
 };
@@ -151,7 +151,7 @@ export const WithWarning: Story = {
 export const WithPlatformIcon: Story = {
   args: {
     label: "Website URL",
-    value: "https://github.com/test",
+    defaultValue: "https://github.com/test",
     platformIcons: {
       "github.com": "Github",
       "linkedin.com": "Linkedin",

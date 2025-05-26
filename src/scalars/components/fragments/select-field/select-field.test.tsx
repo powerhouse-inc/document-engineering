@@ -159,7 +159,7 @@ describe("SelectField Component", () => {
   // Edge Cases
   it("should handle empty options array", () => {
     renderWithForm(<SelectField name="select" options={[]} />);
-    expect(screen.getByRole("combobox")).toHaveValue("");
+    expect(screen.getByRole("combobox")).toHaveTextContent("");
   });
 
   it("should handle value when provided", () => {

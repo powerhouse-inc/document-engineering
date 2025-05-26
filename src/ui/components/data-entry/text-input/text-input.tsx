@@ -91,7 +91,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           <ValueTransformer transformers={transformers}>
             <Input
               id={id}
-              value={value ?? defaultValue ?? ""}
+              value={value}
+              defaultValue={defaultValue}
               onChange={onChange}
               pattern={pattern?.toString()}
               autoComplete={autoCompleteValue}
