@@ -178,7 +178,6 @@ export const Default: Story = {
     label: "Select an option",
     options: defaultOptions,
     placeholder: "Choose from the list",
-    // className: "[&>label]:text-red-900 [&_label]:text-blue-600  [&_label]:hover:text-green-600 [&_button]:border-blue-600 [&_button]:hover:border-green-600",
   },
 };
 
