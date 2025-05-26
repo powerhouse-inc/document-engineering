@@ -7,6 +7,7 @@ const meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    chromatic: { disableSnapshot: true },
     docs: {
       source: {
         language: "tsx",

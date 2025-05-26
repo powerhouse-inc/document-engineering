@@ -1,7 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useCallback, useState } from "react";
-import { Icon } from "../icon/index.js";
-import { cn } from "../../../scalars/index.js";
 import { mockData, type MockedPerson } from "./mock-data.js";
 import { ObjectSetTable } from "./object-set-table.js";
 import ComputedColumnsExample from "./examples/computed-columns/computed-columns.js";
@@ -11,133 +8,281 @@ import CustomRenderingExample from "./examples/custom-rendering/custom-rendering
  * The `ObjectSetTable` component is a powerful data table that displays collections of objects in a structured format.
  * It provides built-in support for row selection, inline editing, different cell types, and flexible column configuration.
  *
- * The table is built around the concept of **column definitions** that specify how data should be displayed, edited, and formatted.
- * Each column definition controls a specific aspect of the data presentation and behavior.
+ * ## Overview
  *
- * ## Key Features
+ * The `ObjectSetTable` displays data in a structured tabular format with support for:
+ * - **Interactive Editing**: Click cells to edit values inline
+ * - **Row Selection**: Multi-row selection with keyboard shortcuts  
+ * - **Flexible Columns**: Configurable display, formatting, and behavior
+ * - **Type Safety**: Full TypeScript support for data and configurations
+ * - **Keyboard Navigation**: Navigate and interact using keyboard only
  *
- * - **Row Selection**: Multi-row selection with Ctrl/Cmd and Shift key support
- * - **Inline Editing**: Click cells to edit values directly in the table
- * - **Cell Types**: Built-in support for text, number, and boolean cell types
- * - **Custom Rendering**: Full control over cell rendering with custom components
- * - **Nested Field Access**: Access nested object properties using dot notation
- * - **Keyboard Navigation**: Navigate and edit cells using keyboard shortcuts
- * - **Row Numbers**: Optional row numbering with selection capabilities
+ * ## Core Concepts
  *
- * ## Column Definition
- *
- * The backbone of the `ObjectSetTable` is the `columns` prop, which defines how each column should behave:
+ * ### Column Definitions
+ * 
+ * The heart of `ObjectSetTable` is the **column definition** system. Each column is configured
+ * through a `ColumnDef<T>` object that controls every aspect of that column's behavior:
  *
  * ```tsx
- * const columns: ColumnDef<DataType>[] = [
- *   {
- *     field: "firstName",           // Field path in data object
- *     title: "First Name",          // Column header (optional)
- *     type: "text",                 // Cell type: "text" | "number" | "boolean"
- *     editable: true,               // Allow inline editing
- *     width: "200px",               // Column width
- *     align: "left",                // Text alignment
- *   }
+ * interface ColumnDef<T = any> {
+ *   field: string;
+ *   title?: string;
+ *   type?: "text" | "number" | "boolean";
+ *   valueGetter?: (row: T, context: CellContext<T>) => unknown;
+ *   valueFormatter?: (value: unknown, context: CellContext<T>) => string;
+ *   renderCell?: (value: unknown, context: CellContext<T>) => React.ReactNode;
+ *   editable?: boolean;
+ *   onSave?: (newValue: unknown, context: CellContext<T>) => boolean;
+ *   width?: React.CSSProperties["width"];
+ *   minWidth?: React.CSSProperties["minWidth"];
+ *   maxWidth?: React.CSSProperties["maxWidth"];
+ *   align?: "left" | "center" | "right";
+ * }
+ * ```
+ *
+ * ### Data Flow Architecture
+ *
+ * Data flows through a pipeline of functions for maximum flexibility:
+ *
+ * ```
+ * Raw Data → valueGetter → valueFormatter → renderCell → Display
+ *                ↓              ↓              ↓
+ *           Extract Value   Format Value   Render UI
+ * ```
+ *
+ * Each step is customizable, allowing fine-grained control over data presentation.
+ *
+ * ---
+ *
+ * ## Column Definition Reference
+ *
+ * ### Required Properties
+ *
+ * | Property | Type | Description |
+ * |----------|------|-------------|
+ * | `field` | `string` | Field path in data object. Supports dot notation for nested access |
+ *
+ * ### Display Configuration
+ *
+ * | Property | Type | Default | Description |
+ * |----------|------|---------|-------------|
+ * | `title` | `string` | Field name (capitalized) | Column header text |
+ * | `type` | `"text" | "number" | "boolean"` | `"text"` | Determines default formatting and editing behavior |
+ * | `align` | `"left" | "center" | "right"` | `"left"` | Text alignment within cells |
+ *
+ * ### Layout Configuration
+ *
+ * | Property | Type | Default | Description |
+ * |----------|------|---------|-------------|
+ * | `width` | `React.CSSProperties["width"]` | `"auto"` | Column width (any valid CSS width) |
+ * | `minWidth` | `React.CSSProperties["minWidth"]` | `"auto"` | Minimum column width |
+ * | `maxWidth` | `React.CSSProperties["maxWidth"]` | `"auto"` | Maximum column width |
+ *
+ * ### Data Processing
+ *
+ * | Property | Type | Default | Description |
+ * |----------|------|---------|-------------|
+ * | `valueGetter` | `(row: T, context: CellContext<T>) => unknown` | Field accessor (using the `field` property) | Extract value from row data |
+ * | `valueFormatter` | `(value: unknown, context: CellContext<T>) => string` | Type-based formatter | Format value for display |
+ * | `renderCell` | `(value: unknown, context: CellContext<T>) => ReactNode` | Type-based renderer | Custom cell rendering |
+ *
+ * ### Editing Configuration
+ *
+ * | Property | Type | Default | Description |
+ * |----------|------|---------|-------------|
+ * | `editable` | `boolean` | `false` | Enable inline cell editing |
+ * | `onSave` | `(newValue: any, context: CellContext<T>) => boolean` | Update data array | Handle cell value changes |
+ *
+ * ---
+ *
+ * ## Usage Patterns
+ *
+ * ### Basic Data Display
+ *
+ * ```tsx
+ * const data = [
+ *   { id: 1, name: "John Doe", email: "john@example.com" },
+ *   { id: 2, name: "Jane Smith", email: "jane@example.com" },
+ * ];
+ *
+ * // should be memoized to avoid unnecessary re-renders
+ * const columns = useMemo(() => [
+ *   { field: "name", title: "Full Name" },
+ *   { field: "email", title: "Email Address" },
+ * ], []);
+ *
+ * <ObjectSetTable data={data} columns={columns} />
+ * ```
+ *
+ * ### Nested Field Access
+ *
+ * Use dot notation to access nested object properties:
+ *
+ * ```tsx
+ * const data = [
+ *   { user: { name: "John", address: { city: "NYC", country: "USA" } } }
+ * ];
+ *
+ * const columns = [
+ *   { field: "user.name", title: "Name" },
+ *   { field: "user.address.city", title: "City" },
+ *   { field: "user.address.country", title: "Country" },
  * ];
  * ```
  *
- * ### Field Access
+ * ### Cell Types and Formatting
  *
- * Use dot notation to access nested properties:
+ * Different cell types provide appropriate formatting and editing interfaces:
  *
  * ```tsx
- * // Data structure
- * const data = {
- *   user: { name: "John", address: { city: "NYC" } }
- * };
- *
- * // Column definitions
- * { field: "user.name" }           // → "John"
- * { field: "user.address.city" }   // → "NYC"
+ * const columns = [
+ *   { field: "name", type: "text" },           // Text input when editing
+ *   { field: "age", type: "number" },          // Number input, right-aligned
+ *   { field: "active", type: "boolean" },      // Checkbox display and editing
+ * ];
  * ```
  *
- * ### Cell Types
+ * ### Custom Value Processing
  *
- * The table supports three built-in cell types:
- *
- * - **`text`** (default): Displays text values, editable with text input
- * - **`number`**: Right-aligned numbers, editable with number input
- * - **`boolean`**: Displays as checkbox, editable as checkbox
- *
- * ### Custom Cell Rendering
- *
- * Override default rendering with the `renderCell` function:
+ * Transform data through the processing pipeline:
  *
  * ```tsx
  * {
- *   field: "status",
- *   renderCell: (value, context) => (
- *     <span className={value === "active" ? "text-green-600" : "text-red-600"}>
- *       {value}
- *     </span>
- *   )
+ *   field: "salary",
+ *   valueGetter: (row) => row.annualSalary / 12,           // Convert annual to monthly
+ *   valueFormatter: (value) => `$${value.toLocaleString()}`, // Format as currency
+ *   renderCell: (formatted) => <strong>{formatted}</strong>   // Bold display
  * }
  * ```
  *
- * ### Value Processing
+ * ### Computed Columns
  *
- * Control how values are extracted and formatted:
+ * Create columns from calculated values:
  *
  * ```tsx
  * {
- *   field: "price",
- *   valueGetter: (row) => row.price / 100,           // Convert cents to dollars
- *   valueFormatter: (value) => `$${value.toFixed(2)}`, // Format as currency
- *   renderCell: (formattedValue) => <strong>{formattedValue}</strong>
+ *   field: "computed", // field is ignored when valueGetter is provided
+ *   title: "Full Name",
+ *   valueGetter: (row) => `${row.firstName} ${row.lastName}`,
  * }
  * ```
  *
- * ### Editing and Saving
+ * ### Inline Editing
  *
- * Handle cell editing with the `onSave` callback:
+ * Enable cell editing with save handling:
  *
  * ```tsx
  * {
  *   field: "email",
  *   editable: true,
  *   onSave: (newValue, context) => {
- *     remoteSave(newValue); // save the value
+ *     // Validate and save the new value
+ *     if (newValue.includes("@")) {
+ *       context.row.email = newValue;
+ *       return true; // Save successful
+ *     }
+ *     return false; // Save failed
  *   }
  * }
  * ```
  *
- * ## Usage
+ * ### Custom Cell Rendering
  *
- * Basic usage with simple column definitions:
+ * Full control over cell appearance:
  *
  * ```tsx
- * const data = [
- *   { id: 1, name: "John", email: "john@example.com", active: true },
- *   { id: 2, name: "Jane", email: "jane@example.com", active: false },
- * ];
+ * {
+ *   field: "status",
+ *   renderCell: (value, context) => (
+ *     <div className="flex items-center gap-2">
+ *       <StatusIcon status={value} />
+ *       <span className={getStatusColor(value)}>{value}</span>
+ *     </div>
+ *   )
+ * }
+ * ```
  *
- * const columns = [
- *   { field: "name", editable: true },
- *   { field: "email", editable: true },
- *   { field: "active", type: "boolean" },
- * ];
+ * ---
  *
+ * ## Table Configuration
+ *
+ * ### Row Selection
+ *
+ * ```tsx
  * <ObjectSetTable
  *   data={data}
  *   columns={columns}
- *   allowRowSelection={true}
- *   showRowNumbers={true}
+ *   allowRowSelection={true}  // Enable row selection (default: true)
  * />
  * ```
  *
- * ## Keyboard Shortcuts
- *
- * - **Click**: Select cell or start editing
- * - **Arrow Keys**: Navigate between cells
- * - **Enter**: Start/stop editing mode
- * - **Escape**: Cancel editing
+ * **Selection Interactions:**
+ * - **Click**: Select single row
  * - **Ctrl/Cmd + Click**: Toggle row selection
  * - **Shift + Click**: Select range of rows
+ *
+ * ### Row Numbers
+ *
+ * ```tsx
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   showRowNumbers={true}     // Show row numbers column (default: true)
+ * />
+ * ```
+ *
+ * ---
+ *
+ * ## Keyboard Shortcuts
+ *
+ * | Key Combination | Action |
+ * |----------------|--------|
+ * | **Click** | Select cell or start editing |
+ * | **Arrow Keys** | Navigate between cells |
+ * | **Enter** | Start/stop editing mode |
+ * | **Escape** | Cancel editing |
+ * | **Ctrl/Cmd + Click** | Toggle row selection |
+ * | **Shift + Click** | Select range of rows |
+ *
+ * ---
+ *
+ * ## Advanced Usage
+ *
+ * ### Context Object
+ *
+ * The `CellContext<T>` object provides access to surrounding data:
+ *
+ * ```tsx
+ * interface CellContext<T> {
+ *   row: T;                           // Current row data
+ *   column: ColumnDef<T>;            // Column definition
+ *   rowIndex: number;                // Row position
+ *   columnIndex: number;             // Column position  
+ *   tableConfig: ObjectSetTableConfig<T>; // Full table configuration
+ * }
+ * ```
+ *
+ * Use context for complex rendering logic:
+ *
+ * ```tsx
+ * {
+ *   field: "priority",
+ *   renderCell: (value, context) => {
+ *     const isLastRow = context.rowIndex === context.tableConfig.data.length - 1;
+ *     const isHighPriority = value === "high";
+ *     
+ *     return (
+ *       <span className={cn(
+ *         isHighPriority && "text-red-600 font-bold",
+ *         isLastRow && "border-b-2"
+ *       )}>
+ *         {value}
+ *       </span>
+ *     );
+ *   }
+ * }
+ * ```
  */
 const meta: Meta<typeof ObjectSetTable> = {
   title: "Document Engineering/Data Display/Object Set Table",
