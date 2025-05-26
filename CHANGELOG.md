@@ -1,3 +1,24 @@
+# [1.6.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.5.0...v1.6.0) (2025-05-26)
+
+
+### Bug Fixes
+
+* generate snapshots ([c0c00e5](https://github.com/powerhouse-inc/document-engineering/commit/c0c00e582731c7cee8f83746a25ff957193f46af))
+* remove chromatic build as there's another action for that ([3291cb7](https://github.com/powerhouse-inc/document-engineering/commit/3291cb76e977c80f9e6adfe123ec122077b4bb63))
+* remove scalar alias ([2e794db](https://github.com/powerhouse-inc/document-engineering/commit/2e794db483a73c3b78a46678db07b05cc03d8598))
+* replace alias import ([76b0e62](https://github.com/powerhouse-inc/document-engineering/commit/76b0e620331c45ff3a42e424d94aca937184e856))
+* **scalars:** add same style in calendar for date-time ([4d08eea](https://github.com/powerhouse-inc/document-engineering/commit/4d08eea0b2a1ebd06b16c470f6262491215a7bab))
+* **scalars:** fix CR, remove comments ([230c3d3](https://github.com/powerhouse-inc/document-engineering/commit/230c3d3d0a06a085764a7100636bc8b02d66f5d0))
+* **scalars:** fix the CR, in type component ([3d66045](https://github.com/powerhouse-inc/document-engineering/commit/3d6604532f9a61621eefc985c73e2f74d5823135))
+* specify pnpm version ([41f0671](https://github.com/powerhouse-inc/document-engineering/commit/41f0671005f4cbc88c4bacba348449a443738dab))
+* text field tests ([dffce97](https://github.com/powerhouse-inc/document-engineering/commit/dffce97330896eaa31960494efb93d9ac21ae83d))
+* time picker tests ([f8fd866](https://github.com/powerhouse-inc/document-engineering/commit/f8fd86607592839c2a94765a3ae325ffbc9329e0))
+
+
+### Features
+
+* add boolean cells support ([cbd136c](https://github.com/powerhouse-inc/document-engineering/commit/cbd136c79c4a3f317b9d42c02d89a6154c4db8d6))
+
 # [1.5.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.4.1...v1.5.0) (2025-05-23)
 
 
