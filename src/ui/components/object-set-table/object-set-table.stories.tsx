@@ -4,6 +4,8 @@ import { Icon } from "../icon/index.js";
 import { cn } from "../../../scalars/index.js";
 import { mockData, type MockedPerson } from "./mock-data.js";
 import { ObjectSetTable } from "./object-set-table.js";
+import ComputedColumnsExample from "./examples/computed-columns/computed-columns.js";
+import CustomRenderingExample from "./examples/custom-rendering/custom-rendering.js";
 
 /**
  * The `ObjectSetTable` component is a powerful data table that displays collections of objects in a structured format.
@@ -224,4 +226,22 @@ export const CellTypes: Story = {
     ],
     data: mockData.slice(0, 5),
   },
+};
+
+/**
+ * Shows how to use computed columns with value formatters to transform and categorize data.
+ * Demonstrates email domain extraction, payment categorization with badges, and address formatting.
+ * This story renders the ComputedColumnsExample component from the examples.
+ */
+export const ComputedColumns: StoryObj = {
+  render: () => <ComputedColumnsExample />,
+};
+
+/**
+ * Demonstrates advanced custom rendering with icons, avatars, status indicators, and styled components.
+ * Shows how to create rich, visually appealing table cells with interactive elements.
+ * This story renders the CustomRenderingExample component from the examples.
+ */
+export const CustomRendering: StoryObj = {
+  render: () => <CustomRenderingExample />,
 };
