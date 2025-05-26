@@ -129,10 +129,17 @@ const DateTimePickerContent = ({
             )}
             monthGridClassName={cn("w-full", "px-[5.5px]")}
             dayClassName={cn(
-              "w-[34px] cursor-pointer text-[12px] hover:rounded-[4px] hover:bg-gray-200 text-gray-900",
+              "w-[34px] cursor-pointer text-[12px] text-gray-900 hover:rounded-[4px] hover:bg-gray-200",
               // dark
-              "dark:text-gray-50 hover:dark:bg-gray-900",
+              "dark:text-gray-50 dark:hover:bg-gray-900",
+              // disabled
               "disabled:text-gray-300",
+              // Remove hover when selected
+              "aria-selected:hover:bg-gray-900 dark:aria-selected:hover:bg-gray-50",
+              // Selected state
+              "aria-selected:!bg-gray-900 aria-selected:!text-white",
+              // Dark mode selected state
+              "dark:aria-selected:!bg-gray-50 dark:aria-selected:!text-gray-900",
             )}
             buttonPreviousClassName={cn(
               "border border-gray-200",
@@ -156,8 +163,8 @@ const DateTimePickerContent = ({
             )}
             selectedClassName={cn(
               "rounded-[4px]",
-              "bg-gray-900 text-white",
-              "hover:bg-gray-900",
+              "!bg-gray-900 !text-white",
+              "hover:bg-gray-900 hover:text-white",
               // dark
               "dark:bg-gray-50 dark:text-gray-900",
               "dark:hover:bg-gray-50 dark:hover:text-gray-900",
