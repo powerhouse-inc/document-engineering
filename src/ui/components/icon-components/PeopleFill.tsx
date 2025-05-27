@@ -1,4 +1,4 @@
-import type { Props } from "./index.js";
+import type { Props } from "./types.js";
 export default function PeopleFill(props: Props) {
   return (
     <svg

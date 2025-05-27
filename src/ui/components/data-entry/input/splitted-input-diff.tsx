@@ -9,7 +9,7 @@ import {
 } from "../../../../ui/components/tooltip/tooltip.js";
 import { InputDiff } from "./subcomponent/input-diff.js";
 import { TextDiff } from "./subcomponent/text-diff.js";
-import type { PlatformIcon } from "../url-input/index.js";
+import type { PlatformIcon } from "../url-input/types.js";
 import UrlFavicon from "../url-input/url-favicon.js";
 
 interface CopyIconProps {

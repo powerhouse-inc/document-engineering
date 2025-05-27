@@ -1,4 +1,6 @@
-import { castValue, deepEqual, isEmpty, type ValueCast } from "../../index.js";
+import { castValue, type ValueCast } from "../../lib/value-cast.js";
+import { deepEqual } from "../../lib/deep-equal.js";
+import { isEmpty } from "../../lib/is-empty.js";
 import {
   forwardRef,
   useCallback,

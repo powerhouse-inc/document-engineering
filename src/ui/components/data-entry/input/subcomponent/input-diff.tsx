@@ -1,4 +1,4 @@
-import { cn } from "../../../../../scalars/lib/index.js";
+import { cn } from "../../../../../scalars/lib/utils.js";
 
 interface InputDiffProps {
   children: React.ReactNode;

@@ -1,13 +1,8 @@
-import {
-  AmountInput,
-  type AmountInputProps,
-} from "../../../ui/components/data-entry/amount-input/amount-input.js";
+import { AmountInput } from "../../../ui/components/data-entry/amount-input/amount-input.js";
 import { withFieldValidation } from "../fragments/with-field-validation/with-field-validation.js";
-import { type FieldErrorHandling } from "../types.js";
+import type { AmountFieldProps } from "./types.js";
 import { validateAmountCurrency } from "./amount-currency-validations.js";
 import { validateAmount } from "./amount-field-validations.js";
-
-type AmountFieldProps = AmountInputProps & FieldErrorHandling;
 
 const AmountField = withFieldValidation<AmountFieldProps>(AmountInput, {
   validations: {
@@ -18,4 +13,4 @@ const AmountField = withFieldValidation<AmountFieldProps>(AmountInput, {
 
 AmountField.displayName = "AmountField";
 
-export { AmountField, type AmountFieldProps };
+export { AmountField };

@@ -4,7 +4,7 @@ import { cn } from "../../../../scalars/lib/index.js";
 import { Command as CommandPrimitive } from "cmdk";
 import React, { useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { Input } from "../../../../ui/components/index.js";
+import { Input } from "../../../../ui/components/data-entry/input/index.js";
 import {
   Tooltip,
   TooltipProvider,
@@ -13,7 +13,7 @@ import { sharedValueTransformers } from "../../../lib/shared-value-transformers.
 import type { InputBaseProps } from "../../types.js";
 import ValueTransformer, {
   type TransformerType,
-} from "../value-transformer/value-transformer.js";
+} from "../value-transformer/index.js";
 import type { IdAutocompleteOption } from "./types.js";
 
 interface IdAutocompleteInputContainerProps

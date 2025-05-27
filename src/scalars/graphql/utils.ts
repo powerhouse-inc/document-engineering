@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { customScalars } from "./index.js";
+import { customScalars } from "./scalars.js";
 import { type Serializable } from "./types.js";
 
 export const SerializableSchema: z.ZodType<Serializable> = z.lazy(() =>

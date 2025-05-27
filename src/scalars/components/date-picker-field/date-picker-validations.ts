@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { type DateFieldValue } from "../../../ui/components/data-entry/date-picker/types.js";
+import type { DateFieldValue } from "../../../ui/components/data-entry/date-picker/types.js";
 
 import {
   formatDateToValidCalendarDateFormat,
@@ -10,7 +10,7 @@ import {
   isDateFormatAllowed,
   normalizeMonthFormat,
 } from "../../../ui/components/data-entry/date-time-picker/utils.js";
-import { type DatePickerFieldProps } from "./date-picker-field.js";
+import type { DatePickerFieldProps } from "./types.js";
 
 export const validateDatePicker =
   ({

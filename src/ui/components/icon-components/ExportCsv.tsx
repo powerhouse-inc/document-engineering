@@ -1,4 +1,4 @@
-import type { Props } from "./index.js";
+import type { Props } from "./types.js";
 export default function ExportCsv(props: Props) {
   return (
     <svg
