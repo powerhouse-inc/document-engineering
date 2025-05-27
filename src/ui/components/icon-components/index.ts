@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { Props } from "./types.js";
 
 import CalendarTime from "./CalendarTime.js";
 import CaretLeft from "./CaretLeft.js";
@@ -114,7 +114,6 @@ import XTwitter from "./XTwitter.js";
 import XmarkLight from "./XmarkLight.js";
 import Xmark from "./Xmark.js";
 import Youtube from "./Youtube.js";
-export type Props = ComponentPropsWithoutRef<"svg">;
 
 export const iconNames = [
   "CalendarTime",

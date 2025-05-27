@@ -1,7 +1,7 @@
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import { FormGroup } from "../../../../scalars/components/fragments/form-group/index.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
 import { SplittedInputDiff } from "../input/splitted-input-diff.js";
-import type { UrlInputProps, UrlInputWithDifference } from "./url-input.js";
+import type { UrlInputProps, UrlInputWithDifference } from "./types.js";
 
 interface UrlInputDiffProps extends UrlInputWithDifference {
   value: string;

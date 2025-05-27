@@ -8,11 +8,11 @@ import {
   type TextareaFieldProps,
 } from "../fragments/textarea-field/index.js";
 
-export interface StringFieldProps
+interface StringFieldProps
   extends Omit<TextFieldProps, keyof TextareaFieldProps>,
     TextareaFieldProps {}
 
-export const StringField = React.forwardRef<
+const StringField = React.forwardRef<
   HTMLInputElement | HTMLTextAreaElement,
   StringFieldProps
 >(({ autoExpand, multiline, ...props }, ref) => {
@@ -37,3 +37,5 @@ export const StringField = React.forwardRef<
 });
 
 StringField.displayName = "StringField";
+
+export { StringField, type StringFieldProps };

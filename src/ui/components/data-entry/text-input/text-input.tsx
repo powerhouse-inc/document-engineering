@@ -1,10 +1,10 @@
 import { cn } from "../../../../scalars/lib/utils.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
+import { FormMessageList } from "../../../../scalars/components/fragments/form-message/index.js";
 import { forwardRef, useId, useMemo } from "react";
 import { CharacterCounter } from "../../../../scalars/components/fragments/character-counter/index.js";
 import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
+import { FormGroup } from "../../../../scalars/components/fragments/form-group/index.js";
+import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
 import ValueTransformer, {
   type TransformerType,
 } from "../../../../scalars/components/fragments/value-transformer/value-transformer.js";

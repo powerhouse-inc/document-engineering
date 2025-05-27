@@ -1,25 +1,17 @@
 import { Icon } from "../../../ui/components/icon/index.js";
 import { cn } from "../../../scalars/lib/index.js";
 import { forwardRef, useId } from "react";
-import { Input } from "../../../ui/components/index.js";
+import { Input } from "../../../ui/components/data-entry/input/index.js";
 import { FormDescription } from "../fragments/form-description/index.js";
 import { FormGroup } from "../fragments/form-group/index.js";
 import { FormLabel } from "../fragments/form-label/index.js";
 import { FormMessageList } from "../fragments/form-message/index.js";
 import { withFieldValidation } from "../fragments/with-field-validation/index.js";
 import { validateNumericType } from "./number-field-validations.js";
-import type { InputNumberProps } from "./types.js";
+import type { NumberFieldProps } from "./types.js";
 import { useNumberField } from "./use-number-field.js";
 import { regex } from "./utils.js";
 
-export interface NumberFieldProps extends InputNumberProps {
-  name: string;
-  value?: number | bigint;
-  defaultValue?: number | bigint;
-  className?: string;
-  pattern?: RegExp;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-}
 export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
     {
@@ -178,4 +170,5 @@ export const NumberField = withFieldValidation<NumberFieldProps>(
     },
   },
 );
+
 NumberField.displayName = "NumberField";

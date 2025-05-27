@@ -5,13 +5,12 @@ import {
   FormMessageList,
 } from "../../../../scalars/components/fragments/index.js";
 import { cn } from "../../../../scalars/lib/utils.js";
-import type { InputBaseProps } from "../../../../scalars/components/types.js";
 import { type Currency } from "../../../../scalars/components/currency-code-field/types.js";
 import { forwardRef, useId } from "react";
 import { CurrencyCodeFieldRaw } from "../../../../scalars/components/currency-code-field/currency-code-field.js";
 import { type SelectFieldProps } from "../../../../scalars/components/fragments/select-field/index.js";
-import { type NumberFieldProps, NumberFieldRaw } from "../../../../scalars/components/number-field/number-field.js";
-import type { InputNumberProps } from "../../../../scalars/components/number-field/types.js";
+import { NumberFieldRaw } from "../../../../scalars/components/number-field/number-field.js";
+import type { InputNumberProps, NumberFieldProps } from "../../../../scalars/components/number-field/types.js";
 import type { AmountInputPropsGeneric, AmountValue } from "./types.js";
 import { useAmountInput } from "./use-amount-input.js";
 

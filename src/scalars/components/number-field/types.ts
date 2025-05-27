@@ -40,3 +40,12 @@ export interface InputNumberProps
   precision?: number;
   trailingZeros?: boolean;
 }
+
+export interface NumberFieldProps extends InputNumberProps {
+  name: string;
+  value?: number | bigint;
+  defaultValue?: number | bigint;
+  className?: string;
+  pattern?: RegExp;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+}

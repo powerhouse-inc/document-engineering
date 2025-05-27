@@ -1,8 +1,8 @@
 import {
   type IconName,
   iconComponents,
-  type Props,
 } from "../icon-components/index.js";
+import type { Props } from "../icon-components/types.js";
 import { type Color, getDimensions, type Size } from "@powerhousedao/design-system";
 import {
   type ComponentPropsWithoutRef,
