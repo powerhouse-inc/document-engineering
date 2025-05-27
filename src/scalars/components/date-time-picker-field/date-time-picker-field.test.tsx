@@ -170,32 +170,38 @@ describe("DateTimePickerField", () => {
   });
 
   it("should validate min date", async () => {
-    const minDate = "2024-12-01";
     renderWithForm(
       <DateTimePickerField
         {...defaultProps}
-        minDate={minDate}
-        value="2024-11-30 14:30"
+        minDate="2024-12-01"
+        showErrorOnBlur
       />
     );
 
-    await waitFor(() => {
-      expect(screen.getByText(`Date must be after ${minDate}`)).toBeInTheDocument();
-    });
+    const input = screen.getByPlaceholderText("Select date and time");
+    expect(input).toBeInTheDocument();
+
+    await userEvent.type(input, "2024-11-30 14:30");
+    await userEvent.tab();
+
+    expect(screen.getByText(/Date must be after/i)).toBeInTheDocument();
   });
 
   it("should validate max date", async () => {
-    const maxDate = "2024-12-31";
     renderWithForm(
       <DateTimePickerField
         {...defaultProps}
-        maxDate={maxDate}
-        value="2025-01-01 14:30"
+        maxDate="2024-12-31"
+        showErrorOnBlur
       />
     );
 
-    await waitFor(() => {
-      expect(screen.getByText(`Date must be before ${maxDate}`)).toBeInTheDocument();
-    });
+    const input = screen.getByPlaceholderText("Select date and time");
+    expect(input).toBeInTheDocument();
+
+    await userEvent.type(input, "2025-01-01 14:30");
+    await userEvent.tab();
+
+    expect(screen.getByText(/Date must be before/i)).toBeInTheDocument();
   });
 }); 
