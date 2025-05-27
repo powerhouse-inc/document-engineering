@@ -1,4 +1,4 @@
-import type { Props } from "./index.js";
+import type { Props } from "./types.js";
 export default function ConnectSmall(props: Props) {
   return (
     <svg

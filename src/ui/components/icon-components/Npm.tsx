@@ -1,4 +1,4 @@
-import type { Props } from "./index.js";
+import type { Props } from "./types.js";
 export default function Npm(props: Props) {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">

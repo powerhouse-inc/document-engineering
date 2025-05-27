@@ -1,4 +1,4 @@
-import type { Props } from "./index.js";
+import type { Props } from "./types.js";
 export default function FolderOpen(props: Props) {
   return (
     <svg {...props} viewBox="0 0 20 19" fill="currentcolor">

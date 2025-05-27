@@ -1,4 +1,4 @@
-import type { Props } from "./index.js";
+import type { Props } from "./types.js";
 export default function Tabler(props: Props) {
   return (
     <svg

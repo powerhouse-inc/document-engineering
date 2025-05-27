@@ -2,18 +2,18 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useId, useMemo, useRef } from "react";
-import { Input } from "../../../../ui/components/index.js";
+import { Input } from "../../../../ui/components/data-entry/input/index.js";
 import { sharedValueTransformers } from "../../../lib/shared-value-transformers.js";
 import { cn } from "../../../lib/utils.js";
-import { Command } from "../command/command.js";
-import { FormDescription } from "../form-description/form-description.js";
-import { FormGroup } from "../form-group/form-group.js";
-import { FormLabel } from "../form-label/form-label.js";
+import { Command } from "../command/index.js";
+import { FormDescription } from "../form-description/index.js";
+import { FormGroup } from "../form-group/index.js";
+import { FormLabel } from "../form-label/index.js";
 import { FormMessageList } from "../form-message/index.js";
-import { Popover, PopoverAnchor, PopoverContent } from "../popover/popover.js";
+import { Popover, PopoverAnchor, PopoverContent } from "../popover/index.js";
 import ValueTransformer, {
   type TransformerType,
-} from "../value-transformer/value-transformer.js";
+} from "../value-transformer/index.js";
 import { IdAutocompleteInputContainer } from "./id-autocomplete-input-container.js";
 import { IdAutocompleteListOption } from "./id-autocomplete-list-option.js";
 import { IdAutocompleteList } from "./id-autocomplete-list.js";

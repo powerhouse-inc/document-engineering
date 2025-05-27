@@ -5,8 +5,10 @@ import {
 import type { FieldErrorHandling } from "../../types.js";
 import { withFieldValidation } from "../with-field-validation/index.js";
 
-export type TextFieldProps = TextInputProps & FieldErrorHandling;
+type TextFieldProps = TextInputProps & FieldErrorHandling;
 
-export const TextField = withFieldValidation<TextFieldProps>(TextInput);
+const TextField = withFieldValidation<TextFieldProps>(TextInput);
 
 TextField.displayName = "TextField";
+
+export { TextField, type TextFieldProps };

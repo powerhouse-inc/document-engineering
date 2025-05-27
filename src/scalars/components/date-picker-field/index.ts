@@ -1,4 +1,2 @@
-export {
-  DatePickerField,
-  type DatePickerFieldProps,
-} from "./date-picker-field.js";
+export { DatePickerField } from "./date-picker-field.js";
+export type { DatePickerFieldProps } from "./types.js";

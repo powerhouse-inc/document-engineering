@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { useCallback, useId, useRef, useState } from "react";
 import { type UseFormReturn } from "react-hook-form";
 import { Checkbox } from "../../ui/components/data-entry/checkbox/checkbox.js";
-import { Form } from "../components/index.js";
+import { Form } from "../components/form/index.js";
 
 function _isValidRegex(pattern: unknown): boolean {
   try {
