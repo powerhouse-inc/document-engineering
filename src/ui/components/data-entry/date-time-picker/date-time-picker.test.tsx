@@ -68,18 +68,18 @@ describe("DateTimePicker", () => {
       />
     );
 
-    // Click en el botón del calendario usando el ícono SVG
+    // Click the calendar button using the SVG icon
     const calendarButton = screen.getByTestId("icon-fallback").closest("button");
     if (!calendarButton) throw new Error("Calendar button not found");
     await userEvent.click(calendarButton);
 
-    // Esperar a que el calendario esté presente
+    // Wait for the calendar to be present
     await waitFor(() => {
       const calendar = screen.getByRole("dialog");
       expect(calendar).toBeInTheDocument();
     });
 
-    // Buscar todos los botones de días usando el aria-label
+    // Find all day buttons using the aria-label
     const dateButtons = screen.getAllByRole("button", {
       name: /^(Today, )?[A-Za-z]+, [A-Za-z]+ \d{1,2}(st|nd|rd|th), \d{4}$/
     });
@@ -89,13 +89,13 @@ describe("DateTimePicker", () => {
       const dateStr = button.getAttribute("aria-label");
       if (!dateStr) return;
 
-      // Extraer el día, mes y año del aria-label
-      const match = dateStr.match(/([A-Za-z]+), ([A-Za-z]+) (\\d{1,2})(st|nd|rd|th), (\\d{4})/);
+      // Extract day, month and year from aria-label
+      const match = dateStr.match(/([A-Za-z]+), ([A-Za-z]+) (\d{1,2})(st|nd|rd|th), (\d{4})/);
       if (!match) return;
       const [, , month, day, , year] = match;
       const buttonDate = new Date(`${month} ${day}, ${year}`);
 
-      // Si la fecha del botón es menor a hoy, debe estar deshabilitado
+      // If the button date is before today, it should be disabled
       if (
         buttonDate.getFullYear() < today.getFullYear() ||
         (buttonDate.getFullYear() === today.getFullYear() && buttonDate.getMonth() < today.getMonth()) ||
