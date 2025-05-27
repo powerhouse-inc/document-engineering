@@ -1,22 +1,22 @@
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/index.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
-import { SplittedInputDiff } from "../input/splitted-input-diff.js";
-import type { UrlInputProps, UrlInputWithDifference } from "./types.js";
+import { FormGroup } from '../../../../scalars/components/fragments/form-group/index.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
+import { SplittedInputDiff } from '../input/splitted-input-diff.js'
+import type { UrlInputProps, UrlInputWithDifference } from './types.js'
 
 interface UrlInputDiffProps extends UrlInputWithDifference {
-  value: string;
-  label: UrlInputProps["label"];
-  required: UrlInputProps["required"];
-  platformIcons: UrlInputProps["platformIcons"];
+  value: string
+  label: UrlInputProps['label']
+  required: UrlInputProps['required']
+  platformIcons: UrlInputProps['platformIcons']
 }
 
 const UrlInputDiff = ({
-  value = "",
+  value = '',
   label,
   required,
   viewMode,
-  diffMode = "sentences",
-  baseValue = "",
+  diffMode = 'sentences',
+  baseValue = '',
   platformIcons,
 }: UrlInputDiffProps) => {
   return (
@@ -35,7 +35,7 @@ const UrlInputDiff = ({
         platformIcons={platformIcons}
       />
     </FormGroup>
-  );
-};
+  )
+}
 
-export { UrlInputDiff };
+export { UrlInputDiff }

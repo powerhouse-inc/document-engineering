@@ -1,6 +1,6 @@
-import { type Currency } from "../../../../scalars/components/currency-code-field/types.js";
-import { useEffect, useMemo, useState } from "react";
-import { isValidNumber } from "../../../../scalars/components/number-field/number-field-validations.js";
+import { type Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import { useEffect, useMemo, useState } from 'react'
+import { isValidNumber } from '../../../../scalars/components/number-field/number-field-validations.js'
 import {
   type Amount,
   type AmountCrypto,
@@ -8,7 +8,7 @@ import {
   type AmountFiat,
   type AmountInputPropsGeneric,
   type AmountValue,
-} from "./types.js";
+} from './types.js'
 import {
   createAmountValue,
   displayValueAmount,
@@ -18,18 +18,18 @@ import {
   isNotSafeValue,
   isValidBigInt,
   isValidNumberGreaterThanMaxSafeInteger,
-} from "./utils.js";
+} from './utils.js'
 
 interface UseAmountInputProps {
-  value?: AmountValue;
-  defaultValue?: AmountValue;
-  type: AmountInputPropsGeneric["type"];
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  precision?: number;
-  viewPrecision?: number;
-  trailingZeros?: boolean;
-  units?: Currency[];
+  value?: AmountValue
+  defaultValue?: AmountValue
+  type: AmountInputPropsGeneric['type']
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  precision?: number
+  viewPrecision?: number
+  trailingZeros?: boolean
+  units?: Currency[]
 }
 
 export const useAmountInput = ({
@@ -43,242 +43,218 @@ export const useAmountInput = ({
   trailingZeros,
   units,
 }: UseAmountInputProps) => {
-  const currentValue = value ?? defaultValue;
+  const currentValue = value ?? defaultValue
 
   const baseValue = useMemo(() => {
     if (currentValue === undefined) {
-      return undefined;
+      return undefined
     }
 
     // If it's an object (for any type), we extract the amount property
-    if (typeof currentValue === "object") {
-      return currentValue.amount;
+    if (typeof currentValue === 'object') {
+      return currentValue.amount
     }
 
     // If it's a primitive value (for AmountPercentage)
-    return currentValue;
-  }, [currentValue]);
+    return currentValue
+  }, [currentValue])
 
   useEffect(() => {
-    if (type === "AmountPercentage") {
-      if (typeof currentValue === "object") {
+    if (type === 'AmountPercentage') {
+      if (typeof currentValue === 'object') {
         const newValue =
-          (currentValue.amount as unknown) === ""
-            ? ""
+          (currentValue.amount as unknown) === ''
+            ? ''
             : (currentValue.amount as unknown) === undefined
-              ? ""
-              : currentValue.amount;
-        const nativeEvent = handleEventOnChange(newValue);
-        onChange?.(nativeEvent);
-        return;
+              ? ''
+              : currentValue.amount
+        const nativeEvent = handleEventOnChange(newValue)
+        onChange?.(nativeEvent)
+        return
       }
       if (
-        typeof currentValue === "number" ||
-        typeof currentValue === "string" ||
-        typeof currentValue === "bigint" ||
-        typeof currentValue === "undefined"
+        typeof currentValue === 'number' ||
+        typeof currentValue === 'string' ||
+        typeof currentValue === 'bigint' ||
+        typeof currentValue === 'undefined'
       ) {
-        const nativeEvent = handleEventOnChange(currentValue);
-        onChange?.(
-          nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>,
-        );
+        const nativeEvent = handleEventOnChange(currentValue)
+        onChange?.(nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>)
       }
     }
     if (
-      (type === "AmountFiat" ||
-        type === "AmountCrypto" ||
-        type === "Amount" ||
-        type === "AmountCurrency") &&
-      (typeof currentValue === "number" || typeof currentValue === "string")
+      (type === 'AmountFiat' || type === 'AmountCrypto' || type === 'Amount' || type === 'AmountCurrency') &&
+      (typeof currentValue === 'number' || typeof currentValue === 'string')
     ) {
       const newValue = {
         amount: currentValue,
-        unit: "",
-      } as AmountCurrency;
-      const nativeEvent = handleEventOnChange(newValue);
-      onChange?.(nativeEvent);
+        unit: '',
+      } as AmountCurrency
+      const nativeEvent = handleEventOnChange(newValue)
+      onChange?.(nativeEvent)
     }
-  }, [currentValue, onChange, type]);
+  }, [currentValue, onChange, type])
 
   const valueSelect = useMemo(() => {
     if (currentValue === undefined) {
-      return undefined;
+      return undefined
     }
 
     // If it's an object, we try to get the unit property
-    if (typeof currentValue === "object" && "unit" in currentValue) {
-      return currentValue.unit;
+    if (typeof currentValue === 'object' && 'unit' in currentValue) {
+      return currentValue.unit
     }
 
-    return undefined;
-  }, [currentValue]);
+    return undefined
+  }, [currentValue])
 
   const isBigInt =
-    type === "AmountCrypto" ||
-    (type === "AmountCurrency" &&
-      isValidNumberGreaterThanMaxSafeInteger(baseValue?.toString()));
+    type === 'AmountCrypto' ||
+    (type === 'AmountCurrency' && isValidNumberGreaterThanMaxSafeInteger(baseValue?.toString()))
 
-  const [inputFocused, setInputFocused] = useState(false);
+  const [inputFocused, setInputFocused] = useState(false)
 
-  const rawAmountState = baseValue?.toString() ?? "";
+  const rawAmountState = baseValue?.toString() ?? ''
   const displayValueAmountState = useMemo(() => {
     if (inputFocused) {
-      return rawAmountState;
+      return rawAmountState
     }
 
-    if (
-      type === "Amount" ||
-      type === "AmountPercentage" ||
-      type === "AmountFiat"
-    ) {
+    if (type === 'Amount' || type === 'AmountPercentage' || type === 'AmountFiat') {
       if (!isValidNumber(rawAmountState) || isNotSafeValue(rawAmountState)) {
         // Return the value without formatting if not valid
-        return baseValue?.toString() ?? "";
+        return baseValue?.toString() ?? ''
       }
     }
-    if (type === "AmountCrypto") {
-      return baseValue?.toString();
+    if (type === 'AmountCrypto') {
+      return baseValue?.toString()
     }
-    if (type === "AmountCurrency") {
+    if (type === 'AmountCurrency') {
       if (isValidNumberGreaterThanMaxSafeInteger(rawAmountState)) {
         //   // Return the value without formatting if not valid
-        return baseValue?.toString() ?? "";
+        return baseValue?.toString() ?? ''
       }
       if (!isValidNumber(rawAmountState) || isNotSafeValue(rawAmountState)) {
         // Return the value without formatting if not valid
-        return baseValue?.toString() ?? "";
+        return baseValue?.toString() ?? ''
       }
     }
     // Here its safe to format the value
-    return displayValueAmount(
-      baseValue?.toString() ?? "",
-      precision,
-      viewPrecision,
-      trailingZeros,
-    );
-  }, [
-    inputFocused,
-    type,
-    baseValue,
-    precision,
-    viewPrecision,
-    trailingZeros,
-    rawAmountState,
-  ]);
+    return displayValueAmount(baseValue?.toString() ?? '', precision, viewPrecision, trailingZeros)
+  }, [inputFocused, type, baseValue, precision, viewPrecision, trailingZeros, rawAmountState])
 
-  const isPercent = type === "AmountPercentage";
-  const isAmountWithUnit =
-    type === "Amount" && typeof value === "object" && "unit" in value;
-  const isAmountWithoutUnit = type === "Amount" && !isAmountWithUnit;
+  const isPercent = type === 'AmountPercentage'
+  const isAmountWithUnit = type === 'Amount' && typeof value === 'object' && 'unit' in value
+  const isAmountWithoutUnit = type === 'Amount' && !isAmountWithUnit
 
   const isShowSelect =
     (isAmountWithUnit && units && units.length > 0) ||
-    type === "AmountFiat" ||
-    type === "AmountCrypto" ||
-    type === "AmountCurrency";
+    type === 'AmountFiat' ||
+    type === 'AmountCrypto' ||
+    type === 'AmountCurrency'
 
   // Handle the change of the input
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
+    const inputValue = e.target.value
 
-    if (type === "AmountFiat" && typeof value === "object") {
+    if (type === 'AmountFiat' && typeof value === 'object') {
       const newValue = {
         ...value,
         amount: createAmountValue(inputValue),
-      } as AmountValue;
+      } as AmountValue
 
-      const nativeEvent = handleEventOnChange(newValue);
+      const nativeEvent = handleEventOnChange(newValue)
 
-      onChange?.(nativeEvent);
+      onChange?.(nativeEvent)
     }
 
     // Handle the change of the currency crypto
-    if (type === "AmountCrypto" && typeof value === "object") {
+    if (type === 'AmountCrypto' && typeof value === 'object') {
       const newValueCurrencyCrypto = {
         ...value,
         amount: createAmountValue(inputValue),
-      } as AmountValue;
-      const nativeEvent = handleEventOnChange(newValueCurrencyCrypto);
+      } as AmountValue
+      const nativeEvent = handleEventOnChange(newValueCurrencyCrypto)
 
-      onChange?.(nativeEvent);
+      onChange?.(nativeEvent)
     }
 
-    if (type === "AmountPercentage") {
-      const amountValue = createAmountValue(inputValue);
-      const nativeEvent = handleEventOnChange(amountValue);
-      onChange?.(nativeEvent);
+    if (type === 'AmountPercentage') {
+      const amountValue = createAmountValue(inputValue)
+      const nativeEvent = handleEventOnChange(amountValue)
+      onChange?.(nativeEvent)
     }
     // Handle the change of the universal amount
-    if (type === "AmountCurrency" && typeof value === "object") {
+    if (type === 'AmountCurrency' && typeof value === 'object') {
       const newValue = {
         ...value,
         amount: createAmountValue(inputValue),
-      } as AmountValue;
+      } as AmountValue
 
-      const nativeEvent = handleEventOnChange(newValue);
+      const nativeEvent = handleEventOnChange(newValue)
 
-      onChange?.(nativeEvent);
+      onChange?.(nativeEvent)
     }
 
-    if (type === "Amount" && typeof value === "object") {
+    if (type === 'Amount' && typeof value === 'object') {
       const newValue = {
         ...value,
         amount: createAmountValue(inputValue),
-      } as AmountValue;
-      const nativeEvent = handleEventOnChange(newValue);
-      onChange?.(nativeEvent);
+      } as AmountValue
+      const nativeEvent = handleEventOnChange(newValue)
+      onChange?.(nativeEvent)
     }
-  };
+  }
   // Handle the change of the select
   const handleOnChangeSelect = (e: string | string[]) => {
     let newValue: AmountFiat | AmountCrypto | AmountCurrency | Amount = {} as
       | AmountFiat
       | AmountCrypto
       | AmountCurrency
-      | Amount;
-    if (type === "AmountFiat" && typeof value === "object") {
+      | Amount
+    if (type === 'AmountFiat' && typeof value === 'object') {
       newValue = {
         ...value,
-        unit: typeof e === "string" ? e : undefined,
-      } as AmountFiat;
+        unit: typeof e === 'string' ? e : undefined,
+      } as AmountFiat
     }
-    if (type === "AmountCrypto" && typeof value === "object") {
+    if (type === 'AmountCrypto' && typeof value === 'object') {
       newValue = {
         ...value,
-        unit: typeof e === "string" ? e : undefined,
-      } as AmountCrypto;
+        unit: typeof e === 'string' ? e : undefined,
+      } as AmountCrypto
     }
-    if (type === "AmountCurrency" && typeof value === "object") {
+    if (type === 'AmountCurrency' && typeof value === 'object') {
       newValue = {
         ...value,
-        unit: typeof e === "string" ? e : undefined,
-      } as AmountCurrency;
+        unit: typeof e === 'string' ? e : undefined,
+      } as AmountCurrency
     }
-    if (type === "Amount" && typeof value === "object") {
+    if (type === 'Amount' && typeof value === 'object') {
       newValue = {
         ...value,
-        unit: typeof e === "string" ? e : undefined,
-      } as Amount;
+        unit: typeof e === 'string' ? e : undefined,
+      } as Amount
     }
 
-    const nativeEvent = handleEventOnChange(newValue);
-    onChange?.(nativeEvent);
-  };
+    const nativeEvent = handleEventOnChange(newValue)
+    onChange?.(nativeEvent)
+  }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setInputFocused(false);
-    const inputValue = e.target.value;
+    setInputFocused(false)
+    const inputValue = e.target.value
     //Avoid transformation if the value is not a number
-    if (type === "AmountFiat" && typeof value === "object") {
+    if (type === 'AmountFiat' && typeof value === 'object') {
       if (!isValidNumber(inputValue)) {
         const newValue = {
           ...value,
           amount: inputValue,
-        };
-        const nativeEvent = handleEventOnBlur(newValue);
+        }
+        const nativeEvent = handleEventOnBlur(newValue)
 
-        onBlur?.(nativeEvent);
-        return;
+        onBlur?.(nativeEvent)
+        return
       }
 
       // Avoid transformation if the value is not a number
@@ -286,128 +262,110 @@ export const useAmountInput = ({
         const newValue = {
           ...value,
           amount: inputValue,
-        };
-        const nativeEvent = handleEventOnBlur(newValue);
+        }
+        const nativeEvent = handleEventOnBlur(newValue)
 
-        onBlur?.(nativeEvent);
-        return;
+        onBlur?.(nativeEvent)
+        return
       }
-      const formatValue = displayValueAmount(
-        inputValue,
-        precision,
-        viewPrecision,
-        trailingZeros,
-      );
+      const formatValue = displayValueAmount(inputValue, precision, viewPrecision, trailingZeros)
       // Update the state with the formatted value
       const newValue = {
         ...value,
         amount: formatValue,
-      };
-      const nativeEvent = handleEventOnBlur(newValue);
+      }
+      const nativeEvent = handleEventOnBlur(newValue)
 
-      onBlur?.(nativeEvent);
+      onBlur?.(nativeEvent)
     }
 
-    if (type === "AmountCrypto" && typeof value === "object") {
+    if (type === 'AmountCrypto' && typeof value === 'object') {
       if (!isValidBigInt(inputValue) || isNotSafeValue(inputValue)) {
         const newValue = {
           ...value,
           amount: inputValue,
-        };
+        }
 
-        const nativeEventBlur = handleEventOnBlur(newValue);
-        onBlur?.(nativeEventBlur);
-        return;
+        const nativeEventBlur = handleEventOnBlur(newValue)
+        onBlur?.(nativeEventBlur)
+        return
       }
       const newValue = {
         ...value,
         amount: inputValue,
-      };
-      const nativeEventBlur = handleEventOnBlur(newValue);
-      onBlur?.(nativeEventBlur);
+      }
+      const nativeEventBlur = handleEventOnBlur(newValue)
+      onBlur?.(nativeEventBlur)
     }
 
-    if (type === "Amount" || type === "AmountPercentage") {
+    if (type === 'Amount' || type === 'AmountPercentage') {
       if (!isValidNumber(inputValue)) {
-        const nativeEventBlur = handleEventOnBlur(inputValue);
-        onBlur?.(nativeEventBlur);
-        return;
+        const nativeEventBlur = handleEventOnBlur(inputValue)
+        onBlur?.(nativeEventBlur)
+        return
       }
 
       // Avoid transformation if the value is not a number
       if (isNotSafeValue(inputValue)) {
-        const newValue = inputValue;
+        const newValue = inputValue
 
-        const nativeEventBlur = handleEventOnBlur(newValue);
-        onBlur?.(nativeEventBlur);
-        return;
+        const nativeEventBlur = handleEventOnBlur(newValue)
+        onBlur?.(nativeEventBlur)
+        return
       }
-      const formatValue = displayValueAmount(
-        inputValue,
-        precision,
-        viewPrecision,
-        trailingZeros,
-      );
-      const nativeEventBlur = handleEventOnBlur(formatValue);
-      onBlur?.(nativeEventBlur);
-      return;
+      const formatValue = displayValueAmount(inputValue, precision, viewPrecision, trailingZeros)
+      const nativeEventBlur = handleEventOnBlur(formatValue)
+      onBlur?.(nativeEventBlur)
+      return
     }
 
     // Handle the blur event for AmountCurrency
-    if (type === "AmountCurrency" && typeof value === "object") {
-      if (
-        isValidBigInt(inputValue) &&
-        isValidNumberGreaterThanMaxSafeInteger(inputValue)
-      ) {
-        const formatValue = inputValue;
+    if (type === 'AmountCurrency' && typeof value === 'object') {
+      if (isValidBigInt(inputValue) && isValidNumberGreaterThanMaxSafeInteger(inputValue)) {
+        const formatValue = inputValue
 
-        const nativeEventBlur = handleEventOnBlur(formatValue);
-        onBlur?.(nativeEventBlur);
-        return;
+        const nativeEventBlur = handleEventOnBlur(formatValue)
+        onBlur?.(nativeEventBlur)
+        return
       }
       // Avoid transformation if the value is not a number
       if (!isValidNumber(inputValue)) {
         const newValue = {
           ...value,
           amount: inputValue,
-        };
-        onBlur?.(newValue as unknown as React.FocusEvent<HTMLInputElement>);
-        return;
+        }
+        onBlur?.(newValue as unknown as React.FocusEvent<HTMLInputElement>)
+        return
       }
       const formatValue =
         viewPrecision !== undefined
           ? trailingZeros
             ? parseFloat(inputValue).toFixed(viewPrecision)
-            : parseFloat(
-                parseFloat(inputValue).toFixed(viewPrecision),
-              ).toString()
-          : inputValue;
+            : parseFloat(parseFloat(inputValue).toFixed(viewPrecision)).toString()
+          : inputValue
       if (isNotSafeValue(inputValue)) {
         const newValue = {
           ...value,
           amount: inputValue,
-        };
-        const nativeEventBlur = handleEventOnBlur(newValue);
-        onBlur?.(nativeEventBlur);
-        return;
+        }
+        const nativeEventBlur = handleEventOnBlur(newValue)
+        onBlur?.(nativeEventBlur)
+        return
       }
       const newValue = {
         ...value,
         amount: formatValue,
-      };
-      onBlur?.(newValue as unknown as React.FocusEvent<HTMLInputElement>);
+      }
+      onBlur?.(newValue as unknown as React.FocusEvent<HTMLInputElement>)
     }
-  };
+  }
 
   const handleIsInputFocused = () => {
-    setInputFocused(true);
-  };
-  const options = units ?? getDefaultUnits(type);
+    setInputFocused(true)
+  }
+  const options = units ?? getDefaultUnits(type)
   //Put the placeholder in case that value its not in the options
-  const validatedValueSelect =
-    valueSelect && units?.some((unit) => unit.ticker === valueSelect)
-      ? valueSelect
-      : undefined;
+  const validatedValueSelect = valueSelect && units?.some(unit => unit.ticker === valueSelect) ? valueSelect : undefined
 
   return {
     isPercent,
@@ -422,5 +380,5 @@ export const useAmountInput = ({
     handleIsInputFocused,
     inputFocused,
     isAmountWithoutUnit,
-  };
-};
+  }
+}

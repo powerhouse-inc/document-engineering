@@ -1,48 +1,46 @@
-import { getOffset } from "../date-time-picker/utils.js";
-import { type TimePeriod } from "./type.js";
+import { getOffset } from '../date-time-picker/utils.js'
+import { type TimePeriod } from './type.js'
 
-export const createChangeEvent = (
-  value: string,
-): React.ChangeEvent<HTMLInputElement> => {
-  const nativeEvent = new Event("change", {
+export const createChangeEvent = (value: string): React.ChangeEvent<HTMLInputElement> => {
+  const nativeEvent = new Event('change', {
     bubbles: true,
     cancelable: true,
-  });
+  })
 
-  Object.defineProperty(nativeEvent, "target", {
+  Object.defineProperty(nativeEvent, 'target', {
     value: { value },
     writable: false,
-  });
+  })
 
-  return nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>;
-};
+  return nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>
+}
 
-export const ALLOWED_TIME_FORMATS = ["hh:mm a", "HH:mm", "hh:mm A"];
+export const ALLOWED_TIME_FORMATS = ['hh:mm a', 'HH:mm', 'hh:mm A']
 export const isFormatTimeAllowed = (format: string): boolean => {
-  return ALLOWED_TIME_FORMATS.includes(format);
-};
+  return ALLOWED_TIME_FORMATS.includes(format)
+}
 export const TIME_PATTERNS = {
   /** Matches times in 24-hour format (HH:mm) like: 0:00, 09:30, 23:59 */
   HOURS_24: /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/,
   /** Matches times in 12-hour format (h:mm a) like: 1:00 AM, 12:59 PM */
   HOURS_12: /^(0?[1-9]|1[0-2]):([0-5][0-9])\s(AM|PM|am|pm)$/,
-} as const;
+} as const
 
 export const cleanTime = (time: string) => {
-  return time.replace(/\s*(AM|PM)\s*/i, "");
-};
+  return time.replace(/\s*(AM|PM)\s*/i, '')
+}
 /**
  * Convert a 24-hour format time to a 12-hour format time
  * @param input - The time in 24-hour format like 14:35
  * @returns The time in 12-hour format like 2:35 PM
  */
 export const convert24hTo12h = (input: string) => {
-  const [hours, minutes] = input.split(":");
-  const hourNum = parseInt(hours, 10);
-  const period = hourNum >= 12 ? "PM" : "AM";
-  const hour12 = hourNum % 12 || 12; // Convierte 0 a 12
-  return `${hour12}:${minutes} ${period}`;
-};
+  const [hours, minutes] = input.split(':')
+  const hourNum = parseInt(hours, 10)
+  const period = hourNum >= 12 ? 'PM' : 'AM'
+  const hour12 = hourNum % 12 || 12 // Convierte 0 a 12
+  return `${hour12}:${minutes} ${period}`
+}
 
 /**
  * Get the time from the input value in ISO 8601 format
@@ -50,10 +48,10 @@ export const convert24hTo12h = (input: string) => {
  * @returns The time in 24-hour format like 14:35
  */
 export const getTime = (value: string) => {
-  const [time] = value.split("±");
+  const [time] = value.split('±')
   // Extract only HH:mm from the complete format HH:mm:ss.SSS
-  return time.substring(0, 5);
-};
+  return time.substring(0, 5)
+}
 
 /**
  * Round the minute to the nearest interval
@@ -62,19 +60,19 @@ export const getTime = (value: string) => {
  * @returns The rounded minute
  */
 export const roundMinute = (minute: number, interval: number): number => {
-  const remainder = minute % interval;
-  let roundedMinute: number;
+  const remainder = minute % interval
+  let roundedMinute: number
   if (remainder >= interval / 2) {
-    roundedMinute = minute + (interval - remainder);
+    roundedMinute = minute + (interval - remainder)
     if (roundedMinute >= 60) {
       // If it exceeds 60, round down
-      roundedMinute = minute - remainder;
+      roundedMinute = minute - remainder
     }
   } else {
-    roundedMinute = minute - remainder;
+    roundedMinute = minute - remainder
   }
-  return roundedMinute;
-};
+  return roundedMinute
+}
 
 /**
  * Transform the input time to the correct format
@@ -87,67 +85,67 @@ export const transformInputTime = (
   input: string,
   is12HourFormat: boolean,
   interval = 1,
-  periodToCheck?: TimePeriod,
+  periodToCheck?: TimePeriod
 ): { hour: string; minute: string; period?: TimePeriod } => {
-  if (!input) return { hour: "", minute: "", period: undefined };
-  input = input.trim();
-  let hourStr = "";
-  let minuteStr = "";
-  let period: TimePeriod | undefined = undefined;
-  if (input.includes(":")) {
-    const [hourPart, rest] = input.split(":", 2);
-    hourStr = hourPart;
-    const parts = rest.split(/\s+/);
-    minuteStr = parts[0];
+  if (!input) return { hour: '', minute: '', period: undefined }
+  input = input.trim()
+  let hourStr = ''
+  let minuteStr = ''
+  let period: TimePeriod | undefined = undefined
+  if (input.includes(':')) {
+    const [hourPart, rest] = input.split(':', 2)
+    hourStr = hourPart
+    const parts = rest.split(/\s+/)
+    minuteStr = parts[0]
     if (parts.length > 1) {
-      period = parts[1].toUpperCase() as TimePeriod;
+      period = parts[1].toUpperCase() as TimePeriod
     }
   } else {
     // Handle short hours: 8 -> 08:00, 12 -> 12:00
-    const digits = input.padStart(4, "0");
-    hourStr = digits.slice(0, 2);
-    minuteStr = digits.slice(2, 4);
+    const digits = input.padStart(4, '0')
+    hourStr = digits.slice(0, 2)
+    minuteStr = digits.slice(2, 4)
   }
 
-  let hourNum = parseInt(hourStr, 10);
-  let minuteNum = parseInt(minuteStr, 10) || 0;
-  if (isNaN(hourNum)) hourNum = 0;
-  if (isNaN(minuteNum)) minuteNum = 0;
+  let hourNum = parseInt(hourStr, 10)
+  let minuteNum = parseInt(minuteStr, 10) || 0
+  if (isNaN(hourNum)) hourNum = 0
+  if (isNaN(minuteNum)) minuteNum = 0
 
   // Apply the minute rounding using the interval
-  minuteNum = roundMinute(minuteNum, interval);
+  minuteNum = roundMinute(minuteNum, interval)
   if (is12HourFormat) {
     // First convert 24h to 12h format if needed
     if (hourNum > 12) {
-      hourNum -= 12;
+      hourNum -= 12
     } else if (hourNum === 0) {
-      hourNum = 12;
+      hourNum = 12
     }
 
     // If still no period assigned, determine based on hour
     if (!period) {
-      period = hourNum >= 8 && hourNum <= 11 ? "AM" : "PM";
+      period = hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
     }
     if (periodToCheck) {
-      period = periodToCheck;
+      period = periodToCheck
     }
   } else {
     // Convert any AM/PM designator to 24h
-    if (period === "PM" && hourNum < 12) {
-      hourNum += 12;
-    } else if (period === "AM" && hourNum === 12) {
-      hourNum = 0;
+    if (period === 'PM' && hourNum < 12) {
+      hourNum += 12
+    } else if (period === 'AM' && hourNum === 12) {
+      hourNum = 0
     }
     // Force period to undefined in 24h format
-    period = undefined;
+    period = undefined
   }
 
   return {
-    hour: String(hourNum).padStart(2, "0"),
-    minute: String(minuteNum).padStart(2, "0"),
+    hour: String(hourNum).padStart(2, '0'),
+    minute: String(minuteNum).padStart(2, '0'),
     period: is12HourFormat ? period : undefined,
-  };
-};
+  }
+}
 
 /**
  * Validate the input time
@@ -158,45 +156,45 @@ export const transformInputTime = (
  * @returns Whether the input time is valid and can be transformed into a proper time format
  */
 export const isValidTimeInput = (input: string): boolean => {
-  if (!input) return true;
-  input = input.trim();
+  if (!input) return true
+  input = input.trim()
   // Allow change the format and convert the time
-  if (input.includes(":")) {
+  if (input.includes(':')) {
     // Must be exactly 5 characters for 24h format
     if (input.length !== 5) {
-      return false;
+      return false
     }
 
     // Split into hours and minutes
-    const [hours, minutes] = input.split(":");
+    const [hours, minutes] = input.split(':')
 
     // Hours and minutes must be numbers
-    const hoursNum = parseInt(hours, 10);
-    const minutesNum = parseInt(minutes, 10);
-    if (isNaN(hoursNum) || isNaN(minutesNum)) return false;
+    const hoursNum = parseInt(hours, 10)
+    const minutesNum = parseInt(minutes, 10)
+    if (isNaN(hoursNum) || isNaN(minutesNum)) return false
 
     // Hours must be between 0 and 23
-    if (hoursNum < 0 || hoursNum > 23) return false;
+    if (hoursNum < 0 || hoursNum > 23) return false
 
     // Minutes must be between 0 and 59
-    if (minutesNum < 0 || minutesNum > 59) return false;
+    if (minutesNum < 0 || minutesNum > 59) return false
 
     // Minutes must be exactly 2 digits
-    if (minutes.length !== 2) return false;
+    if (minutes.length !== 2) return false
 
-    return true;
+    return true
   } else {
     // "For digits, expect 3 or 4 characters and validate they're in range".
     if (input.length !== 3 && input.length !== 4) {
-      return false;
+      return false
     }
-    const hourStr = input.length === 3 ? input.slice(0, 1) : input.slice(0, 2);
-    const minuteStr = input.slice(-2);
-    const hourNum = parseInt(hourStr, 10);
-    const minuteNum = parseInt(minuteStr, 10);
-    return hourNum >= 0 && hourNum <= 23 && minuteNum >= 0 && minuteNum <= 59;
+    const hourStr = input.length === 3 ? input.slice(0, 1) : input.slice(0, 2)
+    const minuteStr = input.slice(-2)
+    const hourNum = parseInt(hourStr, 10)
+    const minuteNum = parseInt(minuteStr, 10)
+    return hourNum >= 0 && hourNum <= 23 && minuteNum >= 0 && minuteNum <= 59
   }
-};
+}
 
 /**
  * Get the formatted offset of the time zone for display purposes
@@ -208,13 +206,11 @@ export const isValidTimeInput = (input: string): boolean => {
  * getOffsetToDisplay()                   // Returns "UTC±00:00"
  */
 export const getOffsetToDisplay = (timeZone?: string) => {
-  const offset = getOffset(timeZone);
+  const offset = getOffset(timeZone)
   // Normalizar el formato para la visualización
-  const normalizedOffset = offset.endsWith(":00")
-    ? offset.slice(0, -3)
-    : offset;
-  return `UTC${normalizedOffset}`;
-};
+  const normalizedOffset = offset.endsWith(':00') ? offset.slice(0, -3) : offset
+  return `UTC${normalizedOffset}`
+}
 
 /**
  * Gets a list of all available timezone options formatted for display
@@ -247,17 +243,15 @@ export const getOffsetToDisplay = (timeZone?: string) => {
  * 4. Returns an array of objects with value (timezone identifier) and label (formatted display string)
  */
 export const getOptions = (includeContinent = false) => {
-  const timeZones = Intl.supportedValuesOf("timeZone");
-  return timeZones.map((timeZone) => {
-    const offset = getOffsetToDisplay(timeZone);
+  const timeZones = Intl.supportedValuesOf('timeZone')
+  return timeZones.map(timeZone => {
+    const offset = getOffsetToDisplay(timeZone)
     const label = `(${offset}) ${
-      includeContinent
-        ? timeZone.replace(/_/g, " ")
-        : timeZone.split("/").pop()?.replace(/_/g, " ")
-    }`;
-    return { value: timeZone, label };
-  });
-};
+      includeContinent ? timeZone.replace(/_/g, ' ') : timeZone.split('/').pop()?.replace(/_/g, ' ')
+    }`
+    return { value: timeZone, label }
+  })
+}
 
 /**
  * Split the datetime into hours, minutes, and last part (offset)
@@ -265,17 +259,17 @@ export const getOptions = (includeContinent = false) => {
  * @returns An object containing hours, minutes, and last part (offset)
  */
 export const splitDatetime = (datetime?: string) => {
-  if (!datetime) return { hours: "", minutes: "", timezoneOffset: "" };
-  const offsetMatch = /([+-]\d{2}:\d{2})$/.exec(datetime);
-  const timezoneOffset = offsetMatch ? offsetMatch[0] : "";
-  const time = removeDate(datetime);
-  const [hours, minutes] = time.split(":");
+  if (!datetime) return { hours: '', minutes: '', timezoneOffset: '' }
+  const offsetMatch = /([+-]\d{2}:\d{2})$/.exec(datetime)
+  const timezoneOffset = offsetMatch ? offsetMatch[0] : ''
+  const time = removeDate(datetime)
+  const [hours, minutes] = time.split(':')
   return {
-    hours: hours.padStart(2, "0"),
-    minutes: minutes.padStart(2, "0"),
+    hours: hours.padStart(2, '0'),
+    minutes: minutes.padStart(2, '0'),
     timezoneOffset,
-  };
-};
+  }
+}
 
 /**
  * Get the hours from the datetime
@@ -283,9 +277,9 @@ export const splitDatetime = (datetime?: string) => {
  * @returns The hours
  */
 export const getHours = (datetime?: string) => {
-  const { hours } = splitDatetime(datetime);
-  return hours;
-};
+  const { hours } = splitDatetime(datetime)
+  return hours
+}
 
 /**
  * Get the minutes from the datetime
@@ -293,16 +287,16 @@ export const getHours = (datetime?: string) => {
  * @returns The minutes
  */
 export const getMinutes = (datetime?: string) => {
-  const { minutes } = splitDatetime(datetime);
-  return minutes;
-};
+  const { minutes } = splitDatetime(datetime)
+  return minutes
+}
 
 export const getInputValue = (datetime?: string) => {
-  if (!datetime) return "";
-  const { hours, minutes } = splitDatetime(datetime);
-  if (!hours && !minutes) return "";
-  return `${hours}:${minutes}`;
-};
+  if (!datetime) return ''
+  const { hours, minutes } = splitDatetime(datetime)
+  if (!hours && !minutes) return ''
+  return `${hours}:${minutes}`
+}
 
 /**
  * Removes the date portion from an ISO 8601 datetime string, keeping only the time
@@ -313,9 +307,9 @@ export const getInputValue = (datetime?: string) => {
  * removeDate("14:30:00")            // Returns "14:30:00"
  */
 export const removeDate = (datetime: string) => {
-  if (!datetime.includes("T")) return datetime;
-  return datetime.replace(/(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})/, "$2");
-};
+  if (!datetime.includes('T')) return datetime
+  return datetime.replace(/(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})/, '$2')
+}
 
 /**
  * Get the timezone from the utcOffset
@@ -323,14 +317,14 @@ export const removeDate = (datetime: string) => {
  * @returns The timezone
  */
 export const getTimezone = (utcOffset: string): string => {
-  if (!utcOffset) return "";
-  const options = getOptions();
-  const { timezoneOffset } = splitDatetime(utcOffset);
-  const findedOption = options.find((option) => {
-    return option.label.includes(timezoneOffset);
-  });
-  return findedOption?.value ?? "";
-};
+  if (!utcOffset) return ''
+  const options = getOptions()
+  const { timezoneOffset } = splitDatetime(utcOffset)
+  const findedOption = options.find(option => {
+    return option.label.includes(timezoneOffset)
+  })
+  return findedOption?.value ?? ''
+}
 
 /**
  * Formats time components into an ISO-like datetime string with milliseconds and timezone offset
@@ -342,15 +336,11 @@ export const getTimezone = (utcOffset: string): string => {
  * formatInputsToValueFormat("14", "30", "+05:30")     // Returns "14:30:00.000+05:30"
  * formatInputsToValueFormat("02", "30 PM", "-04:00")  // Returns "02:30:00.000-04:00"
  */
-export const formatInputsToValueFormat = (
-  hours: string,
-  minutes: string,
-  timezoneOffset: string,
-): string => {
-  if (!hours && !minutes) return "";
-  const datetime = `${cleanTime(hours)}:${cleanTime(minutes)}:00.000${timezoneOffset}`;
-  return datetime;
-};
+export const formatInputsToValueFormat = (hours: string, minutes: string, timezoneOffset: string): string => {
+  if (!hours && !minutes) return ''
+  const datetime = `${cleanTime(hours)}:${cleanTime(minutes)}:00.000${timezoneOffset}`
+  return datetime
+}
 
 /**
  * Convert a 12-hour format time to a 24-hour format time
@@ -358,19 +348,18 @@ export const formatInputsToValueFormat = (
  * @returns The time in 24-hour format like 14:35
  */
 export const convert12hTo24h = (input: string) => {
-  if (!input) return "";
+  if (!input) return ''
   // convert from 12 format to 24 format
-  const [hours, minutes] = input.split(":");
-  const period =
-    input.includes("AM") || input.includes("PM") ? input.slice(-2) : undefined;
-  let formattedHours = hours;
-  if (period === "PM" && hours !== "12") {
-    formattedHours = (parseInt(hours, 10) + 12).toString();
-  } else if (period === "AM" && hours === "12") {
-    formattedHours = "00";
+  const [hours, minutes] = input.split(':')
+  const period = input.includes('AM') || input.includes('PM') ? input.slice(-2) : undefined
+  let formattedHours = hours
+  if (period === 'PM' && hours !== '12') {
+    formattedHours = (parseInt(hours, 10) + 12).toString()
+  } else if (period === 'AM' && hours === '12') {
+    formattedHours = '00'
   }
-  return `${formattedHours}:${minutes}`;
-};
+  return `${formattedHours}:${minutes}`
+}
 
 /**
  * Formats a time input string into a standardized display format
@@ -399,19 +388,13 @@ export const formatInputToDisplayValid = (
   input: string,
   is12HourFormat: boolean,
   timeIntervals?: number,
-  periodToCheck?: TimePeriod,
+  periodToCheck?: TimePeriod
 ) => {
-  const { hour, minute, period } = transformInputTime(
-    input,
-    is12HourFormat,
-    timeIntervals,
-  );
-  if (!hour && !minute) return "";
+  const { hour, minute, period } = transformInputTime(input, is12HourFormat, timeIntervals)
+  if (!hour && !minute) return ''
 
-  return is12HourFormat
-    ? `${hour}:${minute} ${periodToCheck ? periodToCheck : (period ?? "")}`
-    : `${hour}:${minute}`;
-};
+  return is12HourFormat ? `${hour}:${minute} ${periodToCheck ? periodToCheck : (period ?? '')}` : `${hour}:${minute}`
+}
 
 /**
  * Extracts the hours and minutes from the input time string.
@@ -428,15 +411,12 @@ export const formatInputToDisplayValid = (
  * - `getHoursAndMinutes("1430")` returns `{ hours: "14", minutes: "30" }`.
  */
 export const getHoursAndMinutes = (input: string) => {
-  if (!input) return { hours: "", minutes: "", period: undefined };
+  if (!input) return { hours: '', minutes: '', period: undefined }
 
-  if (input.includes(":")) {
-    const [hours, minutes] = input.split(":");
-    const period =
-      input.includes("AM") || input.includes("PM")
-        ? input.slice(-2)
-        : undefined;
-    return { hours, minutes, period };
+  if (input.includes(':')) {
+    const [hours, minutes] = input.split(':')
+    const period = input.includes('AM') || input.includes('PM') ? input.slice(-2) : undefined
+    return { hours, minutes, period }
   } else {
     // Handle short format (e.g., "1430" -> "14:30")
     if (input.length === 3) {
@@ -444,51 +424,51 @@ export const getHoursAndMinutes = (input: string) => {
         hours: input.slice(0, 1),
         minutes: input.slice(1, 3),
         period: undefined,
-      };
+      }
     } else if (input.length === 4) {
       return {
         hours: input.slice(0, 2),
         minutes: input.slice(2, 4),
         period: undefined,
-      };
+      }
     }
     // Return and invalid value as cannot be a value time
-    return { hours: "", minutes: "", period: undefined };
+    return { hours: '', minutes: '', period: undefined }
   }
-};
+}
 
 export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   // Allow control keys (backspace, delete, arrows, etc)
   if (
-    e.key === "Backspace" ||
-    e.key === "Delete" ||
-    e.key === "ArrowLeft" ||
-    e.key === "ArrowRight" ||
-    e.key === "Tab" ||
-    e.key === "Enter" ||
-    e.key === " " ||
-    e.key === "Space" ||
+    e.key === 'Backspace' ||
+    e.key === 'Delete' ||
+    e.key === 'ArrowLeft' ||
+    e.key === 'ArrowRight' ||
+    e.key === 'Tab' ||
+    e.key === 'Enter' ||
+    e.key === ' ' ||
+    e.key === 'Space' ||
     e.ctrlKey ||
     e.metaKey
   ) {
-    return;
+    return
   }
 
   // Allow numbers
   if (/^[0-9]$/.test(e.key)) {
-    return;
+    return
   }
   // Allow ":"
-  if (e.key === ":") {
-    return;
+  if (e.key === ':') {
+    return
   }
   // Allow "A", "M", "P" for AM/PM
   if (/^[AMP]$/i.test(e.key)) {
-    return;
+    return
   }
 
-  e.preventDefault();
-};
+  e.preventDefault()
+}
 
 /**
  * Validates if a string has the hh:mm format and represents a valid time.
@@ -497,9 +477,9 @@ export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
  */
 export const isValidTimeFromValue = (timeString: string) => {
   // Regular expression to validate the hh:mm format
-  const regex = /^([01]?\d|2[0-3]):[0-5]\d$/;
-  return regex.test(timeString);
-};
+  const regex = /^([01]?\d|2[0-3]):[0-5]\d$/
+  return regex.test(timeString)
+}
 
 /**
  * Extracts hours and minutes from a time string value.
@@ -508,6 +488,6 @@ export const isValidTimeFromValue = (timeString: string) => {
  */
 export const getHoursAndMinutesFromValue = (timeString: string) => {
   // Captures everything up to the second ':' regardless of the number of digits in the hour
-  const match = /^([^:]+:\d{2,})/.exec(timeString);
-  return match ? match[1] : "";
-};
+  const match = /^([^:]+:\d{2,})/.exec(timeString)
+  return match ? match[1] : ''
+}

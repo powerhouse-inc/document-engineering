@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { withForm } from "../../lib/decorators.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from "../../lib/storybook-arg-types.js";
-import { BooleanField } from "./boolean-field.js";
+} from '../../lib/storybook-arg-types.js'
+import { BooleanField } from './boolean-field.js'
 
 const meta = {
-  title: "Document Engineering/Scalars/Boolean Field",
+  title: 'Document Engineering/Scalars/Boolean Field',
   component: BooleanField,
   decorators: [withForm],
   argTypes: {
@@ -17,56 +17,56 @@ const meta = {
       enabledArgTypes: {
         value: false,
       },
-      valueControlType: "boolean",
-      valueType: "boolean",
+      valueControlType: 'boolean',
+      valueType: 'boolean',
     }),
 
     value: {
-      control: "inline-radio",
-      options: ["indeterminate", true, false],
-      description: "Current value of the input field",
+      control: 'inline-radio',
+      options: ['indeterminate', true, false],
+      description: 'Current value of the input field',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         category: StorybookControlCategory.DEFAULT,
       },
     },
 
     isToggle: {
-      control: "boolean",
-      description: "Whether the field is a toggle or checkbox",
+      control: 'boolean',
+      description: 'Whether the field is a toggle or checkbox',
       table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
 
     optionalLabel: {
-      control: "text",
-      description: "The label of the optional field",
+      control: 'text',
+      description: 'The label of the optional field',
       table: {
         category: StorybookControlCategory.DIFF,
       },
-      if: { arg: "isToggle", eq: true },
+      if: { arg: 'isToggle', eq: true },
     },
     viewMode: {
-      control: "select",
-      description: "The mode of the input field",
-      options: ["edition", "addition", "removal"],
+      control: 'select',
+      description: 'The mode of the input field',
+      options: ['edition', 'addition', 'removal'],
       table: {
-        type: { summary: "edition | addition | removal" },
-        defaultValue: { summary: "edition" },
+        type: { summary: 'edition | addition | removal' },
+        defaultValue: { summary: 'edition' },
         category: StorybookControlCategory.DIFF,
       },
-      if: { arg: "isToggle", eq: true },
+      if: { arg: 'isToggle', eq: true },
     },
     baseValue: {
-      control: "boolean",
-      description: "The base value of the input field",
+      control: 'boolean',
+      description: 'The base value of the input field',
       table: {
         category: StorybookControlCategory.DIFF,
       },
-      if: { arg: "isToggle", eq: true },
+      if: { arg: 'isToggle', eq: true },
     },
     ...getValidationArgTypes({
       enabledArgTypes: {
@@ -77,35 +77,35 @@ const meta = {
     }),
   },
   args: {
-    name: "boolean-field",
+    name: 'boolean-field',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A boolean field component that can be used as a [checkbox](?path=/docs/document-engineering-data-entry-checkbox--readme) or [toggle](?path=/docs/document-engineering-data-entry-toggle--readme) depending on the `isToggle` prop.",
+          'A boolean field component that can be used as a [checkbox](?path=/docs/document-engineering-data-entry-checkbox--readme) or [toggle](?path=/docs/document-engineering-data-entry-toggle--readme) depending on the `isToggle` prop.',
       },
     },
   },
-} satisfies Meta<typeof BooleanField>;
+} satisfies Meta<typeof BooleanField>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Checkbox: Story = {
   args: {
-    label: "Checkbox Field",
-    description: "This is a checkbox field",
+    label: 'Checkbox Field',
+    description: 'This is a checkbox field',
     isToggle: false,
   },
-};
+}
 
 export const Toggle: Story = {
   args: {
-    label: "Toggle Field",
-    description: "This is a toggle field",
+    label: 'Toggle Field',
+    description: 'This is a toggle field',
     isToggle: true,
   },
-};
+}

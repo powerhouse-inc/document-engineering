@@ -2,55 +2,55 @@ export interface ObjectSetTableConfig<T> {
   /**
    * The columns to display in the table.
    */
-  columns: ColumnDef<T>[];
+  columns: ColumnDef<T>[]
 
   /**
    * The data to display in the table.
    */
-  data: T[];
+  data: T[]
 
   /**
    * Whether to allow row selection.
    *
    * @default true
    */
-  allowRowSelection?: boolean;
+  allowRowSelection?: boolean
 
   /**
    * Whether to show row numbers.
    *
    * @default true
    */
-  showRowNumbers?: boolean;
+  showRowNumbers?: boolean
 }
 
-export type CellType = "text" | "number" | "boolean";
+export type CellType = 'text' | 'number' | 'boolean'
 
 export interface CellContext<T = any> {
   /**
    * The row object.
    */
-  row: T;
+  row: T
 
   /**
    * The column definition.
    */
-  column: ColumnDef<T>;
+  column: ColumnDef<T>
 
   /**
    * The index of the row.
    */
-  rowIndex: number;
+  rowIndex: number
 
   /**
    * The index of the column.
    */
-  columnIndex: number;
+  columnIndex: number
 
   /**
    * The table configuration.
    */
-  tableConfig: ObjectSetTableConfig<T>;
+  tableConfig: ObjectSetTableConfig<T>
 }
 
 /**
@@ -64,7 +64,7 @@ export interface CellContext<T = any> {
  * const valueGetter = (row: T) => row.firstName;
  * ```
  */
-export type ValueGetterFn<T> = (row: T, context: CellContext<T>) => unknown;
+export type ValueGetterFn<T> = (row: T, context: CellContext<T>) => unknown
 
 /**
  * A function that formats a value for display in the table.
@@ -82,10 +82,7 @@ export type ValueGetterFn<T> = (row: T, context: CellContext<T>) => unknown;
  * };
  * ```
  */
-export type ValueFormatterFn<T> = (
-  value: unknown,
-  context: CellContext<T>,
-) => string;
+export type ValueFormatterFn<T> = (value: unknown, context: CellContext<T>) => string
 
 /**
  * A function that renders a cell.
@@ -100,10 +97,7 @@ export type ValueFormatterFn<T> = (
  * };
  * ```
  */
-export type RenderCellFn<T, V = unknown> = (
-  value: V,
-  context: CellContext<T>,
-) => React.ReactNode;
+export type RenderCellFn<T, V = unknown> = (value: V, context: CellContext<T>) => React.ReactNode
 
 /**
  * A function that is called when a cell is saved.
@@ -113,10 +107,7 @@ export type RenderCellFn<T, V = unknown> = (
  *
  * @returns Whether the value was saved.
  */
-export type OnCellSaveFn<TData, TCellValue> = (
-  newValue: TCellValue,
-  context: CellContext<TData>,
-) => boolean;
+export type OnCellSaveFn<TData, TCellValue> = (newValue: TCellValue, context: CellContext<TData>) => boolean
 
 export interface ColumnDef<T = any> {
   /**
@@ -136,7 +127,7 @@ export interface ColumnDef<T = any> {
    * // field: "address.city" -> (San Francisco)
    * ```
    */
-  field: string;
+  field: string
 
   /**
    * The title of the column.
@@ -159,7 +150,7 @@ export interface ColumnDef<T = any> {
    * }
    * ```
    */
-  title?: string;
+  title?: string
 
   /**
    * The type of the column.
@@ -170,7 +161,7 @@ export interface ColumnDef<T = any> {
    *
    * @default "text"
    */
-  type?: CellType;
+  type?: CellType
 
   /**
    * A function that returns the value to display in the column.
@@ -194,7 +185,7 @@ export interface ColumnDef<T = any> {
    * }
    * ```
    */
-  valueGetter?: ValueGetterFn<T>;
+  valueGetter?: ValueGetterFn<T>
 
   /**
    * A function that formats a value for display in the column.
@@ -209,7 +200,7 @@ export interface ColumnDef<T = any> {
    * };
    * ```
    */
-  valueFormatter?: ValueFormatterFn<T>;
+  valueFormatter?: ValueFormatterFn<T>
 
   /**
    * A function that renders a cell. Do to render the cell as a `td` element.
@@ -227,14 +218,14 @@ export interface ColumnDef<T = any> {
    * };
    * ```
    */
-  renderCell?: RenderCellFn<T, any>;
+  renderCell?: RenderCellFn<T, any>
 
   /**
    * Whether the column is editable.
    *
    * @default false
    */
-  editable?: boolean;
+  editable?: boolean
 
   /**
    * A function that is called when a cell is saved.
@@ -244,40 +235,40 @@ export interface ColumnDef<T = any> {
    *
    * @returns Whether the value was saved.
    */
-  onSave?: OnCellSaveFn<T, any>;
+  onSave?: OnCellSaveFn<T, any>
 
   /**
    * The width of the column. It accepts any valid CSS width value.
    *
    * @default "auto"
    */
-  width?: React.CSSProperties["width"];
+  width?: React.CSSProperties['width']
 
   /**
    * The minimum width of the column. It accepts any valid CSS width value.
    *
    * @default "auto"
    */
-  minWidth?: React.CSSProperties["minWidth"];
+  minWidth?: React.CSSProperties['minWidth']
 
   /**
    * The maximum width of the column. It accepts any valid CSS width value.
    *
    * @default "auto"
    */
-  maxWidth?: React.CSSProperties["maxWidth"];
+  maxWidth?: React.CSSProperties['maxWidth']
 
   /**
    * The alignment of the column.
    *
    * @default "left"
    */
-  align?: "left" | "center" | "right";
+  align?: 'left' | 'center' | 'right'
 }
 
-export type DataType = any;
+export type DataType = any
 
 export type TableCellIndex = {
-  row: number;
-  column: number;
-};
+  row: number
+  column: number
+}

@@ -1,20 +1,20 @@
-import { FormGroup, FormLabel } from "../../../../scalars/components/fragments/index.js";
-import { SplittedInputDiff } from "../input/splitted-input-diff.js";
-import type { SelectProps, SelectWithDifference } from "./types.js";
+import { FormGroup, FormLabel } from '../../../../scalars/components/fragments/index.js'
+import { SplittedInputDiff } from '../input/splitted-input-diff.js'
+import type { SelectProps, SelectWithDifference } from './types.js'
 
 interface SelectDiffProps extends SelectWithDifference {
-  value: string;
-  label: SelectProps["label"];
-  required: SelectProps["required"];
+  value: string
+  label: SelectProps['label']
+  required: SelectProps['required']
 }
 
 const SelectDiff = ({
-  value = "",
+  value = '',
   label,
   required,
   viewMode,
-  diffMode = "sentences",
-  baseValue = "",
+  diffMode = 'sentences',
+  baseValue = '',
 }: SelectDiffProps) => {
   return (
     <FormGroup>
@@ -23,14 +23,9 @@ const SelectDiff = ({
           {label}
         </FormLabel>
       )}
-      <SplittedInputDiff
-        baseValue={baseValue}
-        value={value}
-        viewMode={viewMode}
-        diffMode={diffMode}
-      />
+      <SplittedInputDiff baseValue={baseValue} value={value} viewMode={viewMode} diffMode={diffMode} />
     </FormGroup>
-  );
-};
+  )
+}
 
-export { SelectDiff };
+export { SelectDiff }

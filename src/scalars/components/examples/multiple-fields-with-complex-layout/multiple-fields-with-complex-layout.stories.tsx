@@ -1,16 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import MultipleFieldsWithComplexLayout from "./multiple-fields-with-complex-layout.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import MultipleFieldsWithComplexLayout from './multiple-fields-with-complex-layout.js'
 
 const meta = {
-  title:
-    "Document Engineering/Scalars/Examples/Multiple Fields With Complex Layout",
+  title: 'Document Engineering/Scalars/Examples/Multiple Fields With Complex Layout',
   component: MultipleFieldsWithComplexLayout,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: `
 function MultipleFieldsWithComplexLayout() {
@@ -136,11 +135,11 @@ function MultipleFieldsWithComplexLayout() {
       },
     },
   },
-} satisfies Meta<typeof MultipleFieldsWithComplexLayout>;
+} satisfies Meta<typeof MultipleFieldsWithComplexLayout>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-};
+}

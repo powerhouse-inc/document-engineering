@@ -1,11 +1,10 @@
-import { cn } from "../../../../../scalars/lib/utils.js";
-import { useInternalTableState } from "../table-provider/table-provider.js";
-import { HeaderCell } from "./header-cell.js";
+import { cn } from '../../../../../scalars/lib/utils.js'
+import { useInternalTableState } from '../table-provider/table-provider.js'
+import { HeaderCell } from './header-cell.js'
 
-interface HeaderNumberTdProps
-  extends React.HTMLAttributes<HTMLTableCellElement> {
-  isAllRowsSelected: boolean;
-  handleSelectAllRows: () => void;
+interface HeaderNumberTdProps extends React.HTMLAttributes<HTMLTableCellElement> {
+  isAllRowsSelected: boolean
+  handleSelectAllRows: () => void
 }
 
 const HeaderNumberTd: React.FC<HeaderNumberTdProps> = ({
@@ -16,26 +15,26 @@ const HeaderNumberTd: React.FC<HeaderNumberTdProps> = ({
 }) => {
   const {
     config: { showRowNumbers, allowRowSelection },
-  } = useInternalTableState();
+  } = useInternalTableState()
 
   if (!showRowNumbers && !allowRowSelection) {
-    return null;
+    return null
   }
 
   return (
     <HeaderCell
       className={cn(
-        "min-w-9 select-none border-r border-gray-300 text-center",
-        allowRowSelection && "cursor-pointer",
-        isAllRowsSelected && "bg-blue-900 text-white",
-        className,
+        'min-w-9 select-none border-r border-gray-300 text-center',
+        allowRowSelection && 'cursor-pointer',
+        isAllRowsSelected && 'bg-blue-900 text-white',
+        className
       )}
       onClick={handleSelectAllRows}
       {...props}
     >
-      {showRowNumbers ? "#" : ""}
+      {showRowNumbers ? '#' : ''}
     </HeaderCell>
-  );
-};
+  )
+}
 
-export { HeaderNumberTd };
+export { HeaderNumberTd }

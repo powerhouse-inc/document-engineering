@@ -1,42 +1,36 @@
-import { cn } from "../../../../../scalars/lib/utils.js";
-import { useInternalTableState } from "../table-provider/table-provider.js";
-import { TableCellBasic } from "./basic-cell.js";
+import { cn } from '../../../../../scalars/lib/utils.js'
+import { useInternalTableState } from '../table-provider/table-provider.js'
+import { TableCellBasic } from './basic-cell.js'
 
 interface RowNumberCellProps {
-  index: number;
-  handleSelectRowOnClick?: (
-    event: React.MouseEvent<HTMLTableCellElement>,
-  ) => void;
-  selected: boolean;
+  index: number
+  handleSelectRowOnClick?: (event: React.MouseEvent<HTMLTableCellElement>) => void
+  selected: boolean
 }
 
-const RowNumberCell: React.FC<RowNumberCellProps> = ({
-  index,
-  handleSelectRowOnClick,
-  selected,
-}) => {
+const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnClick, selected }) => {
   const {
     config: { showRowNumbers, allowRowSelection },
-  } = useInternalTableState();
+  } = useInternalTableState()
 
   if (!showRowNumbers && !allowRowSelection) {
     // if allow selection is enabled we need to show the row anyways
     // to allow the user to select the row
-    return null;
+    return null
   }
 
   return (
     <TableCellBasic
       className={cn(
-        "min-w-9 select-none border-r border-gray-300 text-center",
-        allowRowSelection && "cursor-pointer",
-        selected && "bg-blue-900 text-white",
+        'min-w-9 select-none border-r border-gray-300 text-center',
+        allowRowSelection && 'cursor-pointer',
+        selected && 'bg-blue-900 text-white'
       )}
       onClick={handleSelectRowOnClick}
     >
-      {showRowNumbers ? index : ""}
+      {showRowNumbers ? index : ''}
     </TableCellBasic>
-  );
-};
+  )
+}
 
-export { RowNumberCell };
+export { RowNumberCell }

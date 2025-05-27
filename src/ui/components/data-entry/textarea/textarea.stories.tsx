@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from "../../../../scalars/lib/storybook-arg-types.js";
-import { Textarea } from "./textarea.js";
+} from '../../../../scalars/lib/storybook-arg-types.js'
+import { Textarea } from './textarea.js'
 
 /**
  * The `Textarea` component provides a multi-line text input field with various features.
@@ -17,22 +17,22 @@ import { Textarea } from "./textarea.js";
  * > component.
  */
 const meta = {
-  title: "Document Engineering/Data Entry/Textarea",
+  title: 'Document Engineering/Data Entry/Textarea',
   component: Textarea,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: {
       disableSnapshot: true,
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
       enabledArgTypes: {
         id: false,
       },
-      valueControlType: "text",
-      valueType: "string",
+      valueControlType: 'text',
+      valueType: 'string',
     }),
     ...PrebuiltArgTypes.placeholder,
     ...PrebuiltArgTypes.autoComplete,
@@ -54,121 +54,119 @@ const meta = {
 
     ...PrebuiltArgTypes.baseValue,
     diffMode: {
-      control: "select",
-      description: "The mode of the input field",
-      options: ["words"],
+      control: 'select',
+      description: 'The mode of the input field',
+      options: ['words'],
       table: {
         category: StorybookControlCategory.DIFF,
       },
     },
     autoExpand: {
-      control: "boolean",
-      description:
-        "Whether the textarea should automatically expand with content",
+      control: 'boolean',
+      description: 'Whether the textarea should automatically expand with content',
     },
     multiline: {
-      control: "boolean",
-      description: "Whether the textarea allows multiple lines of text",
+      control: 'boolean',
+      description: 'Whether the textarea allows multiple lines of text',
     },
     rows: {
-      control: "number",
-      description: "Number of visible text lines",
+      control: 'number',
+      description: 'Number of visible text lines',
     },
   },
-} satisfies Meta<typeof Textarea>;
+} satisfies Meta<typeof Textarea>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: "Comments",
-    placeholder: "Enter your comments",
+    label: 'Comments',
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const WithDefaultValue: Story = {
   args: {
-    label: "Comments",
-    defaultValue:
-      "This is some sample text that appears in the textarea by default.",
-    placeholder: "Enter your comments",
+    label: 'Comments',
+    defaultValue: 'This is some sample text that appears in the textarea by default.',
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const WithDescription: Story = {
   args: {
-    label: "Comments",
-    description: "Please provide detailed feedback",
-    placeholder: "Enter your comments",
+    label: 'Comments',
+    description: 'Please provide detailed feedback',
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const Required: Story = {
   args: {
-    label: "Comments",
+    label: 'Comments',
     required: true,
-    placeholder: "Enter your comments",
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const Disabled: Story = {
   args: {
-    label: "Comments",
+    label: 'Comments',
     disabled: true,
-    defaultValue: "This textarea is disabled and cannot be edited.",
-    placeholder: "Enter your comments",
+    defaultValue: 'This textarea is disabled and cannot be edited.',
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const WithCharacterLimit: Story = {
   args: {
-    label: "Comments",
-    placeholder: "Enter your comments",
+    label: 'Comments',
+    placeholder: 'Enter your comments',
     maxLength: 100,
     rows: 3,
   },
-};
+}
 
 export const AutoExpand: Story = {
   args: {
-    label: "Comments",
-    placeholder: "This textarea will expand as you type more content...",
+    label: 'Comments',
+    placeholder: 'This textarea will expand as you type more content...',
     autoExpand: true,
     rows: 2,
   },
-};
+}
 
 export const WithErrors: Story = {
   args: {
-    label: "Comments",
-    defaultValue: "Too short",
-    errors: ["Comments must be at least 20 characters long"],
-    placeholder: "Enter your comments",
+    label: 'Comments',
+    defaultValue: 'Too short',
+    errors: ['Comments must be at least 20 characters long'],
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const WithWarnings: Story = {
   args: {
-    label: "Comments",
-    defaultValue: "Brief comment",
-    warnings: ["Consider providing more detailed feedback"],
-    placeholder: "Enter your comments",
+    label: 'Comments',
+    defaultValue: 'Brief comment',
+    warnings: ['Consider providing more detailed feedback'],
+    placeholder: 'Enter your comments',
     rows: 3,
   },
-};
+}
 
 export const SingleLine: Story = {
   args: {
-    label: "Brief comment",
-    placeholder: "Enter a single line of text",
+    label: 'Brief comment',
+    placeholder: 'Enter a single line of text',
     multiline: false,
     rows: 1,
   },
-};
+}

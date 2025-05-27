@@ -1,123 +1,123 @@
 export interface MockedPerson {
-  firstName: string;
-  walletAddress: string;
-  isActive: boolean;
-  payment: number;
-  email: string;
-  status: "active" | "inactive";
+  firstName: string
+  walletAddress: string
+  isActive: boolean
+  payment: number
+  email: string
+  status: 'active' | 'inactive'
   address: {
-    addressLine1: string;
-    addressLine2: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+    addressLine1: string
+    addressLine2: string
+    city: string
+    state: string
+    zip: string
+  }
 }
 
 export const mockData: MockedPerson[] = [
   {
-    firstName: "John",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'John',
+    walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 100,
-    email: "john@example.com",
-    status: "active",
+    email: 'john@example.com',
+    status: 'active',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
   {
-    firstName: "Jane",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'Jane',
+    walletAddress: '0x1234567890abcdef',
     isActive: false,
     payment: 1065460,
-    email: "jane@example.com",
-    status: "inactive",
+    email: 'jane@example.com',
+    status: 'inactive',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
   {
-    firstName: "Jim",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'Jim',
+    walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 14522,
-    email: "jim@example.com",
-    status: "active",
+    email: 'jim@example.com',
+    status: 'active',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
   {
-    firstName: "Jill",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'Jill',
+    walletAddress: '0x1234567890abcdef',
     isActive: false,
     payment: 11231200,
-    email: "jill@example.com",
-    status: "inactive",
+    email: 'jill@example.com',
+    status: 'inactive',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
   {
-    firstName: "Jack",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'Jack',
+    walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 10234234230,
-    email: "jack@example.com",
-    status: "active",
+    email: 'jack@example.com',
+    status: 'active',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
   {
-    firstName: "Jill",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'Jill',
+    walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 0,
-    email: "jill@example.com",
-    status: "inactive",
+    email: 'jill@example.com',
+    status: 'inactive',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
   {
-    firstName: "Mike",
-    walletAddress: "0x1234567890abcdef",
+    firstName: 'Mike',
+    walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 15,
-    email: "mike@example.com",
-    status: "inactive",
+    email: 'mike@example.com',
+    status: 'inactive',
     address: {
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 1",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      addressLine1: '123 Main St',
+      addressLine2: 'Apt 1',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
     },
   },
-];
+]

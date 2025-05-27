@@ -1,30 +1,30 @@
-import { cn } from "../../../../scalars/lib/utils.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
-import type { InputBaseProps } from "../../../../scalars/components/types.js";
-import React, { useId } from "react";
-import { CustomizableRadioGroup } from "./customizable-radio-group.js";
-import { Radio } from "./radio.js";
+import { cn } from '../../../../scalars/lib/utils.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/message-list.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import React, { useId } from 'react'
+import { CustomizableRadioGroup } from './customizable-radio-group.js'
+import { Radio } from './radio.js'
 
 interface RadioGroupBaseProps {
   options?: {
-    value: string;
-    label: string;
-    description?: string;
-    disabled?: boolean;
-    className?: string;
-  }[];
-  onChange?: (value: string) => void;
+    value: string
+    label: string
+    description?: string
+    disabled?: boolean
+    className?: string
+  }[]
+  onChange?: (value: string) => void
 }
 
 type RadioGroupProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
-  keyof InputBaseProps<string> | keyof RadioGroupBaseProps | "dir"
+  keyof InputBaseProps<string> | keyof RadioGroupBaseProps | 'dir'
 > &
   InputBaseProps<string> &
   RadioGroupBaseProps & {
-    dir?: "ltr" | "rtl";
-  };
+    dir?: 'ltr' | 'rtl'
+  }
 
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
   (
@@ -45,25 +45,25 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
       value,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const hasLabel = label !== undefined;
-    const hasError = errors.length > 0;
-    const prefix = useId();
-    const id = propId ?? `${prefix}-radio-group`;
+    const hasLabel = label !== undefined
+    const hasError = errors.length > 0
+    const prefix = useId()
+    const id = propId ?? `${prefix}-radio-group`
 
     return (
       <CustomizableRadioGroup
         aria-invalid={hasError}
-        aria-label={!hasLabel ? "Radio group" : undefined}
+        aria-label={!hasLabel ? 'Radio group' : undefined}
         aria-required={required}
         autoFocus={autoFocus}
-        className={cn("flex flex-col gap-2", className)}
+        className={cn('flex flex-col gap-2', className)}
         defaultValue={defaultValue}
         id={id}
         name={name}
-        onValueChange={(newValue) => {
-          onChange?.(newValue);
+        onValueChange={newValue => {
+          onChange?.(newValue)
         }}
         value={value}
         disabled={disabled}
@@ -71,20 +71,14 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         ref={ref}
       >
         {hasLabel && (
-          <FormLabel
-            description={description}
-            hasError={hasError}
-            htmlFor={id}
-            required={required}
-            disabled={disabled}
-          >
+          <FormLabel description={description} hasError={hasError} htmlFor={id} required={required} disabled={disabled}>
             {label}
           </FormLabel>
         )}
         {options.map((option, index) => (
           <div
             key={`${prefix}-radio-${index}-${option.value}`}
-            className={cn("flex items-center gap-2", option.className)}
+            className={cn('flex items-center gap-2', option.className)}
             role="presentation"
           >
             <Radio
@@ -97,15 +91,13 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
             />
           </div>
         ))}
-        {warnings.length > 0 && (
-          <FormMessageList messages={warnings} type="warning" />
-        )}
+        {warnings.length > 0 && <FormMessageList messages={warnings} type="warning" />}
         {hasError && <FormMessageList messages={errors} type="error" />}
       </CustomizableRadioGroup>
-    );
-  },
-);
+    )
+  }
+)
 
-RadioGroup.displayName = "RadioGroup";
+RadioGroup.displayName = 'RadioGroup'
 
-export { RadioGroup, type RadioGroupBaseProps, type RadioGroupProps };
+export { RadioGroup, type RadioGroupBaseProps, type RadioGroupProps }

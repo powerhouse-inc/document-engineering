@@ -1,9 +1,8 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback, useId, useMemo } from "react";
-import { IdAutocompleteContext } from "../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-context.js";
-import { IdAutocompleteListOption } from "../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js";
-import { IdAutocomplete } from "../../../../scalars/components/fragments/id-autocomplete/index.js";
-import type { AIDInputProps, AIDOption } from "./types.js";
+import React, { useCallback, useId, useMemo } from 'react'
+import { IdAutocompleteContext } from '../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-context.js'
+import { IdAutocompleteListOption } from '../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js'
+import { IdAutocomplete } from '../../../../scalars/components/fragments/id-autocomplete/index.js'
+import type { AIDInputProps, AIDOption } from './types.js'
 
 const AIDInput = React.forwardRef<HTMLInputElement, AIDInputProps>(
   (
@@ -26,7 +25,7 @@ const AIDInput = React.forwardRef<HTMLInputElement, AIDInputProps>(
       onMouseDown,
       supportedNetworks,
       autoComplete: autoCompleteProp,
-      variant = "withValue",
+      variant = 'withValue',
       maxLength,
       fetchOptionsCallback,
       fetchSelectedOptionCallback,
@@ -35,28 +34,25 @@ const AIDInput = React.forwardRef<HTMLInputElement, AIDInputProps>(
       previewPlaceholder,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const prefix = useId();
-    const id = idProp ?? `${prefix}-aid`;
-    const autoComplete = autoCompleteProp ?? true;
+    const prefix = useId()
+    const id = idProp ?? `${prefix}-aid`
+    const autoComplete = autoCompleteProp ?? true
 
-    const contextValue = useMemo(
-      () => ({ supportedNetworks }),
-      [supportedNetworks],
-    );
+    const contextValue = useMemo(() => ({ supportedNetworks }), [supportedNetworks])
 
     const renderOption = useCallback(
       (
         option: AIDOption,
         displayProps?: {
-          asPlaceholder?: boolean;
-          showValue?: boolean;
-          isLoadingSelectedOption?: boolean;
-          handleFetchSelectedOption?: (value: string) => void;
-          isFetchSelectedOptionSync?: boolean;
-          className?: string;
-        },
+          asPlaceholder?: boolean
+          showValue?: boolean
+          isLoadingSelectedOption?: boolean
+          handleFetchSelectedOption?: (value: string) => void
+          isFetchSelectedOptionSync?: boolean
+          className?: string
+        }
       ) => (
         <IdAutocompleteListOption
           variant={variant}
@@ -64,26 +60,22 @@ const AIDInput = React.forwardRef<HTMLInputElement, AIDInputProps>(
           title={option.title}
           path={
             displayProps?.asPlaceholder
-              ? previewPlaceholder?.path || "URL not available"
-              : option.path || "URL not available"
+              ? previewPlaceholder?.path || 'URL not available'
+              : option.path || 'URL not available'
           }
-          value={
-            displayProps?.asPlaceholder
-              ? previewPlaceholder?.value || "aid not available"
-              : option.value
-          }
+          value={displayProps?.asPlaceholder ? previewPlaceholder?.value || 'aid not available' : option.value}
           description={option.description}
           agentType={
             displayProps?.asPlaceholder
-              ? previewPlaceholder?.agentType || "Agent type not available"
-              : option.agentType || "Agent type not available"
+              ? previewPlaceholder?.agentType || 'Agent type not available'
+              : option.agentType || 'Agent type not available'
           }
-          placeholderIcon={previewPlaceholder?.icon || "Person"}
+          placeholderIcon={previewPlaceholder?.icon || 'Person'}
           {...displayProps}
         />
       ),
-      [variant, previewPlaceholder],
-    );
+      [variant, previewPlaceholder]
+    )
 
     return (
       <IdAutocompleteContext.Provider value={contextValue}>
@@ -142,10 +134,10 @@ const AIDInput = React.forwardRef<HTMLInputElement, AIDInputProps>(
           />
         )}
       </IdAutocompleteContext.Provider>
-    );
-  },
-);
+    )
+  }
+)
 
-AIDInput.displayName = "AIDInput";
+AIDInput.displayName = 'AIDInput'
 
-export { AIDInput };
+export { AIDInput }

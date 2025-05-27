@@ -1,45 +1,41 @@
-import type { IconName } from "../../../components/icon/index.js";
-import type { InputBaseProps } from "../../../../scalars/components/types.js";
-import type React from "react";
-import type {
-  DiffMode,
-  WithDifference,
-} from "../../../../scalars/components/types.js";
+import type { IconName } from '../../../components/icon/index.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import type React from 'react'
+import type { DiffMode, WithDifference } from '../../../../scalars/components/types.js'
 
-interface SelectWithDifference
-  extends Omit<WithDifference<string>, "diffMode"> {
-  diffMode?: Extract<DiffMode, "sentences">;
+interface SelectWithDifference extends Omit<WithDifference<string>, 'diffMode'> {
+  diffMode?: Extract<DiffMode, 'sentences'>
 }
 
 interface SelectOption {
-  icon?: IconName | React.ComponentType<{ className?: string }>;
-  value: string;
-  label: string;
-  disabled?: boolean;
-  className?: string;
+  icon?: IconName | React.ComponentType<{ className?: string }>
+  value: string
+  label: string
+  disabled?: boolean
+  className?: string
 }
 
 interface SelectBaseProps {
-  options?: SelectOption[];
-  favoriteOptions?: SelectOption[];
-  placeholder?: string;
-  multiple?: boolean;
-  searchable?: boolean;
-  onChange?: (value: string | string[]) => void;
-  contentClassName?: string;
-  contentAlign?: "start" | "end" | "center";
-  optionsClassName?: string;
+  options?: SelectOption[]
+  favoriteOptions?: SelectOption[]
+  placeholder?: string
+  multiple?: boolean
+  searchable?: boolean
+  onChange?: (value: string | string[]) => void
+  contentClassName?: string
+  contentAlign?: 'start' | 'end' | 'center'
+  optionsClassName?: string
 }
 
 type SelectConfigProps =
   | (SelectBaseProps & {
-      selectionIcon?: "auto";
-      selectionIconPosition?: "left";
+      selectionIcon?: 'auto'
+      selectionIconPosition?: 'left'
     })
   | (SelectBaseProps & {
-      selectionIcon: "checkmark";
-      selectionIconPosition?: "left" | "right";
-    });
+      selectionIcon: 'checkmark'
+      selectionIconPosition?: 'left' | 'right'
+    })
 
 type SelectProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -47,11 +43,6 @@ type SelectProps = Omit<
 > &
   InputBaseProps<string | string[]> &
   SelectConfigProps &
-  SelectWithDifference;
+  SelectWithDifference
 
-export type {
-  SelectBaseProps,
-  SelectOption,
-  SelectProps,
-  SelectWithDifference,
-};
+export type { SelectBaseProps, SelectOption, SelectProps, SelectWithDifference }

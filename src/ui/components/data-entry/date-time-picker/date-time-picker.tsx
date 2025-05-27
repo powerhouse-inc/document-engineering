@@ -3,40 +3,40 @@ import {
   FormGroup,
   FormLabel,
   FormMessageList,
-} from "../../../../scalars/components/fragments/index.js";
-import { cn } from "../../../../scalars/lib/utils.js";
-import type { InputBaseProps } from "../../../../scalars/components/types.js";
-import type React from "react";
-import { forwardRef } from "react";
-import { type DateFieldValue } from "../date-picker/types.js";
-import { BasePickerField } from "./base-picker.js";
-import DateTimePickerContent from "./date-time-picker-content.js";
-import { useDateTimePicker } from "./use-date-time-picker.js";
+} from '../../../../scalars/components/fragments/index.js'
+import { cn } from '../../../../scalars/lib/utils.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import type React from 'react'
+import { forwardRef } from 'react'
+import { type DateFieldValue } from '../date-picker/types.js'
+import { BasePickerField } from './base-picker.js'
+import DateTimePickerContent from './date-time-picker-content.js'
+import { useDateTimePicker } from './use-date-time-picker.js'
 
 interface DateTimePickerProps extends InputBaseProps<DateFieldValue> {
-  name: string;
-  id?: string;
-  label?: string;
-  value?: DateFieldValue;
-  defaultValue?: DateFieldValue;
-  placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  timeFormat?: string;
-  timeIntervals?: number;
-  timeZone?: string;
-  showTimezoneSelect?: boolean;
-  includeContinent?: boolean;
+  name: string
+  id?: string
+  label?: string
+  value?: DateFieldValue
+  defaultValue?: DateFieldValue
+  placeholder?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  timeFormat?: string
+  timeIntervals?: number
+  timeZone?: string
+  showTimezoneSelect?: boolean
+  includeContinent?: boolean
   // Date Picker Field
-  disablePastDates?: boolean;
-  disableFutureDates?: boolean;
-  dateFormat?: string;
-  weekStart?: string;
-  autoClose?: boolean;
-  minDate?: string;
-  maxDate?: string;
-  onChangeDate?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlurDate?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  disablePastDates?: boolean
+  disableFutureDates?: boolean
+  dateFormat?: string
+  weekStart?: string
+  autoClose?: boolean
+  minDate?: string
+  maxDate?: string
+  onChangeDate?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlurDate?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
   (
@@ -73,7 +73,7 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
       includeContinent,
       ...props
     },
-    ref,
+    ref
   ) => {
     const {
       isOpen,
@@ -131,16 +131,11 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
       timeZone,
       showTimezoneSelect,
       includeContinent,
-    });
+    })
     return (
       <FormGroup>
         {label && (
-          <FormLabel
-            htmlFor={id}
-            required={required}
-            disabled={disabled}
-            hasError={!!errors?.length}
-          >
+          <FormLabel htmlFor={id} required={required} disabled={disabled} hasError={!!errors?.length}>
             {label}
           </FormLabel>
         )}
@@ -162,7 +157,7 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
           data-cast={`DateTimeString:${dateFormat}`}
           className={cn(
             // Add custom styles when the time is open
-            isCalendarView ? "px-4 pb-6 pt-3" : "px-4 pb-4 pt-3",
+            isCalendarView ? 'px-4 pb-6 pt-3' : 'px-4 pb-4 pt-3'
           )}
         >
           <DateTimePickerContent
@@ -197,10 +192,10 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
         {warnings && <FormMessageList messages={warnings} type="warning" />}
         {errors && <FormMessageList messages={errors} type="error" />}
       </FormGroup>
-    );
-  },
-);
+    )
+  }
+)
 
-DateTimePicker.displayName = "DateTimePicker";
+DateTimePicker.displayName = 'DateTimePicker'
 
-export { DateTimePicker, type DateTimePickerProps };
+export { DateTimePicker, type DateTimePickerProps }

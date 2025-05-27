@@ -1,67 +1,45 @@
-import { Icon } from "../../../../../../ui/components/icon/index.js";
-import { cn } from "../../../../../../scalars/lib/index.js";
-import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
-import { type DatePickerView } from "../../types.js";
+import { Icon } from '../../../../../../ui/components/icon/index.js'
+import { cn } from '../../../../../../scalars/lib/index.js'
+import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
+import { type DatePickerView } from '../../types.js'
 interface CaptionLabelProps extends React.PropsWithChildren {
-  showYearSwitcher: boolean;
-  navView: DatePickerView;
-  setNavView: (navView: DatePickerView) => void;
+  showYearSwitcher: boolean
+  navView: DatePickerView
+  setNavView: (navView: DatePickerView) => void
 }
 
-const CaptionLabel: React.FC<CaptionLabelProps> = ({
-  children,
-  showYearSwitcher,
-  navView,
-  setNavView,
-  ...props
-}) => {
-  if (!showYearSwitcher) return <span {...props}>{children}</span>;
+const CaptionLabel: React.FC<CaptionLabelProps> = ({ children, showYearSwitcher, navView, setNavView, ...props }) => {
+  if (!showYearSwitcher) return <span {...props}>{children}</span>
 
   // Convert children to a string and split by space to separate the month and the year
-  const [monthAbbreviation, yearNumber] = (children as string).split(" ");
+  const [monthAbbreviation, yearNumber] = (children as string).split(' ')
 
-  const isSelectedMonth = navView === "months";
-  const isSelectedYear = navView === "years";
+  const isSelectedMonth = navView === 'months'
+  const isSelectedYear = navView === 'years'
 
   return (
-    <div
-      className={cn(
-        "flex items-center gap-2 text-gray-600",
-        isSelectedMonth ? "text-gray-900" : "text-gray-600",
-      )}
-    >
+    <div className={cn('flex items-center gap-2 text-gray-600', isSelectedMonth ? 'text-gray-900' : 'text-gray-600')}>
       <Button
-        className={cn(
-          "truncate text-sm font-semibold",
-          isSelectedYear ? "text-gray-900" : "text-gray-600",
-        )}
+        className={cn('truncate text-sm font-semibold', isSelectedYear ? 'text-gray-900' : 'text-gray-600')}
         variant="ghost"
-        onClick={() => setNavView("years")}
+        onClick={() => setNavView('years')}
       >
-        <span
-          className={cn(isSelectedMonth ? "text-gray-900" : "text-gray-600")}
-        >
-          {monthAbbreviation}
-        </span>
-        <span
-          className={cn(isSelectedYear ? "text-gray-900" : "text-gray-600")}
-        >
-          {yearNumber}
-        </span>
+        <span className={cn(isSelectedMonth ? 'text-gray-900' : 'text-gray-600')}>{monthAbbreviation}</span>
+        <span className={cn(isSelectedYear ? 'text-gray-900' : 'text-gray-600')}>{yearNumber}</span>
       </Button>
-      {navView === "days" ? (
+      {navView === 'days' ? (
         <Icon
           className="size-[18px] cursor-pointer text-gray-600"
           name="TriangleDown"
-          onClick={() => setNavView("years")}
+          onClick={() => setNavView('years')}
         />
       ) : (
-        <Button variant="ghost" onClick={() => setNavView("days")}>
+        <Button variant="ghost" onClick={() => setNavView('days')}>
           <Icon className="size-[18px] text-gray-900" name="CrossCircle" />
         </Button>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CaptionLabel;
+export default CaptionLabel

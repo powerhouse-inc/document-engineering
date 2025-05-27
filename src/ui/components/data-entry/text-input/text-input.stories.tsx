@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from "../../../../scalars/lib/storybook-arg-types.js";
-import { TextInput } from "./text-input.js";
+} from '../../../../scalars/lib/storybook-arg-types.js'
+import { TextInput } from './text-input.js'
 
 /**
  * The `TextInput` component provides a standard text input field with various features.
@@ -16,22 +16,22 @@ import { TextInput } from "./text-input.js";
  * > component.
  */
 const meta = {
-  title: "Document Engineering/Data Entry/Text Input",
+  title: 'Document Engineering/Data Entry/Text Input',
   component: TextInput,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: {
       disableSnapshot: true,
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
       enabledArgTypes: {
         id: false,
       },
-      valueControlType: "text",
-      valueType: "string",
+      valueControlType: 'text',
+      valueType: 'string',
     }),
     ...PrebuiltArgTypes.placeholder,
     ...PrebuiltArgTypes.autoComplete,
@@ -55,73 +55,73 @@ const meta = {
 
     ...PrebuiltArgTypes.baseValue,
     diffMode: {
-      control: "select",
-      description: "The mode of the input field",
-      options: ["sentences"],
+      control: 'select',
+      description: 'The mode of the input field',
+      options: ['sentences'],
       table: {
         category: StorybookControlCategory.DIFF,
       },
     },
   },
-} satisfies Meta<typeof TextInput>;
+} satisfies Meta<typeof TextInput>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: "Username",
-    placeholder: "Enter your username",
+    label: 'Username',
+    placeholder: 'Enter your username',
   },
-};
+}
 
 export const WithDefaultValue: Story = {
   args: {
-    label: "Username",
-    defaultValue: "jhon.doe",
-    placeholder: "Enter your username",
+    label: 'Username',
+    defaultValue: 'jhon.doe',
+    placeholder: 'Enter your username',
   },
-};
+}
 
 export const WithDescription: Story = {
   args: {
-    label: "Username",
-    description: "Must be at least 3 characters long",
-    placeholder: "Enter your username",
+    label: 'Username',
+    description: 'Must be at least 3 characters long',
+    placeholder: 'Enter your username',
   },
-};
+}
 
 export const Required: Story = {
   args: {
-    label: "Username",
+    label: 'Username',
     required: true,
-    placeholder: "Enter your username",
+    placeholder: 'Enter your username',
   },
-};
+}
 
 export const Disabled: Story = {
   args: {
-    label: "Username",
+    label: 'Username',
     disabled: true,
-    defaultValue: "jhon.doe",
-    placeholder: "Enter your username",
+    defaultValue: 'jhon.doe',
+    placeholder: 'Enter your username',
   },
-};
+}
 
 export const WithErrors: Story = {
   args: {
-    label: "Username",
-    defaultValue: "invalid-username",
-    errors: ["Please enter a valid username"],
-    placeholder: "Enter your username",
+    label: 'Username',
+    defaultValue: 'invalid-username',
+    errors: ['Please enter a valid username'],
+    placeholder: 'Enter your username',
   },
-};
+}
 
 export const WithWarnings: Story = {
   args: {
-    label: "Username",
-    defaultValue: "no",
-    warnings: ["Username must be at least 3 characters long"],
-    placeholder: "Enter your username",
+    label: 'Username',
+    defaultValue: 'no',
+    warnings: ['Username must be at least 3 characters long'],
+    placeholder: 'Enter your username',
   },
-};
+}

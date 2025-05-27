@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import CustomRenderingExample from "./custom-rendering.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import CustomRenderingExample from './custom-rendering.js'
 
 const meta = {
-  title: "Document Engineering/Data Display/Object Set Table/2 - Examples/Custom Rendering",
+  title: 'Document Engineering/Data Display/Object Set Table/2 - Examples/Custom Rendering',
   component: CustomRenderingExample,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: { disableSnapshot: true },
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: `
 import { useMemo } from "react";
@@ -106,12 +106,12 @@ export default CustomRenderingExample;
       },
     },
   },
-} satisfies Meta<typeof CustomRenderingExample>;
+} satisfies Meta<typeof CustomRenderingExample>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-};
+}

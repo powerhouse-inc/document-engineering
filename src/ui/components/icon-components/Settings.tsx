@@ -1,4 +1,4 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function Settings(props: Props) {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="currentcolor">
@@ -13,5 +13,5 @@ export default function Settings(props: Props) {
         d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
       />
     </svg>
-  );
+  )
 }

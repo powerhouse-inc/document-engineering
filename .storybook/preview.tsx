@@ -1,8 +1,7 @@
-import { withThemeByClassName } from "@storybook/addon-themes";
-import type { Preview, ReactRenderer } from "@storybook/react";
-import "../dist/style.css";
-import "../style.css";
-
+import { withThemeByClassName } from '@storybook/addon-themes'
+import type { Preview, ReactRenderer } from '@storybook/react'
+import '../dist/style.css'
+import '../style.css'
 
 const preview: Preview = {
   parameters: {
@@ -15,22 +14,22 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
-          "Connect",
-          "Powerhouse",
-          "RWA",
-          "Document Engineering",
+          'Connect',
+          'Powerhouse',
+          'RWA',
+          'Document Engineering',
           [
-            "Getting started",
-            "Scalars",
-            ["Forms", "Examples"],
-            "Data Entry",
-            "Data Display",
-            "Navigation",
-            "Layout Components",
-            "Fragments",
+            'Getting started',
+            'Scalars',
+            ['Forms', 'Examples'],
+            'Data Entry',
+            'Data Display',
+            'Navigation',
+            'Layout Components',
+            'Fragments',
           ],
         ],
-        method: "alphabetical",
+        method: 'alphabetical',
         includeNames: true,
       },
     },
@@ -38,12 +37,12 @@ const preview: Preview = {
   decorators: [
     withThemeByClassName<ReactRenderer>({
       themes: {
-        light: "light",
-        dark: "dark",
+        light: 'light',
+        dark: 'dark',
       },
-      defaultTheme: "light",
+      defaultTheme: 'light',
     }),
   ],
-};
+}
 
-export default preview;
+export default preview

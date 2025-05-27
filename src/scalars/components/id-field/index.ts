@@ -1,1 +1,1 @@
-export * from "./id-field.js";
+export * from './id-field.js'

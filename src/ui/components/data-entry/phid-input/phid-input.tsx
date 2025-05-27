@@ -1,10 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback, useId, useMemo } from "react";
-import { IdAutocompleteContext } from "../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-context.js";
-import { IdAutocompleteListOption } from "../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js";
-import { IdAutocomplete } from "../../../../scalars/components/fragments/id-autocomplete/index.js";
-import { PHIDInputDiff } from "./phid-input-diff.js";
-import type { PHIDInputProps, PHIDOption } from "./types.js";
+import React, { useCallback, useId, useMemo } from 'react'
+import { IdAutocompleteContext } from '../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-context.js'
+import { IdAutocompleteListOption } from '../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js'
+import { IdAutocomplete } from '../../../../scalars/components/fragments/id-autocomplete/index.js'
+import { PHIDInputDiff } from './phid-input-diff.js'
+import type { PHIDInputProps, PHIDOption } from './types.js'
 
 const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
   (
@@ -28,7 +27,7 @@ const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
       allowUris,
       allowedScopes,
       autoComplete: autoCompleteProp,
-      variant = "withValue",
+      variant = 'withValue',
       maxLength,
       fetchOptionsCallback,
       fetchSelectedOptionCallback,
@@ -36,7 +35,7 @@ const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
       initialOptions,
       previewPlaceholder,
       // Diff props
-      viewMode = "edition",
+      viewMode = 'edition',
       diffMode,
       baseValue,
       basePreviewIcon,
@@ -45,28 +44,25 @@ const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
       basePreviewDescription,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const prefix = useId();
-    const id = idProp ?? `${prefix}-phid`;
-    const autoComplete = autoCompleteProp ?? true;
+    const prefix = useId()
+    const id = idProp ?? `${prefix}-phid`
+    const autoComplete = autoCompleteProp ?? true
 
-    const contextValue = useMemo(
-      () => ({ allowUris, allowedScopes }),
-      [allowUris, allowedScopes],
-    );
+    const contextValue = useMemo(() => ({ allowUris, allowedScopes }), [allowUris, allowedScopes])
 
     const renderOption = useCallback(
       (
         option: PHIDOption,
         displayProps?: {
-          asPlaceholder?: boolean;
-          showValue?: boolean;
-          isLoadingSelectedOption?: boolean;
-          handleFetchSelectedOption?: (value: string) => void;
-          isFetchSelectedOptionSync?: boolean;
-          className?: string;
-        },
+          asPlaceholder?: boolean
+          showValue?: boolean
+          isLoadingSelectedOption?: boolean
+          handleFetchSelectedOption?: (value: string) => void
+          isFetchSelectedOptionSync?: boolean
+          className?: string
+        }
       ) => (
         <IdAutocompleteListOption
           variant={variant}
@@ -74,23 +70,19 @@ const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
           title={option.title}
           path={
             displayProps?.asPlaceholder
-              ? previewPlaceholder?.path || "Type not available"
-              : option.path || "Type not available"
+              ? previewPlaceholder?.path || 'Type not available'
+              : option.path || 'Type not available'
           }
-          value={
-            displayProps?.asPlaceholder
-              ? previewPlaceholder?.value || "phid not available"
-              : option.value
-          }
+          value={displayProps?.asPlaceholder ? previewPlaceholder?.value || 'phid not available' : option.value}
           description={option.description}
           placeholderIcon={previewPlaceholder?.icon || undefined}
           {...displayProps}
         />
       ),
-      [variant, previewPlaceholder],
-    );
+      [variant, previewPlaceholder]
+    )
 
-    if (viewMode === "edition") {
+    if (viewMode === 'edition') {
       return (
         <IdAutocompleteContext.Provider value={contextValue}>
           {autoComplete && fetchOptionsCallback ? (
@@ -148,12 +140,12 @@ const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
             />
           )}
         </IdAutocompleteContext.Provider>
-      );
+      )
     }
 
     return (
       <PHIDInputDiff
-        value={value ?? defaultValue ?? ""}
+        value={value ?? defaultValue ?? ''}
         label={label}
         required={required}
         autoComplete={autoComplete}
@@ -168,10 +160,10 @@ const PHIDInput = React.forwardRef<HTMLInputElement, PHIDInputProps>(
         basePreviewPath={basePreviewPath}
         basePreviewDescription={basePreviewDescription}
       />
-    );
-  },
-);
+    )
+  }
+)
 
-PHIDInput.displayName = "PHIDInput";
+PHIDInput.displayName = 'PHIDInput'
 
-export { PHIDInput };
+export { PHIDInput }

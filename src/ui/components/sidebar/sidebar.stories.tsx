@@ -1,10 +1,10 @@
-import { Icon } from "../../components/icon/index.js";
-import type { Meta, StoryObj } from "@storybook/react";
-import { useCallback, useState } from "react";
-import mockedTree from "./mocked_tree.json";
-import { Sidebar } from "./sidebar.js";
-import { SidebarProvider } from "./subcomponents/sidebar-provider/index.js";
-import { type SidebarNode } from "./types.js";
+import { Icon } from '../../components/icon/index.js'
+import type { Meta, StoryObj } from '@storybook/react'
+import { useCallback, useState } from 'react'
+import mockedTree from './mocked_tree.json'
+import { Sidebar } from './sidebar.js'
+import { SidebarProvider } from './subcomponents/sidebar-provider/index.js'
+import { type SidebarNode } from './types.js'
 
 /**
  * The `Sidebar` component can be used within a page layout to provide a sidebar navigation.
@@ -81,130 +81,129 @@ import { type SidebarNode } from "./types.js";
  * ```
  */
 const meta: Meta<typeof Sidebar> = {
-  title: "Document Engineering/Navigation/Sidebar",
+  title: 'Document Engineering/Navigation/Sidebar',
   component: Sidebar,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
-    (Story) => (
+    Story => (
       <SidebarProvider nodes={mockedTree as SidebarNode[]}>
         <Story />
       </SidebarProvider>
     ),
   ],
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
   argTypes: {
     activeNodeId: {
-      control: "text",
-      description: "The id of the node that is currently active.",
+      control: 'text',
+      description: 'The id of the node that is currently active.',
     },
     nodes: {
-      control: "object",
+      control: 'object',
       table: {
         readonly: true,
       },
       description:
-        "The nodes to be displayed in the sidebar. It can be provided through the SidebarProvider to prevent flickering.",
+        'The nodes to be displayed in the sidebar. It can be provided through the SidebarProvider to prevent flickering.',
     },
     sidebarTitle: {
-      control: "text",
-      description: "The title of the sidebar.",
+      control: 'text',
+      description: 'The title of the sidebar.',
     },
     sidebarIcon: {
-      control: "object",
+      control: 'object',
       table: {
         readonly: true,
       },
-      description: "The icon of the sidebar.",
+      description: 'The icon of the sidebar.',
     },
     defaultLevel: {
-      control: "number",
-      description: "The level to be opened by default.",
+      control: 'number',
+      description: 'The level to be opened by default.',
       table: {
-        defaultValue: { summary: "1" },
+        defaultValue: { summary: '1' },
       },
     },
     enableMacros: {
-      control: "number",
-      description:
-        "The number of macros to be displayed in the sidebar. Recommended up to 4.",
+      control: 'number',
+      description: 'The number of macros to be displayed in the sidebar. Recommended up to 4.',
       table: {
-        defaultValue: { summary: "0" },
+        defaultValue: { summary: '0' },
       },
     },
     allowPinning: {
-      control: "boolean",
-      description: "Whether the sidebar items can be pinned.",
+      control: 'boolean',
+      description: 'Whether the sidebar items can be pinned.',
       table: {
-        defaultValue: { summary: "true" },
+        defaultValue: { summary: 'true' },
       },
     },
     resizable: {
-      control: "boolean",
-      description: "Whether the sidebar is resizable.",
+      control: 'boolean',
+      description: 'Whether the sidebar is resizable.',
       table: {
-        defaultValue: { summary: "true" },
+        defaultValue: { summary: 'true' },
       },
     },
     showSearchBar: {
-      control: "boolean",
-      description: "Whether the sidebar allows searching.",
+      control: 'boolean',
+      description: 'Whether the sidebar allows searching.',
       table: {
-        defaultValue: { summary: "true" },
+        defaultValue: { summary: 'true' },
       },
     },
     showStatusFilter: {
-      control: "boolean",
-      description: "Whether the sidebar allows filtering by status.",
+      control: 'boolean',
+      description: 'Whether the sidebar allows filtering by status.',
       table: {
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: 'false' },
       },
     },
     extraFooterContent: {
-      control: "object",
-      description: "Additional content to be displayed in the sidebar footer.",
+      control: 'object',
+      description: 'Additional content to be displayed in the sidebar footer.',
       table: {
         readonly: true,
       },
     },
     initialWidth: {
-      control: "number",
-      description: "The initial width of the sidebar.",
+      control: 'number',
+      description: 'The initial width of the sidebar.',
       table: {
-        defaultValue: { summary: "300" },
+        defaultValue: { summary: '300' },
       },
     },
     maxWidth: {
-      control: "number",
-      description: "The maximum width of the sidebar.",
+      control: 'number',
+      description: 'The maximum width of the sidebar.',
     },
     allowCollapsingInactiveNodes: {
-      control: "boolean",
-      description: "Whether to allow collapsing inactive nodes on click.",
+      control: 'boolean',
+      description: 'Whether to allow collapsing inactive nodes on click.',
       table: {
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: 'false' },
       },
     },
   },
   args: {
-    sidebarTitle: "Title Sidebar",
+    sidebarTitle: 'Title Sidebar',
     sidebarIcon: (
       <div className="flex items-center justify-center rounded-md bg-gray-900 p-2">
         <Icon name="M" className="text-gray-50" size={16} />
       </div>
     ),
     enableMacros: 4,
-    onActiveNodeChange: (node) => {
-      console.log("onActiveNodeChange", node);
+    onActiveNodeChange: node => {
+      console.log('onActiveNodeChange', node)
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Sidebar>;
+export default meta
+type Story = StoryObj<typeof Sidebar>
 
-export const Default: Story = {};
+export const Default: Story = {}
 
 /**
  * The `Sidebar` component can be used within a page layout to provide a sidebar navigation.
@@ -215,14 +214,12 @@ export const WithinLayoutAndContent: Story = {
   args: {
     showStatusFilter: true,
   },
-  render: (args) => {
-    const [activeNode, setActiveNode] = useState<string>(
-      "4281ab93-ef4f-4974-988d-7dad149a693d",
-    );
+  render: args => {
+    const [activeNode, setActiveNode] = useState<string>('4281ab93-ef4f-4974-988d-7dad149a693d')
 
     const onActiveNodeChange = useCallback((node: SidebarNode) => {
-      setActiveNode(node.id);
-    }, []);
+      setActiveNode(node.id)
+    }, [])
 
     return (
       <main className="flex h-svh w-full">
@@ -235,12 +232,7 @@ export const WithinLayoutAndContent: Story = {
             <div className="flex flex-col gap-1">
               <div className="flex items-baseline gap-2 text-gray-900 dark:text-gray-200">
                 <div>Login with</div>
-                <Icon
-                  name={"Renown"}
-                  size={"auto"}
-                  height={18}
-                  className="cursor-pointer"
-                />
+                <Icon name={'Renown'} size={'auto'} height={18} className="cursor-pointer" />
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 Auth integration example within sidebar content
@@ -248,18 +240,11 @@ export const WithinLayoutAndContent: Story = {
             </div>
           }
         />
-        <div
-          style={{ width: "calc(100% - var(--sidebar-width))" }}
-          className="flex-1 bg-gray-50 p-4 dark:bg-slate-800"
-        >
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">
-            Content Area
-          </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Active Node: {activeNode}
-          </p>
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Active Node: {activeNode}</p>
         </div>
       </main>
-    );
+    )
   },
-};
+}

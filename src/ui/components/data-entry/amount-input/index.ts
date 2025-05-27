@@ -1,1 +1,1 @@
-export { AmountInput, type AmountInputProps } from "./amount-input.js";
+export { AmountInput, type AmountInputProps } from './amount-input.js'

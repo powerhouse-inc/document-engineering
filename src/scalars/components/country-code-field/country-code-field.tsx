@@ -1,27 +1,22 @@
-import { Select } from "../../../ui/components/data-entry/select/index.js";
-import React from "react";
-import { CircleFlag } from "react-circle-flags";
-import countries, { type Countries } from "world-countries";
-import { withFieldValidation } from "../fragments/with-field-validation/with-field-validation.js";
-import type { FieldErrorHandling, InputBaseProps } from "../types.js";
-import type { CountryCodeProps } from "./types.js";
+import { Select } from '../../../ui/components/data-entry/select/index.js'
+import React from 'react'
+import { CircleFlag } from 'react-circle-flags'
+import countries, { type Countries } from 'world-countries'
+import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
+import type { FieldErrorHandling, InputBaseProps } from '../types.js'
+import type { CountryCodeProps } from './types.js'
 
 type CountryCodeFieldBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  | keyof InputBaseProps<string>
-  | keyof FieldErrorHandling
-  | keyof CountryCodeProps
->;
+  keyof InputBaseProps<string> | keyof FieldErrorHandling | keyof CountryCodeProps
+>
 
 export type CountryCodeFieldProps = CountryCodeFieldBaseProps &
   InputBaseProps<string> &
   FieldErrorHandling &
-  CountryCodeProps;
+  CountryCodeProps
 
-const CountryCodeFieldRaw = React.forwardRef<
-  HTMLButtonElement,
-  CountryCodeFieldProps
->(
+const CountryCodeFieldRaw = React.forwardRef<HTMLButtonElement, CountryCodeFieldProps>(
   (
     {
       onChange,
@@ -29,47 +24,39 @@ const CountryCodeFieldRaw = React.forwardRef<
       allowedCountries,
       excludedCountries,
       includeDependentAreas = false,
-      viewMode = "NamesOnly",
+      viewMode = 'NamesOnly',
       showFlagIcons = true,
       enableSearch,
       ...props
     },
-    ref,
+    ref
   ) => {
     const defaultOptions = (countries as unknown as Countries)
       .filter(
-        (country) =>
-          (includeDependentAreas ? true : country.independent) &&
-          country.cca2 !== "AQ", // exclude Antarctica
+        country => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ' // exclude Antarctica
       )
-      .map((country) => ({
+      .map(country => ({
         value: country.cca2,
         label:
-          viewMode === "CodesOnly"
+          viewMode === 'CodesOnly'
             ? country.cca2
-            : viewMode === "NamesAndCodes"
+            : viewMode === 'NamesAndCodes'
               ? `${country.name.common} (${country.cca2})`
               : country.name.common,
         icon: showFlagIcons
-          ? () => (
-              <CircleFlag
-                className="size-4"
-                countryCode={country.cca2.toLowerCase()}
-                height={16}
-              />
-            )
+          ? () => <CircleFlag className="size-4" countryCode={country.cca2.toLowerCase()} height={16} />
           : undefined,
       }))
-      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
+      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0))
 
     const options =
       Array.isArray(allowedCountries) || Array.isArray(excludedCountries)
         ? defaultOptions.filter(
-            (option) =>
+            option =>
               (!allowedCountries || allowedCountries.includes(option.value)) &&
-              !excludedCountries?.includes(option.value),
+              !excludedCountries?.includes(option.value)
           )
-        : defaultOptions;
+        : defaultOptions
 
     return (
       <Select
@@ -82,52 +69,39 @@ const CountryCodeFieldRaw = React.forwardRef<
         placeholder={placeholder}
         {...props}
       />
-    );
+    )
+  }
+)
+
+export const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(CountryCodeFieldRaw, {
+  validations: {
+    _validOption:
+      ({ allowedCountries, excludedCountries, includeDependentAreas }) =>
+      (value: string | undefined) => {
+        if (value === '' || value === undefined) {
+          return true
+        }
+
+        const validCountries = (countries as unknown as Countries)
+          .filter(country => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ')
+          .map(country => country.cca2)
+
+        // First check if it's a valid country code
+        if (!validCountries.includes(value)) {
+          return 'Please select a valid country'
+        }
+        // Check if country is in allowed list
+        if (Array.isArray(allowedCountries) && !allowedCountries.includes(value)) {
+          return 'Please select a valid country'
+        }
+        // Check if country is in excluded list
+        if (Array.isArray(excludedCountries) && excludedCountries.includes(value)) {
+          return 'Please select a valid country'
+        }
+
+        return true
+      },
   },
-);
+})
 
-export const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(
-  CountryCodeFieldRaw,
-  {
-    validations: {
-      _validOption:
-        ({ allowedCountries, excludedCountries, includeDependentAreas }) =>
-        (value: string | undefined) => {
-          if (value === "" || value === undefined) {
-            return true;
-          }
-
-          const validCountries = (countries as unknown as Countries)
-            .filter(
-              (country) =>
-                (includeDependentAreas ? true : country.independent) &&
-                country.cca2 !== "AQ",
-            )
-            .map((country) => country.cca2);
-
-          // First check if it's a valid country code
-          if (!validCountries.includes(value)) {
-            return "Please select a valid country";
-          }
-          // Check if country is in allowed list
-          if (
-            Array.isArray(allowedCountries) &&
-            !allowedCountries.includes(value)
-          ) {
-            return "Please select a valid country";
-          }
-          // Check if country is in excluded list
-          if (
-            Array.isArray(excludedCountries) &&
-            excludedCountries.includes(value)
-          ) {
-            return "Please select a valid country";
-          }
-
-          return true;
-        },
-    },
-  },
-);
-
-CountryCodeField.displayName = "CountryCodeField";
+CountryCodeField.displayName = 'CountryCodeField'

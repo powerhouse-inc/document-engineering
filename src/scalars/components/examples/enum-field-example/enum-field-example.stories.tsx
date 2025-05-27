@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import EnumFieldExample from "./enum-field-example.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import EnumFieldExample from './enum-field-example.js'
 
 const meta = {
-  title: "Document Engineering/Scalars/Examples/Enum Field Example",
+  title: 'Document Engineering/Scalars/Examples/Enum Field Example',
   component: EnumFieldExample,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: `
 function EnumFieldExample() {
@@ -70,12 +70,12 @@ function EnumFieldExample() {
       },
     },
   },
-} satisfies Meta<typeof EnumFieldExample>;
+} satisfies Meta<typeof EnumFieldExample>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-};
+}

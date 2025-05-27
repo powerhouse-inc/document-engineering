@@ -1,20 +1,8 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function ExportZip(props: Props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <mask
-        id="mask0_4381_5398"
-        maskUnits="userSpaceOnUse"
-        x="2"
-        y="0"
-        width="30"
-        height="32"
-      >
+    <svg {...props} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <mask id="mask0_4381_5398" maskUnits="userSpaceOnUse" x="2" y="0" width="30" height="32">
         <path d="M32 0H2V32H32V0Z" fill="white" />
       </mask>
       <g mask="url(#mask0_4381_5398)">
@@ -45,5 +33,5 @@ export default function ExportZip(props: Props) {
         fill="#FCFCFC"
       />
     </svg>
-  );
+  )
 }

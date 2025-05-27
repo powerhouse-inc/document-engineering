@@ -1,16 +1,16 @@
-import { Icon } from "../../../ui/components/icon/index.js";
-import { cn } from "../../../scalars/lib/index.js";
-import { forwardRef, useId } from "react";
-import { Input } from "../../../ui/components/data-entry/input/index.js";
-import { FormDescription } from "../fragments/form-description/index.js";
-import { FormGroup } from "../fragments/form-group/index.js";
-import { FormLabel } from "../fragments/form-label/index.js";
-import { FormMessageList } from "../fragments/form-message/index.js";
-import { withFieldValidation } from "../fragments/with-field-validation/index.js";
-import { validateNumericType } from "./number-field-validations.js";
-import type { NumberFieldProps } from "./types.js";
-import { useNumberField } from "./use-number-field.js";
-import { regex } from "./utils.js";
+import { Icon } from '../../../ui/components/icon/index.js'
+import { cn } from '../../../scalars/lib/index.js'
+import { forwardRef, useId } from 'react'
+import { Input } from '../../../ui/components/data-entry/input/index.js'
+import { FormDescription } from '../fragments/form-description/index.js'
+import { FormGroup } from '../fragments/form-group/index.js'
+import { FormLabel } from '../fragments/form-label/index.js'
+import { FormMessageList } from '../fragments/form-message/index.js'
+import { withFieldValidation } from '../fragments/with-field-validation/index.js'
+import { validateNumericType } from './number-field-validations.js'
+import type { NumberFieldProps } from './types.js'
+import { useNumberField } from './use-number-field.js'
+import { regex } from './utils.js'
 
 export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
@@ -31,15 +31,15 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
       step = 1,
       pattern,
       trailingZeros = false,
-      numericType = "Float",
+      numericType = 'Float',
       precision = 0,
       onFocus,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const generatedId = useId();
-    const id = propId ?? generatedId;
+    const generatedId = useId()
+    const id = propId ?? generatedId
     const {
       canIncrement,
       canDecrement,
@@ -64,7 +64,7 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
       trailingZeros,
       precision,
       onFocus,
-    });
+    })
 
     return (
       <FormGroup>
@@ -84,7 +84,7 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
             id={id}
             onFocus={handleFocus}
             name={name}
-            className={cn("pr-8", className)}
+            className={cn('pr-8', className)}
             pattern={isBigInt ? regex.toString() : pattern?.toString()}
             type="text"
             inputMode="numeric"
@@ -94,17 +94,17 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
             aria-valuemin={minValue}
             aria-valuemax={maxValue}
             aria-invalid={!!errors?.length}
-            onKeyDown={(e) => {
-              preventLetterInput(e);
-              preventInvalidCharsAndHandleArrows(e);
+            onKeyDown={e => {
+              preventLetterInput(e)
+              preventInvalidCharsAndHandleArrows(e)
             }}
-            value={value === undefined ? "" : value.toString()}
+            value={value === undefined ? '' : value.toString()}
             onBlur={handleBlur}
             defaultValue={defaultValue?.toString()}
             onChange={onChange}
             onPaste={blockInvalidPaste}
             ref={ref}
-            data-cast={isBigInt ? "BigInt" : "Number"}
+            data-cast={isBigInt ? 'BigInt' : 'Number'}
             {...props}
           />
           {showSteps && (
@@ -112,33 +112,30 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
               <button
                 aria-label="Increment"
                 disabled={canIncrement}
-                onMouseDown={(e) => e.preventDefault()}
+                onMouseDown={e => e.preventDefault()}
                 type="button"
-                onClick={(e) => {
-                  stepValueHandler(e, "increment");
+                onClick={e => {
+                  stepValueHandler(e, 'increment')
                   if (buttonRef.current) {
-                    buttonRef.current.focus();
+                    buttonRef.current.focus()
                   }
                 }}
               >
                 <Icon
                   size={10}
                   name="ChevronDown"
-                  className={cn(
-                    "rotate-180 text-gray-700 dark:text-gray-300",
-                    canIncrement && "cursor-not-allowed",
-                  )}
+                  className={cn('rotate-180 text-gray-700 dark:text-gray-300', canIncrement && 'cursor-not-allowed')}
                 />
               </button>
               <button
                 aria-label="Decrement"
-                onMouseDown={(e) => e.preventDefault()}
+                onMouseDown={e => e.preventDefault()}
                 disabled={canDecrement}
                 type="button"
-                onClick={(e) => {
-                  stepValueHandler(e, "decrement");
+                onClick={e => {
+                  stepValueHandler(e, 'decrement')
                   if (buttonRef.current) {
-                    buttonRef.current.focus();
+                    buttonRef.current.focus()
                   }
                 }}
               >
@@ -146,8 +143,8 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
                   size={10}
                   name="ChevronDown"
                   className={cn(
-                    "items-center justify-center text-gray-700 dark:text-gray-300",
-                    canDecrement && "cursor-not-allowed",
+                    'items-center justify-center text-gray-700 dark:text-gray-300',
+                    canDecrement && 'cursor-not-allowed'
                   )}
                 />
               </button>
@@ -158,17 +155,14 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
         {warnings && <FormMessageList messages={warnings} type="warning" />}
         {errors && <FormMessageList messages={errors} type="error" />}
       </FormGroup>
-    );
-  },
-);
+    )
+  }
+)
 
-export const NumberField = withFieldValidation<NumberFieldProps>(
-  NumberFieldRaw,
-  {
-    validations: {
-      _numericType: validateNumericType,
-    },
+export const NumberField = withFieldValidation<NumberFieldProps>(NumberFieldRaw, {
+  validations: {
+    _numericType: validateNumericType,
   },
-);
+})
 
-NumberField.displayName = "NumberField";
+NumberField.displayName = 'NumberField'

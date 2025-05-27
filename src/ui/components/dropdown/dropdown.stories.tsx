@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { StorybookControlCategory } from "../../../scalars/lib/storybook-arg-types.js";
-import DropdownExample from "./dropdown-example.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import { StorybookControlCategory } from '../../../scalars/lib/storybook-arg-types.js'
+import DropdownExample from './dropdown-example.js'
 
 /**
  * The `Dropdown` component system provides a flexible way to create interactive menus.
@@ -165,34 +165,34 @@ import DropdownExample from "./dropdown-example.js";
  * TypeScript users get full type checking for native div element props.
  */
 const meta: Meta<typeof DropdownExample> = {
-  title: "Document Engineering/Data Display/Dropdown",
+  title: 'Document Engineering/Data Display/Dropdown',
   component: DropdownExample,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: {
       disableSnapshot: true,
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 
   argTypes: {
     label: {
       label: {
-        control: "text",
-        description: "Sets the visible label text for the input field",
+        control: 'text',
+        description: 'Sets the visible label text for the input field',
         table: {
-          type: { summary: "string" },
+          type: { summary: 'string' },
           category: StorybookControlCategory.COMPONENT_SPECIFIC,
         },
       },
     },
   },
-} satisfies Meta<typeof DropdownExample>;
+} satisfies Meta<typeof DropdownExample>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
-    label: "Export as",
+    label: 'Export as',
   },
-};
+}

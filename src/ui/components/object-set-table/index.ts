@@ -1,2 +1,2 @@
-export { ObjectSetTable } from "./object-set-table.js";
-export * from "./types.js";
+export { ObjectSetTable } from './object-set-table.js'
+export * from './types.js'

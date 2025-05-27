@@ -1,15 +1,11 @@
-import { cn } from "../../../../../scalars/lib/utils.js";
+import { cn } from '../../../../../scalars/lib/utils.js'
 
-const TableCellBasic: React.FC<React.HTMLAttributes<HTMLTableCellElement>> = ({
-  children,
-  className,
-  ...props
-}) => {
+const TableCellBasic: React.FC<React.HTMLAttributes<HTMLTableCellElement>> = ({ children, className, ...props }) => {
   return (
-    <td className={cn("py-2", className)} {...props}>
+    <td className={cn('py-2', className)} {...props}>
       {children}
     </td>
-  );
-};
+  )
+}
 
-export { TableCellBasic };
+export { TableCellBasic }

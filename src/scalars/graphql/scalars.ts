@@ -1,39 +1,39 @@
 // namespace imports -- DO NOT REMOVE OR EDIT THIS COMMENT
-import * as Amount from "./Amount.js";
-import * as AmountCrypto from "./AmountCrypto.js";
-import * as AmountCurrency from "./AmountCurrency.js";
-import * as AmountFiat from "./AmountFiat.js";
-import * as AmountMoney from "./AmountMoney.js";
-import * as AmountPercentage from "./AmountPercentage.js";
-import * as AmountTokens from "./AmountTokens.js";
-import * as Currency from "./Currency.js";
-import * as DateScalar from "./Date.js";
-import * as DateTime from "./DateTime.js";
-import * as EmailAddress from "./EmailAddress.js";
-import * as EthereumAddress from "./EthereumAddress.js";
-import * as OID from "./OID.js";
-import * as OLabel from "./OLabel.js";
-import * as PHID from "./PHID.js";
-import * as URLScalar from "./URL.js";
-import { type BasePHScalar } from "./types.js";
+import * as Amount from './Amount.js'
+import * as AmountCrypto from './AmountCrypto.js'
+import * as AmountCurrency from './AmountCurrency.js'
+import * as AmountFiat from './AmountFiat.js'
+import * as AmountMoney from './AmountMoney.js'
+import * as AmountPercentage from './AmountPercentage.js'
+import * as AmountTokens from './AmountTokens.js'
+import * as Currency from './Currency.js'
+import * as DateScalar from './Date.js'
+import * as DateTime from './DateTime.js'
+import * as EmailAddress from './EmailAddress.js'
+import * as EthereumAddress from './EthereumAddress.js'
+import * as OID from './OID.js'
+import * as OLabel from './OLabel.js'
+import * as PHID from './PHID.js'
+import * as URLScalar from './URL.js'
+import { type BasePHScalar } from './types.js'
 
 // export types -- DO NOT REMOVE OR EDIT THIS COMMENT
-export type { ScalarType as AmountScalarType } from "./Amount.js";
-export type { ScalarType as AmountCryptoScalarType } from "./AmountCrypto.js";
-export type { ScalarType as AmountCurrencyScalarType } from "./AmountCurrency.js";
-export type { ScalarType as AmountFiatScalarType } from "./AmountFiat.js";
-export type { ScalarType as AmountMoneyScalarType } from "./AmountMoney.js";
-export type { ScalarType as AmountPercentageScalarType } from "./AmountPercentage.js";
-export type { ScalarType as AmountTokensScalarType } from "./AmountTokens.js";
-export type { ScalarType as CurrencyScalarType } from "./Currency.js";
-export type { ScalarType as DateScalarType } from "./Date.js";
-export type { ScalarType as DateTimeScalarType } from "./DateTime.js";
-export type { ScalarType as EmailAddressScalarType } from "./EmailAddress.js";
-export type { ScalarType as EthereumAddressScalarType } from "./EthereumAddress.js";
-export type { ScalarType as OIDScalarType } from "./OID.js";
-export type { ScalarType as OLabelScalarType } from "./OLabel.js";
-export type { ScalarType as PHIDScalarType } from "./PHID.js";
-export type { ScalarType as URLScalarType } from "./URL.js";
+export type { ScalarType as AmountScalarType } from './Amount.js'
+export type { ScalarType as AmountCryptoScalarType } from './AmountCrypto.js'
+export type { ScalarType as AmountCurrencyScalarType } from './AmountCurrency.js'
+export type { ScalarType as AmountFiatScalarType } from './AmountFiat.js'
+export type { ScalarType as AmountMoneyScalarType } from './AmountMoney.js'
+export type { ScalarType as AmountPercentageScalarType } from './AmountPercentage.js'
+export type { ScalarType as AmountTokensScalarType } from './AmountTokens.js'
+export type { ScalarType as CurrencyScalarType } from './Currency.js'
+export type { ScalarType as DateScalarType } from './Date.js'
+export type { ScalarType as DateTimeScalarType } from './DateTime.js'
+export type { ScalarType as EmailAddressScalarType } from './EmailAddress.js'
+export type { ScalarType as EthereumAddressScalarType } from './EthereumAddress.js'
+export type { ScalarType as OIDScalarType } from './OID.js'
+export type { ScalarType as OLabelScalarType } from './OLabel.js'
+export type { ScalarType as PHIDScalarType } from './PHID.js'
+export type { ScalarType as URLScalarType } from './URL.js'
 
 export {
   Amount,
@@ -53,7 +53,7 @@ export {
   OLabel,
   PHID,
   URLScalar,
-};
+}
 
 export const customScalars: Record<string, BasePHScalar<any>> = {
   Amount,
@@ -72,7 +72,7 @@ export const customScalars: Record<string, BasePHScalar<any>> = {
   OLabel,
   PHID,
   URLScalar,
-} as const;
+} as const
 
 export const resolvers = {
   // export resolvers -- DO NOT REMOVE OR EDIT THIS COMMENT
@@ -92,7 +92,7 @@ export const resolvers = {
   AmountCurrency: AmountCurrency.scalar,
   AmountCrypto: AmountCrypto.scalar,
   Amount: Amount.scalar,
-};
+}
 
 export const typeDefs = [
   // export typedefs -- DO NOT REMOVE OR EDIT THIS COMMENT
@@ -112,7 +112,7 @@ export const typeDefs = [
   AmountCurrency.typedef,
   AmountCrypto.typedef,
   Amount.typedef,
-];
+]
 
 export const generatorTypeDefs = {
   // export generator typedefs -- DO NOT REMOVE OR EDIT THIS COMMENT
@@ -132,7 +132,7 @@ export const generatorTypeDefs = {
   [AmountCurrency.config.name]: AmountCurrency.type,
   [AmountCrypto.config.name]: AmountCrypto.type,
   [Amount.config.name]: Amount.type,
-};
+}
 
 export const validationSchema = {
   // export validation schema -- DO NOT REMOVE OR EDIT THIS COMMENT
@@ -152,4 +152,4 @@ export const validationSchema = {
   [AmountCurrency.config.name]: AmountCurrency.stringSchema,
   [AmountCrypto.config.name]: AmountCrypto.stringSchema,
   [Amount.config.name]: Amount.stringSchema,
-};
+}

@@ -1,127 +1,102 @@
-import { Select, type SelectOption } from "../../../ui/components/data-entry/select/index.js";
-import React, { useMemo } from "react";
-import { FormGroup } from "../fragments/index.js";
-import { withFieldValidation } from "../fragments/with-field-validation/with-field-validation.js";
-import type { FieldErrorHandling, InputBaseProps } from "../types.js";
-import type { AllowedTypes, Currency } from "./types.js";
-import { getCurrencies } from "./utils.js";
+import { Select, type SelectOption } from '../../../ui/components/data-entry/select/index.js'
+import React, { useMemo } from 'react'
+import { FormGroup } from '../fragments/index.js'
+import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
+import type { FieldErrorHandling, InputBaseProps } from '../types.js'
+import type { AllowedTypes, Currency } from './types.js'
+import { getCurrencies } from './utils.js'
 
 type CurrencyCodeFieldBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  | keyof InputBaseProps<string | string[]>
-  | keyof FieldErrorHandling
-  | "onChange"
-  | "onBlur"
->;
+  keyof InputBaseProps<string | string[]> | keyof FieldErrorHandling | 'onChange' | 'onBlur'
+>
 
 export interface CurrencyCodeFieldProps
   extends CurrencyCodeFieldBaseProps,
     InputBaseProps<string | string[]>,
     FieldErrorHandling {
-  placeholder?: string;
-  onChange?: (value: string | string[]) => void;
-  onBlur?: () => void;
-  currencies?: Currency[];
-  includeCurrencySymbols?: boolean;
-  favoriteCurrencies?: string[];
-  symbolPosition?: "left" | "right";
-  searchable?: boolean;
-  contentClassName?: string;
-  contentAlign?: "start" | "end" | "center";
-  allowedTypes?: AllowedTypes;
+  placeholder?: string
+  onChange?: (value: string | string[]) => void
+  onBlur?: () => void
+  currencies?: Currency[]
+  includeCurrencySymbols?: boolean
+  favoriteCurrencies?: string[]
+  symbolPosition?: 'left' | 'right'
+  searchable?: boolean
+  contentClassName?: string
+  contentAlign?: 'start' | 'end' | 'center'
+  allowedTypes?: AllowedTypes
 }
 
-export const CurrencyCodeFieldRaw = React.forwardRef<
-  HTMLButtonElement,
-  CurrencyCodeFieldProps
->(
+export const CurrencyCodeFieldRaw = React.forwardRef<HTMLButtonElement, CurrencyCodeFieldProps>(
   (
     {
       placeholder,
       currencies = [],
       favoriteCurrencies = [],
       includeCurrencySymbols = true,
-      symbolPosition = "right",
+      symbolPosition = 'right',
       searchable = false,
       contentClassName,
-      contentAlign = "start",
-      allowedTypes = "Both",
+      contentAlign = 'start',
+      allowedTypes = 'Both',
       ...props
     },
-    ref,
+    ref
   ) => {
-    const defaultCurrencies =
-      currencies && currencies.length > 0
-        ? currencies
-        : getCurrencies(allowedTypes);
+    const defaultCurrencies = currencies && currencies.length > 0 ? currencies : getCurrencies(allowedTypes)
     const options: SelectOption[] = useMemo(() => {
-      const favoriteTickers = new Set(favoriteCurrencies);
+      const favoriteTickers = new Set(favoriteCurrencies)
 
       return (
         (defaultCurrencies
-          .map((currency) => {
+          .map(currency => {
             if (favoriteTickers.has(currency.ticker)) {
-              return null;
+              return null
             }
 
-            let label = currency.label ?? currency.ticker;
+            let label = currency.label ?? currency.ticker
             if (includeCurrencySymbols && currency.symbol) {
-              label =
-                symbolPosition === "right"
-                  ? `${label} (${currency.symbol})`
-                  : `(${currency.symbol}) ${label}`;
+              label = symbolPosition === 'right' ? `${label} (${currency.symbol})` : `(${currency.symbol}) ${label}`
             }
             const option: SelectOption = {
               label,
               value: currency.ticker,
-            };
-
-            if ("icon" in currency) {
-              option.icon = currency.icon;
             }
 
-            return option;
+            if ('icon' in currency) {
+              option.icon = currency.icon
+            }
+
+            return option
           })
           .filter(Boolean) as SelectOption[]) ?? []
-      );
-    }, [
-      defaultCurrencies,
-      includeCurrencySymbols,
-      symbolPosition,
-      favoriteCurrencies,
-    ]);
+      )
+    }, [defaultCurrencies, includeCurrencySymbols, symbolPosition, favoriteCurrencies])
 
     const favoriteOptions: SelectOption[] = useMemo(() => {
-      const favoriteTickers = new Set(favoriteCurrencies);
+      const favoriteTickers = new Set(favoriteCurrencies)
       return (
         defaultCurrencies
-          .filter((currency) => favoriteTickers.has(currency.ticker))
-          .map((currency) => {
-            let label = currency.label ?? currency.ticker;
+          .filter(currency => favoriteTickers.has(currency.ticker))
+          .map(currency => {
+            let label = currency.label ?? currency.ticker
             if (includeCurrencySymbols && currency.symbol) {
-              label =
-                symbolPosition === "right"
-                  ? `${label} (${currency.symbol})`
-                  : `(${currency.symbol}) ${label}`;
+              label = symbolPosition === 'right' ? `${label} (${currency.symbol})` : `(${currency.symbol}) ${label}`
             }
             const option: SelectOption = {
               label,
               value: currency.ticker,
-            };
-
-            if ("icon" in currency) {
-              option.icon = currency.icon;
             }
 
-            return option;
+            if ('icon' in currency) {
+              option.icon = currency.icon
+            }
+
+            return option
           }) ?? []
-      );
-    }, [
-      defaultCurrencies,
-      favoriteCurrencies,
-      includeCurrencySymbols,
-      symbolPosition,
-    ]);
+      )
+    }, [defaultCurrencies, favoriteCurrencies, includeCurrencySymbols, symbolPosition])
 
     return (
       <FormGroup>
@@ -138,13 +113,12 @@ export const CurrencyCodeFieldRaw = React.forwardRef<
           {...props}
         />
       </FormGroup>
-    );
-  },
-);
+    )
+  }
+)
 
-CurrencyCodeFieldRaw.displayName = "CurrencyCodeFieldRaw";
+CurrencyCodeFieldRaw.displayName = 'CurrencyCodeFieldRaw'
 
-export const CurrencyCodeField =
-  withFieldValidation<CurrencyCodeFieldProps>(CurrencyCodeFieldRaw);
+export const CurrencyCodeField = withFieldValidation<CurrencyCodeFieldProps>(CurrencyCodeFieldRaw)
 
-CurrencyCodeField.displayName = "CurrencyCodeField";
+CurrencyCodeField.displayName = 'CurrencyCodeField'

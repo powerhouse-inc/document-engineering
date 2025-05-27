@@ -1,12 +1,12 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
-import { IdAutocomplete } from "./id-autocomplete.js";
+import { render, screen, waitFor } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+import { IdAutocomplete } from './id-autocomplete.js'
 
-describe("IdAutocomplete Component", () => {
-  window.HTMLElement.prototype.scrollIntoView = vi.fn();
-  window.Element.prototype.scrollTo = vi.fn();
-  window.matchMedia = vi.fn().mockImplementation((query) => ({
+describe('IdAutocomplete Component', () => {
+  window.HTMLElement.prototype.scrollIntoView = vi.fn()
+  window.Element.prototype.scrollTo = vi.fn()
+  window.matchMedia = vi.fn().mockImplementation(query => ({
     matches: false,
     media: query as string,
     onchange: null,
@@ -15,33 +15,31 @@ describe("IdAutocomplete Component", () => {
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
-  }));
+  }))
 
   const mockedOptions = [
     {
-      icon: "PowerhouseLogoSmall",
-      title: "Document A",
-      path: "projects/finance/document-a",
-      value: "document-a",
-      description: "Financial report for Q1 2024",
+      icon: 'PowerhouseLogoSmall',
+      title: 'Document A',
+      path: 'projects/finance/document-a',
+      value: 'document-a',
+      description: 'Financial report for Q1 2024',
     },
     {
-      icon: "PowerhouseLogoSmall",
-      title: "Document B",
-      path: "projects/legal/document-b",
-      value: "document-b",
-      description: "Legal compliance documentation",
+      icon: 'PowerhouseLogoSmall',
+      title: 'Document B',
+      path: 'projects/legal/document-b',
+      value: 'document-b',
+      description: 'Legal compliance documentation',
     },
-  ];
+  ]
 
-  const defaultGetOptions = vi.fn().mockResolvedValue(mockedOptions);
-  const defaultGetSelectedOption = vi
-    .fn()
-    .mockImplementation((value: string) => {
-      return mockedOptions.find((option) => option.value === value);
-    });
+  const defaultGetOptions = vi.fn().mockResolvedValue(mockedOptions)
+  const defaultGetSelectedOption = vi.fn().mockImplementation((value: string) => {
+    return mockedOptions.find(option => option.value === value)
+  })
 
-  it("should match snapshot", () => {
+  it('should match snapshot', () => {
     const { asFragment } = render(
       <IdAutocomplete
         name="id-autocomplete"
@@ -49,24 +47,24 @@ describe("IdAutocomplete Component", () => {
         placeholder="Search..."
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
-    expect(asFragment()).toMatchSnapshot();
-  });
+      />
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
 
-  it("should render with label", () => {
+  it('should render with label', () => {
     render(
       <IdAutocomplete
         name="id-autocomplete"
         label="Test Label"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
-    expect(screen.getByText("Test Label")).toBeInTheDocument();
-  });
+      />
+    )
+    expect(screen.getByText('Test Label')).toBeInTheDocument()
+  })
 
-  it("should render with description", () => {
+  it('should render with description', () => {
     render(
       <IdAutocomplete
         name="id-autocomplete"
@@ -74,12 +72,12 @@ describe("IdAutocomplete Component", () => {
         description="Test Description"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
-    expect(screen.getByText("Test Description")).toBeInTheDocument();
-  });
+      />
+    )
+    expect(screen.getByText('Test Description')).toBeInTheDocument()
+  })
 
-  it("should handle disabled state", () => {
+  it('should handle disabled state', () => {
     render(
       <IdAutocomplete
         name="id-autocomplete"
@@ -87,43 +85,41 @@ describe("IdAutocomplete Component", () => {
         disabled
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
-    expect(screen.getByRole("combobox")).toBeDisabled();
-  });
+      />
+    )
+    expect(screen.getByRole('combobox')).toBeDisabled()
+  })
 
-  it("should display error messages", async () => {
+  it('should display error messages', async () => {
     render(
       <IdAutocomplete
         name="id-autocomplete"
         label="Test Label"
-        errors={["Invalid format"]}
+        errors={['Invalid format']}
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
-    await waitFor(() =>
-      expect(screen.getByText("Invalid format")).toBeInTheDocument(),
-    );
-  });
+      />
+    )
+    await waitFor(() => expect(screen.getByText('Invalid format')).toBeInTheDocument())
+  })
 
-  it("should display warning messages", () => {
+  it('should display warning messages', () => {
     render(
       <IdAutocomplete
         name="id-autocomplete"
         label="Test Label"
-        warnings={["Option may be deprecated"]}
+        warnings={['Option may be deprecated']}
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
-    expect(screen.getByText("Option may be deprecated")).toBeInTheDocument();
-  });
+      />
+    )
+    expect(screen.getByText('Option may be deprecated')).toBeInTheDocument()
+  })
 
-  it("should show autocomplete options", async () => {
-    const user = userEvent.setup();
-    const originalRandom = Math.random;
-    Math.random = vi.fn().mockReturnValue(1);
+  it('should show autocomplete options', async () => {
+    const user = userEvent.setup()
+    const originalRandom = Math.random
+    Math.random = vi.fn().mockReturnValue(1)
 
     render(
       <IdAutocomplete
@@ -132,46 +128,46 @@ describe("IdAutocomplete Component", () => {
         variant="withValueTitleAndDescription"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
+      />
+    )
 
-    const input = screen.getByRole("combobox");
-    await user.click(input);
-    await user.clear(input);
-    await user.type(input, "test");
-
-    await waitFor(() => {
-      expect(defaultGetOptions).toHaveBeenCalledWith("test", {});
-    });
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    await user.clear(input)
+    await user.type(input, 'test')
 
     await waitFor(() => {
-      expect(input).toHaveAttribute("aria-expanded", "true");
-      expect(screen.getByText(mockedOptions[0].title)).toBeInTheDocument();
-      expect(screen.getByText(mockedOptions[1].title)).toBeInTheDocument();
-    });
+      expect(defaultGetOptions).toHaveBeenCalledWith('test', {})
+    })
 
-    Math.random = originalRandom;
-  });
+    await waitFor(() => {
+      expect(input).toHaveAttribute('aria-expanded', 'true')
+      expect(screen.getByText(mockedOptions[0].title)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[1].title)).toBeInTheDocument()
+    })
 
-  it("should have correct ARIA attributes", async () => {
+    Math.random = originalRandom
+  })
+
+  it('should have correct ARIA attributes', async () => {
     render(
       <IdAutocomplete
         name="id-autocomplete"
         label="Test Label"
         required
-        errors={["Error message"]}
+        errors={['Error message']}
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
+      />
+    )
 
-    const input = screen.getByRole("combobox");
-    expect(input).toHaveAttribute("aria-required", "true");
-    await waitFor(() => expect(input).toHaveAttribute("aria-invalid", "true"));
-    expect(input).toHaveAttribute("aria-expanded", "false");
-  });
+    const input = screen.getByRole('combobox')
+    expect(input).toHaveAttribute('aria-required', 'true')
+    await waitFor(() => expect(input).toHaveAttribute('aria-invalid', 'true'))
+    expect(input).toHaveAttribute('aria-expanded', 'false')
+  })
 
-  it("should show correct placeholders for different variants", () => {
+  it('should show correct placeholders for different variants', () => {
     const { rerender } = render(
       <IdAutocomplete
         name="id-autocomplete"
@@ -179,12 +175,12 @@ describe("IdAutocomplete Component", () => {
         variant="withValueTitleAndDescription"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
+      />
+    )
 
-    expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
-    expect(screen.getByText("Description not available")).toBeInTheDocument();
+    expect(screen.getByText('Title not available')).toBeInTheDocument()
+    expect(screen.getByText('Path not available')).toBeInTheDocument()
+    expect(screen.getByText('Description not available')).toBeInTheDocument()
 
     rerender(
       <IdAutocomplete
@@ -193,14 +189,12 @@ describe("IdAutocomplete Component", () => {
         variant="withValueAndTitle"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
+      />
+    )
 
-    expect(screen.getByText("Title not available")).toBeInTheDocument();
-    expect(screen.getByText("Path not available")).toBeInTheDocument();
-    expect(
-      screen.queryByText("Description not available"),
-    ).not.toBeInTheDocument();
+    expect(screen.getByText('Title not available')).toBeInTheDocument()
+    expect(screen.getByText('Path not available')).toBeInTheDocument()
+    expect(screen.queryByText('Description not available')).not.toBeInTheDocument()
 
     rerender(
       <IdAutocomplete
@@ -209,33 +203,25 @@ describe("IdAutocomplete Component", () => {
         variant="withValue"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
+      />
+    )
 
-    expect(screen.queryByText("Title not available")).not.toBeInTheDocument();
-    expect(screen.queryByText("Path not available")).not.toBeInTheDocument();
-    expect(
-      screen.queryByText("Description not available"),
-    ).not.toBeInTheDocument();
-  });
+    expect(screen.queryByText('Title not available')).not.toBeInTheDocument()
+    expect(screen.queryByText('Path not available')).not.toBeInTheDocument()
+    expect(screen.queryByText('Description not available')).not.toBeInTheDocument()
+  })
 
-  it("should handle autoComplete disabled", () => {
-    render(
-      <IdAutocomplete
-        name="id-autocomplete"
-        label="Test Label"
-        autoComplete={false}
-      />,
-    );
+  it('should handle autoComplete disabled', () => {
+    render(<IdAutocomplete name="id-autocomplete" label="Test Label" autoComplete={false} />)
 
-    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
-    expect(screen.getByRole("textbox")).toBeInTheDocument();
-  });
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+    expect(screen.getByRole('textbox')).toBeInTheDocument()
+  })
 
-  it("should handle value changes and auto selection", async () => {
-    const user = userEvent.setup();
-    const originalRandom = Math.random;
-    Math.random = vi.fn().mockReturnValue(1);
+  it('should handle value changes and auto selection', async () => {
+    const user = userEvent.setup()
+    const originalRandom = Math.random
+    Math.random = vi.fn().mockReturnValue(1)
 
     render(
       <IdAutocomplete
@@ -244,30 +230,28 @@ describe("IdAutocomplete Component", () => {
         variant="withValueTitleAndDescription"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
-      />,
-    );
+      />
+    )
 
-    const input = screen.getByRole("combobox");
-    await user.click(input);
-    await user.type(input, mockedOptions[0].value);
-
-    await waitFor(() => {
-      expect(input).toHaveAttribute("aria-expanded", "false");
-    });
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    await user.type(input, mockedOptions[0].value)
 
     await waitFor(() => {
-      expect(screen.getByText(mockedOptions[0].title)).toBeInTheDocument();
-      expect(screen.getByText(mockedOptions[0].path)).toBeInTheDocument();
-      expect(
-        screen.getByText(mockedOptions[0].description),
-      ).toBeInTheDocument();
-    });
+      expect(input).toHaveAttribute('aria-expanded', 'false')
+    })
 
-    Math.random = originalRandom;
-  });
+    await waitFor(() => {
+      expect(screen.getByText(mockedOptions[0].title)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].path)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].description)).toBeInTheDocument()
+    })
 
-  it("should not invoke onChange on mount when it has a defaultValue", () => {
-    const onChange = vi.fn();
+    Math.random = originalRandom
+  })
+
+  it('should not invoke onChange on mount when it has a defaultValue', () => {
+    const onChange = vi.fn()
     render(
       <IdAutocomplete
         name="id-autocomplete"
@@ -276,8 +260,8 @@ describe("IdAutocomplete Component", () => {
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
         onChange={onChange}
-      />,
-    );
-    expect(onChange).not.toHaveBeenCalled();
-  });
-});
+      />
+    )
+    expect(onChange).not.toHaveBeenCalled()
+  })
+})

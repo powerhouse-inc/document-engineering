@@ -1,12 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function CrossCircle(props: Props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_14287_3626)">
         <path
           fillRule="evenodd"
@@ -21,5 +16,5 @@ export default function CrossCircle(props: Props) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

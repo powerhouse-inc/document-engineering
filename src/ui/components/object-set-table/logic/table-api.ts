@@ -1,30 +1,30 @@
-import type { RefObject } from "react";
-import type { TableState } from "../subcomponents/table-provider/table-reducer.js";
-import type { CellContext, ObjectSetTableConfig } from "../types.js";
-import { getNextSelectedCell } from "../utils.js";
-import { SelectionManager } from "./selection-manager.js";
+import type { RefObject } from 'react'
+import type { TableState } from '../subcomponents/table-provider/table-reducer.js'
+import type { CellContext, ObjectSetTableConfig } from '../types.js'
+import { getNextSelectedCell } from '../utils.js'
+import { SelectionManager } from './selection-manager.js'
 
 class TableApi<TData> {
-  public readonly selection: SelectionManager<TData>;
+  public readonly selection: SelectionManager<TData>
 
   constructor(
     private readonly tableRef: RefObject<HTMLTableElement>,
     private readonly configRef: RefObject<ObjectSetTableConfig<TData>>,
-    private readonly stateRef: RefObject<TableState<TData>>,
+    private readonly stateRef: RefObject<TableState<TData>>
   ) {
-    this.selection = new SelectionManager<TData>(this);
+    this.selection = new SelectionManager<TData>(this)
   }
 
   _getTable(): HTMLTableElement | null {
-    return this.tableRef.current;
+    return this.tableRef.current
   }
 
   _getConfig(): ObjectSetTableConfig<TData> {
-    return this.configRef.current!;
+    return this.configRef.current!
   }
 
   _getState(): TableState<TData> {
-    return this.stateRef.current!;
+    return this.stateRef.current!
   }
 
   _createCellContext(row: number, column: number): CellContext<TData> {
@@ -34,7 +34,7 @@ class TableApi<TData> {
       rowIndex: row,
       columnIndex: column,
       tableConfig: this._getConfig(),
-    };
+    }
   }
 
   // cell editing
@@ -46,7 +46,7 @@ class TableApi<TData> {
    * @returns `true` if the cell can be edited, `false` otherwise
    */
   canEditCell(row: number, column: number) {
-    return this._getConfig().columns[column].editable;
+    return this._getConfig().columns[column].editable
   }
 
   /**
@@ -55,7 +55,7 @@ class TableApi<TData> {
    * @returns `true` if the table is in cell edit mode, `false` otherwise
    */
   isEditing() {
-    return this._getState().isCellEditMode;
+    return this._getState().isCellEditMode
   }
 
   /**
@@ -70,7 +70,7 @@ class TableApi<TData> {
       this._getState().isCellEditMode &&
       this._getState().selectedCellIndex?.row === row &&
       this._getState().selectedCellIndex?.column === column
-    );
+    )
   }
 
   /**
@@ -80,12 +80,12 @@ class TableApi<TData> {
    * @param column - The column index of the cell to enter edit mode
    */
   enterCellEditMode(row: number, column: number) {
-    if (!this.canEditCell(row, column)) throw new Error("Cell is not editable");
+    if (!this.canEditCell(row, column)) throw new Error('Cell is not editable')
 
     this._getState().dispatch?.({
-      type: "ENTER_CELL_EDIT_MODE",
+      type: 'ENTER_CELL_EDIT_MODE',
       payload: { row, column },
-    });
+    })
   }
 
   /**
@@ -100,31 +100,29 @@ class TableApi<TData> {
     const selectedCell = this._getState().selectedCellIndex ?? {
       row: 0,
       column: 0,
-    };
-    this.selection.selectCell(selectedCell.row, selectedCell.column);
+    }
+    this.selection.selectCell(selectedCell.row, selectedCell.column)
 
     if (save) {
-      const value = this._getConfig().columns[
-        selectedCell.column
-      ]?.valueGetter?.(
+      const value = this._getConfig().columns[selectedCell.column]?.valueGetter?.(
         this._getState().data[selectedCell.row],
-        this._createCellContext(selectedCell.row, selectedCell.column),
-      );
+        this._createCellContext(selectedCell.row, selectedCell.column)
+      )
       this._getConfig().columns[selectedCell.column]?.onSave?.(
         `${value} edited`,
-        this._createCellContext(selectedCell.row, selectedCell.column),
-      );
+        this._createCellContext(selectedCell.row, selectedCell.column)
+      )
 
       const nextCell = getNextSelectedCell({
-        direction: "down",
+        direction: 'down',
         currentCell: selectedCell,
         rowCount: this._getState().data.length,
         columnCount: this._getConfig().columns.length,
         moveToNextRow: true,
-      });
-      this.selection.selectCell(nextCell.row, nextCell.column);
+      })
+      this.selection.selectCell(nextCell.row, nextCell.column)
     }
   }
 }
 
-export { TableApi };
+export { TableApi }

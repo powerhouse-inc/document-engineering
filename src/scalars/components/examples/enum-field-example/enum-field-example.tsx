@@ -1,40 +1,34 @@
-import { Button } from "@powerhousedao/design-system";
-import { EnumField } from "../../enum-field/index.js";
-import { Form } from "../../form/index.js";
+import { Button } from '@powerhousedao/design-system'
+import { EnumField } from '../../enum-field/index.js'
+import { Form } from '../../form/index.js'
 
 const EnumFieldExample = () => {
   const onSubmit = async (data: any) => {
     // simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    alert(JSON.stringify(data, null, 2));
-  };
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    alert(JSON.stringify(data, null, 2))
+  }
 
   const genderOptions = [
-    { label: "Male", value: "male" },
-    { label: "Female", value: "female" },
-    { label: "Other", value: "other" },
-  ];
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+    { label: 'Other', value: 'other' },
+  ]
 
   const colorOptions = [
-    { label: "Red", value: "red" },
-    { label: "Blue", value: "blue" },
-    { label: "Green", value: "green" },
-    { label: "Yellow", value: "yellow" },
-    { label: "Purple", value: "purple" },
-    { label: "Orange", value: "orange" },
-  ];
+    { label: 'Red', value: 'red' },
+    { label: 'Blue', value: 'blue' },
+    { label: 'Green', value: 'green' },
+    { label: 'Yellow', value: 'yellow' },
+    { label: 'Purple', value: 'purple' },
+    { label: 'Orange', value: 'orange' },
+  ]
 
   return (
     <Form onSubmit={onSubmit}>
       {({ formState: { isSubmitting } }) => (
         <div className="flex w-[400px] flex-col gap-4">
-          <EnumField
-            name="gender"
-            label="Gender"
-            variant="RadioGroup"
-            options={genderOptions}
-            required
-          />
+          <EnumField name="gender" label="Gender" variant="RadioGroup" options={genderOptions} required />
 
           <EnumField
             name="favoriteColor"
@@ -48,12 +42,12 @@ const EnumFieldExample = () => {
           />
 
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         </div>
       )}
     </Form>
-  );
-};
+  )
+}
 
-export default EnumFieldExample;
+export default EnumFieldExample

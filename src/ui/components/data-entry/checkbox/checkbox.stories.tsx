@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   StorybookControlCategory,
-} from "../../../../scalars/lib/storybook-arg-types.js";
-import { Checkbox } from "./checkbox.js";
+} from '../../../../scalars/lib/storybook-arg-types.js'
+import { Checkbox } from './checkbox.js'
 
 /**
  * The `Checkbox` component allows users to select one or more items from a set.
@@ -18,31 +18,31 @@ import { Checkbox } from "./checkbox.js";
  * > component.
  */
 const meta = {
-  title: "Document Engineering/Data Entry/Checkbox",
+  title: 'Document Engineering/Data Entry/Checkbox',
   component: Checkbox,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: {
       disableSnapshot: true,
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
       enabledArgTypes: {
         value: false,
         id: false,
       },
-      valueControlType: "boolean",
-      valueType: "boolean",
+      valueControlType: 'boolean',
+      valueType: 'boolean',
     }),
 
     value: {
-      control: "inline-radio",
-      options: ["indeterminate", true, false],
-      description: "Current value of the input field",
+      control: 'inline-radio',
+      options: ['indeterminate', true, false],
+      description: 'Current value of the input field',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         category: StorybookControlCategory.DEFAULT,
       },
     },
@@ -55,70 +55,70 @@ const meta = {
       },
     }),
   },
-} satisfies Meta<typeof Checkbox>;
+} satisfies Meta<typeof Checkbox>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: "Accept terms and conditions",
+    label: 'Accept terms and conditions',
   },
-};
+}
 
 export const Checked: Story = {
   args: {
-    label: "Accept terms and conditions",
+    label: 'Accept terms and conditions',
     defaultValue: true,
   },
-};
+}
 
 export const Indeterminate: Story = {
   args: {
-    label: "Select some items",
-    defaultValue: "indeterminate",
+    label: 'Select some items',
+    defaultValue: 'indeterminate',
   },
-};
+}
 
 export const WithDescription: Story = {
   args: {
-    label: "Subscribe to newsletter",
-    description: "Receive updates about our product",
+    label: 'Subscribe to newsletter',
+    description: 'Receive updates about our product',
   },
-};
+}
 
 export const Required: Story = {
   args: {
-    label: "I agree to the terms and conditions",
+    label: 'I agree to the terms and conditions',
     required: true,
   },
-};
+}
 
 export const Disabled: Story = {
   args: {
-    label: "This option is disabled",
+    label: 'This option is disabled',
     disabled: true,
   },
-};
+}
 
 export const WithErrors: Story = {
   args: {
-    label: "Accept terms",
-    errors: ["You must accept the terms to continue"],
+    label: 'Accept terms',
+    errors: ['You must accept the terms to continue'],
   },
-};
+}
 
 export const WithWarnings: Story = {
   args: {
-    label: "Share my data",
-    warnings: ["Your data will be shared with third-party services"],
+    label: 'Share my data',
+    warnings: ['Your data will be shared with third-party services'],
   },
-};
+}
 
 export const WithErrorsAndWarnings: Story = {
   args: {
-    label: "Accept privacy policy",
-    errors: ["This field is required"],
-    warnings: ["Please review our privacy policy carefully"],
+    label: 'Accept privacy policy',
+    errors: ['This field is required'],
+    warnings: ['Please review our privacy policy carefully'],
   },
-};
+}

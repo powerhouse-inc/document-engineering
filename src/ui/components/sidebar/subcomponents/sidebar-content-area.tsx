@@ -1,20 +1,17 @@
-"use client";
+'use client'
 
-import { Icon } from "../../../components/icon/index.js";
-import { cn } from "../../../../scalars/lib/index.js";
-import { AutoSizer, List } from "react-virtualized";
-import { SidebarItem } from "./sidebar-item.js";
-import { useSidebar } from "./sidebar-provider/index.js";
+import { Icon } from '../../../components/icon/index.js'
+import { cn } from '../../../../scalars/lib/index.js'
+import { AutoSizer, List } from 'react-virtualized'
+import { SidebarItem } from './sidebar-item.js'
+import { useSidebar } from './sidebar-provider/index.js'
 
 interface SidebarContentAreaProps {
-  allowPinning?: boolean;
-  allowCollapsingInactiveNodes?: boolean;
+  allowPinning?: boolean
+  allowCollapsingInactiveNodes?: boolean
 }
 
-export const SidebarContentArea = ({
-  allowPinning,
-  allowCollapsingInactiveNodes,
-}: SidebarContentAreaProps) => {
+export const SidebarContentArea = ({ allowPinning, allowCollapsingInactiveNodes }: SidebarContentAreaProps) => {
   const {
     flattenedNodes,
     toggleNode,
@@ -26,19 +23,11 @@ export const SidebarContentArea = ({
     activeNodeId,
     virtualListRef,
     onActiveNodeChange,
-  } = useSidebar();
-  const hasPinnedItems = allowPinning && pinnedNodePath.length > 0;
+  } = useSidebar()
+  const hasPinnedItems = allowPinning && pinnedNodePath.length > 0
 
-  const renderNode = ({
-    index,
-    key,
-    style,
-  }: {
-    index: number;
-    key: string;
-    style: React.CSSProperties;
-  }) => {
-    const node = flattenedNodes[index];
+  const renderNode = ({ index, key, style }: { index: number; key: string; style: React.CSSProperties }) => {
+    const node = flattenedNodes[index]
 
     return (
       <SidebarItem
@@ -55,16 +44,11 @@ export const SidebarContentArea = ({
         style={style}
         allowCollapsingInactiveNodes={allowCollapsingInactiveNodes}
       />
-    );
-  };
+    )
+  }
 
   return (
-    <div
-      className={cn(
-        "flex flex-1 flex-col gap-1 overflow-y-auto",
-        hasPinnedItems && "pt-0.5",
-      )}
-    >
+    <div className={cn('flex flex-1 flex-col gap-1 overflow-y-auto', hasPinnedItems && 'pt-0.5')}>
       {flattenedNodes.length === 0 ? (
         <div className="flex max-w-full items-center gap-2 p-2 text-sm leading-5 text-gray-400 dark:text-gray-400">
           <Icon name="TreeViewSlash" size={16} className="min-w-4" />
@@ -88,5 +72,5 @@ export const SidebarContentArea = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}

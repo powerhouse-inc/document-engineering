@@ -1,12 +1,12 @@
-import type { IconName } from "../../../ui/components/icon/index.js";
-import type React from "react";
+import type { IconName } from '../../../ui/components/icon/index.js'
+import type React from 'react'
 
 export interface Currency {
-  ticker: string;
-  crypto: boolean;
-  label?: string;
-  symbol?: string;
-  icon?: IconName | React.ComponentType<{ className?: string }>;
+  ticker: string
+  crypto: boolean
+  label?: string
+  symbol?: string
+  icon?: IconName | React.ComponentType<{ className?: string }>
 }
 
-export type AllowedTypes = "Crypto" | "Fiat" | "Both";
+export type AllowedTypes = 'Crypto' | 'Fiat' | 'Both'

@@ -1,62 +1,52 @@
 import type {
   IdAutocompleteOption,
   IdAutocompleteProps,
-} from "../../../../scalars/components/fragments/id-autocomplete/types.js";
-import type {
-  DiffMode,
-  WithDifference,
-} from "../../../../scalars/components/types.js";
+} from '../../../../scalars/components/fragments/id-autocomplete/types.js'
+import type { DiffMode, WithDifference } from '../../../../scalars/components/types.js'
 
-export interface PHIDInputWithDifference
-  extends Omit<WithDifference<string>, "diffMode"> {
-  diffMode?: Extract<DiffMode, "sentences">;
-  basePreviewIcon?: string | React.ReactElement;
-  basePreviewTitle?: string;
-  basePreviewPath?: string;
-  basePreviewDescription?: string;
+export interface PHIDInputWithDifference extends Omit<WithDifference<string>, 'diffMode'> {
+  diffMode?: Extract<DiffMode, 'sentences'>
+  basePreviewIcon?: string | React.ReactElement
+  basePreviewTitle?: string
+  basePreviewPath?: string
+  basePreviewDescription?: string
 }
 
-type PHIDOption = IdAutocompleteOption;
+type PHIDOption = IdAutocompleteOption
 
 type PHIDInputBaseProps = Omit<
   IdAutocompleteProps,
-  | "autoComplete"
-  | "fetchOptionsCallback"
-  | "fetchSelectedOptionCallback"
-  | "previewPlaceholder"
-  | "renderOption"
+  'autoComplete' | 'fetchOptionsCallback' | 'fetchSelectedOptionCallback' | 'previewPlaceholder' | 'renderOption'
 > &
   (
     | {
-        allowUris: true;
-        allowedScopes?: string[];
+        allowUris: true
+        allowedScopes?: string[]
       }
     | {
-        allowUris?: false;
-        allowedScopes?: never;
+        allowUris?: false
+        allowedScopes?: never
       }
-  );
+  )
 
 type PHIDInputProps = PHIDInputBaseProps &
   (
     | {
-        autoComplete: false;
-        fetchOptionsCallback?: never;
-        fetchSelectedOptionCallback?: never;
-        previewPlaceholder?: never;
+        autoComplete: false
+        fetchOptionsCallback?: never
+        fetchSelectedOptionCallback?: never
+        previewPlaceholder?: never
       }
     | {
-        autoComplete?: true;
+        autoComplete?: true
         fetchOptionsCallback: (
           userInput: string,
-          context?: Record<string, unknown>,
-        ) => Promise<PHIDOption[]> | PHIDOption[];
-        fetchSelectedOptionCallback?: (
-          value: string,
-        ) => Promise<PHIDOption | undefined> | PHIDOption | undefined;
-        previewPlaceholder?: PHIDOption;
+          context?: Record<string, unknown>
+        ) => Promise<PHIDOption[]> | PHIDOption[]
+        fetchSelectedOptionCallback?: (value: string) => Promise<PHIDOption | undefined> | PHIDOption | undefined
+        previewPlaceholder?: PHIDOption
       }
   ) &
-  PHIDInputWithDifference;
+  PHIDInputWithDifference
 
-export type { PHIDInputProps, PHIDOption };
+export type { PHIDInputProps, PHIDOption }

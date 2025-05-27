@@ -1,19 +1,19 @@
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/index.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
-import type { WithDifference } from "../../../../scalars/components/types.js";
-import { SplittedInputDiff } from "../input/splitted-input-diff.js";
+import { FormGroup } from '../../../../scalars/components/fragments/form-group/index.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
+import type { WithDifference } from '../../../../scalars/components/types.js'
+import { SplittedInputDiff } from '../input/splitted-input-diff.js'
 interface TextInputDiffProps extends WithDifference<string> {
-  value: string;
-  label?: React.ReactNode;
-  required?: boolean;
+  value: string
+  label?: React.ReactNode
+  required?: boolean
 }
 const TextInputDiff = ({
   value,
   label,
   required,
-  baseValue = "",
-  viewMode = "edition",
-  diffMode = "sentences",
+  baseValue = '',
+  viewMode = 'edition',
+  diffMode = 'sentences',
 }: TextInputDiffProps) => {
   return (
     <FormGroup>
@@ -22,14 +22,9 @@ const TextInputDiff = ({
           {label}
         </FormLabel>
       )}
-      <SplittedInputDiff
-        value={value}
-        baseValue={baseValue}
-        diffMode={diffMode}
-        viewMode={viewMode}
-      />
+      <SplittedInputDiff value={value} baseValue={baseValue} diffMode={diffMode} viewMode={viewMode} />
     </FormGroup>
-  );
-};
+  )
+}
 
-export default TextInputDiff;
+export default TextInputDiff

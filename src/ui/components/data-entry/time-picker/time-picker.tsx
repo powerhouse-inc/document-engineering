@@ -1,39 +1,37 @@
-import { cn } from "../../../../scalars/lib/utils.js";
-import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
-import { type InputBaseProps } from "../../../../scalars/components/types.js";
-import { forwardRef } from "react";
-import { type SelectFieldProps } from "../../../../scalars/components/fragments/select-field/index.js";
-import { type InputNumberProps } from "../../../../scalars/components/number-field/types.js";
-import { BasePickerField } from "../date-time-picker/base-picker.js";
-import TimePickerContent from "./subcomponents/time-picker-content.js";
-import { type TimeFieldValue } from "./type.js";
-import { useTimePicker } from "./use-time-picker.js";
-import { handleKeyDown } from "./utils.js";
+import { cn } from '../../../../scalars/lib/utils.js'
+import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
+import { FormGroup } from '../../../../scalars/components/fragments/form-group/form-group.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/message-list.js'
+import { type InputBaseProps } from '../../../../scalars/components/types.js'
+import { forwardRef } from 'react'
+import { type SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
+import { type InputNumberProps } from '../../../../scalars/components/number-field/types.js'
+import { BasePickerField } from '../date-time-picker/base-picker.js'
+import TimePickerContent from './subcomponents/time-picker-content.js'
+import { type TimeFieldValue } from './type.js'
+import { useTimePicker } from './use-time-picker.js'
+import { handleKeyDown } from './utils.js'
 
-interface TimePickerProps
-  extends InputBaseProps<TimeFieldValue>,
-    Omit<InputNumberProps, "value" | "defaultValue"> {
-  label?: string;
-  id?: string;
-  name: string;
-  value?: TimeFieldValue;
-  defaultValue?: TimeFieldValue;
-  placeholder?: string;
+interface TimePickerProps extends InputBaseProps<TimeFieldValue>, Omit<InputNumberProps, 'value' | 'defaultValue'> {
+  label?: string
+  id?: string
+  name: string
+  value?: TimeFieldValue
+  defaultValue?: TimeFieldValue
+  placeholder?: string
   inputProps?: Omit<
     InputBaseProps<string> & {
-      onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+      onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
     },
-    "name" | "onChange" | "value" | "defaultValue" | "onBlur"
-  >;
-  selectProps?: Omit<SelectFieldProps, "name" | "options" | "selectionIcon">;
-  timeFormat?: string;
-  timeIntervals?: number;
-  showTimezoneSelect?: boolean;
-  timeZone?: string;
-  includeContinent?: boolean;
+    'name' | 'onChange' | 'value' | 'defaultValue' | 'onBlur'
+  >
+  selectProps?: Omit<SelectFieldProps, 'name' | 'options' | 'selectionIcon'>
+  timeFormat?: string
+  timeIntervals?: number
+  showTimezoneSelect?: boolean
+  timeZone?: string
+  includeContinent?: boolean
 }
 
 const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
@@ -54,13 +52,13 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       disabled,
       inputProps,
       selectProps,
-      timeFormat = "hh:mm a",
+      timeFormat = 'hh:mm a',
       showTimezoneSelect,
       timeIntervals,
       timeZone,
       includeContinent,
     },
-    ref,
+    ref
   ) => {
     const {
       selectedHour,
@@ -93,17 +91,12 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       timeZone,
       showTimezoneSelect,
       includeContinent,
-    });
+    })
 
     return (
       <FormGroup>
         {label && (
-          <FormLabel
-            htmlFor={id}
-            required={required}
-            disabled={disabled}
-            hasError={!!errors?.length}
-          >
+          <FormLabel htmlFor={id} required={required} disabled={disabled} hasError={!!errors?.length}>
             {label}
           </FormLabel>
         )}
@@ -124,7 +117,7 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
             ...inputProps,
             onKeyDown: handleKeyDown,
           }}
-          className={cn("pb-4 pl-4 pr-4 pt-3")}
+          className={cn('pb-4 pl-4 pr-4 pt-3')}
         >
           <TimePickerContent
             selectedHour={selectedHour}
@@ -150,10 +143,10 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
         {warnings && <FormMessageList messages={warnings} type="warning" />}
         {errors && <FormMessageList messages={errors} type="error" />}
       </FormGroup>
-    );
-  },
-);
+    )
+  }
+)
 
-TimePicker.displayName = "TimePicker";
+TimePicker.displayName = 'TimePicker'
 
-export { TimePicker, type TimePickerProps };
+export { TimePicker, type TimePickerProps }

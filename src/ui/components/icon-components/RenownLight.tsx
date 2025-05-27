@@ -1,14 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function RenownLight(props: Props) {
   return (
-    <svg
-      {...props}
-      width="83"
-      height="22"
-      viewBox="0 0 83 22"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} width="83" height="22" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M62.6841 21.7601V10.6326H65.9736V12.7221H66.0405C66.3274 11.9823 66.7609 11.4191 67.341 11.0325C67.9212 10.6393 68.6192 10.4426 69.4352 10.4426C70.621 10.4426 71.5486 10.8125 72.2179 11.5524C72.8937 12.2922 73.2316 13.3187 73.2316 14.6317V21.7601H69.8369V15.3915C69.8369 14.745 69.6743 14.2418 69.3492 13.8819C69.0304 13.5153 68.581 13.332 68.0009 13.332C67.4271 13.332 66.9617 13.5319 66.6047 13.9319C66.2477 14.3318 66.0692 14.8483 66.0692 15.4815V21.7601H62.6841Z"
         fill="currentcolor"
@@ -51,5 +44,5 @@ export default function RenownLight(props: Props) {
         </linearGradient>
       </defs>
     </svg>
-  );
+  )
 }

@@ -1,27 +1,18 @@
-import { cn } from "../../../../scalars/lib/utils.js";
+import { cn } from '../../../../scalars/lib/utils.js'
 
 export interface FormDescriptionProps extends React.PropsWithChildren {
-  as?: React.ElementType;
-  className?: string;
+  as?: React.ElementType
+  className?: string
 }
 
-const FormDescription: React.FC<FormDescriptionProps> = ({
-  children,
-  as,
-  className,
-}) => {
-  const Component = as ?? "p";
+const FormDescription: React.FC<FormDescriptionProps> = ({ children, as, className }) => {
+  const Component = as ?? 'p'
 
   return (
-    <Component
-      className={cn(
-        "font-sans text-sm font-normal leading-5 text-gray-600 dark:text-gray-500",
-        className,
-      )}
-    >
+    <Component className={cn('font-sans text-sm font-normal leading-5 text-gray-600 dark:text-gray-500', className)}>
       {children}
     </Component>
-  );
-};
+  )
+}
 
-export { FormDescription };
+export { FormDescription }

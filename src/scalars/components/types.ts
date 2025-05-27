@@ -1,37 +1,37 @@
-export type ErrorMessage = string;
+export type ErrorMessage = string
 
-export type ValidatorResult = ErrorMessage | boolean;
+export type ValidatorResult = ErrorMessage | boolean
 
 export type ValidatorHandler = (
   value: any,
-  formState: Record<string, any>,
-) => ValidatorResult | Promise<ValidatorResult>;
+  formState: Record<string, any>
+) => ValidatorResult | Promise<ValidatorResult>
 
-export type ViewMode = "edition" | "addition" | "removal" | "mixed";
-export type DiffMode = "words" | "sentences";
+export type ViewMode = 'edition' | 'addition' | 'removal' | 'mixed'
+export type DiffMode = 'words' | 'sentences'
 
 export interface WithDifference<T> {
-  viewMode?: ViewMode;
-  diffMode?: DiffMode;
-  baseValue?: T;
+  viewMode?: ViewMode
+  diffMode?: DiffMode
+  baseValue?: T
 }
 
 export interface InputBaseProps<T> {
-  id?: string;
-  name?: string;
-  label?: React.ReactNode;
-  description?: string;
-  value?: T;
-  defaultValue?: T;
-  required?: boolean;
-  disabled?: boolean;
-  errors?: ErrorMessage[];
-  warnings?: ErrorMessage[];
-  className?: string;
+  id?: string
+  name?: string
+  label?: React.ReactNode
+  description?: string
+  value?: T
+  defaultValue?: T
+  required?: boolean
+  disabled?: boolean
+  errors?: ErrorMessage[]
+  warnings?: ErrorMessage[]
+  className?: string
 }
 
 export interface FieldErrorHandling {
-  showErrorOnBlur?: boolean;
-  showErrorOnChange?: boolean;
-  validators?: ValidatorHandler[] | ValidatorHandler;
+  showErrorOnBlur?: boolean
+  showErrorOnChange?: boolean
+  validators?: ValidatorHandler[] | ValidatorHandler
 }

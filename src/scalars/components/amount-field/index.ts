@@ -1,2 +1,2 @@
-export { AmountField } from "./amount-field.js";
-export type { AmountFieldProps } from "./types.js";
+export { AmountField } from './amount-field.js'
+export type { AmountFieldProps } from './types.js'

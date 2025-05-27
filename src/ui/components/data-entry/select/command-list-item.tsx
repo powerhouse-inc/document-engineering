@@ -1,44 +1,27 @@
-import { Icon, type IconName } from "../../../components/icon/index.js";
-import type React from "react";
-import { CommandItem } from "../../../../scalars/components/fragments/command/index.js";
-import { cn } from "../../../../scalars/lib/utils.js";
-import type { SelectProps } from "./types.js";
+import { Icon, type IconName } from '../../../components/icon/index.js'
+import type React from 'react'
+import { CommandItem } from '../../../../scalars/components/fragments/command/index.js'
+import { cn } from '../../../../scalars/lib/utils.js'
+import type { SelectProps } from './types.js'
 
 interface FavoriteOptionsProps {
-  options: SelectProps["options"];
-  selectedValues: string[];
-  multiple?: boolean;
-  selectionIcon: "auto" | "checkmark";
-  selectionIconPosition: "left" | "right";
-  hasAnyIcon: boolean;
-  toggleOption: (value: string) => void;
-  tabIndex?: number;
-  optionsClassName?: string;
+  options: SelectProps['options']
+  selectedValues: string[]
+  multiple?: boolean
+  selectionIcon: 'auto' | 'checkmark'
+  selectionIconPosition: 'left' | 'right'
+  hasAnyIcon: boolean
+  toggleOption: (value: string) => void
+  tabIndex?: number
+  optionsClassName?: string
 }
 
-const renderIcon = (
-  IconComponent:
-    | IconName
-    | React.ComponentType<{ className?: string }>
-    | undefined,
-) => {
-  if (typeof IconComponent === "string") {
-    return (
-      <Icon
-        name={IconComponent}
-        size={16}
-        className={cn("text-gray-700 dark:text-gray-400")}
-      />
-    );
+const renderIcon = (IconComponent: IconName | React.ComponentType<{ className?: string }> | undefined) => {
+  if (typeof IconComponent === 'string') {
+    return <Icon name={IconComponent} size={16} className={cn('text-gray-700 dark:text-gray-400')} />
   }
-  return (
-    IconComponent && (
-      <IconComponent
-        className={cn("size-4", "text-gray-700 dark:text-gray-400")}
-      />
-    )
-  );
-};
+  return IconComponent && <IconComponent className={cn('size-4', 'text-gray-700 dark:text-gray-400')} />
+}
 
 export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
   options = [],
@@ -53,8 +36,8 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
 }) => {
   return (
     <>
-      {options.map((opt) => {
-        const isSelected = selectedValues.includes(opt.value);
+      {options.map(opt => {
+        const isSelected = selectedValues.includes(opt.value)
         return (
           <CommandItem
             tabIndex={tabIndex}
@@ -63,24 +46,22 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
             onSelect={() => !opt.disabled && toggleOption(opt.value)}
             disabled={opt.disabled}
             className={cn(
-              "cursor-pointer",
-              "data-[selected=true]:bg-gray-100 dark:data-[selected=true]:bg-gray-900",
-              opt.disabled &&
-                "!pointer-events-auto cursor-not-allowed hover:bg-transparent dark:hover:bg-transparent",
+              'cursor-pointer',
+              'data-[selected=true]:bg-gray-100 dark:data-[selected=true]:bg-gray-900',
+              opt.disabled && '!pointer-events-auto cursor-not-allowed hover:bg-transparent dark:hover:bg-transparent',
               optionsClassName,
               opt.className
             )}
             role="option"
             aria-selected={isSelected}
           >
-            {selectionIcon === "auto" &&
+            {selectionIcon === 'auto' &&
               (multiple ? (
                 <div
                   className={cn(
-                    "flex size-4 items-center justify-center rounded-md border",
-                    "border-gray-700 dark:border-gray-400",
-                    isSelected &&
-                      "bg-gray-900 text-slate-50 dark:bg-gray-400 dark:text-black",
+                    'flex size-4 items-center justify-center rounded-md border',
+                    'border-gray-700 dark:border-gray-400',
+                    isSelected && 'bg-gray-900 text-slate-50 dark:bg-gray-400 dark:text-black'
                   )}
                 >
                   {isSelected && <Icon name="Checkmark" size={16} />}
@@ -88,11 +69,9 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
               ) : (
                 <div
                   className={cn(
-                    "relative size-4 rounded-full border",
-                    isSelected
-                      ? "border-gray-900 dark:border-gray-400"
-                      : "border-gray-800 dark:border-gray-400",
-                    "bg-transparent dark:bg-transparent",
+                    'relative size-4 rounded-full border',
+                    isSelected ? 'border-gray-900 dark:border-gray-400' : 'border-gray-800 dark:border-gray-400',
+                    'bg-transparent dark:bg-transparent'
                   )}
                 >
                   {isSelected && (
@@ -100,43 +79,31 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
                   )}
                 </div>
               ))}
-            {selectionIcon === "checkmark" &&
-              !(selectionIconPosition === "right" && hasAnyIcon) && (
-                <div className="size-4">
-                  {selectionIconPosition === "left" && isSelected && (
-                    <Icon
-                      name="Checkmark"
-                      size={16}
-                      className="text-gray-900 dark:text-gray-50"
-                    />
-                  )}
-                </div>
-              )}
+            {selectionIcon === 'checkmark' && !(selectionIconPosition === 'right' && hasAnyIcon) && (
+              <div className="size-4">
+                {selectionIconPosition === 'left' && isSelected && (
+                  <Icon name="Checkmark" size={16} className="text-gray-900 dark:text-gray-50" />
+                )}
+              </div>
+            )}
             {renderIcon(opt.icon)}
             <span
               className={cn(
-                "flex-1 truncate text-[14px] font-normal leading-4",
-                "text-gray-700 dark:text-gray-500",
-                opt.disabled && "text-gray-600 dark:text-gray-600",
+                'flex-1 truncate text-[14px] font-normal leading-4',
+                'text-gray-700 dark:text-gray-500',
+                opt.disabled && 'text-gray-600 dark:text-gray-600'
               )}
             >
               {opt.label}
             </span>
-            {selectionIcon === "checkmark" &&
-              selectionIconPosition === "right" && (
-                <div className="size-4">
-                  {isSelected && (
-                    <Icon
-                      name="Checkmark"
-                      size={16}
-                      className="text-gray-900 dark:text-gray-50"
-                    />
-                  )}
-                </div>
-              )}
+            {selectionIcon === 'checkmark' && selectionIconPosition === 'right' && (
+              <div className="size-4">
+                {isSelected && <Icon name="Checkmark" size={16} className="text-gray-900 dark:text-gray-50" />}
+              </div>
+            )}
           </CommandItem>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}

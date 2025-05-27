@@ -1,32 +1,28 @@
-import type * as React from "react";
-import { 
-  Select, 
-  type SelectBaseProps, 
-  type SelectProps 
-} from "../../select/index.js";
-import { Button } from "../../../../../scalars/components/fragments/button/button.js";
-import { type TimePeriod } from "../type.js";
-import TimePeriodSelector from "./time-period-selector.js";
-import TimeSelector from "./time-selector.js";
+import type * as React from 'react'
+import { Select, type SelectBaseProps, type SelectProps } from '../../select/index.js'
+import { Button } from '../../../../../scalars/components/fragments/button/button.js'
+import { type TimePeriod } from '../type.js'
+import TimePeriodSelector from './time-period-selector.js'
+import TimeSelector from './time-selector.js'
 
 interface TimePickerContentProps {
-  onSave?: (time: string) => void;
-  onCancel?: () => void;
-  selectedHour: string;
-  selectedMinute: string;
-  selectedPeriod?: TimePeriod;
-  setSelectedHour: (hour: string) => void;
-  setSelectedMinute: (minute: string) => void;
-  setSelectedPeriod: (period?: TimePeriod) => void;
-  hours: string[];
-  minutes: string[];
-  timeZonesOptions: SelectBaseProps["options"];
-  selectProps?: Omit<SelectProps, "name" | "options" | "selectionIcon">;
-  is12HourFormat: boolean;
-  selectedTimeZone?: string;
-  setSelectedTimeZone?: (timeZone: string | string[]) => void;
-  timeZone?: string;
-  isDisableSelect?: boolean;
+  onSave?: (time: string) => void
+  onCancel?: () => void
+  selectedHour: string
+  selectedMinute: string
+  selectedPeriod?: TimePeriod
+  setSelectedHour: (hour: string) => void
+  setSelectedMinute: (minute: string) => void
+  setSelectedPeriod: (period?: TimePeriod) => void
+  hours: string[]
+  minutes: string[]
+  timeZonesOptions: SelectBaseProps['options']
+  selectProps?: Omit<SelectProps, 'name' | 'options' | 'selectionIcon'>
+  is12HourFormat: boolean
+  selectedTimeZone?: string
+  setSelectedTimeZone?: (timeZone: string | string[]) => void
+  timeZone?: string
+  isDisableSelect?: boolean
 }
 
 const TimePickerContent: React.FC<TimePickerContentProps> = ({
@@ -63,34 +59,16 @@ const TimePickerContent: React.FC<TimePickerContentProps> = ({
         {...selectProps}
       />
 
-      {is12HourFormat && (
-        <TimePeriodSelector
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={setSelectedPeriod}
-        />
-      )}
+      {is12HourFormat && <TimePeriodSelector selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />}
       <div
         className="mx-auto mt-[15px] flex h-[148px] justify-center overflow-hidden"
         style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)',
         }}
       >
-        <TimeSelector
-          options={hours}
-          selectedValue={selectedHour}
-          onSelect={setSelectedHour}
-          isCyclic={true}
-        />
-        <div className="flex items-center px-4 text-sm font-normal leading-[20px] text-gray-900">
-          :
-        </div>
-        <TimeSelector
-          options={minutes}
-          selectedValue={selectedMinute}
-          onSelect={setSelectedMinute}
-          isCyclic={true}
-        />
+        <TimeSelector options={hours} selectedValue={selectedHour} onSelect={setSelectedHour} isCyclic={true} />
+        <div className="flex items-center px-4 text-sm font-normal leading-[20px] text-gray-900">:</div>
+        <TimeSelector options={minutes} selectedValue={selectedMinute} onSelect={setSelectedMinute} isCyclic={true} />
       </div>
       <div className="flex items-center justify-between pt-[25px]">
         <Button
@@ -102,16 +80,14 @@ const TimePickerContent: React.FC<TimePickerContentProps> = ({
         </Button>
         <Button
           variant="ghost"
-          onClick={() =>
-            onSave?.(`${selectedHour}:${selectedMinute} ${selectedPeriod}`)
-          }
+          onClick={() => onSave?.(`${selectedHour}:${selectedMinute} ${selectedPeriod}`)}
           className="font-inter text-center text-[12px] font-medium leading-[18px] text-gray-500"
         >
           SAVE
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TimePickerContent;
+export default TimePickerContent

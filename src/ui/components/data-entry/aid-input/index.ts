@@ -1,2 +1,2 @@
-export { AIDInput } from "./aid-input.js";
-export type { AIDInputProps, AIDOption } from "./types.js";
+export { AIDInput } from './aid-input.js'
+export type { AIDInputProps, AIDOption } from './types.js'

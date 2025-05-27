@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import FormWithResetOnSuccessfulSubmit from "./reset-on-successful-submit.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import FormWithResetOnSuccessfulSubmit from './reset-on-successful-submit.js'
 
 const meta = {
-  title: "Document Engineering/Scalars/Examples/Reset On Successful Submit",
+  title: 'Document Engineering/Scalars/Examples/Reset On Successful Submit',
   component: FormWithResetOnSuccessfulSubmit,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: `
 const FormWithResetOnSuccessfulSubmit = () => {
@@ -43,9 +43,9 @@ const FormWithResetOnSuccessfulSubmit = () => {
       },
     },
   },
-} satisfies Meta<typeof FormWithResetOnSuccessfulSubmit>;
+} satisfies Meta<typeof FormWithResetOnSuccessfulSubmit>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
-export const Default: Story = {};
+export const Default: Story = {}

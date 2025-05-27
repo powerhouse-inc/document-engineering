@@ -1,33 +1,30 @@
-import { useCallback } from "react";
-import { Input } from "../../data-entry/input/index.js";
-import { useGlobalTableKeyEvents } from "../hooks/useGlobalTableKeyEvents.js";
-import type { CellContext, ColumnDef, DataType } from "../types.js";
-import { isCellEqual } from "../utils.js";
-import { DefaultTableCell } from "./cells/default-cell.js";
-import { InformationCell } from "./cells/information-cell.js";
-import { RowNumberCell } from "./cells/row-number-cell.js";
-import { TableRow } from "./rows/table-row.js";
-import { useInternalTableState } from "./table-provider/table-provider.js";
+import { useCallback } from 'react'
+import { Input } from '../../data-entry/input/index.js'
+import { useGlobalTableKeyEvents } from '../hooks/useGlobalTableKeyEvents.js'
+import type { CellContext, ColumnDef, DataType } from '../types.js'
+import { isCellEqual } from '../utils.js'
+import { DefaultTableCell } from './cells/default-cell.js'
+import { InformationCell } from './cells/information-cell.js'
+import { RowNumberCell } from './cells/row-number-cell.js'
+import { TableRow } from './rows/table-row.js'
+import { useInternalTableState } from './table-provider/table-provider.js'
 
 interface TableBodyProps<T extends DataType> {
-  data: T[];
-  columns: ColumnDef<T>[];
+  data: T[]
+  columns: ColumnDef<T>[]
 }
 
-const TableBody = <T extends DataType>({
-  data,
-  columns,
-}: TableBodyProps<T>) => {
+const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => {
   const {
     config,
     state: { dispatch, selectedRowIndexes, selectedCellIndex, isCellEditMode },
     api,
-  } = useInternalTableState<T>();
+  } = useInternalTableState<T>()
 
   // add global key events to the table
-  useGlobalTableKeyEvents();
+  useGlobalTableKeyEvents()
 
-  const { allowRowSelection } = config;
+  const { allowRowSelection } = config
 
   /**
    * Create a handler for the click event on the table numbering cell
@@ -36,18 +33,18 @@ const TableBody = <T extends DataType>({
    */
   const createSelectRowOnClickHandler = useCallback(
     (index: number) => (e: React.MouseEvent<HTMLTableCellElement>) => {
-      if (!allowRowSelection) return;
+      if (!allowRowSelection) return
       if (e.ctrlKey || e.metaKey) {
-        e.stopPropagation();
-        api.selection.toggleRow(index);
+        e.stopPropagation()
+        api.selection.toggleRow(index)
       } else if (e.shiftKey) {
-        return; // just let the row handle it
+        return // just let the row handle it
       } else {
-        api.selection.selectRow(index);
+        api.selection.selectRow(index)
       }
     },
-    [allowRowSelection],
-  );
+    [allowRowSelection]
+  )
 
   /**
    * Create a handler for the click event on the table row
@@ -57,58 +54,50 @@ const TableBody = <T extends DataType>({
    */
   const createAddSelectedRowHandler = useCallback(
     (index: number) => (e: React.MouseEvent<HTMLTableRowElement>) => {
-      if (!allowRowSelection) return;
+      if (!allowRowSelection) return
 
       if (e.ctrlKey || e.metaKey) {
-        api.selection.toggleRow(index);
+        api.selection.toggleRow(index)
       } else if (e.shiftKey) {
         // Prevent text selection when shift key is pressed
-        document.getSelection()?.removeAllRanges();
-        api.selection.selectFromLastActiveRow(index);
+        document.getSelection()?.removeAllRanges()
+        api.selection.selectFromLastActiveRow(index)
       }
     },
-    [allowRowSelection],
-  );
+    [allowRowSelection]
+  )
 
   /**
    * Prevent text selection when shift key is pressed so that we
    * can select a range of rows while keeping a good user experience
    */
-  const handleMouseDown = useCallback(
-    (event: React.MouseEvent<HTMLTableRowElement>) => {
-      if (event.shiftKey) {
-        document.getSelection()?.removeAllRanges();
-      }
-    },
-    [],
-  );
+  const handleMouseDown = useCallback((event: React.MouseEvent<HTMLTableRowElement>) => {
+    if (event.shiftKey) {
+      document.getSelection()?.removeAllRanges()
+    }
+  }, [])
 
   const createCellClickHandler = useCallback(
-    (index: number, column: number, columnDef: ColumnDef<T>) =>
-      (e: React.MouseEvent<HTMLTableCellElement>) => {
-        // if the cell is being edited, ignore clicking on it
-        if (
-          isCellEditMode &&
-          selectedCellIndex?.row === index &&
-          selectedCellIndex.column === column
-        ) {
-          return;
-        }
+    (index: number, column: number, columnDef: ColumnDef<T>) => (e: React.MouseEvent<HTMLTableCellElement>) => {
+      // if the cell is being edited, ignore clicking on it
+      if (isCellEditMode && selectedCellIndex?.row === index && selectedCellIndex.column === column) {
+        return
+      }
 
-        // if shift or ctrl is pressed, the user is probably trying to select rows
-        if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
-          if (e.detail === 2 && columnDef.editable) {
-            dispatch?.({
-              type: "ENTER_CELL_EDIT_MODE",
-              payload: { row: index, column },
-            });
-          } else {
-            api.selection.selectCell(index, column);
-          }
+      // if shift or ctrl is pressed, the user is probably trying to select rows
+      if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        if (e.detail === 2 && columnDef.editable) {
+          dispatch?.({
+            type: 'ENTER_CELL_EDIT_MODE',
+            payload: { row: index, column },
+          })
+        } else {
+          api.selection.selectCell(index, column)
         }
-      },
-    [dispatch, isCellEditMode],
-  );
+      }
+    },
+    [dispatch, isCellEditMode]
+  )
 
   return (
     <tbody className="text-sm leading-5 text-gray-900">
@@ -123,10 +112,7 @@ const TableBody = <T extends DataType>({
           <RowNumberCell
             index={index + 1}
             handleSelectRowOnClick={createSelectRowOnClickHandler(index)}
-            selected={
-              selectedRowIndexes.includes(index) ||
-              selectedCellIndex?.row === index
-            }
+            selected={selectedRowIndexes.includes(index) || selectedCellIndex?.row === index}
           />
 
           {columns.map((column, columnIndex) => {
@@ -136,27 +122,21 @@ const TableBody = <T extends DataType>({
               rowIndex: index,
               columnIndex,
               tableConfig: config,
-            };
+            }
 
             // get and format the cell value
-            const cellValue = column.valueFormatter?.(
-              column.valueGetter?.(rowItem, cellContext),
-              cellContext,
-            );
+            const cellValue = column.valueFormatter?.(column.valueGetter?.(rowItem, cellContext), cellContext)
 
             // render the cell
-            const cell = column.renderCell?.(cellValue, cellContext);
+            const cell = column.renderCell?.(cellValue, cellContext)
 
             const currentCellIndex = {
               row: index,
               column: columnIndex,
-            };
-            const isCellSelected = isCellEqual(
-              selectedCellIndex,
-              currentCellIndex,
-            );
+            }
+            const isCellSelected = isCellEqual(selectedCellIndex, currentCellIndex)
 
-            const isThisCellEditMode = isCellEditMode && isCellSelected;
+            const isThisCellEditMode = isCellEditMode && isCellSelected
 
             return (
               <DefaultTableCell
@@ -169,14 +149,11 @@ const TableBody = <T extends DataType>({
                   <Input
                     className="max-w-full"
                     autoFocus
-                    defaultValue={
-                      column.valueGetter?.(rowItem, cellContext) as string
-                    }
-                    // eslint-disable-next-line react/jsx-no-bind
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        const newValue = (e.target as HTMLInputElement).value;
-                        column.onSave?.(newValue, cellContext);
+                    defaultValue={column.valueGetter?.(rowItem, cellContext) as string}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        const newValue = (e.target as HTMLInputElement).value
+                        column.onSave?.(newValue, cellContext)
                       }
                     }}
                   />
@@ -184,7 +161,7 @@ const TableBody = <T extends DataType>({
                   cell
                 )}
               </DefaultTableCell>
-            );
+            )
           })}
 
           {/* Information cell */}
@@ -192,7 +169,7 @@ const TableBody = <T extends DataType>({
         </TableRow>
       ))}
     </tbody>
-  );
-};
+  )
+}
 
-export { TableBody };
+export { TableBody }

@@ -1,19 +1,17 @@
-import { cn } from "../../../../scalars/lib/utils.js";
-import React, { useId } from "react";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/index.js";
-import type { InputBaseProps } from "../../../../scalars/components/types.js";
-import { CheckboxBase, type CheckboxValue } from "./checkbox-base.js";
+import { cn } from '../../../../scalars/lib/utils.js'
+import React, { useId } from 'react'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import { CheckboxBase, type CheckboxValue } from './checkbox-base.js'
 
 type CheckboxBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  keyof InputBaseProps<CheckboxValue> | "onChange"
->;
+  keyof InputBaseProps<CheckboxValue> | 'onChange'
+>
 
-export interface CheckboxProps
-  extends CheckboxBaseProps,
-    InputBaseProps<CheckboxValue> {
-  onChange?: ((checked: CheckboxValue) => void) | ((checked: boolean) => void);
+export interface CheckboxProps extends CheckboxBaseProps, InputBaseProps<CheckboxValue> {
+  onChange?: ((checked: CheckboxValue) => void) | ((checked: boolean) => void)
 }
 
 const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
@@ -33,21 +31,21 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const generatedId = useId();
-    const id = idProp ?? generatedId;
-    const hasError = !!errors?.length;
+    const generatedId = useId()
+    const id = idProp ?? generatedId
+    const hasError = !!errors?.length
 
     const castValue = (value: unknown) => {
-      if (value === "true") return true;
-      if (value === "false") return false;
-      return value;
-    };
+      if (value === 'true') return true
+      if (value === 'false') return false
+      return value
+    }
 
     return (
-      <div className={cn("flex flex-col gap-2")}>
-        <div className={cn("group flex items-center space-x-2", className)}>
+      <div className={cn('flex flex-col gap-2')}>
+        <div className={cn('group flex items-center space-x-2', className)}>
           <CheckboxBase
             id={id}
             name={name}
@@ -66,7 +64,7 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
             disabled={disabled}
             hasError={hasError}
             description={description}
-            className={cn(!disabled && "group-hover:cursor-pointer")}
+            className={cn(!disabled && 'group-hover:cursor-pointer')}
             inline
           >
             {label}
@@ -75,10 +73,10 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         {warnings && <FormMessageList type="warning" messages={warnings} />}
         {errors && <FormMessageList type="error" messages={errors} />}
       </div>
-    );
-  },
-);
+    )
+  }
+)
 
-Checkbox.displayName = "Checkbox";
+Checkbox.displayName = 'Checkbox'
 
-export { Checkbox };
+export { Checkbox }

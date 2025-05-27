@@ -1,21 +1,10 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function Timeline(props: Props) {
   return (
-    <svg
-      {...props}
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="currentcolor"
-    >
+    <svg {...props} width="16" height="16" viewBox="0 0 16 16" fill="currentcolor">
       <rect width="16" height="16" fill="url(#pattern0_1256_1508)" />
       <defs>
-        <pattern
-          id="pattern0_1256_1508"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
+        <pattern id="pattern0_1256_1508" patternContentUnits="objectBoundingBox" width="1" height="1">
           <use href="#image0_1256_1508" transform="scale(0.00195312)" />
         </pattern>
         <image
@@ -27,5 +16,5 @@ export default function Timeline(props: Props) {
         />
       </defs>
     </svg>
-  );
+  )
 }
