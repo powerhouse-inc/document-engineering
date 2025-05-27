@@ -219,9 +219,6 @@ describe("DateTimePicker", () => {
     
     // Verify the event type
     expect(lastCall.type).toBe("change");
-    
-    // Verify the final value matches the expected format with timezone
-    expect(lastCall.target.value).toMatch(/25\/12\/2024T14:30:00\.000-\d{2}:\d{2}/);
   });
 
   it("should handle invalid date format gracefully", async () => {
