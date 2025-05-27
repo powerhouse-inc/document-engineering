@@ -138,7 +138,7 @@ describe("DateTimePickerField", () => {
     
     const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
     expect(lastCall.type).toBe("change");
-    expect(lastCall.target.value).toMatch(/25\/12\/2024T14:30:00\.000-\d{2}:\d{2}/);
+    expect(lastCall.target.value).toMatch(/25\/12\/2024T14:30:00\.000[+-]\d{2}:\d{2}/);
   });
 
   it("should handle time format changes correctly", async () => {
