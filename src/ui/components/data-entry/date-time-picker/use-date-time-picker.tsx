@@ -1,13 +1,10 @@
-import { format } from "date-fns";
-import React, { useState } from "react";
-import { type DateFieldValue } from "../date-picker/types.js";
-import { useDatePickerField } from "../date-picker/use-date-picker.js";
-import { getDateFromValue, getTimeFromValue, isFormatDisabled } from "../date-picker/utils.js";
-import { type TimeFieldValue, type TimePeriod } from "../time-picker/type.js";
-import {
-  convertTimeFrom24To12Hours,
-  useTimePicker,
-} from "../time-picker/use-time-picker.js";
+import { format } from 'date-fns'
+import React, { useState } from 'react'
+import { type DateFieldValue } from '../date-picker/types.js'
+import { useDatePickerField } from '../date-picker/use-date-picker.js'
+import { getDateFromValue, getTimeFromValue, isFormatDisabled } from '../date-picker/utils.js'
+import { type TimeFieldValue, type TimePeriod } from '../time-picker/type.js'
+import { convertTimeFrom24To12Hours, useTimePicker } from '../time-picker/use-time-picker.js'
 import {
   cleanTime,
   convert12hTo24h,
@@ -17,7 +14,7 @@ import {
   getHoursAndMinutes,
   getInputValue,
   isValidTimeInput,
-} from "../time-picker/utils.js";
+} from '../time-picker/utils.js'
 import {
   createBlurEvent,
   getDateFormat,
@@ -25,119 +22,110 @@ import {
   isDateFormatAllowed,
   parseInputString,
   splitDateTimeStringFromInput,
-} from "./utils.js";
+} from './utils.js'
 
 interface DateTimeFieldProps {
-  value?: DateFieldValue;
-  defaultValue?: DateFieldValue;
+  value?: DateFieldValue
+  defaultValue?: DateFieldValue
 
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 
   // Date Picker Field
-  autoClose?: boolean;
-  disableFutureDates?: boolean;
-  disablePastDates?: boolean;
-  dateFormat?: string;
-  onBlurDate?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onChangeDate?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  minDate?: string;
-  maxDate?: string;
-  weekStart?: string;
+  autoClose?: boolean
+  disableFutureDates?: boolean
+  disablePastDates?: boolean
+  dateFormat?: string
+  onBlurDate?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onChangeDate?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  minDate?: string
+  maxDate?: string
+  weekStart?: string
 
   // Time Picker Field
-  onChangeTime?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlurTime?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  timeFormat?: string;
-  timeIntervals?: number;
-  timeZone?: string;
-  showTimezoneSelect?: boolean;
-  includeContinent?: boolean;
+  onChangeTime?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlurTime?: (e: React.FocusEvent<HTMLInputElement>) => void
+  timeFormat?: string
+  timeIntervals?: number
+  timeZone?: string
+  showTimezoneSelect?: boolean
+  includeContinent?: boolean
 }
 
-export const formatToISODateTimeWithOffset = (
-  datePart: string,
-  timePart: string,
-  timeZone?: string,
-): string => {
+export const formatToISODateTimeWithOffset = (datePart: string, timePart: string, timeZone?: string): string => {
   // WIP: think if we need validate timePart before format it with 00 at the end
-  const formattedTime = timePart ? `${timePart}:00` : "00:00:00";
+  const formattedTime = timePart ? `${timePart}:00` : '00:00:00'
   // const formattedTime = timePart ? `${timePart}:00` : "00:00:00";
-  const formattedDateTime = `${datePart}T${formattedTime}${getOffset(timeZone)}`;
+  const formattedDateTime = `${datePart}T${formattedTime}${getOffset(timeZone)}`
   // WIP: check the replace sentence
-  const formattedTimeWithMiliseconds =
-    formattedDateTime.replace(/(:\d{2})([+-].*|Z)/, "$1.000$2") || "";
-  return formattedTimeWithMiliseconds;
-};
+  const formattedTimeWithMiliseconds = formattedDateTime.replace(/(:\d{2})([+-].*|Z)/, '$1.000$2') || ''
+  return formattedTimeWithMiliseconds
+}
 
 const todayInIsoFormat = () => {
-  return format(new Date(), "yyyy-MM-dd'T'HH:mm:ssXXX");
-};
+  return format(new Date(), "yyyy-MM-dd'T'HH:mm:ssXXX")
+}
 
 const todayTimeInput = () => {
-  return format(new Date(), "HH:mm:ss");
-};
+  return format(new Date(), 'HH:mm:ss')
+}
 const todayDateInput = (dateFormat?: string) => {
-  return format(new Date(), dateFormat ?? "yyyy-MM-dd");
-};
+  return format(new Date(), dateFormat ?? 'yyyy-MM-dd')
+}
 
-const parseDateTimeValueToInput = (
-  value: DateFieldValue,
-  dateFormat = "yyyy-MM-dd",
-) => {
-  const datePart = getDateFromValue(value);
-  const dateFormatted = parseInputString(datePart, dateFormat);
+const parseDateTimeValueToInput = (value: DateFieldValue, dateFormat = 'yyyy-MM-dd') => {
+  const datePart = getDateFromValue(value)
+  const dateFormatted = parseInputString(datePart, dateFormat)
 
-  const timePart = getTimeFromValue(value);
+  const timePart = getTimeFromValue(value)
 
-  const timeFormatted = getInputValue(timePart);
-  let date = dateFormatted;
-  let time = timeFormatted;
+  const timeFormatted = getInputValue(timePart)
+  let date = dateFormatted
+  let time = timeFormatted
 
   if (!dateFormatted && !timeFormatted) {
-    return "";
+    return ''
   }
 
-  const dateDefault = todayDateInput();
-  const timeDefault = todayTimeInput();
+  const dateDefault = todayDateInput()
+  const timeDefault = todayTimeInput()
 
   if (!dateFormatted) {
     // set date to today in string format
-    date = dateDefault;
+    date = dateDefault
   }
 
   if (!timeFormatted) {
     // set time to current time in string format
-    time = timeDefault;
+    time = timeDefault
   }
-  return `${date} ${time}`;
-};
+  return `${date} ${time}`
+}
 
 const putTimeInValue = (value: DateFieldValue, time: TimeFieldValue) => {
-  let datePart = getDateFromValue(value);
+  let datePart = getDateFromValue(value)
   // put today if datePart is empty
   if (!datePart) {
-    const today = todayInIsoFormat();
-    datePart = getDateFromValue(today);
+    const today = todayInIsoFormat()
+    datePart = getDateFromValue(today)
   }
-  return `${datePart}T${time}`;
-};
+  return `${datePart}T${time}`
+}
 
 const putDateInValue = (value: DateFieldValue, date: DateFieldValue) => {
-  let timePart = getTimeFromValue(value);
+  let timePart = getTimeFromValue(value)
 
   // if dont have timePart add default time today
   if (!timePart) {
-    const today = todayInIsoFormat();
-    timePart = getTimeFromValue(today);
+    const today = todayInIsoFormat()
+    timePart = getTimeFromValue(today)
   }
 
-  const datePart = getDateFromValue(date);
-  const newValue = `${datePart}T${timePart}`;
-  const formattedTime =
-    newValue.replace(/(:\d{2})([+-].*|Z)/, "$1.000$2") || "";
-  return formattedTime;
-};
+  const datePart = getDateFromValue(date)
+  const newValue = `${datePart}T${timePart}`
+  const formattedTime = newValue.replace(/(:\d{2})([+-].*|Z)/, '$1.000$2') || ''
+  return formattedTime
+}
 
 export const useDateTimePicker = ({
   value,
@@ -161,55 +149,41 @@ export const useDateTimePicker = ({
   showTimezoneSelect = true,
   includeContinent,
 }: DateTimeFieldProps) => {
-  const internalFormat = getDateFormat(dateFormat ?? "");
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [activeTab, setActiveTab] = useState<"date" | "time">("date");
+  const internalFormat = getDateFormat(dateFormat ?? '')
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [activeTab, setActiveTab] = useState<'date' | 'time'>('date')
 
   const [dateTimeToDisplay, setDateTimeToDisplay] = useState(
-    parseDateTimeValueToInput(
-      value ?? defaultValue ?? "",
-      internalFormat ?? "",
-    ),
-  );
+    parseDateTimeValueToInput(value ?? defaultValue ?? '', internalFormat ?? '')
+  )
 
   const onChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: parse date and time to correct format
-    const date = e.target.value;
-    const newValue = putDateInValue(value ?? defaultValue ?? "", date);
-    const newVInput = parseDateTimeValueToInput(newValue, internalFormat);
+    const date = e.target.value
+    const newValue = putDateInValue(value ?? defaultValue ?? '', date)
+    const newVInput = parseDateTimeValueToInput(newValue, internalFormat)
 
-    const splitTime = newVInput.split(" ")[1];
-    const splitDate = newVInput.split(" ")[0];
+    const splitTime = newVInput.split(' ')[1]
+    const splitDate = newVInput.split(' ')[0]
 
-    const transformedTime = formatInputToDisplayValid(
-      splitTime,
-      is12HourFormat,
-      timeIntervals,
-    );
+    const transformedTime = formatInputToDisplayValid(splitTime, is12HourFormat, timeIntervals)
 
-    const { hours, minutes, period } = getHoursAndMinutes(transformedTime);
+    const { hours, minutes, period } = getHoursAndMinutes(transformedTime)
 
-    setSelectedHour(cleanTime(hours));
-    setSelectedMinute(cleanTime(minutes));
+    setSelectedHour(cleanTime(hours))
+    setSelectedMinute(cleanTime(minutes))
     if (is12HourFormat) {
-      setSelectedPeriod(period as TimePeriod);
+      setSelectedPeriod(period as TimePeriod)
     }
-    const inputDisplay = `${splitDate.toLocaleUpperCase()} ${transformedTime}`;
+    const inputDisplay = `${splitDate.toLocaleUpperCase()} ${transformedTime}`
 
-    setDateTimeToDisplay(inputDisplay);
-    onChange?.(createChangeEvent(newValue));
+    setDateTimeToDisplay(inputDisplay)
+    onChange?.(createChangeEvent(newValue))
     // Add onBlur event to update the value when select a date from calendar
-    onBlur?.(createBlurEvent(newValue));
-  };
+    onBlur?.(createBlurEvent(newValue))
+  }
 
-  const {
-    date,
-    handleDateSelect,
-    handleInputChange,
-    handleBlur,
-    disabledDates,
-    weekStartDay,
-  } = useDatePickerField({
+  const { date, handleDateSelect, handleInputChange, handleBlur, disabledDates, weekStartDay } = useDatePickerField({
     value,
     defaultValue,
     onChange: onChangeDate,
@@ -221,83 +195,78 @@ export const useDateTimePicker = ({
     weekStart,
     minDate,
     maxDate,
-  });
+  })
 
-  const timeInput = getTimeFromValue(value ?? defaultValue ?? "");
+  const timeInput = getTimeFromValue(value ?? defaultValue ?? '')
 
   const onChangeTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsOpen(false);
-    const time = e.target.value;
+    setIsOpen(false)
+    const time = e.target.value
 
-    const newValue = putTimeInValue(value ?? defaultValue ?? "", time);
-    const newVInput = parseDateTimeValueToInput(newValue, internalFormat);
-    setDateTimeToDisplay(newVInput);
-    onChange?.(createChangeEvent(newValue));
-  };
+    const newValue = putTimeInValue(value ?? defaultValue ?? '', time)
+    const newVInput = parseDateTimeValueToInput(newValue, internalFormat)
+    setDateTimeToDisplay(newVInput)
+    onChange?.(createChangeEvent(newValue))
+  }
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
+    const inputValue = e.target.value
     if (!inputValue) {
-      setDateTimeToDisplay(inputValue);
-      onChange?.(createChangeEvent(""));
-      onBlur?.(createBlurEvent(""));
-      return;
+      setDateTimeToDisplay(inputValue)
+      onChange?.(createChangeEvent(''))
+      onBlur?.(createBlurEvent(''))
+      return
     }
     // Get the time and transform to 24 hours format and avoid undefined
-    const timeValue = inputValue.split(" ")[1] ?? "";
+    const timeValue = inputValue.split(' ')[1] ?? ''
     // Get period from input if exists
-    const periodInput = inputValue.split(" ")[2] as TimePeriod;
+    const periodInput = inputValue.split(' ')[2] as TimePeriod
 
     if (!isValidTimeInput(timeValue)) {
-      if (inputValue === "") {
-        setDateTimeToDisplay(inputValue);
-        onChange?.(createChangeEvent(""));
-        onBlur?.(createBlurEvent(""));
-        return;
+      if (inputValue === '') {
+        setDateTimeToDisplay(inputValue)
+        onChange?.(createChangeEvent(''))
+        onBlur?.(createBlurEvent(''))
+        return
       }
 
       // If the time is not valid, made the onChage and onBlur with the inputValue
-      setDateTimeToDisplay(inputValue);
-      onChange?.(createChangeEvent(inputValue));
-      onBlur?.(createBlurEvent(inputValue));
-      return;
+      setDateTimeToDisplay(inputValue)
+      onChange?.(createChangeEvent(inputValue))
+      onBlur?.(createBlurEvent(inputValue))
+      return
     }
 
-    const datetimeFormatted = formatInputToDisplayValid(
-      timeValue,
-      is12HourFormat,
-      timeIntervals,
-      periodInput,
-    );
-    const validValue = convert12hTo24h(datetimeFormatted);
-    const offsetUTC = getOffset(timeZone ?? (selectedTimeZone as string));
-    const { minutes, hours, period } = getHoursAndMinutes(validValue);
+    const datetimeFormatted = formatInputToDisplayValid(timeValue, is12HourFormat, timeIntervals, periodInput)
+    const validValue = convert12hTo24h(datetimeFormatted)
+    const offsetUTC = getOffset(timeZone ?? (selectedTimeZone as string))
+    const { minutes, hours, period } = getHoursAndMinutes(validValue)
 
-    const clearMinutes = cleanTime(minutes);
-    const clearHours = convertTimeFrom24To12Hours(cleanTime(hours));
-    setSelectedHour(clearHours);
-    setSelectedMinute(clearMinutes);
+    const clearMinutes = cleanTime(minutes)
+    const clearHours = convertTimeFrom24To12Hours(cleanTime(hours))
+    setSelectedHour(clearHours)
+    setSelectedMinute(clearMinutes)
     if (is12HourFormat) {
-      setSelectedPeriod(period as TimePeriod);
+      setSelectedPeriod(period as TimePeriod)
     }
-    const timeFormat = formatInputsToValueFormat(hours, minutes, offsetUTC);
-    const newValue = putTimeInValue(value ?? defaultValue ?? "", timeFormat);
-    const newVInput = newValue.split("T")[0];
+    const timeFormat = formatInputsToValueFormat(hours, minutes, offsetUTC)
+    const newValue = putTimeInValue(value ?? defaultValue ?? '', timeFormat)
+    const newVInput = newValue.split('T')[0]
 
     // Check if the date is empty when split the value by T
-    const valueEmptyDate = (value as string)?.split("T")[0] === "";
+    const valueEmptyDate = (value as string)?.split('T')[0] === ''
     if (valueEmptyDate) {
-      setDateTimeToDisplay(inputValue);
-      onChange?.(createChangeEvent(inputValue));
-      onBlur?.(createBlurEvent(inputValue));
-      return;
+      setDateTimeToDisplay(inputValue)
+      onChange?.(createChangeEvent(inputValue))
+      onBlur?.(createBlurEvent(inputValue))
+      return
     }
 
-    const valueFormatted = `${newVInput} ${datetimeFormatted}`;
-    setDateTimeToDisplay(valueFormatted);
-    onChange?.(createChangeEvent(newValue));
-    onBlur?.(createBlurEvent(newValue));
-  };
+    const valueFormatted = `${newVInput} ${datetimeFormatted}`
+    setDateTimeToDisplay(valueFormatted)
+    onChange?.(createChangeEvent(newValue))
+    onBlur?.(createBlurEvent(newValue))
+  }
 
   const {
     selectedHour,
@@ -323,103 +292,94 @@ export const useDateTimePicker = ({
     timeZone,
     showTimezoneSelect,
     includeContinent,
-  });
+  })
 
   const handleInputChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
+    const inputValue = e.target.value
 
     if (isFormatDisabled(internalFormat, inputValue)) {
-      return;
+      return
     }
-    setDateTimeToDisplay(inputValue);
-    const { date, time } = splitDateTimeStringFromInput(inputValue);
-    const offset = getOffset(timeZone ?? (selectedTimeZone as string));
-    let formattedDateTime = formatToISODateTimeWithOffset(date, time, offset);
+    setDateTimeToDisplay(inputValue)
+    const { date, time } = splitDateTimeStringFromInput(inputValue)
+    const offset = getOffset(timeZone ?? (selectedTimeZone as string))
+    let formattedDateTime = formatToISODateTimeWithOffset(date, time, offset)
     if (!time && !date) {
-      formattedDateTime = inputValue;
+      formattedDateTime = inputValue
     }
-    const [hour, minute] = time.split(":");
-    setSelectedHour(hour);
-    setSelectedMinute(minute);
-    onChange?.(createChangeEvent(formattedDateTime));
-  };
+    const [hour, minute] = time.split(':')
+    setSelectedHour(hour)
+    setSelectedMinute(minute)
+    onChange?.(createChangeEvent(formattedDateTime))
+  }
 
   const onChangeTabs = (value: string) => {
-    setActiveTab(value as "date" | "time");
-  };
+    setActiveTab(value as 'date' | 'time')
+  }
 
-  const isCalendarView = activeTab === "date";
+  const isCalendarView = activeTab === 'date'
 
   // Close the calendar when a date is selected, move this to callback
   const handleDayClick = () => {
     if (autoClose) {
-      setIsOpen(false);
+      setIsOpen(false)
     }
-  };
+  }
 
   const onCancel = () => {
-    setIsOpen(false);
-  };
+    setIsOpen(false)
+  }
   // WIP: need to be refactored to work with the date
   const handleOnSave = () => {
-    setIsOpen(false);
-    const offsetUTC = timeZone
-      ? getOffset(timeZone)
-      : getOffset(selectedTimeZone as string);
+    setIsOpen(false)
+    const offsetUTC = timeZone ? getOffset(timeZone) : getOffset(selectedTimeZone as string)
 
-    setSelectedHour(cleanTime(selectedHour));
-    setSelectedMinute(cleanTime(selectedMinute));
+    setSelectedHour(cleanTime(selectedHour))
+    setSelectedMinute(cleanTime(selectedMinute))
 
-    const newValueTime = formatInputsToValueFormat(
-      selectedHour,
-      selectedMinute,
-      offsetUTC,
-    );
+    const newValueTime = formatInputsToValueFormat(selectedHour, selectedMinute, offsetUTC)
 
     // If there are no hours and minutes selected, do nothing
     if (!selectedHour && !selectedMinute) {
-      return;
+      return
     }
     // Set default values
-    let hourToUse = selectedHour;
+    let hourToUse = selectedHour
     if (!selectedHour && selectedMinute) {
-      hourToUse = is12HourFormat ? "12" : "00";
-      setSelectedHour(hourToUse);
+      hourToUse = is12HourFormat ? '12' : '00'
+      setSelectedHour(hourToUse)
     }
 
-    let periodToUse = selectedPeriod;
+    let periodToUse = selectedPeriod
     if (is12HourFormat && !selectedPeriod) {
-      const hourNum =
-        selectedHour && selectedHour !== "" ? parseInt(selectedHour) : 0;
-      periodToUse = hourNum >= 8 && hourNum <= 11 ? "AM" : "PM";
-      setSelectedPeriod(periodToUse);
+      const hourNum = selectedHour && selectedHour !== '' ? parseInt(selectedHour) : 0
+      periodToUse = hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
+      setSelectedPeriod(periodToUse)
     }
     if (is12HourFormat) {
-      setSelectedPeriod(periodToUse);
+      setSelectedPeriod(periodToUse)
     }
 
     const timeToDisplay = is12HourFormat
       ? `${hourToUse}:${selectedMinute} ${periodToUse}`
-      : `${hourToUse}:${selectedMinute}`;
+      : `${hourToUse}:${selectedMinute}`
 
-    const newValue = putTimeInValue(value ?? defaultValue ?? "", newValueTime);
-    let valueDate = parseDateTimeValueToInput(newValue, internalFormat).split(
-      " ",
-    )[0];
+    const newValue = putTimeInValue(value ?? defaultValue ?? '', newValueTime)
+    let valueDate = parseDateTimeValueToInput(newValue, internalFormat).split(' ')[0]
     // Check if the date is valid if not add today date to the value
-    const isValid = isDateFormatAllowed(valueDate, internalFormat);
+    const isValid = isDateFormatAllowed(valueDate, internalFormat)
     if (!isValid) {
-      valueDate = todayDateInput(internalFormat);
+      valueDate = todayDateInput(internalFormat)
     }
     // Convert to uppercase for the value and for the input display
-    const upperValueDate = valueDate.toUpperCase();
+    const upperValueDate = valueDate.toUpperCase()
 
-    const valueWithFormat = putDateInValue(newValue, upperValueDate);
-    const inputDisplay = `${upperValueDate} ${timeToDisplay}`;
-    setDateTimeToDisplay(inputDisplay);
-    onChange?.(createChangeEvent(valueWithFormat));
-    onBlur?.(createBlurEvent(valueWithFormat));
-  };
+    const valueWithFormat = putDateInValue(newValue, upperValueDate)
+    const inputDisplay = `${upperValueDate} ${timeToDisplay}`
+    setDateTimeToDisplay(inputDisplay)
+    onChange?.(createChangeEvent(valueWithFormat))
+    onBlur?.(createBlurEvent(valueWithFormat))
+  }
 
   return {
     isOpen,
@@ -454,5 +414,5 @@ export const useDateTimePicker = ({
     setSelectedTimeZone,
     is12HourFormat,
     isDisableSelect,
-  };
-};
+  }
+}

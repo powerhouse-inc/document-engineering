@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { mockData, type MockedPerson } from "./mock-data.js";
-import { ObjectSetTable } from "./object-set-table.js";
-import ComputedColumnsExample from "./examples/computed-columns/computed-columns.js";
-import CustomRenderingExample from "./examples/custom-rendering/custom-rendering.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import { mockData, type MockedPerson } from './mock-data.js'
+import { ObjectSetTable } from './object-set-table.js'
+import ComputedColumnsExample from './examples/computed-columns/computed-columns.js'
+import CustomRenderingExample from './examples/custom-rendering/custom-rendering.js'
 
 /**
  * The `ObjectSetTable` component is a powerful data table that displays collections of objects in a structured format.
@@ -12,7 +12,7 @@ import CustomRenderingExample from "./examples/custom-rendering/custom-rendering
  *
  * The `ObjectSetTable` displays data in a structured tabular format with support for:
  * - **Interactive Editing**: Click cells to edit values inline
- * - **Row Selection**: Multi-row selection with keyboard shortcuts  
+ * - **Row Selection**: Multi-row selection with keyboard shortcuts
  * - **Flexible Columns**: Configurable display, formatting, and behavior
  * - **Type Safety**: Full TypeScript support for data and configurations
  * - **Keyboard Navigation**: Navigate and interact using keyboard only
@@ -20,7 +20,7 @@ import CustomRenderingExample from "./examples/custom-rendering/custom-rendering
  * ## Core Concepts
  *
  * ### Column Definitions
- * 
+ *
  * The heart of `ObjectSetTable` is the **column definition** system. Each column is configured
  * through a `ColumnDef<T>` object that controls every aspect of that column's behavior:
  *
@@ -258,7 +258,7 @@ import CustomRenderingExample from "./examples/custom-rendering/custom-rendering
  *   row: T;                           // Current row data
  *   column: ColumnDef<T>;            // Column definition
  *   rowIndex: number;                // Row position
- *   columnIndex: number;             // Column position  
+ *   columnIndex: number;             // Column position
  *   tableConfig: ObjectSetTableConfig<T>; // Full table configuration
  * }
  * ```
@@ -271,7 +271,7 @@ import CustomRenderingExample from "./examples/custom-rendering/custom-rendering
  *   renderCell: (value, context) => {
  *     const isLastRow = context.rowIndex === context.tableConfig.data.length - 1;
  *     const isHighPriority = value === "high";
- *     
+ *
  *     return (
  *       <span className={cn(
  *         isHighPriority && "text-red-600 font-bold",
@@ -285,60 +285,58 @@ import CustomRenderingExample from "./examples/custom-rendering/custom-rendering
  * ```
  */
 const meta: Meta<typeof ObjectSetTable> = {
-  title: "Document Engineering/Data Display/Object Set Table",
+  title: 'Document Engineering/Data Display/Object Set Table',
   component: ObjectSetTable,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   argTypes: {
     columns: {
-      control: "object",
-      description:
-        "Array of column definitions that specify how data should be displayed and behave.",
+      control: 'object',
+      description: 'Array of column definitions that specify how data should be displayed and behave.',
       table: {
         type: {
-          summary: "ColumnDef<T>[]",
+          summary: 'ColumnDef<T>[]',
         },
         readonly: true,
       },
     },
     data: {
-      control: "object",
-      description: "Array of data objects to display in the table.",
+      control: 'object',
+      description: 'Array of data objects to display in the table.',
       table: {
         type: {
-          summary: "T[]",
+          summary: 'T[]',
         },
         readonly: true,
       },
     },
     allowRowSelection: {
-      control: "boolean",
-      description:
-        "Whether to allow row selection with mouse clicks and keyboard shortcuts.",
+      control: 'boolean',
+      description: 'Whether to allow row selection with mouse clicks and keyboard shortcuts.',
       table: {
         type: {
-          summary: "boolean",
+          summary: 'boolean',
         },
-        defaultValue: { summary: "true" },
+        defaultValue: { summary: 'true' },
       },
     },
     showRowNumbers: {
-      control: "boolean",
-      description: "Whether to show row numbers in the leftmost column.",
+      control: 'boolean',
+      description: 'Whether to show row numbers in the leftmost column.',
       table: {
         type: {
-          summary: "boolean",
+          summary: 'boolean',
         },
-        defaultValue: { summary: "true" },
+        defaultValue: { summary: 'true' },
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof ObjectSetTable<MockedPerson>>;
+export default meta
+type Story = StoryObj<typeof ObjectSetTable<MockedPerson>>
 
 /**
  * A simple read-only table without row selection or editing capabilities.
@@ -347,16 +345,16 @@ type Story = StoryObj<typeof ObjectSetTable<MockedPerson>>;
 export const ReadOnly: Story = {
   args: {
     columns: [
-      { field: "firstName", title: "First Name" },
-      { field: "email", title: "Email Address" },
-      { field: "payment", type: "number", title: "Payment" },
-      { field: "status", title: "Status" },
+      { field: 'firstName', title: 'First Name' },
+      { field: 'email', title: 'Email Address' },
+      { field: 'payment', type: 'number', title: 'Payment' },
+      { field: 'status', title: 'Status' },
     ],
     data: mockData.slice(0, 4),
     allowRowSelection: false,
     showRowNumbers: false,
   },
-};
+}
 
 /**
  * Demonstrates different cell types and their default rendering.
@@ -365,13 +363,13 @@ export const ReadOnly: Story = {
 export const CellTypes: Story = {
   args: {
     columns: [
-      { field: "firstName", type: "text", title: "Text Field" },
-      { field: "payment", type: "number", title: "Number Field" },
-      { field: "isActive", type: "boolean", title: "Boolean Field" },
+      { field: 'firstName', type: 'text', title: 'Text Field' },
+      { field: 'payment', type: 'number', title: 'Number Field' },
+      { field: 'isActive', type: 'boolean', title: 'Boolean Field' },
     ],
     data: mockData.slice(0, 5),
   },
-};
+}
 
 /**
  * Shows how to use computed columns with value formatters to transform and categorize data.
@@ -380,7 +378,7 @@ export const CellTypes: Story = {
  */
 export const ComputedColumns: StoryObj = {
   render: () => <ComputedColumnsExample />,
-};
+}
 
 /**
  * Demonstrates advanced custom rendering with icons, avatars, status indicators, and styled components.
@@ -389,4 +387,4 @@ export const ComputedColumns: StoryObj = {
  */
 export const CustomRendering: StoryObj = {
   render: () => <CustomRenderingExample />,
-};
+}

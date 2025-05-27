@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   StorybookControlCategory,
-} from "../../../../scalars/lib/storybook-arg-types.js";
-import { Toggle } from "./toggle.js";
+} from '../../../../scalars/lib/storybook-arg-types.js'
+import { Toggle } from './toggle.js'
 
 /**
  * The `Toggle` component provides a simple on/off control similar to a light switch.
@@ -18,22 +18,22 @@ import { Toggle } from "./toggle.js";
  * > component and set the `isToggle` prop to `true`.
  */
 const meta = {
-  title: "Document Engineering/Data Entry/Toggle",
+  title: 'Document Engineering/Data Entry/Toggle',
   component: Toggle,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: {
       disableSnapshot: true,
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
       enabledArgTypes: {
         id: false,
       },
-      valueControlType: "boolean",
-      valueType: "boolean",
+      valueControlType: 'boolean',
+      valueType: 'boolean',
     }),
 
     ...getValidationArgTypes({
@@ -44,87 +44,87 @@ const meta = {
       },
     }),
     optionalLabel: {
-      control: "text",
-      description: "The label of the optional field",
+      control: 'text',
+      description: 'The label of the optional field',
       table: {
         category: StorybookControlCategory.DIFF,
       },
     },
     viewMode: {
-      control: "select",
-      description: "The mode of the input field",
-      options: ["edition", "addition", "removal"],
+      control: 'select',
+      description: 'The mode of the input field',
+      options: ['edition', 'addition', 'removal'],
       table: {
-        type: { summary: "edition | addition | removal" },
-        defaultValue: { summary: "edition" },
+        type: { summary: 'edition | addition | removal' },
+        defaultValue: { summary: 'edition' },
         category: StorybookControlCategory.DIFF,
       },
     },
     baseValue: {
-      control: "boolean",
-      description: "The base value of the input field",
+      control: 'boolean',
+      description: 'The base value of the input field',
       table: {
         category: StorybookControlCategory.DIFF,
       },
     },
   },
-} satisfies Meta<typeof Toggle>;
+} satisfies Meta<typeof Toggle>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: "Enable notifications",
+    label: 'Enable notifications',
   },
-};
+}
 
 export const Checked: Story = {
   args: {
-    label: "Notifications enabled",
+    label: 'Notifications enabled',
     defaultValue: true,
   },
-};
+}
 
 export const WithDescription: Story = {
   args: {
-    label: "Dark mode",
-    description: "Switch between light and dark theme",
+    label: 'Dark mode',
+    description: 'Switch between light and dark theme',
   },
-};
+}
 
 export const Required: Story = {
   args: {
-    label: "Accept usage tracking",
+    label: 'Accept usage tracking',
     required: true,
   },
-};
+}
 
 export const Disabled: Story = {
   args: {
-    label: "This feature is disabled",
+    label: 'This feature is disabled',
     disabled: true,
   },
-};
+}
 
 export const WithErrors: Story = {
   args: {
-    label: "Enable feature",
-    errors: ["This feature requires admin privileges"],
+    label: 'Enable feature',
+    errors: ['This feature requires admin privileges'],
   },
-};
+}
 
 export const WithWarnings: Story = {
   args: {
-    label: "Enable experimental features",
-    warnings: ["Experimental features may be unstable"],
+    label: 'Enable experimental features',
+    warnings: ['Experimental features may be unstable'],
   },
-};
+}
 
 export const WithErrorsAndWarnings: Story = {
   args: {
-    label: "Allow third-party access",
-    errors: ["This setting requires additional verification"],
-    warnings: ["Enabling this will share your data with third parties"],
+    label: 'Allow third-party access',
+    errors: ['This setting requires additional verification'],
+    warnings: ['Enabling this will share your data with third parties'],
   },
-};
+}

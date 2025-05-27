@@ -1,14 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function Clock(props: Props) {
   return (
-    <svg
-      {...props}
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -16,5 +9,5 @@ export default function Clock(props: Props) {
         fill="currentColor"
       />
     </svg>
-  );
+  )
 }

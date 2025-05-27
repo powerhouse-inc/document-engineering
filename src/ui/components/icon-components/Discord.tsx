@@ -1,12 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function Discord(props: Props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M6.646 7.31348C6.28467 7.31348 6 7.63014 6 8.01681C6 8.40214 6.29133 8.72014 6.646 8.72014C7.00667 8.72014 7.29133 8.40214 7.29133 8.01681C7.29867 7.62948 7.00667 7.31348 6.646 7.31348ZM8.958 7.31348C8.59667 7.31348 8.312 7.63014 8.312 8.01681C8.312 8.40214 8.60333 8.72014 8.958 8.72014C9.31867 8.72014 9.60333 8.40214 9.60333 8.01681C9.60267 7.62948 9.31867 7.31348 8.958 7.31348Z"
         fill="currentcolor"
@@ -16,5 +11,5 @@ export default function Discord(props: Props) {
         fill="currentcolor"
       />
     </svg>
-  );
+  )
 }

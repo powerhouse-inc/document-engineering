@@ -1,12 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function CircleInfo(props: Props) {
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      fill="none"
-    >
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -22,5 +17,5 @@ export default function CircleInfo(props: Props) {
         fill="currentcolor"
       />
     </svg>
-  );
+  )
 }

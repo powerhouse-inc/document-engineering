@@ -1,4 +1,4 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function ArrowLeft(props: Props) {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" stroke="currentcolor">
@@ -9,5 +9,5 @@ export default function ArrowLeft(props: Props) {
         strokeLinejoin="round"
       />
     </svg>
-  );
+  )
 }

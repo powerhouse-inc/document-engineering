@@ -3,39 +3,36 @@ import {
   FormGroup,
   FormLabel,
   FormMessageList,
-} from "../../../../scalars/components/fragments/index.js";
-import { cn } from "../../../../scalars/lib/utils.js";
-import { type Currency } from "../../../../scalars/components/currency-code-field/types.js";
-import { forwardRef, useId } from "react";
-import { CurrencyCodeFieldRaw } from "../../../../scalars/components/currency-code-field/currency-code-field.js";
-import { type SelectFieldProps } from "../../../../scalars/components/fragments/select-field/index.js";
-import { NumberFieldRaw } from "../../../../scalars/components/number-field/number-field.js";
-import type { InputNumberProps, NumberFieldProps } from "../../../../scalars/components/number-field/types.js";
-import type { AmountInputPropsGeneric, AmountValue } from "./types.js";
-import { useAmountInput } from "./use-amount-input.js";
+} from '../../../../scalars/components/fragments/index.js'
+import { cn } from '../../../../scalars/lib/utils.js'
+import { type Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import { forwardRef, useId } from 'react'
+import { CurrencyCodeFieldRaw } from '../../../../scalars/components/currency-code-field/currency-code-field.js'
+import { type SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
+import { NumberFieldRaw } from '../../../../scalars/components/number-field/number-field.js'
+import type { InputNumberProps, NumberFieldProps } from '../../../../scalars/components/number-field/types.js'
+import type { AmountInputPropsGeneric, AmountValue } from './types.js'
+import { useAmountInput } from './use-amount-input.js'
 
 type AmountInputProps = AmountInputPropsGeneric &
-  Omit<InputNumberProps, "onChange" | "onBlur" | "precision"> & {
-    className?: string;
-    name: string;
-    numberProps?: Omit<NumberFieldProps, "name">;
-    selectProps?: Omit<
-      SelectFieldProps,
-      "placeholder" | "selectionIcon" | "onBlur"
-    >;
-    defaultValue?: AmountValue;
-    value?: AmountValue;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    currencyPosition?: "left" | "right";
-    symbolPosition?: "left" | "right";
-    allowNegative?: boolean;
-    viewPrecision?: number;
-    precision?: number;
-    placeholderSelect?: string;
-    units?: Currency[];
-    includeCurrencySymbols?: boolean;
-  };
+  Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision'> & {
+    className?: string
+    name: string
+    numberProps?: Omit<NumberFieldProps, 'name'>
+    selectProps?: Omit<SelectFieldProps, 'placeholder' | 'selectionIcon' | 'onBlur'>
+    defaultValue?: AmountValue
+    value?: AmountValue
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+    currencyPosition?: 'left' | 'right'
+    symbolPosition?: 'left' | 'right'
+    allowNegative?: boolean
+    viewPrecision?: number
+    precision?: number
+    placeholderSelect?: string
+    units?: Currency[]
+    includeCurrencySymbols?: boolean
+  }
 
 const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
   (
@@ -58,7 +55,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
       numberProps,
       selectProps,
       step = 1,
-      currencyPosition = "right",
+      currencyPosition = 'right',
       name,
       trailingZeros,
       viewPrecision,
@@ -69,10 +66,10 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
       includeCurrencySymbols,
       symbolPosition,
     },
-    ref,
+    ref
   ) => {
-    const generatedId = useId();
-    const id = propId ?? generatedId;
+    const generatedId = useId()
+    const id = propId ?? generatedId
     const {
       isShowSelect,
       isPercent,
@@ -96,7 +93,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
       viewPrecision,
       trailingZeros,
       units,
-    });
+    })
 
     return (
       <FormGroup>
@@ -106,19 +103,15 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
             required={required}
             disabled={disabled}
             hasError={!!errors?.length}
-            className={cn(disabled && "mb-[3px]")}
+            className={cn(disabled && 'mb-[3px]')}
           >
             {label}
           </FormLabel>
         )}
-        <div className={cn("relative flex items-center")}>
-          <input
-            name={name}
-            type="hidden"
-            data-cast={isBigInt ? "AmountBigInt" : "AmountNumber"}
-          />
-          <div className={cn("relative flex items-center")}>
-            {isShowSelect && currencyPosition === "left" && (
+        <div className={cn('relative flex items-center')}>
+          <input name={name} type="hidden" data-cast={isBigInt ? 'AmountBigInt' : 'AmountNumber'} />
+          <div className={cn('relative flex items-center')}>
+            {isShowSelect && currencyPosition === 'left' && (
               <CurrencyCodeFieldRaw
                 contentAlign="start"
                 contentClassName="[&]:!w-[120px] w-full"
@@ -130,15 +123,15 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
                 symbolPosition={symbolPosition}
                 searchable={false}
                 className={cn(
-                  "rounded-l-md rounded-r-none border border-gray-300",
-                  "border-r-[0.5px]",
+                  'rounded-l-md rounded-r-none border border-gray-300',
+                  'border-r-[0.5px]',
                   // focus state
-                  "focus:border-r-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0",
-                  "focus:outline-none",
+                  'focus:border-r-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
+                  'focus:outline-none',
 
-                  selectProps?.className,
+                  selectProps?.className
                 )}
-                {...(selectProps ?? { name: "" })}
+                {...(selectProps ?? { name: '' })}
               />
             )}
             <NumberFieldRaw
@@ -146,11 +139,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
               step={step}
               required={required}
               disabled={disabled}
-              value={
-                valueInput === undefined
-                  ? undefined
-                  : (valueInput as unknown as number)
-              }
+              value={valueInput === undefined ? undefined : (valueInput as unknown as number)}
               id={id}
               maxValue={maxValue}
               precision={precision}
@@ -159,15 +148,13 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
               onFocus={handleIsInputFocused}
               placeholder={placeholder}
               className={cn(
-                currencyPosition === "left" &&
-                  "rounded-l-none border border-l-[0.5px] border-gray-300",
-                currencyPosition === "right" &&
-                  "rounded-r-none border border-r-[0.5px] border-gray-300",
-                isPercent && "rounded-md pr-7",
+                currencyPosition === 'left' && 'rounded-l-none border border-l-[0.5px] border-gray-300',
+                currencyPosition === 'right' && 'rounded-r-none border border-r-[0.5px] border-gray-300',
+                isPercent && 'rounded-md pr-7',
                 // focus state
-                "focus:border-r-0",
-                isAmountWithoutUnit && "rounded-md",
-                className,
+                'focus:border-r-0',
+                isAmountWithoutUnit && 'rounded-md',
+                className
               )}
               onBlur={handleBlur}
               ref={ref}
@@ -176,8 +163,8 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
             {isPercent && !inputFocused && (
               <span
                 className={cn(
-                  "pointer-events-none absolute inset-y-0 right-2 ml-2 flex items-center",
-                  disabled ? "text-gray-400" : "text-gray-900",
+                  'pointer-events-none absolute inset-y-0 right-2 ml-2 flex items-center',
+                  disabled ? 'text-gray-400' : 'text-gray-900'
                 )}
               >
                 %
@@ -185,7 +172,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
             )}
           </div>
 
-          {isShowSelect && currencyPosition === "right" && (
+          {isShowSelect && currencyPosition === 'right' && (
             <CurrencyCodeFieldRaw
               contentAlign="end"
               contentClassName="[&]:!w-[120px] w-full"
@@ -199,12 +186,12 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
               symbolPosition={symbolPosition}
               searchable={false}
               className={cn(
-                "rounded-l-none rounded-r-md border border-gray-300",
-                "border-l-[0.5px]",
+                'rounded-l-none rounded-r-md border border-gray-300',
+                'border-l-[0.5px]',
                 // focus state
-                "focus:border-l-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0",
-                "focus:outline-none",
-                selectProps?.className,
+                'focus:border-l-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
+                'focus:outline-none',
+                selectProps?.className
               )}
             />
           )}
@@ -213,8 +200,8 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
         {warnings && <FormMessageList messages={warnings} type="warning" />}
         {errors && <FormMessageList messages={errors} type="error" />}
       </FormGroup>
-    );
-  },
-);
-AmountInput.displayName = "AmountInput";
-export { AmountInput, type AmountInputProps };
+    )
+  }
+)
+AmountInput.displayName = 'AmountInput'
+export { AmountInput, type AmountInputProps }

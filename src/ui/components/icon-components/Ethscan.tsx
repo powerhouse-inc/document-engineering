@@ -1,4 +1,4 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function Ethscan(props: Props) {
   return (
     <svg {...props} viewBox="0 0 14 14" fill="none">
@@ -11,5 +11,5 @@ export default function Ethscan(props: Props) {
         fill="currentcolor"
       />
     </svg>
-  );
+  )
 }

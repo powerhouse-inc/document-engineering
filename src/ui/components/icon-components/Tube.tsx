@@ -1,12 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function Tube(props: Props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M21.2247 30H10.7906C5.09802 30 3.97038 26.6304 5.81808 22.5283L7.77448 18.1731C7.77448 18.1731 11.9318 18.0133 16.0076 19.3452C20.0834 20.677 23.9283 18.1598 23.9283 18.1598L24.1864 18L26.2108 22.5416C28.0313 26.6437 26.8357 30 21.2247 30Z"
         fill="currentcolor"
@@ -16,5 +11,5 @@ export default function Tube(props: Props) {
         fill="currentcolor"
       />
     </svg>
-  );
+  )
 }

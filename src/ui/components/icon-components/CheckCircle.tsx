@@ -1,4 +1,4 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function CheckCircle(props: Props) {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="none">
@@ -12,5 +12,5 @@ export default function CheckCircle(props: Props) {
         stroke="currentcolor"
       />
     </svg>
-  );
+  )
 }

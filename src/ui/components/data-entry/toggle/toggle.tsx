@@ -1,27 +1,23 @@
-import { cn } from "../../../../scalars/lib/utils.js";
-import React, { useId } from "react";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/index.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/index.js";
-import {
-  type InputBaseProps,
-  type ViewMode,
-  type WithDifference,
-} from "../../../../scalars/components/types.js";
-import ToggleDiff from "./subcomponents/toogle-diff.js";
-import { ToggleBase } from "./toggle-base.js";
+import { cn } from '../../../../scalars/lib/utils.js'
+import React, { useId } from 'react'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
+import { type InputBaseProps, type ViewMode, type WithDifference } from '../../../../scalars/components/types.js'
+import ToggleDiff from './subcomponents/toogle-diff.js'
+import { ToggleBase } from './toggle-base.js'
 
 export type ToggleBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  keyof InputBaseProps<boolean> | "onChange"
->;
+  keyof InputBaseProps<boolean> | 'onChange'
+>
 
 interface ToggleProps
   extends ToggleBaseProps,
-    Omit<WithDifference<boolean>, "diffMode" | "viewMode">,
+    Omit<WithDifference<boolean>, 'diffMode' | 'viewMode'>,
     InputBaseProps<boolean> {
-  onChange?: (checked: boolean) => void;
-  optionalLabel?: string;
-  viewMode?: ViewMode;
+  onChange?: (checked: boolean) => void
+  optionalLabel?: string
+  viewMode?: ViewMode
 }
 
 const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
@@ -39,25 +35,22 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
       className,
       defaultValue,
       description,
-      viewMode = "edition",
+      viewMode = 'edition',
       optionalLabel,
       baseValue,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const generatedId = useId();
-    const id = idProp ?? generatedId;
-    if (viewMode === "edition") {
+    const generatedId = useId()
+    const id = idProp ?? generatedId
+    if (viewMode === 'edition') {
       return (
-        <div
-          className={cn("flex flex-col gap-1", className)}
-          data-testid="custom-class"
-        >
+        <div className={cn('flex flex-col gap-1', className)} data-testid="custom-class">
           <div className="flex items-center">
             {optionalLabel && (
               <FormLabel
-                className={cn("mr-2")}
+                className={cn('mr-2')}
                 disabled={disabled}
                 required={required}
                 inline
@@ -80,7 +73,7 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
             {label && (
               <FormLabel
                 htmlFor={id}
-                className={cn("ml-2")}
+                className={cn('ml-2')}
                 disabled={disabled}
                 required={required}
                 description={description}
@@ -91,29 +84,24 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
               </FormLabel>
             )}
           </div>
-          {warnings.length !== 0 && (
-            <FormMessageList messages={warnings} type="warning" />
-          )}
-          {errors.length !== 0 && (
-            <FormMessageList messages={errors} type="error" />
-          )}
+          {warnings.length !== 0 && <FormMessageList messages={warnings} type="warning" />}
+          {errors.length !== 0 && <FormMessageList messages={errors} type="error" />}
         </div>
-      );
+      )
     }
     return (
-        <ToggleDiff
-          viewMode={viewMode}
-          baseValue={baseValue}
-          value={value}
-          label={label}
-          optionalLabel={optionalLabel}
-          disabled={disabled}
-        />
-      
-    );
-  },
-);
+      <ToggleDiff
+        viewMode={viewMode}
+        baseValue={baseValue}
+        value={value}
+        label={label}
+        optionalLabel={optionalLabel}
+        disabled={disabled}
+      />
+    )
+  }
+)
 
-Toggle.displayName = "Toggle";
+Toggle.displayName = 'Toggle'
 
-export { Toggle, type ToggleProps };
+export { Toggle, type ToggleProps }

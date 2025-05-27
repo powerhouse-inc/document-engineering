@@ -1,4 +1,4 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function RenownHover(props: Props) {
   return (
     <svg {...props} viewBox="0 0 71 19" fill="currentcolor">
@@ -13,5 +13,5 @@ export default function RenownHover(props: Props) {
         fill="#21FFB4"
       />
     </svg>
-  );
+  )
 }

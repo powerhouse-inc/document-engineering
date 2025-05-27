@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import SubmitChangesOnly, { DOCS_CODE } from "./submit-changes-only.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import SubmitChangesOnly, { DOCS_CODE } from './submit-changes-only.js'
 
 const meta = {
-  title: "Document Engineering/Scalars/Examples/Submit Changes Only",
+  title: 'Document Engineering/Scalars/Examples/Submit Changes Only',
   component: SubmitChangesOnly,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: DOCS_CODE,
       },
     },
   },
-} satisfies Meta<typeof SubmitChangesOnly>;
+} satisfies Meta<typeof SubmitChangesOnly>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
-export const Default: Story = {};
+export const Default: Story = {}

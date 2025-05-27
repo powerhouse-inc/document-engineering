@@ -1,14 +1,14 @@
-import { DatePicker} from "../../../ui/components/data-entry/date-picker/date-picker.js";
-import { withFieldValidation } from "../fragments/with-field-validation/with-field-validation.js";
-import type { DatePickerFieldProps } from "./types.js";
-import { validateDatePicker } from "./date-picker-validations.js";
+import { DatePicker } from '../../../ui/components/data-entry/date-picker/date-picker.js'
+import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
+import type { DatePickerFieldProps } from './types.js'
+import { validateDatePicker } from './date-picker-validations.js'
 
 const DatePickerField = withFieldValidation<DatePickerFieldProps>(DatePicker, {
   validations: {
     _timePickerType: validateDatePicker,
   },
-});
+})
 
-DatePickerField.displayName = "DatePickerField";
+DatePickerField.displayName = 'DatePickerField'
 
-export { DatePickerField };
+export { DatePickerField }

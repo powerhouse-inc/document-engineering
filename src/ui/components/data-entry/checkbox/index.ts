@@ -1,2 +1,2 @@
-export { type CheckboxValue } from "./checkbox-base.js";
-export { Checkbox, type CheckboxProps } from "./checkbox.js";
+export { type CheckboxValue } from './checkbox-base.js'
+export { Checkbox, type CheckboxProps } from './checkbox.js'

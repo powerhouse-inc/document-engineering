@@ -1,50 +1,49 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { withForm } from "../../lib/decorators.js";
-import { IdField } from "./id-field.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import { withForm } from '../../lib/decorators.js'
+import { IdField } from './id-field.js'
 
 const meta = {
-  title: "Document Engineering/Scalars/Id Field",
+  title: 'Document Engineering/Scalars/Id Field',
   component: IdField,
   decorators: [withForm],
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   argTypes: {
     name: {
       control: false,
-      description: "Name of the field in the form data",
+      description: 'Name of the field in the form data',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "id" },
-        category: "Default",
+        type: { summary: 'string' },
+        defaultValue: { summary: 'id' },
+        category: 'Default',
       },
     },
     value: {
       control: false,
       description:
-        "A predefined value for the ID field. If provided, this value will be used instead of generating a new ID.",
+        'A predefined value for the ID field. If provided, this value will be used instead of generating a new ID.',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "auto-generated" },
-        category: "Default",
+        type: { summary: 'string' },
+        defaultValue: { summary: 'auto-generated' },
+        category: 'Default',
       },
     },
     generator: {
       control: false,
-      description:
-        "Generator function or built-in generator to generate the ID.",
+      description: 'Generator function or built-in generator to generate the ID.',
       table: {
-        type: { summary: "UUID | (() => string)" },
-        defaultValue: { summary: "UUID" },
-        category: "Default",
+        type: { summary: 'UUID | (() => string)' },
+        defaultValue: { summary: 'UUID' },
+        category: 'Default',
       },
     },
   },
-} satisfies Meta<typeof IdField>;
+} satisfies Meta<typeof IdField>
 
-export default meta;
-type Story = StoryObj<typeof IdField>;
+export default meta
+type Story = StoryObj<typeof IdField>
 
 export const Default: Story = {
   render: () => (
@@ -65,7 +64,7 @@ export const Default: Story = {
       },
     },
   },
-};
+}
 
 export const CustomGenerator: Story = {
   render: () => (
@@ -86,7 +85,7 @@ export const CustomGenerator: Story = {
       },
     },
   },
-};
+}
 
 export const CustomIdValue: Story = {
   render: () => (
@@ -107,4 +106,4 @@ export const CustomIdValue: Story = {
       },
     },
   },
-};
+}

@@ -1,20 +1,8 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function DownloadFile(props: Props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <mask
-        id="mask0_4381_5452"
-        maskUnits="userSpaceOnUse"
-        x="1"
-        y="0"
-        width="30"
-        height="32"
-      >
+    <svg {...props} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <mask id="mask0_4381_5452" maskUnits="userSpaceOnUse" x="1" y="0" width="30" height="32">
         <path d="M31 0H1V32H31V0Z" fill="white" />
       </mask>
       <g mask="url(#mask0_4381_5452)">
@@ -32,5 +20,5 @@ export default function DownloadFile(props: Props) {
         fill="#343839"
       />
     </svg>
-  );
+  )
 }

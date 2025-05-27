@@ -1,28 +1,28 @@
-import { Button } from "@powerhousedao/design-system";
-import { BooleanField } from "../../boolean-field/index.js";
-import { Form } from "../../form/index.js";
-import { RadioGroupField } from "../../fragments/radio-group-field/index.js";
-import { NumberField } from "../../number-field/index.js";
-import { StringField } from "../../string-field/index.js";
+import { Button } from '@powerhousedao/design-system'
+import { BooleanField } from '../../boolean-field/index.js'
+import { Form } from '../../form/index.js'
+import { RadioGroupField } from '../../fragments/radio-group-field/index.js'
+import { NumberField } from '../../number-field/index.js'
+import { StringField } from '../../string-field/index.js'
 
 const MultipleFieldsWithComplexLayout = () => {
   const onSubmit = async (data: any) => {
     // simulate a slow network request
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    alert(JSON.stringify(data, null, 2));
-  };
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    alert(JSON.stringify(data, null, 2))
+  }
 
   return (
     <Form
       onSubmit={onSubmit}
       defaultValues={{
-        name: "",
-        email: "",
-        bio: "",
-        phone: "",
+        name: '',
+        email: '',
+        bio: '',
+        phone: '',
         age: 0,
         notifications: true,
-        gender: "",
+        gender: '',
         subscribe: true,
         termsAndConditions: false,
       }}
@@ -30,21 +30,8 @@ const MultipleFieldsWithComplexLayout = () => {
       {({ formState: { isSubmitting } }) => (
         <div className="flex w-[700px] flex-col gap-4">
           <div className="grid grid-cols-2 gap-4">
-            <StringField
-              name="name"
-              label="First Name"
-              placeholder="John"
-              required
-              maxLength={50}
-            />
-            <NumberField
-              name="age"
-              label="Age"
-              placeholder="25"
-              required
-              precision={0}
-              showErrorOnBlur
-            />
+            <StringField name="name" label="First Name" placeholder="John" required maxLength={50} />
+            <NumberField name="age" label="Age" placeholder="25" required precision={0} showErrorOnBlur />
             <NumberField
               showErrorOnBlur
               name="height"
@@ -87,9 +74,9 @@ const MultipleFieldsWithComplexLayout = () => {
             name="gender"
             label="Gender"
             options={[
-              { label: "Male", value: "male" },
-              { label: "Female", value: "female" },
-              { label: "Other", value: "other" },
+              { label: 'Male', value: 'male' },
+              { label: 'Female', value: 'female' },
+              { label: 'Other', value: 'other' },
             ]}
             required
           />
@@ -107,7 +94,7 @@ const MultipleFieldsWithComplexLayout = () => {
               name="termsAndConditions"
               label={
                 <div>
-                  Accept{" "}
+                  Accept{' '}
                   <a href="#" className="font-bold text-blue-500">
                     terms and conditions
                   </a>
@@ -117,12 +104,12 @@ const MultipleFieldsWithComplexLayout = () => {
             />
           </div>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         </div>
       )}
     </Form>
-  );
-};
+  )
+}
 
-export default MultipleFieldsWithComplexLayout;
+export default MultipleFieldsWithComplexLayout

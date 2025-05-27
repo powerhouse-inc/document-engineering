@@ -1,80 +1,80 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Input } from "./input.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import { Input } from './input.js'
 
 /**
  * The `Input` component is a basic HTML `input` component that allows users to enter text.
  * It has the standard `input` HTML element attributes and design system styles.
  */
 const meta = {
-  title: "Document Engineering/Data Entry/Input",
+  title: 'Document Engineering/Data Entry/Input',
   component: Input,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: {
       disableSnapshot: true,
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     className: {
-      control: "text",
+      control: 'text',
     },
     placeholder: {
-      control: "text",
+      control: 'text',
     },
     disabled: {
-      control: "boolean",
+      control: 'boolean',
     },
     value: {
-      control: "text",
+      control: 'text',
     },
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Input>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    placeholder: "Type something...",
+    placeholder: 'Type something...',
   },
-};
+}
 
 export const WithDefaultValue: Story = {
   args: {
-    defaultValue: "Hello World",
+    defaultValue: 'Hello World',
   },
-};
+}
 
 export const Empty: Story = {
   args: {},
-};
+}
 
 export const Placeholder: Story = {
   args: {
-    placeholder: "Enter your text here",
+    placeholder: 'Enter your text here',
   },
-};
+}
 
 export const Focused: Story = {
   args: {
-    placeholder: "This input is focused",
+    placeholder: 'This input is focused',
     autoFocus: true,
   },
   parameters: {
     pseudo: { focus: true },
   },
-};
+}
 
 export const Disabled: Story = {
   args: {
-    placeholder: "This input is disabled",
+    placeholder: 'This input is disabled',
     disabled: true,
   },
-};
+}
 
 export const WithCustomWidth: Story = {
   args: {
-    className: "w-[50px]",
+    className: 'w-[50px]',
   },
-};
+}

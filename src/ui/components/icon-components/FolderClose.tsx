@@ -1,4 +1,4 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function FolderClose(props: Props) {
   return (
     <svg {...props} viewBox="0 0 18 19" fill="currentcolor">
@@ -7,5 +7,5 @@ export default function FolderClose(props: Props) {
         fill="#6C7275"
       />
     </svg>
-  );
+  )
 }

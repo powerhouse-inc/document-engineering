@@ -1,15 +1,7 @@
-import { cn } from "../../../../scalars/lib/utils.js";
+import { cn } from '../../../../scalars/lib/utils.js'
 
-export const DropdownShortcut = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span
-      className={cn("ml-auto text-xs tracking-widest opacity-60", className)}
-      {...props}
-    />
-  );
-};
+export const DropdownShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+  return <span className={cn('ml-auto text-xs tracking-widest opacity-60', className)} {...props} />
+}
 
-DropdownShortcut.displayName = "DropdownShortcut";
+DropdownShortcut.displayName = 'DropdownShortcut'

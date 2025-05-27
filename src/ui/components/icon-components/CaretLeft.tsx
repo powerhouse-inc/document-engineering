@@ -1,14 +1,7 @@
-import type { Props } from "./types.js";
+import type { Props } from './types.js'
 export default function CaretLeft(props: Props) {
   return (
-    <svg
-      {...props}
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g id="Caret Left">
         <path
           id="Shape"
@@ -19,5 +12,5 @@ export default function CaretLeft(props: Props) {
         />
       </g>
     </svg>
-  );
+  )
 }

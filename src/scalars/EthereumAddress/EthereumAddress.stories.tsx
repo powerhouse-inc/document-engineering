@@ -1,22 +1,22 @@
-import { type Meta, type StoryObj } from "@storybook/react";
-import { EthereumAddress } from "./EthereumAddress.js";
+import { type Meta, type StoryObj } from '@storybook/react'
+import { EthereumAddress } from './EthereumAddress.js'
 
 const meta = {
-  title: "Scalars/EthereumAddress",
+  title: 'Scalars/EthereumAddress',
   component: EthereumAddress,
   argTypes: {
-    onChange: { action: "onChange" },
+    onChange: { action: 'onChange' },
   },
-} satisfies Meta<typeof EthereumAddress>;
+} satisfies Meta<typeof EthereumAddress>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     onChange: (address: string, isValidAddress: boolean) => {
-      console.log({ address, isValidAddress });
+      console.log({ address, isValidAddress })
     },
   },
-};
+}

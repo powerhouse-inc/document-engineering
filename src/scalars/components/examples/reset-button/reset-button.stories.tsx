@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import FormWithResetButton from "./reset-button.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import FormWithResetButton from './reset-button.js'
 
 const meta = {
-  title: "Document Engineering/Scalars/Examples/Reset Button",
+  title: 'Document Engineering/Scalars/Examples/Reset Button',
   component: FormWithResetButton,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: `
 const FormWithResetButton = () => {
@@ -42,11 +42,11 @@ const FormWithResetButton = () => {
       },
     },
   },
-} satisfies Meta<typeof FormWithResetButton>;
+} satisfies Meta<typeof FormWithResetButton>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-};
+}

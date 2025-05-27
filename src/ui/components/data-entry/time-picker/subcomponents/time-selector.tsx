@@ -1,18 +1,13 @@
-import * as React from "react";
-import { useRef } from "react";
-import { Button } from "../../../../../scalars/components/fragments/button/index.js";
-import { cn } from "../../../../../scalars/lib/utils.js";
-import { type TimeSelectorProps } from "../type.js";
-import { useTimeSelector } from "./use-time-selector.js";
+import * as React from 'react'
+import { useRef } from 'react'
+import { Button } from '../../../../../scalars/components/fragments/button/index.js'
+import { cn } from '../../../../../scalars/lib/utils.js'
+import { type TimeSelectorProps } from '../type.js'
+import { useTimeSelector } from './use-time-selector.js'
 
-const TimeSelector: React.FC<TimeSelectorProps> = ({
-  options,
-  selectedValue,
-  onSelect,
-  isCyclic = true,
-}) => {
-  const selectedRef = React.useRef<HTMLButtonElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+const TimeSelector: React.FC<TimeSelectorProps> = ({ options, selectedValue, onSelect, isCyclic = true }) => {
+  const selectedRef = React.useRef<HTMLButtonElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const { displayOptions, handleExplicitSelection } = useTimeSelector({
     options,
@@ -21,7 +16,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
     isCyclic,
     containerRef,
     selectedRef,
-  });
+  })
 
   return (
     <div className="relative w-[43px] overflow-hidden">
@@ -32,9 +27,8 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
         {isCyclic && <div className="h-[60px]" />}
         {displayOptions.map((option, index) => {
           // Determine if this is the middle set of options (for proper reference)
-          const isMiddleSet =
-            index >= options.length && index < options.length * 2;
-          const shouldUseRef = option === selectedValue && isMiddleSet;
+          const isMiddleSet = index >= options.length && index < options.length * 2
+          const shouldUseRef = option === selectedValue && isMiddleSet
 
           return (
             <Button
@@ -43,20 +37,20 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
               key={`${option}-${index}`}
               onClick={() => handleExplicitSelection(option)}
               className={cn(
-                "flex h-[37px] cursor-pointer items-center justify-center text-[12px] leading-[20px]",
+                'flex h-[37px] cursor-pointer items-center justify-center text-[12px] leading-[20px]',
                 selectedValue === option
-                  ? "rounded-[6px] border border-gray-300 bg-white px-3 py-2 font-normal text-gray-900"
-                  : "h-[20px] w-[16px] font-normal text-gray-900",
+                  ? 'rounded-[6px] border border-gray-300 bg-white px-3 py-2 font-normal text-gray-900'
+                  : 'h-[20px] w-[16px] font-normal text-gray-900'
               )}
             >
               {option}
             </Button>
-          );
+          )
         })}
       </div>
       {isCyclic && <div className="h-[60px]" />}
     </div>
-  );
-};
+  )
+}
 
-export default TimeSelector;
+export default TimeSelector

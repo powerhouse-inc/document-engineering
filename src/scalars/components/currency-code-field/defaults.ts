@@ -1,45 +1,45 @@
-import { type Currency } from "./types.js";
+import { type Currency } from './types.js'
 
 export const commonFiatCurrencies: Currency[] = [
   {
-    ticker: "EUR",
+    ticker: 'EUR',
     crypto: false,
-    label: "Euro",
-    symbol: "€",
+    label: 'Euro',
+    symbol: '€',
   },
   {
-    ticker: "USD",
+    ticker: 'USD',
     crypto: false,
-    label: "United States Dollar",
-    symbol: "$",
+    label: 'United States Dollar',
+    symbol: '$',
   },
   {
-    ticker: "THB",
+    ticker: 'THB',
     crypto: false,
-    label: "Thai Baht",
+    label: 'Thai Baht',
   },
-];
+]
 
 export const commonCryptoCurrencies: Currency[] = [
   {
-    ticker: "BTC",
+    ticker: 'BTC',
     crypto: true,
-    label: "Bitcoin",
-    symbol: "₿",
+    label: 'Bitcoin',
+    symbol: '₿',
   },
   {
-    ticker: "ETH",
+    ticker: 'ETH',
     crypto: true,
-    label: "Ether",
-    symbol: "Ξ",
+    label: 'Ether',
+    symbol: 'Ξ',
   },
   {
-    ticker: "USDS",
+    ticker: 'USDS',
     crypto: true,
-    label: "Sky USD",
+    label: 'Sky USD',
   },
   {
-    ticker: "USDC",
+    ticker: 'USDC',
     crypto: true,
   },
-];
+]

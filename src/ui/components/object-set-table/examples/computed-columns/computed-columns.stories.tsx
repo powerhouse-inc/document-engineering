@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import ComputedColumnsExample from "./computed-columns.js";
+import type { Meta, StoryObj } from '@storybook/react'
+import ComputedColumnsExample from './computed-columns.js'
 
 const meta = {
-  title: "Document Engineering/Data Display/Object Set Table/2 - Examples/Computed Columns",
+  title: 'Document Engineering/Data Display/Object Set Table/2 - Examples/Computed Columns',
   component: ComputedColumnsExample,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     chromatic: { disableSnapshot: true },
     docs: {
       source: {
-        language: "tsx",
+        language: 'tsx',
         format: true,
         code: `
 import { useMemo } from "react";
@@ -83,12 +83,12 @@ export default ComputedColumnsExample;
       },
     },
   },
-} satisfies Meta<typeof ComputedColumnsExample>;
+} satisfies Meta<typeof ComputedColumnsExample>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-};
+}

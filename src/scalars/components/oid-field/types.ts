@@ -1,6 +1,6 @@
-import type { OIDInputProps } from "../../../ui/components/data-entry/oid-input/types.js";
-import type { FieldErrorHandling } from "../types.js";
+import type { OIDInputProps } from '../../../ui/components/data-entry/oid-input/types.js'
+import type { FieldErrorHandling } from '../types.js'
 
-type OIDFieldProps = OIDInputProps & FieldErrorHandling;
+type OIDFieldProps = OIDInputProps & FieldErrorHandling
 
-export type { OIDFieldProps };
+export type { OIDFieldProps }

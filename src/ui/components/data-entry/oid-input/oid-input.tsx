@@ -1,8 +1,7 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback, useId } from "react";
-import { IdAutocompleteListOption } from "../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js";
-import { IdAutocomplete } from "../../../../scalars/components/fragments/id-autocomplete/index.js";
-import type { OIDInputProps, OIDOption } from "./types.js";
+import React, { useCallback, useId } from 'react'
+import { IdAutocompleteListOption } from '../../../../scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js'
+import { IdAutocomplete } from '../../../../scalars/components/fragments/id-autocomplete/index.js'
+import type { OIDInputProps, OIDOption } from './types.js'
 
 const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
   (
@@ -24,7 +23,7 @@ const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
       onClick,
       onMouseDown,
       autoComplete: autoCompleteProp,
-      variant = "withValue",
+      variant = 'withValue',
       fetchOptionsCallback,
       fetchSelectedOptionCallback,
       isOpenByDefault, // to be used only in stories
@@ -32,23 +31,23 @@ const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
       previewPlaceholder,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const prefix = useId();
-    const id = idProp ?? `${prefix}-oid`;
-    const autoComplete = autoCompleteProp ?? true;
+    const prefix = useId()
+    const id = idProp ?? `${prefix}-oid`
+    const autoComplete = autoCompleteProp ?? true
 
     const renderOption = useCallback(
       (
         option: OIDOption,
         displayProps?: {
-          asPlaceholder?: boolean;
-          showValue?: boolean;
-          isLoadingSelectedOption?: boolean;
-          handleFetchSelectedOption?: (value: string) => void;
-          isFetchSelectedOptionSync?: boolean;
-          className?: string;
-        },
+          asPlaceholder?: boolean
+          showValue?: boolean
+          isLoadingSelectedOption?: boolean
+          handleFetchSelectedOption?: (value: string) => void
+          isFetchSelectedOptionSync?: boolean
+          className?: string
+        }
       ) => (
         <IdAutocompleteListOption
           variant={variant}
@@ -56,21 +55,17 @@ const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
           title={option.title}
           path={
             displayProps?.asPlaceholder
-              ? previewPlaceholder?.path || "Type not available"
-              : option.path || "Type not available"
+              ? previewPlaceholder?.path || 'Type not available'
+              : option.path || 'Type not available'
           }
-          value={
-            displayProps?.asPlaceholder
-              ? previewPlaceholder?.value || "oid not available"
-              : option.value
-          }
+          value={displayProps?.asPlaceholder ? previewPlaceholder?.value || 'oid not available' : option.value}
           description={option.description}
-          placeholderIcon={previewPlaceholder?.icon || "Braces"}
+          placeholderIcon={previewPlaceholder?.icon || 'Braces'}
           {...displayProps}
         />
       ),
-      [variant, previewPlaceholder],
-    );
+      [variant, previewPlaceholder]
+    )
 
     return autoComplete && fetchOptionsCallback ? (
       <IdAutocomplete
@@ -123,10 +118,10 @@ const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
         {...props}
         ref={ref}
       />
-    );
-  },
-);
+    )
+  }
+)
 
-OIDInput.displayName = "OIDInput";
+OIDInput.displayName = 'OIDInput'
 
-export { OIDInput };
+export { OIDInput }

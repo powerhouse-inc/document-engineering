@@ -1,1 +1,1 @@
-export * from "./EthereumAddress.js";
+export * from './EthereumAddress.js'

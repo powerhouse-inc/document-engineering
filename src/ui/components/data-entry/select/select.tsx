@@ -1,36 +1,30 @@
-/* eslint-disable react/jsx-max-depth */
-/* eslint-disable react/jsx-props-no-spreading */
-import { cn } from "../../../../scalars/lib/utils.js";
-import { FormDescription } from "../../../../scalars/components/fragments/form-description/index.js";
-import { FormGroup } from "../../../../scalars/components/fragments/form-group/form-group.js";
-import { FormLabel } from "../../../../scalars/components/fragments/form-label/form-label.js";
-import { FormMessageList } from "../../../../scalars/components/fragments/form-message/message-list.js";
-import React, { useCallback, useId } from "react";
-import { Button } from "../../../../scalars/components/fragments/button/index.js";
-import { Command } from "../../../../scalars/components/fragments/command/index.js";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../../../scalars/components/fragments/popover/index.js";
-import { Content } from "./content.js";
-import { SelectDiff } from "./select-diff.js";
-import { SelectedContent } from "./selected-content.js";
-import { useSelect } from "./use-select.js";
-import type { SelectProps } from "./types.js";
+import { cn } from '../../../../scalars/lib/utils.js'
+import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
+import { FormGroup } from '../../../../scalars/components/fragments/form-group/form-group.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/message-list.js'
+import React, { useCallback, useId } from 'react'
+import { Button } from '../../../../scalars/components/fragments/button/index.js'
+import { Command } from '../../../../scalars/components/fragments/command/index.js'
+import { Popover, PopoverContent, PopoverTrigger } from '../../../../scalars/components/fragments/popover/index.js'
+import { Content } from './content.js'
+import { SelectDiff } from './select-diff.js'
+import { SelectedContent } from './selected-content.js'
+import { useSelect } from './use-select.js'
+import type { SelectProps } from './types.js'
 
 const processValue = (
   currentValue: string | string[] | undefined,
-  currentDefaultValue: string | string[] | undefined,
+  currentDefaultValue: string | string[] | undefined
 ): string => {
-  const displayValue = currentValue ?? currentDefaultValue ?? "";
+  const displayValue = currentValue ?? currentDefaultValue ?? ''
 
   if (Array.isArray(displayValue)) {
-    return displayValue.join(", ");
+    return displayValue.join(', ')
   }
 
-  return displayValue;
-};
+  return displayValue
+}
 
 const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   (
@@ -56,8 +50,8 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
       // behavior props
       multiple,
-      selectionIcon = "auto",
-      selectionIconPosition = "left",
+      selectionIcon = 'auto',
+      selectionIconPosition = 'left',
       searchable,
 
       // display props
@@ -65,48 +59,41 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       placeholder,
       className,
       contentClassName,
-      contentAlign = "start",
+      contentAlign = 'start',
       optionsClassName,
 
       // diff props
-      viewMode = "edition",
+      viewMode = 'edition',
       diffMode,
       baseValue,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const prefix = useId();
-    const id = propId ?? `${prefix}-select`;
+    const prefix = useId()
+    const id = propId ?? `${prefix}-select`
 
-    const {
-      selectedValues,
-      isPopoverOpen,
-      commandListRef,
-      toggleOption,
-      handleClear,
-      toggleAll,
-      handleOpenChange,
-    } = useSelect({
-      options,
-      multiple,
-      defaultValue,
-      value,
-      onChange,
-    });
+    const { selectedValues, isPopoverOpen, commandListRef, toggleOption, handleClear, toggleAll, handleOpenChange } =
+      useSelect({
+        options,
+        multiple,
+        defaultValue,
+        value,
+        onChange,
+      })
 
     const onTriggerBlur = useCallback(
       (e: React.FocusEvent<HTMLButtonElement>) => {
         if (!isPopoverOpen) {
           // trigger the blur event when the trigger loses focus but the popover is not open,
           // because when the popover is open, the trigger loses focus but the select as a component still has the focus
-          onBlur?.(e);
+          onBlur?.(e)
         }
       },
-      [onBlur, isPopoverOpen],
-    );
+      [onBlur, isPopoverOpen]
+    )
 
-    if (viewMode === "edition") {
+    if (viewMode === 'edition') {
       return (
         <FormGroup>
           {label && (
@@ -116,9 +103,9 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               disabled={disabled}
               hasError={errors.length > 0}
               inline={false}
-              onClick={(e) => {
-                e.preventDefault();
-                (e.target as HTMLLabelElement).control?.focus();
+              onClick={e => {
+                e.preventDefault()
+                ;(e.target as HTMLLabelElement).control?.focus()
               }}
             >
               {label}
@@ -126,11 +113,11 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           )}
           <Popover
             open={isPopoverOpen}
-            onOpenChange={(open) => {
-              handleOpenChange(open);
+            onOpenChange={open => {
+              handleOpenChange(open)
               // if the popover is closing and it was not by the trigger button
               if (!open && document.activeElement?.id !== id) {
-                onBlur?.({ target: {} } as React.FocusEvent<HTMLButtonElement>);
+                onBlur?.({ target: {} } as React.FocusEvent<HTMLButtonElement>)
               }
             }}
           >
@@ -142,33 +129,31 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 type="button"
                 role="combobox"
                 onBlur={onTriggerBlur}
-                onKeyDown={(e) => {
-                  const shouldPreventOpening = isPopoverOpen || /^[0-9]$/.test(e.key) || !/^[a-zA-Z]$/.test(e.key);
+                onKeyDown={e => {
+                  const shouldPreventOpening = isPopoverOpen || /^[0-9]$/.test(e.key) || !/^[a-zA-Z]$/.test(e.key)
                   // Prevent opening for numbers and non-letter characters (only letters)
                   if (shouldPreventOpening) {
-                    return;
+                    return
                   }
-                  handleOpenChange(true);
+                  handleOpenChange(true)
                 }}
                 disabled={disabled}
                 aria-invalid={errors.length > 0}
-                aria-label={
-                  label ? undefined : multiple ? "Multi select" : "Select"
-                }
+                aria-label={label ? undefined : multiple ? 'Multi select' : 'Select'}
                 aria-required={required}
                 aria-expanded={isPopoverOpen}
                 className={cn(
-                  "flex h-9 w-full items-center justify-between px-3 py-2",
-                  "dark:border-charcoal-700 dark:bg-charcoal-900 rounded-md border border-gray-300 bg-white",
-                  "hover:border-gray-300 hover:bg-gray-100",
-                  "dark:hover:border-charcoal-700 dark:hover:bg-charcoal-800",
-                  "dark:focus:ring-charcoal-300 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-0",
-                  "dark:focus-visible:ring-charcoal-300 focus-visible:ring-1 focus-visible:ring-gray-900 focus-visible:ring-offset-0",
+                  'flex h-9 w-full items-center justify-between px-3 py-2',
+                  'dark:border-charcoal-700 dark:bg-charcoal-900 rounded-md border border-gray-300 bg-white',
+                  'hover:border-gray-300 hover:bg-gray-100',
+                  'dark:hover:border-charcoal-700 dark:hover:bg-charcoal-800',
+                  'dark:focus:ring-charcoal-300 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
+                  'dark:focus-visible:ring-charcoal-300 focus-visible:ring-1 focus-visible:ring-gray-900 focus-visible:ring-offset-0',
                   disabled && [
-                    "!pointer-events-auto cursor-not-allowed bg-gray-50",
-                    "dark:hover:border-charcoal-700 dark:hover:bg-charcoal-900 hover:border-gray-300 hover:bg-gray-50",
+                    '!pointer-events-auto cursor-not-allowed bg-gray-50',
+                    'dark:hover:border-charcoal-700 dark:hover:bg-charcoal-900 hover:border-gray-300 hover:bg-gray-50',
                   ],
-                  className,
+                  className
                 )}
                 {...props}
                 ref={ref}
@@ -186,17 +171,16 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             </PopoverTrigger>
             <PopoverContent
               align={contentAlign}
-              onEscapeKeyDown={(e) => {
-                e.preventDefault();
-                handleOpenChange(false);
+              onEscapeKeyDown={e => {
+                e.preventDefault()
+                handleOpenChange(false)
               }}
               className={contentClassName}
             >
               <Command
                 defaultValue={
                   !multiple && selectedValues[0]
-                    ? options.find((opt) => opt.value === selectedValues[0])
-                        ?.label
+                    ? options.find(opt => opt.value === selectedValues[0])?.label
                     : undefined
                 }
               >
@@ -217,14 +201,10 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             </PopoverContent>
           </Popover>
           {description && <FormDescription>{description}</FormDescription>}
-          {warnings.length > 0 && (
-            <FormMessageList messages={warnings} type="warning" />
-          )}
-          {errors.length > 0 && (
-            <FormMessageList messages={errors} type="error" />
-          )}
+          {warnings.length > 0 && <FormMessageList messages={warnings} type="warning" />}
+          {errors.length > 0 && <FormMessageList messages={errors} type="error" />}
         </FormGroup>
-      );
+      )
     }
 
     return (
@@ -236,10 +216,10 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         diffMode={diffMode}
         baseValue={baseValue}
       />
-    );
-  },
-);
+    )
+  }
+)
 
-Select.displayName = "Select";
+Select.displayName = 'Select'
 
-export { Select };
+export { Select }

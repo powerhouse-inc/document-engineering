@@ -1,24 +1,19 @@
-/* eslint-disable react/jsx-max-depth */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useId, useMemo, useRef } from "react";
-import { Input } from "../../../../ui/components/data-entry/input/index.js";
-import { sharedValueTransformers } from "../../../lib/shared-value-transformers.js";
-import { cn } from "../../../lib/utils.js";
-import { Command } from "../command/index.js";
-import { FormDescription } from "../form-description/index.js";
-import { FormGroup } from "../form-group/index.js";
-import { FormLabel } from "../form-label/index.js";
-import { FormMessageList } from "../form-message/index.js";
-import { Popover, PopoverAnchor, PopoverContent } from "../popover/index.js";
-import ValueTransformer, {
-  type TransformerType,
-} from "../value-transformer/index.js";
-import { IdAutocompleteInputContainer } from "./id-autocomplete-input-container.js";
-import { IdAutocompleteListOption } from "./id-autocomplete-list-option.js";
-import { IdAutocompleteList } from "./id-autocomplete-list.js";
-import type { IdAutocompleteProps } from "./types.js";
-import { useIdAutocomplete } from "./use-id-autocomplete.js";
+import React, { useId, useMemo, useRef } from 'react'
+import { Input } from '../../../../ui/components/data-entry/input/index.js'
+import { sharedValueTransformers } from '../../../lib/shared-value-transformers.js'
+import { cn } from '../../../lib/utils.js'
+import { Command } from '../command/index.js'
+import { FormDescription } from '../form-description/index.js'
+import { FormGroup } from '../form-group/index.js'
+import { FormLabel } from '../form-label/index.js'
+import { FormMessageList } from '../form-message/index.js'
+import { Popover, PopoverAnchor, PopoverContent } from '../popover/index.js'
+import ValueTransformer, { type TransformerType } from '../value-transformer/index.js'
+import { IdAutocompleteInputContainer } from './id-autocomplete-input-container.js'
+import { IdAutocompleteListOption } from './id-autocomplete-list-option.js'
+import { IdAutocompleteList } from './id-autocomplete-list.js'
+import type { IdAutocompleteProps } from './types.js'
+import { useIdAutocomplete } from './use-id-autocomplete.js'
 
 const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
   (
@@ -41,7 +36,7 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
       onKeyDown,
       onMouseDown,
       autoComplete = true,
-      variant = "withValue",
+      variant = 'withValue',
       maxLength,
       fetchOptionsCallback,
       fetchSelectedOptionCallback,
@@ -51,23 +46,23 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
       previewPlaceholder,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const prefix = useId();
-    const id = idProp ?? `${prefix}-id-autocomplete`;
-    const inputRef = useRef<HTMLInputElement | null>(null);
+    const prefix = useId()
+    const id = idProp ?? `${prefix}-id-autocomplete`
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
     const mergedRef = (node: HTMLInputElement | null) => {
-      inputRef.current = node;
-      if (typeof ref === "function") {
-        ref(node);
+      inputRef.current = node
+      if (typeof ref === 'function') {
+        ref(node)
       } else if (ref) {
-        ref.current = node;
+        ref.current = node
       }
-    };
+    }
 
-    const hasWarning = Array.isArray(warnings) && warnings.length > 0;
-    const hasError = Array.isArray(errors) && errors.length > 0;
+    const hasWarning = Array.isArray(warnings) && warnings.length > 0
+    const hasError = Array.isArray(errors) && errors.length > 0
 
     const {
       selectedValue,
@@ -97,24 +92,19 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
       onBlur,
       fetchOptions: fetchOptionsCallback,
       fetchSelectedOption: fetchSelectedOptionCallback,
-    });
+    })
 
     const handleOptionSelection = (optionValue: string) => {
-      toggleOption(optionValue);
-      inputRef.current?.focus();
-    };
+      toggleOption(optionValue)
+      inputRef.current?.focus()
+    }
 
-    const asCard =
-      variant === "withValueAndTitle" ||
-      variant === "withValueTitleAndDescription";
+    const asCard = variant === 'withValueAndTitle' || variant === 'withValueTitleAndDescription'
 
     const transformers: TransformerType = useMemo(
-      () => [
-        sharedValueTransformers.trimOnBlur(),
-        sharedValueTransformers.trimOnEnter(),
-      ],
-      [],
-    );
+      () => [sharedValueTransformers.trimOnBlur(), sharedValueTransformers.trimOnEnter()],
+      []
+    )
 
     return (
       <FormGroup>
@@ -124,9 +114,9 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
             disabled={disabled}
             hasError={hasError}
             required={required}
-            onClick={(e) => {
-              e.preventDefault();
-              (e.target as HTMLLabelElement).control?.focus();
+            onClick={e => {
+              e.preventDefault()
+              ;(e.target as HTMLLabelElement).control?.focus()
             }}
           >
             {label}
@@ -138,7 +128,7 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
               shouldFilter={false}
               value={commandValue}
               onValueChange={handleCommandValue}
-              className={cn("dark:bg-charcoal-900 bg-gray-100")}
+              className={cn('dark:bg-charcoal-900 bg-gray-100')}
             >
               <PopoverAnchor asChild={true}>
                 <IdAutocompleteInputContainer
@@ -177,18 +167,16 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
                         }
                       : {
                           ...selectedOption,
-                          value: selectedOption?.value ?? "",
+                          value: selectedOption?.value ?? '',
                         },
                     {
                       asPlaceholder: selectedOption === undefined,
                       showValue: false,
                       isLoadingSelectedOption,
-                      handleFetchSelectedOption: fetchSelectedOptionCallback
-                        ? handleFetchSelectedOption
-                        : undefined,
+                      handleFetchSelectedOption: fetchSelectedOptionCallback ? handleFetchSelectedOption : undefined,
                       isFetchSelectedOptionSync,
-                      className: cn("rounded-t-none pt-2"),
-                    },
+                      className: cn('rounded-t-none pt-2'),
+                    }
                   )
                 ) : (
                   <IdAutocompleteListOption
@@ -196,31 +184,22 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
                     icon={selectedOption?.icon ?? previewPlaceholder?.icon}
                     title={selectedOption?.title ?? previewPlaceholder?.title}
                     path={selectedOption?.path ?? previewPlaceholder?.path}
-                    value={
-                      selectedOption?.value ?? previewPlaceholder?.value ?? ""
-                    }
-                    description={
-                      selectedOption?.description ??
-                      previewPlaceholder?.description
-                    }
+                    value={selectedOption?.value ?? previewPlaceholder?.value ?? ''}
+                    description={selectedOption?.description ?? previewPlaceholder?.description}
                     asPlaceholder={selectedOption === undefined}
                     showValue={false}
                     isLoadingSelectedOption={isLoadingSelectedOption}
-                    handleFetchSelectedOption={
-                      fetchSelectedOptionCallback
-                        ? handleFetchSelectedOption
-                        : undefined
-                    }
+                    handleFetchSelectedOption={fetchSelectedOptionCallback ? handleFetchSelectedOption : undefined}
                     isFetchSelectedOptionSync={isFetchSelectedOptionSync}
-                    className={cn("rounded-t-none pt-2")}
+                    className={cn('rounded-t-none pt-2')}
                   />
                 ))}
               <PopoverContent
                 align="start"
-                onOpenAutoFocus={(e) => e.preventDefault()}
-                onInteractOutside={(e) => {
+                onOpenAutoFocus={e => e.preventDefault()}
+                onInteractOutside={e => {
                   if (e.target instanceof Element && e.target.id === id) {
-                    e.preventDefault();
+                    e.preventDefault()
                   }
                 }}
               >
@@ -250,7 +229,7 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
               onMouseDown={onMouseDown}
               placeholder={placeholder}
               aria-invalid={hasError}
-              aria-label={!label ? "Id Autocomplete" : undefined}
+              aria-label={!label ? 'Id Autocomplete' : undefined}
               aria-required={required}
               maxLength={maxLength}
               {...props}
@@ -262,10 +241,10 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
         {hasWarning && <FormMessageList messages={warnings} type="warning" />}
         {hasError && <FormMessageList messages={errors} type="error" />}
       </FormGroup>
-    );
-  },
-);
+    )
+  }
+)
 
-IdAutocomplete.displayName = "IdAutocomplete";
+IdAutocomplete.displayName = 'IdAutocomplete'
 
-export { IdAutocomplete };
+export { IdAutocomplete }

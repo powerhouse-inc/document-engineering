@@ -1,18 +1,18 @@
-import { format } from "date-fns";
-import YearButton from "./year-button.js";
+import { format } from 'date-fns'
+import YearButton from './year-button.js'
 
 interface YearRange {
-  from: number;
-  to: number;
+  from: number
+  to: number
 }
 interface YearGridProps {
-  displayYears: YearRange;
-  startMonth?: Date;
-  endMonth?: Date;
-  actualMonth: string;
-  months: { date: Date }[];
-  currentYear: number;
-  onYearSelect: (year: number) => void;
+  displayYears: YearRange
+  startMonth?: Date
+  endMonth?: Date
+  actualMonth: string
+  months: { date: Date }[]
+  currentYear: number
+  onYearSelect: (year: number) => void
 }
 
 export const YearGrid = ({
@@ -24,18 +24,15 @@ export const YearGrid = ({
   currentYear,
   onYearSelect,
 }: YearGridProps) => {
-  const years = Array.from(
-    { length: displayYears.to - displayYears.from + 1 },
-    (_, i) => displayYears.from + i,
-  );
+  const years = Array.from({ length: displayYears.to - displayYears.from + 1 }, (_, i) => displayYears.from + i)
 
   return (
     <div className="grid grid-cols-3 gap-x-[14px] gap-y-[15px]">
-      {years.map((year) => (
+      {years.map(year => (
         <YearButton
           key={year}
           year={year}
-          actualYear={format(months[0].date, "yyyy")}
+          actualYear={format(months[0].date, 'yyyy')}
           currentYear={currentYear}
           startMonth={startMonth}
           endMonth={endMonth}
@@ -45,5 +42,5 @@ export const YearGrid = ({
         />
       ))}
     </div>
-  );
-};
+  )
+}

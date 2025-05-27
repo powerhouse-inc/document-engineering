@@ -1,11 +1,10 @@
-"use client";
+'use client'
 
-import { SidebarItem } from "./sidebar-item.js";
-import { useSidebar } from "./sidebar-provider/index.js";
+import { SidebarItem } from './sidebar-item.js'
+import { useSidebar } from './sidebar-provider/index.js'
 
 export const SidebarPinningArea = () => {
-  const { pinnedNodePath, togglePin, activeNodeId, onActiveNodeChange } =
-    useSidebar();
+  const { pinnedNodePath, togglePin, activeNodeId, onActiveNodeChange } = useSidebar()
 
   return (
     <div className="flex flex-col gap-1 border-b border-gray-300 bg-gray-100 px-2 pb-0.5 pt-2 dark:border-gray-800 dark:bg-slate-700">
@@ -18,7 +17,7 @@ export const SidebarPinningArea = () => {
             isExpanded: false,
           }}
           togglePin={togglePin}
-          searchTerm={""}
+          searchTerm={''}
           searchResults={[]}
           activeSearchIndex={0}
           allowPinning={true}
@@ -29,5 +28,5 @@ export const SidebarPinningArea = () => {
         />
       ))}
     </div>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import type { TableApi } from "./table-api.js";
+import type { TableApi } from './table-api.js'
 
 class SelectionManager<TData> {
   constructor(private api: TableApi<TData>) {}
@@ -7,21 +7,21 @@ class SelectionManager<TData> {
    * Checks if the table allows row selection
    */
   canSelectRows() {
-    return this.api._getConfig().allowRowSelection;
+    return this.api._getConfig().allowRowSelection
   }
 
   /**
    * Checks if the table allows cell selection
    */
   canSelectCells() {
-    return this.api._getConfig().allowRowSelection;
+    return this.api._getConfig().allowRowSelection
   }
 
   /**
    * Clears the selection of the table
    */
   clear() {
-    this.api._getState().dispatch?.({ type: "SELECT_CELL", payload: null });
+    this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
   }
 
   /**
@@ -30,12 +30,12 @@ class SelectionManager<TData> {
    * @param rowIndex - The index of the row to select
    */
   selectRow(rowIndex: number) {
-    if (!this.canSelectRows()) return;
+    if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: "TOGGLE_SELECTED_ROW",
+      type: 'TOGGLE_SELECTED_ROW',
       payload: { index: rowIndex, clearOtherSelections: true },
-    });
+    })
   }
 
   /**
@@ -44,12 +44,12 @@ class SelectionManager<TData> {
    * @param rowIndex - The index of the row to toggle
    */
   toggleRow(rowIndex: number) {
-    if (!this.canSelectRows()) return;
+    if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: "TOGGLE_SELECTED_ROW",
+      type: 'TOGGLE_SELECTED_ROW',
       payload: { index: rowIndex },
-    });
+    })
   }
 
   /**
@@ -58,32 +58,32 @@ class SelectionManager<TData> {
    * @param rowIndex - The index of the row to select from
    */
   selectFromLastActiveRow(rowIndex: number) {
-    if (!this.canSelectRows()) return;
+    if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: "SELECT_ROW_RANGE",
+      type: 'SELECT_ROW_RANGE',
       payload: rowIndex,
-    });
+    })
   }
 
   /**
    * Selects all rows in the table.
    */
   selectAllRows() {
-    if (!this.canSelectRows()) return;
+    if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: "SELECT_ROW_RANGE",
+      type: 'SELECT_ROW_RANGE',
       payload: this.api._getState().data.length - 1,
-    });
+    })
   }
 
   toggleSelectAll() {
-    if (!this.canSelectRows()) return;
+    if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: "TOGGLE_SELECT_ALL_ROWS",
-    });
+      type: 'TOGGLE_SELECT_ALL_ROWS',
+    })
   }
 
   /**
@@ -93,13 +93,13 @@ class SelectionManager<TData> {
    * @param columnIndex - The index of the column to select
    */
   selectCell(rowIndex: number, columnIndex: number) {
-    if (!this.canSelectCells()) return;
+    if (!this.canSelectCells()) return
 
     this.api._getState().dispatch?.({
-      type: "SELECT_CELL",
+      type: 'SELECT_CELL',
       payload: { row: rowIndex, column: columnIndex },
-    });
+    })
   }
 }
 
-export { SelectionManager };
+export { SelectionManager }

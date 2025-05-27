@@ -1,1 +1,1 @@
-export * from "./sidebar-provider.js";
+export * from './sidebar-provider.js'

@@ -1,23 +1,23 @@
-import { Icon } from "../../../../../../ui/components/icon/index.js";
-import { cn } from "../../../../../../scalars/lib/index.js";
-import { differenceInCalendarDays } from "date-fns";
+import { Icon } from '../../../../../../ui/components/icon/index.js'
+import { cn } from '../../../../../../scalars/lib/index.js'
+import { differenceInCalendarDays } from 'date-fns'
 
-import { useCallback, useMemo } from "react";
-import { useDayPicker } from "react-day-picker";
-import { Button } from "../../../../../../scalars/components/fragments/button/index.js";
-import { type DatePickerView } from "../../types.js";
+import { useCallback, useMemo } from 'react'
+import { useDayPicker } from 'react-day-picker'
+import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
+import { type DatePickerView } from '../../types.js'
 
 interface NavProps {
-  className?: string;
-  navView: DatePickerView;
-  displayYears: { from: number; to: number };
-  setDisplayYears: (years: { from: number; to: number }) => void;
-  onPrevClick?: (date: Date) => void;
-  onNextClick?: (date: Date) => void;
-  startMonth?: Date;
-  endMonth?: Date;
-  buttonPreviousClassName?: string;
-  buttonNextClassName?: string;
+  className?: string
+  navView: DatePickerView
+  displayYears: { from: number; to: number }
+  setDisplayYears: (years: { from: number; to: number }) => void
+  onPrevClick?: (date: Date) => void
+  onNextClick?: (date: Date) => void
+  startMonth?: Date
+  endMonth?: Date
+  buttonPreviousClassName?: string
+  buttonNextClassName?: string
 }
 
 const NavCalendar: React.FC<NavProps> = ({
@@ -32,105 +32,75 @@ const NavCalendar: React.FC<NavProps> = ({
   buttonPreviousClassName,
   buttonNextClassName,
 }) => {
-  const { nextMonth, previousMonth, goToMonth } = useDayPicker();
+  const { nextMonth, previousMonth, goToMonth } = useDayPicker()
 
   // Function to check if the "Previous" button should be disabled
   const isPreviousDisabled = useMemo(() => {
-    if (navView === "years") {
-      const previousYearDate = new Date(displayYears.from - 1, 0, 1);
+    if (navView === 'years') {
+      const previousYearDate = new Date(displayYears.from - 1, 0, 1)
       return (
-        (startMonth &&
-          differenceInCalendarDays(previousYearDate, startMonth) < 0) ||
+        (startMonth && differenceInCalendarDays(previousYearDate, startMonth) < 0) ||
         (endMonth && differenceInCalendarDays(previousYearDate, endMonth) > 0)
-      );
+      )
     }
-    return !previousMonth;
-  }, [navView, displayYears, startMonth, endMonth, previousMonth]);
+    return !previousMonth
+  }, [navView, displayYears, startMonth, endMonth, previousMonth])
 
   // Function to check if the "Next" button should be disabled
   const isNextDisabled = useMemo(() => {
-    if (navView === "years") {
-      const nextYearDate = new Date(displayYears.to + 1, 0, 1);
+    if (navView === 'years') {
+      const nextYearDate = new Date(displayYears.to + 1, 0, 1)
       return (
-        (startMonth &&
-          differenceInCalendarDays(nextYearDate, startMonth) < 0) ||
+        (startMonth && differenceInCalendarDays(nextYearDate, startMonth) < 0) ||
         (endMonth && differenceInCalendarDays(nextYearDate, endMonth) > 0)
-      );
+      )
     }
-    return !nextMonth;
-  }, [navView, displayYears, startMonth, endMonth, nextMonth]);
+    return !nextMonth
+  }, [navView, displayYears, startMonth, endMonth, nextMonth])
 
   const handlePreviousClick = useCallback(() => {
-    if (!previousMonth) return;
-    if (navView === "years") {
+    if (!previousMonth) return
+    if (navView === 'years') {
       const newDisplayYears = {
         from: displayYears.from - (displayYears.to - displayYears.from + 1),
         to: displayYears.to - (displayYears.to - displayYears.from + 1),
-      };
-      setDisplayYears(newDisplayYears);
-      onPrevClick?.(
-        new Date(
-          displayYears.from - (displayYears.to - displayYears.from),
-          0,
-          1,
-        ),
-      );
-      return;
+      }
+      setDisplayYears(newDisplayYears)
+      onPrevClick?.(new Date(displayYears.from - (displayYears.to - displayYears.from), 0, 1))
+      return
     }
-    goToMonth(previousMonth);
-    onPrevClick?.(previousMonth);
-  }, [
-    previousMonth,
-    goToMonth,
-    navView,
-    displayYears,
-    setDisplayYears,
-    onPrevClick,
-  ]);
+    goToMonth(previousMonth)
+    onPrevClick?.(previousMonth)
+  }, [previousMonth, goToMonth, navView, displayYears, setDisplayYears, onPrevClick])
 
   const handleNextClick = useCallback(() => {
-    if (!nextMonth) return;
-    if (navView === "years") {
+    if (!nextMonth) return
+    if (navView === 'years') {
       const newDisplayYears = {
         from: displayYears.from + (displayYears.to - displayYears.from + 1),
         to: displayYears.to + (displayYears.to - displayYears.from + 1),
-      };
-      setDisplayYears(newDisplayYears);
-      onNextClick?.(
-        new Date(
-          displayYears.from + (displayYears.to - displayYears.from),
-          0,
-          1,
-        ),
-      );
-      return;
+      }
+      setDisplayYears(newDisplayYears)
+      onNextClick?.(new Date(displayYears.from + (displayYears.to - displayYears.from), 0, 1))
+      return
     }
-    goToMonth(nextMonth);
-    onNextClick?.(nextMonth);
-  }, [
-    nextMonth,
-    goToMonth,
-    navView,
-    displayYears,
-    setDisplayYears,
-    onNextClick,
-  ]);
+    goToMonth(nextMonth)
+    onNextClick?.(nextMonth)
+  }, [nextMonth, goToMonth, navView, displayYears, setDisplayYears, onNextClick])
 
   return (
-    <nav className={cn("flex items-center", className)}>
+    <nav className={cn('flex items-center', className)}>
       <Button
         variant="outline"
         className={cn(
-          "absolute left-0 size-7 bg-transparent p-0 opacity-80 hover:opacity-100",
-          buttonPreviousClassName,
+          'absolute left-0 size-7 bg-transparent p-0 opacity-80 hover:opacity-100',
+          buttonPreviousClassName
         )}
         type="button"
         tabIndex={isPreviousDisabled ? undefined : -1}
         disabled={isPreviousDisabled}
         aria-label={
-          navView === "years"
-            ? `Go to the previous ${displayYears.to - displayYears.from + 1} years`
-            : `Previous month`
+          navView === 'years' ? `Go to the previous ${displayYears.to - displayYears.from + 1} years` : `Previous month`
         }
         onClick={handlePreviousClick}
       >
@@ -139,24 +109,19 @@ const NavCalendar: React.FC<NavProps> = ({
 
       <Button
         variant="outline"
-        className={cn(
-          "absolute right-0 size-7 bg-transparent p-0 opacity-80 hover:opacity-100",
-          buttonNextClassName,
-        )}
+        className={cn('absolute right-0 size-7 bg-transparent p-0 opacity-80 hover:opacity-100', buttonNextClassName)}
         type="button"
         tabIndex={isNextDisabled ? undefined : -1}
         disabled={isNextDisabled}
         aria-label={
-          navView === "years"
-            ? `Go to the next ${displayYears.to - displayYears.from + 1} years`
-            : `Next month`
+          navView === 'years' ? `Go to the next ${displayYears.to - displayYears.from + 1} years` : `Next month`
         }
         onClick={handleNextClick}
       >
         <Icon className="size-4" name="CaretRight" />
       </Button>
     </nav>
-  );
-};
+  )
+}
 
-export default NavCalendar;
+export default NavCalendar

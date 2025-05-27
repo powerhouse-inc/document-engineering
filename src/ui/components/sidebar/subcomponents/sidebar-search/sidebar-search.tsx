@@ -1,22 +1,20 @@
-"use client";
+'use client'
 
-import { useCallback, useRef } from "react";
-import CrossCircle from "../../../icon-components/CrossCircle.js";
-import Search from "../../../icon-components/Search.js";
-import Tabler from "../../../icon-components/Tabler.js";
-import { cn } from "../../../../../scalars/lib/utils.js";
-import { Input } from "../../../../../ui/components/index.js";
-import { useSidebar } from "../sidebar-provider/index.js";
-import { SearchNavigationArrow } from "./search-navigation-arrow.js";
-import { SearchResultCounter } from "./search-result-counter.js";
+import { useCallback, useRef } from 'react'
+import CrossCircle from '../../../icon-components/CrossCircle.js'
+import Search from '../../../icon-components/Search.js'
+import Tabler from '../../../icon-components/Tabler.js'
+import { cn } from '../../../../../scalars/lib/utils.js'
+import { Input } from '../../../../../ui/components/index.js'
+import { useSidebar } from '../sidebar-provider/index.js'
+import { SearchNavigationArrow } from './search-navigation-arrow.js'
+import { SearchResultCounter } from './search-result-counter.js'
 
 interface SidebarSearchProps {
-  showStatusFilter: boolean;
+  showStatusFilter: boolean
 }
 
-export const SidebarSearch: React.FC<SidebarSearchProps> = ({
-  showStatusFilter,
-}) => {
+export const SidebarSearch: React.FC<SidebarSearchProps> = ({ showStatusFilter }) => {
   const {
     searchTerm,
     isSearching,
@@ -27,31 +25,31 @@ export const SidebarSearch: React.FC<SidebarSearchProps> = ({
     nextSearchResult,
     previousSearchResult,
     toggleStatusFilter,
-  } = useSidebar();
-  const searchControlsRef = useRef<HTMLDivElement>(null);
+  } = useSidebar()
+  const searchControlsRef = useRef<HTMLDivElement>(null)
 
   // Event handlers
   const handleReset = useCallback(() => {
-    changeSearchTerm("");
-  }, [changeSearchTerm]);
+    changeSearchTerm('')
+  }, [changeSearchTerm])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "ArrowDown" || e.key === "Enter") {
-        nextSearchResult();
-      } else if (e.key === "ArrowUp") {
-        previousSearchResult();
+      if (e.key === 'ArrowDown' || e.key === 'Enter') {
+        nextSearchResult()
+      } else if (e.key === 'ArrowUp') {
+        previousSearchResult()
       }
     },
-    [nextSearchResult, previousSearchResult],
-  );
+    [nextSearchResult, previousSearchResult]
+  )
 
   const handleSearchTermChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      changeSearchTerm(e.target.value);
+      changeSearchTerm(e.target.value)
     },
-    [changeSearchTerm],
-  );
+    [changeSearchTerm]
+  )
 
   return (
     <div className="flex w-full gap-2 border-t border-gray-300 p-2 dark:border-gray-800">
@@ -117,15 +115,15 @@ export const SidebarSearch: React.FC<SidebarSearchProps> = ({
           onClick={toggleStatusFilter}
           tabIndex={1}
           className={cn(
-            "rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-500",
+            'rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-500',
             isStatusFilterEnabled
-              ? "border-blue-500 bg-blue-100 text-blue-900"
-              : "hover:bg-gray-100 hover:text-gray-700",
+              ? 'border-blue-500 bg-blue-100 text-blue-900'
+              : 'hover:bg-gray-100 hover:text-gray-700'
           )}
         >
           <Tabler height={16} width={16} />
         </button>
       )}
     </div>
-  );
-};
+  )
+}
