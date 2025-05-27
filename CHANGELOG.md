@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.6.0...v1.7.0) (2025-05-27)
+
+
+### Bug Fixes
+
+* **scalars & ui:** tests & minor issues in stories ([38ec9e7](https://github.com/powerhouse-inc/document-engineering/commit/38ec9e779dc58bb94001811edacd43ecaf7f03cd))
+* **scalars:** remove the comments ([bb95cd6](https://github.com/powerhouse-inc/document-engineering/commit/bb95cd65b928de2faa3758a4a7ded4e821fd28b6))
+
+
+### Features
+
+* **scalars:** add custom class for radio enum component ([1dec6d8](https://github.com/powerhouse-inc/document-engineering/commit/1dec6d8d250005d07abdeb33d9f9a9df0367b092))
+* **scalars:** add two stories for the enum componenent ([079a5fb](https://github.com/powerhouse-inc/document-engineering/commit/079a5fb1da22a5803990b2ecaaf41fb1f57c0a0c))
+
 # [1.6.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.5.0...v1.6.0) (2025-05-26)
 
 
