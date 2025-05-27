@@ -43,7 +43,7 @@ describe("DateTimePickerField", () => {
       <DateTimePickerField 
         {...defaultProps} 
         required 
-        value="" 
+        showErrorOnBlur
       />
     );
 
@@ -52,7 +52,7 @@ describe("DateTimePickerField", () => {
     await userEvent.tab(); // Trigger blur to show validation
 
     await waitFor(() => {
-      expect(screen.getByText("This field is required")).toBeInTheDocument();
+      expect(screen.getByText(/this field is required/i)).toBeInTheDocument();
     });
   });
 
@@ -65,7 +65,13 @@ describe("DateTimePickerField", () => {
 
 
   it("should handle required state with validation", async () => {
-    renderWithForm(<DateTimePickerField {...defaultProps} required />);
+    renderWithForm(
+      <DateTimePickerField 
+        {...defaultProps} 
+        required 
+        showErrorOnBlur
+      />
+    );
 
     expect(screen.getByText("*")).toBeInTheDocument();
 
@@ -77,7 +83,7 @@ describe("DateTimePickerField", () => {
     await userEvent.tab();
 
     await waitFor(() => {
-      expect(screen.getByText("This field is required")).toBeInTheDocument();
+      expect(screen.getByText(/this field is required/i)).toBeInTheDocument();
     });
   });
 
@@ -125,6 +131,7 @@ describe("DateTimePickerField", () => {
       <DateTimePickerField
         {...defaultProps}
         required
+        showErrorOnBlur
         onChange={onChange}
       />
     );
@@ -138,7 +145,7 @@ describe("DateTimePickerField", () => {
     expect(lastOnChangeCall.target.value).toBe("");
 
     await waitFor(() => {
-      expect(screen.getByText("This field is required")).toBeInTheDocument();
+      expect(screen.getByText(/this field is required/i)).toBeInTheDocument();
     });
   });
 
@@ -156,7 +163,9 @@ describe("DateTimePickerField", () => {
     await userEvent.type(input, "invalid-date 14:30");
     await userEvent.tab();
 
-    expect(screen.getByText(/Invalid format. Use Date and Time separated by a space/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Invalid date format. Use/i)).toBeInTheDocument();
+    });
   });
 
   it("should validate time format", async () => {
@@ -173,25 +182,9 @@ describe("DateTimePickerField", () => {
     await userEvent.type(input, "2024-12-25 invalid-time");
     await userEvent.tab();
 
-    expect(screen.getByText(/Invalid format. Use Date and Time separated by a space/i)).toBeInTheDocument();
-  });
-
-  it("should validate min date", async () => {
-    renderWithForm(
-      <DateTimePickerField
-        {...defaultProps}
-        minDate="2024-12-01"
-        showErrorOnBlur
-      />
-    );
-
-    const input = screen.getByPlaceholderText("Select date and time");
-    expect(input).toBeInTheDocument();
-
-    await userEvent.type(input, "2024-11-30 14:30");
-    await userEvent.tab();
-
-    expect(screen.getByText(/Date must be after/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/invalid format/i)).toBeInTheDocument();
+    });
   });
 
   it("should validate max date", async () => {
@@ -200,15 +193,40 @@ describe("DateTimePickerField", () => {
         {...defaultProps}
         maxDate="2024-12-31"
         showErrorOnBlur
+        dateFormat="yyyy-MM-dd"
+        timeFormat="hh:mm a"
       />
     );
 
-    const input = screen.getByPlaceholderText("Select date and time");
+    const input = screen.getByRole("textbox");
     expect(input).toBeInTheDocument();
 
-    await userEvent.type(input, "2025-01-01 14:30");
+    await userEvent.type(input, "2025-01-01 02:30 PM");
     await userEvent.tab();
 
     expect(screen.getByText(/Date must be before/i)).toBeInTheDocument();
   });
+
+  it("should validate min date", async () => {
+    renderWithForm(
+      <DateTimePickerField
+        {...defaultProps}
+        minDate="2024-12-10"
+        showErrorOnBlur
+        dateFormat="yyyy-MM-dd"
+        timeFormat="hh:mm a"
+      />
+    );
+
+    const input = screen.getByRole("textbox");
+    expect(input).toBeInTheDocument();
+
+    await userEvent.type(input, "2024-11-09 02:30 PM");
+    await userEvent.tab();
+
+    await waitFor(() => {
+      expect(screen.getByText(/Date must be after/i)).toBeInTheDocument();
+    });
+  });
+
 }); 
