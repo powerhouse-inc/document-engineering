@@ -280,6 +280,16 @@ describe("TimePicker", () => {
 
   it("should not show timezone select when showTimezoneSelect is false", async () => {
     const user = userEvent.setup();
+    // Mock the timezone to be Montevideo
+    vi.spyOn(Intl, "DateTimeFormat").mockImplementation(() => ({
+      resolvedOptions: () => ({
+        timeZone: "America/Montevideo"
+      }),
+      formatToParts: () => [
+        { type: "timeZoneName", value: "GMT-03:00" }
+      ]
+    } as any));
+
     render(
       <TimePicker
         name="test-time"

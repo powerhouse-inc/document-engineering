@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DateTimePicker > should match the snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-2"
+  >
+    <label
+      class="inline-flex items-center text-sm font-medium leading-4 text-gray-900 dark:text-gray-50 mb-[3px]"
+    >
+      Test Label
+    </label>
+    <div
+      class="flex flex-col space-y-2"
+    >
+      <div
+        class="flex w-[275px] rounded-md text-sm focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white focus:[&_.input-field]:bg-transparent dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white"
+      >
+        <button
+          aria-controls="radix-:r0:"
+          aria-expanded="false"
+          aria-haspopup="dialog"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-l-md border-none pl-3 pr-2 focus:text-selected-foreground focus:bg-none button-ghost"
+          data-state="closed"
+          type="button"
+        >
+          <svg
+            class="hover:none text-gray-700 dark:text-gray-50"
+            data-testid="icon-fallback"
+            fill="none"
+            height="16"
+            style="width: 16px; height: 16px;"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              id="Calendar"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M4.79998 1.06665C5.09454 1.06665 5.33332 1.30543 5.33332 1.59998V2.13332H10.6667V1.59998C10.6667 1.30543 10.9054 1.06665 11.2 1.06665C11.4945 1.06665 11.7333 1.30543 11.7333 1.59998V2.13332H13.3333C14.217 2.13332 14.9333 2.84966 14.9333 3.73332V13.3333C14.9333 14.217 14.217 14.9333 13.3333 14.9333H2.66665C1.783 14.9333 1.06665 14.217 1.06665 13.3333V3.73332C1.06665 2.84966 1.78299 2.13332 2.66665 2.13332H4.26665V1.59998C4.26665 1.30543 4.50543 1.06665 4.79998 1.06665ZM10.6667 3.19998V3.73332C10.6667 4.02787 10.9054 4.26665 11.2 4.26665C11.4945 4.26665 11.7333 4.02787 11.7333 3.73332V3.19998H13.3333C13.6279 3.19998 13.8667 3.43877 13.8667 3.73332V5.33332H2.13332V3.73332C2.13332 3.43877 2.3721 3.19998 2.66665 3.19998H4.26665V3.73332C4.26665 4.02787 4.50543 4.26665 4.79998 4.26665C5.09454 4.26665 5.33332 4.02787 5.33332 3.73332V3.19998H10.6667ZM2.13332 6.39998V13.3333C2.13332 13.6279 2.3721 13.8667 2.66665 13.8667H13.3333C13.6279 13.8667 13.8667 13.6279 13.8667 13.3333V6.39998H2.13332ZM7.46665 7.99998C7.46665 7.70543 7.70543 7.46665 7.99999 7.46665C8.29454 7.46665 8.53332 7.70543 8.53332 7.99998C8.53332 8.29454 8.29454 8.53332 7.99999 8.53332C7.70543 8.53332 7.46665 8.29454 7.46665 7.99998ZM10.1333 7.46665C9.83877 7.46665 9.59999 7.70543 9.59999 7.99998C9.59999 8.29454 9.83877 8.53332 10.1333 8.53332C10.4279 8.53332 10.6667 8.29454 10.6667 7.99998C10.6667 7.70543 10.4279 7.46665 10.1333 7.46665ZM11.7333 7.99998C11.7333 7.70543 11.9721 7.46665 12.2667 7.46665C12.5612 7.46665 12.8 7.70543 12.8 7.99998C12.8 8.29454 12.5612 8.53332 12.2667 8.53332C11.9721 8.53332 11.7333 8.29454 11.7333 7.99998ZM12.2667 9.59998C11.9721 9.59998 11.7333 9.83877 11.7333 10.1333C11.7333 10.4279 11.9721 10.6667 12.2667 10.6667C12.5612 10.6667 12.8 10.4279 12.8 10.1333C12.8 9.83877 12.5612 9.59998 12.2667 9.59998ZM9.59999 10.1333C9.59999 9.83877 9.83877 9.59998 10.1333 9.59998C10.4279 9.59998 10.6667 9.83877 10.6667 10.1333C10.6667 10.4279 10.4279 10.6667 10.1333 10.6667C9.83877 10.6667 9.59999 10.4279 9.59999 10.1333ZM7.99999 9.59998C7.70543 9.59998 7.46665 9.83877 7.46665 10.1333C7.46665 10.4279 7.70543 10.6667 7.99999 10.6667C8.29454 10.6667 8.53332 10.4279 8.53332 10.1333C8.53332 9.83877 8.29454 9.59998 7.99999 9.59998ZM5.33332 10.1333C5.33332 9.83877 5.5721 9.59998 5.86665 9.59998C6.1612 9.59998 6.39998 9.83877 6.39998 10.1333C6.39998 10.4279 6.1612 10.6667 5.86665 10.6667C5.5721 10.6667 5.33332 10.4279 5.33332 10.1333ZM3.73332 9.59998C3.43877 9.59998 3.19999 9.83877 3.19999 10.1333C3.19999 10.4279 3.43877 10.6667 3.73332 10.6667C4.02787 10.6667 4.26665 10.4279 4.26665 10.1333C4.26665 9.83877 4.02787 9.59998 3.73332 9.59998ZM3.19999 12.2667C3.19999 11.9721 3.43877 11.7333 3.73332 11.7333C4.02787 11.7333 4.26665 11.9721 4.26665 12.2667C4.26665 12.5612 4.02787 12.8 3.73332 12.8C3.43877 12.8 3.19999 12.5612 3.19999 12.2667ZM5.86665 11.7333C5.5721 11.7333 5.33332 11.9721 5.33332 12.2667C5.33332 12.5612 5.5721 12.8 5.86665 12.8C6.1612 12.8 6.39998 12.5612 6.39998 12.2667C6.39998 11.9721 6.1612 11.7333 5.86665 11.7333ZM7.46665 12.2667C7.46665 11.9721 7.70543 11.7333 7.99999 11.7333C8.29454 11.7333 8.53332 11.9721 8.53332 12.2667C8.53332 12.5612 8.29454 12.8 7.99999 12.8C7.70543 12.8 7.46665 12.5612 7.46665 12.2667ZM10.1333 11.7333C9.83877 11.7333 9.59999 11.9721 9.59999 12.2667C9.59999 12.5612 9.83877 12.8 10.1333 12.8C10.4279 12.8 10.6667 12.5612 10.6667 12.2667C10.6667 11.9721 10.4279 11.7333 10.1333 11.7333Z"
+                fill="currentcolor"
+                fill-rule="evenodd"
+                id="Shape"
+              />
+            </g>
+          </svg>
+        </button>
+        <input
+          class="flex h-9 rounded-md text-sm font-normal leading-5 text-gray-900 dark:text-gray-50 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white px-3 py-2 font-sans placeholder:text-gray-500 dark:placeholder:text-gray-600 focus-visible:outline-none focus-visible:ring-gray-900 focus-visible:ring-offset-white dark:focus-visible:ring-charcoal-300 dark:focus-visible:ring-offset-charcoal-900 dark:focus:bg-charcoal-900 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-50 disabled:text-gray-700 disabled:dark:border-charcoal-800 disabled:dark:bg-charcoal-900 disabled:dark:text-gray-300 w-full rounded-l-none border-none text-right placeholder:text-right focus:bg-white focus-visible:ring-0 focus-visible:ring-offset-0 input-field"
+          data-cast="DateTimeString:yyyy-MM-dd"
+          id="test-date-input"
+          label="Test Label"
+          name="test-date"
+          placeholder="Select date and time"
+          value="2025-01-01 12:00"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
