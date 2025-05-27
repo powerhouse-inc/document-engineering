@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TimePicker > should render with basic props 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-2"
+  >
+    <label
+      class="inline-flex items-center text-sm font-medium leading-4 text-gray-900 dark:text-gray-50 mb-[3px]"
+      for="test-id"
+    >
+      Test Label
+      <span
+        class="ml-1 text-gray-800 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-slate-50"
+      >
+        *
+      </span>
+    </label>
+    <div
+      class="flex flex-col space-y-2"
+    >
+      <div
+        class="flex w-[275px] rounded-md text-sm focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white focus:[&_.input-field]:bg-transparent dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white"
+      >
+        <button
+          aria-controls="radix-:r0:"
+          aria-expanded="false"
+          aria-haspopup="dialog"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-l-md border-none pl-3 pr-2 focus:text-selected-foreground focus:bg-none button-ghost"
+          data-state="closed"
+          type="button"
+        >
+          <svg
+            class="hover:none text-gray-700 dark:text-gray-50"
+            data-testid="icon-fallback"
+            fill="none"
+            height="16"
+            style="width: 16px; height: 16px;"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M8.00022 0.967133C4.11618 0.967133 0.967529 4.11578 0.967529 7.99982C0.967529 11.8838 4.11617 15.0325 8.00022 15.0325C11.8842 15.0325 15.0329 11.8838 15.0329 7.99982C15.0329 4.11578 11.8842 0.967133 8.00022 0.967133ZM1.91753 7.99982C1.91753 4.64045 4.64085 1.91713 8.00022 1.91713C11.3596 1.91713 14.0829 4.64045 14.0829 7.99982C14.0829 11.3592 11.3596 14.0825 8.00022 14.0825C4.64085 14.0825 1.91753 11.3592 1.91753 7.99982ZM8.50012 4.8C8.50012 4.52386 8.27626 4.3 8.00012 4.3C7.72398 4.3 7.50012 4.52386 7.50012 4.8V8C7.50012 8.13261 7.5528 8.25979 7.64657 8.35355L9.7799 10.4869C9.97516 10.6821 10.2917 10.6821 10.487 10.4869C10.6823 10.2916 10.6823 9.97504 10.487 9.77978L8.50012 7.79289V4.8Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <input
+          class="flex h-9 rounded-md text-sm font-normal leading-5 text-gray-900 dark:text-gray-50 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white px-3 py-2 font-sans placeholder:text-gray-500 dark:placeholder:text-gray-600 focus-visible:outline-none focus-visible:ring-gray-900 focus-visible:ring-offset-white dark:focus-visible:ring-charcoal-300 dark:focus-visible:ring-offset-charcoal-900 dark:focus:bg-charcoal-900 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-50 disabled:text-gray-700 disabled:dark:border-charcoal-800 disabled:dark:bg-charcoal-900 disabled:dark:text-gray-300 w-full rounded-l-none border-none text-right placeholder:text-right focus:bg-white focus-visible:ring-0 focus-visible:ring-offset-0 input-field"
+          name="test-time"
+          required=""
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
