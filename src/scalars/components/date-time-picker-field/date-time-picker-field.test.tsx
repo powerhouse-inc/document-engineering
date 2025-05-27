@@ -1,7 +1,8 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {  screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DateTimePickerField } from "./date-time-picker-field";
 import { vi } from "vitest";
+import { renderWithForm } from "#scalars/lib/testing";
 
 describe("DateTimePickerField", () => {
   const defaultProps = {
@@ -11,7 +12,7 @@ describe("DateTimePickerField", () => {
   };
 
   it("should match the snapshot", () => {
-    const { container } = render(
+    const { container } = renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         label="Test Label"
@@ -24,21 +25,21 @@ describe("DateTimePickerField", () => {
   });
 
   it("should handle disabled state", () => {
-    render(<DateTimePickerField {...defaultProps} disabled />);
+    renderWithForm(<DateTimePickerField {...defaultProps} disabled />);
     
     const input = screen.getByPlaceholderText("Select date and time");
     expect(input).toBeDisabled();
   });
 
   it("should render with basic props", () => {
-    render(<DateTimePickerField {...defaultProps} />);
+    renderWithForm(<DateTimePickerField {...defaultProps} />);
     
     expect(screen.getByPlaceholderText("Select date and time")).toBeInTheDocument();
     expect(screen.getByText("Date and Time")).toBeInTheDocument();
   });
 
   it("should display error messages from validation", async () => {
-    render(
+    renderWithForm(
       <DateTimePickerField 
         {...defaultProps} 
         required 
@@ -57,13 +58,13 @@ describe("DateTimePickerField", () => {
 
   it("should handle description", () => {
     const description = "Select a date and time for your appointment";
-    render(<DateTimePickerField {...defaultProps} description={description} />);
+    renderWithForm(<DateTimePickerField {...defaultProps} description={description} />);
     
     expect(screen.getByText(description)).toBeInTheDocument();
   });
 
   it("should disable past dates when disablePastDates is true", async () => {
-    render(
+    renderWithForm(
       <DateTimePickerField 
         {...defaultProps}
         disablePastDates
@@ -104,7 +105,7 @@ describe("DateTimePickerField", () => {
   });
 
   it("should handle required state with validation", async () => {
-    render(<DateTimePickerField {...defaultProps} required />);
+    renderWithForm(<DateTimePickerField {...defaultProps} required />);
     
     expect(screen.getByText("*")).toBeInTheDocument();
     
@@ -122,7 +123,7 @@ describe("DateTimePickerField", () => {
 
   it("should handle different date formats correctly", async () => {
     const onChange = vi.fn();
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         dateFormat="dd/MM/yyyy"
@@ -142,7 +143,7 @@ describe("DateTimePickerField", () => {
 
   it("should handle time format changes correctly", async () => {
     const onChange = vi.fn();
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         timeFormat="hh:mm a"
@@ -162,7 +163,7 @@ describe("DateTimePickerField", () => {
 
   it("should handle empty input with validation", async () => {
     const onChange = vi.fn();
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         required
@@ -184,7 +185,7 @@ describe("DateTimePickerField", () => {
   });
 
   it("should validate date format", async () => {
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         dateFormat="yyyy-MM-dd"
@@ -198,7 +199,7 @@ describe("DateTimePickerField", () => {
   });
 
   it("should validate time format", async () => {
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         value="2024-12-25 invalid-time"
@@ -212,7 +213,7 @@ describe("DateTimePickerField", () => {
 
   it("should validate min date", async () => {
     const minDate = "2024-12-01";
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         minDate={minDate}
@@ -227,7 +228,7 @@ describe("DateTimePickerField", () => {
 
   it("should validate max date", async () => {
     const maxDate = "2024-12-31";
-    render(
+    renderWithForm(
       <DateTimePickerField
         {...defaultProps}
         maxDate={maxDate}
