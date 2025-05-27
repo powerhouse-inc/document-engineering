@@ -12,6 +12,7 @@ interface RadioGroupBaseProps {
     label: string;
     description?: string;
     disabled?: boolean;
+    className?: string;
   }[];
   onChange?: (value: string) => void;
 }
@@ -83,7 +84,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         {options.map((option, index) => (
           <div
             key={`${prefix}-radio-${index}-${option.value}`}
-            className="flex items-center gap-2"
+            className={cn("flex items-center gap-2", option.className)}
             role="presentation"
           >
             <Radio
