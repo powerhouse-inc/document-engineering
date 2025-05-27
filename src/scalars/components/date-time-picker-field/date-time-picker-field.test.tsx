@@ -146,27 +146,34 @@ describe("DateTimePickerField", () => {
     renderWithForm(
       <DateTimePickerField
         {...defaultProps}
-        dateFormat="yyyy-MM-dd"
-        value="invalid-date 14:30"
+        showErrorOnBlur
       />
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("Invalid format. Use Date and Time separated by a space.")).toBeInTheDocument();
-    });
+    const input = screen.getByPlaceholderText("Select date and time");
+    expect(input).toBeInTheDocument();
+
+    await userEvent.type(input, "invalid-date 14:30");
+    await userEvent.tab();
+
+    expect(screen.getByText(/Invalid format. Use Date and Time separated by a space/i)).toBeInTheDocument();
   });
 
   it("should validate time format", async () => {
     renderWithForm(
       <DateTimePickerField
         {...defaultProps}
-        value="2024-12-25 invalid-time"
+        showErrorOnBlur
       />
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("Invalid format. Use Date and Time separated by a space.")).toBeInTheDocument();
-    });
+    const input = screen.getByPlaceholderText("Select date and time");
+    expect(input).toBeInTheDocument();
+
+    await userEvent.type(input, "2024-12-25 invalid-time");
+    await userEvent.tab();
+
+    expect(screen.getByText(/Invalid format. Use Date and Time separated by a space/i)).toBeInTheDocument();
   });
 
   it("should validate min date", async () => {
