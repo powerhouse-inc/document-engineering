@@ -152,17 +152,19 @@ describe('DateTimePickerField', () => {
         maxDate="2024-12-31"
         showErrorOnBlur
         dateFormat="yyyy-MM-dd"
-        timeFormat="hh:mm a"
+        timeFormat="HH:mm a"
       />
     )
 
     const input = screen.getByRole('textbox')
     expect(input).toBeInTheDocument()
 
-    await userEvent.type(input, '2025-01-01 02:30 PM')
+    await userEvent.type(input, '2025-01-01 14:30')
     await userEvent.tab()
 
-    expect(screen.getByText(/Date must be before/i)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText(/Date must be before/i)).toBeInTheDocument()
+    })
   })
 
   it('should validate min date', async () => {
@@ -172,14 +174,14 @@ describe('DateTimePickerField', () => {
         minDate="2024-12-10"
         showErrorOnBlur
         dateFormat="yyyy-MM-dd"
-        timeFormat="hh:mm a"
+        timeFormat="HH:mm a"
       />
     )
 
     const input = screen.getByRole('textbox')
     expect(input).toBeInTheDocument()
 
-    await userEvent.type(input, '2024-11-09 02:30 PM')
+    await userEvent.type(input, '2024-11-09 14:30')
     await userEvent.tab()
 
     await waitFor(() => {
