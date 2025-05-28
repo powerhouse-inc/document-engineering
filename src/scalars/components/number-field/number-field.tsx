@@ -1,3 +1,4 @@
+import React from 'react'
 import { Icon } from '../../../ui/components/icon/index.js'
 import { cn } from '../../../scalars/lib/index.js'
 import { forwardRef, useId } from 'react'
@@ -158,6 +159,8 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
     )
   }
 )
+
+NumberFieldRaw.displayName = 'NumberFieldRaw'
 
 export const NumberField = withFieldValidation<NumberFieldProps>(NumberFieldRaw, {
   validations: {
