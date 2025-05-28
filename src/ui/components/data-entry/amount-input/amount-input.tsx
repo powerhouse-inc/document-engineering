@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -42,8 +43,8 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
       id: propId,
       minValue,
       maxValue,
-      onChange,
-      onBlur,
+      onChange: propOnChange,
+      onBlur: propOnBlur,
       disabled,
       className,
       required,
@@ -87,8 +88,8 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
       value,
       defaultValue,
       type,
-      onChange,
-      onBlur,
+      onChange: propOnChange,
+      onBlur: propOnBlur,
       precision,
       viewPrecision,
       trailingZeros,

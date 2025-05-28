@@ -1,15 +1,17 @@
+import React, { useState } from 'react'
 import {
   commonCryptoCurrencies,
   commonFiatCurrencies,
 } from '../../../../scalars/components/currency-code-field/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
-import { AmountInput } from './amount-input.js'
-
+import { Amount, AmountCrypto, AmountFiat, AmountCurrency, AmountPercentage } from './types.js'
 import {
   getDefaultArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
+import { AmountInput, AmountInputProps } from './amount-input.js'
+
 const mappedFiatCurrencies = commonFiatCurrencies.map(currency => ({
   ...currency,
   label: currency.ticker,
@@ -208,7 +210,68 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const AmountInputWrapper = (props: AmountInputProps) => {
+  const [value, setValue] = useState<Amount>(props.value as Amount)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value as Amount
+    setValue(newValue)
+  }
+
+  return <AmountInput {...props} type="Amount" value={value} onChange={handleChange} name="amount-field" />
+}
+const AmountPercentageInputWrapper = (props: AmountInputProps) => {
+  const [value, setValue] = useState<AmountPercentage>(props.value as AmountPercentage)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value as unknown as AmountPercentage
+    setValue(newValue)
+  }
+
+  // When using the AmountPercentage type, the units prop is not used, so we need to remove it from the props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { units, ...restProps } = props
+  return (
+    <AmountInput {...restProps} type="AmountPercentage" value={value} onChange={handleChange} name="amount-field" />
+  )
+}
+
+const AmountFiatInputWrapper = (props: AmountInputProps) => {
+  const [value, setValue] = useState<AmountFiat>(props.value as AmountFiat)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value as unknown as AmountFiat
+    setValue(newValue)
+  }
+  return <AmountInput {...props} type="Amount" value={value} onChange={handleChange} name="amount-field" />
+}
+
+const AmountCryptoInputWrapper = (props: AmountInputProps) => {
+  const [value, setValue] = useState<AmountCrypto>(props.value as AmountCrypto)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value as unknown as AmountCrypto
+    setValue(newValue)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { trailingZeros, ...restProps } = props
+  return <AmountInput {...restProps} type="AmountCrypto" value={value} onChange={handleChange} name="amount-field" />
+}
+
+const AmountCurrencyInputWrapper = (props: AmountInputProps) => {
+  const [value, setValue] = useState<AmountCurrency>(props.value as AmountCurrency)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value as unknown as AmountCurrency
+    setValue(newValue)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { trailingZeros, ...restProps } = props
+  return <AmountInput {...restProps} type="AmountCurrency" value={value} onChange={handleChange} name="amount-field" />
+}
+
 export const Default: Story = {
+  render: (args: AmountInputProps) => <AmountInputWrapper {...args} />,
   args: {
     placeholder: '0',
     units: mappedFiatCurrencies,
@@ -223,6 +286,7 @@ export const Default: Story = {
 }
 
 export const WithValue: Story = {
+  render: (args: AmountInputProps) => <AmountInputWrapper {...args} />,
   args: {
     placeholder: 'Enter Amount',
     placeholderSelect: 'CUR',
@@ -234,6 +298,7 @@ export const WithValue: Story = {
   },
 }
 export const WithAmount: Story = {
+  render: (args: AmountInputProps) => <AmountFiatInputWrapper {...args} />,
   parameters: {
     form: {
       defaultValues: {
@@ -254,6 +319,7 @@ export const WithAmount: Story = {
   },
 }
 export const CurrencyIcon: Story = {
+  render: (args: AmountInputProps) => <AmountCryptoInputWrapper {...args} />,
   args: {
     units: mappedCryptoCurrencies,
     placeholder: 'Enter Amount',
@@ -268,6 +334,7 @@ export const CurrencyIcon: Story = {
 }
 
 export const WithToken: Story = {
+  render: (args: AmountInputProps) => <AmountCurrencyInputWrapper {...args} />,
   parameters: {
     units: mappedCryptoCurrencies,
     form: {
@@ -293,6 +360,7 @@ export const WithToken: Story = {
 }
 
 export const WithValuePercent: Story = {
+  render: (args: AmountInputProps) => <AmountPercentageInputWrapper {...args} />,
   parameters: {
     form: {
       defaultValues: {
@@ -308,6 +376,7 @@ export const WithValuePercent: Story = {
   },
 }
 export const Disable: Story = {
+  render: (args: AmountInputProps) => <AmountFiatInputWrapper {...args} />,
   args: {
     units: mappedCryptoCurrencies,
     label: 'Enter Amount ',
@@ -323,6 +392,7 @@ export const Disable: Story = {
 }
 
 export const WithValueUniversalAmountCurrency: Story = {
+  render: (args: AmountInputProps) => <AmountCurrencyInputWrapper {...args} />,
   parameters: {
     form: {
       defaultValues: {
