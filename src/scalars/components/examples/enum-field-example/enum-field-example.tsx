@@ -5,7 +5,9 @@ import { Form } from '../../form/index.js'
 const EnumFieldExample = () => {
   const onSubmit = async (data: any) => {
     // simulate a network request
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // this is a test
+    // eslint-disable-next-line no-alert
     alert(JSON.stringify(data, null, 2))
   }
 

@@ -11,7 +11,7 @@ import { StringField } from './string-field.js'
 const meta: Meta<typeof StringField> = {
   title: 'Document Engineering/Scalars/String Field',
   component: StringField,
-  decorators: [withForm, Story => <div className="w-48">{Story()}</div>],
+  decorators: [withForm, (Story) => <div className="w-48">{Story()}</div>],
   parameters: {
     layout: 'centered',
   },

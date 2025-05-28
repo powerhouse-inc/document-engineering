@@ -28,7 +28,7 @@ export interface BasePickerFieldProps extends InputBaseProps<string>, FieldError
   className?: string
 }
 
-export const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChildren<BasePickerFieldProps>>(
+const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChildren<BasePickerFieldProps>>(
   (
     {
       id,
@@ -75,7 +75,11 @@ export const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChild
                   'button-ghost',
                   disabled && 'cursor-not-allowed hover:bg-transparent'
                 )}
-                onClick={() => !disabled && setIsOpen(isOpen)}
+                onClick={() => {
+                  if (!disabled) {
+                    setIsOpen(isOpen)
+                  }
+                }}
               >
                 <Icon size={16} name={iconName} className="hover:none text-gray-700 dark:text-gray-50" />
               </Button>
@@ -121,3 +125,7 @@ export const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChild
     )
   }
 )
+
+BasePickerField.displayName = 'BasePickerField'
+
+export { BasePickerField }

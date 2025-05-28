@@ -50,7 +50,7 @@ export const CurrencyCodeFieldRaw = React.forwardRef<HTMLButtonElement, Currency
 
       return (
         (defaultCurrencies
-          .map(currency => {
+          .map((currency) => {
             if (favoriteTickers.has(currency.ticker)) {
               return null
             }
@@ -78,8 +78,8 @@ export const CurrencyCodeFieldRaw = React.forwardRef<HTMLButtonElement, Currency
       const favoriteTickers = new Set(favoriteCurrencies)
       return (
         defaultCurrencies
-          .filter(currency => favoriteTickers.has(currency.ticker))
-          .map(currency => {
+          .filter((currency) => favoriteTickers.has(currency.ticker))
+          .map((currency) => {
             let label = currency.label ?? currency.ticker
             if (includeCurrencySymbols && currency.symbol) {
               label = symbolPosition === 'right' ? `${label} (${currency.symbol})` : `(${currency.symbol}) ${label}`

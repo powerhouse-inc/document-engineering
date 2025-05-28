@@ -12,7 +12,7 @@ interface ToggleBaseProps {
 const ToggleBase = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & ToggleBaseProps
->(({ className, disabled = false, checked = true, required = false, onChange = () => {}, ...props }, ref) => (
+>(({ className, disabled = false, checked = true, required = false, onChange = () => undefined, ...props }, ref) => (
   <SwitchPrimitives.Root
     required={required}
     checked={checked}

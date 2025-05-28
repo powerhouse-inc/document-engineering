@@ -58,8 +58,12 @@ describe('TextareaField Component', () => {
       expect(screen.getByText('Help text')).toBeInTheDocument()
       expect(screen.getByText('Warning 1')).toBeInTheDocument()
       expect(screen.getByText('Warning 2')).toBeInTheDocument()
-      await waitFor(() => expect(screen.getByText('Error 1')).toBeInTheDocument())
-      await waitFor(() => expect(screen.getByText('Error 2')).toBeInTheDocument())
+      await waitFor(() => {
+        expect(screen.getByText('Error 1')).toBeInTheDocument()
+      })
+      await waitFor(() => {
+        expect(screen.getByText('Error 2')).toBeInTheDocument()
+      })
     })
   })
 
@@ -102,7 +106,9 @@ describe('TextareaField Component', () => {
   describe('Form Integration', () => {
     it('should handle form operations', async () => {
       const user = userEvent.setup()
-      const handleSubmit = vi.fn((e: React.FormEvent) => e.preventDefault())
+      const handleSubmit = vi.fn((e: React.FormEvent) => {
+        e.preventDefault()
+      })
 
       renderWithForm(
         <form onSubmit={handleSubmit}>

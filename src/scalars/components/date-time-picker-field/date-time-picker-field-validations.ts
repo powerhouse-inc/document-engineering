@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { type DateFieldValue } from '../../../ui/components/data-entry/date-picker/types.js'
+import type { DateFieldValue } from '../../../ui/components/data-entry/date-picker/types.js'
 import {
   formatDateToValidCalendarDateFormat,
   getDateFromValue,

@@ -7,7 +7,7 @@ import { IdField } from './id-field.js'
 describe('IdField', () => {
   it('should render a hidden input field', () => {
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <IdField data-testid="id-field" />
       </Form>
     )
@@ -19,7 +19,7 @@ describe('IdField', () => {
 
   it("should use default name 'id' when no name prop provided", () => {
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <IdField data-testid="id-field" />
       </Form>
     )
@@ -30,7 +30,7 @@ describe('IdField', () => {
 
   it('should use custom name when name prop provided', () => {
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <IdField name="customId" data-testid="id-field" />
       </Form>
     )
@@ -41,7 +41,7 @@ describe('IdField', () => {
 
   it('should use provided value when value prop is set', () => {
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <IdField value="static-id" data-testid="id-field" />
       </Form>
     )
@@ -56,7 +56,7 @@ describe('IdField', () => {
     }))
 
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <IdField data-testid="id-field" />
       </Form>
     )
@@ -69,7 +69,7 @@ describe('IdField', () => {
     const customGenerator = () => 'custom-generated-id'
 
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <IdField generator={customGenerator} data-testid="id-field" />
       </Form>
     )

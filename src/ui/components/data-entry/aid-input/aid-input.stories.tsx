@@ -33,7 +33,7 @@ const meta: Meta<typeof AIDInput> = {
   title: 'Document Engineering/Data Entry/AID Input',
   component: AIDInput,
   decorators: [
-    Story => (
+    (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
-import {
-  getDefaultArgTypes,
-  getValidationArgTypes,
-  PrebuiltArgTypes,
-  StorybookControlCategory,
-} from '../../lib/storybook-arg-types.js'
+import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } from '../../lib/storybook-arg-types.js'
 import { BooleanField } from './boolean-field.js'
 
 const meta = {

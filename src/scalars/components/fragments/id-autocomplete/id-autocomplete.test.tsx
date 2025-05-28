@@ -6,7 +6,7 @@ import { IdAutocomplete } from './id-autocomplete.js'
 describe('IdAutocomplete Component', () => {
   window.HTMLElement.prototype.scrollIntoView = vi.fn()
   window.Element.prototype.scrollTo = vi.fn()
-  window.matchMedia = vi.fn().mockImplementation(query => ({
+  window.matchMedia = vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query as string,
     onchange: null,
@@ -36,7 +36,7 @@ describe('IdAutocomplete Component', () => {
 
   const defaultGetOptions = vi.fn().mockResolvedValue(mockedOptions)
   const defaultGetSelectedOption = vi.fn().mockImplementation((value: string) => {
-    return mockedOptions.find(option => option.value === value)
+    return mockedOptions.find((option) => option.value === value)
   })
 
   it('should match snapshot', () => {
@@ -100,7 +100,9 @@ describe('IdAutocomplete Component', () => {
         fetchSelectedOptionCallback={defaultGetSelectedOption}
       />
     )
-    await waitFor(() => expect(screen.getByText('Invalid format')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Invalid format')).toBeInTheDocument()
+    })
   })
 
   it('should display warning messages', () => {
@@ -163,7 +165,9 @@ describe('IdAutocomplete Component', () => {
 
     const input = screen.getByRole('combobox')
     expect(input).toHaveAttribute('aria-required', 'true')
-    await waitFor(() => expect(input).toHaveAttribute('aria-invalid', 'true'))
+    await waitFor(() => {
+      expect(input).toHaveAttribute('aria-invalid', 'true')
+    })
     expect(input).toHaveAttribute('aria-expanded', 'false')
   })
 

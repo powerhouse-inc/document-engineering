@@ -1,7 +1,7 @@
 import { Icon } from '../../../../../../ui/components/icon/index.js'
 import { cn } from '../../../../../../scalars/lib/index.js'
 import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
-import { type DatePickerView } from '../../types.js'
+import type { DatePickerView } from '../../types.js'
 interface CaptionLabelProps extends React.PropsWithChildren {
   showYearSwitcher: boolean
   navView: DatePickerView
@@ -22,7 +22,9 @@ const CaptionLabel: React.FC<CaptionLabelProps> = ({ children, showYearSwitcher,
       <Button
         className={cn('truncate text-sm font-semibold', isSelectedYear ? 'text-gray-900' : 'text-gray-600')}
         variant="ghost"
-        onClick={() => setNavView('years')}
+        onClick={() => {
+          setNavView('years')
+        }}
       >
         <span className={cn(isSelectedMonth ? 'text-gray-900' : 'text-gray-600')}>{monthAbbreviation}</span>
         <span className={cn(isSelectedYear ? 'text-gray-900' : 'text-gray-600')}>{yearNumber}</span>
@@ -31,10 +33,17 @@ const CaptionLabel: React.FC<CaptionLabelProps> = ({ children, showYearSwitcher,
         <Icon
           className="size-[18px] cursor-pointer text-gray-600"
           name="TriangleDown"
-          onClick={() => setNavView('years')}
+          onClick={() => {
+            setNavView('years')
+          }}
         />
       ) : (
-        <Button variant="ghost" onClick={() => setNavView('days')}>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setNavView('days')
+          }}
+        >
           <Icon className="size-[18px] text-gray-900" name="CrossCircle" />
         </Button>
       )}

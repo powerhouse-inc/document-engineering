@@ -1,7 +1,6 @@
 import type { IconName } from '../../../components/icon/index.js'
-import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import type { DiffMode, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import type React from 'react'
-import type { DiffMode, WithDifference } from '../../../../scalars/components/types.js'
 
 interface SelectWithDifference extends Omit<WithDifference<string>, 'diffMode'> {
   diffMode?: Extract<DiffMode, 'sentences'>

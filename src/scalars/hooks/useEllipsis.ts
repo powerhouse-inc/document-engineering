@@ -17,7 +17,9 @@ export const useEllipsis = <T extends HTMLElement>(ref: React.RefObject<T>): boo
     })
     observer.observe(element)
 
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+    }
   }, [ref])
 
   return hasEllipsis

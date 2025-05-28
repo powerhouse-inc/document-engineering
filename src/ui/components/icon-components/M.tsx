@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function M(props: Props) {
+
+const M = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="none">
       <path
@@ -13,3 +14,7 @@ export default function M(props: Props) {
     </svg>
   )
 }
+
+M.displayName = 'M'
+
+export default M

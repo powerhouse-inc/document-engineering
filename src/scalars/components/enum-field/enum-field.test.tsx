@@ -44,7 +44,9 @@ describe('EnumField Component', () => {
 
   it('should render error messages when provided', async () => {
     renderWithForm(<EnumField {...defaultProps} errors={['Error message']} />)
-    await waitFor(() => expect(screen.getByText('Error message')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Error message')).toBeInTheDocument()
+    })
   })
 
   it('should handle value changes in RadioGroup variant', async () => {

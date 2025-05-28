@@ -3,7 +3,7 @@ import { format, isValid, parse } from 'date-fns'
 export const ALLOWED_FORMATS = ['yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy', 'dd-MMM-yyyy', 'MMM-dd-yyyy']
 
 export const isFormatAllowed = (dateString: string) =>
-  Object.values(dateFormatRegexes).some(regex => regex.test(dateString))
+  Object.values(dateFormatRegexes).some((regex) => regex.test(dateString))
 
 export const isDateFormatAllowed = (dateString: string, dateFormat?: string) => {
   if (!dateFormat) return isFormatAllowed(dateString)
@@ -84,7 +84,7 @@ export const getOffset = (timeZone?: string) => {
       timeZoneName: 'shortOffset',
     })
     // Extract the offset from the format
-    const offsetPart = formatter.formatToParts(new Date()).find(part => part.type === 'timeZoneName')?.value
+    const offsetPart = formatter.formatToParts(new Date()).find((part) => part.type === 'timeZoneName')?.value
 
     if (!offsetPart) return getLocalOffset()
     const offsetMatch =
@@ -96,7 +96,7 @@ export const getOffset = (timeZone?: string) => {
     const minutes = (offsetMatch[3] || '00').padStart(2, '0')
 
     return `${sign}${hours}:${minutes}`
-  } catch (error) {
+  } catch {
     return getLocalOffset()
   }
 }
@@ -173,7 +173,7 @@ export const getDateFormat = (displayFormat: string): string | undefined => {
 export const normalizeMonthFormat = (dateString: string): string => {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
-  return dateString.replace(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i, month => {
+  return dateString.replace(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i, (month) => {
     const upperMonth = month.toUpperCase()
     const monthIndex = months.indexOf(upperMonth)
     if (monthIndex !== -1) {
@@ -211,7 +211,7 @@ export const parseDateValue = (dateValue: string | number | undefined) => {
         )
         return utcDate
       }
-    } catch (e) {
+    } catch {
       continue
     }
   }

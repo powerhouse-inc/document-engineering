@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { isNotSafeValue } from '../../../ui/components/data-entry/amount-input/utils.js'
-import { type NumericType } from './types.js'
+import type { NumericType } from './types.js'
 import { getDisplayValue } from './utils.js'
 
 interface UseNumberFieldProps {

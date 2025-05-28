@@ -1,5 +1,5 @@
 import { Kind } from 'graphql'
-import { scalar, type AmountFiat } from '../AmountFiat.js'
+import { type AmountFiat, scalar } from '../AmountFiat.js'
 
 describe('AmountFiat Scalar', () => {
   const validAmount: AmountFiat = {
@@ -36,7 +36,7 @@ describe('AmountFiat Scalar', () => {
 
     it('should parse valid amounts for all supported currencies', () => {
       const currencies = ['USD', 'EUR', 'GBP', 'INVALID']
-      currencies.forEach(currency => {
+      currencies.forEach((currency) => {
         expect(scalar.parseValue({ unit: currency, value: 1.5 })).toEqual({
           unit: currency,
           value: 1.5,

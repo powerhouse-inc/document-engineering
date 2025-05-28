@@ -28,7 +28,7 @@ export function deepEqual(a: unknown, b: unknown, visited = new Map()): boolean 
     const bKeys = Object.keys(b)
     return (
       aKeys.length === bKeys.length &&
-      aKeys.every(key => {
+      aKeys.every((key) => {
         return key in b && deepEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key], visited)
       })
     )

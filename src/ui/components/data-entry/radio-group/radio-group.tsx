@@ -7,13 +7,13 @@ import { CustomizableRadioGroup } from './customizable-radio-group.js'
 import { Radio } from './radio.js'
 
 interface RadioGroupBaseProps {
-  options?: {
+  options?: Array<{
     value: string
     label: string
     description?: string
     disabled?: boolean
     className?: string
-  }[]
+  }>
   onChange?: (value: string) => void
 }
 
@@ -62,7 +62,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         defaultValue={defaultValue}
         id={id}
         name={name}
-        onValueChange={newValue => {
+        onValueChange={(newValue) => {
           onChange?.(newValue)
         }}
         value={value}

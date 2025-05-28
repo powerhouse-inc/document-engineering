@@ -7,7 +7,7 @@ import { Form } from './form.js'
 describe('Form', () => {
   it('should render children as React nodes', () => {
     render(
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={() => undefined}>
         <div data-testid="child">Test Child</div>
       </Form>
     )
@@ -16,8 +16,8 @@ describe('Form', () => {
 
   it('should render children as function with form methods', () => {
     render(
-      <Form onSubmit={() => {}}>
-        {methods => <div data-testid="child">{methods.formState.isSubmitting ? 'Submitting' : 'Not Submitting'}</div>}
+      <Form onSubmit={() => undefined}>
+        {(methods) => <div data-testid="child">{methods.formState.isSubmitting ? 'Submitting' : 'Not Submitting'}</div>}
       </Form>
     )
     expect(screen.getByTestId('child')).toHaveTextContent('Not Submitting')
@@ -110,7 +110,7 @@ describe('Form', () => {
     render(
       // disable tailwind custom classname rule for this test
 
-      <Form onSubmit={() => {}} className="test-class">
+      <Form onSubmit={() => undefined} className="test-class">
         Test
       </Form>
     )

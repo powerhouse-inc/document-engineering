@@ -32,7 +32,7 @@ export const validateTimePicker =
       }
     }
     if (timeFormat && !isFormatTimeAllowed(timeFormat)) {
-      return `Invalid time format. Please select a valid format`
+      return 'Invalid time format. Please select a valid format'
     }
     // Validar formato 24-hour (HH:mm)
     if (timeFormat === 'HH:mm') {

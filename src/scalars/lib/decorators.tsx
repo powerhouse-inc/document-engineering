@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Button } from '@powerhousedao/design-system'
-import { type Decorator } from '@storybook/react'
-import { type Args, type DecoratorFunction } from '@storybook/types'
+import type { Decorator } from '@storybook/react'
+import type { Args, DecoratorFunction } from '@storybook/types'
 import { format } from 'date-fns'
 import { useCallback, useId, useRef, useState } from 'react'
-import { type UseFormReturn } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
 import { Checkbox } from '../../ui/components/data-entry/checkbox/checkbox.js'
 import { Form } from '../components/form/index.js'
 
@@ -37,10 +38,10 @@ export const withForm: Decorator = (Story, context) => {
 
   const onReset = useCallback(() => {
     if (resetBehavior === 'unmount') {
-      setResetKey(prev => prev + 1)
+      setResetKey((prev) => prev + 1)
     } else {
       const defaultValues = Object.fromEntries(
-        Object.keys(formRef.current?.control._fields ?? {}).map(fieldName => [
+        Object.keys(formRef.current?.control._fields ?? {}).map((fieldName) => [
           fieldName,
           formParameters?.defaultValues?.[fieldName] ?? '',
         ])
@@ -59,6 +60,7 @@ export const withForm: Decorator = (Story, context) => {
 
     // delay the alert to allow component JS to finish the execution
     setTimeout(() => {
+      // eslint-disable-next-line no-alert
       alert(serializedData)
     }, 300)
   }, [])
@@ -122,7 +124,7 @@ export const withTimestampsAsISOStrings: DecoratorFunction<any> = (Story, contex
     const newArgs = { ...args }
 
     // Iterate through all args properties
-    Object.keys(newArgs).forEach(key => {
+    Object.keys(newArgs).forEach((key) => {
       const value = newArgs[key] as unknown
       if ((key === 'minDate' || key === 'maxDate') && typeof value === 'string') {
         const timestamp = new Date(value).getTime()

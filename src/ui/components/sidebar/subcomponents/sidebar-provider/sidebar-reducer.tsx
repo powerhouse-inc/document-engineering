@@ -1,4 +1,4 @@
-import { type SidebarNode } from '../../types.js'
+import type { SidebarNode } from '../../types.js'
 
 // State interface
 export interface SidebarState {

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function CaretSort(props: Props) {
+
+const CaretSort = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 15 16" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function CaretSort(props: Props) {
     </svg>
   )
 }
+
+CaretSort.displayName = 'CaretSort'
+
+export default CaretSort

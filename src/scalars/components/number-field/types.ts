@@ -1,6 +1,6 @@
 import type { FieldErrorHandling, InputBaseProps } from '../types.js'
 
-type NumberProps = {
+interface NumberProps {
   numericType?: NumericType | undefined
   minValue?: number
   maxValue?: number

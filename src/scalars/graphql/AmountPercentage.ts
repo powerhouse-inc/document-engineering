@@ -1,7 +1,7 @@
 import { GraphQLError, GraphQLScalarType, type GraphQLScalarTypeConfig, Kind } from 'graphql'
 import { z } from 'zod'
 
-export type ScalarType = {
+export interface ScalarType {
   input: number // Update this accordingly
   output: number // Update this accordingly
 }
@@ -34,7 +34,7 @@ export const config: GraphQLScalarTypeConfig<number, number> = {
   description: '',
   serialize: amountPercentageValidation,
   parseValue: amountPercentageValidation,
-  parseLiteral: value => {
+  parseLiteral: (value) => {
     if (value.kind !== Kind.FLOAT) {
       throw new GraphQLError('some error message', { nodes: value })
     }

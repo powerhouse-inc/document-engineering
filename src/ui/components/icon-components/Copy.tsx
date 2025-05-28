@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Copy(props: Props) {
+
+const Copy = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function Copy(props: Props) {
     </svg>
   )
 }
+
+Copy.displayName = 'Copy'
+
+export default Copy

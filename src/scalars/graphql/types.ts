@@ -1,5 +1,5 @@
-import { type GraphQLScalarType, type GraphQLScalarTypeConfig } from 'graphql'
-import { type z } from 'zod'
+import type { GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql'
+import type { z } from 'zod'
 
 export type Serializable =
   | string
@@ -10,7 +10,7 @@ export type Serializable =
   | Serializable[]
   | { [key: string]: Serializable }
 
-export type BasePHScalar<TInput> = {
+export interface BasePHScalar<TInput> {
   type: string
   typedef: `scalar ${string}`
   schema: z.ZodType<TInput>

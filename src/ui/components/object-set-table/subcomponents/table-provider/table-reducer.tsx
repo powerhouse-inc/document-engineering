@@ -99,7 +99,7 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
         selectedCellIndex: null,
         lastSelectedRowIndex: action.payload.index,
         selectedRowIndexes: state.selectedRowIndexes.includes(action.payload.index)
-          ? [...state.selectedRowIndexes.filter(index => index !== action.payload.index)]
+          ? [...state.selectedRowIndexes.filter((index) => index !== action.payload.index)]
           : [...state.selectedRowIndexes, action.payload.index],
       }
     }
@@ -130,9 +130,9 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
 
       // we're selecting a range of rows
       const selectedRowIndexesSet = new Set(state.selectedRowIndexes)
-      const [start, end] = [action.payload, state.lastSelectedRowIndex].sort()
+      const [start, end] = [action.payload, state.lastSelectedRowIndex].sort((a, b) => a - b)
 
-      Array.from({ length: end - start + 1 }, (_, index) => index + start).forEach(index =>
+      Array.from({ length: end - start + 1 }, (_, index) => index + start).forEach((index) =>
         selectedRowIndexesSet.add(index)
       )
 

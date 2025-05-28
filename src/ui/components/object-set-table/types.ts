@@ -2,7 +2,7 @@ export interface ObjectSetTableConfig<T> {
   /**
    * The columns to display in the table.
    */
-  columns: ColumnDef<T>[]
+  columns: Array<ColumnDef<T>>
 
   /**
    * The data to display in the table.
@@ -235,7 +235,7 @@ export interface ColumnDef<T = any> {
    *
    * @returns Whether the value was saved.
    */
-  onSave?: OnCellSaveFn<T, any>
+  onSave?: OnCellSaveFn<T, unknown>
 
   /**
    * The width of the column. It accepts any valid CSS width value.
@@ -268,7 +268,7 @@ export interface ColumnDef<T = any> {
 
 export type DataType = any
 
-export type TableCellIndex = {
+export interface TableCellIndex {
   row: number
   column: number
 }

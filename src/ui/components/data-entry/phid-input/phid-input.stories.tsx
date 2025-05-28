@@ -33,7 +33,7 @@ const meta: Meta<typeof PHIDInput> = {
   title: 'Document Engineering/Data Entry/PHID Input',
   component: PHIDInput,
   decorators: [
-    Story => (
+    (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

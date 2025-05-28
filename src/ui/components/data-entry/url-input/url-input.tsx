@@ -1,4 +1,4 @@
-import React, { useCallback, useId, useMemo, useState, useEffect } from 'react'
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react'
 import UrlFavicon from './url-favicon.js'
 import { useURLWarnings } from './useURLWarnings.js'
 import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
