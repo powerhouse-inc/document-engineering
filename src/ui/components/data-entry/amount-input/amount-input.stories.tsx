@@ -220,7 +220,10 @@ const AmountInputWrapper = (props: AmountInputProps) => {
 
   return <AmountInput {...props} type="Amount" value={value} onChange={handleChange} name="amount-field" />
 }
-const AmountPercentageInputWrapper = (props: AmountInputProps) => {
+
+type AmountPercentageInputProps = Omit<AmountInputProps, 'units'>
+
+const AmountPercentageInputWrapper = (props: AmountPercentageInputProps) => {
   const [value, setValue] = useState<AmountPercentage>(props.value as AmountPercentage)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -228,7 +231,7 @@ const AmountPercentageInputWrapper = (props: AmountInputProps) => {
     setValue(newValue)
   }
 
-  return <AmountInput type="AmountPercentage" value={value} onChange={handleChange} name="amount-field" />
+  return <AmountInput {...props} type="AmountPercentage" value={value} onChange={handleChange} name="amount-field" />
 }
 
 const AmountFiatInputWrapper = (props: AmountInputProps) => {
@@ -240,15 +243,15 @@ const AmountFiatInputWrapper = (props: AmountInputProps) => {
   }
   return <AmountInput {...props} type="Amount" value={value} onChange={handleChange} name="amount-field" />
 }
-
-const AmountCryptoInputWrapper = (props: AmountInputProps) => {
+type AmountCryptoInputProps = Omit<AmountInputProps, 'trailingZeros'>
+const AmountCryptoInputWrapper = (props: AmountCryptoInputProps) => {
   const [value, setValue] = useState<AmountCrypto>(props.value as AmountCrypto)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value as unknown as AmountCrypto
     setValue(newValue)
   }
-  return <AmountInput type="AmountCrypto" value={value} onChange={handleChange} name="amount-field" />
+  return <AmountInput {...props} type="AmountCrypto" value={value} onChange={handleChange} name="amount-field" />
 }
 
 const AmountCurrencyInputWrapper = (props: AmountInputProps) => {
