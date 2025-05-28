@@ -228,12 +228,7 @@ const AmountPercentageInputWrapper = (props: AmountInputProps) => {
     setValue(newValue)
   }
 
-  // When using the AmountPercentage type, the units prop is not used, so we need to remove it from the props
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { units, ...restProps } = props
-  return (
-    <AmountInput {...restProps} type="AmountPercentage" value={value} onChange={handleChange} name="amount-field" />
-  )
+  return <AmountInput type="AmountPercentage" value={value} onChange={handleChange} name="amount-field" />
 }
 
 const AmountFiatInputWrapper = (props: AmountInputProps) => {
@@ -253,9 +248,7 @@ const AmountCryptoInputWrapper = (props: AmountInputProps) => {
     const newValue = e.target.value as unknown as AmountCrypto
     setValue(newValue)
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { trailingZeros, ...restProps } = props
-  return <AmountInput {...restProps} type="AmountCrypto" value={value} onChange={handleChange} name="amount-field" />
+  return <AmountInput type="AmountCrypto" value={value} onChange={handleChange} name="amount-field" />
 }
 
 const AmountCurrencyInputWrapper = (props: AmountInputProps) => {
@@ -265,9 +258,7 @@ const AmountCurrencyInputWrapper = (props: AmountInputProps) => {
     const newValue = e.target.value as unknown as AmountCurrency
     setValue(newValue)
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { trailingZeros, ...restProps } = props
-  return <AmountInput {...restProps} type="AmountCurrency" value={value} onChange={handleChange} name="amount-field" />
+  return <AmountInput {...props} type="AmountCurrency" value={value} onChange={handleChange} name="amount-field" />
 }
 
 export const Default: Story = {
