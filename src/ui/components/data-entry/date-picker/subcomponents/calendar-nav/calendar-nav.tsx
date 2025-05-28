@@ -1,11 +1,10 @@
 import { Icon } from '../../../../../../ui/components/icon/index.js'
 import { cn } from '../../../../../../scalars/lib/index.js'
 import { differenceInCalendarDays } from 'date-fns'
-
 import { useCallback, useMemo } from 'react'
 import { useDayPicker } from 'react-day-picker'
 import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
-import { type DatePickerView } from '../../types.js'
+import type { DatePickerView } from '../../types.js'
 
 interface NavProps {
   className?: string
@@ -100,7 +99,7 @@ const NavCalendar: React.FC<NavProps> = ({
         tabIndex={isPreviousDisabled ? undefined : -1}
         disabled={isPreviousDisabled}
         aria-label={
-          navView === 'years' ? `Go to the previous ${displayYears.to - displayYears.from + 1} years` : `Previous month`
+          navView === 'years' ? `Go to the previous ${displayYears.to - displayYears.from + 1} years` : 'Previous month'
         }
         onClick={handlePreviousClick}
       >
@@ -114,7 +113,7 @@ const NavCalendar: React.FC<NavProps> = ({
         tabIndex={isNextDisabled ? undefined : -1}
         disabled={isNextDisabled}
         aria-label={
-          navView === 'years' ? `Go to the next ${displayYears.to - displayYears.from + 1} years` : `Next month`
+          navView === 'years' ? `Go to the next ${displayYears.to - displayYears.from + 1} years` : 'Next month'
         }
         onClick={handleNextClick}
       >

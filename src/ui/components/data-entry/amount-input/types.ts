@@ -1,8 +1,10 @@
-import { type Currency } from '../../../../scalars/components/currency-code-field/types.js'
-export type Amount = {
+import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
+
+export interface Amount {
   amount?: number
   unit?: CurrencyTicker
 }
+
 export type AmountPercentage = number | undefined
 export type CurrencyTicker = Currency['ticker']
 

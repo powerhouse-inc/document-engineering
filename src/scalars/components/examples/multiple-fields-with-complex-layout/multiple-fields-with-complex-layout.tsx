@@ -8,7 +8,9 @@ import { StringField } from '../../string-field/index.js'
 const MultipleFieldsWithComplexLayout = () => {
   const onSubmit = async (data: any) => {
     // simulate a slow network request
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    // this is a test
+    // eslint-disable-next-line no-alert
     alert(JSON.stringify(data, null, 2))
   }
 

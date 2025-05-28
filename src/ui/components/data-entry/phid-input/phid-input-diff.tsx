@@ -71,7 +71,7 @@ const PHIDInputDiff = ({
   basePreviewDescription = '',
 }: PHIDInputDiffProps) => {
   const matchingOption = Array.isArray(initialOptions)
-    ? initialOptions.find(option => option.value === value)
+    ? initialOptions.find((option) => option.value === value)
     : undefined
   const previewPlaceholderPath =
     (typeof previewPlaceholder?.path === 'object' ? previewPlaceholder.path.text : previewPlaceholder?.path) ?? ''

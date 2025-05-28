@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function CheckCircle(props: Props) {
+
+const CheckCircle = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="10" fill="none" />
@@ -14,3 +15,7 @@ export default function CheckCircle(props: Props) {
     </svg>
   )
 }
+
+CheckCircle.displayName = 'CheckCircle'
+
+export default CheckCircle

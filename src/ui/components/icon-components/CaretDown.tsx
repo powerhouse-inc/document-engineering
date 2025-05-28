@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function CaretDown(props: Props) {
+
+const CaretDown = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function CaretDown(props: Props) {
     </svg>
   )
 }
+
+CaretDown.displayName = 'CaretDown'
+
+export default CaretDown

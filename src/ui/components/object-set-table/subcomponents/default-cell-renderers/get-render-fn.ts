@@ -11,6 +11,8 @@ const getRenderFn = <T>(type: CellType | undefined): RenderCellFn<T> => {
       return renderNumberCell
     case 'boolean':
       return renderBooleanCell
+    case undefined:
+      return renderTextCell
     default:
       return renderTextCell
   }

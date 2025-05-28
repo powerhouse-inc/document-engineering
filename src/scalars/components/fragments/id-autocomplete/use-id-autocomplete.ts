@@ -66,9 +66,9 @@ export function useIdAutocomplete({
         try {
           const result = fetchOptions(newValue, context)
           Promise.resolve(result)
-            .then(newOptions => {
+            .then((newOptions) => {
               setOptions(newOptions)
-              const matchingOption = newOptions.find(opt => opt.value === newValue)
+              const matchingOption = newOptions.find((opt) => opt.value === newValue)
               if (matchingOption) {
                 setSelectedOption(matchingOption)
                 setIsPopoverOpen(false)
@@ -102,11 +102,11 @@ export function useIdAutocomplete({
         const isPromise = result instanceof Promise
 
         Promise.resolve(result)
-          .then(option => {
+          .then((option) => {
             if (option) {
               setSelectedOption(option)
-              setOptions(prevOptions => {
-                const optionIndex = prevOptions.findIndex(opt => opt.value === value)
+              setOptions((prevOptions) => {
+                const optionIndex = prevOptions.findIndex((opt) => opt.value === value)
                 if (optionIndex !== -1) {
                   const newOptions = [...prevOptions]
                   newOptions[optionIndex] = option
@@ -153,7 +153,7 @@ export function useIdAutocomplete({
       shouldFetchOptions.current = false
       isInternalChange.current = true
       setSelectedValue(optionValue)
-      setSelectedOption(options.find(opt => opt.value === optionValue))
+      setSelectedOption(options.find((opt) => opt.value === optionValue))
       clear()
       onChange?.(optionValue)
     },
@@ -243,7 +243,7 @@ export function useIdAutocomplete({
 
   useEffect(() => {
     if (initialOptions?.length && selectedValue) {
-      const matchingOption = initialOptions.find(opt => opt.value === selectedValue)
+      const matchingOption = initialOptions.find((opt) => opt.value === selectedValue)
       if (matchingOption) {
         setSelectedOption(matchingOption)
       }

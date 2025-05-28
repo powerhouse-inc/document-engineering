@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
 import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } from '../../lib/storybook-arg-types.js'
 import { CurrencyCodeField } from './currency-code-field.js'
+
 const meta: Meta<typeof CurrencyCodeField> = {
   title: 'Document Engineering/Scalars/Currency Code Field',
   component: CurrencyCodeField,
-  decorators: [withForm, Story => <div className="w-48">{Story()}</div>],
+  decorators: [withForm, (Story) => <div className="w-48">{Story()}</div>],
   parameters: {
     layout: 'centered',
   },
@@ -84,7 +85,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Currency',
-    onChange: () => {},
     allowedTypes: 'Both',
   },
 }
@@ -94,7 +94,6 @@ export const Disabled: Story = {
     label: 'Currency',
     value: 'EUR',
     disabled: true,
-    onChange: () => {},
     allowedTypes: 'Fiat',
   },
 }
@@ -102,7 +101,6 @@ export const Disabled: Story = {
 export const WithFavorites: Story = {
   args: {
     label: 'Currency',
-    onChange: () => {},
     currencies: [
       {
         ticker: 'BTC',

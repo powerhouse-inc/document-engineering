@@ -26,11 +26,11 @@ export const TextDiff = ({
   }, [baseValue, value, diffMode])
 
   const hasAdditions = useMemo(() => {
-    return wordsDiff.some(word => word.added)
+    return wordsDiff.some((word) => word.added)
   }, [wordsDiff])
 
   const hasRemovals = useMemo(() => {
-    return wordsDiff.some(word => word.removed)
+    return wordsDiff.some((word) => word.removed)
   }, [wordsDiff])
 
   const bgColor =

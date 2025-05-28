@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function PlusSquare(props: Props) {
+
+const PlusSquare = (props: Props) => {
   return (
     <svg {...props} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,3 +10,7 @@ export default function PlusSquare(props: Props) {
     </svg>
   )
 }
+
+PlusSquare.displayName = 'PlusSquare'
+
+export default PlusSquare

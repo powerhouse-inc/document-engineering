@@ -10,7 +10,7 @@ interface YearGridProps {
   startMonth?: Date
   endMonth?: Date
   actualMonth: string
-  months: { date: Date }[]
+  months: Array<{ date: Date }>
   currentYear: number
   onYearSelect: (year: number) => void
 }
@@ -28,7 +28,7 @@ export const YearGrid = ({
 
   return (
     <div className="grid grid-cols-3 gap-x-[14px] gap-y-[15px]">
-      {years.map(year => (
+      {years.map((year) => (
         <YearButton
           key={year}
           year={year}

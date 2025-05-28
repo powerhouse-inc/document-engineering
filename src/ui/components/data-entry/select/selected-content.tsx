@@ -1,5 +1,5 @@
 import { Icon, type IconName } from '../../../components/icon/index.js'
-import React from 'react'
+import type React from 'react'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { SelectProps } from './types.js'
 
@@ -50,7 +50,7 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
         className={cn('max-w-full truncate text-gray-900 dark:text-gray-50', !multiple && 'flex items-center gap-2')}
       >
         {selectedValues.map((value, index) => {
-          const option = options.find(o => o.value === value)
+          const option = options.find((o) => o.value === value)
           return !multiple ? (
             <div key={value} className={cn('flex items-center gap-2', optionsClassName, option?.className)}>
               {renderIcon(option?.icon)}
@@ -69,7 +69,7 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
       <div className="flex items-center justify-between gap-2">
         {multiple && selectedValues.length > 0 && (
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
               handleClear()

@@ -12,12 +12,12 @@ import {
   useRef,
   useState,
 } from 'react'
-import { type List } from 'react-virtualized'
+import type { List } from 'react-virtualized'
 import { type FlattenedNode, NodeStatus, type SidebarNode } from '../../types.js'
 import { filterStatuses, getMaxDepth, getNodePath, getOpenLevels, isOpenLevel, nodesSearch } from '../../utils.js'
 import { initialSidebarState, SidebarActionType, sidebarReducer, type SidebarState } from './sidebar-reducer.js'
 
-type SidebarContextType = {
+interface SidebarContextType {
   nodes: SidebarNode[]
   flattenedNodes: FlattenedNode[]
   expandedNodes: Set<string>
@@ -190,7 +190,7 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
         openPathToNode(nodeId)
       }
       if (scrollTo) {
-        const nodeIndex = flattenedNodesRef.current.findIndex(node => node.id === nodeId)
+        const nodeIndex = flattenedNodesRef.current.findIndex((node) => node.id === nodeId)
         setTimeout(() => {
           virtualListRef.current?.scrollToRow(nodeIndex)
         }, 100)
@@ -299,7 +299,9 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
     }
 
     // Cleanup the timeout on component unmount or when dependencies change
-    return () => clearTimeout(timeoutId)
+    return () => {
+      clearTimeout(timeoutId)
+    }
   }, [currentRoots, _state.searchTerm, openPathToNode])
 
   useEffect(() => {
@@ -344,16 +346,19 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
   }, [activeSearchIndex, openPathToNode])
 
   const setNodes = useCallback(
-    (newNodes: SidebarNode[]) => dispatch({ type: SidebarActionType.SET_NODES, payload: newNodes }),
+    (newNodes: SidebarNode[]) => {
+      dispatch({ type: SidebarActionType.SET_NODES, payload: newNodes })
+    },
     [dispatch]
   )
 
   const changeSearchTerm = useCallback(
-    (newTerm: string) =>
+    (newTerm: string) => {
       dispatch({
         type: SidebarActionType.CHANGE_SEARCH_TERM,
         payload: newTerm,
-      }),
+      })
+    },
     [dispatch]
   )
 

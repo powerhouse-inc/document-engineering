@@ -1,11 +1,11 @@
 import { Icon } from '../../../components/icon/index.js'
 import { cn } from '../../../../scalars/lib/index.js'
-import { type SelectBaseProps } from '../select/index.js'
+import type { SelectBaseProps } from '../select/index.js'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
-import { type Matcher } from 'react-day-picker'
-import { type SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
+import type { Matcher } from 'react-day-picker'
+import type { SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
 import { Calendar } from '../date-picker/subcomponents/calendar/calendar.js'
-import { type WeekStartDayNumber } from '../date-picker/types.js'
+import type { WeekStartDayNumber } from '../date-picker/types.js'
 import TimePickerContent from '../time-picker/subcomponents/time-picker-content.js'
 
 interface DateTimePickerContentProps {
@@ -34,7 +34,7 @@ interface DateTimePickerContentProps {
   is12HourFormat: boolean
   isDisableSelect?: boolean
   selectedTimeZone?: string
-  setSelectedTimeZone?: (timeZone: string | string[]) => void
+  setSelectedTimeZone?: (timeZone: string[] | string) => void
   timeZone?: string
   onSave: () => void
   onCancel: () => void

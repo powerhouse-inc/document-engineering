@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function TriangleDown(props: Props) {
+
+const TriangleDown = (props: Props) => {
   return (
     <svg {...props} width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g id="Triangle Down">
@@ -8,3 +9,7 @@ export default function TriangleDown(props: Props) {
     </svg>
   )
 }
+
+TriangleDown.displayName = 'TriangleDown'
+
+export default TriangleDown

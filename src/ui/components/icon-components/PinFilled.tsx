@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function PinFilled(props: Props) {
+
+const PinFilled = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -17,3 +18,7 @@ export default function PinFilled(props: Props) {
     </svg>
   )
 }
+
+PinFilled.displayName = 'PinFilled'
+
+export default PinFilled

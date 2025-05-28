@@ -183,7 +183,7 @@ const filterOptions = (options: PHIDOption[], userInput: string, context?: Recor
   const allowUris = context?.allowUris as boolean
   const allowedScopes = Array.isArray(context?.allowedScopes) ? context.allowedScopes : []
 
-  return options.filter(opt => {
+  return options.filter((opt) => {
     const isUrl = opt.value.startsWith('phd://')
 
     if (!isUrl && !allowUris) {
@@ -211,7 +211,7 @@ const filterOptions = (options: PHIDOption[], userInput: string, context?: Recor
 // Async versions
 export const fetchOptions = async (userInput: string, context?: Record<string, unknown>): Promise<PHIDOption[]> => {
   // Simulate 2s network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   // Add 20% chance of error
   if (Math.random() < 0.2) {
@@ -223,8 +223,8 @@ export const fetchOptions = async (userInput: string, context?: Record<string, u
 
 export const fetchSelectedOption = async (value: string): Promise<PHIDOption | undefined> => {
   // Simulate 2s network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
-  return mockedOptions.find(option => option.value === value)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  return mockedOptions.find((option) => option.value === value)
 }
 
 // Sync versions
@@ -233,5 +233,5 @@ export const fetchOptionsSync = (userInput: string, context?: Record<string, unk
 }
 
 export const fetchSelectedOptionSync = (value: string): PHIDOption | undefined => {
-  return mockedOptions.find(option => option.value === value)
+  return mockedOptions.find((option) => option.value === value)
 }

@@ -8,7 +8,7 @@ interface Network {
   name?: string
 }
 
-type AIDOptionProps = {
+interface AIDOptionProps {
   agentType?: string
 }
 

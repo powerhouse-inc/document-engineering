@@ -1,7 +1,7 @@
 import { GraphQLError, GraphQLScalarType, type GraphQLScalarTypeConfig, Kind } from 'graphql'
 import { z } from 'zod'
 
-export type ScalarType = {
+export interface ScalarType {
   input: string
   output: string
 }
@@ -33,7 +33,7 @@ export const config: GraphQLScalarTypeConfig<string, string> = {
     'A custom scalar representing an Ethereum address, validated as a 42-character hexadecimal string prefixed with "0x"',
   serialize: addressValidation,
   parseValue: addressValidation,
-  parseLiteral: value => {
+  parseLiteral: (value) => {
     if (value.kind !== Kind.STRING) {
       throw new GraphQLError('some error message', { nodes: value })
     }

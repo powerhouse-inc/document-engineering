@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Npm(props: Props) {
+
+const Npm = (props: Props) => {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
       <path
@@ -9,3 +10,7 @@ export default function Npm(props: Props) {
     </svg>
   )
 }
+
+Npm.displayName = 'Npm'
+
+export default Npm

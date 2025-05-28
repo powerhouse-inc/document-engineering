@@ -1,4 +1,4 @@
-import { type TransformerObject } from '../components/fragments/value-transformer/value-transformer.js'
+import type { TransformerObject } from '../components/fragments/value-transformer/value-transformer.js'
 
 export const sharedValueTransformers: Record<string, (ifParam?: boolean) => TransformerObject> = {
   trimOnBlur: (ifParam = true) => ({

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Discord(props: Props) {
+
+const Discord = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -13,3 +14,7 @@ export default function Discord(props: Props) {
     </svg>
   )
 }
+
+Discord.displayName = 'Discord'
+
+export default Discord

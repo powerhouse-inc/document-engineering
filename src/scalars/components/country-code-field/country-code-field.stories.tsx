@@ -13,7 +13,7 @@ const meta: Meta<typeof CountryCodeField> = {
   component: CountryCodeField,
   decorators: [
     withForm,
-    Story => (
+    (Story) => (
       <div style={{ maxWidth: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

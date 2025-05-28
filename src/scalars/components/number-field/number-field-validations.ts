@@ -105,7 +105,9 @@ export const validateNumericType =
         if (isInt) return true
         return 'This is not a valid BigInt'
       }
-
+      case undefined: {
+        return true
+      }
       default: {
         return true
       }

@@ -99,14 +99,13 @@ describe('DatePicker', () => {
     // Act: Open calendar and select date
     const calendarTrigger = screen.getByTestId('icon-fallback')
     await userEvent.click(calendarTrigger)
-    const calendar = await screen.findByRole('dialog')
     const dateButton = screen.getByRole('button', {
       name: 'Saturday, May 10th, 2025',
     })
     await userEvent.click(dateButton)
 
     // Assert: Input value matches custom format
-    const input = screen.getByRole('textbox') as HTMLInputElement
+    const input: HTMLInputElement = screen.getByRole('textbox')
     await waitFor(() => {
       expect(input.value).toMatch(/^\d{2}\/\d{2}\/\d{4}$/)
     })
@@ -119,7 +118,6 @@ describe('DatePicker', () => {
     // Act: Open calendar and click outside
     const calendarTrigger = screen.getByTestId('icon-fallback')
     await userEvent.click(calendarTrigger)
-    const calendar = await screen.findByRole('dialog')
     await userEvent.click(document.body)
 
     // Assert: Calendar is closed
@@ -129,7 +127,7 @@ describe('DatePicker', () => {
   it('should handle manual date input', async () => {
     // Arrange: Render component
     render(<DatePicker {...defaultProps} />)
-    const input = screen.getByRole('textbox') as HTMLInputElement
+    const input: HTMLInputElement = screen.getByRole('textbox')
 
     // Act: Type date manually
     await userEvent.type(input, '2024-03-20')
@@ -165,7 +163,6 @@ describe('DatePicker', () => {
     // Act: Open calendar and select date
     const calendarButton = screen.getByTestId('icon-fallback').closest('button')
     await userEvent.click(calendarButton!)
-    const calendar = await screen.findByRole('dialog')
     const dateButton = screen.getByRole('button', {
       name: 'Saturday, May 10th, 2025',
     })
@@ -184,11 +181,10 @@ describe('DatePicker', () => {
     // Act: Open calendar
     const calendarTrigger = screen.getByTestId('icon-fallback')
     await userEvent.click(calendarTrigger)
-    const calendar = await screen.findByRole('dialog')
 
     // Assert: Weekday headers are in correct order
     const weekdayHeaders = screen.getAllByRole('columnheader', { hidden: true })
-    const weekdays = weekdayHeaders.map(header => header.textContent)
+    const weekdays = weekdayHeaders.map((header) => header.textContent)
     expect(weekdays).toEqual(['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'])
   })
 })

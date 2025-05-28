@@ -1,6 +1,5 @@
-import type { DiffMode, WithDifference } from '../../../../scalars/components/types.js'
-import { IconName } from '../../icon/index.js'
-import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import type { DiffMode, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
+import type { IconName } from '../../icon/index.js'
 
 interface UrlInputWithDifference extends Omit<WithDifference<string>, 'diffMode'> {
   diffMode?: Extract<DiffMode, 'sentences'>

@@ -1,9 +1,9 @@
 import { format } from 'date-fns'
 import React, { useState } from 'react'
-import { type DateFieldValue } from '../date-picker/types.js'
+import type { DateFieldValue } from '../date-picker/types.js'
 import { useDatePickerField } from '../date-picker/use-date-picker.js'
 import { getDateFromValue, getTimeFromValue, isFormatDisabled } from '../date-picker/utils.js'
-import { type TimeFieldValue, type TimePeriod } from '../time-picker/type.js'
+import type { TimeFieldValue, TimePeriod } from '../time-picker/type.js'
 import { convertTimeFrom24To12Hours, useTimePicker } from '../time-picker/use-time-picker.js'
 import {
   cleanTime,
@@ -254,7 +254,7 @@ export const useDateTimePicker = ({
     const newVInput = newValue.split('T')[0]
 
     // Check if the date is empty when split the value by T
-    const valueEmptyDate = (value as string)?.split('T')[0] === ''
+    const valueEmptyDate = (value as string | undefined)?.split('T')[0] === ''
     if (valueEmptyDate) {
       setDateTimeToDisplay(inputValue)
       onChange?.(createChangeEvent(inputValue))

@@ -3,7 +3,7 @@ import {
   currencies,
   fiatCurrencies,
 } from '../../../../scalars/components/currency-code-field/utils.js'
-import { type Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
 import type { AmountInputPropsGeneric, AmountValue } from './types.js'
 
 export const getDefaultUnits = (type: AmountInputPropsGeneric['type']) => {
@@ -14,7 +14,8 @@ export const getDefaultUnits = (type: AmountInputPropsGeneric['type']) => {
       return cryptoCurrencies()
     case 'AmountCurrency':
       return currencies()
-    default:
+    case 'Amount':
+    case 'AmountPercentage':
       return []
   }
 }
@@ -103,17 +104,17 @@ export const createAmountValue = (inputValue: string) => {
 export const isValidUnit = (type: AmountInputPropsGeneric['type'], value: AmountValue, units?: Currency[]) => {
   if (!units) return true
   if (type === 'Amount' && typeof value === 'object' && 'unit' in value) {
-    return units.some(u => u.ticker === value.unit)
+    return units.some((u) => u.ticker === value.unit)
   }
   if (type === 'AmountCurrency' && typeof value === 'object') {
     console.log('ebtre')
-    return units.some(u => u.ticker === value.unit)
+    return units.some((u) => u.ticker === value.unit)
   }
   if (type === 'AmountCrypto' && typeof value === 'object') {
-    return units.some(u => u.ticker === value.unit)
+    return units.some((u) => u.ticker === value.unit)
   }
   if (type === 'AmountFiat' && typeof value === 'object') {
-    return units.some(u => u.ticker === value.unit)
+    return units.some((u) => u.ticker === value.unit)
   }
   return false
 }

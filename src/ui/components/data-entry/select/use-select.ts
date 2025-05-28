@@ -45,7 +45,7 @@ export function useSelect({ options = [], multiple = false, defaultValue, value,
 
       if (multiple) {
         newValues = selectedValues.includes(optionValue)
-          ? selectedValues.filter(v => v !== optionValue)
+          ? selectedValues.filter((v) => v !== optionValue)
           : [...selectedValues, optionValue]
       } else {
         newValues = selectedValues[0] === optionValue ? [] : [optionValue]
@@ -67,7 +67,7 @@ export function useSelect({ options = [], multiple = false, defaultValue, value,
 
   const toggleAll = useCallback(() => {
     isInternalChange.current = true
-    const enabledOptions = options.filter(opt => !opt.disabled).map(opt => opt.value)
+    const enabledOptions = options.filter((opt) => !opt.disabled).map((opt) => opt.value)
 
     const newValues = selectedValues.length === enabledOptions.length ? [] : enabledOptions
 

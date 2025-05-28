@@ -5,7 +5,7 @@ import {
   FormMessageList,
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
 import { forwardRef } from 'react'
 import { BasePickerField } from '../date-time-picker/base-picker.js'
 import { Calendar } from './subcomponents/calendar/calendar.js'

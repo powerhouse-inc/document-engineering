@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function RenownLight(props: Props) {
+
+const RenownLight = (props: Props) => {
   return (
     <svg {...props} width="83" height="22" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -46,3 +47,7 @@ export default function RenownLight(props: Props) {
     </svg>
   )
 }
+
+RenownLight.displayName = 'RenownLight'
+
+export default RenownLight

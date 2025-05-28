@@ -1,5 +1,4 @@
-import type React from 'react'
-import { useCallback } from 'react'
+import { type FC, useCallback } from 'react'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { ColumnDef } from '../types.js'
 import { getColumnTitle } from '../utils.js'
@@ -11,7 +10,7 @@ interface TableHeaderProps {
   columns: ColumnDef[]
 }
 
-const TableHeader: React.FC<TableHeaderProps> = ({ columns }) => {
+const TableHeader: FC<TableHeaderProps> = ({ columns }) => {
   const {
     config: { data, allowRowSelection },
     state: { selectedRowIndexes },
@@ -30,7 +29,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({ columns }) => {
     <thead>
       <tr className={cn('border-gray-300', !selectedRowIndexes.includes(0) && 'border-b')}>
         <HeaderNumberTd isAllRowsSelected={isAllRowsSelected} handleSelectAllRows={handleSelectAllRows} />
-        {columns.map(column => (
+        {columns.map((column) => (
           <HeaderCell key={column.field}>{getColumnTitle(column)}</HeaderCell>
         ))}
       </tr>

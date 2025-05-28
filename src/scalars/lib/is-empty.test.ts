@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { isEmpty } from './is-empty.js'
 
 describe('isEmpty', () => {
@@ -104,6 +104,6 @@ describe('isEmpty', () => {
   })
 
   it('should return false for functions', () => {
-    expect(isEmpty(() => {})).toBe(false)
+    expect(isEmpty(() => undefined)).toBe(false)
   })
 })

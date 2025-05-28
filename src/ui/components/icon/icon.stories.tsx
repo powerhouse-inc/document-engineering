@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { iconNames } from '../icon-components/index.js'
 import { Icon } from './icon.js'
 
@@ -22,7 +22,7 @@ export const AllIcons: Story = {
       <div className="bg-white p-8">
         <h2 className="mb-6 text-xl font-semibold">All Available Icons</h2>
         <div className="flex flex-wrap">
-          {iconNames.map(name => (
+          {iconNames.map((name) => (
             <div key={name} className="flex flex-col items-center gap-2 rounded-lg border border-gray-200 p-4">
               <div className="flex size-10 items-center justify-center">
                 <Icon name={name} className="text-gray-700" />

@@ -11,7 +11,7 @@ interface MonthGridProps {
 export const MonthGrid = ({ actualMonth, actualYear, onMonthSelect }: MonthGridProps) => {
   return (
     <div className="grid grid-cols-3 gap-x-[14px] gap-y-[15px]">
-      {MONTHS.flat().map(month => (
+      {MONTHS.flat().map((month) => (
         <Button
           key={month}
           variant="ghost"
@@ -21,7 +21,9 @@ export const MonthGrid = ({ actualMonth, actualYear, onMonthSelect }: MonthGridP
             'hover:bg-gray-100',
             month === actualMonth && 'bg-gray-900 text-white hover:bg-gray-900'
           )}
-          onClick={() => onMonthSelect(parseInt(actualYear), MONTHS.indexOf(month))}
+          onClick={() => {
+            onMonthSelect(parseInt(actualYear), MONTHS.indexOf(month))
+          }}
         >
           {month}
         </Button>

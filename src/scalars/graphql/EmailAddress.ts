@@ -1,7 +1,7 @@
 import { GraphQLError, GraphQLScalarType, type GraphQLScalarTypeConfig, Kind } from 'graphql'
 import { z } from 'zod'
 
-export type ScalarType = {
+export interface ScalarType {
   input: string
   output: string
 }
@@ -31,7 +31,7 @@ export const config: GraphQLScalarTypeConfig<string, string> = {
     'A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.',
   serialize: emailValidation,
   parseValue: emailValidation,
-  parseLiteral: value => {
+  parseLiteral: (value) => {
     if (value.kind !== Kind.STRING) {
       throw new GraphQLError(`Can only validate strings as email addresses but got a: ${value.kind}`, { nodes: value })
     }

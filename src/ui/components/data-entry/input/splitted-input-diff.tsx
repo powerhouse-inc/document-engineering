@@ -22,7 +22,9 @@ const CopyIcon = ({ value, hasCopied, setHasCopied, hasHover }: CopyIconProps) =
       .writeText(value)
       .then(() => {
         setHasCopied(true)
-        setTimeout(() => setHasCopied(false), 2000)
+        setTimeout(() => {
+          setHasCopied(false)
+        }, 2000)
       })
       .catch((error: unknown) => {
         console.error('Failed to copy value: ', error)
@@ -99,7 +101,7 @@ const SplittedInputDiff = ({
               diffMode={diffMode}
               className={cn('flex-1')}
               asLink={asLink}
-              icon={<UrlFavicon url={value ?? ''} platformIcons={platformIcons} />}
+              icon={<UrlFavicon url={value} platformIcons={platformIcons} />}
             />
             {showCopyIcon && value !== '' && (
               <CopyIcon value={value} hasCopied={hasCopiedRight} setHasCopied={setHasCopiedRight} hasHover={hasHover} />

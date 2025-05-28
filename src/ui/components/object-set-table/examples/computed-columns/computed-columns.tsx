@@ -2,18 +2,18 @@ import { useMemo } from 'react'
 import { cn } from '../../../../../scalars/index.js'
 import { mockData, type MockedPerson } from '../../mock-data.js'
 import { ObjectSetTable } from '../../object-set-table.js'
-import { ColumnDef } from '../../types.js'
+import type { ColumnDef } from '../../types.js'
 
 const ComputedColumnsExample = () => {
-  const columns = useMemo<ColumnDef<MockedPerson>[]>(
+  const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
       { field: 'firstName', title: 'Name' },
       {
         field: 'email',
         title: 'Email Domain',
-        valueFormatter: value => {
+        valueFormatter: (value) => {
           if (typeof value !== 'string') return value?.toString() ?? 'N/A'
-          return value?.toString().split('@')[1]
+          return value.toString().split('@')[1]
         },
       },
       {
@@ -43,7 +43,7 @@ const ComputedColumnsExample = () => {
       {
         field: 'address',
         title: 'Full Address',
-        valueFormatter: value => {
+        valueFormatter: (value) => {
           const addr = value as MockedPerson['address']
           return `${addr.addressLine1}, ${addr.city}, ${addr.state} ${addr.zip}`
         },

@@ -114,7 +114,7 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
             disabled={disabled}
             hasError={hasError}
             required={required}
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault()
               ;(e.target as HTMLLabelElement).control?.focus()
             }}
@@ -196,8 +196,10 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
                 ))}
               <PopoverContent
                 align="start"
-                onOpenAutoFocus={e => e.preventDefault()}
-                onInteractOutside={e => {
+                onOpenAutoFocus={(e) => {
+                  e.preventDefault()
+                }}
+                onInteractOutside={(e) => {
                   if (e.target instanceof Element && e.target.id === id) {
                     e.preventDefault()
                   }

@@ -6,7 +6,7 @@ export type ValueTransformer = (value?: any) => any
 
 export type TransformerTrigger = 'blur' | 'change' | 'keyDown'
 
-export type TransformerObject = {
+export interface TransformerObject {
   /**
    * The transformer function
    */
@@ -36,9 +36,11 @@ interface ValueTransformerProps {
 // following react core team recommendation
 // https://github.com/facebook/react/issues/10135
 function setNativeValue(element: HTMLInputElement, value: any) {
+  // eslint-disable-next-line @typescript-eslint/unbound-method -- this is a workaround
   const valueSetter = Object.getOwnPropertyDescriptor(element, 'value')?.set
   const prototype = Object.getPrototypeOf(element) as HTMLInputElement
 
+  // eslint-disable-next-line @typescript-eslint/unbound-method -- this is a workaround
   const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value')?.set
 
   if (valueSetter && valueSetter !== prototypeValueSetter) {
@@ -111,7 +113,7 @@ function _applyTransformers(
  */
 function ValueTransformer({ transformers, children }: ValueTransformerProps) {
   const formContext = useFormContext()
-  const setValue = formContext?.setValue
+  const setValue = formContext.setValue
 
   useEffect(() => {
     // apply all the transformers on mount to prevent untransformed values
@@ -121,7 +123,7 @@ function ValueTransformer({ transformers, children }: ValueTransformerProps) {
 
     if (!deepEqual(transformedValue, value)) {
       if (typeof setValue === 'function') {
-        setValue?.((children.props as { name: string }).name, transformedValue)
+        setValue((children.props as { name: string }).name, transformedValue)
       } else {
         // if setValue is not available, then we're not inside a form context
         // so we need to update the value using onChange if available
@@ -132,6 +134,7 @@ function ValueTransformer({ transformers, children }: ValueTransformerProps) {
     }
   }, [transformers])
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- this is a workaround
   return React.cloneElement(children, {
     ...children.props,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,7 +142,7 @@ function ValueTransformer({ transformers, children }: ValueTransformerProps) {
       const transformedValue = _applyTransformers(transformers, event.target.value, 'change')
 
       if (transformedValue !== event.target.value) {
-        setValue?.((children.props as { name: string }).name, transformedValue)
+        setValue((children.props as { name: string }).name, transformedValue)
         setNativeValue(event.target, transformedValue)
       }
 

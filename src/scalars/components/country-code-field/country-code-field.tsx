@@ -33,9 +33,9 @@ const CountryCodeFieldRaw = React.forwardRef<HTMLButtonElement, CountryCodeField
   ) => {
     const defaultOptions = (countries as unknown as Countries)
       .filter(
-        country => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ' // exclude Antarctica
+        (country) => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ' // exclude Antarctica
       )
-      .map(country => ({
+      .map((country) => ({
         value: country.cca2,
         label:
           viewMode === 'CodesOnly'
@@ -52,7 +52,7 @@ const CountryCodeFieldRaw = React.forwardRef<HTMLButtonElement, CountryCodeField
     const options =
       Array.isArray(allowedCountries) || Array.isArray(excludedCountries)
         ? defaultOptions.filter(
-            option =>
+            (option) =>
               (!allowedCountries || allowedCountries.includes(option.value)) &&
               !excludedCountries?.includes(option.value)
           )
@@ -73,6 +73,8 @@ const CountryCodeFieldRaw = React.forwardRef<HTMLButtonElement, CountryCodeField
   }
 )
 
+CountryCodeFieldRaw.displayName = 'CountryCodeFieldRaw'
+
 export const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(CountryCodeFieldRaw, {
   validations: {
     _validOption:
@@ -83,8 +85,8 @@ export const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(Count
         }
 
         const validCountries = (countries as unknown as Countries)
-          .filter(country => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ')
-          .map(country => country.cca2)
+          .filter((country) => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ')
+          .map((country) => country.cca2)
 
         // First check if it's a valid country code
         if (!validCountries.includes(value)) {

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function PeopleFill(props: Props) {
+
+const PeopleFill = (props: Props) => {
   return (
     <svg {...props} {...props} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,3 +10,7 @@ export default function PeopleFill(props: Props) {
     </svg>
   )
 }
+
+PeopleFill.displayName = 'PeopleFill'
+
+export default PeopleFill

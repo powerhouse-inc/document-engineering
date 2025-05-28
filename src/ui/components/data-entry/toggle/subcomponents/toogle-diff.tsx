@@ -32,7 +32,7 @@ const ToggleDiff = ({
     if (baseValue === value) {
       return { hasDiff: false, type: 'neutral' as const }
     }
-    if (baseValue === false && value === true) {
+    if (!baseValue && value === true) {
       return { hasDiff: true, type: 'addition' as const }
     }
     return { hasDiff: true, type: 'removal' as const }

@@ -80,14 +80,14 @@ const IdAutocompleteInputContainer = React.forwardRef<HTMLInputElement, IdAutoco
               disabled={disabled}
               onChange={onChange}
               onBlur={onBlur}
-              onClick={e => {
+              onClick={(e) => {
                 const input = e.target as HTMLInputElement
                 if (!(isLoading || haveFetchError) && !selectedOption && input.value !== '') {
                   handleOpenChange?.(true)
                 }
                 onClick?.(e)
               }}
-              onKeyDown={e => {
+              onKeyDown={(e) => {
                 onKeyDown?.(e)
                 const isOptionsRelatedKey = ['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)
 
@@ -100,7 +100,7 @@ const IdAutocompleteInputContainer = React.forwardRef<HTMLInputElement, IdAutoco
                   e.stopPropagation()
                 }
               }}
-              onMouseDown={e => {
+              onMouseDown={(e) => {
                 const input = e.target as HTMLInputElement
                 if (!input.contains(document.activeElement)) {
                   // wait for the next tick to ensure the focus occurs first
@@ -110,7 +110,7 @@ const IdAutocompleteInputContainer = React.forwardRef<HTMLInputElement, IdAutoco
                 }
                 onMouseDown?.(e)
               }}
-              onPaste={e => {
+              onPaste={(e) => {
                 handlePaste?.(e)
                 onPaste?.(e)
               }}
@@ -151,9 +151,11 @@ const IdAutocompleteInputContainer = React.forwardRef<HTMLInputElement, IdAutoco
                       .writeText(selectedOption.value)
                       .then(() => {
                         setHasCopied(true)
-                        setTimeout(() => setHasCopied(false), 2000)
+                        setTimeout(() => {
+                          setHasCopied(false)
+                        }, 2000)
                       })
-                      .catch(error => {
+                      .catch((error) => {
                         console.error('Failed to copy value: ', error)
                       })
                   }}
@@ -172,5 +174,7 @@ const IdAutocompleteInputContainer = React.forwardRef<HTMLInputElement, IdAutoco
     )
   }
 )
+
+IdAutocompleteInputContainer.displayName = 'IdAutocompleteInputContainer'
 
 export { IdAutocompleteInputContainer, type IdAutocompleteInputContainerProps }

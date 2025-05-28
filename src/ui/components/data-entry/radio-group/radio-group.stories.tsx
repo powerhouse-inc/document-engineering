@@ -30,7 +30,7 @@ const meta: Meta<typeof RadioGroup> = {
   title: 'Document Engineering/Data Entry/Radio Group',
   component: RadioGroup,
   decorators: [
-    Story => (
+    (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>
