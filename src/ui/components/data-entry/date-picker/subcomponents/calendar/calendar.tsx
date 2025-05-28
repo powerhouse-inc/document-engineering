@@ -173,8 +173,8 @@ const Calendar = ({
               onNextClick={onNextClick}
               setDisplayYears={setDisplayYears}
               className={className}
-              buttonPreviousClassName={props.buttonPreviousClassName}
-              buttonNextClassName={props.buttonNextClassName}
+              buttonPreviousClassName={cn(props.buttonPreviousClassName)}
+              buttonNextClassName={cn(props.buttonNextClassName)}
               startMonth={startMonth}
               endMonth={endMonth}
               {...props}
