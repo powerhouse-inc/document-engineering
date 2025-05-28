@@ -12,6 +12,8 @@ interface AIDOptionProps {
   agentType?: string
 }
 
+// TODO: fix this type
+// @ts-expect-error - this will be fixed soon
 type AIDOption = IdAutocompleteOption<AIDOptionProps>
 
 type AIDInputBaseProps = Omit<

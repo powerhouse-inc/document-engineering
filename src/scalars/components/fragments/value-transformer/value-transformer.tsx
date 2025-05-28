@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { type FieldValues, useFormContext, type UseFormReturn } from 'react-hook-form'
 import { deepEqual } from '../../../lib/deep-equal.js'
 
 export type ValueTransformer = (value?: any) => any
@@ -112,8 +112,8 @@ function _applyTransformers(
  * </ValueTransformer>
  */
 function ValueTransformer({ transformers, children }: ValueTransformerProps) {
-  const formContext = useFormContext()
-  const setValue = formContext.setValue
+  const formContext = useFormContext() as UseFormReturn<FieldValues, unknown, FieldValues> | undefined
+  const setValue = formContext?.setValue
 
   useEffect(() => {
     // apply all the transformers on mount to prevent untransformed values
@@ -142,7 +142,7 @@ function ValueTransformer({ transformers, children }: ValueTransformerProps) {
       const transformedValue = _applyTransformers(transformers, event.target.value, 'change')
 
       if (transformedValue !== event.target.value) {
-        setValue((children.props as { name: string }).name, transformedValue)
+        setValue?.((children.props as { name: string }).name, transformedValue)
         setNativeValue(event.target, transformedValue)
       }
 
