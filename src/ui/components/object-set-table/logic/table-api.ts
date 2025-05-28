@@ -3,8 +3,9 @@ import type { TableState } from '../subcomponents/table-provider/table-reducer.j
 import type { CellContext, ObjectSetTableConfig } from '../types.js'
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
+import type { ITableApi } from './types.js'
 
-class TableApi<TData> {
+class TableApi<TData> implements ITableApi<TData> {
   public readonly selection: SelectionManager<TData>
 
   constructor(
