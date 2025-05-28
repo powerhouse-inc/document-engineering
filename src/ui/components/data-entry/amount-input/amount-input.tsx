@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -126,7 +127,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
                   'rounded-l-md rounded-r-none border border-gray-300',
                   'border-r-[0.5px]',
                   // focus state
-                  'focus:border-r-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
+                  'focus:border-r-none focus:z-10 focus:ring-0 focus:ring-gray-300 focus:ring-offset-none',
                   'focus:outline-none',
 
                   selectProps?.className
@@ -154,6 +155,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
                 // focus state
                 'focus:border-r-0',
                 isAmountWithoutUnit && 'rounded-md',
+                'focus-visible:ring-0 ',
                 className
               )}
               onBlur={handleBlur}
@@ -189,7 +191,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
                 'rounded-l-none rounded-r-md border border-gray-300',
                 'border-l-[0.5px]',
                 // focus state
-                'focus:border-l-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
+                'focus:border-l-none focus:z-10 focus:ring-0 focus:ring-gray-300 focus:ring-offset-none',
                 'focus:outline-none',
                 selectProps?.className
               )}
