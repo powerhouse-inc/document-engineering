@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -5,14 +6,14 @@ import {
   FormMessageList,
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
 import { forwardRef } from 'react'
 import { BasePickerField } from '../date-time-picker/base-picker.js'
-import { Calendar } from './subcomponents/calendar/calendar.js'
+import { Calendar, CalendarProps } from './subcomponents/calendar/calendar.js'
 import type { DateFieldValue } from './types.js'
 import { useDatePickerField } from './use-date-picker.js'
 
-interface DatePickerProps extends InputBaseProps<DateFieldValue> {
+interface DatePickerProps extends InputBaseProps<DateFieldValue>, Omit<CalendarProps, 'mode'> {
   label?: string
   id?: string
   name: string
@@ -31,6 +32,8 @@ interface DatePickerProps extends InputBaseProps<DateFieldValue> {
   dateFormat?: string
   weekStart?: string
   autoClose?: boolean
+  className?: string
+  customCalendarClassName?: string
 }
 
 const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -57,6 +60,10 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       autoClose = false,
       minDate,
       maxDate,
+      // display props
+      className,
+      customCalendarClassName,
+
       ...props
     },
     ref
@@ -112,7 +119,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           data-cast={`DateString:${dateFormat}`}
           className={cn(
             // custom styles
-            'px-4 pb-6 pt-3'
+            'px-4 pb-6 pt-3',
+            className
           )}
         >
           <Calendar
@@ -131,7 +139,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               'font-inter',
               'text-[14px]',
               'font-semibold',
-              'leading-[22px]'
+              'leading-[22px]',
+              customCalendarClassName
             )}
             weekdaysClassName={cn('h-[34px]', 'gap-x-[3px]', 'dark:text-gray-600')}
             monthGridClassName={cn('w-full', 'px-[5.5px]')}
