@@ -1,7 +1,7 @@
-import type { TableApi } from './table-api.js'
+import type { ITableApi } from './types.js'
 
 class SelectionManager<TData> {
-  constructor(private api: TableApi<TData>) {}
+  constructor(private api: ITableApi<TData>) {}
 
   /**
    * Checks if the table allows row selection
