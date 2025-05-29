@@ -3,6 +3,7 @@ import { Icon } from '../../../../../../ui/components/icon/index.js'
 import { cn } from '../../../../../../scalars/lib/index.js'
 import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
 import type { DatePickerView } from '../../types.js'
+
 interface CaptionLabelProps extends React.PropsWithChildren {
   showYearSwitcher: boolean
   navView: DatePickerView

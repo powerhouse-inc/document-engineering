@@ -73,16 +73,17 @@ export const useTimeSelector = ({
   // Handle cyclic behavior
   useEffect(() => {
     const container = containerRef.current
-    if (!container || !isCyclic) return
+    if (!container) return
+    if (!isCyclic) return
 
     const handleScroll = () => {
-      if (!container) return
-
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
       }
 
-      scrollTimeoutRef.current = setTimeout(() => {}, SCROLL_TIMEOUT_MS)
+      scrollTimeoutRef.current = setTimeout(() => {
+        // Scroll timeout logic will be handled in the next frame
+      }, SCROLL_TIMEOUT_MS)
 
       const { scrollTop, scrollHeight, clientHeight } = container
       const currentScrollTop = scrollTop
@@ -94,15 +95,11 @@ export const useTimeSelector = ({
 
       if (scrollDirection === 'down' && scrollTop >= bottomThreshold) {
         requestAnimationFrame(() => {
-          if (container) {
-            container.scrollTop = scrollHeight / 2
-          }
+          container.scrollTop = scrollHeight / 2
         })
       } else if (scrollDirection === 'up' && scrollTop <= topThreshold) {
         requestAnimationFrame(() => {
-          if (container) {
-            container.scrollTop = scrollHeight / 2
-          }
+          container.scrollTop = scrollHeight / 2
         })
       }
     }

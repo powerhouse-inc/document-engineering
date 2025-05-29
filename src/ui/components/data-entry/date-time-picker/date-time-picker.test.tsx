@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DateTimePicker } from './date-time-picker'
 import { vi } from 'vitest'
+import { ChangeEvent, FocusEvent } from 'react'
 
 describe('DateTimePicker', () => {
   const defaultProps = {
@@ -196,7 +197,7 @@ describe('DateTimePicker', () => {
   })
 
   it('should handle different date formats correctly', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} dateFormat="dd/MM/yyyy" onChange={onChange} />)
 
     const input = screen.getByPlaceholderText('Select date and time')
@@ -206,14 +207,14 @@ describe('DateTimePicker', () => {
     expect(input).toHaveValue('25/12/2024 14:30')
 
     // Get the last call to onChange
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
 
     // Verify the event type
     expect(lastCall.type).toBe('change')
   })
 
   it('should handle invalid date format gracefully', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} dateFormat="yyyy-MM-dd" onChange={onChange} />)
 
     const input = screen.getByPlaceholderText('Select date and time')
@@ -224,7 +225,7 @@ describe('DateTimePicker', () => {
   })
 
   it('should handle time format changes correctly', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} timeFormat="hh:mm a" onChange={onChange} />)
 
     const input: HTMLInputElement = screen.getByPlaceholderText('Select date and time')
@@ -235,15 +236,15 @@ describe('DateTimePicker', () => {
     expect(input.value.trim()).toBe('2024-12-25 02:30')
 
     // Get the last call to onChange
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
 
     // Verify the event type
     expect(lastCall.type).toBe('change')
   })
 
   it('should handle empty input correctly', async () => {
-    const onChange = vi.fn()
-    const onBlur = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
+    const onBlur = vi.fn<(e: FocusEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} onChange={onChange} onBlur={onBlur} />)
 
     const input = screen.getByPlaceholderText('Select date and time')
@@ -251,14 +252,14 @@ describe('DateTimePicker', () => {
     await userEvent.tab() // Trigger blur
 
     // Get the last call to onChange
-    const lastOnChangeCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
+    const lastOnChangeCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
 
     // Verify onChange was called with empty value
     expect(lastOnChangeCall.type).toBe('change')
     expect(lastOnChangeCall.target.value).toBe('')
 
     // Get the last call to onBlur
-    const lastOnBlurCall = onBlur.mock.calls[onBlur.mock.calls.length - 1][0]
+    const lastOnBlurCall = onBlur.mock.calls[onBlur.mock.calls.length - 1][0] as FocusEvent<HTMLInputElement>
 
     // Verify onBlur was called with empty value
     expect(lastOnBlurCall.type).toBe('blur')

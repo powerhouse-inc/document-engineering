@@ -112,7 +112,7 @@ export const getOffset = (timeZone?: string) => {
 export const parseInputString = (inputString: string, dateFormat = ALLOWED_FORMATS[0]): string => {
   const newInputString = normalizeMonthFormat(inputString)
 
-  if (!dateFormat || !inputString) return inputString
+  if (!inputString) return inputString
 
   // First check the specified format
   const specifiedFormatRegex = dateFormatRegexes[dateFormat as keyof typeof dateFormatRegexes]

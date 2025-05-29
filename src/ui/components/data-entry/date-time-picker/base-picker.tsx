@@ -1,8 +1,7 @@
-import React from 'react'
+import { type PropsWithChildren, forwardRef } from 'react'
 import { Icon, type IconName } from '../../../components/icon/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
-import { type PropsWithChildren } from 'react'
 import { Button } from '../../../../scalars/components/fragments/button/index.js'
 import { Popover, PopoverContent, PopoverTrigger } from '../../../../scalars/components/fragments/popover/index.js'
 import { Input } from '../../../components/data-entry/input/input.js'
@@ -29,7 +28,7 @@ export interface BasePickerFieldProps extends InputBaseProps<string>, FieldError
   className?: string
 }
 
-const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChildren<BasePickerFieldProps>>(
+const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePickerFieldProps>>(
   (
     {
       id,

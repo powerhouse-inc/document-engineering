@@ -4,11 +4,11 @@ import { cn } from '../../../../../../scalars/lib/utils.js'
 
 interface YearButtonProps {
   year: number
-  actualYear: string
+  _actualYear: string
   currentYear: number
   startMonth?: Date
   endMonth?: Date
-  actualMonth: string
+  _actualMonth: string
   months: Array<{ date: Date }>
   onSelect: (year: number) => void
   disabled?: boolean
@@ -16,11 +16,11 @@ interface YearButtonProps {
 
 const YearButton = ({
   year,
-  actualYear,
+  _actualYear,
   currentYear,
   startMonth,
   endMonth,
-  actualMonth,
+  _actualMonth,
   months,
   onSelect,
   disabled,

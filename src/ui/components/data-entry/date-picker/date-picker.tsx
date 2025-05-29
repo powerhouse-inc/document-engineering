@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -7,9 +7,9 @@ import {
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { InputBaseProps } from '../../../../scalars/components/types.js'
-import { forwardRef } from 'react'
 import { BasePickerField } from '../date-time-picker/base-picker.js'
-import { Calendar, CalendarProps } from './subcomponents/calendar/calendar.js'
+import { Calendar } from './subcomponents/calendar/calendar.js'
+import type { CalendarProps } from './subcomponents/calendar/calendar.js'
 import type { DateFieldValue } from './types.js'
 import { useDatePickerField } from './use-date-picker.js'
 
