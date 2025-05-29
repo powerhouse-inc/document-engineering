@@ -47,7 +47,9 @@ describe('UrlField', () => {
   it('should show error message when provided', async () => {
     renderWithForm(<UrlField name="test-url" label="Website URL" errors={['Invalid URL format']} />)
 
-    await waitFor(() => expect(screen.getByText('Invalid URL format')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Invalid URL format')).toBeInTheDocument()
+    })
   })
 
   it('should show warning message when provided', () => {

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function PowerhouseLogoSmall(props: Props) {
+
+const PowerhouseLogoSmall = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function PowerhouseLogoSmall(props: Props) {
     </svg>
   )
 }
+
+PowerhouseLogoSmall.displayName = 'PowerhouseLogoSmall'
+
+export default PowerhouseLogoSmall

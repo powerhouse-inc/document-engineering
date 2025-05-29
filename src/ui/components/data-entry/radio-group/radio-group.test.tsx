@@ -113,8 +113,12 @@ describe('RadioGroup Component', () => {
       />
     )
     const radioGroup = screen.getByRole('radiogroup')
-    await waitFor(() => expect(radioGroup).toHaveAttribute('aria-invalid', 'true'))
-    await waitFor(() => expect(screen.getByText('Error message')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(radioGroup).toHaveAttribute('aria-invalid', 'true')
+    })
+    await waitFor(() => {
+      expect(screen.getByText('Error message')).toBeInTheDocument()
+    })
   })
 
   it('should have aria-label when no label is provided', () => {
@@ -224,6 +228,8 @@ describe('RadioGroup Component', () => {
       />
     )
     expect(screen.getByText('Warning message')).toBeInTheDocument()
-    await waitFor(() => expect(screen.getByText('Error message')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Error message')).toBeInTheDocument()
+    })
   })
 })

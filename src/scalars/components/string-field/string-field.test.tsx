@@ -27,7 +27,9 @@ describe('StringField', () => {
 
   it('should render error messages when provided', async () => {
     renderWithForm(<StringField name="test" errors={['Error message']} />)
-    await waitFor(() => expect(screen.getByText('Error message')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Error message')).toBeInTheDocument()
+    })
   })
 
   it('should render warning messages when provided', () => {

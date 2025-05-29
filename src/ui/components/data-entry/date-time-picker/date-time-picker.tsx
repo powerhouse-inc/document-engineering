@@ -6,9 +6,8 @@ import {
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { InputBaseProps } from '../../../../scalars/components/types.js'
-import type React from 'react'
-import { forwardRef } from 'react'
-import { type DateFieldValue } from '../date-picker/types.js'
+import { type ChangeEvent, type FocusEvent, forwardRef } from 'react'
+import type { DateFieldValue } from '../date-picker/types.js'
 import { BasePickerField } from './base-picker.js'
 import DateTimePickerContent from './date-time-picker-content.js'
 import { useDateTimePicker } from './use-date-time-picker.js'
@@ -20,8 +19,8 @@ interface DateTimePickerProps extends InputBaseProps<DateFieldValue> {
   value?: DateFieldValue
   defaultValue?: DateFieldValue
   placeholder?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void
   timeFormat?: string
   timeIntervals?: number
   timeZone?: string
@@ -35,8 +34,8 @@ interface DateTimePickerProps extends InputBaseProps<DateFieldValue> {
   autoClose?: boolean
   minDate?: string
   maxDate?: string
-  onChangeDate?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onBlurDate?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onChangeDate?: (e: ChangeEvent<HTMLInputElement>) => void
+  onBlurDate?: (e: FocusEvent<HTMLInputElement>) => void
 }
 const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
   (
@@ -71,7 +70,7 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
       timeZone,
       showTimezoneSelect,
       includeContinent,
-      ...props
+      ..._props
     },
     ref
   ) => {
@@ -134,11 +133,11 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
     })
     return (
       <FormGroup>
-        {label && (
+        {label ? (
           <FormLabel htmlFor={id} required={required} disabled={disabled} hasError={!!errors?.length}>
             {label}
           </FormLabel>
-        )}
+        ) : null}
         <BasePickerField
           ref={ref}
           label={label}
@@ -188,9 +187,9 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
             onSave={handleSave}
           />
         </BasePickerField>
-        {description && <FormDescription>{description}</FormDescription>}
-        {warnings && <FormMessageList messages={warnings} type="warning" />}
-        {errors && <FormMessageList messages={errors} type="error" />}
+        {description ? <FormDescription>{description}</FormDescription> : null}
+        {warnings ? <FormMessageList messages={warnings} type="warning" /> : null}
+        {errors ? <FormMessageList messages={errors} type="error" /> : null}
       </FormGroup>
     )
   }

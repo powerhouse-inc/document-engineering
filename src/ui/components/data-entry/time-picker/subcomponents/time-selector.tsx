@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRef } from 'react'
 import { Button } from '../../../../../scalars/components/fragments/button/index.js'
 import { cn } from '../../../../../scalars/lib/utils.js'
-import { type TimeSelectorProps } from '../type.js'
+import type { TimeSelectorProps } from '../type.js'
 import { useTimeSelector } from './use-time-selector.js'
 
 const TimeSelector: React.FC<TimeSelectorProps> = ({ options, selectedValue, onSelect, isCyclic = true }) => {
@@ -35,7 +35,9 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({ options, selectedValue, onS
               ref={shouldUseRef ? selectedRef : null}
               variant="ghost"
               key={`${option}-${index}`}
-              onClick={() => handleExplicitSelection(option)}
+              onClick={() => {
+                handleExplicitSelection(option)
+              }}
               className={cn(
                 'flex h-[37px] cursor-pointer items-center justify-center text-[12px] leading-[20px]',
                 selectedValue === option

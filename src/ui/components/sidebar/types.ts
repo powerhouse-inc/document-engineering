@@ -1,4 +1,4 @@
-import { type IconName } from '../../components/icon/index.js'
+import type { IconName } from '../../components/icon/index.js'
 
 export enum NodeStatus {
   CREATED = 'CREATED',
@@ -11,7 +11,7 @@ export enum NodeStatus {
 
 export type SidebarIcon = IconName | React.ReactElement
 
-export type SidebarNode = {
+export interface SidebarNode {
   title: string
   id: string
   children?: SidebarNode[]

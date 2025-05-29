@@ -1,15 +1,15 @@
-import { type ValidatorResult } from '../../../scalars/components/types.js'
-import {
-  type Amount,
-  type AmountCrypto,
-  type AmountCurrency,
-  type AmountFiat,
-  type AmountInputPropsGeneric,
-  type AmountValue,
+import type { ValidatorResult } from '../../../scalars/components/types.js'
+import type {
+  Amount,
+  AmountCrypto,
+  AmountCurrency,
+  AmountFiat,
+  AmountInputPropsGeneric,
+  AmountValue,
 } from '../../../ui/components/data-entry/amount-input/types.js'
 import { isValidBigInt } from '../../../ui/components/data-entry/amount-input/utils.js'
 import { isValidNumber } from '../number-field/number-field-validations.js'
-import { type AmountFieldProps } from './types.js'
+import type { AmountFieldProps } from './types.js'
 
 const isAmountCurrencyFiat = (type: AmountInputPropsGeneric['type']): type is 'AmountFiat' => type === 'AmountFiat'
 
@@ -30,9 +30,9 @@ const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): n
 }
 
 export const validateAmount =
-  ({ type, required, minValue, maxValue, allowNegative, units }: AmountFieldProps) =>
+  ({ type, required, minValue, maxValue, allowNegative }: AmountFieldProps) =>
   (value: unknown): ValidatorResult => {
-    const amount = getAmount(value as AmountValue, type as AmountInputPropsGeneric['type'])
+    const amount = getAmount(value as AmountValue, type)
     if (value === '') return true
     if (amount?.toString() === '') {
       if (required) {

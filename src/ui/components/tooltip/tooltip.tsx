@@ -48,6 +48,8 @@ const TooltipContent = React.forwardRef<React.ElementRef<typeof Content>, Toolti
   }
 )
 
+TooltipContent.displayName = 'TooltipContent'
+
 const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,

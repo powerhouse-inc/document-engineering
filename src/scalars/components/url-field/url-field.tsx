@@ -9,7 +9,7 @@ interface UrlFieldProps extends UrlInputProps, FieldErrorHandling {
 
 const UrlField = withFieldValidation<UrlFieldProps>(UrlInput, {
   validations: {
-    _validUrl: () => value => {
+    _validUrl: () => (value) => {
       if (!value) return true
       try {
         const url = new URL(value as string)
@@ -24,7 +24,7 @@ const UrlField = withFieldValidation<UrlFieldProps>(UrlInput, {
     },
     _allowedProtocols:
       ({ allowedProtocols }) =>
-      value => {
+      (value) => {
         if (!value || !allowedProtocols) return true
         try {
           const url = new URL(value as string)
@@ -43,7 +43,7 @@ const UrlField = withFieldValidation<UrlFieldProps>(UrlInput, {
       },
     _maxURLLength:
       ({ maxURLLength, label }) =>
-      value => {
+      (value) => {
         if (!maxURLLength) return true
         return (
           (value as string).length <= maxURLLength ||

@@ -29,7 +29,7 @@ export const getColumnTitle = (column: ColumnDef) => {
     // Replace underscores and hyphens with spaces
     .replace(/[_-]/g, ' ')
     // Capitalize the first letter
-    .replace(/^\w/, c => c.toUpperCase())
+    .replace(/^\w/, (c) => c.toUpperCase())
 
   return humanized
 }

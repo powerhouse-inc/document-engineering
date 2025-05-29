@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { customScalars } from './scalars.js'
-import { type Serializable } from './types.js'
+import type { Serializable } from './types.js'
 
 export const SerializableSchema: z.ZodType<Serializable> = z.lazy(() =>
   z.union([
@@ -19,6 +19,6 @@ export function isSerializable(value: unknown): value is Serializable {
 }
 
 export function getPHCustomScalarByTypeName(name: string) {
-  const scalar = Object.values(customScalars).find(scalar => scalar.config.name === name) ?? null
+  const scalar = Object.values(customScalars).find((scalar) => scalar.config.name === name) ?? null
   return scalar
 }

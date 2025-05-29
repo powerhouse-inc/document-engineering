@@ -85,7 +85,9 @@ describe('SelectField Component', () => {
   // Validation and Error Handling Tests
   it('should display error messages', async () => {
     renderWithForm(<SelectField name="select" options={defaultOptions} errors={['This field is required']} />)
-    await waitFor(() => expect(screen.getByText('This field is required')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('This field is required')).toBeInTheDocument()
+    })
   })
 
   it('should display warning messages', () => {
@@ -126,7 +128,9 @@ describe('SelectField Component', () => {
 
     const select = screen.getByRole('combobox')
     expect(select).toHaveAttribute('aria-required', 'true')
-    await waitFor(() => expect(select).toHaveAttribute('aria-invalid', 'true'))
+    await waitFor(() => {
+      expect(select).toHaveAttribute('aria-invalid', 'true')
+    })
     expect(select).toHaveAttribute('aria-expanded', 'false')
   })
 

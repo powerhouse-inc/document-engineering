@@ -204,6 +204,5 @@ export const Default: Story = {
     label: 'Date Time Picker Field',
     description: 'This is a date time picker field',
     placeholder: '2025/01/27 12:00',
-    onChange: () => {},
   },
 }

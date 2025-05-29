@@ -13,15 +13,30 @@ const DropdownExample = () => {
         Export as
       </DropdownTrigger>
       <DropdownContent className="w-[184px]">
-        <DropdownItem onClick={() => alert('Powerhouse Invoice')}>
+        <DropdownItem
+          onClick={() => {
+            // eslint-disable-next-line no-alert
+            alert('Powerhouse Invoice')
+          }}
+        >
           <ExportZip width={16} height={16} />
           <span>Powerhouse Invoice</span>
         </DropdownItem>
-        <DropdownItem onClick={() => alert('UBL file')}>
+        <DropdownItem
+          onClick={() => {
+            // eslint-disable-next-line no-alert
+            alert('UBL file')
+          }}
+        >
           <ExportUbl width={16} height={16} />
           <span>UBL file</span>
         </DropdownItem>
-        <DropdownItem onClick={() => alert('PDF file')}>
+        <DropdownItem
+          onClick={() => {
+            // eslint-disable-next-line no-alert
+            alert('PDF file')
+          }}
+        >
           <ExportPdf width={16} height={16} />
           <span>PDF file</span>
         </DropdownItem>

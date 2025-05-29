@@ -2,16 +2,16 @@ import { useMemo } from 'react'
 import { cn } from '../../../../../scalars/index.js'
 import { mockData, type MockedPerson } from '../../mock-data.js'
 import { ObjectSetTable } from '../../object-set-table.js'
-import { ColumnDef } from '../../types.js'
+import type { ColumnDef } from '../../types.js'
 import { Icon } from '../../../icon/icon.js'
 
 const CustomRenderingExample = () => {
-  const columns = useMemo<ColumnDef<MockedPerson>[]>(
+  const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
       {
         field: 'firstName',
         title: 'User',
-        renderCell: (value: string, context) => (
+        renderCell: (value: string) => (
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-800 font-semibold text-xs">
               {value.charAt(0).toUpperCase()}

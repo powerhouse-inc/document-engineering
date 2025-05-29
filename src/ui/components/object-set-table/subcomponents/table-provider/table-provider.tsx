@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react'
+import { createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
 import { TableApi } from '../../logic/table-api.js'
 import type { DataType, ObjectSetTableConfig } from '../../types.js'
 import { tableReducer, type TableState } from './table-reducer.js'
@@ -62,7 +62,7 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
 }
 
 const useInternalTableState = <T extends DataType = any>() => {
-  const context = useContext(TableContext) as TableContextValue<T>
+  const context = useContext<TableContextValue<T> | null>(TableContext)
   if (!context) {
     throw new Error('useTable must be used within a TableProvider')
   }

@@ -76,7 +76,11 @@ const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChildren<Bas
                   'button-ghost',
                   disabled && 'cursor-not-allowed hover:bg-transparent'
                 )}
-                onClick={() => !disabled && setIsOpen(isOpen)}
+                onClick={() => {
+                  if (!disabled) {
+                    setIsOpen(isOpen)
+                  }
+                }}
               >
                 <Icon size={16} name={iconName} className="hover:none text-gray-700 dark:text-gray-50" />
               </Button>
@@ -124,4 +128,5 @@ const BasePickerField = React.forwardRef<HTMLInputElement, PropsWithChildren<Bas
 )
 
 BasePickerField.displayName = 'BasePickerField'
+
 export { BasePickerField }

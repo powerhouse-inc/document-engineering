@@ -1,8 +1,5 @@
 import type { Props } from './types.js'
 
-import CalendarTime from './CalendarTime.js'
-import CaretLeft from './CaretLeft.js'
-import CaretRight from './CaretRight.js'
 import ArrowCouterclockwise from './ArrowCouterclockwise.js'
 import ArrowFilledRight from './ArrowFilledRight.js'
 import ArrowLeft from './ArrowLeft.js'
@@ -15,24 +12,27 @@ import Branch from './Branch.js'
 import BrickGlobe from './BrickGlobe.js'
 import Briefcase from './Briefcase.js'
 import Calendar from './Calendar.js'
-import CaretDown from './CaretDown.js'
-import CaretSort from './CaretSort.js'
+import CalendarTime from './CalendarTime.js'
 import Caret from './Caret.js'
-import CheckCircleFill from './CheckCircleFill.js'
-import CheckCircle from './CheckCircle.js'
+import CaretDown from './CaretDown.js'
+import CaretLeft from './CaretLeft.js'
+import CaretRight from './CaretRight.js'
+import CaretSort from './CaretSort.js'
 import Check from './Check.js'
+import CheckCircle from './CheckCircle.js'
+import CheckCircleFill from './CheckCircleFill.js'
 import Checkmark from './Checkmark.js'
 import ChevronDown from './ChevronDown.js'
-import CircleInfo from './CircleInfo.js'
 import Circle from './Circle.js'
+import CircleInfo from './CircleInfo.js'
+import Clock from './Clock.js'
 import ClockFill from './ClockFill.js'
 import ClockHistory from './ClockHistory.js'
-import Clock from './Clock.js'
 import CloudSlash from './CloudSlash.js'
 import Collapse from './Collapse.js'
 import Compass from './Compass.js'
-import ConnectSmall from './ConnectSmall.js'
 import Connect from './Connect.js'
+import ConnectSmall from './ConnectSmall.js'
 import Copy from './Copy.js'
 import Created from './Created.js'
 import CrossCircle from './CrossCircle.js'
@@ -61,8 +61,8 @@ import FolderPlus from './FolderPlus.js'
 import Forum from './Forum.js'
 import Gear from './Gear.js'
 import Github from './Github.js'
-import GlobeWww from './GlobeWww.js'
 import Globe from './Globe.js'
+import GlobeWww from './GlobeWww.js'
 import Hdd from './Hdd.js'
 import History from './History.js'
 import InfoSquare from './InfoSquare.js'
@@ -75,23 +75,23 @@ import Moved from './Moved.js'
 import Npm from './Npm.js'
 import PackageManager from './PackageManager.js'
 import Pencil from './Pencil.js'
-import PeopleFill from './PeopleFill.js'
 import People from './People.js'
+import PeopleFill from './PeopleFill.js'
 import Person from './Person.js'
-import PinFilled from './PinFilled.js'
 import Pin from './Pin.js'
+import PinFilled from './PinFilled.js'
+import Plus from './Plus.js'
 import PlusCircle from './PlusCircle.js'
 import PlusSquare from './PlusSquare.js'
-import Plus from './Plus.js'
 import PowerhouseLogoSmall from './PowerhouseLogoSmall.js'
 import Project from './Project.js'
 import QuestionSquare from './QuestionSquare.js'
 import RedoArrow from './RedoArrow.js'
 import Reload from './Reload.js'
 import Removed from './Removed.js'
+import Renown from './Renown.js'
 import RenownHover from './RenownHover.js'
 import RenownLight from './RenownLight.js'
-import Renown from './Renown.js'
 import Ring from './Ring.js'
 import Save from './Save.js'
 import Search from './Search.js'
@@ -100,10 +100,10 @@ import Settings from './Settings.js'
 import Synced from './Synced.js'
 import Syncing from './Syncing.js'
 import Tabler from './Tabler.js'
-import TimelineCaret from './TimelineCaret.js'
 import Timeline from './Timeline.js'
-import TrashFill from './TrashFill.js'
+import TimelineCaret from './TimelineCaret.js'
 import Trash from './Trash.js'
+import TrashFill from './TrashFill.js'
 import TreeViewSlash from './TreeViewSlash.js'
 import TriangleDown from './TriangleDown.js'
 import Tube from './Tube.js'
@@ -111,14 +111,11 @@ import VariantArrowLeft from './VariantArrowLeft.js'
 import VerticalDots from './VerticalDots.js'
 import WarningFill from './WarningFill.js'
 import XTwitter from './XTwitter.js'
-import XmarkLight from './XmarkLight.js'
 import Xmark from './Xmark.js'
+import XmarkLight from './XmarkLight.js'
 import Youtube from './Youtube.js'
 
 export const iconNames = [
-  'CalendarTime',
-  'CaretLeft',
-  'CaretRight',
   'ArrowCouterclockwise',
   'ArrowFilledRight',
   'ArrowLeft',
@@ -131,24 +128,27 @@ export const iconNames = [
   'BrickGlobe',
   'Briefcase',
   'Calendar',
-  'CaretDown',
-  'CaretSort',
+  'CalendarTime',
   'Caret',
-  'CheckCircleFill',
-  'CheckCircle',
+  'CaretDown',
+  'CaretLeft',
+  'CaretRight',
+  'CaretSort',
   'Check',
+  'CheckCircle',
+  'CheckCircleFill',
   'Checkmark',
   'ChevronDown',
-  'CircleInfo',
   'Circle',
+  'CircleInfo',
+  'Clock',
   'ClockFill',
   'ClockHistory',
-  'Clock',
   'CloudSlash',
   'Collapse',
   'Compass',
-  'ConnectSmall',
   'Connect',
+  'ConnectSmall',
   'Copy',
   'Created',
   'CrossCircle',
@@ -177,8 +177,8 @@ export const iconNames = [
   'Forum',
   'Gear',
   'Github',
-  'GlobeWww',
   'Globe',
+  'GlobeWww',
   'Hdd',
   'History',
   'InfoSquare',
@@ -191,23 +191,23 @@ export const iconNames = [
   'Npm',
   'PackageManager',
   'Pencil',
-  'PeopleFill',
   'People',
+  'PeopleFill',
   'Person',
-  'PinFilled',
   'Pin',
+  'PinFilled',
+  'Plus',
   'PlusCircle',
   'PlusSquare',
-  'Plus',
   'PowerhouseLogoSmall',
   'Project',
   'QuestionSquare',
   'RedoArrow',
   'Reload',
   'Removed',
+  'Renown',
   'RenownHover',
   'RenownLight',
-  'Renown',
   'Ring',
   'Save',
   'Search',
@@ -216,10 +216,10 @@ export const iconNames = [
   'Synced',
   'Syncing',
   'Tabler',
-  'TimelineCaret',
   'Timeline',
-  'TrashFill',
+  'TimelineCaret',
   'Trash',
+  'TrashFill',
   'TreeViewSlash',
   'TriangleDown',
   'Tube',
@@ -227,16 +227,13 @@ export const iconNames = [
   'VerticalDots',
   'WarningFill',
   'XTwitter',
-  'XmarkLight',
   'Xmark',
+  'XmarkLight',
   'Youtube',
 ] as const
 
 export type IconName = (typeof iconNames)[number]
 export const iconComponents: Record<IconName, (props: Props) => React.JSX.Element> = {
-  CalendarTime,
-  CaretLeft,
-  CaretRight,
   ArrowCouterclockwise,
   ArrowFilledRight,
   ArrowLeft,
@@ -249,24 +246,27 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   BrickGlobe,
   Briefcase,
   Calendar,
-  CaretDown,
-  CaretSort,
+  CalendarTime,
   Caret,
-  CheckCircleFill,
-  CheckCircle,
+  CaretDown,
+  CaretLeft,
+  CaretRight,
+  CaretSort,
   Check,
+  CheckCircle,
+  CheckCircleFill,
   Checkmark,
   ChevronDown,
-  CircleInfo,
   Circle,
+  CircleInfo,
+  Clock,
   ClockFill,
   ClockHistory,
-  Clock,
   CloudSlash,
   Collapse,
   Compass,
-  ConnectSmall,
   Connect,
+  ConnectSmall,
   Copy,
   Created,
   CrossCircle,
@@ -295,8 +295,8 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Forum,
   Gear,
   Github,
-  GlobeWww,
   Globe,
+  GlobeWww,
   Hdd,
   History,
   InfoSquare,
@@ -309,23 +309,23 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Npm,
   PackageManager,
   Pencil,
-  PeopleFill,
   People,
+  PeopleFill,
   Person,
-  PinFilled,
   Pin,
+  PinFilled,
+  Plus,
   PlusCircle,
   PlusSquare,
-  Plus,
   PowerhouseLogoSmall,
   Project,
   QuestionSquare,
   RedoArrow,
   Reload,
   Removed,
+  Renown,
   RenownHover,
   RenownLight,
-  Renown,
   Ring,
   Save,
   Search,
@@ -334,10 +334,10 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Synced,
   Syncing,
   Tabler,
-  TimelineCaret,
   Timeline,
-  TrashFill,
+  TimelineCaret,
   Trash,
+  TrashFill,
   TreeViewSlash,
   TriangleDown,
   Tube,
@@ -345,7 +345,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   VerticalDots,
   WarningFill,
   XTwitter,
-  XmarkLight,
   Xmark,
+  XmarkLight,
   Youtube,
 } as const

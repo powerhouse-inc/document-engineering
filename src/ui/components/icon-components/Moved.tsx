@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Moved(props: Props) {
+
+const Moved = (props: Props) => {
   return (
     <svg {...props} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -15,3 +16,7 @@ export default function Moved(props: Props) {
     </svg>
   )
 }
+
+Moved.displayName = 'Moved'
+
+export default Moved

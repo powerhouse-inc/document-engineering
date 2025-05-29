@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function CrossCircle(props: Props) {
+
+const CrossCircle = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_14287_3626)">
@@ -18,3 +19,7 @@ export default function CrossCircle(props: Props) {
     </svg>
   )
 }
+
+CrossCircle.displayName = 'CrossCircle'
+
+export default CrossCircle

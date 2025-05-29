@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Settings(props: Props) {
+
+const Settings = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="currentcolor">
       <path
@@ -15,3 +16,7 @@ export default function Settings(props: Props) {
     </svg>
   )
 }
+
+Settings.displayName = 'Settings'
+
+export default Settings

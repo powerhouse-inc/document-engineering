@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Forum(props: Props) {
+
+const Forum = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,3 +10,7 @@ export default function Forum(props: Props) {
     </svg>
   )
 }
+
+Forum.displayName = 'Forum'
+
+export default Forum

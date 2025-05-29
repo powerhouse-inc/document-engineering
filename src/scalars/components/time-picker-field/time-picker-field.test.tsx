@@ -1,6 +1,5 @@
 import { screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { vi } from 'vitest'
 import { renderWithForm } from '../../lib/testing.js'
 import { TimePickerField } from './time-picker-field.js'
 
@@ -59,7 +58,7 @@ describe('TimePickerField', () => {
     }
 
     // Verify that intermediate values are not present
-    ;['13', '20', '25', '35', '40', '50', '55'].forEach(minute => {
+    ;['13', '20', '25', '35', '40', '50', '55'].forEach((minute) => {
       expect(screen.queryByText(minute)).not.toBeInTheDocument()
     })
   })
@@ -84,7 +83,7 @@ describe('TimePickerField', () => {
       expect(minuteElements[0]).toBeInTheDocument()
     }
     // Verify that other values are not present
-    ;['15', '45'].forEach(minute => {
+    ;['15', '45'].forEach((minute) => {
       expect(screen.queryByText(minute)).not.toBeInTheDocument()
     })
   })
@@ -105,7 +104,7 @@ describe('TimePickerField', () => {
     expect(select).toBeDisabled()
 
     // Use a more flexible approach to find the timezone text
-    const timezoneText = screen.getByText(content => {
+    const timezoneText = screen.getByText((content) => {
       return content.includes('New York') && content.includes('(')
     })
     expect(timezoneText).toBeInTheDocument()
@@ -124,7 +123,7 @@ describe('TimePickerField', () => {
     expect(popoverContent).toBeVisible()
 
     // Verify that the timezone includes the continent (America)
-    const timezoneText = screen.getByText(content => {
+    const timezoneText = screen.getByText((content) => {
       return content.includes('America') && content.includes('New York')
     })
     expect(timezoneText).toBeInTheDocument()
@@ -145,7 +144,7 @@ describe('TimePickerField', () => {
     expect(popoverContent).toBeVisible()
 
     // Verify that the timezone excludes the continent (America)
-    const timezoneText = screen.getByText(content => {
+    const timezoneText = screen.getByText((content) => {
       return content.includes('New York') && !content.includes('America')
     })
     expect(timezoneText).toBeInTheDocument()

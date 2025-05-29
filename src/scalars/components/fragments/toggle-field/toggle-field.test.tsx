@@ -38,7 +38,9 @@ describe('ToggleField Component', () => {
 
   it('should display an error message when hasMessage is true', async () => {
     renderWithForm(<ToggleField name="test" label="Test Label" errors={['Error message']} />)
-    await waitFor(() => expect(screen.getByText('Error message')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Error message')).toBeInTheDocument()
+    })
   })
 
   it('should call onChange when clicked', () => {

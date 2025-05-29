@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Link(props: Props) {
+
+const Link = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function Link(props: Props) {
     </svg>
   )
 }
+
+Link.displayName = 'Link'
+
+export default Link

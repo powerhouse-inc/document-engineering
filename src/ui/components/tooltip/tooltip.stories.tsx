@@ -19,7 +19,7 @@ const meta: Meta<typeof Tooltip> = {
   },
   tags: ['autodocs'],
   decorators: [
-    Story => (
+    (Story) => (
       <TooltipProvider>
         <Story />
       </TooltipProvider>

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function CalendarTime(props: Props) {
+
+const CalendarTime = (props: Props) => {
   return (
     <svg {...props} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g id="Calendar">
@@ -14,3 +15,7 @@ export default function CalendarTime(props: Props) {
     </svg>
   )
 }
+
+CalendarTime.displayName = 'CalendarTime'
+
+export default CalendarTime

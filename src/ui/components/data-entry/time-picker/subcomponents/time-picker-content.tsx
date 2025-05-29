@@ -1,7 +1,7 @@
 import type * as React from 'react'
 import { Select, type SelectBaseProps, type SelectProps } from '../../select/index.js'
 import { Button } from '../../../../../scalars/components/fragments/button/button.js'
-import { type TimePeriod } from '../type.js'
+import type { TimePeriod } from '../type.js'
 import TimePeriodSelector from './time-period-selector.js'
 import TimeSelector from './time-selector.js'
 

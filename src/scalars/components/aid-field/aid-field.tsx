@@ -32,9 +32,9 @@ const AIDField = withFieldValidation<AIDFieldProps>(AIDInput, {
           }
 
           if (Array.isArray(supportedNetworks)) {
-            if (!supportedNetworks.some(network => network.chainId === chainId)) {
+            if (!supportedNetworks.some((network) => network.chainId === chainId)) {
               return `Invalid chainId. Allowed chainIds are: ${supportedNetworks
-                .map(network => network.chainId)
+                .map((network) => network.chainId)
                 .join(', ')}`
             }
           }

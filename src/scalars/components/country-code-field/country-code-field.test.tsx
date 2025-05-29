@@ -39,7 +39,9 @@ describe('CountryCodeField Component', () => {
 
   it('should display error messages', async () => {
     renderWithForm(<CountryCodeField {...defaultProps} errors={['Country is required']} />)
-    await waitFor(() => expect(screen.getByText('Country is required')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Country is required')).toBeInTheDocument()
+    })
   })
 
   it('should display warning messages', () => {

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function CircleInfo(props: Props) {
+
+const CircleInfo = (props: Props) => {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
       <path
@@ -19,3 +20,7 @@ export default function CircleInfo(props: Props) {
     </svg>
   )
 }
+
+CircleInfo.displayName = 'CircleInfo'
+
+export default CircleInfo

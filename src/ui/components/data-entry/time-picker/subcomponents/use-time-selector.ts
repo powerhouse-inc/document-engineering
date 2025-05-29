@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { type TimeSelectorProps } from '../type.js'
+import type { TimeSelectorProps } from '../type.js'
 import {
   BOTTOM_THRESHOLD_OFFSET,
   CENTERING_TIMEOUT_MS,

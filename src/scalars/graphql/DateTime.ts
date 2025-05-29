@@ -1,7 +1,7 @@
 import { GraphQLError, GraphQLScalarType, type GraphQLScalarTypeConfig, Kind } from 'graphql'
 import { z } from 'zod'
 
-export type ScalarType = {
+export interface ScalarType {
   input: string
   output: string
 }
@@ -30,7 +30,7 @@ export const config: GraphQLScalarTypeConfig<string, string> = {
   description: 'A custom scalar that represents a datetime in ISO 8601 format',
   serialize: datetimeValidation,
   parseValue: datetimeValidation,
-  parseLiteral: value => {
+  parseLiteral: (value) => {
     if (value.kind !== Kind.STRING) {
       throw new GraphQLError('Value is not an string', { nodes: value })
     }

@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Youtube(props: Props) {
+
+const Youtube = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -11,3 +12,7 @@ export default function Youtube(props: Props) {
     </svg>
   )
 }
+
+Youtube.displayName = 'Youtube'
+
+export default Youtube

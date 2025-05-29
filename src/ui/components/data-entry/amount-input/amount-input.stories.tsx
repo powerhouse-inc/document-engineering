@@ -10,11 +10,11 @@ import {
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
-const mappedFiatCurrencies = commonFiatCurrencies.map(currency => ({
+const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
 }))
-const mappedCryptoCurrencies = commonCryptoCurrencies.map(currency => ({
+const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
 }))
