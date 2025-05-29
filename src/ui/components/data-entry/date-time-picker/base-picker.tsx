@@ -1,4 +1,4 @@
-import { type PropsWithChildren, forwardRef } from 'react'
+import { forwardRef, type PropsWithChildren } from 'react'
 import { Icon, type IconName } from '../../../components/icon/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'

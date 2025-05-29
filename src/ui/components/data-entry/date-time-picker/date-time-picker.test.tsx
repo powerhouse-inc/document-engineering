@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DateTimePicker } from './date-time-picker'
 import { vi } from 'vitest'
-import { ChangeEvent, FocusEvent } from 'react'
+import type { ChangeEvent, FocusEvent } from 'react'
 
 describe('DateTimePicker', () => {
   const defaultProps = {
@@ -207,7 +207,7 @@ describe('DateTimePicker', () => {
     expect(input).toHaveValue('25/12/2024 14:30')
 
     // Get the last call to onChange
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
 
     // Verify the event type
     expect(lastCall.type).toBe('change')
@@ -236,7 +236,7 @@ describe('DateTimePicker', () => {
     expect(input.value.trim()).toBe('2024-12-25 02:30')
 
     // Get the last call to onChange
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
 
     // Verify the event type
     expect(lastCall.type).toBe('change')
@@ -252,14 +252,14 @@ describe('DateTimePicker', () => {
     await userEvent.tab() // Trigger blur
 
     // Get the last call to onChange
-    const lastOnChangeCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
+    const lastOnChangeCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
 
     // Verify onChange was called with empty value
     expect(lastOnChangeCall.type).toBe('change')
     expect(lastOnChangeCall.target.value).toBe('')
 
     // Get the last call to onBlur
-    const lastOnBlurCall = onBlur.mock.calls[onBlur.mock.calls.length - 1][0] as FocusEvent<HTMLInputElement>
+    const lastOnBlurCall = onBlur.mock.calls[onBlur.mock.calls.length - 1][0]
 
     // Verify onBlur was called with empty value
     expect(lastOnBlurCall.type).toBe('blur')

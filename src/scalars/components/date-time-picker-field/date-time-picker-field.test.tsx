@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { DateTimePickerField } from './date-time-picker-field'
 import { vi } from 'vitest'
 import { renderWithForm } from '#scalars/lib/testing'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 
 describe('DateTimePickerField', () => {
   const defaultProps = {
@@ -92,7 +92,7 @@ describe('DateTimePickerField', () => {
     const onChange = vi.fn()
     renderWithForm(<DateTimePickerField {...defaultProps} timeFormat="hh:mm a" onChange={onChange} />)
 
-    const input = screen.getByPlaceholderText('Select date and time') as HTMLInputElement
+    const input = screen.getByPlaceholderText<HTMLInputElement>('Select date and time')
     await userEvent.type(input, '2024-12-25 02:30 PM')
 
     expect(input.value.trim()).toBe('2024-12-25 02:30')

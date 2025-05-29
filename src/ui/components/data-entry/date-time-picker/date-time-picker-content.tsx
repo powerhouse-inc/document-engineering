@@ -1,4 +1,3 @@
-import React from 'react'
 import { Icon } from '../../../components/icon/index.js'
 import { cn } from '../../../../scalars/lib/index.js'
 import type { SelectBaseProps } from '../select/index.js'

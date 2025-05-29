@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -8,8 +8,7 @@ import {
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { InputBaseProps } from '../../../../scalars/components/types.js'
 import { BasePickerField } from '../date-time-picker/base-picker.js'
-import { Calendar } from './subcomponents/calendar/calendar.js'
-import type { CalendarProps } from './subcomponents/calendar/calendar.js'
+import { Calendar, type CalendarProps } from './subcomponents/calendar/calendar.js'
 import type { DateFieldValue } from './types.js'
 import { useDatePickerField } from './use-date-picker.js'
 
@@ -129,6 +128,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           )}
         >
           <Calendar
+            // CaptionLabel={<CaptionLabel {...props} />}
             mode="single"
             selected={date}
             weekStartsOn={weekStartDay}
