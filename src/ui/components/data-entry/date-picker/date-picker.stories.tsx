@@ -173,9 +173,33 @@ const meta: Meta<typeof DatePicker> = {
         category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
       },
     },
+    footerButtonClassName: {
+      control: 'text',
+      description: 'Additional className for the calendar footer button navigation year and month',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
+      },
+    },
+    yearGridViewClassName: {
+      control: 'text',
+      description: 'Additional className for the calendar year grid button',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
+      },
+    },
+    monthGridViewClassName: {
+      control: 'text',
+      description: 'Additional className for the calendar month grid button',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
+      },
+    },
     monthsClassName: {
       control: 'text',
-      description: 'Styles for the months container',
+      description: 'Styles for the months container view days',
       table: {
         type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
@@ -391,22 +415,20 @@ export const Filled: Story = {
   },
 }
 
-export const CustomizedCalendar: Story = {
+export const WithCustomizedCalendar: Story = {
   args: {
     name: 'date',
     label: 'Customized Calendar',
     placeholder: '2025/01/27',
-    buttonPreviousClassName: 'bg-red-100 text-green-100 [&>svg]:text-green-100 [&> div > button]:text-green-900',
-    className: '[&>div]:bg-red-100',
-    // monthsClassName: 'bg-gray-50 rounded-lg shadow-sm',
-    // monthClassName: 'rounded-lg p-2 hover:border-blue-300 transition-colors',
-    // captionClassName: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium py-2 px-4 rounded-t-lg',
-    // buttonNextClassName: 'bg-white text-blue-600 hover:bg-blue-50 rounded-full p-2 transition-colors',
-    // buttonPreviousClassName: 'bg-white text-blue-600 hover:bg-blue-50 rounded-full p-2 transition-colors',
-    // selectedClassName: 'bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition-colors',
-    // todayClassName: 'border-2 border-blue-400 rounded-full font-medium',
-    // weekdayClassName: 'text-blue-600 font-medium text-sm',
-    // dayButtonClassName: 'text-blue-600 hover:text-blue-800 transition-colors',
-    // outsideClassName: 'bg-red-100',
+    monthsClassName: 'bg-gray-50',
+    monthClassName: 'hover:border-blue-300 transition-colors',
+    captionClassName: 'text-white font-medium py-2 px-4 rounded-t-lg bg-blue-500 border-2 border-blue-200',
+    buttonNextClassName: 'bg-white text-blue-600 hover:bg-blue-50 rounded-full p-2 transition-colors',
+    buttonPreviousClassName: 'bg-white text-blue-600 hover:bg-blue-50 rounded-full p-2 transition-colors',
+    selectedClassName: 'bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition-colors',
+    todayClassName: 'border-2 border-blue-400 rounded-full font-medium',
+    weekdayClassName: 'text-blue-600 font-medium text-sm',
+    dayButtonClassName: 'text-blue-600 hover:text-blue-800 transition-colors',
+    outsideClassName: 'bg-red-100',
   },
 }

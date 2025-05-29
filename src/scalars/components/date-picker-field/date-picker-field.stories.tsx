@@ -330,18 +330,20 @@ export const Filled: Story = {
   },
 }
 
-export const CustomizedCalendar: Story = {
+export const WithCustomizedCalendar: Story = {
   args: {
     name: 'date',
     label: 'Customized Calendar',
-    // placeholder: '2025/01/27',
-    // monthsClassName: 'bg-gray-50',
-    // monthClassName: 'border-2 border-blue-200',
-    // captionClassName: 'bg-blue-100',
-    // buttonNextClassName: 'bg-blue-500 text-white',
-    // buttonPreviousClassName: 'bg-blue-500 text-white',
-    // selectedClassName: 'bg-blue-500 text-white',
-    // todayClassName: 'border-2 border-green-500 bg-green-100',
-    // outsideClassName: 'bg-red-100',
+    placeholder: '2025/01/27',
+    monthsClassName: 'bg-gray-50',
+    monthClassName: 'hover:border-blue-300 transition-colors',
+    captionClassName: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium py-2 px-4 rounded-t-lg',
+    buttonNextClassName: 'bg-white text-blue-600 hover:bg-blue-50 rounded-full p-2 transition-colors',
+    buttonPreviousClassName: 'bg-white text-blue-600 hover:bg-blue-50 rounded-full p-2 transition-colors',
+    selectedClassName: 'bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition-colors',
+    todayClassName: 'border-2 border-blue-400 rounded-full font-medium',
+    weekdayClassName: 'text-blue-600 font-medium text-sm',
+    dayButtonClassName: 'text-blue-600 hover:text-blue-800 transition-colors',
+    outsideClassName: 'bg-red-100',
   },
 }

@@ -7,12 +7,13 @@ import * as React from 'react'
 import { DayPicker, type DayPickerProps, useDayPicker } from 'react-day-picker'
 import { buttonVariants } from '../../../../../../scalars/components/fragments/button/index.js'
 import type { DatePickerView } from '../../types.js'
-import CalendarDateHeader from '../calendar-date-header/calendar-date-header.js'
+import CalendarDateHeader from '../calendar-date-footer/calendar-date-footer.js'
 import NavCalendar from '../calendar-nav/calendar-nav.js'
 import CaptionLabel from '../caption-label/caption-label.js'
 import { MonthGrid } from '../months-view/month-view.js'
 import { MONTHS } from '../utils.js'
 import { YearGrid } from '../year-view/year-grid.js'
+import CalendarDateFooter from '../calendar-date-footer/calendar-date-footer.js'
 
 export type CalendarProps = DayPickerProps & {
   /**
@@ -51,6 +52,9 @@ export type CalendarProps = DayPickerProps & {
   hiddenClassName?: string
   dayPickerClassName?: string
   disabledDates?: boolean
+  footerButtonClassName?: string
+  yearGridViewClassName?: string
+  monthGridViewClassName?: string
 }
 
 /**
@@ -66,6 +70,9 @@ const Calendar = ({
   yearRange = 12,
   numberOfMonths,
   disabledDates = false,
+  footerButtonClassName,
+  yearGridViewClassName,
+  monthGridViewClassName,
   ...props
 }: CalendarProps) => {
   const [navView, setNavView] = React.useState<DatePickerView>('days')
@@ -193,7 +200,7 @@ const Calendar = ({
           const actualMonth = format(months[0].date, 'MMMM')
           if (navView === 'years') {
             return (
-              <div className="mt-[18px] flex flex-col gap-2">
+              <div className={cn("mt-[18px] flex flex-col gap-2",yearGridViewClassName)}>
                 <YearGrid
                   displayYears={displayYears}
                   startMonth={startMonth}
@@ -205,14 +212,21 @@ const Calendar = ({
                     goToMonth(new Date(year, MONTHS.indexOf(actualMonth)))
                     setNavView('months')
                   }}
+                  
                 />
-                <CalendarDateHeader navView={navView} setNavView={setNavView} />
+                <div>
+                <CalendarDateFooter
+                  navView={navView}
+                  setNavView={setNavView}
+                  footerButtonClassName={footerButtonClassName}
+                />
+                </div>
               </div>
             )
           }
           if (navView === 'months') {
             return (
-              <div className="mt-[15px] flex flex-col gap-3">
+              <div className={cn("mt-[15px] flex flex-col gap-3", monthGridViewClassName)}>
                 <MonthGrid
                   actualMonth={actualMonth}
                   actualYear={actualYear}
@@ -221,7 +235,9 @@ const Calendar = ({
                     setNavView('days')
                   }}
                 />
-                <CalendarDateHeader navView={navView} setNavView={setNavView} />
+                <div> 
+                <CalendarDateFooter navView={navView} setNavView={setNavView} footerButtonClassName={footerButtonClassName}/>
+                </div>
               </div>
             )
           }

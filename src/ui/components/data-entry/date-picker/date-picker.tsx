@@ -34,6 +34,9 @@ interface DatePickerProps extends InputBaseProps<DateFieldValue>, Omit<CalendarP
   autoClose?: boolean
   className?: string
   customCalendarClassName?: string
+  footerButtonClassName?: string
+  yearGridViewClassName?: string
+  monthGridViewClassName?: string
 }
 
 const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -63,7 +66,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       // display props
       className,
       customCalendarClassName,
-
+      footerButtonClassName,
+      yearGridViewClassName,
+      monthGridViewClassName,
       ...props
     },
     ref
@@ -130,6 +135,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             onSelect={handleDateSelect}
             disabled={disabledDates}
             onDayClick={handleDayClick}
+            footerButtonClassName={footerButtonClassName}
+            yearGridViewClassName={yearGridViewClassName}
+            monthGridViewClassName={monthGridViewClassName}
             className={cn(
               'w-full',
               'p-0',
