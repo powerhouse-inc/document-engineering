@@ -23,7 +23,7 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
   const extendedConfig = useMemo(() => {
     const _config: ObjectSetTableConfig<T> = {
       ...config,
-      columns: config.columns.map(column => ({
+      columns: config.columns.map((column) => ({
         ...column,
         type: column.type ?? 'text',
         valueGetter: column.valueGetter ?? defaultValueGetter,
@@ -38,7 +38,7 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
 
-            config.data[context.rowIndex][context.column.field] = value
+            config.data[context.rowIndex][context.column.field] = value as T[keyof T]
             return true
           }),
       })),

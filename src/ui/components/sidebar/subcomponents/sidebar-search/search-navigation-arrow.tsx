@@ -1,7 +1,7 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface SearchNavigationArrowProps {
-  direction: 'up' | 'down'
+  direction: 'down' | 'up'
   isDisabled: boolean
   onClick: () => void
 }

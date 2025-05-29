@@ -284,10 +284,10 @@ const filterOptions = (options: AIDOption[], userInput: string, context?: Record
     ? context.supportedNetworks
     : []
 
-  return options.filter(opt => {
+  return options.filter((opt) => {
     if (supportedNetworks.length > 0) {
       const chainId = opt.value.split(':')[2]
-      if (!supportedNetworks.some(network => network.chainId === chainId)) {
+      if (!supportedNetworks.some((network) => network.chainId === chainId)) {
         return false
       }
     }
@@ -306,7 +306,7 @@ const filterOptions = (options: AIDOption[], userInput: string, context?: Record
 // Async versions
 export const fetchOptions = async (userInput: string, context?: Record<string, unknown>): Promise<AIDOption[]> => {
   // Simulate 2s network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   // Add 20% chance of error
   if (Math.random() < 0.2) {
@@ -318,8 +318,8 @@ export const fetchOptions = async (userInput: string, context?: Record<string, u
 
 export const fetchSelectedOption = async (value: string): Promise<AIDOption | undefined> => {
   // Simulate 2s network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
-  return mockedOptions.find(option => option.value === value)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  return mockedOptions.find((option) => option.value === value)
 }
 
 // Sync versions
@@ -328,5 +328,5 @@ export const fetchOptionsSync = (userInput: string, context?: Record<string, unk
 }
 
 export const fetchSelectedOptionSync = (value: string): AIDOption | undefined => {
-  return mockedOptions.find(option => option.value === value)
+  return mockedOptions.find((option) => option.value === value)
 }

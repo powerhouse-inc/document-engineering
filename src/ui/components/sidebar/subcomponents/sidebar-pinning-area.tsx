@@ -17,7 +17,7 @@ export const SidebarPinningArea = () => {
             isExpanded: false,
           }}
           togglePin={togglePin}
-          searchTerm={''}
+          searchTerm=""
           searchResults={[]}
           activeSearchIndex={0}
           allowPinning={true}

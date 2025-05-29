@@ -90,7 +90,7 @@ export const mockedOptions: OIDOption[] = [
 const filterOptions = (options: OIDOption[], userInput: string) => {
   const normalizedInput = userInput.toLowerCase()
 
-  return options.filter(opt => {
+  return options.filter((opt) => {
     const pathText = typeof opt.path === 'object' ? opt.path.text : opt.path
 
     return (
@@ -105,7 +105,7 @@ const filterOptions = (options: OIDOption[], userInput: string) => {
 // Async versions
 export const fetchOptions = async (userInput: string): Promise<OIDOption[]> => {
   // Simulate 2s network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   // Add 20% chance of error
   if (Math.random() < 0.2) {
@@ -117,8 +117,8 @@ export const fetchOptions = async (userInput: string): Promise<OIDOption[]> => {
 
 export const fetchSelectedOption = async (value: string): Promise<OIDOption | undefined> => {
   // Simulate 2s network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
-  return mockedOptions.find(option => option.value === value)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  return mockedOptions.find((option) => option.value === value)
 }
 
 // Sync versions
@@ -127,5 +127,5 @@ export const fetchOptionsSync = (userInput: string): OIDOption[] => {
 }
 
 export const fetchSelectedOptionSync = (value: string): OIDOption | undefined => {
-  return mockedOptions.find(option => option.value === value)
+  return mockedOptions.find((option) => option.value === value)
 }

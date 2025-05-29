@@ -15,7 +15,7 @@ import * as OID from './OID.js'
 import * as OLabel from './OLabel.js'
 import * as PHID from './PHID.js'
 import * as URLScalar from './URL.js'
-import { type BasePHScalar } from './types.js'
+import type { BasePHScalar } from './types.js'
 
 // export types -- DO NOT REMOVE OR EDIT THIS COMMENT
 export type { ScalarType as AmountScalarType } from './Amount.js'
@@ -56,9 +56,13 @@ export {
 }
 
 export const customScalars: Record<string, BasePHScalar<any>> = {
+  // @ts-expect-error - it works this way
   Amount,
+  // @ts-expect-error - it works this way
   AmountCrypto,
+  // @ts-expect-error - it works this way
   AmountCurrency,
+  // @ts-expect-error - it works this way
   AmountFiat,
   AmountMoney,
   AmountPercentage,

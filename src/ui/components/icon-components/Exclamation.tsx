@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Exclamation(props: Props) {
+
+const Exclamation = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="currentcolor">
       <path d="M9 4C9 3.448 8.552 3 8 3C7.448 3 7 3.448 7 4V9C7 9.552 7.448 10 8 10C8.552 10 9 9.552 9 9V4Z" />
@@ -7,3 +8,7 @@ export default function Exclamation(props: Props) {
     </svg>
   )
 }
+
+Exclamation.displayName = 'Exclamation'
+
+export default Exclamation

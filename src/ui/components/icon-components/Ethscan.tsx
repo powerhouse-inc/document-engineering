@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Ethscan(props: Props) {
+
+const Ethscan = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 14 14" fill="none">
       <path
@@ -13,3 +14,7 @@ export default function Ethscan(props: Props) {
     </svg>
   )
 }
+
+Ethscan.displayName = 'Ethscan'
+
+export default Ethscan

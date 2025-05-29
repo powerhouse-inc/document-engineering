@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function FolderClose(props: Props) {
+
+const FolderClose = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 18 19" fill="currentcolor">
       <path
@@ -9,3 +10,7 @@ export default function FolderClose(props: Props) {
     </svg>
   )
 }
+
+FolderClose.displayName = 'FolderClose'
+
+export default FolderClose

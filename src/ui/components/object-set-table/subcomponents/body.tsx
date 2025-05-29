@@ -11,7 +11,7 @@ import { useInternalTableState } from './table-provider/table-provider.js'
 
 interface TableBodyProps<T extends DataType> {
   data: T[]
-  columns: ColumnDef<T>[]
+  columns: Array<ColumnDef<T>>
 }
 
 const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => {
@@ -150,7 +150,7 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
                     className="max-w-full"
                     autoFocus
                     defaultValue={column.valueGetter?.(rowItem, cellContext) as string}
-                    onKeyDown={e => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         const newValue = (e.target as HTMLInputElement).value
                         column.onSave?.(newValue, cellContext)

@@ -1,6 +1,6 @@
 // add docs
 
-import { type AllowedTypes } from './types.js'
+import type { AllowedTypes } from './types.js'
 
 /**
  * Get the fiat currencies

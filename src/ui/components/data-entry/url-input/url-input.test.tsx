@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { UrlInput } from './url-input.js'
 
 describe('UrlInput', () => {
@@ -43,7 +43,9 @@ describe('UrlInput', () => {
   it('should show error message when provided', async () => {
     render(<UrlInput name="test-url" label="Website URL" errors={['Invalid URL format']} />)
 
-    await waitFor(() => expect(screen.getByText('Invalid URL format')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Invalid URL format')).toBeInTheDocument()
+    })
   })
 
   it('should show warning message when provided', () => {

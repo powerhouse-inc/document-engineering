@@ -44,7 +44,9 @@ describe('CheckboxField', () => {
 
   it('should render with errors', async () => {
     renderWithForm(<CheckboxField name="test" label="Test checkbox" errors={['This is an error']} />)
-    await waitFor(() => expect(screen.getByText('This is an error')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('This is an error')).toBeInTheDocument()
+    })
   })
 
   it('should render with warnings and errors', async () => {
@@ -52,6 +54,8 @@ describe('CheckboxField', () => {
       <CheckboxField name="test" label="Test checkbox" warnings={['This is a warning']} errors={['This is an error']} />
     )
     expect(screen.getByText('This is a warning')).toBeInTheDocument()
-    await waitFor(() => expect(screen.getByText('This is an error')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('This is an error')).toBeInTheDocument()
+    })
   })
 })

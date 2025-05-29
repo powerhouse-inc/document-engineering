@@ -1,6 +1,5 @@
-import { screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { render } from '@testing-library/react'
 import { TimePicker } from './time-picker.js'
 import { vi } from 'vitest'
 
@@ -13,7 +12,7 @@ describe('TimePicker', () => {
           resolvedOptions: () => ({
             timeZone: 'America/New_York',
           }),
-        }) as any
+        }) as unknown as Intl.DateTimeFormat
     )
   })
 
@@ -71,7 +70,7 @@ describe('TimePicker', () => {
       expect(minuteElements[0]).toBeInTheDocument()
     }
 
-    ;['13', '20', '25', '35', '40', '50', '55'].forEach(minute => {
+    ;['13', '20', '25', '35', '40', '50', '55'].forEach((minute) => {
       expect(screen.queryByText(minute)).not.toBeInTheDocument()
     })
   })
@@ -93,7 +92,7 @@ describe('TimePicker', () => {
       expect(minuteElements[0]).toBeInTheDocument()
     }
 
-    ;['15', '45'].forEach(minute => {
+    ;['15', '45'].forEach((minute) => {
       expect(screen.queryByText(minute)).not.toBeInTheDocument()
     })
   })
@@ -113,7 +112,7 @@ describe('TimePicker', () => {
     const select = await screen.findByRole('combobox')
     expect(select).toBeDisabled()
 
-    const timezoneText = screen.getByText(content => {
+    const timezoneText = screen.getByText((content) => {
       return content.includes('New York') && content.includes('(')
     })
     expect(timezoneText).toBeInTheDocument()
@@ -128,7 +127,7 @@ describe('TimePicker', () => {
   it('should display error messages when provided', () => {
     const errors = ['Error 1', 'Error 2']
     render(<TimePicker name="test-time" label="Test Label" errors={errors} />)
-    errors.forEach(error => {
+    errors.forEach((error) => {
       expect(screen.getByText(error)).toBeInTheDocument()
     })
   })
@@ -136,7 +135,7 @@ describe('TimePicker', () => {
   it('should display warning messages when provided', () => {
     const warnings = ['Warning 1', 'Warning 2']
     render(<TimePicker name="test-time" label="Test Label" warnings={warnings} />)
-    warnings.forEach(warning => {
+    warnings.forEach((warning) => {
       expect(screen.getByText(warning)).toBeInTheDocument()
     })
   })
@@ -213,7 +212,7 @@ describe('TimePicker', () => {
     const popoverContent = await screen.findByRole('dialog')
     expect(popoverContent).toBeVisible()
 
-    const timezoneText = screen.getByText(content => {
+    const timezoneText = screen.getByText((content) => {
       return content.includes('America') && content.includes('New York')
     })
     expect(timezoneText).toBeInTheDocument()
@@ -239,7 +238,7 @@ describe('TimePicker', () => {
     const popoverContent = await screen.findByRole('dialog')
     expect(popoverContent).toBeVisible()
 
-    const timezoneText = screen.getByText(content => {
+    const timezoneText = screen.getByText((content) => {
       return content.includes('New York') && !content.includes('America')
     })
     expect(timezoneText).toBeInTheDocument()
@@ -255,7 +254,7 @@ describe('TimePicker', () => {
             timeZone: 'America/Montevideo',
           }),
           formatToParts: () => [{ type: 'timeZoneName', value: 'GMT-03:00' }],
-        }) as any
+        }) as unknown as Intl.DateTimeFormat
     )
 
     render(<TimePicker name="test-time" label="Test Label" timeZone="America/Montevideo" showTimezoneSelect={false} />)

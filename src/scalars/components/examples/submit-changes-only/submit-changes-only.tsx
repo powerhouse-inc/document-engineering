@@ -6,6 +6,7 @@ const SubmitChangesOnly = () => {
   return (
     <Form
       onSubmit={(data: FormData) => {
+        // eslint-disable-next-line no-alert
         alert(JSON.stringify(data, null, 2))
       }}
       submitChangesOnly
@@ -32,7 +33,14 @@ const SubmitChangesOnly = () => {
           </div>
 
           <div className="flex gap-2">
-            <Button className="w-full" color="light" type="reset" onClick={() => reset()}>
+            <Button
+              className="w-full"
+              color="light"
+              type="reset"
+              onClick={() => {
+                reset()
+              }}
+            >
               Reset
             </Button>
             <Button className="w-full" type="submit">

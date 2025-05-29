@@ -1,5 +1,5 @@
 import { getOffset } from '../date-time-picker/utils.js'
-import { type TimePeriod } from './type.js'
+import type { TimePeriod } from './type.js'
 
 export const createChangeEvent = (value: string): React.ChangeEvent<HTMLInputElement> => {
   const nativeEvent = new Event('change', {
@@ -123,9 +123,7 @@ export const transformInputTime = (
     }
 
     // If still no period assigned, determine based on hour
-    if (!period) {
-      period = hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
-    }
+    period ??= hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
     if (periodToCheck) {
       period = periodToCheck
     }
@@ -244,7 +242,7 @@ export const getOffsetToDisplay = (timeZone?: string) => {
  */
 export const getOptions = (includeContinent = false) => {
   const timeZones = Intl.supportedValuesOf('timeZone')
-  return timeZones.map(timeZone => {
+  return timeZones.map((timeZone) => {
     const offset = getOffsetToDisplay(timeZone)
     const label = `(${offset}) ${
       includeContinent ? timeZone.replace(/_/g, ' ') : timeZone.split('/').pop()?.replace(/_/g, ' ')
@@ -320,7 +318,7 @@ export const getTimezone = (utcOffset: string): string => {
   if (!utcOffset) return ''
   const options = getOptions()
   const { timezoneOffset } = splitDatetime(utcOffset)
-  const findedOption = options.find(option => {
+  const findedOption = options.find((option) => {
     return option.label.includes(timezoneOffset)
   })
   return findedOption?.value ?? ''
@@ -393,7 +391,7 @@ export const formatInputToDisplayValid = (
   const { hour, minute, period } = transformInputTime(input, is12HourFormat, timeIntervals)
   if (!hour && !minute) return ''
 
-  return is12HourFormat ? `${hour}:${minute} ${periodToCheck ? periodToCheck : (period ?? '')}` : `${hour}:${minute}`
+  return is12HourFormat ? `${hour}:${minute} ${periodToCheck ?? period ?? ''}` : `${hour}:${minute}`
 }
 
 /**

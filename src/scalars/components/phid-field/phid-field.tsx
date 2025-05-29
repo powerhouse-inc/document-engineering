@@ -43,7 +43,7 @@ const PHIDField = withFieldValidation<PHIDFieldProps>(PHIDInput, {
           `^phd:${documentIDPattern}:${branchScopePattern}:${branchScopePattern}$`,
         ]
 
-        const isValidURIFormat = URIFormats.some(format => new RegExp(format).test(value))
+        const isValidURIFormat = URIFormats.some((format) => new RegExp(format).test(value))
         if (!isValidURIFormat) {
           return 'Invalid format. Please use either URL format: phd://<domain>/<documentID> or URI format: phd:uuid, phd:uuid:branch, phd:uuid::scope, or phd:uuid:branch:scope'
         }

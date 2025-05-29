@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function TimelineCaret(props: Props) {
+
+const TimelineCaret = (props: Props) => {
   return (
     <svg {...props} width="10" height="7" viewBox="0 0 10 7" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function TimelineCaret(props: Props) {
     </svg>
   )
 }
+
+TimelineCaret.displayName = 'TimelineCaret'
+
+export default TimelineCaret

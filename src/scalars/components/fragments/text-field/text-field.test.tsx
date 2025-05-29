@@ -36,7 +36,9 @@ describe('TextField', () => {
 
   it('should display error messages', async () => {
     renderWithForm(<TextField name="name" label="Name" errors={['Name is required']} />)
-    await waitFor(() => expect(screen.getByText('Name is required')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('Name is required')).toBeInTheDocument()
+    })
   })
 
   it('should display warning messages', () => {

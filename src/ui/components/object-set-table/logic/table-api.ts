@@ -110,7 +110,7 @@ class TableApi<TData> implements ITableApi<TData> {
         this._createCellContext(selectedCell.row, selectedCell.column)
       )
       this._getConfig().columns[selectedCell.column]?.onSave?.(
-        `${value} edited`,
+        `${value?.toString() ?? ''} edited`,
         this._createCellContext(selectedCell.row, selectedCell.column)
       )
 

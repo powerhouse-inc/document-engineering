@@ -29,7 +29,7 @@ const meta: Meta<typeof UrlInput> = {
   title: 'Document Engineering/Data Entry/Url Input',
   component: UrlInput,
   decorators: [
-    Story => (
+    (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

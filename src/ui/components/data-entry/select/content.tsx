@@ -1,6 +1,5 @@
 import { Icon } from '../../../components/icon/index.js'
 import { useCommandState } from 'cmdk'
-import type React from 'react'
 import { useEffect } from 'react'
 import {
   CommandEmpty,
@@ -40,10 +39,10 @@ export const Content: React.FC<ContentProps> = ({
   favoriteOptions = [],
   optionsClassName,
 }) => {
-  const enabledOptions = options.filter(opt => !opt.disabled)
-  const hasAnyIcon = options.some(opt => opt.icon)
+  const enabledOptions = options.filter((opt) => !opt.disabled)
+  const hasAnyIcon = options.some((opt) => opt.icon)
 
-  const cmdkSearch = useCommandState(state => state.search) as string
+  const cmdkSearch = useCommandState((state) => state.search)
   // scroll to top when search change
   useEffect(() => {
     commandListRef.current?.scrollTo({ top: 0, behavior: 'instant' })
@@ -54,7 +53,7 @@ export const Content: React.FC<ContentProps> = ({
       {searchable && (
         <CommandInput
           placeholder="Search..."
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             const isOptionsRelatedKey = ['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)
             if (!(isOptionsRelatedKey && enabledOptions.length > 0)) {
               e.stopPropagation()

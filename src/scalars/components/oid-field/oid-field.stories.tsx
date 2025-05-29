@@ -14,7 +14,7 @@ const meta: Meta<typeof OIDField> = {
   component: OIDField,
   decorators: [
     withForm,
-    Story => (
+    (Story) => (
       <div style={{ maxWidth: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

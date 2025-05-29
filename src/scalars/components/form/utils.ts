@@ -1,8 +1,8 @@
 export interface SupportedErrorObject extends Error {
-  data: {
+  data: Array<{
     path?: string
     message?: string
-  }[]
+  }>
 }
 
 export const isSupportedErrorObject = (error: object): error is SupportedErrorObject => {

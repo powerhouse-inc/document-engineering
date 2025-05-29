@@ -1,14 +1,12 @@
-import type React from 'react'
 import { useMemo, useState } from 'react'
-
 import { createBlurEvent, getOffset } from '../date-time-picker/utils.js'
-import { type TimeFieldValue, type TimePeriod } from './type.js'
+import type { TimeFieldValue, TimePeriod } from './type.js'
 import {
   cleanTime,
   convert12hTo24h,
   createChangeEvent,
-  formatInputToDisplayValid,
   formatInputsToValueFormat,
+  formatInputToDisplayValid,
   getHours,
   getHoursAndMinutes,
   getInputValue,
@@ -166,7 +164,7 @@ export const useTimePicker = ({
   const timeZonesOptions =
     timeZone || !showTimezoneSelect
       ? [
-          options.find(opt => opt.value === (timeZone || systemTimezone)) || {
+          options.find((opt) => opt.value === (timeZone || systemTimezone)) || {
             label: `(${getOffsetToDisplay(timeZone || systemTimezone)}) ${
               includeContinent
                 ? (timeZone || systemTimezone).replace(/_/g, ' ')

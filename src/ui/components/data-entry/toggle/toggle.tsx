@@ -2,7 +2,7 @@ import { cn } from '../../../../scalars/lib/utils.js'
 import React, { useId } from 'react'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
-import { type InputBaseProps, type ViewMode, type WithDifference } from '../../../../scalars/components/types.js'
+import type { InputBaseProps, ViewMode, WithDifference } from '../../../../scalars/components/types.js'
 import ToggleDiff from './subcomponents/toogle-diff.js'
 import { ToggleBase } from './toggle-base.js'
 

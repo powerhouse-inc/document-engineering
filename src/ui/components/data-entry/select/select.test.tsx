@@ -84,7 +84,9 @@ describe('Select Component', () => {
   // Validation and Error Handling Tests
   it('should display error messages', async () => {
     render(<Select name="select" options={defaultOptions} errors={['This field is required']} />)
-    await waitFor(() => expect(screen.getByText('This field is required')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(screen.getByText('This field is required')).toBeInTheDocument()
+    })
   })
 
   it('should display warning messages', () => {
@@ -127,7 +129,9 @@ describe('Select Component', () => {
 
     const select = screen.getByRole('combobox')
     expect(select).toHaveAttribute('aria-required', 'true')
-    await waitFor(() => expect(select).toHaveAttribute('aria-invalid', 'true'))
+    await waitFor(() => {
+      expect(select).toHaveAttribute('aria-invalid', 'true')
+    })
     expect(select).toHaveAttribute('aria-expanded', 'false')
   })
 
@@ -178,7 +182,7 @@ describe('Select Component', () => {
 
     await user.click(screen.getByRole('combobox'))
     const optionItems = screen.getAllByRole('option')
-    optionItems.forEach(item => {
+    optionItems.forEach((item) => {
       expect(item).toHaveClass('custom-options-class')
     })
   })

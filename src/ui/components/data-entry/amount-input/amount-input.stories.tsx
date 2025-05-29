@@ -12,11 +12,11 @@ import {
 } from '../../../../scalars/lib/storybook-arg-types.js'
 import { AmountInput, AmountInputProps } from './amount-input.js'
 
-const mappedFiatCurrencies = commonFiatCurrencies.map(currency => ({
+const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
 }))
-const mappedCryptoCurrencies = commonCryptoCurrencies.map(currency => ({
+const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
 }))
