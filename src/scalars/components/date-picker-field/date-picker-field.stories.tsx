@@ -121,7 +121,7 @@ const meta: Meta<typeof DatePickerField> = {
     },
     monthCaptionClassName: {
       control: 'text',
-      description: 'Styles for the month caption',
+      description: 'Styles for the month caption. Example: "[&>div>button>span]:text-green-500"',
       table: {
         type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
@@ -146,22 +146,6 @@ const meta: Meta<typeof DatePickerField> = {
     monthClassName: {
       control: 'text',
       description: 'Styles for the month container',
-      table: {
-        type: { summary: 'string' },
-        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
-      },
-    },
-    captionClassName: {
-      control: 'text',
-      description: 'Styles for the caption container',
-      table: {
-        type: { summary: 'string' },
-        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
-      },
-    },
-    captionLabelClassName: {
-      control: 'text',
-      description: 'Styles for the caption label',
       table: {
         type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,

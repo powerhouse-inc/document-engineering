@@ -31,8 +31,6 @@ import { DatePicker } from './date-picker.js'
  * - weekdaysClassName: Styles for the weekdays container
  * - weekdayClassName: Styles for individual weekday
  * - monthClassName: Styles for the month container
- * - captionClassName: Styles for the caption container
- * - captionLabelClassName: Styles for the caption label
  * - buttonNextClassName: Styles for the next button
  * - buttonPreviousClassName: Styles for the previous button
  * - navClassName: Styles for the navigation container
@@ -207,7 +205,7 @@ const meta: Meta<typeof DatePicker> = {
     },
     monthCaptionClassName: {
       control: 'text',
-      description: 'Styles for the month caption',
+      description: 'Styles for the month caption. Example: "[&>div>button>span]:text-green-500"',
       table: {
         type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
@@ -232,22 +230,6 @@ const meta: Meta<typeof DatePicker> = {
     monthClassName: {
       control: 'text',
       description: 'Styles for the month container',
-      table: {
-        type: { summary: 'string' },
-        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
-      },
-    },
-    captionClassName: {
-      control: 'text',
-      description: 'Styles for the caption container',
-      table: {
-        type: { summary: 'string' },
-        category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
-      },
-    },
-    captionLabelClassName: {
-      control: 'text',
-      description: 'Styles for the caption label',
       table: {
         type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_CUSTOMIZATION,
