@@ -15,6 +15,7 @@ import type { DatePickerView } from '../../types.js'
 import { NavCalendar } from '../calendar-nav/calendar-nav.js'
 import { CaptionLabel } from '../caption-label/caption-label.js'
 import { MonthGrid } from '../month-grid.js'
+import { parseBemTailwindString } from '../utils.js'
 
 const Chevron = (props: {
   className?: string
@@ -69,9 +70,9 @@ export type CalendarProps = DayPickerProps & {
   hiddenClassName?: string
   dayPickerClassName?: string
   disabledDates?: boolean
-  footerButtonClassName?: string
   yearGridViewClassName?: string
   monthGridViewClassName?: string
+  calendarClassName?: string
 }
 
 /**
@@ -81,15 +82,15 @@ export type CalendarProps = DayPickerProps & {
  * @returns
  */
 const Calendar = ({
-  className,
+  // className,
   showOutsideDays = true,
   showYearSwitcher = true,
   yearRange = 12,
   numberOfMonths,
   disabledDates = false,
-  footerButtonClassName,
   yearGridViewClassName,
   monthGridViewClassName,
+  calendarClassName,
   ...props
 }: CalendarProps) => {
   const [navView, setNavView] = React.useState<DatePickerView>('days')
@@ -109,48 +110,137 @@ const Calendar = ({
 
   const columnsDisplayed = navView === 'years' ? 1 : numberOfMonths
 
-  const _monthsClassName = cn('relative flex', props.monthsClassName)
-  const _monthCaptionClassName = cn('relative mx-10 flex h-7 items-center justify-center ', props.monthCaptionClassName)
-  const _weekdaysClassName = cn('flex flex-row', props.weekdaysClassName)
-  const _weekdayClassName = cn('text-muted-foreground w-8 text-sm font-normal', props.weekdayClassName)
-  const _monthClassName = cn('w-full', props.monthClassName)
-  const _captionClassName = cn('relative flex items-center justify-center pt-1', props.captionClassName)
-  const _captionLabelClassName = cn('truncate text-sm font-medium', props.captionLabelClassName)
   const buttonNavClassName = buttonVariants({
     variant: 'outline',
     className: 'absolute h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100',
   })
-  const _buttonNextClassName = cn(buttonNavClassName, 'right-0', props.buttonNextClassName)
-  const _buttonPreviousClassName = cn(buttonNavClassName, 'left-0', props.buttonPreviousClassName)
-  const _navClassName = cn('flex items-start', props.navClassName)
-  const _monthGridClassName = cn('mt-[15px]', 'w-auto', props.monthGridClassName)
-  const _weekClassName = cn('mt-[5px] flex w-max items-start', props.weekClassName)
-  const _dayClassName = cn('flex h-[34px] w-8 flex-1 items-center justify-center p-0 text-sm', props.dayClassName)
-  const _dayButtonClassName = cn(
-    buttonVariants({ variant: 'ghost' }),
-    'size-8 rounded-md p-0 font-normal transition-none aria-selected:opacity-100',
-    props.dayButtonClassName
+
+  const parsedStyles = React.useMemo(() => parseBemTailwindString(calendarClassName), [calendarClassName])
+
+  // TODO: add BEM naming to the calendar
+  const baseClass = 'date-picker'
+
+  const _monthsClassName = cn(
+    `${baseClass}__months`,
+    'relative flex',
+    props.monthsClassName,
+    parsedStyles['date-picker__months']
   )
-  const buttonRangeClassName =
-    'bg-accent [&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground'
-  const _rangeStartClassName = cn(buttonRangeClassName, 'day-range-start rounded-s-md', props.rangeStartClassName)
-  const _rangeEndClassName = cn(buttonRangeClassName, 'day-range-end rounded-e-md', props.rangeEndClassName)
+  const _monthCaptionClassName = cn(
+    `${baseClass}__month-caption`,
+    'relative mx-10 flex h-7 items-center justify-center ',
+    props.monthCaptionClassName,
+    parsedStyles['date-picker__month-caption']
+  )
+  const _weekdaysClassName = cn(
+    `${baseClass}__weekdays`,
+    'flex flex-row',
+    props.weekdaysClassName,
+    parsedStyles['date-picker__weekdays']
+  )
+  const _weekdayClassName = cn(
+    `${baseClass}__weekday`,
+    'text-muted-foreground w-8 text-sm font-normal',
+    props.weekdayClassName,
+    parsedStyles['date-picker__weekday']
+  )
+  const _monthClassName = cn(`${baseClass}__month`, 'w-full', props.monthClassName)
+  const _captionClassName = cn(
+    `${baseClass}__caption`,
+    'relative flex items-center justify-center pt-1',
+    props.captionClassName,
+    parsedStyles['date-picker__caption']
+  )
+  const _captionLabelClassName = cn(
+    `${baseClass}__caption-label`,
+    'truncate text-sm font-medium',
+    props.captionLabelClassName,
+    parsedStyles['date-picker__caption-label']
+  )
+  const _buttonNextClassName = cn(
+    `${baseClass}__button-next`,
+    buttonNavClassName,
+    'right-0',
+    props.buttonNextClassName,
+    parsedStyles['date-picker__button-next']
+  )
+  const _buttonPreviousClassName = cn(
+    `${baseClass}__button-previous`,
+    buttonNavClassName,
+    'left-0',
+    props.buttonPreviousClassName,
+    parsedStyles['date-picker__button-previous']
+  )
+  const _navClassName = cn(
+    `${baseClass}__nav`,
+    'flex items-start',
+    props.navClassName,
+    parsedStyles['date-picker__nav']
+  )
+  const _monthGridClassName = cn(
+    `${baseClass}__month-grid`,
+    'mt-[15px] w-auto',
+    props.monthGridClassName,
+    parsedStyles['date-picker__month-grid']
+  )
+  const _weekClassName = cn(
+    `${baseClass}__week`,
+    'mt-[5px] flex w-max items-start',
+    props.weekClassName,
+    parsedStyles['date-picker__week']
+  )
+  const _dayClassName = cn(
+    `${baseClass}__day`,
+    'flex h-[34px] w-8 flex-1 items-center justify-center p-0 text-sm',
+    'disabled:pointer-events-none disabled:cursor-not-allowed',
+    props.dayClassName,
+    parsedStyles['date-picker__day']
+  )
+  const _dayButtonClassName = cn(
+    `${baseClass}__day-button`,
+    'size-8 rounded-md p-0 font-normal transition-none aria-selected:opacity-100',
+    'disabled:pointer-events-none disabled:cursor-not-allowed disabled:text-gray-300',
+    props.dayButtonClassName,
+    parsedStyles['date-picker__day-button']
+  )
+  const _rangeStartClassName = cn(
+    `${baseClass}__range-start`,
+    'day-range-start rounded-s-md',
+    props.rangeStartClassName,
+    parsedStyles['date-picker__range-start']
+  )
+  const _rangeEndClassName = cn(`${baseClass}__range-end`, 'day-range-end rounded-e-md', props.rangeEndClassName)
   const _rangeMiddleClassName = cn(
+    `${baseClass}__range-middle`,
     'bg-accent !text-foreground [&>button]:!text-foreground [&>button]:hover:!text-foreground [&>button]:bg-transparent [&>button]:hover:bg-transparent',
-    props.rangeMiddleClassName
+    props.rangeMiddleClassName,
+    parsedStyles['date-picker__range-middle']
   )
   const _selectedClassName = cn(
+    `${baseClass}__selected`,
     '[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground',
     'rounded-[4px] bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900',
-    props.selectedClassName
+    props.selectedClassName,
+    parsedStyles['date-picker__selected']
   )
-  const _todayClassName = cn('[&>button]:bg-accent [&>button]:text-accent-foreground', props.todayClassName)
+  const _todayClassName = cn(
+    `${baseClass}__today`,
+    '[&>button]:bg-accent [&>button]:text-accent-foreground',
+    props.todayClassName,
+    parsedStyles['date-picker__today']
+  )
   const _outsideClassName = cn(
+    `${baseClass}__outside`,
     'day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground opacity-50 aria-selected:opacity-30',
-    props.outsideClassName
+    props.outsideClassName,
+    parsedStyles['date-picker__outside']
   )
-  const _disabledClassName = cn('text-gray-300 cursor-not-allowed', props.disabledClassName)
-  const _hiddenClassName = cn('invisible flex-1', props.hiddenClassName)
+
+  const _disabledClassName = cn(
+    'text-gray-300 cursor-not-allowed disabled:pointer-events-none',
+    props.disabledClassName
+  )
+  const _hiddenClassName = cn(`${baseClass}__hidden`, 'invisible flex-1', props.hiddenClassName)
 
   const createNav = React.useCallback(
     (navProps: NavProps) => {
@@ -183,27 +273,25 @@ const Calendar = ({
         <MonthGrid
           navView={navView}
           displayYears={displayYears}
-          footerButtonClassName={footerButtonClassName}
           monthGridViewClassName={monthGridViewClassName}
           yearGridViewClassName={yearGridViewClassName}
           setNavView={setNavView}
           actualMonth="some"
           actualYear="some"
-          className={className}
+          className={calendarClassName}
           {...props}
         />
       )
     },
-    [className, displayYears, footerButtonClassName, monthGridViewClassName, navView, yearGridViewClassName]
+    [calendarClassName, displayYears, monthGridViewClassName, navView, yearGridViewClassName]
   )
-
   return (
     <DayPicker
       mode="single"
       showOutsideDays={showOutsideDays}
       numberOfMonths={columnsDisplayed}
       disabled={disabledDates}
-      className={cn('w-auto p-3 dark:border-gray-900 dark:bg-slate-600', className)}
+      className={cn('w-auto p-3 dark:border-gray-900 dark:bg-slate-600', calendarClassName)}
       classNames={{
         months: _monthsClassName,
         month_caption: _monthCaptionClassName,

@@ -5,12 +5,11 @@ import type { DatePickerView } from '../../types.js'
 interface CalendarDateHeaderProps {
   navView: DatePickerView
   setNavView: (navView: DatePickerView) => void
-  footerButtonClassName?: string
 }
 
-const CalendarDateFooter = ({ navView, setNavView, footerButtonClassName }: CalendarDateHeaderProps) => {
+const CalendarDateFooter = ({ navView, setNavView }: CalendarDateHeaderProps) => {
   return (
-    <div className={cn('flex flex-row justify-between', footerButtonClassName)}>
+    <div className={cn('flex flex-row justify-between')}>
       <Button
         variant="ghost"
         onClick={() => {

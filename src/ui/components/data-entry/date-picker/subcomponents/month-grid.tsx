@@ -14,7 +14,6 @@ interface Props extends PropsWithChildren<MonthGridProps> {
   displayYears: { from: number; to: number }
   startMonth?: Date
   endMonth?: Date
-  footerButtonClassName?: string
   monthGridViewClassName?: string
   setNavView: (view: DatePickerView) => void
   actualMonth: string
@@ -27,7 +26,6 @@ const MonthGrid = ({
   displayYears,
   startMonth,
   endMonth,
-  footerButtonClassName,
   monthGridViewClassName,
   setNavView,
   className,
@@ -53,7 +51,7 @@ const MonthGrid = ({
           }}
         />
         <div>
-          <CalendarDateFooter navView={navView} setNavView={setNavView} footerButtonClassName={footerButtonClassName} />
+          <CalendarDateFooter navView={navView} setNavView={setNavView} />
         </div>
       </div>
     )
@@ -70,7 +68,7 @@ const MonthGrid = ({
           }}
         />
         <div>
-          <CalendarDateFooter navView={navView} setNavView={setNavView} footerButtonClassName={footerButtonClassName} />
+          <CalendarDateFooter navView={navView} setNavView={setNavView} />
         </div>
       </div>
     )
