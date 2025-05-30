@@ -10,7 +10,7 @@ import {
 import { PHIDField } from './phid-field.js'
 
 const meta: Meta<typeof PHIDField> = {
-  title: 'Document Engineering/Scalars/PHID Field',
+  title: 'Scalars/PHID Field',
   component: PHIDField,
   decorators: [
     withForm,

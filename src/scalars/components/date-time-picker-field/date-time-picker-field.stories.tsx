@@ -5,7 +5,7 @@ import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } f
 import { DateTimePickerField } from './date-time-picker-field.js'
 
 const meta: Meta<typeof DateTimePickerField> = {
-  title: 'Document Engineering/Scalars/DateTimePickerField',
+  title: 'Scalars/DateTimePickerField',
   component: DateTimePickerField,
   decorators: [withForm],
   tags: ['autodocs'],

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import CustomRenderingExample from './custom-rendering.js'
 
 const meta = {
-  title: 'Document Engineering/Data Display/Object Set Table/2 - Examples/Custom Rendering',
+  title: 'Data Display/Object Set Table/2 - Examples/Custom Rendering',
   component: CustomRenderingExample,
   tags: ['autodocs'],
   parameters: {

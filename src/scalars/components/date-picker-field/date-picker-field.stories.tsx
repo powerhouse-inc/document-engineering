@@ -5,7 +5,7 @@ import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } f
 import { DatePickerField } from './date-picker-field.js'
 
 const meta: Meta<typeof DatePickerField> = {
-  title: 'Document Engineering/Scalars/Date Field',
+  title: 'Scalars/Date Field',
   component: DatePickerField,
   parameters: {
     layout: 'centered',

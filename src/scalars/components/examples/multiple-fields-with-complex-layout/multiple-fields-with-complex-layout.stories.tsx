@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import MultipleFieldsWithComplexLayout from './multiple-fields-with-complex-layout.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Examples/Multiple Fields With Complex Layout',
+  title: 'Scalars/Examples/Multiple Fields With Complex Layout',
   component: MultipleFieldsWithComplexLayout,
   tags: ['autodocs'],
   parameters: {
