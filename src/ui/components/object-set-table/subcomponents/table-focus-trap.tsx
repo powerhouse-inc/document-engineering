@@ -11,7 +11,9 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLTableElement>(null)
 
   useOnClickOutside(ref, () => {
-    api.selection.clear()
+    if (api.selection.haveSelectedCells()) {
+      api.selection.clearCellSelection()
+    }
   })
 
   //   return children;

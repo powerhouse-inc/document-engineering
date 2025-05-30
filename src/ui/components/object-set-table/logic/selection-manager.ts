@@ -18,6 +18,13 @@ class SelectionManager<TData> implements TableSelectionManager {
   }
 
   /**
+   * Checks if the table has any selected cells
+   */
+  haveSelectedCells() {
+    return this.api._getState().selectedCellIndex !== null
+  }
+
+  /**
    * Selects a single row in the table. Only one row can be selected at a time.
    *
    * @param rowIndex - The index of the row to select
@@ -118,6 +125,13 @@ class SelectionManager<TData> implements TableSelectionManager {
       type: 'SELECT_CELL',
       payload: { row: rowIndex, column: columnIndex },
     })
+  }
+
+  /**
+   * Clears the selection of the current cell
+   */
+  clearCellSelection() {
+    this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
   }
 
   /**

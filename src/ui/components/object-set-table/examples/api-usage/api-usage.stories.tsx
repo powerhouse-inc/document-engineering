@@ -8,15 +8,6 @@ const meta = {
   parameters: {
     layout: 'centered',
     chromatic: { disableSnapshot: true },
-    docs: {
-      source: {
-        language: 'tsx',
-        format: true,
-        code: `
-
-        `,
-      },
-    },
   },
 } satisfies Meta<typeof ApiUsageExample>
 

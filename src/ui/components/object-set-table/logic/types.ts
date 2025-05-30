@@ -4,6 +4,7 @@ import type { TableState } from '../subcomponents/table-provider/table-reducer.j
 export interface TableSelectionManager {
   canSelectRows(): boolean
   canSelectCells(): boolean
+  haveSelectedCells(): boolean
 
   selectRow(rowIndex: number): void
   toggleRow(rowIndex: number): void
@@ -14,6 +15,7 @@ export interface TableSelectionManager {
 
   selectCell(rowIndex: number, columnIndex: number): void
 
+  clearCellSelection(): void
   clear(): void
 }
 

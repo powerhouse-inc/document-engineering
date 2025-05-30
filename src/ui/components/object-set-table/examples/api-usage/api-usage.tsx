@@ -65,20 +65,21 @@ const ApiUsageExample = () => {
       <div className="flex flex-col gap-4">
         <h2 className="text-lg font-bold mb-2">Controls</h2>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-6 mb-4">
             <Button variant="primary" onClick={() => apiRef.current?.selection.selectAllRows()}>
               Select All
-            </Button>
-            <Button variant="primary" onClick={() => apiRef.current?.selection.toggleSelectAll()}>
-              Toggle Select All
             </Button>
             <Button variant="danger" onClick={() => apiRef.current?.selection.clear()}>
               Deselect All
             </Button>
+            <Button variant="primary" onClick={() => apiRef.current?.selection.toggleSelectAll()}>
+              Toggle Select All
+            </Button>
           </div>
+
           <div className="flex gap-6 items-center">
             <Form
-              className="flex gap-2 items-center"
+              className="flex gap-1 items-center"
               onSubmit={(data: { rowIndex: number }) => {
                 apiRef.current?.selection.selectRow(data.rowIndex)
               }}
@@ -91,7 +92,7 @@ const ApiUsageExample = () => {
             </Form>
 
             <Form
-              className="flex gap-2 items-center"
+              className="flex gap-1 items-center"
               onSubmit={(data: { rowIndex: number; rowIndex2: number }) => {
                 apiRef.current?.selection.selectRange(data.rowIndex, data.rowIndex2)
               }}
@@ -101,6 +102,22 @@ const ApiUsageExample = () => {
 
               <Button variant="primary" type="submit">
                 Select range
+              </Button>
+            </Form>
+          </div>
+
+          <div className="flex gap-6 items-center">
+            <Form
+              className="flex gap-1 items-center"
+              onSubmit={(data: { rowIndex: number; colIndex: number }) => {
+                apiRef.current?.selection.selectCell(data.rowIndex, data.colIndex)
+              }}
+            >
+              <NumberField className="w-16" name="rowIndex" minValue={0} maxValue={mockData.length - 2} />
+              <NumberField className="w-16" name="colIndex" minValue={0} maxValue={columns.length - 1} />
+
+              <Button variant="primary" type="submit">
+                Select cell
               </Button>
             </Form>
           </div>
