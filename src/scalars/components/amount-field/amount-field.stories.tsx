@@ -1,4 +1,7 @@
-import { commonCryptoCurrencies, commonFiatCurrencies } from '../../index.js'
+import {
+  commonCryptoCurrencies,
+  commonFiatCurrencies,
+} from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
 import {

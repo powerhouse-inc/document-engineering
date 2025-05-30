@@ -1,7 +1,4 @@
-import {
-  commonCryptoCurrencies,
-  commonFiatCurrencies,
-} from '../../../../scalars/components/currency-code-field/defaults.js'
+import { commonCryptoCurrencies, commonFiatCurrencies } from '../currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
 import { AmountInput } from './amount-input.js'
 

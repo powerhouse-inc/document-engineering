@@ -1,12 +1,6 @@
-import type { IconName } from '../../../ui/components/icon/index.js'
-import type React from 'react'
+import type { CurrencyCodePickerProps } from '../../../ui/components/data-entry/currency-code-picker/types.js'
+import type { FieldErrorHandling } from '../types.js'
 
-export interface Currency {
-  ticker: string
-  crypto: boolean
-  label?: string
-  symbol?: string
-  icon?: IconName | React.ComponentType<{ className?: string }>
-}
+type CurrencyCodeFieldProps = CurrencyCodePickerProps & FieldErrorHandling
 
-export type AllowedTypes = 'Crypto' | 'Fiat' | 'Both'
+export type { CurrencyCodeFieldProps }

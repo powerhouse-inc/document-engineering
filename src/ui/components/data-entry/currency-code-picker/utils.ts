@@ -1,5 +1,3 @@
-// add docs
-
 import type { AllowedTypes } from './types.js'
 
 /**
