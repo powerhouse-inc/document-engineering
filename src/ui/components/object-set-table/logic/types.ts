@@ -14,7 +14,7 @@ export interface TableSelectionManager {
   clear(): void
 }
 
-export interface PublicTableApiBase {
+export interface TableApiBase {
   // properties
   selection: TableSelectionManager
 
@@ -29,7 +29,7 @@ export interface PublicTableApiBase {
   exitCellEditMode(save?: boolean): void
 }
 
-export interface PrivateTableApiBase<TData> extends PublicTableApiBase {
+export interface PrivateTableApiBase<TData> extends TableApiBase {
   _getConfig(): ObjectSetTableConfig<TData>
   _getState(): TableState<TData>
   _createCellContext(row: number, column: number): CellContext<TData>

@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react'
 import { ObjectSetTable } from '../../object-set-table.js'
 import { mockData, type MockedPerson } from '../../mock-data.js'
-import type { PublicTableApiBase } from '../../logic/types.js'
+import type { TableApiBase } from '../../logic/types.js'
 import { cn } from '../../../../../scalars/lib/utils.js'
 import type { ColumnDef } from '../../types.js'
 import { Button } from './button.js'
@@ -9,7 +9,7 @@ import { Form } from '../../../../../scalars/components/form/form.js'
 import { NumberField } from '../../../../../scalars/components/number-field/number-field.js'
 
 const ApiUsageExample = () => {
-  const apiRef = useRef<PublicTableApiBase>(null)
+  const apiRef = useRef<TableApiBase>(null)
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
       { field: 'firstName', title: 'Name' },
