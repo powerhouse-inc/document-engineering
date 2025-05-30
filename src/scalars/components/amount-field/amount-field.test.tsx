@@ -1,4 +1,4 @@
-import { commonCryptoCurrencies } from '../../index.js'
+import { commonCryptoCurrencies } from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
 import { screen, waitFor } from '@testing-library/react'
 import { renderWithForm } from '../../lib/testing.js'
 import { AmountField } from './amount-field.js'

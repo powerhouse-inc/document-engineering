@@ -1,4 +1,4 @@
-import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import type { Currency } from '../currency-code-picker/types.js'
 import { useEffect, useMemo, useState } from 'react'
 import { isValidNumber } from '../../../../scalars/components/number-field/number-field-validations.js'
 import type { Amount, AmountCrypto, AmountCurrency, AmountFiat, AmountInputPropsGeneric, AmountValue } from './types.js'

@@ -1,4 +1,4 @@
-import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import type { Currency } from '../currency-code-picker/types.js'
 
 export interface Amount {
   amount?: number
