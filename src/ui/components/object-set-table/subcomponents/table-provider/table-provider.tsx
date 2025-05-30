@@ -2,14 +2,14 @@ import { createContext, type ReactNode, useContext, useEffect, useMemo, useReduc
 import type { DataType, ObjectSetTableConfig } from '../../types.js'
 import { tableReducer, type TableState } from './table-reducer.js'
 import { createPublicTableApi } from '../../logic/public-table-api.js'
-import type { PrivateTableApiBase, PublicTableApiBase } from '../../logic/types.js'
+import type { PrivateTableApiBase, TableApiBase } from '../../logic/types.js'
 import { TableApi } from '../../logic/table-api.js'
 
 interface TableContextValue<T extends DataType = DataType> {
   config: ObjectSetTableConfig<T>
   state: TableState<T>
   api: PrivateTableApiBase<T>
-  publicApi: PublicTableApiBase
+  publicApi: TableApiBase
 }
 
 const TableContext = createContext<TableContextValue | null>(null)
