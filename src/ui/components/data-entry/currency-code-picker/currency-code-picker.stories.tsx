@@ -31,12 +31,12 @@ import { CurrencyCodePicker } from './currency-code-picker.js'
  * - Content alignment options
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [CurrencyCodeField](?path=/docs/document-engineering-scalars-currency-code-field--readme)
+ * > you can use the [CurrencyCodeField](?path=/docs/scalars-currency-code-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof CurrencyCodePicker> = {
-  title: 'Document Engineering/Data Entry/Currency Code Picker',
+  title: 'Data Entry/Currency Code Picker',
   component: CurrencyCodePicker,
   parameters: {
     layout: 'padded',
