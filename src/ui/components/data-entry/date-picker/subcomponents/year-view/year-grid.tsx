@@ -1,4 +1,4 @@
-import YearButton from './year-button.js'
+import { YearButton } from './year-button.js'
 
 interface YearRange {
   from: number
@@ -13,7 +13,7 @@ interface YearGridProps {
   onYearSelect: (year: number) => void
 }
 
-export const YearGrid = ({ displayYears, startMonth, endMonth, months, currentYear, onYearSelect }: YearGridProps) => {
+const YearGrid = ({ displayYears, startMonth, endMonth, months, currentYear, onYearSelect }: YearGridProps) => {
   const years = Array.from({ length: displayYears.to - displayYears.from + 1 }, (_, i) => displayYears.from + i)
 
   return (
@@ -32,3 +32,6 @@ export const YearGrid = ({ displayYears, startMonth, endMonth, months, currentYe
     </div>
   )
 }
+
+YearGrid.displayName = 'YearGrid'
+export { YearGrid }

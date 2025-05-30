@@ -4,7 +4,7 @@ import { cn } from '../../../../scalars/lib/utils.js'
 import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
 import { Button } from '../../../../scalars/components/fragments/button/index.js'
 import { Popover, PopoverContent, PopoverTrigger } from '../../../../scalars/components/fragments/popover/index.js'
-import { Input } from '../../../components/data-entry/input/input.js'
+import { Input } from '../../data-entry/input/input.js'
 
 export interface BasePickerFieldProps extends InputBaseProps<string>, FieldErrorHandling {
   id?: string

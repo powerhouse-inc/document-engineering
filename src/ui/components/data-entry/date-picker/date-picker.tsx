@@ -128,7 +128,6 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           )}
         >
           <Calendar
-            // CaptionLabel={<CaptionLabel {...props} />}
             mode="single"
             selected={date}
             weekStartsOn={weekStartDay}

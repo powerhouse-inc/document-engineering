@@ -1,17 +1,19 @@
-import React from 'react'
+import type { HTMLAttributes } from 'react'
 import { Icon } from '../../../../../../ui/components/icon/index.js'
 import { cn } from '../../../../../../scalars/lib/index.js'
 import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
 import type { DatePickerView } from '../../types.js'
 
-interface CaptionLabelProps extends React.PropsWithChildren {
+interface CaptionLabelProps extends HTMLAttributes<HTMLSpanElement> {
   showYearSwitcher: boolean
   navView: DatePickerView
   setNavView: (navView: DatePickerView) => void
 }
 
-const CaptionLabel: React.FC<CaptionLabelProps> = ({ children, showYearSwitcher, navView, setNavView, ...props }) => {
-  if (!showYearSwitcher) return <span {...props}>{children}</span>
+const CaptionLabel = (props: CaptionLabelProps): JSX.Element => {
+  const { children, showYearSwitcher, navView, setNavView, ...rest } = props
+
+  if (!showYearSwitcher) return <span {...rest}>{children}</span>
 
   // Convert children to a string and split by space to separate the month and the year
   const [monthAbbreviation, yearNumber] = (children as string).split(' ')
@@ -52,5 +54,5 @@ const CaptionLabel: React.FC<CaptionLabelProps> = ({ children, showYearSwitcher,
     </div>
   )
 }
-
-export default CaptionLabel
+CaptionLabel.displayName = 'CaptionLabel'
+export { CaptionLabel }

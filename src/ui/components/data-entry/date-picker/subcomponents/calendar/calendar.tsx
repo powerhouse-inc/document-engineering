@@ -1,18 +1,36 @@
 'use client'
 
 import { Icon } from '../../../../../../ui/components/icon/index.js'
-import { cn } from '../../../../../../scalars/lib/index.js'
-import { format } from 'date-fns'
+import { cn } from '../../../../../../scalars/lib/utils.js'
 import * as React from 'react'
-import { DayPicker, type DayPickerProps, useDayPicker } from 'react-day-picker'
+import {
+  type CaptionLabelProps,
+  DayPicker,
+  type DayPickerProps,
+  type MonthGridProps,
+  type NavProps,
+} from 'react-day-picker'
 import { buttonVariants } from '../../../../../../scalars/components/fragments/button/index.js'
 import type { DatePickerView } from '../../types.js'
-import NavCalendar from '../calendar-nav/calendar-nav.js'
-import CaptionLabel from '../caption-label/caption-label.js'
-import { MonthGrid } from '../months-view/month-view.js'
-import { MONTHS } from '../utils.js'
-import { YearGrid } from '../year-view/year-grid.js'
-import CalendarDateFooter from '../calendar-date-footer/calendar-date-footer.js'
+import { NavCalendar } from '../calendar-nav/calendar-nav.js'
+import { CaptionLabel } from '../caption-label/caption-label.js'
+import { MonthGrid } from '../month-grid.js'
+
+const Chevron = (props: {
+  className?: string
+  /**
+   * The size of the chevron.
+   *
+   * @defaultValue 24
+   */
+  size?: number
+  /** Set to `true` to disable the chevron. */
+  disabled?: boolean
+  /** The orientation of the chevron. */
+  orientation?: 'up' | 'down' | 'left' | 'right'
+}) => {
+  return <Icon className="size-4" name="ArrowLeft" {...props} />
+}
 
 export type CalendarProps = DayPickerProps & {
   /**
@@ -56,113 +74,6 @@ export type CalendarProps = DayPickerProps & {
   monthGridViewClassName?: string
 }
 
-const ChevronComponent = () => {
-  return <Icon className="size-4" name="ArrowLeft" />
-}
-
-type NavComponentProps = {
-  className?: string
-  navView: DatePickerView
-  displayYears: { from: number; to: number }
-  onPrevClick?: () => void
-  onNextClick?: () => void
-  setDisplayYears: (years: { from: number; to: number }) => void
-  buttonPreviousClassName?: string
-  buttonNextClassName?: string
-  startMonth?: Date
-  endMonth?: Date
-}
-
-const NavComponent = ({ className, navView, displayYears, onPrevClick, onNextClick, setDisplayYears, buttonPreviousClassName, buttonNextClassName, startMonth, endMonth }: NavComponentProps) => {
-  return (
-    <NavCalendar
-      navView={navView}
-      displayYears={displayYears}
-      onPrevClick={onPrevClick}
-      onNextClick={onNextClick}
-      setDisplayYears={setDisplayYears}
-      className={className}
-      buttonPreviousClassName={cn(buttonPreviousClassName)}
-      buttonNextClassName={cn(buttonNextClassName)}
-      startMonth={startMonth}
-      endMonth={endMonth}
-    />
-  )
-}
-
-type MonthGridComponentProps = {
-  className?: string
-  children: React.ReactNode
-  navView: DatePickerView
-  displayYears: { from: number; to: number }
-  startMonth?: Date
-  endMonth?: Date
-  setNavView: (view: DatePickerView) => void
-  footerButtonClassName?: string
-  yearGridViewClassName?: string
-  monthGridViewClassName?: string
-}
-
-const MonthGridComponent = ({ className, children, navView, displayYears, startMonth, endMonth, setNavView, footerButtonClassName, yearGridViewClassName, monthGridViewClassName }: MonthGridComponentProps) => {
-  const { goToMonth, months } = useDayPicker()
-  const actualYear = format(months[0].date, 'yyyy')
-  const actualMonth = format(months[0].date, 'MMMM')
-
-  if (navView === 'years') {
-    return (
-      <div className={cn("mt-[18px] flex flex-col gap-2", yearGridViewClassName)}>
-        <YearGrid
-          displayYears={displayYears}
-          startMonth={startMonth}
-          endMonth={endMonth}
-          actualMonth={actualMonth}
-          months={months}
-          currentYear={new Date().getFullYear()}
-          onYearSelect={year => {
-            goToMonth(new Date(year, MONTHS.indexOf(actualMonth)))
-            setNavView('months')
-          }}
-        />
-        <div>
-          <CalendarDateFooter
-            navView={navView}
-            setNavView={setNavView}
-            footerButtonClassName={footerButtonClassName}
-          />
-        </div>
-      </div>
-    )
-  }
-
-  if (navView === 'months') {
-    return (
-      <div className={cn("mt-[15px] flex flex-col gap-3", monthGridViewClassName)}>
-        <MonthGrid
-          actualMonth={actualMonth}
-          actualYear={actualYear}
-          onMonthSelect={(year, monthIndex) => {
-            goToMonth(new Date(year, monthIndex))
-            setNavView('days')
-          }}
-        />
-        <div>
-          <CalendarDateFooter
-            navView={navView}
-            setNavView={setNavView}
-            footerButtonClassName={footerButtonClassName}
-          />
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <table className={className}>
-      {children}
-    </table>
-  )
-}
-
 /**
  * A custom calendar component built on top of react-day-picker.
  * @param props The props for the calendar.
@@ -194,8 +105,7 @@ const Calendar = ({
       }
     }, [yearRange])
   )
-
-  const { onNextClick, onPrevClick, startMonth, endMonth } = props
+  const { startMonth, endMonth } = props
 
   const columnsDisplayed = navView === 'years' ? 1 : numberOfMonths
 
@@ -242,6 +152,51 @@ const Calendar = ({
   const _disabledClassName = cn('text-gray-300 cursor-not-allowed', props.disabledClassName)
   const _hiddenClassName = cn('invisible flex-1', props.hiddenClassName)
 
+  const createNav = React.useCallback(
+    (navProps: NavProps) => {
+      return (
+        <NavCalendar
+          {...navProps}
+          navView={navView}
+          displayYears={displayYears}
+          setDisplayYears={setDisplayYears}
+          startMonth={startMonth}
+          endMonth={endMonth}
+          buttonPreviousClassName={_buttonPreviousClassName}
+          buttonNextClassName={_buttonNextClassName}
+        />
+      )
+    },
+    [navView, displayYears, setDisplayYears, startMonth, endMonth, _buttonPreviousClassName, _buttonNextClassName]
+  )
+
+  const createCaptionLabel = React.useCallback(
+    (props: CaptionLabelProps) => {
+      return <CaptionLabel {...props} showYearSwitcher={showYearSwitcher} navView={navView} setNavView={setNavView} />
+    },
+    [navView, showYearSwitcher]
+  )
+
+  const createMonthGrid = React.useCallback(
+    (props: MonthGridProps) => {
+      return (
+        <MonthGrid
+          navView={navView}
+          displayYears={displayYears}
+          footerButtonClassName={footerButtonClassName}
+          monthGridViewClassName={monthGridViewClassName}
+          yearGridViewClassName={yearGridViewClassName}
+          setNavView={setNavView}
+          actualMonth="some"
+          actualYear="some"
+          className={className}
+          {...props}
+        />
+      )
+    },
+    [className, displayYears, footerButtonClassName, monthGridViewClassName, navView, yearGridViewClassName]
+  )
+
   return (
     <DayPicker
       mode="single"
@@ -274,46 +229,16 @@ const Calendar = ({
         hidden: _hiddenClassName,
       }}
       components={{
-        Chevron: ChevronComponent,
-        Nav: ({ className }) => (
-          <NavComponent
-            className={className}
-            navView={navView}
-            displayYears={displayYears}
-            onPrevClick={onPrevClick as (() => void) | undefined}
-            onNextClick={onNextClick as (() => void) | undefined}
-            setDisplayYears={setDisplayYears}
-            buttonPreviousClassName={props.buttonPreviousClassName}
-            buttonNextClassName={props.buttonNextClassName}
-            startMonth={startMonth}
-            endMonth={endMonth}
-          />
-        ),
-        CaptionLabel: ({ children, ...props }) => (
-          <CaptionLabel navView={navView} setNavView={setNavView} showYearSwitcher={showYearSwitcher} {...props}>
-            {children}
-          </CaptionLabel>
-        ),
-        MonthGrid: ({ className, children }) => (
-          <MonthGridComponent
-            className={className}
-            navView={navView}
-            displayYears={displayYears}
-            startMonth={startMonth}
-            endMonth={endMonth}
-            setNavView={setNavView}
-            footerButtonClassName={footerButtonClassName}
-            yearGridViewClassName={yearGridViewClassName}
-            monthGridViewClassName={monthGridViewClassName}
-          >
-            {children}
-          </MonthGridComponent>
-        ),
+        Chevron,
+        Nav: createNav,
+        CaptionLabel: createCaptionLabel,
+        MonthGrid: createMonthGrid,
       }}
       {...props}
     />
   )
 }
+
 Calendar.displayName = 'Calendar'
 
 export { Calendar }

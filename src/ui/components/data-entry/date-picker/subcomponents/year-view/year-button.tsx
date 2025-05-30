@@ -35,5 +35,5 @@ const YearButton = ({ year, currentYear, startMonth, endMonth, months, onSelect,
     </Button>
   )
 }
-
-export default YearButton
+YearButton.displayName = 'YearButton'
+export { YearButton }
