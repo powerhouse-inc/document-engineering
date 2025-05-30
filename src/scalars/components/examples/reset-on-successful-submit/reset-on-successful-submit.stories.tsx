@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import FormWithResetOnSuccessfulSubmit from './reset-on-successful-submit.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Examples/Reset On Successful Submit',
+  title: 'Scalars/Examples/Reset On Successful Submit',
   component: FormWithResetOnSuccessfulSubmit,
   tags: ['autodocs'],
   parameters: {

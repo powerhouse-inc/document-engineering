@@ -3,7 +3,7 @@ import { withForm } from '../../lib/decorators.js'
 import { IdField } from './id-field.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Id Field',
+  title: 'Scalars/Id Field',
   component: IdField,
   decorators: [withForm],
   tags: ['autodocs'],

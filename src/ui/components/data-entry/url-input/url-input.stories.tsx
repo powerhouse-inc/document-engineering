@@ -21,12 +21,12 @@ import { UrlInput } from './url-input.js'
  * - Trailing space trimming
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [UrlField](?path=/docs/document-engineering-scalars-url-field--readme)
+ * > you can use the [UrlField](?path=/docs/scalars-url-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof UrlInput> = {
-  title: 'Document Engineering/Data Entry/Url Input',
+  title: 'Data Entry/Url Input',
   component: UrlInput,
   decorators: [
     (Story) => (

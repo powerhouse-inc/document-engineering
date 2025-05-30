@@ -13,11 +13,11 @@ import { Textarea } from './textarea.js'
  * It also includes auto-expansion capabilities and character counting.
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [StringField](?path=/docs/document-engineering-scalars-string-field--readme)
+ * > you can use the [StringField](?path=/docs/scalars-string-field--readme)
  * > component.
  */
 const meta = {
-  title: 'Document Engineering/Data Entry/Textarea',
+  title: 'Data Entry/Textarea',
   component: Textarea,
   parameters: {
     layout: 'centered',

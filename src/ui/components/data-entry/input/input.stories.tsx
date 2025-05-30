@@ -6,7 +6,7 @@ import { Input } from './input.js'
  * It has the standard `input` HTML element attributes and design system styles.
  */
 const meta = {
-  title: 'Document Engineering/Data Entry/Input',
+  title: 'Data Entry/Input',
   component: Input,
   parameters: {
     layout: 'centered',

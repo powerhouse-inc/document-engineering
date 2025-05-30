@@ -11,7 +11,7 @@ import {
 import { EnumField } from './enum-field.js'
 
 const meta: Meta<typeof EnumField> = {
-  title: 'Document Engineering/Scalars/Enum Field',
+  title: 'Scalars/Enum Field',
   component: EnumField,
   decorators: [
     withForm,

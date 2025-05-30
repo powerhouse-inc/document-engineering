@@ -285,7 +285,7 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * ```
  */
 const meta: Meta<typeof ObjectSetTable> = {
-  title: 'Document Engineering/Data Display/Object Set Table',
+  title: 'Data Display/Object Set Table',
   component: ObjectSetTable,
   tags: ['autodocs'],
   parameters: {

@@ -19,12 +19,12 @@ import { TimePicker } from './time-picker'
  * - Custom placeholder support
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [TimePicker](?path=/docs/document-engineering-scalars-timepickerfield--readme)
+ * > you can use the [TimePicker](?path=/docs/scalars-timepickerfield--readme)
  * > component.
  */
 
 const meta: Meta<typeof TimePicker> = {
-  title: 'Document Engineering/Data Entry/Time Picker',
+  title: 'Data Entry/Time Picker',
   component: TimePicker,
   parameters: {
     layout: 'centered',

@@ -25,12 +25,12 @@ import { PHIDInput } from './phid-input.js'
  * - Async and sync options fetching
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [PHIDField](?path=/docs/document-engineering-scalars-phid-field--readme)
+ * > you can use the [PHIDField](?path=/docs/scalars-phid-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof PHIDInput> = {
-  title: 'Document Engineering/Data Entry/PHID Input',
+  title: 'Data Entry/PHID Input',
   component: PHIDInput,
   decorators: [
     (Story) => (

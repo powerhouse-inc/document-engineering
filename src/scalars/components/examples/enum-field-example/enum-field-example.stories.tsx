@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import EnumFieldExample from './enum-field-example.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Examples/Enum Field Example',
+  title: 'Scalars/Examples/Enum Field Example',
   component: EnumFieldExample,
   tags: ['autodocs'],
   parameters: {

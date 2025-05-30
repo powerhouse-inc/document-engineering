@@ -4,7 +4,7 @@ import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } f
 import { CurrencyCodeField } from './currency-code-field.js'
 
 const meta: Meta<typeof CurrencyCodeField> = {
-  title: 'Document Engineering/Scalars/Currency Code Field',
+  title: 'Scalars/Currency Code Field',
   component: CurrencyCodeField,
   decorators: [withForm, (Story) => <div className="w-48">{Story()}</div>],
   parameters: {
