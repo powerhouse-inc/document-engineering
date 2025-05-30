@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { DateTimePickerField } from './date-time-picker-field'
 import { vi } from 'vitest'
 import { renderWithForm } from '#scalars/lib/testing'
+import type { ChangeEvent } from 'react'
 
 describe('DateTimePickerField', () => {
   const defaultProps = {
@@ -83,7 +84,7 @@ describe('DateTimePickerField', () => {
 
     expect(input).toHaveValue('25/12/2024 14:30')
 
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
     expect(lastCall.type).toBe('change')
   })
 
@@ -91,12 +92,12 @@ describe('DateTimePickerField', () => {
     const onChange = vi.fn()
     renderWithForm(<DateTimePickerField {...defaultProps} timeFormat="hh:mm a" onChange={onChange} />)
 
-    const input = screen.getByPlaceholderText('Select date and time') as HTMLInputElement
+    const input = screen.getByPlaceholderText<HTMLInputElement>('Select date and time')
     await userEvent.type(input, '2024-12-25 02:30 PM')
 
     expect(input.value.trim()).toBe('2024-12-25 02:30')
 
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
     expect(lastCall.type).toBe('change')
   })
 
@@ -108,7 +109,7 @@ describe('DateTimePickerField', () => {
     await userEvent.clear(input)
     await userEvent.tab()
 
-    const lastOnChangeCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
+    const lastOnChangeCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
     expect(lastOnChangeCall.type).toBe('change')
     expect(lastOnChangeCall.target.value).toBe('')
 

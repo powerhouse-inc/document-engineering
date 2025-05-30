@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -6,13 +7,12 @@ import {
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { InputBaseProps } from '../../../../scalars/components/types.js'
-import { forwardRef } from 'react'
 import { BasePickerField } from '../date-time-picker/base-picker.js'
-import { Calendar } from './subcomponents/calendar/calendar.js'
+import { Calendar, type CalendarProps } from './subcomponents/calendar/calendar.js'
 import type { DateFieldValue } from './types.js'
 import { useDatePickerField } from './use-date-picker.js'
 
-interface DatePickerProps extends InputBaseProps<DateFieldValue> {
+interface DatePickerProps extends InputBaseProps<DateFieldValue>, Omit<CalendarProps, 'mode'> {
   label?: string
   id?: string
   name: string
@@ -31,6 +31,10 @@ interface DatePickerProps extends InputBaseProps<DateFieldValue> {
   dateFormat?: string
   weekStart?: string
   autoClose?: boolean
+  popoverClassName?: string
+  calendarClassName?: string
+  yearGridViewClassName?: string
+  monthGridViewClassName?: string
 }
 
 const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -57,6 +61,11 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       autoClose = false,
       minDate,
       maxDate,
+      // display props
+      popoverClassName,
+      calendarClassName,
+      yearGridViewClassName,
+      monthGridViewClassName,
       ...props
     },
     ref
@@ -112,7 +121,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           data-cast={`DateString:${dateFormat}`}
           className={cn(
             // custom styles
-            'px-4 pb-6 pt-3'
+            'px-4 pb-6 pt-3',
+            popoverClassName
           )}
         >
           <Calendar
@@ -122,6 +132,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             onSelect={handleDateSelect}
             disabled={disabledDates}
             onDayClick={handleDayClick}
+            yearGridViewClassName={yearGridViewClassName}
+            monthGridViewClassName={monthGridViewClassName}
+            calendarClassName={calendarClassName}
             className={cn(
               'w-full',
               'p-0',

@@ -1,25 +1,25 @@
 import { Icon } from '../../../../../../ui/components/icon/index.js'
-import { cn } from '../../../../../../scalars/lib/index.js'
+import { cn } from '../../../../../../scalars/lib/utils.js'
 import { differenceInCalendarDays } from 'date-fns'
-import { useCallback, useMemo } from 'react'
-import { useDayPicker } from 'react-day-picker'
 import { Button } from '../../../../../../scalars/components/fragments/button/index.js'
 import type { DatePickerView } from '../../types.js'
+import { useDayPicker } from 'react-day-picker'
+import { type MouseEventHandler, useCallback, useMemo } from 'react'
 
 interface NavProps {
   className?: string
   navView: DatePickerView
   displayYears: { from: number; to: number }
   setDisplayYears: (years: { from: number; to: number }) => void
-  onPrevClick?: (date: Date) => void
-  onNextClick?: (date: Date) => void
+  onPrevClick?: MouseEventHandler<HTMLButtonElement>
+  onNextClick?: MouseEventHandler<HTMLButtonElement>
   startMonth?: Date
   endMonth?: Date
   buttonPreviousClassName?: string
   buttonNextClassName?: string
 }
 
-const NavCalendar: React.FC<NavProps> = ({
+const NavCalendar = ({
   className,
   navView,
   displayYears,
@@ -30,7 +30,7 @@ const NavCalendar: React.FC<NavProps> = ({
   endMonth,
   buttonPreviousClassName,
   buttonNextClassName,
-}) => {
+}: NavProps): JSX.Element => {
   const { nextMonth, previousMonth, goToMonth } = useDayPicker()
 
   // Function to check if the "Previous" button should be disabled
@@ -43,7 +43,7 @@ const NavCalendar: React.FC<NavProps> = ({
       )
     }
     return !previousMonth
-  }, [navView, displayYears, startMonth, endMonth, previousMonth])
+  }, [navView, displayYears.from, startMonth, endMonth, previousMonth])
 
   // Function to check if the "Next" button should be disabled
   const isNextDisabled = useMemo(() => {
@@ -55,37 +55,43 @@ const NavCalendar: React.FC<NavProps> = ({
       )
     }
     return !nextMonth
-  }, [navView, displayYears, startMonth, endMonth, nextMonth])
+  }, [navView, displayYears.to, startMonth, endMonth, nextMonth])
 
-  const handlePreviousClick = useCallback(() => {
-    if (!previousMonth) return
-    if (navView === 'years') {
-      const newDisplayYears = {
-        from: displayYears.from - (displayYears.to - displayYears.from + 1),
-        to: displayYears.to - (displayYears.to - displayYears.from + 1),
+  const handlePreviousClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!previousMonth) return
+      if (navView === 'years') {
+        const newDisplayYears = {
+          from: displayYears.from - (displayYears.to - displayYears.from + 1),
+          to: displayYears.to - (displayYears.to - displayYears.from + 1),
+        }
+        setDisplayYears(newDisplayYears)
+        onPrevClick?.(e)
+        return
       }
-      setDisplayYears(newDisplayYears)
-      onPrevClick?.(new Date(displayYears.from - (displayYears.to - displayYears.from), 0, 1))
-      return
-    }
-    goToMonth(previousMonth)
-    onPrevClick?.(previousMonth)
-  }, [previousMonth, goToMonth, navView, displayYears, setDisplayYears, onPrevClick])
+      goToMonth(previousMonth)
+      onPrevClick?.(e)
+    },
+    [previousMonth, navView, goToMonth, onPrevClick, displayYears.from, displayYears.to, setDisplayYears]
+  )
 
-  const handleNextClick = useCallback(() => {
-    if (!nextMonth) return
-    if (navView === 'years') {
-      const newDisplayYears = {
-        from: displayYears.from + (displayYears.to - displayYears.from + 1),
-        to: displayYears.to + (displayYears.to - displayYears.from + 1),
+  const handleNextClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!nextMonth) return
+      if (navView === 'years') {
+        const newDisplayYears = {
+          from: displayYears.from + (displayYears.to - displayYears.from + 1),
+          to: displayYears.to + (displayYears.to - displayYears.from + 1),
+        }
+        setDisplayYears(newDisplayYears)
+        onNextClick?.(e)
+        return
       }
-      setDisplayYears(newDisplayYears)
-      onNextClick?.(new Date(displayYears.from + (displayYears.to - displayYears.from), 0, 1))
-      return
-    }
-    goToMonth(nextMonth)
-    onNextClick?.(nextMonth)
-  }, [nextMonth, goToMonth, navView, displayYears, setDisplayYears, onNextClick])
+      onNextClick?.(e)
+      goToMonth(nextMonth)
+    },
+    [nextMonth, navView, goToMonth, onNextClick, displayYears.from, displayYears.to, setDisplayYears]
+  )
 
   return (
     <nav className={cn('flex items-center', className)}>
@@ -123,4 +129,5 @@ const NavCalendar: React.FC<NavProps> = ({
   )
 }
 
-export default NavCalendar
+NavCalendar.displayName = 'NavCalendar'
+export { NavCalendar }

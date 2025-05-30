@@ -2,13 +2,13 @@ import { Button } from '../../../../../../scalars/components/fragments/button/in
 import { cn } from '../../../../../../scalars/lib/utils.js'
 import { MONTHS } from '../utils.js'
 
-interface MonthGridProps {
+interface MonthViewProps {
   actualMonth: string
   actualYear: string
   onMonthSelect: (year: number, monthIndex: number) => void
 }
 
-export const MonthGrid = ({ actualMonth, actualYear, onMonthSelect }: MonthGridProps) => {
+const MonthView = ({ actualMonth, actualYear, onMonthSelect }: MonthViewProps) => {
   return (
     <div className="grid grid-cols-3 gap-x-[14px] gap-y-[15px]">
       {MONTHS.flat().map((month) => (
@@ -31,3 +31,6 @@ export const MonthGrid = ({ actualMonth, actualYear, onMonthSelect }: MonthGridP
     </div>
   )
 }
+
+MonthView.displayName = 'MonthView'
+export { MonthView }

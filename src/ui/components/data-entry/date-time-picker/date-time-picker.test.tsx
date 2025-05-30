@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DateTimePicker } from './date-time-picker'
 import { vi } from 'vitest'
+import type { ChangeEvent, FocusEvent } from 'react'
 
 describe('DateTimePicker', () => {
   const defaultProps = {
@@ -196,7 +197,7 @@ describe('DateTimePicker', () => {
   })
 
   it('should handle different date formats correctly', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} dateFormat="dd/MM/yyyy" onChange={onChange} />)
 
     const input = screen.getByPlaceholderText('Select date and time')
@@ -213,7 +214,7 @@ describe('DateTimePicker', () => {
   })
 
   it('should handle invalid date format gracefully', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} dateFormat="yyyy-MM-dd" onChange={onChange} />)
 
     const input = screen.getByPlaceholderText('Select date and time')
@@ -224,7 +225,7 @@ describe('DateTimePicker', () => {
   })
 
   it('should handle time format changes correctly', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} timeFormat="hh:mm a" onChange={onChange} />)
 
     const input: HTMLInputElement = screen.getByPlaceholderText('Select date and time')
@@ -242,8 +243,8 @@ describe('DateTimePicker', () => {
   })
 
   it('should handle empty input correctly', async () => {
-    const onChange = vi.fn()
-    const onBlur = vi.fn()
+    const onChange = vi.fn<(e: ChangeEvent<HTMLInputElement>) => void>()
+    const onBlur = vi.fn<(e: FocusEvent<HTMLInputElement>) => void>()
     render(<DateTimePicker {...defaultProps} onChange={onChange} onBlur={onBlur} />)
 
     const input = screen.getByPlaceholderText('Select date and time')

@@ -8,7 +8,6 @@ export const isFormatAllowed = (dateString: string) =>
 export const isDateFormatAllowed = (dateString: string, dateFormat?: string) => {
   if (!dateFormat) return isFormatAllowed(dateString)
   const regex = dateFormatRegexes[dateFormat as keyof typeof dateFormatRegexes]
-  if (!regex) return false
   return regex.test(dateString)
 }
 
@@ -112,14 +111,16 @@ export const getOffset = (timeZone?: string) => {
 export const parseInputString = (inputString: string, dateFormat = ALLOWED_FORMATS[0]): string => {
   const newInputString = normalizeMonthFormat(inputString)
 
-  if (!dateFormat || !inputString) return inputString
+  if (!inputString) return inputString
 
   // First check the specified format
-  const specifiedFormatRegex = dateFormatRegexes[dateFormat as keyof typeof dateFormatRegexes]
-  if (specifiedFormatRegex.test(newInputString)) {
-    const parsedDate = parse(newInputString, dateFormat, new Date())
-    if (isValid(parsedDate)) {
-      return format(parsedDate, dateFormat)
+  if (dateFormat in dateFormatRegexes) {
+    const specifiedFormatRegex = dateFormatRegexes[dateFormat as keyof typeof dateFormatRegexes]
+    if (specifiedFormatRegex.test(newInputString)) {
+      const parsedDate = parse(newInputString, dateFormat, new Date())
+      if (isValid(parsedDate)) {
+        return format(parsedDate, dateFormat)
+      }
     }
   }
 
