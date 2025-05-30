@@ -47,8 +47,10 @@ type TableAction<T extends DataType = DataType> =
     }
   | {
       type: 'SELECT_ROW_RANGE'
-      // the payload is the end of the range, the start is the lastSelectedRowIndex
-      payload: number
+      payload: {
+        from: number
+        to: number
+      }
     }
   // Cell selection
   | {
@@ -129,23 +131,11 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
       }
     }
     case 'SELECT_ROW_RANGE': {
-      if (
-        state.lastSelectedRowIndex === null ||
-        (state.selectedRowIndexes.length === 1 && state.lastSelectedRowIndex === action.payload)
-      ) {
-        // there are no selected rows, so let's select just the payload index
-        // IF THERE ARE SELECTED ROWS, WE'RE NOT HANDLING IT WELL SOMEWHERE ELSE
-        return {
-          ...state,
-          selectedCellIndex: null,
-          selectedRowIndexes: [action.payload],
-          lastSelectedRowIndex: action.payload,
-        }
-      }
+      const { from, to } = action.payload
 
       // we're selecting a range of rows
       const selectedRowIndexesSet = new Set(state.selectedRowIndexes)
-      const [start, end] = [action.payload, state.lastSelectedRowIndex].sort((a, b) => a - b)
+      const [start, end] = [from, to].sort((a, b) => a - b)
 
       Array.from({ length: end - start + 1 }, (_, index) => index + start).forEach((index) =>
         selectedRowIndexesSet.add(index)
@@ -155,7 +145,7 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
         ...state,
         selectedCellIndex: null,
         selectedRowIndexes: [...selectedRowIndexesSet],
-        lastSelectedRowIndex: action.payload,
+        lastSelectedRowIndex: to,
       }
     }
     case 'SELECT_CELL': {

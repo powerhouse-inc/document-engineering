@@ -10,7 +10,10 @@ export interface TableSelectionManager {
   selectFromLastActiveRow(rowIndex: number): void
   selectAllRows(): void
   toggleSelectAll(): void
+  selectRange(from: number, to: number): void
+
   selectCell(rowIndex: number, columnIndex: number): void
+
   clear(): void
 }
 

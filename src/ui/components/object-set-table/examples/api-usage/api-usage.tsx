@@ -93,8 +93,7 @@ const ApiUsageExample = () => {
             <Form
               className="flex gap-2 items-center"
               onSubmit={(data: { rowIndex: number; rowIndex2: number }) => {
-                apiRef.current?.selection.selectRow(data.rowIndex)
-                apiRef.current?.selection.selectFromLastActiveRow(data.rowIndex2)
+                apiRef.current?.selection.selectRange(data.rowIndex, data.rowIndex2)
               }}
             >
               <NumberField className="w-16" name="rowIndex" minValue={0} maxValue={mockData.length - 2} />
