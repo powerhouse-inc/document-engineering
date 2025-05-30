@@ -21,7 +21,7 @@ const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
 }))
 
 const meta = {
-  title: 'Document Engineering/Scalars/Amount Field',
+  title: 'Scalars/Amount Field',
   component: AmountField,
   decorators: [withForm],
   parameters: {

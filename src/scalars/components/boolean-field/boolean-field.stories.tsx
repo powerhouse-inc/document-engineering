@@ -4,7 +4,7 @@ import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } f
 import { BooleanField } from './boolean-field.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Boolean Field',
+  title: 'Scalars/Boolean Field',
   component: BooleanField,
   decorators: [withForm],
   argTypes: {
@@ -80,7 +80,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A boolean field component that can be used as a [checkbox](?path=/docs/document-engineering-data-entry-checkbox--readme) or [toggle](?path=/docs/document-engineering-data-entry-toggle--readme) depending on the `isToggle` prop.',
+          'A boolean field component that can be used as a [checkbox](?path=/docs/data-entry-checkbox--readme) or [toggle](?path=/docs/data-entry-toggle--readme) depending on the `isToggle` prop.',
       },
     },
   },

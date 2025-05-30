@@ -36,11 +36,11 @@ const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
  * - Multiple amount types (Fiat, Crypto, Percentage, etc.)
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [AmountField](?path=/docs/document-engineering-scalars-amount-field--readme)
+ * > you can use the [AmountField](?path=/docs/scalars-amount-field--readme)
  * > component.
  */
 const meta = {
-  title: 'Document Engineering/Data Entry/Amount Input',
+  title: 'Data Entry/Amount Input',
   component: AmountInput,
   parameters: {
     layout: 'centered',

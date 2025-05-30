@@ -165,7 +165,7 @@ import DropdownExample from './dropdown-example.js'
  * TypeScript users get full type checking for native div element props.
  */
 const meta: Meta<typeof DropdownExample> = {
-  title: 'Document Engineering/Data Display/Dropdown',
+  title: 'Data Display/Dropdown',
   component: DropdownExample,
   parameters: {
     layout: 'centered',
