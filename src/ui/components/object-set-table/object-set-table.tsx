@@ -44,6 +44,7 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
       })),
       allowRowSelection: config.allowRowSelection ?? true,
       showRowNumbers: config.showRowNumbers ?? true,
+      apiRef: config.apiRef,
     }
 
     return _config

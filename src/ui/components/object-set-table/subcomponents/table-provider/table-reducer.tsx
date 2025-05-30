@@ -43,6 +43,9 @@ type TableAction<T extends DataType = DataType> =
       type: 'TOGGLE_SELECT_ALL_ROWS'
     }
   | {
+      type: 'SELECT_ALL_ROWS'
+    }
+  | {
       type: 'SELECT_ROW_RANGE'
       // the payload is the end of the range, the start is the lastSelectedRowIndex
       payload: number
@@ -113,6 +116,18 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
             ? []
             : Array.from({ length: state.data.length }, (_, index) => index),
       }
+    case 'SELECT_ALL_ROWS': {
+      // if all the rows are already selected, do nothing
+      if (state.selectedRowIndexes.length === state.data.length) {
+        return { ...state }
+      }
+      return {
+        ...state,
+        selectedCellIndex: null,
+        lastSelectedRowIndex: null,
+        selectedRowIndexes: Array.from({ length: state.data.length }, (_, index) => index),
+      }
+    }
     case 'SELECT_ROW_RANGE': {
       if (
         state.lastSelectedRowIndex === null ||

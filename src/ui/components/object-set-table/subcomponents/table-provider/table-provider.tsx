@@ -1,12 +1,15 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
-import { TableApi } from '../../logic/table-api.js'
 import type { DataType, ObjectSetTableConfig } from '../../types.js'
 import { tableReducer, type TableState } from './table-reducer.js'
+import { createPublicTableApi } from '../../logic/public-table-api.js'
+import type { PrivateTableApiBase, PublicTableApiBase } from '../../logic/types.js'
+import { TableApi } from '../../logic/table-api.js'
 
 interface TableContextValue<T extends DataType = DataType> {
   config: ObjectSetTableConfig<T>
   state: TableState<T>
-  api: TableApi<T>
+  api: PrivateTableApiBase<T>
+  publicApi: PublicTableApiBase
 }
 
 const TableContext = createContext<TableContextValue | null>(null)
@@ -46,7 +49,16 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
     configRef.current = config
   }, [state, config])
 
-  const api = useMemo(() => new TableApi<T>(tableRef, configRef, stateRef), [])
+  const [api, publicApi] = useMemo(() => {
+    const internalApi = new TableApi<T>(tableRef, configRef, stateRef)
+    const publicApi = createPublicTableApi(internalApi)
+
+    if (config.apiRef) {
+      config.apiRef.current = publicApi
+    }
+
+    return [internalApi, publicApi]
+  }, [config.apiRef, tableRef])
 
   return (
     <TableContext.Provider
@@ -54,6 +66,7 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
         config,
         state,
         api,
+        publicApi,
       }}
     >
       {children}

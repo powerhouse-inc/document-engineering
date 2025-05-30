@@ -1,20 +1,20 @@
-import type { ITableApi } from './types.js'
+import type { PrivateTableApiBase, TableSelectionManager } from './types.js'
 
-class SelectionManager<TData> {
-  constructor(private api: ITableApi<TData>) {}
+class SelectionManager<TData> implements TableSelectionManager {
+  constructor(private api: PrivateTableApiBase<TData>) {}
 
   /**
    * Checks if the table allows row selection
    */
   canSelectRows() {
-    return this.api._getConfig().allowRowSelection
+    return this.api._getConfig().allowRowSelection ?? true
   }
 
   /**
    * Checks if the table allows cell selection
    */
   canSelectCells() {
-    return this.api._getConfig().allowRowSelection
+    return this.api._getConfig().allowRowSelection ?? true
   }
 
   /**
@@ -73,8 +73,7 @@ class SelectionManager<TData> {
     if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: 'SELECT_ROW_RANGE',
-      payload: this.api._getState().data.length - 1,
+      type: 'SELECT_ALL_ROWS',
     })
   }
 
