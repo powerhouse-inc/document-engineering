@@ -4,7 +4,7 @@ import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } f
 import { TimePickerField } from './time-picker-field.js'
 
 const meta: Meta<typeof TimePickerField> = {
-  title: 'Document Engineering/Scalars/TimePickerField',
+  title: 'Scalars/TimePickerField',
   component: TimePickerField,
   parameters: {
     layout: 'centered',

@@ -1,25 +1,60 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../lib/storybook-arg-types.js'
-import { CurrencyCodeField } from './currency-code-field.js'
+} from '../../../../scalars/lib/storybook-arg-types.js'
+import { CurrencyCodePicker } from './currency-code-picker.js'
 
-const meta: Meta<typeof CurrencyCodeField> = {
-  title: 'Scalars/Currency Code Field',
-  component: CurrencyCodeField,
-  decorators: [withForm, (Story) => <div className="w-48">{Story()}</div>],
+/**
+ * The `CurrencyCodePicker` component provides a dropdown selection field for currency codes.
+ * It supports multiple configuration properties like:
+ * - label
+ * - description
+ * - placeholder
+ * - currencies
+ * - favoriteCurrencies
+ * - includeCurrencySymbols
+ * - symbolPosition
+ * - allowedTypes
+ * - searchable
+ * - contentAlign
+ *
+ * Features include:
+ * - Support for both fiat and crypto currencies
+ * - Favorite currencies displayed at the top
+ * - Currency symbol display with customizable positioning
+ * - Searchable dropdown option
+ * - Default filtering by currency type (Fiat, Crypto, Both)
+ * - Custom currency list or default currencies
+ * - Content alignment options
+ *
+ * > **Note:** This component does not have built-in validation. If you need built-in validation
+ * > you can use the [CurrencyCodeField](?path=/docs/scalars-currency-code-field--readme)
+ * > component.
+ */
+
+const meta: Meta<typeof CurrencyCodePicker> = {
+  title: 'Data Entry/Currency Code Picker',
+  component: CurrencyCodePicker,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '192px', margin: '1rem auto 0' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes(),
     ...PrebuiltArgTypes.placeholder,
-    ...getValidationArgTypes(),
 
     currencies: {
       control: 'object',
@@ -75,10 +110,17 @@ const meta: Meta<typeof CurrencyCodeField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
   },
 
   args: {
-    name: 'currency-code-field',
+    name: 'currency-code-picker',
     placeholder: 'Select a currency',
     favoriteCurrencies: [],
     currencies: [],
@@ -97,7 +139,7 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Currency',
-    value: 'EUR',
+    defaultValue: 'EUR',
     disabled: true,
     allowedTypes: 'Fiat',
   },

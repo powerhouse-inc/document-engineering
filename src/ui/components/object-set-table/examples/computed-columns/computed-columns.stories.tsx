@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import ComputedColumnsExample from './computed-columns.js'
 
 const meta = {
-  title: 'Document Engineering/Data Display/Object Set Table/2 - Examples/Computed Columns',
+  title: 'Data Display/Object Set Table/2 - Examples/Computed Columns',
   component: ComputedColumnsExample,
   tags: ['autodocs'],
   parameters: {

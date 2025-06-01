@@ -283,9 +283,103 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  *   }
  * }
  * ```
+ *
+ * ## Table API usage
+ *
+ * The `ObjectSetTable` provides a programmatic API through the `apiRef` prop that allows you to control
+ * the table's behavior from your component code. This is useful for implementing custom controls,
+ * handling external events, or building advanced user interfaces.
+ *
+ * ### Getting Started with the API
+ *
+ * To use the table API, create a ref and pass it to the `apiRef` prop:
+ *
+ * ```tsx
+ * import { useRef } from 'react';
+ * import type { TableApiBase } from './types';
+ *
+ * const MyComponent = () => {
+ *   const apiRef = useRef<TableApiBase>(null);
+ *
+ *   return (
+ *     <ObjectSetTable
+ *       data={data}
+ *       columns={columns}
+ *       apiRef={apiRef}
+ *     />
+ *   );
+ * };
+ * ```
+ *
+ * ### Selection Management API
+ *
+ * The `selection` property provides comprehensive control over row and cell selection:
+ *
+ * #### Row Selection Methods
+ *
+ * | Method | Description | Parameters |
+ * |--------|-------------|------------|
+ * | `selectRow(index)` | Selects a single row (clears other selections) | `index: number` |
+ * | `toggleRow(index)` | Toggles selection state of a row | `index: number` |
+ * | `selectAllRows()` | Selects all rows in the table | None |
+ * | `toggleSelectAll()` | Toggles between all selected and all deselected | None |
+ * | `selectRange(from, to)` | Selects a range of rows | `from: number, to: number` |
+ * | `selectFromLastActiveRow(index)` | Selects from last selected row to target row | `index: number` |
+ *
+ * #### Cell Selection Methods
+ *
+ * | Method | Description | Parameters |
+ * |--------|-------------|------------|
+ * | `selectCell(row, column)` | Selects a specific cell | `row: number, column: number` |
+ * | `clearCellSelection()` | Clears current cell selection | None |
+ * | `clear()` | Clears all selections (rows and cells) | None |
+ *
+ * #### Selection State Methods
+ *
+ * | Method | Description | Returns |
+ * |--------|-------------|---------|
+ * | `canSelectRows()` | Checks if row selection is enabled | `boolean` |
+ * | `canSelectCells()` | Checks if cell selection is enabled | `boolean` |
+ * | `haveSelectedCells()` | Checks if any cells are selected | `boolean` |
+ *
+ * ### Cell Editing API
+ *
+ * Control cell editing programmatically:
+ *
+ * | Method | Description | Parameters | Returns |
+ * |--------|-------------|------------|---------|
+ * | `canEditCell(row, column)` | Checks if a cell can be edited | `row: number, column: number` | `boolean` |
+ * | `isEditing()` | Checks if table is in edit mode | None | `boolean` |
+ * | `isEditingCell(row, column)` | Checks if specific cell is being edited | `row: number, column: number` | `boolean` |
+ * | `enterCellEditMode(row, column)` | Enters edit mode for a cell | `row: number, column: number` | `void` |
+ * | `exitCellEditMode(save?)` | Exits edit mode | `save?: boolean = true` | `void` |
+ *
+ * ### DOM Access
+ *
+ * | Method | Description | Returns |
+ * |--------|-------------|---------|
+ * | `getHTMLTable()` | Gets the underlying HTML table element | `HTMLTableElement | null` |
+ *
+ * ### Usage Examples
+ *
+ * #### Basic Selection Control
+ *
+ * ```tsx
+ * const handleSelectAll = () => {
+ *   apiRef.current?.selection.selectAllRows();
+ * };
+ *
+ * const handleClearSelection = () => {
+ *   apiRef.current?.selection.clear();
+ * };
+ *
+ * const handleSelectRange = () => {
+ *   apiRef.current?.selection.selectRange(0, 2); // Select first 3 rows
+ * };
+ * ```
  */
 const meta: Meta<typeof ObjectSetTable> = {
-  title: 'Document Engineering/Data Display/Object Set Table',
+  title: 'Data Display/Object Set Table',
   component: ObjectSetTable,
   tags: ['autodocs'],
   parameters: {

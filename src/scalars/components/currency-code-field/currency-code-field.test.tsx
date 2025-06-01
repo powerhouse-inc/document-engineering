@@ -1,14 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { renderWithForm } from '../../lib/testing.js'
 import { Form } from '../form/index.js'
 import { CurrencyCodeField } from './currency-code-field.js'
-import { currencies } from './utils.js'
+import { currencies } from '../../../ui/components/data-entry/currency-code-picker/utils.js'
 
 describe('CurrencyCodeField', () => {
-  window.HTMLElement.prototype.scrollIntoView = vi.fn()
-
   it('should match snapshot', () => {
     const { container } = renderWithForm(
       <CurrencyCodeField

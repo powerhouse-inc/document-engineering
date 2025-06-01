@@ -9,7 +9,7 @@ import {
 import { NumberField } from './number-field.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Number Field',
+  title: 'Scalars/Number Field',
   component: NumberField,
   parameters: {
     layout: 'centered',

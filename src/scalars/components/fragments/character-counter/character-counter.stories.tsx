@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { CharacterCounter } from './character-counter.js'
 
 const meta = {
-  title: 'Document Engineering/Fragments/CharacterCounter',
+  title: 'Fragments/CharacterCounter',
   component: CharacterCounter,
   parameters: {
     layout: 'centered',

@@ -1,27 +1,27 @@
-import type { ITableApi } from './types.js'
+import type { PrivateTableApiBase, TableSelectionManager } from './types.js'
 
-class SelectionManager<TData> {
-  constructor(private api: ITableApi<TData>) {}
+class SelectionManager<TData> implements TableSelectionManager {
+  constructor(private api: PrivateTableApiBase<TData>) {}
 
   /**
    * Checks if the table allows row selection
    */
   canSelectRows() {
-    return this.api._getConfig().allowRowSelection
+    return this.api._getConfig().allowRowSelection ?? true
   }
 
   /**
    * Checks if the table allows cell selection
    */
   canSelectCells() {
-    return this.api._getConfig().allowRowSelection
+    return this.api._getConfig().allowRowSelection ?? true
   }
 
   /**
-   * Clears the selection of the table
+   * Checks if the table has any selected cells
    */
-  clear() {
-    this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
+  haveSelectedCells() {
+    return this.api._getState().selectedCellIndex !== null
   }
 
   /**
@@ -60,9 +60,18 @@ class SelectionManager<TData> {
   selectFromLastActiveRow(rowIndex: number) {
     if (!this.canSelectRows()) return
 
+    const state = this.api._getState()
+    const lastSelectedIndex = state.lastSelectedRowIndex
+
+    // If there's no last selected row, just select the current row
+    if (lastSelectedIndex === null) {
+      this.selectRow(rowIndex)
+      return
+    }
+
     this.api._getState().dispatch?.({
       type: 'SELECT_ROW_RANGE',
-      payload: rowIndex,
+      payload: { from: lastSelectedIndex, to: rowIndex },
     })
   }
 
@@ -73,16 +82,33 @@ class SelectionManager<TData> {
     if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
-      type: 'SELECT_ROW_RANGE',
-      payload: this.api._getState().data.length - 1,
+      type: 'SELECT_ALL_ROWS',
     })
   }
 
+  /**
+   * Toggles the selection of all rows in the table.
+   */
   toggleSelectAll() {
     if (!this.canSelectRows()) return
 
     this.api._getState().dispatch?.({
       type: 'TOGGLE_SELECT_ALL_ROWS',
+    })
+  }
+
+  /**
+   * Selects a range of rows from the given index to the given index.
+   *
+   * @param from - The index of the first row to select
+   * @param to - The index of the last row to select
+   */
+  selectRange(from: number, to: number) {
+    if (!this.canSelectRows()) return
+
+    this.api._getState().dispatch?.({
+      type: 'SELECT_ROW_RANGE',
+      payload: { from, to },
     })
   }
 
@@ -99,6 +125,20 @@ class SelectionManager<TData> {
       type: 'SELECT_CELL',
       payload: { row: rowIndex, column: columnIndex },
     })
+  }
+
+  /**
+   * Clears the selection of the current cell
+   */
+  clearCellSelection() {
+    this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
+  }
+
+  /**
+   * Clears the selection of the table
+   */
+  clear() {
+    this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
   }
 }
 

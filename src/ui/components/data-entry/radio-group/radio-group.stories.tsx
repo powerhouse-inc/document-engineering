@@ -22,12 +22,12 @@ import { RadioGroup } from './radio-group.js'
  * - Error and warning message display
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [EnumField](?path=/docs/document-engineering-scalars-enum-field--readme)
+ * > you can use the [EnumField](?path=/docs/scalars-enum-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'Document Engineering/Data Entry/Radio Group',
+  title: 'Data Entry/Radio Group',
   component: RadioGroup,
   decorators: [
     (Story) => (

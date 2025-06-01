@@ -1,4 +1,7 @@
-import { commonCryptoCurrencies, commonFiatCurrencies } from '../../index.js'
+import {
+  commonCryptoCurrencies,
+  commonFiatCurrencies,
+} from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
 import {
@@ -18,7 +21,7 @@ const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
 }))
 
 const meta = {
-  title: 'Document Engineering/Scalars/Amount Field',
+  title: 'Scalars/Amount Field',
   component: AmountField,
   decorators: [withForm],
   parameters: {

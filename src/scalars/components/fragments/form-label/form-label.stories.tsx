@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { FormLabel } from './form-label.js'
 
 const meta: Meta<typeof FormLabel> = {
-  title: 'Document Engineering/Fragments/FormLabel',
+  title: 'Fragments/FormLabel',
   component: FormLabel,
   parameters: {
     chromatic: {
