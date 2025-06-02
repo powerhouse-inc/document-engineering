@@ -25,12 +25,12 @@ import { OIDInput } from './oid-input.js'
  * - Async and sync options fetching
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [OIDField](?path=/docs/document-engineering-scalars-oid-field--readme)
+ * > you can use the [OIDField](?path=/docs/scalars-oid-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof OIDInput> = {
-  title: 'Document Engineering/Data Entry/OID Input',
+  title: 'Data Entry/OID Input',
   component: OIDInput,
   decorators: [
     (Story) => (

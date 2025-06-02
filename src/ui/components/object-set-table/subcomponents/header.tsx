@@ -21,7 +21,7 @@ const TableHeader: FC<TableHeaderProps> = ({ columns }) => {
     if (!allowRowSelection) return
 
     api.selection.toggleSelectAll()
-  }, [allowRowSelection])
+  }, [allowRowSelection, api.selection])
 
   const isAllRowsSelected = selectedRowIndexes.length === data.length
 

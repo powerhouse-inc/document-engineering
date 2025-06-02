@@ -1,3 +1,34 @@
+# [1.8.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.7.0...v1.8.0) (2025-06-02)
+
+
+### Bug Fixes
+
+* build ([5de819e](https://github.com/powerhouse-inc/document-engineering/commit/5de819e32cbc56163d08124b8c0c200500ff316a))
+* build ([d598e82](https://github.com/powerhouse-inc/document-engineering/commit/d598e8247c9992a5b62e06425057979f93fffe65))
+* eslint issues ([2934f95](https://github.com/powerhouse-inc/document-engineering/commit/2934f95f5ec2dbf78ff918c438098a1475a7d2f7))
+* **scalars & ui:** tests, stories and circular references ([955f22e](https://github.com/powerhouse-inc/document-engineering/commit/955f22e2c1747b2d201efa6f45b73f95c6c5561b))
+* **scalars:** add wrapper in the stories for amount component ([b04adab](https://github.com/powerhouse-inc/document-engineering/commit/b04adabe138ebc0da6af92df5f0751d3198733b3))
+* **scalars:** add wrapper to check for onChange ([c68f4c1](https://github.com/powerhouse-inc/document-engineering/commit/c68f4c1ea382340262ba6d727369d91e042a56e3))
+* **scalars:** fix the chromatic differences ([55da7ad](https://github.com/powerhouse-inc/document-engineering/commit/55da7ad2c7b0315328a481554ebffe83d41dd851))
+* **scalars:** fix the test in date-time-field ([24cb3d9](https://github.com/powerhouse-inc/document-engineering/commit/24cb3d9ed94a79f8147fa1224978bbe79bb640d6))
+* **scalars:** fix the test in the date-time-picker-field ([d73cb2a](https://github.com/powerhouse-inc/document-engineering/commit/d73cb2a859988459e60e68beca3b082b5075f447))
+* **scalars:** fix the test when invalid date its provieded ([f82b144](https://github.com/powerhouse-inc/document-engineering/commit/f82b14409492f89f292f10ec04aa2bee429ff2b9))
+* **scalars:** remove the comments in spanish ([b548702](https://github.com/powerhouse-inc/document-engineering/commit/b5487028891d3590e06f870cdeb0c13fbbed0cb4))
+* **scalars:** remove the eslint rules ([7007a06](https://github.com/powerhouse-inc/document-engineering/commit/7007a06791b2946a7f98b597bb36ade51bd0addf))
+* **scalars:** remove unnecesary border-0 ([6470d15](https://github.com/powerhouse-inc/document-engineering/commit/6470d154518dbded0397967643fe025ab37feed9))
+* **scalars:** update the snapshot test ([51ea200](https://github.com/powerhouse-inc/document-engineering/commit/51ea200a1ce4666c8e01bf7f6a4a30c12e184d45))
+* table broken type ([2c66d8d](https://github.com/powerhouse-inc/document-engineering/commit/2c66d8d2b677b66cc03fa5c4e56463c37e05e34a))
+* **ui:** currency-code-picker.stories.tsx ([6e26e30](https://github.com/powerhouse-inc/document-engineering/commit/6e26e30b0a00a16444bcb7539e834856eb0a023d))
+* **ui:** remaining circular references ([cae5819](https://github.com/powerhouse-inc/document-engineering/commit/cae58192b8d4afeb0f0295843f7dac53926d9cf6))
+
+
+### Features
+
+* add eslint ([61a8b85](https://github.com/powerhouse-inc/document-engineering/commit/61a8b85e4f6d1dc7fdb1d94adbed88af41b9730a))
+* allow public api usage ([051ffed](https://github.com/powerhouse-inc/document-engineering/commit/051ffedbdccc288e8c25a2ad500efcfc67a65617))
+* improve table api ([d81d49e](https://github.com/powerhouse-inc/document-engineering/commit/d81d49e4f66dcc78cb1032239024779cae47e6a3))
+* **scalars & ui:** adapt Currency component to be used outside of the form ([17668e4](https://github.com/powerhouse-inc/document-engineering/commit/17668e4fb28036fcaa72bc49a2297f211769fd2b))
+
 # [1.7.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.6.0...v1.7.0) (2025-05-27)
 
 

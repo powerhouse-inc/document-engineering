@@ -40,9 +40,9 @@ const useGlobalTableKeyEvents = () => {
       }
     }
 
-    api._getTable()?.addEventListener('keydown', handleKeyDown)
+    api.getHTMLTable()?.addEventListener('keydown', handleKeyDown)
     return () => {
-      api._getTable()?.removeEventListener('keydown', handleKeyDown)
+      api.getHTMLTable()?.removeEventListener('keydown', handleKeyDown)
     }
   }, [api])
 }

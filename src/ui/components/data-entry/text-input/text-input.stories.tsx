@@ -12,11 +12,11 @@ import { TextInput } from './text-input.js'
  * It supports labels, descriptions, validation states, and text transformations.
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [StringField](?path=/docs/document-engineering-scalars-string-field--readme)
+ * > you can use the [StringField](?path=/docs/scalars-string-field--readme)
  * > component.
  */
 const meta = {
-  title: 'Document Engineering/Data Entry/Text Input',
+  title: 'Data Entry/Text Input',
   component: TextInput,
   parameters: {
     layout: 'centered',

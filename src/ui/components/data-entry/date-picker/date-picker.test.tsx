@@ -1,7 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DatePicker } from './date-picker'
+import { addDays, format } from 'date-fns'
 
+// Helper function to get a date relative to today
+export const getRelativeDate = (daysFromToday: number) => {
+  const date = addDays(new Date(), daysFromToday)
+  return format(date, 'yyyy-MM-dd')
+}
 describe('DatePicker', () => {
   const defaultProps = {
     name: 'test-date',
@@ -52,8 +58,9 @@ describe('DatePicker', () => {
   })
 
   it('should disable dates before minDate', async () => {
-    // Arrange: Render component with minDate
-    render(<DatePicker label="Test Label" name="test-date" minDate="2025-01-16" />)
+    // Arrange: Get dates relative to today
+    const minDate = getRelativeDate(5) // 5 days from today
+    render(<DatePicker label="Test Label" name="test-date" minDate={minDate} />)
 
     // Act: Open calendar
     const calendarTrigger = screen.getByTestId('icon-fallback')
@@ -65,14 +72,16 @@ describe('DatePicker', () => {
 
     // Assert: Date before minDate is disabled
     const dateButton = screen.getByRole('button', {
-      name: 'Saturday, May 10th, 2025',
+      name: format(addDays(new Date(), 2), 'EEEE, MMMM do, yyyy'),
     })
     expect(dateButton).toHaveClass('disabled:pointer-events-none')
   })
 
   it('should disable dates after maxDate', async () => {
-    // Arrange: Render component with maxDate
-    render(<DatePicker label="Test Label" name="test-date" maxDate="2025-05-16" />)
+    // Arrange: Get dates relative to today
+    const maxDate = getRelativeDate(5) // 5 days from today
+
+    render(<DatePicker label="Test Label" name="test-date" maxDate={maxDate} />)
 
     // Act: Open calendar
     const calendarTrigger = screen.getByTestId('icon-fallback')
@@ -84,7 +93,7 @@ describe('DatePicker', () => {
 
     // Assert: Date after maxDate is disabled
     const dateButton = screen.getByRole('button', {
-      name: 'Saturday, May 17th, 2025',
+      name: format(addDays(new Date(), 7), 'EEEE, MMMM do, yyyy'),
     })
     expect(dateButton).toHaveClass('disabled:pointer-events-none')
     const input = screen.getByRole('textbox')
@@ -94,13 +103,14 @@ describe('DatePicker', () => {
   it('should handle custom date format', async () => {
     // Arrange: Render component with custom date format
     const dateFormat = 'DD/MM/YYYY'
+
     render(<DatePicker {...defaultProps} dateFormat={dateFormat} />)
 
     // Act: Open calendar and select date
     const calendarTrigger = screen.getByTestId('icon-fallback')
     await userEvent.click(calendarTrigger)
     const dateButton = screen.getByRole('button', {
-      name: 'Saturday, May 10th, 2025',
+      name: format(addDays(new Date(), 3), 'EEEE, MMMM do, yyyy'),
     })
     await userEvent.click(dateButton)
 
@@ -130,10 +140,11 @@ describe('DatePicker', () => {
     const input: HTMLInputElement = screen.getByRole('textbox')
 
     // Act: Type date manually
-    await userEvent.type(input, '2024-03-20')
+    const testDate = getRelativeDate(3)
+    await userEvent.type(input, testDate)
 
     // Assert: Input has correct value
-    expect(input.value).toBe('2024-03-20')
+    expect(input.value).toBe(testDate)
   })
 
   it('should open calendar when clicking the input', async () => {
@@ -164,7 +175,7 @@ describe('DatePicker', () => {
     const calendarButton = screen.getByTestId('icon-fallback').closest('button')
     await userEvent.click(calendarButton!)
     const dateButton = screen.getByRole('button', {
-      name: 'Saturday, May 10th, 2025',
+      name: 'Sunday, June 29th, 2025',
     })
     await userEvent.click(dateButton)
 

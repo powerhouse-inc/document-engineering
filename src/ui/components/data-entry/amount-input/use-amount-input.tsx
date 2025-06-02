@@ -1,4 +1,4 @@
-import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import type { Currency } from '../currency-code-picker/types.js'
 import { useEffect, useMemo, useState } from 'react'
 import { isValidNumber } from '../../../../scalars/components/number-field/number-field-validations.js'
 import type { Amount, AmountCrypto, AmountCurrency, AmountFiat, AmountInputPropsGeneric, AmountValue } from './types.js'
@@ -93,9 +93,10 @@ export const useAmountInput = ({
       return undefined
     }
 
-    // If it's an object, we try to get the unit property
+    // Type guard to check if currentValue is an object with a unit property
     if (typeof currentValue === 'object' && 'unit' in currentValue) {
-      return currentValue.unit
+      const typedValue = currentValue as { unit: string }
+      return typedValue.unit
     }
 
     return undefined
@@ -148,6 +149,13 @@ export const useAmountInput = ({
 
   // Handle the change of the input
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (currentValue === undefined) {
+      const inputValue = e.target.value
+      const newValue = createAmountValue(inputValue)
+
+      const nativeEvent = handleEventOnChange(newValue)
+      onChange?.(nativeEvent)
+    }
     const inputValue = e.target.value
 
     if (type === 'AmountFiat' && typeof value === 'object') {

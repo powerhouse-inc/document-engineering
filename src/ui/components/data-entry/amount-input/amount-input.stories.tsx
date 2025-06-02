@@ -1,15 +1,12 @@
-import {
-  commonCryptoCurrencies,
-  commonFiatCurrencies,
-} from '../../../../scalars/components/currency-code-field/defaults.js'
+import { commonCryptoCurrencies, commonFiatCurrencies } from '../currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
-import { AmountInput } from './amount-input.js'
-
 import {
   getDefaultArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
+import { AmountInput } from './index.js'
+
 const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
@@ -39,11 +36,11 @@ const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
  * - Multiple amount types (Fiat, Crypto, Percentage, etc.)
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [AmountField](?path=/docs/document-engineering-scalars-amount-field--readme)
+ * > you can use the [AmountField](?path=/docs/scalars-amount-field--readme)
  * > component.
  */
 const meta = {
-  title: 'Document Engineering/Data Entry/Amount Input',
+  title: 'Data Entry/Amount Input',
   component: AmountInput,
   parameters: {
     layout: 'centered',
@@ -215,6 +212,7 @@ export const Default: Story = {
     label: 'Enter Amount and Select Currency',
     placeholderSelect: 'CUR',
     type: 'Amount',
+    name: 'amount-field',
     value: {
       amount: undefined,
       unit: '',
@@ -247,6 +245,7 @@ export const WithAmount: Story = {
     placeholderSelect: 'CUR',
     label: 'Enter Amout ',
     type: 'AmountFiat',
+    name: 'amount-field',
     value: {
       amount: 345,
       unit: 'EUR',

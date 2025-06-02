@@ -81,7 +81,7 @@ import type { SidebarNode } from './types.js'
  * ```
  */
 const meta: Meta<typeof Sidebar> = {
-  title: 'Document Engineering/Navigation/Sidebar',
+  title: 'Navigation/Sidebar',
   component: Sidebar,
   tags: ['autodocs'],
   decorators: [
