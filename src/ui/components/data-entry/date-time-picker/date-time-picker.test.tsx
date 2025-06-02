@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DateTimePicker } from './date-time-picker'
 import { vi } from 'vitest'
@@ -78,7 +78,7 @@ describe('DateTimePicker', () => {
     })
 
     const today = new Date()
-    dateButtons.forEach(button => {
+    dateButtons.forEach((button) => {
       const dateStr = button.getAttribute('aria-label')
       if (!dateStr) return
 
@@ -122,7 +122,7 @@ describe('DateTimePicker', () => {
 
     // Check if future dates are disabled
     const today = new Date()
-    dateButtons.forEach(button => {
+    dateButtons.forEach((button) => {
       const dateStr = button.getAttribute('aria-label')
       if (!dateStr) return
 
@@ -227,7 +227,7 @@ describe('DateTimePicker', () => {
     const onChange = vi.fn()
     render(<DateTimePicker {...defaultProps} timeFormat="hh:mm a" onChange={onChange} />)
 
-    const input = screen.getByPlaceholderText('Select date and time') as HTMLInputElement
+    const input: HTMLInputElement = screen.getByPlaceholderText('Select date and time')
     await userEvent.type(input, '2024-12-25 02:30 PM')
 
     // Verify the input value is formatted correctly (without AM/PM in display)

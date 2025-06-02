@@ -103,7 +103,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               disabled={disabled}
               hasError={errors.length > 0}
               inline={false}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault()
                 ;(e.target as HTMLLabelElement).control?.focus()
               }}
@@ -113,7 +113,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           )}
           <Popover
             open={isPopoverOpen}
-            onOpenChange={open => {
+            onOpenChange={(open) => {
               handleOpenChange(open)
               // if the popover is closing and it was not by the trigger button
               if (!open && document.activeElement?.id !== id) {
@@ -129,7 +129,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 type="button"
                 role="combobox"
                 onBlur={onTriggerBlur}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   const shouldPreventOpening = isPopoverOpen || /^[0-9]$/.test(e.key) || !/^[a-zA-Z]$/.test(e.key)
                   // Prevent opening for numbers and non-letter characters (only letters)
                   if (shouldPreventOpening) {
@@ -171,7 +171,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             </PopoverTrigger>
             <PopoverContent
               align={contentAlign}
-              onEscapeKeyDown={e => {
+              onEscapeKeyDown={(e) => {
                 e.preventDefault()
                 handleOpenChange(false)
               }}
@@ -180,7 +180,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               <Command
                 defaultValue={
                   !multiple && selectedValues[0]
-                    ? options.find(opt => opt.value === selectedValues[0])?.label
+                    ? options.find((opt) => opt.value === selectedValues[0])?.label
                     : undefined
                 }
               >

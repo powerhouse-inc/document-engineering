@@ -5,11 +5,11 @@ import { describe, expect, it, vi } from 'vitest'
 import { Input } from '../../../../ui/components/index.js'
 import { renderWithForm } from '../../../lib/testing.js'
 import { Form } from '../../form/index.js'
-import { type ValidatorHandler } from '../../types.js'
+import type { ValidatorHandler } from '../../types.js'
 import { FormGroup } from '../form-group/index.js'
 import { FormLabel } from '../form-label/index.js'
 import { FormMessageList } from '../form-message/index.js'
-import { type TextFieldProps } from '../text-field/index.js'
+import type { TextFieldProps } from '../text-field/index.js'
 import { withFieldValidation } from './with-field-validation.js'
 
 // Test component that will be wrapped
@@ -37,6 +37,8 @@ const TextFieldTesting = React.forwardRef<HTMLInputElement, Omit<TextFieldProps,
     )
   }
 )
+
+TextFieldTesting.displayName = 'TextFieldTesting'
 
 const WrappedComponent = withFieldValidation<TextFieldProps>(TextFieldTesting)
 
@@ -141,7 +143,7 @@ describe('withFieldValidation', () => {
 
     render(
       <Form onSubmit={handleSubmit}>
-        <WrappedComponent name="test" value="" onChange={() => {}} required={true} />
+        <WrappedComponent name="test" value="" onChange={() => undefined} required={true} />
         <button type="submit">Submit</button>
       </Form>
     )
@@ -174,7 +176,7 @@ describe('withFieldValidation', () => {
   it('should validate custom validators using parent props', async () => {
     const WrappedComponentWithValidator = withFieldValidation<TextFieldProps>(TextFieldTesting, {
       validations: {
-        _autoCompleteRequireLength3: props =>
+        _autoCompleteRequireLength3: (props) =>
           ((value: string) => {
             return props.autoComplete ? (value.length > 3 ? true : 'Error') : true
           }) as ValidatorHandler,

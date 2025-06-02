@@ -13,7 +13,7 @@ import type { NumberFieldProps } from './types.js'
 import { useNumberField } from './use-number-field.js'
 import { regex } from './utils.js'
 
-export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
+const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
     {
       label,
@@ -95,7 +95,7 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
             aria-valuemin={minValue}
             aria-valuemax={maxValue}
             aria-invalid={!!errors?.length}
-            onKeyDown={e => {
+            onKeyDown={(e) => {
               preventLetterInput(e)
               preventInvalidCharsAndHandleArrows(e)
             }}
@@ -113,9 +113,11 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
               <button
                 aria-label="Increment"
                 disabled={canIncrement}
-                onMouseDown={e => e.preventDefault()}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                }}
                 type="button"
-                onClick={e => {
+                onClick={(e) => {
                   stepValueHandler(e, 'increment')
                   if (buttonRef.current) {
                     buttonRef.current.focus()
@@ -130,10 +132,12 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
               </button>
               <button
                 aria-label="Decrement"
-                onMouseDown={e => e.preventDefault()}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                }}
                 disabled={canDecrement}
                 type="button"
-                onClick={e => {
+                onClick={(e) => {
                   stepValueHandler(e, 'decrement')
                   if (buttonRef.current) {
                     buttonRef.current.focus()
@@ -162,10 +166,12 @@ export const NumberFieldRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
 
 NumberFieldRaw.displayName = 'NumberFieldRaw'
 
-export const NumberField = withFieldValidation<NumberFieldProps>(NumberFieldRaw, {
+const NumberField = withFieldValidation<NumberFieldProps>(NumberFieldRaw, {
   validations: {
     _numericType: validateNumericType,
   },
 })
 
 NumberField.displayName = 'NumberField'
+
+export { NumberField, NumberFieldRaw }

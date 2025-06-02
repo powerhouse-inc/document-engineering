@@ -8,7 +8,7 @@ import { SidebarHeader } from './subcomponents/sidebar-header.js'
 import { SidebarPinningArea } from './subcomponents/sidebar-pinning-area.js'
 import { useSidebar } from './subcomponents/sidebar-provider/index.js'
 import { SidebarSearch } from './subcomponents/sidebar-search/index.js'
-import { type SidebarNode } from './types.js'
+import type { SidebarNode } from './types.js'
 import { useSidebarResize } from './use-sidebar-resize.js'
 import { triggerEvent } from './utils.js'
 

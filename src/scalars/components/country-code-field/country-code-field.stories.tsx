@@ -9,11 +9,11 @@ import {
 import { CountryCodeField } from './country-code-field.js'
 
 const meta: Meta<typeof CountryCodeField> = {
-  title: 'Document Engineering/Scalars/Country Code Field',
+  title: 'Scalars/Country Code Field',
   component: CountryCodeField,
   decorators: [
     withForm,
-    Story => (
+    (Story) => (
       <div style={{ maxWidth: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

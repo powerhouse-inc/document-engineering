@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react'
 import mockedTree from './mocked_tree.json'
 import { Sidebar } from './sidebar.js'
 import { SidebarProvider } from './subcomponents/sidebar-provider/index.js'
-import { type SidebarNode } from './types.js'
+import type { SidebarNode } from './types.js'
 
 /**
  * The `Sidebar` component can be used within a page layout to provide a sidebar navigation.
@@ -81,11 +81,11 @@ import { type SidebarNode } from './types.js'
  * ```
  */
 const meta: Meta<typeof Sidebar> = {
-  title: 'Document Engineering/Navigation/Sidebar',
+  title: 'Navigation/Sidebar',
   component: Sidebar,
   tags: ['autodocs'],
   decorators: [
-    Story => (
+    (Story) => (
       <SidebarProvider nodes={mockedTree as SidebarNode[]}>
         <Story />
       </SidebarProvider>
@@ -194,7 +194,7 @@ const meta: Meta<typeof Sidebar> = {
       </div>
     ),
     enableMacros: 4,
-    onActiveNodeChange: node => {
+    onActiveNodeChange: (node) => {
       console.log('onActiveNodeChange', node)
     },
   },
@@ -214,7 +214,7 @@ export const WithinLayoutAndContent: Story = {
   args: {
     showStatusFilter: true,
   },
-  render: args => {
+  render: function WithinLayoutAndContentRender(args) {
     const [activeNode, setActiveNode] = useState<string>('4281ab93-ef4f-4974-988d-7dad149a693d')
 
     const onActiveNodeChange = useCallback((node: SidebarNode) => {
@@ -232,7 +232,7 @@ export const WithinLayoutAndContent: Story = {
             <div className="flex flex-col gap-1">
               <div className="flex items-baseline gap-2 text-gray-900 dark:text-gray-200">
                 <div>Login with</div>
-                <Icon name={'Renown'} size={'auto'} height={18} className="cursor-pointer" />
+                <Icon name="Renown" size="auto" height={18} className="cursor-pointer" />
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 Auth integration example within sidebar content

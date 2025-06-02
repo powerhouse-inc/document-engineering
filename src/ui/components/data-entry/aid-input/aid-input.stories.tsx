@@ -25,15 +25,15 @@ import { fetchOptions, fetchSelectedOption, mockedOptions } from './mocks.js'
  * - Async and sync options fetching
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [AIDField](?path=/docs/document-engineering-scalars-aid-field--readme)
+ * > you can use the [AIDField](?path=/docs/scalars-aid-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof AIDInput> = {
-  title: 'Document Engineering/Data Entry/AID Input',
+  title: 'Data Entry/AID Input',
   component: AIDInput,
   decorators: [
-    Story => (
+    (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

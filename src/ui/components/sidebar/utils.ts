@@ -10,7 +10,7 @@ import type { NodeStatus, SidebarNode } from './types.js'
 export const nodesSearch = (
   nodes: SidebarNode[],
   searchTerm: string,
-  searchType: 'dfs' | 'bfs' = 'dfs'
+  searchType: 'bfs' | 'dfs' = 'dfs'
 ): SidebarNode[] => {
   if (!searchTerm.trim()) {
     return []
@@ -150,7 +150,7 @@ export const isOpenLevel = (items: SidebarNode[], expandedNodes: Set<string>, le
  * @param nodeId - The ID of the node to find
  * @returns An array representing the path to the node, or null if not found
  */
-export const getNodePath = (items: SidebarNode[], nodeId: string): Array<SidebarNode> | null => {
+export const getNodePath = (items: SidebarNode[], nodeId: string): SidebarNode[] | null => {
   if (!nodeId || !items.length) {
     return null
   }
@@ -268,7 +268,7 @@ export const filterStatuses = (nodes: SidebarNode[], statuses: NodeStatus[]): Si
 export const triggerEvent = (
   eventType: string,
   data: unknown,
-  element: HTMLElement | Document | null = document
+  element: Document | HTMLElement | null = document
 ): void => {
   if (!eventType) {
     console.warn('triggerEvent called without an event type')
@@ -281,5 +281,5 @@ export const triggerEvent = (
     cancelable: false,
   })
 
-  ;(element || document).dispatchEvent(event)
+  ;(element ?? document).dispatchEvent(event)
 }

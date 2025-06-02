@@ -10,11 +10,11 @@ import {
 import { PHIDField } from './phid-field.js'
 
 const meta: Meta<typeof PHIDField> = {
-  title: 'Document Engineering/Scalars/PHID Field',
+  title: 'Scalars/PHID Field',
   component: PHIDField,
   decorators: [
     withForm,
-    Story => (
+    (Story) => (
       <div style={{ maxWidth: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

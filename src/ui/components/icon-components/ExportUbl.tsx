@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function ExportUbl(props: Props) {
+
+const ExportUbl = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <mask id="mask0_4381_5338" maskUnits="userSpaceOnUse" x="2" y="0" width="30" height="32">
@@ -35,3 +36,7 @@ export default function ExportUbl(props: Props) {
     </svg>
   )
 }
+
+ExportUbl.displayName = 'ExportUbl'
+
+export default ExportUbl

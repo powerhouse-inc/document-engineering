@@ -25,7 +25,7 @@ export const validateDatePicker =
     const isValid = isDateFormatAllowed(stringDate, internalFormat)
 
     if (!isValid) {
-      return `Invalid date format. Please use a valid format`
+      return 'Invalid date format. Please use a valid format'
     }
     const isoDate = formatDateToValidCalendarDateFormat(stringDate)
     // Split the date and time parts

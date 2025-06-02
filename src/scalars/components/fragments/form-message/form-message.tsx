@@ -2,7 +2,7 @@ import { cn } from '../../../lib/utils.js'
 
 export type FormMessageType = 'error' | 'info' | 'warning'
 
-type FormMessageOwnProps<E extends React.ElementType = React.ElementType> = {
+interface FormMessageOwnProps<E extends React.ElementType = React.ElementType> {
   type?: FormMessageType
   as?: E
   className?: string

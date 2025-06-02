@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Compass(props: Props) {
+
+const Compass = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_1808_6629)">
@@ -16,3 +17,7 @@ export default function Compass(props: Props) {
     </svg>
   )
 }
+
+Compass.displayName = 'Compass'
+
+export default Compass

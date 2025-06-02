@@ -24,12 +24,12 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
   Component: React.ComponentType<T>,
   options?: ValidationOptions<T>
 ): React.ForwardRefExoticComponent<React.PropsWithoutRef<T> & React.RefAttributes<R>> => {
-  return React.forwardRef<R, T>(
+  const ComponentWithFieldValidation = React.forwardRef<R, T>(
     ({ value, name, showErrorOnBlur, showErrorOnChange, validators: customValidators, ...props }, ref) => {
       const { onChange: onChangeProp, onBlur: onBlurProp } = props as PossibleEventsProps
       const {
         control,
-        formState: { errors: formErrors, defaultValues },
+        formState: { errors: formErrors },
         trigger,
         setValue,
         getValues,
@@ -99,6 +99,7 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
             // React Hook "useCallback" cannot be called inside a callback.
             // React Hooks must be called in a React function component or a custom React Hook function.
 
+            // eslint-disable-next-line react-hooks/rules-of-hooks -- this is an inline component
             const onBlurCallback = useCallback(
               (event: React.FocusEvent<HTMLInputElement>) => {
                 if (showErrorOnBlur) {
@@ -119,6 +120,7 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
             // React Hook "useCallback" cannot be called inside a callback.
             // React Hooks must be called in a React function component or a custom React Hook function.
 
+            // eslint-disable-next-line react-hooks/rules-of-hooks -- this is an inline component
             const onChangeCallback = useCallback(
               (event: React.ChangeEvent<HTMLInputElement>) => {
                 // update value state
@@ -276,4 +278,8 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
       )
     }
   )
+
+  ComponentWithFieldValidation.displayName = `WithFieldValidation(${Component.displayName})`
+
+  return ComponentWithFieldValidation
 }

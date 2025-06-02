@@ -7,6 +7,7 @@ const FormWithResetButton = () => {
   return (
     <Form
       onSubmit={(data: FormData) => {
+        // eslint-disable-next-line no-alert
         alert(JSON.stringify(data, null, 2))
       }}
     >

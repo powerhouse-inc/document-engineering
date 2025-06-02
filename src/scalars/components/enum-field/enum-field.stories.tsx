@@ -11,11 +11,11 @@ import {
 import { EnumField } from './enum-field.js'
 
 const meta: Meta<typeof EnumField> = {
-  title: 'Document Engineering/Scalars/Enum Field',
+  title: 'Scalars/Enum Field',
   component: EnumField,
   decorators: [
     withForm,
-    Story => (
+    (Story) => (
       <div style={{ maxWidth: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>
@@ -129,7 +129,9 @@ export default meta
 type Story = StoryObj<typeof EnumField>
 
 const IconComponent = (name: IconName): React.ComponentType<{ className?: string }> => {
-  return ({ className }) => <Icon name={name} size={16} className={className} />
+  const IconComponent = ({ className }: { className?: string }) => <Icon name={name} size={16} className={className} />
+  IconComponent.displayName = `IconComponent(${name})`
+  return IconComponent
 }
 
 const defaultOptions = [
@@ -162,9 +164,9 @@ const defaultOptionsWithIcon = [
   },
 ]
 
-type StoryProps = {
+interface StoryProps {
   variant: 'auto' | 'RadioGroup' | 'Select'
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export const Default: Story = {

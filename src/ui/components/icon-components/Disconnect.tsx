@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Disconnect(props: Props) {
+
+const Disconnect = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,3 +10,7 @@ export default function Disconnect(props: Props) {
     </svg>
   )
 }
+
+Disconnect.displayName = 'Disconnect'
+
+export default Disconnect

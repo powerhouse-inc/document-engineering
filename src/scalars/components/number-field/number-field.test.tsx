@@ -235,7 +235,7 @@ describe('NumberField', () => {
     expect(eventArg.target.value).toBe('1')
   })
 
-  //New test for the issues
+  // New test for the issues
   it('should handle NonPositiveFloat numeric type correctly', async () => {
     const mockOnSubmit = vi.fn()
     const user = userEvent.setup()
@@ -414,7 +414,7 @@ describe('NumberField', () => {
     expect(mockOnSubmit).not.toHaveBeenCalled()
   })
 
-  //New test for the issues
+  // New test for the issues
   it('should handle NonPositiveFloat numeric type correctly', async () => {
     const mockOnSubmit = vi.fn()
     const user = userEvent.setup()

@@ -29,12 +29,12 @@ import { FORMAT_MAPPING } from './utils.js'
  * - Custom placeholder support
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [DateTimePickerField](?path=/docs/document-engineering-scalars-datetimepickerfield--readme)
+ * > you can use the [DateTimePickerField](?path=/docs/scalars-datetimepickerfield--readme)
  * > component.
  */
 
 const meta: Meta<typeof DateTimePicker> = {
-  title: 'Document Engineering/Data Entry/Date Time Picker',
+  title: 'Data Entry/Date Time Picker',
   component: DateTimePicker,
   tags: ['autodocs'],
   decorators: [withTimestampsAsISOStrings],
@@ -204,6 +204,5 @@ export const Default: Story = {
     label: 'Date Time Picker Field',
     description: 'This is a date time picker field',
     placeholder: '2025/01/27 12:00',
-    onChange: () => {},
   },
 }

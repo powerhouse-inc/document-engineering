@@ -36,14 +36,18 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
 }) => {
   return (
     <>
-      {options.map(opt => {
+      {options.map((opt) => {
         const isSelected = selectedValues.includes(opt.value)
         return (
           <CommandItem
             tabIndex={tabIndex}
             key={`favorite-${opt.value}`}
             value={opt.label}
-            onSelect={() => !opt.disabled && toggleOption(opt.value)}
+            onSelect={() => {
+              if (!opt.disabled) {
+                toggleOption(opt.value)
+              }
+            }}
             disabled={opt.disabled}
             className={cn(
               'cursor-pointer',

@@ -1,7 +1,7 @@
 import { GraphQLError, GraphQLScalarType, type GraphQLScalarTypeConfig, Kind } from 'graphql'
 import { z } from 'zod'
 
-export type ScalarType = {
+export interface ScalarType {
   input: number // Update this accordingly
   output: number // Update this accordingly
 }
@@ -34,7 +34,7 @@ export const config: GraphQLScalarTypeConfig<number, number> = {
   description: 'A custom scalar that represents a monetary amount in a currency',
   serialize: amountMoneyValidation,
   parseValue: amountMoneyValidation,
-  parseLiteral: value => {
+  parseLiteral: (value) => {
     if (value.kind !== Kind.FLOAT) {
       throw new GraphQLError('Value is not a float type', {
         nodes: value,

@@ -3,7 +3,7 @@ import { withForm } from '../../lib/decorators.js'
 import { IdField } from './id-field.js'
 
 const meta = {
-  title: 'Document Engineering/Scalars/Id Field',
+  title: 'Scalars/Id Field',
   component: IdField,
   decorators: [withForm],
   tags: ['autodocs'],
@@ -60,7 +60,7 @@ export const Default: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<IdField />`,
+        code: '<IdField />',
       },
     },
   },
@@ -81,7 +81,7 @@ export const CustomGenerator: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<IdField generator={() => \`custom-\${Date.now()}\`} />`,
+        code: '<IdField generator={() => `custom-${Date.now()}`} />',
       },
     },
   },
@@ -91,7 +91,7 @@ export const CustomIdValue: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="text-sm text-gray-500">
-        <p>This form contains a hidden IdField with the id: "custom-id".</p>
+        <p>This form contains a hidden IdField with the id: &quot;custom-id&quot;.</p>
         <p>Submit the form to see the ID in the alert.</p>
       </div>
 
@@ -102,7 +102,7 @@ export const CustomIdValue: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<IdField value="custom-id" />`,
+        code: '<IdField value="custom-id" />',
       },
     },
   },

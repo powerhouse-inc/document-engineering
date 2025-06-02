@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Tabler(props: Props) {
+
+const Tabler = (props: Props) => {
   return (
     <svg {...props} width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -19,3 +20,7 @@ export default function Tabler(props: Props) {
     </svg>
   )
 }
+
+Tabler.displayName = 'Tabler'
+
+export default Tabler

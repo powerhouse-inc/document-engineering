@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Xmark(props: Props) {
+
+const Xmark = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 24 24" fill="currentcolor">
       <path
@@ -10,3 +11,7 @@ export default function Xmark(props: Props) {
     </svg>
   )
 }
+
+Xmark.displayName = 'Xmark'
+
+export default Xmark

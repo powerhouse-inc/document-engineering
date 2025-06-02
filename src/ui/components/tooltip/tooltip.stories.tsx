@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Tooltip, TooltipProvider } from './tooltip.js'
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Document Engineering/Fragments/Tooltip',
+  title: 'Fragments/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',
@@ -19,7 +19,7 @@ const meta: Meta<typeof Tooltip> = {
   },
   tags: ['autodocs'],
   decorators: [
-    Story => (
+    (Story) => (
       <TooltipProvider>
         <Story />
       </TooltipProvider>

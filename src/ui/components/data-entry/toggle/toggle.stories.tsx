@@ -14,11 +14,11 @@ import { Toggle } from './toggle.js'
  * and can display error states. It also supports labels, descriptions, and validation messages.
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [BooleanField](?path=/docs/document-engineering-scalars-boolean-field--readme)
+ * > you can use the [BooleanField](?path=/docs/scalars-boolean-field--readme)
  * > component and set the `isToggle` prop to `true`.
  */
 const meta = {
-  title: 'Document Engineering/Data Entry/Toggle',
+  title: 'Data Entry/Toggle',
   component: Toggle,
   parameters: {
     layout: 'centered',

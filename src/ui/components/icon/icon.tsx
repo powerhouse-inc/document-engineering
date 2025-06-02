@@ -1,14 +1,31 @@
-import { type IconName, iconComponents } from '../icon-components/index.js'
-import type { Props } from '../icon-components/types.js'
-import { type Color, getDimensions, type Size } from '@powerhousedao/design-system'
-import { type ComponentPropsWithoutRef, type ComponentType, type ElementType, lazy, Suspense, useMemo } from 'react'
+import { type ComponentPropsWithoutRef, type CSSProperties, Suspense } from 'react'
+import { iconComponents, type IconName } from '../icon-components/index.js'
 
-export type IconProps = ComponentPropsWithoutRef<'svg'> & {
+export type Color = CSSProperties['color']
+export type Size = CSSProperties['width']
+export function getDimensions(size?: Size) {
+  if (!size) return {}
+
+  if (typeof size === 'number') {
+    return {
+      width: `${size}px`,
+      height: `${size}px`,
+    }
+  }
+
+  return {
+    width: size,
+    height: size,
+  }
+}
+
+type IconProps = ComponentPropsWithoutRef<'svg'> & {
   readonly name: IconName
   readonly size?: Size
   readonly color?: Color
 }
-export function Icon({ name, size = 24, color, style, ...props }: IconProps) {
+
+const Icon = ({ name, size = 24, color, style, ...props }: IconProps) => {
   const dimensions = getDimensions(size)
   const _style = {
     color,
@@ -26,3 +43,5 @@ export function Icon({ name, size = 24, color, style, ...props }: IconProps) {
     </Suspense>
   )
 }
+
+export { Icon, type IconProps }

@@ -3,9 +3,9 @@ import type { TableState } from '../subcomponents/table-provider/table-reducer.j
 import type { CellContext, ObjectSetTableConfig } from '../types.js'
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
-import type { ITableApi } from './types.js'
+import type { PrivateTableApiBase } from './types.js'
 
-class TableApi<TData> implements ITableApi<TData> {
+class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
 
   constructor(
@@ -14,10 +14,6 @@ class TableApi<TData> implements ITableApi<TData> {
     private readonly stateRef: RefObject<TableState<TData>>
   ) {
     this.selection = new SelectionManager<TData>(this)
-  }
-
-  _getTable(): HTMLTableElement | null {
-    return this.tableRef.current
   }
 
   _getConfig(): ObjectSetTableConfig<TData> {
@@ -38,6 +34,15 @@ class TableApi<TData> implements ITableApi<TData> {
     }
   }
 
+  /**
+   * Returns the HTML table element
+   *
+   * @returns The HTML table element
+   */
+  getHTMLTable(): HTMLTableElement | null {
+    return this.tableRef.current
+  }
+
   // cell editing
   /**
    * Checks if the cell at the given row and column can be edited
@@ -46,8 +51,8 @@ class TableApi<TData> implements ITableApi<TData> {
    * @param column - The column index of the cell to check
    * @returns `true` if the cell can be edited, `false` otherwise
    */
-  canEditCell(row: number, column: number) {
-    return this._getConfig().columns[column].editable
+  canEditCell(row: number, column: number): boolean {
+    return this._getConfig().columns[column].editable ?? false
   }
 
   /**
@@ -110,7 +115,7 @@ class TableApi<TData> implements ITableApi<TData> {
         this._createCellContext(selectedCell.row, selectedCell.column)
       )
       this._getConfig().columns[selectedCell.column]?.onSave?.(
-        `${value} edited`,
+        `${value?.toString() ?? ''} edited`,
         this._createCellContext(selectedCell.row, selectedCell.column)
       )
 

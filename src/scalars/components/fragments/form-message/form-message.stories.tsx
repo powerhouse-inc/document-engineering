@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { FormMessage } from './form-message.js'
 
 const meta: Meta<typeof FormMessage> = {
-  title: 'Document Engineering/Fragments/FormMessage',
+  title: 'Fragments/FormMessage',
   component: FormMessage,
   parameters: {
     chromatic: {

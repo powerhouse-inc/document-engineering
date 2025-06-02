@@ -14,20 +14,14 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
-          'Connect',
-          'Powerhouse',
-          'RWA',
-          'Document Engineering',
-          [
-            'Getting started',
-            'Scalars',
-            ['Forms', 'Examples'],
-            'Data Entry',
-            'Data Display',
-            'Navigation',
-            'Layout Components',
-            'Fragments',
-          ],
+          'Getting started',
+          'Scalars',
+          ['Forms', 'Examples'],
+          'Data Entry',
+          'Data Display',
+          'Navigation',
+          'Layout Components',
+          'Fragments',
         ],
         method: 'alphabetical',
         includeNames: true,

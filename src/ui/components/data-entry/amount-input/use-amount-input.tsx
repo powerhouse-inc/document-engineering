@@ -1,14 +1,7 @@
-import { type Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import type { Currency } from '../currency-code-picker/types.js'
 import { useEffect, useMemo, useState } from 'react'
 import { isValidNumber } from '../../../../scalars/components/number-field/number-field-validations.js'
-import {
-  type Amount,
-  type AmountCrypto,
-  type AmountCurrency,
-  type AmountFiat,
-  type AmountInputPropsGeneric,
-  type AmountValue,
-} from './types.js'
+import type { Amount, AmountCrypto, AmountCurrency, AmountFiat, AmountInputPropsGeneric, AmountValue } from './types.js'
 import {
   createAmountValue,
   displayValueAmount,
@@ -244,7 +237,7 @@ export const useAmountInput = ({
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setInputFocused(false)
     const inputValue = e.target.value
-    //Avoid transformation if the value is not a number
+    // Avoid transformation if the value is not a number
     if (type === 'AmountFiat' && typeof value === 'object') {
       if (!isValidNumber(inputValue)) {
         const newValue = {
@@ -364,8 +357,9 @@ export const useAmountInput = ({
     setInputFocused(true)
   }
   const options = units ?? getDefaultUnits(type)
-  //Put the placeholder in case that value its not in the options
-  const validatedValueSelect = valueSelect && units?.some(unit => unit.ticker === valueSelect) ? valueSelect : undefined
+  // Put the placeholder in case that value its not in the options
+  const validatedValueSelect =
+    valueSelect && units?.some((unit) => unit.ticker === valueSelect) ? valueSelect : undefined
 
   return {
     isPercent,

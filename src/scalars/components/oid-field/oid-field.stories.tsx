@@ -10,11 +10,11 @@ import {
 import { OIDField } from './oid-field.js'
 
 const meta: Meta<typeof OIDField> = {
-  title: 'Document Engineering/Scalars/OID Field',
+  title: 'Scalars/OID Field',
   component: OIDField,
   decorators: [
     withForm,
-    Story => (
+    (Story) => (
       <div style={{ maxWidth: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>

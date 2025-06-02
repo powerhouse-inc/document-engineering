@@ -38,7 +38,11 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ sidebarTitle, side
                     'hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50',
                   isDisabled && 'cursor-not-allowed bg-gray-100 text-[#E2E4E7] dark:bg-[#252728] dark:text-slate-500'
                 )}
-                onClick={() => !isDisabled && openLevel(index + 1)}
+                onClick={() => {
+                  if (!isDisabled) {
+                    openLevel(index + 1)
+                  }
+                }}
               >
                 {index + 1}
               </div>

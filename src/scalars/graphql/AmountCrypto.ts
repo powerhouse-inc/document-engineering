@@ -3,12 +3,12 @@ import { z } from 'zod'
 
 export type SupportedCrypto = string
 
-export type AmountCrypto = {
+export interface AmountCrypto {
   unit: SupportedCrypto
   value: number
 }
 
-export type ScalarType = {
+export interface ScalarType {
   input: AmountCrypto
   output: AmountCrypto
 }
@@ -40,13 +40,13 @@ export const config: GraphQLScalarTypeConfig<AmountCrypto, AmountCrypto> = {
   description: 'A custom scalar that represents a cryptocurrency amount with its currency type',
   serialize: amountCryptoValidation,
   parseValue: amountCryptoValidation,
-  parseLiteral: ast => {
+  parseLiteral: (ast) => {
     if (ast.kind !== Kind.OBJECT) {
       throw new GraphQLError('Value must be an object', { nodes: ast })
     }
 
-    const unitField = ast.fields.find(f => f.name.value === 'unit')
-    const valueField = ast.fields.find(f => f.name.value === 'value')
+    const unitField = ast.fields.find((f) => f.name.value === 'unit')
+    const valueField = ast.fields.find((f) => f.name.value === 'value')
 
     if (!unitField || unitField.value.kind !== Kind.STRING) {
       throw new GraphQLError('unit must be a valid string value', {

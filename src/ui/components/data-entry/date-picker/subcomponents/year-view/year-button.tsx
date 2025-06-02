@@ -9,7 +9,7 @@ interface YearButtonProps {
   startMonth?: Date
   endMonth?: Date
   actualMonth: string
-  months: { date: Date }[]
+  months: Array<{ date: Date }>
   onSelect: (year: number) => void
   disabled?: boolean
 }
@@ -38,7 +38,9 @@ const YearButton = ({
         year === months[0].date.getFullYear() && 'bg-gray-900 text-white hover:bg-gray-900'
       )}
       variant="ghost"
-      onClick={() => onSelect(year)}
+      onClick={() => {
+        onSelect(year)
+      }}
       disabled={disabled || isBefore || isAfter}
     >
       {year}

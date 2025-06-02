@@ -6,11 +6,10 @@ import {
   FormMessageList,
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import { type Currency } from '../../../../scalars/components/currency-code-field/types.js'
 import { forwardRef, useId } from 'react'
-import { CurrencyCodeFieldRaw } from '../../../../scalars/components/currency-code-field/currency-code-field.js'
-import { type SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
-import { NumberFieldRaw } from '../../../../scalars/components/number-field/number-field.js'
+import { type Currency, CurrencyCodePicker } from '../currency-code-picker/index.js'
+import type { SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
+import { NumberFieldRaw } from '../../../../scalars/components/number-field/index.js'
 import type { InputNumberProps, NumberFieldProps } from '../../../../scalars/components/number-field/types.js'
 import type { AmountInputPropsGeneric, AmountValue } from './types.js'
 import { useAmountInput } from './use-amount-input.js'
@@ -113,11 +112,11 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
           <input name={name} type="hidden" data-cast={isBigInt ? 'AmountBigInt' : 'AmountNumber'} />
           <div className={cn('relative flex items-center')}>
             {isShowSelect && currencyPosition === 'left' && (
-              <CurrencyCodeFieldRaw
+              <CurrencyCodePicker
                 contentAlign="start"
                 contentClassName="[&]:!w-[120px] w-full"
                 disabled={disabled}
-                currencies={options ?? []}
+                currencies={options}
                 onChange={handleOnChangeSelect}
                 placeholder={placeholderSelect}
                 includeCurrencySymbols={includeCurrencySymbols}
@@ -175,12 +174,12 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
           </div>
 
           {isShowSelect && currencyPosition === 'right' && (
-            <CurrencyCodeFieldRaw
+            <CurrencyCodePicker
               contentAlign="end"
               contentClassName="[&]:!w-[120px] w-full"
               disabled={disabled}
               includeCurrencySymbols={includeCurrencySymbols}
-              currencies={options ?? []}
+              currencies={options}
               value={valueSelect}
               onChange={handleOnChangeSelect}
               name=""
@@ -205,5 +204,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
     )
   }
 )
+
 AmountInput.displayName = 'AmountInput'
+
 export { AmountInput, type AmountInputProps }

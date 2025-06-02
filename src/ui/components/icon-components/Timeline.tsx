@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function Timeline(props: Props) {
+
+const Timeline = (props: Props) => {
   return (
     <svg {...props} width="16" height="16" viewBox="0 0 16 16" fill="currentcolor">
       <rect width="16" height="16" fill="url(#pattern0_1256_1508)" />
@@ -18,3 +19,7 @@ export default function Timeline(props: Props) {
     </svg>
   )
 }
+
+Timeline.displayName = 'Timeline'
+
+export default Timeline

@@ -56,7 +56,7 @@ export const SidebarItem = ({
 
       // Then recursively check all children
       if (n.children && n.children.length > 0) {
-        return n.children.some(child => check(child))
+        return n.children.some((child) => check(child))
       }
 
       return false
@@ -213,7 +213,7 @@ const RenderTitle = forwardRef<
           dangerouslySetInnerHTML={{
             __html: title.replace(
               new RegExp(searchTerm, 'gi'),
-              match =>
+              (match) =>
                 `<span class="${isSearchActive ? 'bg-yellow-300 dark:bg-[#604B00]' : 'bg-gray-300 dark:bg-charcoal-800'}">${match}</span>`
             ),
           }}
@@ -225,6 +225,8 @@ const RenderTitle = forwardRef<
   )
 })
 
+RenderTitle.displayName = 'RenderTitle'
+
 const PinnedModeCircleIcon = ({ isPinned }: { isPinned: boolean }) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="min-w-4">
     <rect width="16" height="16" rx="6.4" fill="transparent" />
@@ -233,24 +235,5 @@ const PinnedModeCircleIcon = ({ isPinned }: { isPinned: boolean }) => (
       fill="currentColor"
       className={isPinned ? 'text-gray-500 dark:text-gray-500' : 'text-gray-300 dark:text-gray-300'}
     />
-  </svg>
-)
-
-const CaretIcon = ({ node }: { node: FlattenedNode }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentcolor"
-    width="16"
-    height="16"
-    className={cn(
-      'min-w-4',
-      node.isExpanded && node.children && node.children.length > 0 ? '' : '-rotate-90',
-      node.children === undefined || node.children.length === 0
-        ? 'text-gray-300 dark:text-gray-700'
-        : 'text-gray-700 dark:text-gray-400'
-    )}
-  >
-    <path d="M6 9L12 15L18 9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )

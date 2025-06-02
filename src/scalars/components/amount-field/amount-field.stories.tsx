@@ -1,24 +1,27 @@
-import { commonCryptoCurrencies, commonFiatCurrencies } from '../../index.js'
+import {
+  commonCryptoCurrencies,
+  commonFiatCurrencies,
+} from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
 import {
-  PrebuiltArgTypes,
-  StorybookControlCategory,
   getDefaultArgTypes,
   getValidationArgTypes,
+  PrebuiltArgTypes,
+  StorybookControlCategory,
 } from '../../lib/storybook-arg-types.js'
 import { AmountField } from './amount-field.js'
-const mappedFiatCurrencies = commonFiatCurrencies.map(currency => ({
+const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
 }))
-const mappedCryptoCurrencies = commonCryptoCurrencies.map(currency => ({
+const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
 }))
 
 const meta = {
-  title: 'Document Engineering/Scalars/Amount Field',
+  title: 'Scalars/Amount Field',
   component: AmountField,
   decorators: [withForm],
   parameters: {

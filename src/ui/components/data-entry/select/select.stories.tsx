@@ -30,12 +30,12 @@ import { Select } from './select.js'
  * - Disabled options support
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [EnumField](?path=/docs/document-engineering-scalars-enum-field--readme)
+ * > you can use the [EnumField](?path=/docs/scalars-enum-field--readme)
  * > component.
  */
 
 const meta: Meta<typeof Select> = {
-  title: 'Document Engineering/Data Entry/Select',
+  title: 'Data Entry/Select',
   component: Select,
   parameters: {
     layout: 'padded',
@@ -44,7 +44,7 @@ const meta: Meta<typeof Select> = {
     },
   },
   decorators: [
-    Story => (
+    (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>
@@ -169,7 +169,9 @@ export default meta
 type Story = StoryObj<typeof Select>
 
 const IconComponent = (name: IconName): React.ComponentType<{ className?: string }> => {
-  return ({ className }) => <Icon name={name} size={16} className={className} />
+  const IconComponent = ({ className }: { className?: string }) => <Icon name={name} size={16} className={className} />
+  IconComponent.displayName = `IconComponent(${name})`
+  return IconComponent
 }
 
 const defaultOptions = [

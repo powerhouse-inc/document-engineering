@@ -1,5 +1,6 @@
 import type { Props } from './types.js'
-export default function ArrowLeft(props: Props) {
+
+const ArrowLeft = (props: Props) => {
   return (
     <svg {...props} viewBox="0 0 16 16" fill="none" stroke="currentcolor">
       <path
@@ -11,3 +12,7 @@ export default function ArrowLeft(props: Props) {
     </svg>
   )
 }
+
+ArrowLeft.displayName = 'ArrowLeft'
+
+export default ArrowLeft

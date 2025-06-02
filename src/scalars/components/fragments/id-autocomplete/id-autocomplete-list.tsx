@@ -1,5 +1,4 @@
 import { useCommandState } from 'cmdk'
-import type React from 'react'
 import { useEffect } from 'react'
 import { cn } from '../../../lib/utils.js'
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '../command/index.js'
@@ -34,7 +33,7 @@ const IdAutocompleteList: React.FC<IdAutocompleteListProps> = ({
   renderOption,
   previewPlaceholder,
 }) => {
-  const cmdkSearch = useCommandState(state => state.search) as string
+  const cmdkSearch = useCommandState((state) => state.search)
   const defaultOption: IdAutocompleteOption = previewPlaceholder || {
     value: 'value not available',
     title: 'Title not available',
@@ -69,7 +68,7 @@ const IdAutocompleteList: React.FC<IdAutocompleteListProps> = ({
         )}
       </CommandEmpty>
       <CommandGroup className={cn('px-1')}>
-        {options.map(opt => {
+        {options.map((opt) => {
           const isSelected = selectedValue === opt.value
 
           return (
