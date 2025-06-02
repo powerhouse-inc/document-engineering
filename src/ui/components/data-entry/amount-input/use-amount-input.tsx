@@ -149,6 +149,13 @@ export const useAmountInput = ({
 
   // Handle the change of the input
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (currentValue === undefined) {
+      const inputValue = e.target.value
+      const newValue = createAmountValue(inputValue)
+
+      const nativeEvent = handleEventOnChange(newValue)
+      onChange?.(nativeEvent)
+    }
     const inputValue = e.target.value
 
     if (type === 'AmountFiat' && typeof value === 'object') {
