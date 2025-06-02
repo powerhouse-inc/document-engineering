@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.8.0...v1.8.1) (2025-06-02)
+
+
+### Bug Fixes
+
+* **scalars:** fix input not typing when value its undefiend ([32648a4](https://github.com/powerhouse-inc/document-engineering/commit/32648a4490838de1e731aedb5a854375659dd9d8))
+
 # [1.8.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.7.0...v1.8.0) (2025-06-02)
 
 
