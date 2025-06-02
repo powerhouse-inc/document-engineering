@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { TimeSelectorProps } from '../type.js'
-import {
-  BOTTOM_THRESHOLD_OFFSET,
-  CENTERING_TIMEOUT_MS,
-  SCROLL_TIMEOUT_MS,
-  TOP_THRESHOLD_OFFSET,
-} from './time-selector.constants.js'
+import { BOTTOM_THRESHOLD_OFFSET, CENTERING_TIMEOUT_MS, TOP_THRESHOLD_OFFSET } from './time-selector.constants.js'
 
 interface UseTimeSelectorProps extends TimeSelectorProps {
   containerRef: React.RefObject<HTMLDivElement>
@@ -81,10 +76,6 @@ export const useTimeSelector = ({
         clearTimeout(scrollTimeoutRef.current)
       }
 
-      scrollTimeoutRef.current = setTimeout(() => {
-        // Scroll timeout logic will be handled in the next frame
-      }, SCROLL_TIMEOUT_MS)
-
       const { scrollTop, scrollHeight, clientHeight } = container
       const currentScrollTop = scrollTop
       const scrollDirection = currentScrollTop > lastScrollTop.current ? 'down' : 'up'
@@ -107,9 +98,6 @@ export const useTimeSelector = ({
     container.addEventListener('scroll', handleScroll, { passive: true })
     return () => {
       container.removeEventListener('scroll', handleScroll)
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current)
-      }
     }
   }, [options, selectedValue, onSelect, isCyclic, containerRef])
 
