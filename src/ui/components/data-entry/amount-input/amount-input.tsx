@@ -1,3 +1,4 @@
+import { forwardRef, useId, useState } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -5,36 +6,42 @@ import {
   FormMessageList,
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
-import { forwardRef, useId } from 'react'
-import { CurrencyCodeFieldRaw } from '../../../../scalars/components/currency-code-field/currency-code-field.js'
+import { type Currency, CurrencyCodePicker } from '../currency-code-picker/index.js'
 import type { SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
-import { NumberFieldRaw } from '../../../../scalars/components/number-field/number-field.js'
+import { NumberFieldRaw } from '../../../../scalars/components/number-field/index.js'
 import type { InputNumberProps, NumberFieldProps } from '../../../../scalars/components/number-field/types.js'
-import type { AmountInputPropsGeneric, AmountValue } from './types.js'
+import type { Amount, AmountInputPropsGeneric } from './types.js'
 import { useAmountInput } from './use-amount-input.js'
 
-type AmountInputProps = AmountInputPropsGeneric &
-  Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision'> & {
-    className?: string
-    name: string
-    numberProps?: Omit<NumberFieldProps, 'name'>
-    selectProps?: Omit<SelectFieldProps, 'placeholder' | 'selectionIcon' | 'onBlur'>
-    defaultValue?: AmountValue
-    value?: AmountValue
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
-    currencyPosition?: 'left' | 'right'
-    symbolPosition?: 'left' | 'right'
-    allowNegative?: boolean
-    viewPrecision?: number
-    precision?: number
-    placeholderSelect?: string
-    units?: Currency[]
-    includeCurrencySymbols?: boolean
-  }
+type AdditionalProps = Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision'> & {
+  className?: string
+  name: string
+  numberProps?: Omit<NumberFieldProps, 'name'>
+  selectProps?: Omit<SelectFieldProps, 'placeholder' | 'selectionIcon' | 'onBlur'>
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+  currencyPosition?: 'left' | 'right'
+  symbolPosition?: 'left' | 'right'
+  allowNegative?: boolean
+  viewPrecision?: number
+  precision?: number
+  placeholderSelect?: string
+  units?: Currency[]
+  includeCurrencySymbols?: boolean
+}
 
-const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
+interface AmountInputUncontrollerMain {
+  type: 'Amount'
+  value?: Amount
+  defaultValue?: Amount
+  trailingZeros?: boolean
+}
+
+type AmountInputUncontrollerProps = AmountInputUncontrollerMain & AdditionalProps
+
+type AmountInputProps = AmountInputPropsGeneric & AdditionalProps
+
+const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
   (
     {
       label,
@@ -112,7 +119,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
           <input name={name} type="hidden" data-cast={isBigInt ? 'AmountBigInt' : 'AmountNumber'} />
           <div className={cn('relative flex items-center')}>
             {isShowSelect && currencyPosition === 'left' && (
-              <CurrencyCodeFieldRaw
+              <CurrencyCodePicker
                 contentAlign="start"
                 contentClassName="[&]:!w-[120px] w-full"
                 disabled={disabled}
@@ -148,11 +155,9 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
               onFocus={handleIsInputFocused}
               placeholder={placeholder}
               className={cn(
-                currencyPosition === 'left' && 'rounded-l-none border border-l-[0.5px] border-gray-300',
-                currencyPosition === 'right' && 'rounded-r-none border border-r-[0.5px] border-gray-300',
+                currencyPosition === 'left' && 'rounded-l-none border-l-[0.5px]',
+                currencyPosition === 'right' && 'rounded-r-none border-r-[0.5px]',
                 isPercent && 'rounded-md pr-7',
-                // focus state
-                'focus:border-r-0',
                 isAmountWithoutUnit && 'rounded-md',
                 className
               )}
@@ -173,7 +178,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
           </div>
 
           {isShowSelect && currencyPosition === 'right' && (
-            <CurrencyCodeFieldRaw
+            <CurrencyCodePicker
               contentAlign="end"
               contentClassName="[&]:!w-[120px] w-full"
               disabled={disabled}
@@ -203,5 +208,25 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
     )
   }
 )
+AmountInputController.displayName = 'AmountInputController'
+
+const AmountInputUncontroller = (props: AmountInputUncontrollerProps) => {
+  const [value, setValue] = useState(props.value ?? props.defaultValue)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value
+    setValue(newValue as Amount)
+  }
+  return <AmountInputController {...props} value={value} onChange={handleChange} />
+}
+
+const AmountInput = (props: AmountInputProps) => {
+  if (props.onChange) {
+    return <AmountInputController {...props} />
+  }
+  return <AmountInputUncontroller {...(props as AmountInputUncontrollerProps)} />
+}
+
 AmountInput.displayName = 'AmountInput'
+
 export { AmountInput, type AmountInputProps }

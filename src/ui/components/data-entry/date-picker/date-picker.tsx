@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -6,13 +7,12 @@ import {
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { InputBaseProps } from '../../../../scalars/components/types.js'
-import { forwardRef } from 'react'
 import { BasePickerField } from '../date-time-picker/base-picker.js'
-import { Calendar } from './subcomponents/calendar/calendar.js'
+import { Calendar, type CalendarProps } from './subcomponents/calendar/calendar.js'
 import type { DateFieldValue } from './types.js'
 import { useDatePickerField } from './use-date-picker.js'
 
-interface DatePickerProps extends InputBaseProps<DateFieldValue> {
+interface DatePickerProps extends InputBaseProps<DateFieldValue>, Omit<CalendarProps, 'mode'> {
   label?: string
   id?: string
   name: string
@@ -31,6 +31,7 @@ interface DatePickerProps extends InputBaseProps<DateFieldValue> {
   dateFormat?: string
   weekStart?: string
   autoClose?: boolean
+  className?: string
 }
 
 const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -57,6 +58,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       autoClose = false,
       minDate,
       maxDate,
+      // display props
+      className,
       ...props
     },
     ref
@@ -131,7 +134,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               'font-inter',
               'text-[14px]',
               'font-semibold',
-              'leading-[22px]'
+              'leading-[22px]',
+              className
             )}
             weekdaysClassName={cn('h-[34px]', 'gap-x-[3px]', 'dark:text-gray-600')}
             monthGridClassName={cn('w-full', 'px-[5.5px]')}

@@ -5,7 +5,7 @@ import { validateDatePicker } from './date-picker-validations.js'
 
 const DatePickerField = withFieldValidation<DatePickerFieldProps>(DatePicker, {
   validations: {
-    _timePickerType: validateDatePicker,
+    _datePickerType: validateDatePicker,
   },
 })
 

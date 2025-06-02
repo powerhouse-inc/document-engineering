@@ -1,4 +1,4 @@
-import type { Currency } from '../../../../scalars/components/currency-code-field/types.js'
+import type { Currency } from '../currency-code-picker/types.js'
 
 export interface Amount {
   amount?: number
@@ -27,27 +27,32 @@ export type AmountInputPropsGeneric =
   | {
       type: 'Amount'
       value?: Amount
+      defaultValue?: Amount
       trailingZeros?: boolean
     }
   | {
       type: 'AmountFiat'
       value?: AmountFiat
+      defaultValue?: AmountFiat
       trailingZeros?: boolean
     }
   | {
       type: 'AmountPercentage'
       value?: AmountPercentage
+      defaultValue?: AmountPercentage
       trailingZeros?: boolean
       units?: never
     }
   | {
       type: 'AmountCrypto'
       value?: AmountCrypto
+      defaultValue?: AmountCrypto
       trailingZeros?: never
     }
   | {
       type: 'AmountCurrency'
       value?: AmountCurrency
+      defaultValue?: AmountCurrency
       trailingZeros?: boolean
     }
 
