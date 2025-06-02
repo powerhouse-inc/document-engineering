@@ -93,9 +93,10 @@ export const useAmountInput = ({
       return undefined
     }
 
-    // If it's an object, we try to get the unit property
+    // Type guard to check if currentValue is an object with a unit property
     if (typeof currentValue === 'object' && 'unit' in currentValue) {
-      return currentValue.unit
+      const typedValue = currentValue as { unit: string }
+      return typedValue.unit
     }
 
     return undefined
