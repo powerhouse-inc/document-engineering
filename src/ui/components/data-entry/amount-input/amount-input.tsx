@@ -155,11 +155,9 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
               onFocus={handleIsInputFocused}
               placeholder={placeholder}
               className={cn(
-                currencyPosition === 'left' && 'rounded-l-none border border-l-[0.5px] border-gray-300',
-                currencyPosition === 'right' && 'rounded-r-none border border-r-[0.5px] border-gray-300',
+                currencyPosition === 'left' && 'rounded-l-none border-l-[0.5px]',
+                currencyPosition === 'right' && 'rounded-r-none border-r-[0.5px]',
                 isPercent && 'rounded-md pr-7',
-                // focus state
-                'focus:border-r-0',
                 isAmountWithoutUnit && 'rounded-md',
                 className
               )}
