@@ -2,105 +2,121 @@ import { screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { renderWithForm } from '../../lib/testing.js'
 import { DatePickerField } from './date-picker-field.js'
+import { addDays, format } from 'date-fns'
+
+// Helper function to get a date relative to today
+export const getRelativeDate = (daysFromToday: number) => {
+  const date = addDays(new Date(), daysFromToday)
+  return format(date, 'yyyy-MM-dd')
+}
 
 describe('DatePickerField', () => {
+  const defaultProps = {
+    name: 'test-date',
+    label: 'Test Label',
+  }
+
   it('should match the snapshot', () => {
     const { container } = renderWithForm(
-      <DatePickerField label="Test Label" name="test-date" value="2025-01-01" dateFormat="yyyy-MM-dd" />
+      <DatePickerField {...defaultProps} value="2025-01-01" dateFormat="yyyy-MM-dd" />
     )
     expect(container).toMatchSnapshot()
   })
+
   it('should display the label when provided', () => {
-    const labelText = 'Test Label'
-    renderWithForm(<DatePickerField name="test-date" label={labelText} />)
-    expect(screen.getByText(labelText)).toBeInTheDocument()
+    renderWithForm(<DatePickerField {...defaultProps} />)
+    expect(screen.getByText(defaultProps.label)).toBeInTheDocument()
   })
 
   it('should not render the label when label prop is not provided', () => {
     renderWithForm(<DatePickerField name="test-date" />)
-    expect(screen.queryByText('Test Label')).not.toBeInTheDocument()
+    expect(screen.queryByText(defaultProps.label)).not.toBeInTheDocument()
   })
 
   it('should mark the label as required when required prop is true', () => {
-    renderWithForm(<DatePickerField name="test-date" label="Test Label" required />)
-    const label = screen.getByText('Test Label')
+    renderWithForm(<DatePickerField {...defaultProps} required />)
+    const label = screen.getByText(defaultProps.label)
     const asterisk = screen.getByText('*')
     expect(label).toBeInTheDocument()
     expect(asterisk).toBeInTheDocument()
   })
 
   it('should mark the label as disabled when disabled prop is true', () => {
-    renderWithForm(<DatePickerField name="test-date" label="Test Label" disabled />)
-    const label = screen.getByText('Test Label')
+    renderWithForm(<DatePickerField {...defaultProps} disabled />)
+    const label = screen.getByText(defaultProps.label)
     expect(label).toHaveClass('cursor-not-allowed')
     expect(label).toHaveClass('text-gray-700')
   })
 
   it('should disable dates before minDate', async () => {
-    renderWithForm(<DatePickerField label="Test Label" name="test-date" minDate="2025-01-16" />)
+    // Arrange: Get dates relative to today
+    const minDate = getRelativeDate(5) // 5 days from today
+    renderWithForm(<DatePickerField {...defaultProps} minDate={minDate} />)
 
-    // 1. Find and click the calendar button to open it
+    // Act: Open calendar
     const calendarTrigger = screen.getByTestId('icon-fallback')
     await userEvent.click(calendarTrigger)
 
-    // 2. Wait for the calendar dialog to be visible
+    // Assert: Calendar is visible
     const calendar = await screen.findByRole('dialog')
     expect(calendar).toBeInTheDocument()
 
-    // 3. Find a date button before minDate
+    // Assert: Date before minDate is disabled
     const dateButton = screen.getByRole('button', {
-      name: 'Saturday, May 10th, 2025',
+      name: format(addDays(new Date(), 2), 'EEEE, MMMM do, yyyy'),
     })
-
-    // 4. Check that the date button is disabled
     expect(dateButton).toHaveClass('disabled:pointer-events-none')
     const input = screen.getByRole('textbox')
     expect(input).toHaveValue('')
   })
 
   it('should disable dates after maxDate', async () => {
-    renderWithForm(<DatePickerField label="Test Label" name="test-date" maxDate="2025-05-16" />)
+    // Arrange: Get dates relative to today
+    const maxDate = getRelativeDate(5) // 5 days from today
+    renderWithForm(<DatePickerField {...defaultProps} maxDate={maxDate} />)
 
-    // 1. Find and click the calendar button to open it
+    // Act: Open calendar
     const calendarTrigger = screen.getByTestId('icon-fallback')
     await userEvent.click(calendarTrigger)
 
-    // 2. Wait for the calendar dialog to be visible
+    // Assert: Calendar is visible
     const calendar = await screen.findByRole('dialog')
     expect(calendar).toBeInTheDocument()
 
-    // 3. Find a date button after maxDate
+    // Assert: Date after maxDate is disabled
     const dateButton = screen.getByRole('button', {
-      name: 'Saturday, May 17th, 2025',
+      name: format(addDays(new Date(), 7), 'EEEE, MMMM do, yyyy'),
     })
-
-    // 4. Check that the date button is disabled
     expect(dateButton).toHaveClass('disabled:pointer-events-none')
     const input = screen.getByRole('textbox')
     expect(input).toHaveValue('')
   })
 
   it('should show error when date is before minDate', async () => {
-    renderWithForm(<DatePickerField label="Test Label" name="test-date" minDate="2025-05-16" showErrorOnBlur />)
+    // Arrange: Get dates relative to today
+    const minDate = getRelativeDate(5)
+    renderWithForm(<DatePickerField {...defaultProps} minDate={minDate} showErrorOnBlur />)
 
+    // Act: Type invalid date and blur
     const input = screen.getByRole('textbox')
-    expect(input).toBeInTheDocument()
-
-    await userEvent.type(input, '2025-05-10')
+    await userEvent.type(input, getRelativeDate(2))
     await userEvent.tab()
 
+    // Assert: Error message is shown
     expect(screen.getByText(/Date must be after/i)).toBeInTheDocument()
   })
 
   it('should show error when date is after maxDate', async () => {
-    renderWithForm(<DatePickerField label="Test Label" name="test-date" maxDate="2025-01-16" showErrorOnBlur />)
+    // Arrange: Get dates relative to today
+    const maxDate = getRelativeDate(5)
+    renderWithForm(<DatePickerField {...defaultProps} maxDate={maxDate} showErrorOnBlur />)
 
+    // Act: Type invalid date and blur
     const input = screen.getByRole('textbox')
-    expect(input).toBeInTheDocument()
-
-    await userEvent.type(input, '2025-01-20')
+    await userEvent.type(input, getRelativeDate(7))
     await userEvent.tab()
 
+    // Assert: Error message is shown
     expect(screen.getByText(/Date must be before/i)).toBeInTheDocument()
   })
 })

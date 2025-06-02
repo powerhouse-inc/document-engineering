@@ -1,12 +1,12 @@
 import { commonCryptoCurrencies, commonFiatCurrencies } from '../currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
-import { AmountInput } from './amount-input.js'
-
 import {
   getDefaultArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
+import { AmountInput } from './index.js'
+
 const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,
@@ -212,6 +212,7 @@ export const Default: Story = {
     label: 'Enter Amount and Select Currency',
     placeholderSelect: 'CUR',
     type: 'Amount',
+    name: 'amount-field',
     value: {
       amount: undefined,
       unit: '',
@@ -244,6 +245,7 @@ export const WithAmount: Story = {
     placeholderSelect: 'CUR',
     label: 'Enter Amout ',
     type: 'AmountFiat',
+    name: 'amount-field',
     value: {
       amount: 345,
       unit: 'EUR',
