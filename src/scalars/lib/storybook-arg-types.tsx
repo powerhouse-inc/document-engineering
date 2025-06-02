@@ -6,7 +6,6 @@ export enum StorybookControlCategory {
   COMPONENT_SPECIFIC = 'Component-specific',
   VALIDATION = 'Validation',
   DIFF = 'Differences',
-  COMPONENT_CUSTOMIZATION = 'Component Customization',
 }
 
 export const PrebuiltArgTypes = {

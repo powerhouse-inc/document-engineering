@@ -31,10 +31,7 @@ interface DatePickerProps extends InputBaseProps<DateFieldValue>, Omit<CalendarP
   dateFormat?: string
   weekStart?: string
   autoClose?: boolean
-  popoverClassName?: string
-  calendarClassName?: string
-  yearGridViewClassName?: string
-  monthGridViewClassName?: string
+  className?: string
 }
 
 const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -62,10 +59,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       minDate,
       maxDate,
       // display props
-      popoverClassName,
-      calendarClassName,
-      yearGridViewClassName,
-      monthGridViewClassName,
+      className,
       ...props
     },
     ref
@@ -121,8 +115,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           data-cast={`DateString:${dateFormat}`}
           className={cn(
             // custom styles
-            'px-4 pb-6 pt-3',
-            popoverClassName
+            'px-4 pb-6 pt-3'
           )}
         >
           <Calendar
@@ -132,9 +125,6 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             onSelect={handleDateSelect}
             disabled={disabledDates}
             onDayClick={handleDayClick}
-            yearGridViewClassName={yearGridViewClassName}
-            monthGridViewClassName={monthGridViewClassName}
-            calendarClassName={calendarClassName}
             className={cn(
               'w-full',
               'p-0',
@@ -144,7 +134,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               'font-inter',
               'text-[14px]',
               'font-semibold',
-              'leading-[22px]'
+              'leading-[22px]',
+              className
             )}
             weekdaysClassName={cn('h-[34px]', 'gap-x-[3px]', 'dark:text-gray-600')}
             monthGridClassName={cn('w-full', 'px-[5.5px]')}

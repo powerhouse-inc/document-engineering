@@ -10,23 +10,16 @@ import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface Props extends PropsWithChildren<MonthGridProps> {
   navView: DatePickerView
-  yearGridViewClassName?: string
   displayYears: { from: number; to: number }
   startMonth?: Date
   endMonth?: Date
-  monthGridViewClassName?: string
   setNavView: (view: DatePickerView) => void
-  actualMonth: string
-  actualYear: string
-  className?: string
 }
 const MonthGrid = ({
   navView,
-  yearGridViewClassName,
   displayYears,
   startMonth,
   endMonth,
-  monthGridViewClassName,
   setNavView,
   className,
   children,
@@ -38,7 +31,7 @@ const MonthGrid = ({
   const actualMonth = format(months[0].date, 'MMMM')
   if (navView === 'years') {
     return (
-      <div className={cn('mt-[18px] flex flex-col gap-2', yearGridViewClassName)}>
+      <div className={cn('mt-[18px] flex flex-col gap-2', 'date-picker__year-grid--view')}>
         <YearGrid
           displayYears={displayYears}
           startMonth={startMonth}
@@ -58,7 +51,7 @@ const MonthGrid = ({
   }
   if (navView === 'months') {
     return (
-      <div className={cn('mt-[15px] flex flex-col gap-3', monthGridViewClassName)}>
+      <div className={cn('mt-[15px] flex flex-col gap-3', 'date-picker__month-grid--view')}>
         <MonthView
           actualMonth={actualMonth}
           actualYear={actualYear}
