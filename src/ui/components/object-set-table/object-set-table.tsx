@@ -7,6 +7,8 @@ import { TableHeader } from './subcomponents/header.js'
 import { TableFocusTrap } from './subcomponents/table-focus-trap.js'
 import { TableProvider } from './subcomponents/table-provider/table-provider.js'
 import type { DataType, ObjectSetTableConfig } from './types.js'
+import { defaultColumnAlignment } from './subcomponents/default-fns/default-column-config.js'
+import { defaultHeaderRenderer } from './subcomponents/default-header-renderers/default-header.renderer.js'
 
 /**
  * The ObjectSetTable component is a table component that displays a list of objects.
@@ -25,9 +27,11 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
       ...config,
       columns: config.columns.map((column) => ({
         ...column,
+        align: column.align ?? defaultColumnAlignment(column.type ?? 'text'),
         type: column.type ?? 'text',
         valueGetter: column.valueGetter ?? defaultValueGetter,
         valueFormatter: column.valueFormatter ?? defaultValueFormatter,
+        renderHeader: column.renderHeader ?? defaultHeaderRenderer,
         renderCell: column.renderCell ?? getRenderFn(column.type),
         editable: column.editable ?? false,
         // TODO: move the default onSave to a utility function
@@ -54,6 +58,7 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
         <div className="w-full overflow-hidden rounded-md border border-gray-300">
           <table ref={tableRef} className="h-px w-full overflow-x-auto">
             <TableHeader columns={extendedConfig.columns} />
+            {/* TODO: implement width, minWidth, maxWidth and alignment for the columns in the table body */}
             <TableBody data={extendedConfig.data} columns={extendedConfig.columns} />
           </table>
         </div>

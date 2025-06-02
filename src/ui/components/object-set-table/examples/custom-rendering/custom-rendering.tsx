@@ -4,6 +4,7 @@ import { mockData, type MockedPerson } from '../../mock-data.js'
 import { ObjectSetTable } from '../../object-set-table.js'
 import type { ColumnDef } from '../../types.js'
 import { Icon } from '../../../icon/icon.js'
+import { Tooltip, TooltipProvider } from '../../../tooltip/tooltip.js'
 
 const CustomRenderingExample = () => {
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
@@ -22,6 +23,16 @@ const CustomRenderingExample = () => {
       },
       {
         field: 'status',
+        renderHeader: (value: string) => (
+          <div className="flex items-center px-[12px] py-[15px] text-left text-[14px] font-medium leading-[14px] text-gray-500">
+            <span>{value}</span>
+            <TooltipProvider>
+              <Tooltip content="User status" side="right">
+                <Icon name="InfoSquare" size={16} className="ml-1 text-gray-500" />
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        ),
         renderCell: (value: 'active' | 'inactive') => (
           <div className="flex items-center gap-2">
             <div className={cn('h-2 w-2 rounded-full', value === 'active' ? 'bg-green-500' : 'bg-red-500')} />

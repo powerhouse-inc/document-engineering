@@ -31,6 +31,7 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  *   type?: "text" | "number" | "boolean";
  *   valueGetter?: (row: T, context: CellContext<T>) => unknown;
  *   valueFormatter?: (value: unknown, context: CellContext<T>) => string;
+ *   renderHeader?: (value: unknown, context: CellContext<T>) => React.ReactNode;
  *   renderCell?: (value: unknown, context: CellContext<T>) => React.ReactNode;
  *   editable?: boolean;
  *   onSave?: (newValue: unknown, context: CellContext<T>) => boolean;
@@ -85,6 +86,7 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * |----------|------|---------|-------------|
  * | `valueGetter` | `(row: T, context: CellContext<T>) => unknown` | Field accessor (using the `field` property) | Extract value from row data |
  * | `valueFormatter` | `(value: unknown, context: CellContext<T>) => string` | Type-based formatter | Format value for display |
+ * | `renderHeader` | `(value: unknown, context: CellContext<T>) => ReactNode` | Default header renderer | Custom header rendering |
  * | `renderCell` | `(value: unknown, context: CellContext<T>) => ReactNode` | Type-based renderer | Custom cell rendering |
  *
  * ### Editing Configuration
@@ -184,6 +186,24 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  *     }
  *     return false; // Save failed
  *   }
+ * }
+ * ```
+ *
+ * ### Custom Header Rendering
+ *
+ * ```tsx
+ * {
+ *   field: "status",
+ *   renderHeader: (value: string) => (
+ *     <div className="flex items-center px-[12px] py-[15px] text-left text-[14px] font-medium leading-[14px] text-gray-500">
+ *       <span>{value}</span>
+ *       <TooltipProvider>
+ *         <Tooltip content="User status" side="right">
+ *           <Icon name="InfoSquare" size={16} className="ml-1 text-gray-500" />
+ *         </Tooltip>
+ *       </TooltipProvider>
+ *     </div>
+ *   )
  * }
  * ```
  *

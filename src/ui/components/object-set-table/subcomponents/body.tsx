@@ -43,7 +43,7 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
         api.selection.selectRow(index)
       }
     },
-    [allowRowSelection]
+    [allowRowSelection, api.selection]
   )
 
   /**
