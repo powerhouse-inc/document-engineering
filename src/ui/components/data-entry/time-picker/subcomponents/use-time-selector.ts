@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { TimeSelectorProps } from '../type.js'
-import {
-  BOTTOM_THRESHOLD_OFFSET,
-  CENTERING_TIMEOUT_MS,
-  SCROLL_TIMEOUT_MS,
-  TOP_THRESHOLD_OFFSET,
-} from './time-selector.constants.js'
+import { BOTTOM_THRESHOLD_OFFSET, CENTERING_TIMEOUT_MS, TOP_THRESHOLD_OFFSET } from './time-selector.constants.js'
 
 interface UseTimeSelectorProps extends TimeSelectorProps {
   containerRef: React.RefObject<HTMLDivElement>
@@ -73,16 +68,13 @@ export const useTimeSelector = ({
   // Handle cyclic behavior
   useEffect(() => {
     const container = containerRef.current
-    if (!container || !isCyclic) return
+    if (!container) return
+    if (!isCyclic) return
 
     const handleScroll = () => {
-      if (!container) return
-
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
       }
-
-      scrollTimeoutRef.current = setTimeout(() => {}, SCROLL_TIMEOUT_MS)
 
       const { scrollTop, scrollHeight, clientHeight } = container
       const currentScrollTop = scrollTop
@@ -94,15 +86,11 @@ export const useTimeSelector = ({
 
       if (scrollDirection === 'down' && scrollTop >= bottomThreshold) {
         requestAnimationFrame(() => {
-          if (container) {
-            container.scrollTop = scrollHeight / 2
-          }
+          container.scrollTop = scrollHeight / 2
         })
       } else if (scrollDirection === 'up' && scrollTop <= topThreshold) {
         requestAnimationFrame(() => {
-          if (container) {
-            container.scrollTop = scrollHeight / 2
-          }
+          container.scrollTop = scrollHeight / 2
         })
       }
     }
@@ -110,9 +98,6 @@ export const useTimeSelector = ({
     container.addEventListener('scroll', handleScroll, { passive: true })
     return () => {
       container.removeEventListener('scroll', handleScroll)
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current)
-      }
     }
   }, [options, selectedValue, onSelect, isCyclic, containerRef])
 

@@ -1,5 +1,4 @@
-import { format } from 'date-fns'
-import YearButton from './year-button.js'
+import { YearButton } from './year-button.js'
 
 interface YearRange {
   from: number
@@ -9,21 +8,12 @@ interface YearGridProps {
   displayYears: YearRange
   startMonth?: Date
   endMonth?: Date
-  actualMonth: string
   months: Array<{ date: Date }>
   currentYear: number
   onYearSelect: (year: number) => void
 }
 
-export const YearGrid = ({
-  displayYears,
-  startMonth,
-  endMonth,
-  actualMonth,
-  months,
-  currentYear,
-  onYearSelect,
-}: YearGridProps) => {
+const YearGrid = ({ displayYears, startMonth, endMonth, months, currentYear, onYearSelect }: YearGridProps) => {
   const years = Array.from({ length: displayYears.to - displayYears.from + 1 }, (_, i) => displayYears.from + i)
 
   return (
@@ -32,11 +22,9 @@ export const YearGrid = ({
         <YearButton
           key={year}
           year={year}
-          actualYear={format(months[0].date, 'yyyy')}
           currentYear={currentYear}
           startMonth={startMonth}
           endMonth={endMonth}
-          actualMonth={actualMonth}
           months={months}
           onSelect={onYearSelect}
         />
@@ -44,3 +32,6 @@ export const YearGrid = ({
     </div>
   )
 }
+
+YearGrid.displayName = 'YearGrid'
+export { YearGrid }

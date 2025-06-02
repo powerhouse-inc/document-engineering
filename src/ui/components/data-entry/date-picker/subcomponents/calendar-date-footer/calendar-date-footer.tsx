@@ -7,9 +7,9 @@ interface CalendarDateHeaderProps {
   setNavView: (navView: DatePickerView) => void
 }
 
-const CalendarDateHeader = ({ navView, setNavView }: CalendarDateHeaderProps) => {
+const CalendarDateFooter = ({ navView, setNavView }: CalendarDateHeaderProps) => {
   return (
-    <div className="flex flex-row justify-between">
+    <div className={cn('flex flex-row justify-between', 'date-picker__date-footer')}>
       <Button
         variant="ghost"
         onClick={() => {
@@ -40,4 +40,4 @@ const CalendarDateHeader = ({ navView, setNavView }: CalendarDateHeaderProps) =>
   )
 }
 
-export default CalendarDateHeader
+export default CalendarDateFooter
