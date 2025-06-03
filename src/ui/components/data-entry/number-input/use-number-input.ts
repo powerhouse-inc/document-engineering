@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { isNotSafeValue } from '../../../ui/components/data-entry/amount-input/utils.js'
 import type { NumericType } from './types.js'
 import { getDisplayValue } from './utils.js'
+import { isNotSafeValue } from '../amount-input/utils.js'
 
 interface UseNumberFieldProps {
   value?: number | bigint
@@ -16,7 +16,7 @@ interface UseNumberFieldProps {
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export const useNumberField = ({
+export const useNumberInput = ({
   value,
   maxValue,
   minValue,
@@ -103,7 +103,7 @@ export const useNumberField = ({
       value: { value: newValue },
       writable: false,
     })
-
+    console.log('entre aqui')
     onChange?.(nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>)
   }
 

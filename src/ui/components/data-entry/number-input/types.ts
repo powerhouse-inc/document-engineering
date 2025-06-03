@@ -1,4 +1,4 @@
-import type { FieldErrorHandling, InputBaseProps } from '../types.js'
+import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
 
 interface NumberProps {
   numericType?: NumericType | undefined

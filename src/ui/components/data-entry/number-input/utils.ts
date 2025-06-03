@@ -1,4 +1,4 @@
-import { MAX_SAFE_INTEGER } from './number-field-validations.js'
+import { MAX_SAFE_INTEGER } from '../../../../scalars/components/number-field/number-field-validations.js'
 import type { NumericType } from './types.js'
 
 export const regex = /^-?\d*\.?\d*$/
