@@ -90,7 +90,7 @@ import { DatePicker } from './date-picker.js'
  * ```
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [DatePicker](?path=/docs/scalars-date-field--readme)
+ * > you can use the [Date Picker Field](?path=/docs/scalars-date-picker-field--readme)
  * > component.
  */
 const meta: Meta<typeof DatePicker> = {

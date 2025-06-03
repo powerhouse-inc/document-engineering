@@ -50,7 +50,7 @@ import { TimePicker } from './time-picker'
  * ```
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [TimePicker](?path=/docs/scalars-timepickerfield--readme)
+ * > you can use the [Time Picker](?path=/docs/scalars-timepickerfield--readme)
  * > component.
  */
 

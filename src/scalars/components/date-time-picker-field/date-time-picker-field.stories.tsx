@@ -4,8 +4,20 @@ import { withForm } from '../../index.js'
 import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } from '../../lib/storybook-arg-types.js'
 import { DateTimePickerField } from './date-time-picker-field.js'
 
+/**
+ * A  `DateTimePickerField` component designed for form usage with built-in validation.
+ * It renders both a `DatePicker` and `TimePicker` functionality in a single component.
+ *
+ * For styling examples:
+ * See our Storybook docs → 🎨
+ * [Date Time Picker Examples](?path=/docs/data-entry-date-time-picker--readme)
+ *
+ * > **Note:** Must be used within a form context provider.
+ * > Use the `withForm` decorator in Storybook for quick testing.
+ */
+
 const meta: Meta<typeof DateTimePickerField> = {
-  title: 'Scalars/DateTimePickerField',
+  title: 'Scalars/Date Time Picker Field',
   component: DateTimePickerField,
   decorators: [withForm],
   tags: ['autodocs'],
@@ -164,12 +176,6 @@ const meta: Meta<typeof DateTimePickerField> = {
     form: {
       resetBehavior: 'unmount',
     },
-    docs: {
-      description: {
-        component:
-          'A DateTimeField component that renders both a DatePicker and TimePicker functionality in a single component.',
-      },
-    },
   },
 }
 
@@ -181,5 +187,19 @@ export const DateTimePicker: Story = {
     label: 'Date Time Picker Field',
     description: 'This is a date time picker field',
     placeholder: '2025/01/27 12:00',
+  },
+}
+export const WithCustomizedContent: Story = {
+  args: {
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    placeholder: '2025/01/27 12:00',
+    className: String.raw`
+      [&_.date-time-picker\\_\\_content]:rounded-lg
+      [&_.date-time-picker\\_\\_content]:border-cyan-200
+      [&_.date-time-picker\\_\\_tabs]:border-cyan-200
+      [&_.date-time-picker\\_\\_tabs_svg]:text-green-700
+      [&_.date-time-picker\\_\\_tabs_svg[data-state=active]]:text-green-900
+    `,
   },
 }
