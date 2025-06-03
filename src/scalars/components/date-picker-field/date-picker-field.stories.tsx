@@ -15,7 +15,7 @@ import { DatePickerField } from './date-picker-field.js'
  *
  * For styling examples and implementation details:
  * See our Storybook docs → 🎨
- * [DatePicker Examples](?path=/docs/data-entry-date-picker--readme)
+ * [Date Picker Examples](?path=/docs/data-entry-date-picker--readme)
  *
  * Note: Must be used within a form context provider.
  * Use the `withForm` decorator in Storybook for quick testing.

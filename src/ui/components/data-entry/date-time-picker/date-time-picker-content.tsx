@@ -71,8 +71,8 @@ const DateTimePickerContent = ({
   timeZone,
 }: DateTimePickerContentProps) => {
   return (
-    <div className={cn('mx-auto w-full max-w-md', className)}>
-      <Tabs value={activeTab} onValueChange={onChangeTabs} className="w-full">
+    <div className={cn('mx-auto w-full max-w-md', 'date-time-picker__content', className)}>
+      <Tabs value={activeTab} onValueChange={onChangeTabs} className="w-full date-time-picker__tabs">
         <TabsList className="mb-4 grid h-8 w-full grid-cols-2 bg-white">
           <TabsTrigger
             value="date"

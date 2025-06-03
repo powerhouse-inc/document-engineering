@@ -36,6 +36,7 @@ interface DateTimePickerProps extends InputBaseProps<DateFieldValue> {
   maxDate?: string
   onChangeDate?: (e: ChangeEvent<HTMLInputElement>) => void
   onBlurDate?: (e: FocusEvent<HTMLInputElement>) => void
+  className?: string
 }
 const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
   (
@@ -70,6 +71,7 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
       timeZone,
       showTimezoneSelect,
       includeContinent,
+      className,
       ..._props
     },
     ref
@@ -156,7 +158,8 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
           data-cast={`DateTimeString:${dateFormat}`}
           className={cn(
             // Add custom styles when the time is open
-            isCalendarView ? 'px-4 pb-6 pt-3' : 'px-4 pb-4 pt-3'
+            isCalendarView ? 'px-4 pb-6 pt-3' : 'px-4 pb-4 pt-3',
+            className
           )}
         >
           <DateTimePickerContent
