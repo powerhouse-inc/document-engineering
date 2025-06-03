@@ -31,8 +31,6 @@ export interface InputNumberProps
     'value' | 'defaultValue' | 'name' | 'pattern'
   > {
   name: string
-  min?: number
-  max?: number
   step?: number
   precision?: number
   trailingZeros?: boolean

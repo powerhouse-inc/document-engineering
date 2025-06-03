@@ -103,7 +103,6 @@ export const useNumberInput = ({
       value: { value: newValue },
       writable: false,
     })
-    console.log('entre aqui')
     onChange?.(nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>)
   }
 
