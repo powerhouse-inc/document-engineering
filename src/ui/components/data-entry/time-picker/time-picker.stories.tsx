@@ -18,6 +18,37 @@ import { TimePicker } from './time-picker'
  * - Timezone selection support
  * - Custom placeholder support
  *
+ * ## Time Picker Customization
+ * The time picker can be customized using the `className` prop which accepts a string of Tailwind classes.
+ * Each class should follow the format `[&_.time-picker\\_\\_{element}]:{tailwind-classes}`.
+ *
+ * Base classes available for customization:
+ * - .time-picker__content: Main container for the time picker
+ * - .time-picker__period: AM/PM selector section
+ * - .time-picker__selector: Time selection area (hours/minutes)
+ * - .time-picker__buttons: Container for action buttons (Cancel/OK)
+ * - .time-picker__select: Individual time selection buttons
+ * - .time-picker__hour: Hour display in 24-hour format
+ * - .time-picker__minute: Minute display
+ * - .time-picker__separator: Colon separator between hours and minutes
+ * - .time-picker__am-pm: AM/PM button in 12-hour format
+ *
+ * # Example Usage
+ * When using Tailwind CSS with custom class names, use `String.raw` to properly escape class names:
+ *
+ * ```tsx
+ * <TimePicker
+ *   name="custom-time"
+ *   label="Select Time"
+ *   className={String.raw`
+ *     [&_.time-picker\\_\\_content]:bg-blue-100
+ *     [&_.time-picker\\_\\_selector]:[&>div]:bg-green-100
+ *     [&_.time-picker\\_\\_period]:[&>button]:text-red-500
+ *     [&_.time-picker\\_\\_buttons]:[&>button]:bg-gray-800
+ *   `}
+ * />
+ * ```
+ *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
  * > you can use the [TimePicker](?path=/docs/scalars-timepickerfield--readme)
  * > component.
@@ -134,5 +165,35 @@ export const Filled: Story = {
     label: 'Pick a time',
     value: '12:00 PM',
     placeholder: 'HH:mm',
+  },
+}
+
+export const WithCustomizedCalendar: Story = {
+  args: {
+    name: 'time',
+    label: 'Pick a time',
+    placeholder: 'HH:mm',
+    className: String.raw`
+      [&_.time-picker\\_\\_content]:bg-red-300
+      [&_.time-picker\\_\\_content]:border-2
+      [&_.time-picker\\_\\_content]:border-cyan-400
+      [&_.time-picker\\_\\_content]:rounded-lg
+      [&_.time-picker\\_\\_content]:p-2
+      [&_.time-picker\\_\\_content]:transition-all
+      [&_.time-picker\\_\\_content]:duration-300
+      [&_.time-picker\\_\\_content]:font-mono
+      [&_.time-picker\\_\\_content]:text-lg
+      [&_.time-picker\\_\\_content]:border-b
+      [&_.time-picker\\_\\_content]:border-cyan-400/30
+      [&_.time-picker\\_\\_period]:[&>button]:text-blue-500
+      [&_.time-picker\\_\\_selector]:[&>div]:bg-green-500
+      [&_.time-picker\\_\\_buttons]:[&>button]:text-gray-900 
+      [&_.time-picker\\_\\_select]:[&>button]:text-gray-900
+      [&_.time-picker\\_\\_select]:[&>button]:bg-red-500
+      [&_.time-picker\\_\\_select]:[&>button]:rounded-lg
+      [&_.time-picker\\_\\_select]:[&>button]:p-2
+      [&_.time-picker\\_\\_select]:[&>button]:transition-all
+      [&_.time-picker\\_\\_select]:[&>button]:duration-300
+    `,
   },
 }
