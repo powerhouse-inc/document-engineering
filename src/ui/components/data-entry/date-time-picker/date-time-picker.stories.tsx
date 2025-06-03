@@ -327,20 +327,24 @@ export const WithCustomizedContent: Story = {
       [&_.date-time-picker\\_\\_content]:rounded-lg
       [&_.date-time-picker\\_\\_content]:border-cyan-200
       [&_.date-time-picker\\_\\_tabs]:border-cyan-200
+      [&_.date-time-picker\\_\\_tabs]:[&_button[data-selected=true]]:border-blue-200
       [&_.date-time-picker\\_\\_tabs_svg]:text-green-700
-      [&_.date-time-picker\\_\\_tabs_svg[data-state=active]]:text-green-900
+      [&_.date-time-picker\\_\\_tabs_svg[data-state=active]]:text-red-900
       [&_.date-picker\\_\\_calendar]:bg-white
       [&_.date-picker\\_\\_calendar]:rounded-b-lg
       [&_.date-picker\\_\\_calendar_button]:text-gray-700
-      [&_.date-picker\\_\\_calendar_button[aria-selected=true]]:bg-green-600
-      [&_.date-picker\\_\\_calendar_button[aria-selected=true]]:text-white
-      [&_.date-picker\\_\\_calendar_button[aria-selected=true]]:dark:bg-blue-500
+      [&_.date-picker\\_\\_calendar_button[data-selected=true]]:bg-green-600
+      [&_.date-picker\\_\\_calendar_button[data-selected=true]]:text-white
+      [&_.date-picker\\_\\_calendar_button[data-selected=true]]:bg-blue-500
       [&_.date-picker\\_\\_button-previous]:bg-transparent
       [&_.date-picker\\_\\_button-previous]:border-2
       [&_.date-picker\\_\\_button-previous]:border-cyan-400
       [&_.date-picker\\_\\_button-next]:bg-transparent
       [&_.date-picker\\_\\_button-next]:border-2
       [&_.date-picker\\_\\_button-next]:border-cyan-400
+      [&_.date-time-picker\\_\\_tabs_svg[data-selected=true]]:text-red-600
+      [&_.date-time-picker\\_\\_tabs_svg[data-selected=true]]:scale-110
+      [&_.date-time-picker\\_\\_tabs_svg[data-selected=true]]:font-bold
     `,
   },
 }
