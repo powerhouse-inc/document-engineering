@@ -74,9 +74,12 @@ export const useAmountInput = ({
         const nativeEvent = handleEventOnChange(currentValue)
         onChange?.(nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>)
       }
+      return
     }
+
+    // Only create object with unit for types that require it
     if (
-      (type === 'AmountFiat' || type === 'AmountCrypto' || type === 'Amount' || type === 'AmountCurrency') &&
+      (type === 'AmountFiat' || type === 'AmountCrypto' || type === 'AmountCurrency') &&
       (typeof currentValue === 'number' || typeof currentValue === 'string')
     ) {
       const newValue = {
@@ -149,14 +152,13 @@ export const useAmountInput = ({
 
   // Handle the change of the input
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (currentValue === undefined) {
-      const inputValue = e.target.value
-      const newValue = createAmountValue(inputValue)
-
-      const nativeEvent = handleEventOnChange(newValue)
-      onChange?.(nativeEvent)
-    }
     const inputValue = e.target.value
+
+    if (currentValue === undefined) {
+      const nativeEvent = handleEventOnChange(createAmountValue(inputValue))
+      onChange?.(nativeEvent)
+      return
+    }
 
     if (type === 'AmountFiat' && typeof value === 'object') {
       const newValue = {
@@ -197,13 +199,20 @@ export const useAmountInput = ({
       onChange?.(nativeEvent)
     }
 
-    if (type === 'Amount' && typeof value === 'object') {
-      const newValue = {
-        ...value,
-        amount: createAmountValue(inputValue),
-      } as AmountValue
-      const nativeEvent = handleEventOnChange(newValue)
-      onChange?.(nativeEvent)
+    if (type === 'Amount') {
+      // For Amount type, we need to check if it should have units
+      if (typeof value === 'object' && 'unit' in value) {
+        const newValue = {
+          ...value,
+          amount: createAmountValue(inputValue),
+        } as AmountValue
+        const nativeEvent = handleEventOnChange(newValue)
+        onChange?.(nativeEvent)
+      } else {
+        // If it's Amount without units, just pass the value directly
+        const nativeEvent = handleEventOnChange(createAmountValue(inputValue))
+        onChange?.(nativeEvent)
+      }
     }
   }
   // Handle the change of the select
