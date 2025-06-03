@@ -32,6 +32,7 @@ interface TimePickerProps extends InputBaseProps<TimeFieldValue>, Omit<InputNumb
   showTimezoneSelect?: boolean
   timeZone?: string
   includeContinent?: boolean
+  className?: string
 }
 
 const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
@@ -57,6 +58,7 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       timeIntervals,
       timeZone,
       includeContinent,
+      className,
     },
     ref
   ) => {
@@ -117,7 +119,7 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
             ...inputProps,
             onKeyDown: handleKeyDown,
           }}
-          className={cn('pb-4 pl-4 pr-4 pt-3')}
+          className={cn('pb-4 pl-4 pr-4 pt-3', className)}
         >
           <TimePickerContent
             selectedHour={selectedHour}

@@ -3,8 +3,25 @@ import { withForm } from '../../lib/decorators.js'
 import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } from '../../lib/storybook-arg-types.js'
 import { TimePickerField } from './time-picker-field.js'
 
+/**
+ * A time picker component designed for form usage with built-in validation.
+ *
+ * Key features:
+ * - Seamless form integration
+ * - Input validation out of the box
+ * - Customizable styling via Tailwind CSS (className prop)
+ * - Timezone selection support
+ *
+ * For styling examples and implementation details:
+ * See our Storybook docs → 🎨
+ * [Time Picker Examples](?path=/docs/data-entry-time-picker--readme)
+ *
+ * Note: Must be used within a form context provider.
+ * Use the `withForm` decorator in Storybook for quick testing.
+ */
+
 const meta: Meta<typeof TimePickerField> = {
-  title: 'Scalars/TimePickerField',
+  title: 'Scalars/Time Picker Field',
   component: TimePickerField,
   parameters: {
     layout: 'centered',

@@ -5,70 +5,24 @@ import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } f
 import { DatePickerField } from './date-picker-field.js'
 
 /**
- * Base classes available for customization:
- * - .date-picker__calendar: Calendar container
- * - .date-picker__button-next: Next month button
- * - .date-picker__button-previous: Previous month button
- * - .date-picker__selected: Selected dates
- * - .date-picker__today: Today's date
- * - .date-picker__weekday: Weekday headers
- * - .date-picker__day-button: Day buttons
- * - .date-picker__day: Day cells
- * - .date-picker__outside: Days outside current month
- * - .date-picker__month-caption: Month/year caption
- * - .date-picker__months: Months container
- * - .date-picker__month: Month container
- * - .date-picker__week: Week container
- * - .date-picker__range-start: Range start date
- * - .date-picker__range-end: Range end date
- * - .date-picker__range-middle: Dates in range
- * - .date-picker__nav: Navigation container
- * - .date-picker__month-grid: Month grid
- * - .date-picker__caption: Caption container
- * - .date-picker__caption-label: Caption label
- * - .date-picker__weekdays: Weekdays container
- * - .date-picker__hidden: Hidden elements
- * - .date-picker__year-grid--view: Year grid view
- * - .date-picker__month-grid--view: Month grid view
- * - .date-picker__date-footer: This is class for button footer in month and year view
+ * A date picker component designed for form usage with built-in validation.
  *
- * # Example Usage
+ * Key features:
+ * - Seamless form integration
+ * - Input validation out of the box
+ * - Customizable styling via Tailwind CSS (className prop)
+ * - Date range restrictions (min/max, disable past/future dates)
  *
- * When using Tailwind CSS with custom class names, we need to use `String.raw` because Tailwind
- * interprets underscores (`_`) as class separators. Without `String.raw`, the escape characters don't work
- * properly and you would need to use four backslashes (`\\\\`) to make it work. Using `String.raw` ensures
- * that the class names with underscores are properly escaped and interpreted by Tailwind.
+ * For styling examples and implementation details:
+ * See our Storybook docs → 🎨
+ * [DatePicker Examples](?path=/docs/data-entry-date-picker--readme)
  *
- * Here's an example of how to use the DatePickerField component with custom class for styling:
- *
- * ```tsx
- * import { DatePickerField } from './date-picker-field'
- *
- * function MyCustomDatePicker() {
- *   return (
- *     <DatePickerField
- *       name="custom-date"
- *       label="Select Date"
- *       placeholder="YYYY/MM/DD"
- *       className={String.raw`
- *         [&_.date-picker\\_\\_button-next]:bg-blue-500
- *         [&_.date-picker\\_\\_button-next]:text-white
- *         [&_.date-picker\\_\\_button-next]:rounded-full
- *         [&_.date-picker\\_\\_selected]:!bg-blue-500
- *         [&_.date-picker\\_\\_selected]:!text-white
- *         [&_.date-picker\\_\\_today]:border-2
- *         [&_.date-picker\\_\\_today]:border-blue-500
- *         [&_.date-picker\\_\\_weekday]:text-blue-500
- *         [&_.date-picker\\_\\_day-button]:hover:bg-blue-100
- *       `}
- *     />
- *   )
- * }
- * ```
+ * Note: Must be used within a form context provider.
+ * Use the `withForm` decorator in Storybook for quick testing.
  */
 
 const meta: Meta<typeof DatePickerField> = {
-  title: 'Scalars/Date Field',
+  title: 'Scalars/Date Picker Field',
   component: DatePickerField,
   parameters: {
     layout: 'centered',

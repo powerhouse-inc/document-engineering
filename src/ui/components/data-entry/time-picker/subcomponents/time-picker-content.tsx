@@ -4,6 +4,7 @@ import { Button } from '../../../../../scalars/components/fragments/button/butto
 import type { TimePeriod } from '../type.js'
 import TimePeriodSelector from './time-period-selector.js'
 import TimeSelector from './time-selector.js'
+import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface TimePickerContentProps {
   onSave?: (time: string) => void
@@ -45,7 +46,7 @@ const TimePickerContent: React.FC<TimePickerContentProps> = ({
   timeZone,
 }) => {
   return (
-    <div className="relative mx-auto w-full">
+    <div className={cn('relative mx-auto w-full', 'time-picker__content')}>
       <Select
         name=""
         options={timeZonesOptions}
@@ -70,7 +71,7 @@ const TimePickerContent: React.FC<TimePickerContentProps> = ({
         <div className="flex items-center px-4 text-sm font-normal leading-[20px] text-gray-900">:</div>
         <TimeSelector options={minutes} selectedValue={selectedMinute} onSelect={setSelectedMinute} isCyclic={true} />
       </div>
-      <div className="flex items-center justify-between pt-[25px]">
+      <div className="flex items-center justify-between pt-[25px] time-picker__buttons">
         <Button
           variant="ghost"
           onClick={onCancel}
