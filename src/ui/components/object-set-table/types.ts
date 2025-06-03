@@ -104,6 +104,21 @@ export type ValueFormatterFn<T> = (value: unknown, context: CellContext<T>) => s
 export type RenderCellFn<T, V = unknown> = (value: V, context: CellContext<T>) => React.ReactNode
 
 /**
+ * A function that renders the header of the column.
+ *
+ * @param value The value to display in the header.
+ * @param context The cell context.
+ *
+ * @example
+ * ```ts
+ * const renderHeader = (value: string, context: CellContext<T>) => {
+ *   return <div>{value}</div>;
+ * };
+ * ```
+ */
+export type RenderHeaderFn<T, V = string> = (value: V, context: CellContext<T>) => React.ReactNode
+
+/**
  * A function that is called when a cell is saved.
  *
  * @param newValue The new value of the cell.
@@ -157,6 +172,22 @@ export interface ColumnDef<T = any> {
   title?: string
 
   /**
+   * A function that renders the header of the column. Do not to render the header as a `th` element.
+   * Instead, render using `div` or `span` elements.
+   *
+   * @param value The value to display in the header.
+   * @param context The cell context.
+   *
+   * @example
+   * ```ts
+   * const renderHeader = (value: string, context: CellContext<T>) => {
+   *   return <div>{value}</div>;
+   * };
+   * ```
+   */
+  renderHeader?: RenderHeaderFn<T>
+
+  /**
    * The type of the column.
    *
    * Based on the type, the value will be formatted differently and if
@@ -207,7 +238,7 @@ export interface ColumnDef<T = any> {
   valueFormatter?: ValueFormatterFn<T>
 
   /**
-   * A function that renders a cell. Do to render the cell as a `td` element.
+   * A function that renders a cell. Do not to render the cell as a `td` element.
    * Instead, render using `div` or `span` elements.
    *
    * @default The value is converted to a string and formatted depending on the column type.
@@ -267,8 +298,10 @@ export interface ColumnDef<T = any> {
    *
    * @default "left"
    */
-  align?: 'left' | 'center' | 'right'
+  align?: ColumnAlignment
 }
+
+export type ColumnAlignment = 'left' | 'center' | 'right'
 
 export type DataType = any
 
