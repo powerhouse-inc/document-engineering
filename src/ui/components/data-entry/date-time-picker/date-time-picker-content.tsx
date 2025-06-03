@@ -75,6 +75,7 @@ const DateTimePickerContent = ({
       <Tabs value={activeTab} onValueChange={onChangeTabs} className="w-full date-time-picker__tabs">
         <TabsList className="mb-4 grid h-8 w-full grid-cols-2 bg-white">
           <TabsTrigger
+            data-selected={activeTab === 'date'}
             value="date"
             className={cn(
               'relative transition-all duration-200',
@@ -88,6 +89,7 @@ const DateTimePickerContent = ({
             <Icon name="CalendarTime" className="h-6 w-6" />
           </TabsTrigger>
           <TabsTrigger
+            data-selected={activeTab === 'time'}
             value="time"
             className={cn(
               'relative transition-all duration-200',

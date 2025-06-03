@@ -186,6 +186,9 @@ export const WithCustomizedCalendar: Story = {
       [&_.time-picker\\_\\_content]:border-b
       [&_.time-picker\\_\\_content]:border-cyan-400/30
       [&_.time-picker\\_\\_period]:[&>button]:text-blue-500
+      [&_.time-picker\\_\\_period]:[&>button[data-selected=true]]:bg-blue-100
+      [&_.time-picker\\_\\_period]:[&>button[data-selected=true]]:rounded-md
+      [&_.time-picker\\_\\_period]:[&>button[data-selected=true]]:font-bold
       [&_.time-picker\\_\\_selector]:[&>div]:bg-green-500
       [&_.time-picker\\_\\_buttons]:[&>button]:text-gray-900 
       [&_.time-picker\\_\\_select]:[&>button]:text-gray-900
