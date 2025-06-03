@@ -13,6 +13,7 @@ export { TimePicker, type TimePickerProps } from './data-entry/time-picker/index
 export { Toggle, type ToggleProps } from './data-entry/toggle/index.js'
 export { AmountInput, type AmountInputProps } from './data-entry/amount-input/index.js'
 export { Select, type SelectBaseProps, type SelectOption, type SelectProps } from './data-entry/select/index.js'
+export { NumberInput, type NumberFieldProps } from './data-entry/number-input/index.js'
 export {
   CustomizableRadioGroup,
   RadioGroup,

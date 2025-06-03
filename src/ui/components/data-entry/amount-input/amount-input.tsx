@@ -8,10 +8,10 @@ import {
 import { cn } from '../../../../scalars/lib/utils.js'
 import { type Currency, CurrencyCodePicker } from '../currency-code-picker/index.js'
 import type { SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
-import { NumberFieldRaw } from '../../../../scalars/components/number-field/index.js'
-import type { InputNumberProps, NumberFieldProps } from '../../../../scalars/components/number-field/types.js'
 import type { Amount, AmountInputPropsGeneric } from './types.js'
 import { useAmountInput } from './use-amount-input.js'
+import { NumberInput } from '../number-input/index.js'
+import type { InputNumberProps, NumberFieldProps } from '../number-input/types.js'
 
 type AdditionalProps = Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision'> & {
   className?: string
@@ -141,7 +141,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 {...(selectProps ?? { name: '' })}
               />
             )}
-            <NumberFieldRaw
+            <NumberInput
               name=""
               step={step}
               required={required}

@@ -9,7 +9,7 @@ describe('NumberField', () => {
   const mockOnChange = vi.fn()
 
   beforeEach(() => {
-    mockOnChange.mockClear() // Limpia el mock antes de cada prueba
+    mockOnChange.mockClear()
   })
 
   it('should match snapshot', () => {
