@@ -142,7 +142,7 @@ const meta = {
       control: 'object',
       description: 'All the props options for number field',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'object' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
@@ -150,7 +150,7 @@ const meta = {
       control: 'object',
       description: 'All the props options for select field',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'object' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
