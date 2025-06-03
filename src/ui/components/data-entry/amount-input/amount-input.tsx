@@ -198,6 +198,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 'focus:outline-none',
                 selectProps?.className
               )}
+              {...(selectProps ?? { name: '' })}
             />
           )}
         </div>
