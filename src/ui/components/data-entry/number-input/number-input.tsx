@@ -162,23 +162,24 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
 
 NumberInputRaw.displayName = 'NumberInputRaw'
 
-const NumberInputUncontroller = (props: NumberFieldProps) => {
+const NumberInputUncontroller = forwardRef<HTMLInputElement, NumberFieldProps>((props, ref) => {
   const [value, setValue] = useState(props.value ?? props.defaultValue)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     setValue(newValue as unknown as number)
   }
-  return <NumberInputRaw {...props} value={value} onChange={handleChange} defaultValue={value} />
-}
+  return <NumberInputRaw {...props} value={value} onChange={handleChange} defaultValue={value} ref={ref} />
+})
+NumberInputUncontroller.displayName = 'NumberInputUncontroller'
 
-const NumberInput = (props: NumberFieldProps) => {
+const NumberInput = forwardRef<HTMLInputElement, NumberFieldProps>((props, ref) => {
   if (props.onChange) {
-    return <NumberInputRaw {...props} />
+    return <NumberInputRaw {...props} ref={ref} />
   }
-  return <NumberInputUncontroller {...props} />
-}
+  return <NumberInputUncontroller {...props} ref={ref} />
+})
 
 NumberInput.displayName = 'NumberInput'
 
-export { NumberInput, NumberInputRaw, NumberFieldProps }
+export { NumberInput, NumberFieldProps }
