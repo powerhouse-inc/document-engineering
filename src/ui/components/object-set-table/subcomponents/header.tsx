@@ -37,8 +37,18 @@ const TableHeader: FC<TableHeaderProps> = ({ columns }) => {
             tableConfig: config,
           }
 
-          // the `renderHeader` function should be intialized with a default value at this point
-          return <th key={column.field}>{column.renderHeader!(getColumnTitle(column), cellContext)}</th>
+          const style: React.CSSProperties = {
+            width: column.width ?? 'auto',
+            minWidth: column.minWidth ?? 'auto',
+            maxWidth: column.maxWidth ?? column.width ?? 'auto',
+          }
+
+          return (
+            <th style={style} key={column.field}>
+              {/* the `renderHeader` function should be intialized with a default value at this point */}
+              {column.renderHeader!(getColumnTitle(column), cellContext)}
+            </th>
+          )
         })}
       </tr>
     </thead>

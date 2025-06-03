@@ -42,6 +42,7 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
             return true
           }),
       })),
+      width: config.width ?? 'auto',
       allowRowSelection: config.allowRowSelection ?? true,
       showRowNumbers: config.showRowNumbers ?? true,
       apiRef: config.apiRef,
@@ -55,10 +56,9 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
   return (
     <TableProvider config={extendedConfig} tableRef={tableRef}>
       <TableFocusTrap>
-        <div className="w-full overflow-hidden rounded-md border border-gray-300">
-          <table ref={tableRef} className="h-px w-full overflow-x-auto">
+        <div className="grid grid-cols-1 overflow-x-auto rounded-md border border-gray-300">
+          <table ref={tableRef} style={{ minWidth: config.width }}>
             <TableHeader columns={extendedConfig.columns} />
-            {/* TODO: implement width, minWidth, maxWidth and alignment for the columns in the table body */}
             <TableBody data={extendedConfig.data} columns={extendedConfig.columns} />
           </table>
         </div>
