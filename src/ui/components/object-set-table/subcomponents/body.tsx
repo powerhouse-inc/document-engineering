@@ -138,12 +138,19 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
 
             const isThisCellEditMode = isCellEditMode && isCellSelected
 
+            const style: React.CSSProperties = {
+              width: column.width ?? 'auto',
+              minWidth: column.minWidth ?? 'auto',
+              maxWidth: column.maxWidth ?? column.width ?? 'auto',
+            }
+
             return (
               <DefaultTableCell
                 key={column.field}
                 onClick={createCellClickHandler(index, columnIndex, column)}
                 isSelected={isCellSelected}
                 isEditable={column.editable ?? false}
+                style={style}
               >
                 {isThisCellEditMode ? (
                   <Input

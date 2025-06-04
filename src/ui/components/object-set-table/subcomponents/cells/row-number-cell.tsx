@@ -22,7 +22,7 @@ const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnC
   return (
     <TableCellBasic
       className={cn(
-        'min-w-9 select-none border-r border-gray-300 text-center',
+        'select-none border-r border-gray-300 text-center',
         allowRowSelection && 'cursor-pointer',
         selected && 'bg-blue-900 text-white'
       )}

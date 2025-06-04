@@ -446,6 +446,14 @@ const meta: Meta<typeof ObjectSetTable> = {
         defaultValue: { summary: 'true' },
       },
     },
+    width: {
+      control: 'text',
+      description: 'The width of the table.',
+      table: {
+        type: { summary: 'CSSProperties["width"]' },
+        defaultValue: { summary: 'auto' },
+      },
+    },
   },
 }
 

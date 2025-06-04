@@ -7,10 +7,11 @@ import type { ColumnDef } from '../../types.js'
 const ComputedColumnsExample = () => {
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
-      { field: 'firstName', title: 'Name' },
+      { field: 'firstName', title: 'Name', width: '100px' },
       {
         field: 'email',
         title: 'Email Domain',
+        width: '150px',
         valueFormatter: (value) => {
           if (typeof value !== 'string') return value?.toString() ?? 'N/A'
           return value.toString().split('@')[1]
@@ -19,6 +20,7 @@ const ComputedColumnsExample = () => {
       {
         field: 'payment',
         title: 'Payment Category',
+        width: '180px',
         valueFormatter: (value: unknown) => {
           if (typeof value !== 'number') return value?.toString() ?? 'N/A'
           if (value === 0) return 'No Payment'
@@ -43,6 +45,7 @@ const ComputedColumnsExample = () => {
       {
         field: 'address',
         title: 'Full Address',
+        width: '200px',
         valueFormatter: (value) => {
           const addr = value as MockedPerson['address']
           return `${addr.addressLine1}, ${addr.city}, ${addr.state} ${addr.zip}`

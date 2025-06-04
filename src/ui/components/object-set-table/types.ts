@@ -26,6 +26,13 @@ export interface ObjectSetTableConfig<T> {
    * @default true
    */
   showRowNumbers?: boolean
+
+  /**
+   * The width of the table.
+   *
+   * @default "auto"
+   */
+  width?: React.CSSProperties['width']
 }
 
 export type CellType = 'text' | 'number' | 'boolean'
