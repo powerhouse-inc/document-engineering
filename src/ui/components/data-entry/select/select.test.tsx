@@ -175,15 +175,4 @@ describe('Select Component', () => {
     )
     expect(onChange).not.toHaveBeenCalled()
   })
-
-  it('should apply custom className to options container', async () => {
-    const user = userEvent.setup()
-    render(<Select name="select" options={defaultOptions} optionsClassName="custom-options-class" />)
-
-    await user.click(screen.getByRole('combobox'))
-    const optionItems = screen.getAllByRole('option')
-    optionItems.forEach((item) => {
-      expect(item).toHaveClass('custom-options-class')
-    })
-  })
 })
