@@ -1,3 +1,15 @@
+# [1.10.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.9.0...v1.10.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* selected cell height ([88d593d](https://github.com/powerhouse-inc/document-engineering/commit/88d593d6aa719820bed157c545a9e398b63fa9e2))
+
+
+### Features
+
+* allow to setup column width, alignment and table width ([e69bb4f](https://github.com/powerhouse-inc/document-engineering/commit/e69bb4fb653f3aa973954063f4b8ba9ab2338926))
+
 # [1.9.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.8.1...v1.9.0) (2025-06-04)
 
 
