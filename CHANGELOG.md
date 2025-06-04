@@ -1,3 +1,32 @@
+# [1.9.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.8.1...v1.9.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* **scalars:** adjust the Number got get a reference ([ae5cdfa](https://github.com/powerhouse-inc/document-engineering/commit/ae5cdfa269160e44439b7efe3fa813fa81512b6a))
+* **scalars:** fix amount appear currency when input change state ([1cc7710](https://github.com/powerhouse-inc/document-engineering/commit/1cc7710b2877f3f0b04f23d154fde742baaa5efb))
+* **scalars:** fix CR and remove unnecesary code ([39d93c6](https://github.com/powerhouse-inc/document-engineering/commit/39d93c6957310de2d0321cdac55969ce59ef0136))
+* **scalars:** fix lint error ([6199eef](https://github.com/powerhouse-inc/document-engineering/commit/6199eef43268b37606a1022f9b7c9b480deda543))
+* **scalars:** fix the circular dependency and fix ling error ([e4898bf](https://github.com/powerhouse-inc/document-engineering/commit/e4898bfbddbaf39e2bb777e78dcd2bfac4f7b953))
+* **scalars:** fix the code review using and use BEM approach for customize ([a144611](https://github.com/powerhouse-inc/document-engineering/commit/a144611ef7c4c61e76d1e40bc4fb49b5cf411f0c))
+* **scalars:** fix the lint error ([fce553e](https://github.com/powerhouse-inc/document-engineering/commit/fce553e3816485ea148cd820506db537b8128793))
+* **scalars:** improve the description for rest props in the input and select ([e2ba700](https://github.com/powerhouse-inc/document-engineering/commit/e2ba700a175c60f230f70b0250288fbcfbcec301))
+* **scalars:** improve the docs for the class and fix the CR ([079e709](https://github.com/powerhouse-inc/document-engineering/commit/079e709abcb3e592f12cfc7fdf689b60a84517c4))
+* **scalars:** pass rest props to select ([7bbb4d9](https://github.com/powerhouse-inc/document-engineering/commit/7bbb4d93dcd041e580937502b506c33ba27632a7))
+* **scalars:** remove the clg ([799a24f](https://github.com/powerhouse-inc/document-engineering/commit/799a24f7462f5a5faca59494612cb46a3abba635))
+
+
+### Features
+
+* allow custom header renderers ([0afdeb4](https://github.com/powerhouse-inc/document-engineering/commit/0afdeb469cd0aec4b446254e5db5f06bf6e2cf33))
+* **scalars:** add avility to target component by state ([0a42036](https://github.com/powerhouse-inc/document-engineering/commit/0a42036fe5291bd16f52bff72079f3b37414fa66))
+* **scalars:** add class and sections for customize components ([51ca7ae](https://github.com/powerhouse-inc/document-engineering/commit/51ca7ae313fd1a37c05c03ddcd10125fc19896c1))
+* **scalars:** add class for customize the date-time-picker-field ([53ff98c](https://github.com/powerhouse-inc/document-engineering/commit/53ff98c268b9f343d4741a19bae866c14d608650))
+* **scalars:** add custom class for grid view years and months and footer navigation buttons ([ad364c3](https://github.com/powerhouse-inc/document-engineering/commit/ad364c3a8d7bc00548ec94e0555e323b4f58231a))
+* **scalars:** add custom class for styling time-picker and time-picker-field ([e1eb3ea](https://github.com/powerhouse-inc/document-engineering/commit/e1eb3ea53107e4f3e949513dbbd5d484208efb08))
+* **scalars:** add custom class grid view and add example for custom year and month in botton ([1ed3f5e](https://github.com/powerhouse-inc/document-engineering/commit/1ed3f5e2251860455af770a5b7c9bef4035d2008))
+* **scalars:** add number to be using outside of form ([e83af02](https://github.com/powerhouse-inc/document-engineering/commit/e83af02087e1380ffe0de82c5b4c66d7eb40f98f))
+
 ## [1.8.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.8.0...v1.8.1) (2025-06-02)
 
 
