@@ -9,7 +9,7 @@ exports[`EnumField Component > should match snapshot 1`] = `
     <div
       aria-invalid="false"
       aria-label="Radio group"
-      class="flex flex-col gap-2 select__radio-group"
+      class="flex flex-col gap-2 radio-group"
       dir="ltr"
       id=":r1:-radio-group"
       role="radiogroup"
@@ -17,7 +17,7 @@ exports[`EnumField Component > should match snapshot 1`] = `
       tabindex="0"
     >
       <div
-        class="flex items-center gap-2 select__radio-group-item"
+        class="flex items-center gap-2 radio-group__item"
         role="presentation"
       >
         <button
@@ -49,7 +49,7 @@ exports[`EnumField Component > should match snapshot 1`] = `
         </label>
       </div>
       <div
-        class="flex items-center gap-2 select__radio-group-item"
+        class="flex items-center gap-2 radio-group__item"
         role="presentation"
       >
         <button
@@ -81,7 +81,7 @@ exports[`EnumField Component > should match snapshot 1`] = `
         </label>
       </div>
       <div
-        class="flex items-center gap-2 select__radio-group-item"
+        class="flex items-center gap-2 radio-group__item"
         role="presentation"
       >
         <button

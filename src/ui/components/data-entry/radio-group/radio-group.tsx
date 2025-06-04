@@ -58,7 +58,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         aria-label={!hasLabel ? 'Radio group' : undefined}
         aria-required={required}
         autoFocus={autoFocus}
-        className={cn('flex flex-col gap-2', 'select__radio-group', className)}
+        className={cn('flex flex-col gap-2', 'radio-group', className)}
         defaultValue={defaultValue}
         id={id}
         name={name}
@@ -78,7 +78,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         {options.map((option, index) => (
           <div
             key={`${prefix}-radio-${index}-${option.value}`}
-            className={cn('flex items-center gap-2', 'select__radio-group-item')}
+            className={cn('flex items-center gap-2', 'radio-group__item')}
             role="presentation"
           >
             <Radio
@@ -87,7 +87,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
               value={option.value}
               description={option.description}
               disabled={disabled || option.disabled}
-              hasError={hasError}              // className={cn('select__radio-group-item')}
+              hasError={hasError}
             />
           </div>
         ))}

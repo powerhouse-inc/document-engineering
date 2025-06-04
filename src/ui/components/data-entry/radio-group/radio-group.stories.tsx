@@ -23,11 +23,11 @@ import { RadioGroup } from './radio-group.js'
  *
  * ## Radio Group Customization
  * The radio group can be customized using the `className` prop which accepts a string of Tailwind classes.
- * Each class should follow the format `[&_.select\\_\\_{element}]:{tailwind-classes}`.
+ * Each class should follow the format `[&_.radio-group\\_\\_{element}]:{tailwind-classes}`.
  *
  * Base classes available for customization:
- * - .select__radio-group: Radio group container
- * - .select__radio-group-item: Individual radio option container
+ * - .radio-group: Radio group container
+ * - .radio-group__item: Individual radio option container
  *
  * ## Example Usage
  *
@@ -51,21 +51,21 @@ import { RadioGroup } from './radio-group.js'
  *         { label: 'Option 2', value: '2' },
  *       ]}
  *       className={String.raw`
- *         [&_.select\\_\\_radio-group]:bg-gray-200
- *         [&_.select\\_\\_radio-group]:border-2
- *         [&_.select\\_\\_radio-group]:border-red-500
- *         [&_.select\\_\\_radio-group]:rounded-lg
- *         [&_.select\\_\\_radio-group]:shadow-lg
- *         [&_.select\\_\\_radio-group]:[&>label]:text-blue-500
- *         [&_.select\\_\\_radio-group]:[&>label]:font-semibold
+ *         [&_.radio-group]:bg-gray-200
+ *         [&_.radio-group]:border-2
+ *         [&_.radio-group]:border-red-500
+ *         [&_.radio-group]:rounded-lg
+ *         [&_.radio-group]:shadow-lg
+ *         [&_.radio-group]:[&>label]:text-blue-500
+ *         [&_.radio-group]:[&>label]:font-semibold
  *
- *         [&_.select\\_\\_radio-group-item]:text-cyan-400
- *         [&_.select\\_\\_radio-group-item]:hover:text-cyan-300
- *         [&_.select\\_\\_radio-group-item]:hover:bg-cyan-400/10
- *         [&_.select\\_\\_radio-group-item]:rounded-full
- *         [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]]:border-cyan-400
- *         [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:!bg-cyan-400
- *         [&_.select\\_\\_radio-group-item]:[&_label]:text-red-400
+ *         [&_.radio-group\\_\\_item]:text-cyan-400
+ *         [&_.radio-group\\_\\_item]:hover:text-cyan-300
+ *         [&_.radio-group\\_\\_item]:hover:bg-cyan-400/10
+ *         [&_.radio-group\\_\\_item]:rounded-full
+ *         [&_.radio-group\\_\\_item]:[&_button[data-state=checked]]:border-cyan-400
+ *         [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:!bg-cyan-400
+ *         [&_.radio-group\\_\\_item]:[&_label]:text-red-400
  *       `}
  *     />
  *   )
@@ -248,32 +248,32 @@ export const WithCustomStyles: Story = {
     label: 'Radio Group with custom styles',
     options: defaultOptionsWithStyles,
     className: String.raw`
-      [&.select\\_\\_radio-group]:bg-gray-200
-      [&.select\\_\\_radio-group]:border-2
-      [&.select\\_\\_radio-group]:border-red-500
-      [&.select\\_\\_radio-group]:rounded-lg
-      [&.select\\_\\_radio-group]:shadow-lg
-      [&.select\\_\\_radio-group]:transition-all
-      [&.select\\_\\_radio-group]:duration-300
-      [&.select\\_\\_radio-group]:[&>label]:text-blue-500
-      [&.select\\_\\_radio-group]:[&>label]:font-semibold
+      [&.radio-group]:bg-gray-200
+      [&.radio-group]:border-2
+      [&.radio-group]:border-red-500
+      [&.radio-group]:rounded-lg
+      [&.radio-group]:shadow-lg
+      [&.radio-group]:transition-all
+      [&.radio-group]:duration-300
+      [&.radio-group]:[&>label]:text-blue-500
+      [&.radio-group]:[&>label]:font-semibold
 
-      [&_.select\\_\\_radio-group-item]:text-cyan-400
-      [&_.select\\_\\_radio-group-item]:hover:text-cyan-300
-      [&_.select\\_\\_radio-group-item]:hover:bg-cyan-400/10
-      [&_.select\\_\\_radio-group-item]:rounded-full
-      [&_.select\\_\\_radio-group-item]:transition-all
-      [&_.select\\_\\_radio-group-item]:duration-300
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]]:border-cyan-400
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]]:hover:border-cyan-500
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:!bg-cyan-400
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:!text-black
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:!font-mono
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:!rounded-full
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:hover:!bg-cyan-500
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:transition-all
-      [&_.select\\_\\_radio-group-item]:[&_button[data-state=checked]_span]:after:duration-300
-      [&_.select\\_\\_radio-group-item]:[&_label]:text-red-400
+      [&_.radio-group\\_\\_item]:text-cyan-400
+      [&_.radio-group\\_\\_item]:hover:text-cyan-300
+      [&_.radio-group\\_\\_item]:hover:bg-cyan-400/10
+      [&_.radio-group\\_\\_item]:rounded-full
+      [&_.radio-group\\_\\_item]:transition-all
+      [&_.radio-group\\_\\_item]:duration-300
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]]:border-cyan-400
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]]:hover:border-cyan-500
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:!bg-cyan-400
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:!text-black
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:!font-mono
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:!rounded-full
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:hover:!bg-cyan-500
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:transition-all
+      [&_.radio-group\\_\\_item]:[&_button[data-state=checked]_span]:after:duration-300
+      [&_.radio-group\\_\\_item]:[&_label]:text-red-400
     `,
   },
 }
