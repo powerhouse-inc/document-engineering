@@ -43,7 +43,7 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
   }
 
   return (
-    <div className={cn('flex w-full items-center justify-between gap-2', 'select__selected-item')}>
+    <div className={cn('flex w-full items-center justify-between gap-2', 'select__item--selected')}>
       <div
         className={cn('max-w-full truncate text-gray-900 dark:text-gray-50', !multiple && 'flex items-center gap-2')}
       >

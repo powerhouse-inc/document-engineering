@@ -44,7 +44,7 @@ import { Select } from './select.js'
  * - .select__search: Search input container
  *
  * For customizing the selected item display, you can use the `selectedItemClassName` prop.
- * - .select__selected-item: Selected item display
+ * - .select__item--selected: Selected item display
  *
  * Here's an example of how to use the Select component with custom class for styling:
  *
@@ -72,11 +72,11 @@ import { Select } from './select.js'
  *         [&_.select\\_\\_list-item-favorite]:data-[selected=true]:text-red-900
  *       `}
  *       selectedItemClassName={String.raw`
- *         [&_.select\\_\\_selected-item]:text-red-500
- *         [&_.select\\_\\_selected-item]:[&>div]:text-red-500
- *         [&_.select\\_\\_selected-item]:[&>div]:gap-2
- *         [&_.select\\_\\_selected-item]:[&>svg]:text-red-500
- *         [&_.select\\_\\_selected-item]:[&>svg]:size-8
+ *         [&_.select\\_\\_item--selected]:text-red-500
+ *         [&_.select\\_\\_item--selected]:[&>div]:text-red-500
+ *         [&_.select\\_\\_item--selected]:[&>div]:gap-2
+ *         [&_.select\\_\\_item--selected]:[&>svg]:text-red-500
+ *         [&_.select\\_\\_item--selected]:[&>svg]:size-8
  *       `}
  *     />
  *   )
@@ -424,11 +424,11 @@ export const WithCustomizedSelect: Story = {
     [&_.select\\_\\_search]:[&>svg]:text-red-500
   `,
     selectedItemClassName: String.raw`
-    [&_.select\\_\\_selected-item]:text-red-500
-    [&_.select\\_\\_selected-item]:[&>div]:text-red-500
-    [&_.select\\_\\_selected-item]:[&>div]:gap-2
-    [&_.select\\_\\_selected-item]:[&>svg]:text-red-500
-    [&_.select\\_\\_selected-item]:[&>svg]:size-8
+    [&_.select\\_\\_item--selected]:text-red-500
+    [&_.select\\_\\_item--selected]:[&>div]:text-red-500
+    [&_.select\\_\\_item--selected]:[&>div]:gap-2
+    [&_.select\\_\\_item--selected]:[&>svg]:text-red-500
+    [&_.select\\_\\_item--selected]:[&>svg]:size-8
   `,
   },
 }

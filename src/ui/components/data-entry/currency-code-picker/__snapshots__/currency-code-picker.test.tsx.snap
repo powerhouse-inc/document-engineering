@@ -27,7 +27,7 @@ exports[`CurrencyCodePicker > should match snapshot 1`] = `
         type="button"
       >
         <div
-          class="flex w-full items-center justify-between gap-2 select__selected-item"
+          class="flex w-full items-center justify-between gap-2 select__item--selected"
         >
           <div
             class="max-w-full truncate text-gray-900 dark:text-gray-50 flex items-center gap-2"
