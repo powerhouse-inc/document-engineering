@@ -57,7 +57,7 @@ const ObjectSetTable = <T extends DataType = DataType>({ ...config }: ObjectSetT
     <TableProvider config={extendedConfig} tableRef={tableRef}>
       <TableFocusTrap>
         <div className="grid grid-cols-1 overflow-x-auto rounded-md border border-gray-300">
-          <table ref={tableRef} style={{ minWidth: config.width }}>
+          <table className="object-set-table" ref={tableRef} style={{ minWidth: config.width }}>
             <TableHeader columns={extendedConfig.columns} />
             <TableBody data={extendedConfig.data} columns={extendedConfig.columns} />
           </table>

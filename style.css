@@ -261,3 +261,20 @@ input[type="number"] {
     @apply cursor-pointer;
   }
 }
+
+/* 
+ * This is a workaround to make `div`s inside `td` elements to have 100% height
+ * This is no the best solution, but it is the only thing in the entire internet
+ * that works in all the browsers.
+ */
+.object-set-table {
+  height: 1px;
+}
+.object-set-table__td {
+  height: 1px;
+}
+@-moz-document url-prefix() {
+   .object-set-table__td {
+        height: 100%;
+    }
+}
