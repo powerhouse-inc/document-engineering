@@ -87,8 +87,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
               value={option.value}
               description={option.description}
               disabled={disabled || option.disabled}
-              hasError={hasError}
-              // className={cn('select__radio-group-item')}
+              hasError={hasError}              // className={cn('select__radio-group-item')}
             />
           </div>
         ))}
