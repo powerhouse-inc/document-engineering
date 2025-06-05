@@ -1,3 +1,19 @@
+# [1.11.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.10.0...v1.11.0) (2025-06-05)
+
+
+### Bug Fixes
+
+* **scalars:** add missing dependencies ([25b2c2e](https://github.com/powerhouse-inc/document-engineering/commit/25b2c2e6c7e1e9952c1145ce78e65a0e98df00ae))
+* **scalars:** correct naming error ([dec21d0](https://github.com/powerhouse-inc/document-engineering/commit/dec21d0837bb5cf6d36fa13562e787db3213c4bf))
+* **scalars:** fix CR an remove the clg ([9a9b12e](https://github.com/powerhouse-inc/document-engineering/commit/9a9b12e9e40fe469412e9e41639d325a86e8938c))
+* **scalars:** remove clg ([30ae446](https://github.com/powerhouse-inc/document-engineering/commit/30ae446d3200aa95cbf1c24381507e2c1048ffcb))
+
+
+### Features
+
+* **scalars:** add docs and fix validations issues ([d46c493](https://github.com/powerhouse-inc/document-engineering/commit/d46c493176a30ea600acb94f8a591fbac89d98ce))
+* **scalars:** add way for customize the radio-group ([579fd79](https://github.com/powerhouse-inc/document-engineering/commit/579fd79fcf5cefa22c80ccbc5f458b2de7221fcc))
+
 # [1.10.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.9.0...v1.10.0) (2025-06-04)
 
 
