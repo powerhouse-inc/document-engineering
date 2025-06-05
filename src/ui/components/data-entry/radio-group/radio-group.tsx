@@ -12,7 +12,6 @@ interface RadioGroupBaseProps {
     label: string
     description?: string
     disabled?: boolean
-    className?: string
   }>
   onChange?: (value: string) => void
 }
@@ -24,6 +23,7 @@ type RadioGroupProps = Omit<
   InputBaseProps<string> &
   RadioGroupBaseProps & {
     dir?: 'ltr' | 'rtl'
+    className?: string
   }
 
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
@@ -58,7 +58,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         aria-label={!hasLabel ? 'Radio group' : undefined}
         aria-required={required}
         autoFocus={autoFocus}
-        className={cn('flex flex-col gap-2', className)}
+        className={cn('flex flex-col gap-2', 'radio-group', className)}
         defaultValue={defaultValue}
         id={id}
         name={name}
@@ -78,7 +78,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         {options.map((option, index) => (
           <div
             key={`${prefix}-radio-${index}-${option.value}`}
-            className={cn('flex items-center gap-2', option.className)}
+            className={cn('flex items-center gap-2', 'radio-group__item')}
             role="presentation"
           >
             <Radio
