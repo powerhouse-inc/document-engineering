@@ -7,6 +7,24 @@ import {
 } from '../../../../scalars/lib/storybook-arg-types.js'
 import { NumberInput } from './number-input.js'
 
+/**
+ * The `NumberField` component provides an input field for entering and selecting numbers.
+ * It supports multiple configuration properties like:
+ * - label
+ * - description
+ * - precision
+ * - step
+ *
+ * Features include:
+ * - Customizable decimal precision
+ * - Min/Max value restrictions
+ * - Negative value support
+ * - Trailing zeros option
+ *
+ * > **Note:** This component does not have built-in validation. If you need built-in validation
+ * > you can use the [NumberField](?path=/docs/scalars-number-field--readme)
+ * > component.
+ */
 const meta = {
   title: 'Data Entry/Number Input',
   component: NumberInput,

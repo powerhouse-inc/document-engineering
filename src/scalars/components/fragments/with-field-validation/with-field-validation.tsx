@@ -228,13 +228,13 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
               : {
                   minLength: undefined,
                 }),
-            ...(props.minValue && {
+            ...(props.minValue !== undefined && {
               min: {
                 value: props.minValue,
                 message: `This field must be greater than or equal to ${props.minValue}`,
               },
             }),
-            ...(props.maxValue && {
+            ...(props.maxValue !== undefined && {
               max: {
                 value: props.maxValue,
                 message: `This field must be less than or equal to ${props.maxValue}`,
