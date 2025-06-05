@@ -20,7 +20,6 @@ interface SelectBaseProps {
   multiple?: boolean
   searchable?: boolean
   onChange?: (value: string | string[]) => void
-  selectedItemClassName?: string
   contentAlign?: 'start' | 'end' | 'center'
 }
 

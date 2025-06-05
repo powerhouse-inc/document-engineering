@@ -31,8 +31,7 @@ import { Select } from './select.js'
  *
  * ## Select Customization
  * The select component can be customized using two main props:
- * 1. `className`: For styling the dropdown content and list items
- * 2. `selectedItemClassName`: For styling the selected item display
+ * 1. `className`: For styling the dropdown content, list items and selected item display
  *
  * Each class should follow the format `[&_.select\\_\\_{element}]:{tailwind-classes}`.
  *
@@ -42,9 +41,8 @@ import { Select } from './select.js'
  * - .select__list-item: Individual option item
  * - .select__list-item-favorite: Favorite option item
  * - .select__search: Search input container
- *
- * For customizing the selected item display, you can use the `selectedItemClassName` prop.
  * - .select__item--selected: Selected item display
+ *
  *
  * Here's an example of how to use the Select component with custom class for styling:
  *
@@ -70,13 +68,6 @@ import { Select } from './select.js'
  *         [&_.select\\_\\_list-item-favorite]:font-bold
  *         [&_.select\\_\\_list-item-favorite]:cursor-pointer
  *         [&_.select\\_\\_list-item-favorite]:data-[selected=true]:text-red-900
- *       `}
- *       selectedItemClassName={String.raw`
- *         [&_.select\\_\\_item--selected]:text-red-500
- *         [&_.select\\_\\_item--selected]:[&>div]:text-red-500
- *         [&_.select\\_\\_item--selected]:[&>div]:gap-2
- *         [&_.select\\_\\_item--selected]:[&>svg]:text-red-500
- *         [&_.select\\_\\_item--selected]:[&>svg]:size-8
  *       `}
  *     />
  *   )
@@ -183,14 +174,6 @@ const meta: Meta<typeof Select> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    selectedItemClassName: {
-      control: 'text',
-      description: 'Custom class name for the selected item',
-      table: {
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
     ...getValidationArgTypes({
       enabledArgTypes: {
         validators: false,
@@ -422,8 +405,6 @@ export const WithCustomizedSelect: Story = {
     [&_.select\\_\\_list-item]:[&>span]:text-blue-500
     [&_.select\\_\\_search]:text-red-500
     [&_.select\\_\\_search]:[&>svg]:text-red-500
-  `,
-    selectedItemClassName: String.raw`
     [&_.select\\_\\_item--selected]:text-red-500
     [&_.select\\_\\_item--selected]:[&>div]:text-red-500
     [&_.select\\_\\_item--selected]:[&>div]:gap-2

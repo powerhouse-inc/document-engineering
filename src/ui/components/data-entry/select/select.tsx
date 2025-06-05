@@ -58,7 +58,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       description,
       placeholder,
       className,
-      selectedItemClassName,
       contentAlign = 'start',
 
       // diff props
@@ -153,7 +152,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                     'dark:hover:border-charcoal-700 dark:hover:bg-charcoal-900 hover:border-gray-300 hover:bg-gray-50',
                   ],
                   'select',
-                  selectedItemClassName
+                  className
                 )}
                 {...props}
                 ref={ref}
