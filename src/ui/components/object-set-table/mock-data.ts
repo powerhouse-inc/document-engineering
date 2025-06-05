@@ -16,11 +16,11 @@ export interface MockedPerson {
 
 export const mockData: MockedPerson[] = [
   {
-    firstName: 'John',
+    firstName: 'Alice',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 100,
-    email: 'john@example.com',
+    email: 'alice@example.com',
     status: 'active',
     address: {
       addressLine1: '123 Main St',
@@ -31,11 +31,11 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Jane',
+    firstName: 'Bob',
     walletAddress: '0x1234567890abcdef',
     isActive: false,
     payment: 1065460,
-    email: 'jane@example.com',
+    email: 'bob@example.com',
     status: 'inactive',
     address: {
       addressLine1: '123 Main St',
@@ -46,11 +46,11 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Jim',
+    firstName: 'Charlie',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 14522,
-    email: 'jim@example.com',
+    email: 'charlie@example.com',
     status: 'active',
     address: {
       addressLine1: '123 Main St',
@@ -61,11 +61,11 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Jill',
+    firstName: 'Diana',
     walletAddress: '0x1234567890abcdef',
     isActive: false,
     payment: 11231200,
-    email: 'jill@example.com',
+    email: 'diana@example.com',
     status: 'inactive',
     address: {
       addressLine1: '123 Main St',
@@ -76,11 +76,11 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Jack',
+    firstName: 'Edward',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 10234234230,
-    email: 'jack@example.com',
+    email: 'edward@example.com',
     status: 'active',
     address: {
       addressLine1: '123 Main St',
@@ -91,11 +91,11 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Jill',
+    firstName: 'Fiona',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 0,
-    email: 'jill@example.com',
+    email: 'fiona@example.com',
     status: 'inactive',
     address: {
       addressLine1: '123 Main St',
@@ -106,11 +106,11 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Mike',
+    firstName: 'Alex',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 15,
-    email: 'mike@example.com',
+    email: 'alex@example.com',
     status: 'inactive',
     address: {
       addressLine1: '123 Main St',

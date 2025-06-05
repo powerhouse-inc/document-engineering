@@ -29,6 +29,7 @@ interface TableProviderProps<T extends DataType = DataType> {
 const TableProvider = <T extends DataType>({ children, config, tableRef }: TableProviderProps<T>) => {
   const [state, dispatch] = useReducer(tableReducer<T>, {
     columns: config.columns,
+    defaultData: [...config.data],
     data: config.data,
     allowRowSelection: config.allowRowSelection ?? true,
     showRowNumbers: config.showRowNumbers ?? true,
@@ -36,6 +37,7 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
     lastSelectedRowIndex: null,
     selectedCellIndex: null,
     isCellEditMode: false,
+    sortState: null,
   })
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
   )
 }
 
-const useInternalTableState = <T extends DataType = any>() => {
+const useInternalTableState = <T extends DataType = unknown>() => {
   const context = useContext<TableContextValue<T> | null>(TableContext)
   if (!context) {
     throw new Error('useTable must be used within a TableProvider')

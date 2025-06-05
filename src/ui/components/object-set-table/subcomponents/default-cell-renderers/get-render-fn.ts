@@ -1,9 +1,9 @@
-import type { CellType, RenderCellFn } from '../../types.js'
+import type { ColumnType, RenderCellFn } from '../../types.js'
 import { renderBooleanCell } from './boolean-render.js'
 import { renderNumberCell } from './number-render.js'
 import { renderTextCell } from './text-render.js'
 
-const getRenderFn = <T>(type: CellType | undefined): RenderCellFn<T> => {
+const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
     case 'text':
       return renderTextCell

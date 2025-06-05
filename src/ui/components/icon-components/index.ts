@@ -1,6 +1,7 @@
 import type { Props } from './types.js'
 
 import ArrowCouterclockwise from './ArrowCouterclockwise.js'
+import ArrowDownUp from './ArrowDownUp.js'
 import ArrowFilledRight from './ArrowFilledRight.js'
 import ArrowLeft from './ArrowLeft.js'
 import ArrowUp from './ArrowUp.js'
@@ -117,6 +118,7 @@ import Youtube from './Youtube.js'
 
 export const iconNames = [
   'ArrowCouterclockwise',
+  'ArrowDownUp',
   'ArrowFilledRight',
   'ArrowLeft',
   'ArrowUp',
@@ -235,6 +237,7 @@ export const iconNames = [
 export type IconName = (typeof iconNames)[number]
 export const iconComponents: Record<IconName, (props: Props) => React.JSX.Element> = {
   ArrowCouterclockwise,
+  ArrowDownUp,
   ArrowFilledRight,
   ArrowLeft,
   ArrowUp,

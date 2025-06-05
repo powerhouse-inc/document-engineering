@@ -35,7 +35,7 @@ export interface ObjectSetTableConfig<T> {
   width?: React.CSSProperties['width']
 }
 
-export type CellType = 'text' | 'number' | 'boolean'
+export type ColumnType = 'text' | 'number' | 'boolean'
 
 export interface CellContext<T = any> {
   /**
@@ -62,6 +62,39 @@ export interface CellContext<T = any> {
    * The table configuration.
    */
   tableConfig: ObjectSetTableConfig<T>
+}
+
+/**
+ * A function that compares two values.
+ *
+ * @param a The first value.
+ * @param b The second value.
+ * @param context The sort context.
+ *
+ * @example
+ */
+export type SortFn<T = unknown> = (a: unknown, b: unknown, context: SortableColumnContext<T>) => number
+
+/**
+ * The context for a sortable column.
+ *
+ * @param T The type of the row object.
+ */
+export interface SortableColumnContext<T = unknown> {
+  /**
+   * The table configuration.
+   */
+  tableConfig: ObjectSetTableConfig<T>
+
+  /**
+   * The column definition.
+   */
+  columnDef: ColumnDef<T>
+
+  /**
+   * The data.
+   */
+  data: T[]
 }
 
 /**
@@ -135,7 +168,36 @@ export type RenderHeaderFn<T, V = string> = (value: V, context: CellContext<T>) 
  */
 export type OnCellSaveFn<TData, TCellValue> = (newValue: TCellValue, context: CellContext<TData>) => boolean
 
-export interface ColumnDef<T = any> {
+export type SortDirection = 'asc' | 'desc'
+
+export interface SortableColumnDef<T = unknown> {
+  /**
+   * Whether the column is sortable.
+   *
+   * @default false
+   */
+  sortable?: boolean
+
+  /**
+   * The default sort direction, only one column can be sorted at a time.
+   */
+  defaultSortDirection?: SortDirection
+
+  /**
+   * A function that compares two rows.
+   *
+   * @default The value is compared using the `rowComparator` function.
+   *
+   * @example
+   * ```ts
+   * const rowComparator = (a: unknown, b: unknown, context: SortableColumnContext<T>) => {
+   *   return (a as number) - (b as number)
+   * }
+   */
+  rowComparator?: SortFn<T>
+}
+
+export interface ColumnDef<T = any> extends SortableColumnDef<T> {
   /**
    * The field from the row object to display in the column.
    * You can use dot notation to access nested fields.
@@ -203,7 +265,7 @@ export interface ColumnDef<T = any> {
    *
    * @default "text"
    */
-  type?: CellType
+  type?: ColumnType
 
   /**
    * A function that returns the value to display in the column.
