@@ -248,7 +248,7 @@ export function useIdAutocomplete({
         setSelectedOption(matchingOption)
       }
     }
-  }, [])
+  }, [initialOptions, selectedValue])
 
   return {
     selectedValue,
