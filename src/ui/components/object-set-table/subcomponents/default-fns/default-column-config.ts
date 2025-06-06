@@ -1,7 +1,7 @@
-import type { CellType, ColumnAlignment } from '../../types.js'
+import type { ColumnAlignment, ColumnType } from '../../types.js'
 
-const defaultColumnAlignment = (cellType: CellType): ColumnAlignment => {
-  switch (cellType) {
+const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
+  switch (columnType) {
     case 'number':
       return 'right'
 

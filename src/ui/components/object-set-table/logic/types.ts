@@ -1,5 +1,10 @@
-import type { CellContext, ObjectSetTableConfig } from '../types.js'
+import type { CellContext, ObjectSetTableConfig, SortDirection } from '../types.js'
 import type { TableState } from '../subcomponents/table-provider/table-reducer.js'
+
+export interface SortingInfo {
+  columnIndex: number
+  direction: SortDirection
+}
 
 export interface TableSelectionManager {
   canSelectRows(): boolean
@@ -27,11 +32,16 @@ export interface TableApiBase {
   getHTMLTable(): HTMLTableElement | null
 
   // cell editing
+  isEditable(): boolean
   canEditCell(row: number, column: number): boolean
   isEditing(): boolean
   isEditingCell(row: number, column: number): boolean
   enterCellEditMode(row: number, column: number): void
   exitCellEditMode(save?: boolean): void
+
+  // sorting
+  sortRows(columnIndex: number, direction: SortDirection | null): void
+  getCurrentSortInfo(): SortingInfo | null
 }
 
 export interface PrivateTableApiBase<TData> extends TableApiBase {

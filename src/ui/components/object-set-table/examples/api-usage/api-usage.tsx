@@ -12,7 +12,7 @@ const ApiUsageExample = () => {
   const apiRef = useRef<TableApiBase>(null)
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
-      { field: 'firstName', title: 'Name' },
+      { field: 'firstName', title: 'Name', sortable: true },
       {
         field: 'email',
         title: 'Email Domain',
@@ -121,10 +121,22 @@ const ApiUsageExample = () => {
               </Button>
             </Form>
           </div>
+
+          <div className="flex gap-6 items-center">
+            <Button
+              variant="primary"
+              onClick={() => {
+                const direction = apiRef.current?.getCurrentSortInfo()?.direction === 'asc' ? 'desc' : 'asc'
+                apiRef.current?.sortRows(0, direction)
+              }}
+            >
+              Sort by Name
+            </Button>
+          </div>
         </div>
       </div>
 
-      <ObjectSetTable<MockedPerson> columns={columns} data={mockData.slice(0, 6)} apiRef={apiRef} />
+      <ObjectSetTable<MockedPerson> columns={columns} data={mockData} apiRef={apiRef} />
     </div>
   )
 }

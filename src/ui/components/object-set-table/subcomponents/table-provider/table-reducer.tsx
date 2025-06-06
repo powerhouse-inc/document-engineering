@@ -1,7 +1,9 @@
-import type { ColumnDef, DataType, TableCellIndex } from '../../types.js'
+import type { ColumnDef, DataType, ObjectSetTableConfig, SortDirection, TableCellIndex } from '../../types.js'
 
 interface TableState<T extends DataType = DataType> {
   dispatch?: React.Dispatch<TableAction<T>>
+
+  defaultData: T[]
 
   columns: ColumnDef[]
   data: T[]
@@ -12,6 +14,11 @@ interface TableState<T extends DataType = DataType> {
 
   selectedCellIndex: TableCellIndex | null
   isCellEditMode: boolean
+
+  sortState: {
+    columnIndex: number
+    direction: SortDirection
+  } | null
 }
 
 type TableAction<T extends DataType = DataType> =
@@ -60,6 +67,15 @@ type TableAction<T extends DataType = DataType> =
   | {
       type: 'ENTER_CELL_EDIT_MODE'
       payload: TableCellIndex
+    }
+  // sorting
+  | {
+      type: 'SORT_COLUMN'
+      payload: {
+        columnIndex: number
+        direction: SortDirection | null
+        tableConfig: ObjectSetTableConfig<T>
+      }
     }
 
 const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAction<T>): TableState<T> => {
@@ -167,6 +183,51 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
         ...state,
         selectedCellIndex: action.payload,
         isCellEditMode: true,
+      }
+    }
+    case 'SORT_COLUMN': {
+      const column = state.columns[action.payload.columnIndex]
+      const sortDirection = action.payload.direction
+      const sortFn = column.rowComparator
+
+      if (sortDirection === null) {
+        // do not sort the data, just use the default unsorted data
+        return {
+          ...state,
+          data: [...state.defaultData],
+          sortState: null,
+        }
+      }
+
+      const data = [...state.defaultData].sort((rowA, rowB) => {
+        const columnValueA = column.valueGetter!(rowA, {
+          row: rowA,
+          rowIndex: -1,
+          column,
+          columnIndex: action.payload.columnIndex,
+          tableConfig: action.payload.tableConfig,
+        })
+        const columnValueB = column.valueGetter!(rowB, {
+          row: rowB,
+          rowIndex: -1,
+          column,
+          columnIndex: action.payload.columnIndex,
+          tableConfig: action.payload.tableConfig,
+        })
+        return sortFn!(columnValueA, columnValueB, {
+          tableConfig: action.payload.tableConfig,
+          columnDef: column,
+          data: state.data,
+        })
+      })
+
+      return {
+        ...state,
+        data: sortDirection === 'asc' ? data : data.reverse(),
+        sortState: {
+          columnIndex: action.payload.columnIndex,
+          direction: sortDirection,
+        },
       }
     }
     default:
