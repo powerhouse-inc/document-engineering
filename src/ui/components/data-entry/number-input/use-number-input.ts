@@ -78,7 +78,6 @@ export const useNumberInput = ({
   const stepValueHandler = (e: React.MouseEvent<HTMLButtonElement>, operation: 'increment' | 'decrement') => {
     e.preventDefault()
     let newValue: number | bigint
-
     if (isBigInt) {
       const currentValue = BigInt(value ?? 0)
       const adjustment = BigInt(step || 1) * (operation === 'increment' ? BigInt(1) : BigInt(-1))
@@ -86,7 +85,8 @@ export const useNumberInput = ({
     } else {
       const currentValue = Number(value ?? 0)
       const adjustment = (step || 1) * (operation === 'increment' ? 1 : -1)
-      newValue = currentValue + adjustment
+      // Convertir a string con la precisión correcta y volver a número
+      newValue = parseFloat((currentValue + adjustment).toFixed(precision || 10))
     }
 
     if (!isBigInt) {
