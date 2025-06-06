@@ -43,6 +43,22 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     return this.tableRef.current
   }
 
+  /**
+   * Returns the total number of rows in the table, including the empty rows
+   *
+   * @returns The total number of rows in the table
+   */
+  getTotalRowsCount(): number {
+    const state = this._getState()
+    const minRowCount = this._getConfig().minRowCount ?? 0
+
+    if (state.data.length >= minRowCount) {
+      return state.data.length
+    }
+
+    return this._getState().data.length + ((this._getConfig().minRowCount ?? 0) - this._getState().data.length)
+  }
+
   // cell editing
   /**
    * Checks if the cell at the given row and column can be edited

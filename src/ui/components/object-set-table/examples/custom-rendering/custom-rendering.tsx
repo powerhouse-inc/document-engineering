@@ -76,7 +76,7 @@ const CustomRenderingExample = () => {
     []
   )
 
-  return <ObjectSetTable<MockedPerson> columns={columns} data={mockData} />
+  return <ObjectSetTable<MockedPerson> columns={columns} data={mockData} minRowCount={10} />
 }
 
 export default CustomRenderingExample

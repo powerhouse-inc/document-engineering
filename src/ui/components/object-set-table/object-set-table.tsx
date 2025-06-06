@@ -49,6 +49,7 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
         rowComparator: column.rowComparator ?? defaultSortFns(column.type ?? defaultColumnType),
       })),
       width: config.width ?? 'auto',
+      minRowCount: config.minRowCount ?? 0,
       allowRowSelection: config.allowRowSelection ?? true,
       showRowNumbers: config.showRowNumbers ?? true,
       apiRef: config.apiRef,

@@ -384,11 +384,12 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `sortRows(columnIndex, direction)` | Sorts rows by the specified column | `columnIndex: number, direction: 'asc' | 'desc' | null` | `void` |
  * | `getCurrentSortInfo()` | Gets current sorting information | None | `SortingInfo | null` |
  *
- * ### DOM Access
+ * ### General Public Methods
  *
  * | Method | Description | Returns |
  * |--------|-------------|---------|
  * | `getHTMLTable()` | Gets the underlying HTML table element | `HTMLTableElement | null` |
+ * | `getTotalRowsCount()` | Gets the total number of rows in the table, including the empty rows | `number` |
  *
  * ### Usage Examples
  *
@@ -462,6 +463,15 @@ const meta: Meta<typeof ObjectSetTable> = {
       table: {
         type: { summary: 'CSSProperties["width"]' },
         defaultValue: { summary: 'auto' },
+      },
+    },
+    minRowCount: {
+      control: 'number',
+      description:
+        'The minimum number of rows to display in the table. If the data is less than this number, the table will add empty rows to reach the minimum.',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: '0' },
       },
     },
   },
