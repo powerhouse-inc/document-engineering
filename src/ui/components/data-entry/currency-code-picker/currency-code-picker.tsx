@@ -13,7 +13,6 @@ const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePicke
       includeCurrencySymbols = true,
       symbolPosition = 'right',
       searchable = false,
-      contentClassName,
       contentAlign = 'start',
       allowedTypes = 'Both',
       ...props
@@ -80,7 +79,6 @@ const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePicke
           multiple={false}
           placeholder={placeholder}
           contentAlign={contentAlign}
-          contentClassName={contentClassName}
           favoriteOptions={favoriteOptions}
           {...props}
         />

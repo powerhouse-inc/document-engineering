@@ -316,7 +316,6 @@ export const WithCustomStylesSelect: Story = {
     selectionIcon: 'checkmark',
     selectionIconPosition: 'right',
     placeholder: 'Select an icon',
-    optionsClassName: '[&>span]:text-blue-900 [&>svg]:text-green-900',
   },
 }
 export const WithCustomStylesRadioGroup: Story = {

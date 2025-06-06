@@ -58,9 +58,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       description,
       placeholder,
       className,
-      contentClassName,
       contentAlign = 'start',
-      optionsClassName,
 
       // diff props
       viewMode = 'edition',
@@ -153,6 +151,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                     '!pointer-events-auto cursor-not-allowed bg-gray-50',
                     'dark:hover:border-charcoal-700 dark:hover:bg-charcoal-900 hover:border-gray-300 hover:bg-gray-50',
                   ],
+                  'select',
                   className
                 )}
                 {...props}
@@ -165,7 +164,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                   searchable={searchable}
                   placeholder={placeholder}
                   handleClear={handleClear}
-                  optionsClassName={optionsClassName}
                 />
               </Button>
             </PopoverTrigger>
@@ -175,7 +173,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 e.preventDefault()
                 handleOpenChange(false)
               }}
-              className={contentClassName}
+              className={className}
             >
               <Command
                 defaultValue={
@@ -195,7 +193,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                   options={options}
                   toggleAll={toggleAll}
                   toggleOption={toggleOption}
-                  optionsClassName={optionsClassName}
                 />
               </Command>
             </PopoverContent>

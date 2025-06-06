@@ -10,7 +10,6 @@ interface SelectedContentProps {
   searchable?: boolean
   placeholder?: string
   handleClear: () => void
-  optionsClassName?: string
 }
 
 export const SelectedContent: React.FC<SelectedContentProps> = ({
@@ -20,7 +19,6 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
   searchable,
   placeholder,
   handleClear,
-  optionsClassName,
 }) => {
   const renderIcon = (IconComponent: IconName | React.ComponentType<{ className?: string }> | undefined) => {
     if (typeof IconComponent === 'string') {
@@ -45,14 +43,14 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
   }
 
   return (
-    <div className="flex w-full items-center justify-between gap-2">
+    <div className={cn('flex w-full items-center justify-between gap-2', 'select__item--selected')}>
       <div
         className={cn('max-w-full truncate text-gray-900 dark:text-gray-50', !multiple && 'flex items-center gap-2')}
       >
         {selectedValues.map((value, index) => {
           const option = options.find((o) => o.value === value)
           return !multiple ? (
-            <div key={value} className={cn('flex items-center gap-2', optionsClassName, option?.className)}>
+            <div key={value} className={cn('flex items-center gap-2')}>
               {renderIcon(option?.icon)}
               <span className={cn('truncate text-[14px] font-normal leading-5')}>{option?.label}</span>
             </div>
