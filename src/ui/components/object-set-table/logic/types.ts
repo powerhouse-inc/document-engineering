@@ -30,6 +30,7 @@ export interface TableApiBase {
 
   // methods
   getHTMLTable(): HTMLTableElement | null
+  getTotalRowsCount(): number
 
   // cell editing
   isEditable(): boolean

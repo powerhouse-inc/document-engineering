@@ -83,6 +83,7 @@ class SelectionManager<TData> implements TableSelectionManager {
 
     this.api._getState().dispatch?.({
       type: 'SELECT_ALL_ROWS',
+      payload: { totalRows: this.api.getTotalRowsCount() },
     })
   }
 
@@ -94,6 +95,7 @@ class SelectionManager<TData> implements TableSelectionManager {
 
     this.api._getState().dispatch?.({
       type: 'TOGGLE_SELECT_ALL_ROWS',
+      payload: { totalRows: this.api.getTotalRowsCount() },
     })
   }
 
