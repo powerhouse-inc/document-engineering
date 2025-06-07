@@ -1,9 +1,7 @@
-import type { DiffMode, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
+import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import type { IconName } from '../../icon/index.js'
 
-interface UrlInputWithDifference extends Omit<WithDifference<string>, 'diffMode'> {
-  diffMode?: Extract<DiffMode, 'sentences'>
-}
+type UrlInputWithDifference = Omit<WithDifference<string>, 'diffMode'>
 
 type PlatformIcon = IconName | React.ReactElement
 

@@ -31,7 +31,6 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
       onKeyDown,
       // diff props
       viewMode = 'edition',
-      diffMode,
       baseValue,
       ...props
     },
@@ -126,7 +125,6 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
         label={label}
         required={required}
         viewMode={viewMode}
-        diffMode={diffMode}
         baseValue={baseValue}
         platformIcons={platformIcons}
       />
