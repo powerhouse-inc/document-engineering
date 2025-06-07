@@ -242,13 +242,13 @@ export function useIdAutocomplete({
   }, [value])
 
   useEffect(() => {
-    if (initialOptions?.length && selectedValue) {
+    if (initialOptions?.length && selectedValue !== '') {
       const matchingOption = initialOptions.find((opt) => opt.value === selectedValue)
-      if (matchingOption) {
+      if (matchingOption && (!selectedOption || selectedOption.value !== matchingOption.value)) {
         setSelectedOption(matchingOption)
       }
     }
-  }, [initialOptions, selectedValue])
+  }, [initialOptions, selectedValue, selectedOption])
 
   return {
     selectedValue,
