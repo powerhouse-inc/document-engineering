@@ -10,15 +10,7 @@ interface UrlInputDiffProps extends UrlInputWithDifference {
   platformIcons: UrlInputProps['platformIcons']
 }
 
-const UrlInputDiff = ({
-  value = '',
-  label,
-  required,
-  viewMode,
-  diffMode = 'sentences',
-  baseValue = '',
-  platformIcons,
-}: UrlInputDiffProps) => {
+const UrlInputDiff = ({ value = '', label, required, viewMode, baseValue = '', platformIcons }: UrlInputDiffProps) => {
   return (
     <FormGroup>
       {label && (
@@ -30,7 +22,7 @@ const UrlInputDiff = ({
         baseValue={baseValue}
         value={value}
         viewMode={viewMode}
-        diffMode={diffMode}
+        diffMode="sentences"
         asLink={true}
         platformIcons={platformIcons}
       />
