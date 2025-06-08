@@ -1,4 +1,4 @@
-import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
+import type { FieldErrorHandling, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 
 interface NumberProps {
   numericType?: NumericType | undefined
@@ -36,7 +36,7 @@ export interface InputNumberProps
   trailingZeros?: boolean
 }
 
-export interface NumberFieldProps extends InputNumberProps {
+export interface NumberFieldProps extends InputNumberProps, WithDifference<string> {
   name: string
   value?: number | bigint
   defaultValue?: number | bigint

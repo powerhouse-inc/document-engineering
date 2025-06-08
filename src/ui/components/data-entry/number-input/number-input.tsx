@@ -9,6 +9,7 @@ import { FormDescription } from '../../../../scalars/components/fragments/form-d
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import { cn } from '../../../../scalars/lib/index.js'
 import { Input } from '../input/index.js'
+import TextInputDiff from '../text-input/text-input-diff.js'
 
 const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
@@ -32,6 +33,10 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
       numericType = 'Float',
       precision = 0,
       onFocus,
+      // Difference Props
+      baseValue,
+      viewMode = 'edition',
+      diffMode = 'sentences',
       ...props
     },
     ref
@@ -63,99 +68,111 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
       onFocus,
     })
 
-    return (
-      <FormGroup>
-        {label && (
-          <FormLabel
-            htmlFor={id}
-            required={props.required}
-            disabled={props.disabled}
-            hasError={!!errors?.length}
-            className="mb-[3px]"
-          >
-            {label}
-          </FormLabel>
-        )}
-        <div className="relative flex items-center">
-          <Input
-            id={id}
-            onFocus={handleFocus}
-            name={name}
-            className={cn('pr-8', className)}
-            pattern={isBigInt ? regex.toString() : pattern?.toString()}
-            type="text"
-            inputMode="numeric"
-            role="spinbutton"
-            min={minValue}
-            max={maxValue}
-            aria-valuemin={minValue}
-            aria-valuemax={maxValue}
-            aria-invalid={!!errors?.length}
-            onKeyDown={(e) => {
-              preventLetterInput(e)
-              preventInvalidCharsAndHandleArrows(e)
-            }}
-            value={value === undefined ? '' : value.toString()}
-            onBlur={handleBlur}
-            defaultValue={defaultValue?.toString()}
-            onChange={onChange}
-            onPaste={blockInvalidPaste}
-            ref={ref}
-            data-cast={isBigInt ? 'BigInt' : 'Number'}
-            {...props}
-          />
-          {showSteps && (
-            <div className="absolute inset-y-2 right-3 flex flex-col justify-center">
-              <button
-                aria-label="Increment"
-                disabled={canIncrement}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                }}
-                type="button"
-                onClick={(e) => {
-                  stepValueHandler(e, 'increment')
-                  if (buttonRef.current) {
-                    buttonRef.current.focus()
-                  }
-                }}
-              >
-                <Icon
-                  size={10}
-                  name="ChevronDown"
-                  className={cn('rotate-180 text-gray-700 dark:text-gray-300', canIncrement && 'cursor-not-allowed')}
-                />
-              </button>
-              <button
-                aria-label="Decrement"
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                }}
-                disabled={canDecrement}
-                type="button"
-                onClick={(e) => {
-                  stepValueHandler(e, 'decrement')
-                  if (buttonRef.current) {
-                    buttonRef.current.focus()
-                  }
-                }}
-              >
-                <Icon
-                  size={10}
-                  name="ChevronDown"
-                  className={cn(
-                    'items-center justify-center text-gray-700 dark:text-gray-300',
-                    canDecrement && 'cursor-not-allowed'
-                  )}
-                />
-              </button>
-            </div>
+    if (viewMode === 'edition') {
+      return (
+        <FormGroup>
+          {label && (
+            <FormLabel
+              htmlFor={id}
+              required={props.required}
+              disabled={props.disabled}
+              hasError={!!errors?.length}
+              className="mb-[3px]"
+            >
+              {label}
+            </FormLabel>
           )}
-        </div>
-        {description && <FormDescription>{description}</FormDescription>}
-        {warnings && <FormMessageList messages={warnings} type="warning" />}
-        {errors && <FormMessageList messages={errors} type="error" />}
-      </FormGroup>
+          <div className="relative flex items-center">
+            <Input
+              id={id}
+              onFocus={handleFocus}
+              name={name}
+              className={cn('pr-8', className)}
+              pattern={isBigInt ? regex.toString() : pattern?.toString()}
+              type="text"
+              inputMode="numeric"
+              role="spinbutton"
+              min={minValue}
+              max={maxValue}
+              aria-valuemin={minValue}
+              aria-valuemax={maxValue}
+              aria-invalid={!!errors?.length}
+              onKeyDown={(e) => {
+                preventLetterInput(e)
+                preventInvalidCharsAndHandleArrows(e)
+              }}
+              value={value === undefined ? '' : value.toString()}
+              onBlur={handleBlur}
+              defaultValue={defaultValue?.toString()}
+              onChange={onChange}
+              onPaste={blockInvalidPaste}
+              ref={ref}
+              data-cast={isBigInt ? 'BigInt' : 'Number'}
+              {...props}
+            />
+            {showSteps && (
+              <div className="absolute inset-y-2 right-3 flex flex-col justify-center">
+                <button
+                  aria-label="Increment"
+                  disabled={canIncrement}
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                  }}
+                  type="button"
+                  onClick={(e) => {
+                    stepValueHandler(e, 'increment')
+                    if (buttonRef.current) {
+                      buttonRef.current.focus()
+                    }
+                  }}
+                >
+                  <Icon
+                    size={10}
+                    name="ChevronDown"
+                    className={cn('rotate-180 text-gray-700 dark:text-gray-300', canIncrement && 'cursor-not-allowed')}
+                  />
+                </button>
+                <button
+                  aria-label="Decrement"
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                  }}
+                  disabled={canDecrement}
+                  type="button"
+                  onClick={(e) => {
+                    stepValueHandler(e, 'decrement')
+                    if (buttonRef.current) {
+                      buttonRef.current.focus()
+                    }
+                  }}
+                >
+                  <Icon
+                    size={10}
+                    name="ChevronDown"
+                    className={cn(
+                      'items-center justify-center text-gray-700 dark:text-gray-300',
+                      canDecrement && 'cursor-not-allowed'
+                    )}
+                  />
+                </button>
+              </div>
+            )}
+          </div>
+          {description && <FormDescription>{description}</FormDescription>}
+          {warnings && <FormMessageList messages={warnings} type="warning" />}
+          {errors && <FormMessageList messages={errors} type="error" />}
+        </FormGroup>
+      )
+    }
+    return (
+      <TextInputDiff
+        value={value?.toString() ?? defaultValue?.toString() ?? ''}
+        viewMode={viewMode}
+        diffMode={diffMode}
+        baseValue={baseValue?.toString() ?? ''}
+        label={label}
+        required={props.required}
+      />
     )
   }
 )

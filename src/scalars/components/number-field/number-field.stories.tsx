@@ -80,6 +80,16 @@ const meta = {
     ...PrebuiltArgTypes.maxValue,
     ...PrebuiltArgTypes.precision,
     ...PrebuiltArgTypes.trailingZeros,
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
+    diffMode: {
+      control: 'select',
+      description: 'The mode of the input field',
+      options: ['sentences', 'words'],
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
   args: {
     name: 'number-field',
