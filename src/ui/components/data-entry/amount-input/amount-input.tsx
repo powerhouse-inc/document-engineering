@@ -118,7 +118,6 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
         <div
           className={cn(
             'relative flex items-center',
-            'flex items-center',
             'rounded-md border border-gray-300',
             'h-[36px]',
             // focus state
