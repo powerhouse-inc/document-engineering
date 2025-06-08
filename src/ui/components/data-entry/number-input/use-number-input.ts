@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { isNotSafeValue } from '../../../ui/components/data-entry/amount-input/utils.js'
 import type { NumericType } from './types.js'
 import { getDisplayValue } from './utils.js'
+import { isNotSafeValue } from '../amount-input/utils.js'
 
 interface UseNumberFieldProps {
   value?: number | bigint
@@ -16,7 +16,7 @@ interface UseNumberFieldProps {
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export const useNumberField = ({
+export const useNumberInput = ({
   value,
   maxValue,
   minValue,
@@ -78,7 +78,6 @@ export const useNumberField = ({
   const stepValueHandler = (e: React.MouseEvent<HTMLButtonElement>, operation: 'increment' | 'decrement') => {
     e.preventDefault()
     let newValue: number | bigint
-
     if (isBigInt) {
       const currentValue = BigInt(value ?? 0)
       const adjustment = BigInt(step || 1) * (operation === 'increment' ? BigInt(1) : BigInt(-1))
@@ -86,7 +85,8 @@ export const useNumberField = ({
     } else {
       const currentValue = Number(value ?? 0)
       const adjustment = (step || 1) * (operation === 'increment' ? 1 : -1)
-      newValue = currentValue + adjustment
+      // Convertir a string con la precisión correcta y volver a número
+      newValue = parseFloat((currentValue + adjustment).toFixed(precision || 10))
     }
 
     if (!isBigInt) {
@@ -103,7 +103,6 @@ export const useNumberField = ({
       value: { value: newValue },
       writable: false,
     })
-
     onChange?.(nativeEvent as unknown as React.ChangeEvent<HTMLInputElement>)
   }
 

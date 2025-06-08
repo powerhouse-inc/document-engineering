@@ -1,9 +1,9 @@
 import type { RefObject } from 'react'
 import type { TableState } from '../subcomponents/table-provider/table-reducer.js'
-import type { CellContext, ObjectSetTableConfig } from '../types.js'
+import type { CellContext, ObjectSetTableConfig, SortDirection } from '../types.js'
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
-import type { PrivateTableApiBase } from './types.js'
+import type { PrivateTableApiBase, SortingInfo } from './types.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
@@ -62,6 +62,15 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    */
   isEditing() {
     return this._getState().isCellEditMode
+  }
+
+  /**
+   * Checks if at least one column is editable
+   *
+   * @returns `true` if the table is editable, `false` otherwise
+   */
+  isEditable() {
+    return this._getConfig().columns.some((column) => column.editable)
   }
 
   /**
@@ -128,6 +137,40 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       })
       this.selection.selectCell(nextCell.row, nextCell.column)
     }
+  }
+
+  /**
+   * Sorts the rows by the given column index and direction
+   *
+   * @param columnIndex - The index of the column to sort
+   * @param direction - The direction to sort the rows. Null if the sorting should be removed
+   */
+  sortRows(columnIndex: number, direction: SortDirection | null) {
+    if (direction === null) {
+      this._getState().dispatch?.({
+        type: 'SORT_COLUMN',
+        payload: { columnIndex, direction: 'asc', tableConfig: this._getConfig() },
+      })
+    }
+    this._getState().dispatch?.({
+      type: 'SORT_COLUMN',
+      payload: { columnIndex, direction, tableConfig: this._getConfig() },
+    })
+  }
+
+  /**
+   * Returns the sorting information.
+   *
+   * @returns The sorting information. `null` if no sorting is applied.
+   *
+   * @example
+   * ```tsx
+   * const sortingInfo = apiRef.current?.getCurrentSortInfo()
+   * console.log(sortingInfo) // { columnIndex: 0, direction: 'asc' }
+   * ```
+   */
+  getCurrentSortInfo(): SortingInfo | null {
+    return this._getState().sortState
   }
 }
 

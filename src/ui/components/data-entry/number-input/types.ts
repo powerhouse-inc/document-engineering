@@ -1,4 +1,4 @@
-import type { FieldErrorHandling, InputBaseProps } from '../types.js'
+import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
 
 interface NumberProps {
   numericType?: NumericType | undefined
@@ -31,8 +31,6 @@ export interface InputNumberProps
     'value' | 'defaultValue' | 'name' | 'pattern'
   > {
   name: string
-  min?: number
-  max?: number
   step?: number
   precision?: number
   trailingZeros?: boolean

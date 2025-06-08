@@ -368,11 +368,21 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  *
  * | Method | Description | Parameters | Returns |
  * |--------|-------------|------------|---------|
+ * | `isEditable()` | Checks if at least one column is editable | None | `boolean` |
  * | `canEditCell(row, column)` | Checks if a cell can be edited | `row: number, column: number` | `boolean` |
  * | `isEditing()` | Checks if table is in edit mode | None | `boolean` |
  * | `isEditingCell(row, column)` | Checks if specific cell is being edited | `row: number, column: number` | `boolean` |
  * | `enterCellEditMode(row, column)` | Enters edit mode for a cell | `row: number, column: number` | `void` |
  * | `exitCellEditMode(save?)` | Exits edit mode | `save?: boolean = true` | `void` |
+ *
+ * ### Sorting API
+ *
+ * Control table sorting programmatically:
+ *
+ * | Method | Description | Parameters | Returns |
+ * |--------|-------------|------------|---------|
+ * | `sortRows(columnIndex, direction)` | Sorts rows by the specified column | `columnIndex: number, direction: 'asc' | 'desc' | null` | `void` |
+ * | `getCurrentSortInfo()` | Gets current sorting information | None | `SortingInfo | null` |
  *
  * ### DOM Access
  *
@@ -444,6 +454,14 @@ const meta: Meta<typeof ObjectSetTable> = {
           summary: 'boolean',
         },
         defaultValue: { summary: 'true' },
+      },
+    },
+    width: {
+      control: 'text',
+      description: 'The width of the table.',
+      table: {
+        type: { summary: 'CSSProperties["width"]' },
+        defaultValue: { summary: 'auto' },
       },
     },
   },

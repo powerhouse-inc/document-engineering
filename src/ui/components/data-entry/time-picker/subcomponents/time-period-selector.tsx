@@ -16,9 +16,10 @@ const TimePeriodSelector: React.FC<TimePeriodSelectorProps> = ({ selectedPeriod,
         onClick={() => {
           setSelectedPeriod(period as TimePeriod)
         }}
+        data-selected={selectedPeriod === period}
         className={cn(
           'h-[20px] w-[16px] text-[12px] font-normal leading-[28px] transition-colors',
-          selectedPeriod === period ? 'font-normal text-gray-900 data-[selected=true]' : 'font-normal text-gray-300'
+          selectedPeriod === period ? 'font-normal text-gray-900' : 'font-normal text-gray-300'
         )}
       >
         {period}

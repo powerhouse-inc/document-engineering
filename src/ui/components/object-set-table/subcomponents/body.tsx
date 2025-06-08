@@ -9,15 +9,10 @@ import { RowNumberCell } from './cells/row-number-cell.js'
 import { TableRow } from './rows/table-row.js'
 import { useInternalTableState } from './table-provider/table-provider.js'
 
-interface TableBodyProps<T extends DataType> {
-  data: T[]
-  columns: Array<ColumnDef<T>>
-}
-
-const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => {
+const TableBody = <T extends DataType>() => {
   const {
     config,
-    state: { dispatch, selectedRowIndexes, selectedCellIndex, isCellEditMode },
+    state: { data, dispatch, selectedRowIndexes, selectedCellIndex, isCellEditMode },
     api,
   } = useInternalTableState<T>()
 
@@ -64,7 +59,7 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
         api.selection.selectFromLastActiveRow(index)
       }
     },
-    [allowRowSelection]
+    [allowRowSelection, api.selection]
   )
 
   /**
@@ -99,6 +94,8 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
     [dispatch, isCellEditMode]
   )
 
+  const isEditable = api.isEditable()
+
   return (
     <tbody className="text-sm leading-5 text-gray-900">
       {data.map((rowItem, index) => (
@@ -115,7 +112,7 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
             selected={selectedRowIndexes.includes(index) || selectedCellIndex?.row === index}
           />
 
-          {columns.map((column, columnIndex) => {
+          {config.columns.map((column, columnIndex) => {
             const cellContext: CellContext<T> = {
               row: rowItem,
               column,
@@ -138,12 +135,19 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
 
             const isThisCellEditMode = isCellEditMode && isCellSelected
 
+            const style: React.CSSProperties = {
+              width: column.width ?? 'auto',
+              minWidth: column.minWidth ?? 'auto',
+              maxWidth: column.maxWidth ?? column.width ?? 'auto',
+            }
+
             return (
               <DefaultTableCell
                 key={column.field}
                 onClick={createCellClickHandler(index, columnIndex, column)}
                 isSelected={isCellSelected}
                 isEditable={column.editable ?? false}
+                style={style}
               >
                 {isThisCellEditMode ? (
                   <Input
@@ -165,7 +169,7 @@ const TableBody = <T extends DataType>({ data, columns }: TableBodyProps<T>) => 
           })}
 
           {/* Information cell */}
-          <InformationCell />
+          {isEditable && <InformationCell />}
         </TableRow>
       ))}
     </tbody>

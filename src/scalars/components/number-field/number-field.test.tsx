@@ -9,7 +9,7 @@ describe('NumberField', () => {
   const mockOnChange = vi.fn()
 
   beforeEach(() => {
-    mockOnChange.mockClear() // Limpia el mock antes de cada prueba
+    mockOnChange.mockClear()
   })
 
   it('should match snapshot', () => {
@@ -355,6 +355,46 @@ describe('NumberField', () => {
     expect(mockOnSubmit).toHaveBeenCalledWith({
       precisionField: 0.9,
     })
+  })
+
+  it('should handle step with precision correctly', async () => {
+    const mockOnChange = vi.fn()
+    const user = userEvent.setup()
+
+    renderWithForm(
+      <NumberField
+        label="Step Precision Field"
+        name="stepPrecisionField"
+        value={1235}
+        step={0.2}
+        precision={1}
+        onChange={mockOnChange}
+      />
+    )
+
+    const input = screen.getByLabelText('Step Precision Field')
+    await user.click(input) // Focus the input
+
+    // Click increment button
+    const incrementButton = screen.getByRole('button', { name: /Increment/i })
+    await user.click(incrementButton)
+
+    // Verify the value is correctly incremented with proper precision
+    expect(mockOnChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: { value: 1235.2 },
+      })
+    )
+
+    // Click increment button again
+    await user.click(incrementButton)
+
+    // Verify the value is correctly incremented again with proper precision
+    expect(mockOnChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: { value: 1235.4 },
+      })
+    )
   })
 
   it('should accept integer values when numericType is PositiveFloat', async () => {

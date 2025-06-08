@@ -11,7 +11,6 @@ interface SelectOption {
   value: string
   label: string
   disabled?: boolean
-  className?: string
 }
 
 interface SelectBaseProps {
@@ -21,9 +20,7 @@ interface SelectBaseProps {
   multiple?: boolean
   searchable?: boolean
   onChange?: (value: string | string[]) => void
-  contentClassName?: string
   contentAlign?: 'start' | 'end' | 'center'
-  optionsClassName?: string
 }
 
 type SelectConfigProps =
@@ -42,6 +39,9 @@ type SelectProps = Omit<
 > &
   InputBaseProps<string | string[]> &
   SelectConfigProps &
-  SelectWithDifference
+  SelectWithDifference & {
+    className?: string
+    contentClassName?: string
+  }
 
 export type { SelectBaseProps, SelectOption, SelectProps, SelectWithDifference }

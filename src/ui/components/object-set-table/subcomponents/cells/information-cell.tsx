@@ -1,7 +1,7 @@
 import { TableCellBasic } from './basic-cell.js'
 
 const InformationCell = () => {
-  return <TableCellBasic className="min-w-[40px]" />
+  return <TableCellBasic className="min-w-[40px] max-w-[40px]" />
 }
 
 export { InformationCell }

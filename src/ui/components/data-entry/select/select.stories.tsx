@@ -29,6 +29,58 @@ import { Select } from './select.js'
  * - Customizable content alignment
  * - Disabled options support
  *
+ * ## Select Customization
+ * The select component can be customized using two main props:
+ * 1. `className`: For styling the entire select component
+ *
+ * Each class should follow the format `[&_.select\\_\\_{element}]:{tailwind-classes}`.
+ *
+ * Base classes available for customization (for the dropdown content and list items):
+ * - .select__content: Dropdown content container
+ * - .select__list: Options list container
+ * - .select__list-item: Individual option item
+ * - .select__list-item-favorite: Favorite option item
+ * - .select__search: Search input container
+ * - .select__item--selected: Selected item display
+ *
+ *
+ * Here's an example of how to use the Select component with custom class for styling:
+ *
+ * ```tsx
+ * import { Select } from './select'
+ *
+ * function MyCustomSelect() {
+ *   return (
+ *     <Select
+ *       name="custom-select"
+ *       label="Select"
+ *       placeholder="Select an option"
+ *       options={[{ value: 'Briefcase', label: 'Briefcase' }, { value: 'Drive', label: 'Drive' }, { value: 'Globe', label: 'Globe' }, { value: 'Settings', label: 'Settings' }]}
+ *       contentClassName={String.raw`
+ *         [&_.select\\_\\_content]:border-2
+ *         [&_.select\\_\\_content]:rounded-lg
+ *         [&_.select\\_\\_content]:border-cyan-400/30
+ *         [&_.select\\_\\_content]:bg-white
+ *         [&_.select\\_\\_content]:shadow-lg
+ *         [&_.select\\_\\_list]:border-2
+ *         [&_.select\\_\\_list]:border-red-500
+ *         [&_.select\\_\\_list-item-favorite]:text-red-400
+ *         [&_.select\\_\\_list-item-favorite]:font-bold
+ *         [&_.select\\_\\_list-item-favorite]:cursor-pointer
+ *         [&_.select\\_\\_list-item-favorite]:data-[selected=true]:text-red-900
+ *       `}
+ *       className={String.raw`
+ *         [&_.select\\_\\_content]:border-2
+ *         [&_.select\\_\\_content]:rounded-lg
+ *         [&_.select\\_\\_content]:border-cyan-400/30
+ *         [&_.select\\_\\_content]:bg-white
+ *         [&_.select\\_\\_content]:shadow-lg
+ *       `}
+ *     />
+ *   )
+ * }
+ * ```
+ *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
  * > you can use the [EnumField](?path=/docs/scalars-enum-field--readme)
  * > component.
@@ -122,21 +174,13 @@ const meta: Meta<typeof Select> = {
       },
     },
 
-    contentClassName: {
+    className: {
       control: 'text',
-      description: 'Custom class name for the dropdown content',
+      description: 'Custom class name for the entire select component',
       table: {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    optionsClassName: {
-      control: 'text',
-      description: 'Custom class name for the options',
-      table: {
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
     ...getValidationArgTypes({
       enabledArgTypes: {
         validators: false,
@@ -179,13 +223,6 @@ const defaultOptions = [
   { value: 'Drive', label: 'Drive' },
   { value: 'Globe', label: 'Globe' },
   { value: 'Settings', label: 'Settings' },
-]
-
-const defaultOptionsWithColors = [
-  { value: 'Briefcase', label: 'Briefcase', className: '[&>span]:text-red-900' },
-  { value: 'Drive', label: 'Drive', className: '[&>span]:text-blue-900' },
-  { value: 'Globe', label: 'Globe', className: '[&>span]:text-yellow-900' },
-  { value: 'Settings', label: 'Settings', className: '[&>span]:text-green-900' },
 ]
 
 const defaultOptionsWithIcon = [
@@ -345,10 +382,41 @@ export const WithLongOptionLabel: Story = {
   },
 }
 
-export const WithCustomColors: Story = {
+export const WithCustomizedSelect: Story = {
   args: {
-    label: 'Favorite icon name',
-    options: defaultOptionsWithColors,
-    placeholder: 'Select an icon name',
+    label: 'Customized Select',
+    description: 'A select with custom styling for all its elements',
+    options: defaultOptionsWithIcon,
+    placeholder: 'Select an option',
+    selectionIcon: 'checkmark',
+    selectionIconPosition: 'right',
+    className: String.raw`
+    [&_.select\\_\\_content]:border-2
+    [&_.select\\_\\_content]:rounded-lg
+    [&_.select\\_\\_content]:border-cyan-400/30
+    [&_.select\\_\\_content]:bg-white
+    [&_.select\\_\\_content]:shadow-lg
+    [&_.select\\_\\_list]:border-2
+    [&_.select\\_\\_list]:border-red-500
+    [&_.select\\_\\_list-item-favorite]:text-red-400
+    [&_.select\\_\\_list-item-favorite]:font-bold
+    [&_.select\\_\\_list-item-favorite]:cursor-pointer
+    [&_.select\\_\\_list-item-favorite]:data-[selected=true]:text-red-900
+    [&_.select\\_\\_list-item]:text-red-400
+    [&_.select\\_\\_list-item]:font-bold
+    [&_.select\\_\\_list-item]:cursor-pointer
+    [&_.select\\_\\_list-item]:data-[selected=true]:text-red-900
+    [&_.select\\_\\_list-item]:data-[disabled=true]:opacity-50
+    [&_.select\\_\\_list-item]:data-[disabled=true]:cursor-not-allowed
+    [&_.select\\_\\_list-item]:[&>svg]:text-red-500
+    [&_.select\\_\\_list-item]:[&>span]:text-blue-500
+    [&_.select\\_\\_search]:text-red-500
+    [&_.select\\_\\_search]:[&>svg]:text-red-500
+    [&_.select\\_\\_item--selected]:text-red-500
+    [&_.select\\_\\_item--selected]:[&>div]:text-red-500
+    [&_.select\\_\\_item--selected]:[&>div]:gap-2
+    [&_.select\\_\\_item--selected]:[&>svg]:text-red-500
+    [&_.select\\_\\_item--selected]:[&>svg]:size-8
+  `,
   },
 }

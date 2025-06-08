@@ -20,6 +20,7 @@ const CustomRenderingExample = () => {
             <span className="font-medium">{value}</span>
           </div>
         ),
+        sortable: true,
       },
       {
         field: 'status',
@@ -55,6 +56,8 @@ const CustomRenderingExample = () => {
             )}
           </div>
         ),
+        sortable: true,
+        defaultSortDirection: 'desc',
       },
       {
         field: 'isActive',
@@ -73,7 +76,7 @@ const CustomRenderingExample = () => {
     []
   )
 
-  return <ObjectSetTable<MockedPerson> columns={columns} data={mockData.slice(0, 6)} />
+  return <ObjectSetTable<MockedPerson> columns={columns} data={mockData} />
 }
 
 export default CustomRenderingExample
