@@ -58,6 +58,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       description,
       placeholder,
       className,
+      contentClassName,
       contentAlign = 'start',
 
       // diff props
@@ -173,7 +174,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 e.preventDefault()
                 handleOpenChange(false)
               }}
-              className={className}
+              className={contentClassName}
             >
               <Command
                 defaultValue={

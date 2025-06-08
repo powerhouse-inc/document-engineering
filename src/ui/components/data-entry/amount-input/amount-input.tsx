@@ -129,7 +129,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
           {isShowSelect && currencyPosition === 'left' && (
             <CurrencyCodePicker
               contentAlign="start"
-              contentClassName="[&]:!w-[120px] w-full"
+              contentClassName="[&]:!w-[120px]"
               disabled={disabled}
               currencies={options}
               onChange={handleOnChangeSelect}
@@ -196,7 +196,15 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
           {isShowSelect && currencyPosition === 'right' && (
             <CurrencyCodePicker
               contentAlign="end"
-              contentClassName="[&]:!w-[120px] w-full"
+              contentClassName="[&]:!w-[120px]"
+              className={cn(
+                'focus:border-l-none focus:z-10 focus:ring-0 focus:ring-offset-0 focus:bg-none',
+                'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
+                'h-[32px]',
+                'hover:bg-transparent',
+                'border-none',
+                selectProps?.className
+              )}
               disabled={disabled}
               includeCurrencySymbols={includeCurrencySymbols}
               currencies={options}
@@ -206,14 +214,6 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
               placeholder={placeholderSelect}
               symbolPosition={symbolPosition}
               searchable={false}
-              className={cn(
-                'focus:border-l-none focus:z-10 focus:ring-0 focus:ring-offset-0 focus:bg-none',
-                'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
-                'h-[32px]',
-                'hover:bg-transparent',
-                'border-none',
-                selectProps?.className
-              )}
               {...(selectProps ?? { name: '' })}
             />
           )}
