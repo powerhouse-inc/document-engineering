@@ -41,6 +41,7 @@ type SelectProps = Omit<
   SelectConfigProps &
   SelectWithDifference & {
     className?: string
+    contentClassName?: string
   }
 
 export type { SelectBaseProps, SelectOption, SelectProps, SelectWithDifference }

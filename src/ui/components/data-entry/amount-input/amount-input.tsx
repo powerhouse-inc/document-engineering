@@ -115,32 +115,42 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
             {label}
           </FormLabel>
         )}
-        <div className={cn('relative flex items-center')}>
+        <div
+          className={cn(
+            'relative flex items-center',
+            'rounded-md border border-gray-300',
+            'h-[36px]',
+            // focus state
+            'focus:rounded-md focus:border-gray-900 transition-colors focus-within:ring-1 focus-within:rounded focus-within:ring-offset-0'
+          )}
+        >
           <input name={name} type="hidden" data-cast={isBigInt ? 'AmountBigInt' : 'AmountNumber'} />
+          {isShowSelect && currencyPosition === 'left' && (
+            <CurrencyCodePicker
+              contentAlign="start"
+              contentClassName="[&]:!w-[120px]"
+              disabled={disabled}
+              currencies={options}
+              onChange={handleOnChangeSelect}
+              placeholder={placeholderSelect}
+              includeCurrencySymbols={includeCurrencySymbols}
+              symbolPosition={symbolPosition}
+              searchable={false}
+              className={cn(
+                'focus:border-r-none focus:z-10 focus:ring-0 focus:ring-offset-0 focus:bg-none',
+                'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
+                'h-[32px]',
+                'hover:bg-transparent',
+                'border-none',
+                selectProps?.className
+              )}
+              {...(selectProps ?? { name: '' })}
+            />
+          )}
+          {isShowSelect && currencyPosition === 'left' && (
+            <div className="border-l-[1px] border-gray-300 h-full flex items-center" />
+          )}
           <div className={cn('relative flex items-center')}>
-            {isShowSelect && currencyPosition === 'left' && (
-              <CurrencyCodePicker
-                contentAlign="start"
-                contentClassName="[&]:!w-[120px] w-full"
-                disabled={disabled}
-                currencies={options}
-                onChange={handleOnChangeSelect}
-                placeholder={placeholderSelect}
-                includeCurrencySymbols={includeCurrencySymbols}
-                symbolPosition={symbolPosition}
-                searchable={false}
-                className={cn(
-                  'rounded-l-md rounded-r-none border border-gray-300',
-                  'border-r-[0.5px]',
-                  // focus state
-                  'focus:border-r-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
-                  'focus:outline-none',
-
-                  selectProps?.className
-                )}
-                {...(selectProps ?? { name: '' })}
-              />
-            )}
             <NumberInput
               name=""
               step={step}
@@ -159,6 +169,9 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 currencyPosition === 'right' && 'rounded-r-none border-r-[0.5px]',
                 isPercent && 'rounded-md pr-7',
                 isAmountWithoutUnit && 'rounded-md',
+                'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
+                'border-none',
+                'h-[32px]',
                 className
               )}
               onBlur={handleBlur}
@@ -176,11 +189,21 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
               </span>
             )}
           </div>
-
+          {isShowSelect && currencyPosition === 'right' && (
+            <div className="border-l-[1px] border-gray-300 h-full flex items-center" />
+          )}
           {isShowSelect && currencyPosition === 'right' && (
             <CurrencyCodePicker
               contentAlign="end"
-              contentClassName="[&]:!w-[120px] w-full"
+              contentClassName="[&]:!w-[120px]"
+              className={cn(
+                'focus:border-l-none focus:z-10 focus:ring-0 focus:ring-offset-0 focus:bg-none',
+                'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
+                'h-[32px]',
+                'hover:bg-transparent',
+                'border-none',
+                selectProps?.className
+              )}
               disabled={disabled}
               includeCurrencySymbols={includeCurrencySymbols}
               currencies={options}
@@ -190,14 +213,6 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
               placeholder={placeholderSelect}
               symbolPosition={symbolPosition}
               searchable={false}
-              className={cn(
-                'rounded-l-none rounded-r-md border border-gray-300',
-                'border-l-[0.5px]',
-                // focus state
-                'focus:border-l-none focus:z-10 focus:ring-1 focus:ring-gray-900 focus:ring-offset-0',
-                'focus:outline-none',
-                selectProps?.className
-              )}
               {...(selectProps ?? { name: '' })}
             />
           )}

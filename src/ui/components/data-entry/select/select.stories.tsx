@@ -30,48 +30,39 @@ import { Select } from './select.js'
  * - Disabled options support
  *
  * ## Select Customization
- * The select component can be customized using two main props:
- * 1. `className`: For styling the dropdown content, list items and selected item display
+ * The select component can be customized using two different props:
  *
- * Each class should follow the format `[&_.select\\_\\_{element}]:{tailwind-classes}`.
+ * 1. `className`: Styles for the trigger button and selected item display
+ *    - Controls the width, appearance, and layout of the select trigger
+ *    - Styles the selected item display in the trigger
+ *    - Example: `[&]:!w-[120px]` for fixed width of select trigger
  *
- * Base classes available for customization (for the dropdown content and list items):
- * - .select__content: Dropdown content container
- * - .select__list: Options list container
- * - .select__list-item: Individual option item
- * - .select__list-item-favorite: Favorite option item
- * - .select__search: Search input container
- * - .select__item--selected: Selected item display
+ * 2. `contentClassName`: Styles for the popover content and its elements
+ *    - Controls the appearance of the dropdown popover
+ *    - Styles the list container, list items, and search input
+ *    - Example: `[&_.select\\_\\_content]:!w-[120px]` for fixed width popover
  *
+ * Available class patterns for targeting specific elements:
+ * - `.select__content`: Dropdown content container
+ * - `.select__list`: Options list container
+ * - `.select__list-item`: Individual option item
+ * - `.select__list-item-favorite`: Favorite option item
+ * - `.select__search`: Search input container
+ * - `.select__list-item--selected`: Selected item in the list
  *
- * Here's an example of how to use the Select component with custom class for styling:
- *
+ * Example of custom styling:
  * ```tsx
- * import { Select } from './select'
- *
- * function MyCustomSelect() {
- *   return (
- *     <Select
- *       name="custom-select"
- *       label="Select"
- *       placeholder="Select an option"
- *       options={[{ value: 'Briefcase', label: 'Briefcase' }, { value: 'Drive', label: 'Drive' }, { value: 'Globe', label: 'Globe' }, { value: 'Settings', label: 'Settings' }]}
- *       className={String.raw`
- *         [&_.select\\_\\_content]:border-2
- *         [&_.select\\_\\_content]:rounded-lg
- *         [&_.select\\_\\_content]:border-cyan-400/30
- *         [&_.select\\_\\_content]:bg-white
- *         [&_.select\\_\\_content]:shadow-lg
- *         [&_.select\\_\\_list]:border-2
- *         [&_.select\\_\\_list]:border-red-500
- *         [&_.select\\_\\_list-item-favorite]:text-red-400
- *         [&_.select\\_\\_list-item-favorite]:font-bold
- *         [&_.select\\_\\_list-item-favorite]:cursor-pointer
- *         [&_.select\\_\\_list-item-favorite]:data-[selected=true]:text-red-900
- *       `}
- *     />
- *   )
- * }
+ * <Select
+ *   className={String.raw`
+ *     [&]:!w-[120px]
+ *     [&_.select\\_\\_item--selected]:text-green-500
+ *   `}
+ *   contentClassName={String.raw`
+ *     [&_.select\\_\\_content]:!w-[120px]
+ *     [&_.select\\_\\_list]:border-2
+ *     [&_.select\\_\\_list-item]:text-red-400
+ *   `}
+ * />
  * ```
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
@@ -169,7 +160,16 @@ const meta: Meta<typeof Select> = {
 
     className: {
       control: 'text',
-      description: 'Custom class name for the dropdown content',
+      description:
+        'Custom class name for styling the select trigger button and selected item display. Use [&] selector for the trigger button or [&_.select\\_\\_item--selected] for the selected item.',
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    contentClassName: {
+      control: 'text',
+      description:
+        'Custom class name for styling the dropdown content. Can use direct Tailwind classes with [&] selector or target specific elements with [&_.select\\_\\_{element}]',
       table: {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
@@ -384,6 +384,14 @@ export const WithCustomizedSelect: Story = {
     selectionIcon: 'checkmark',
     selectionIconPosition: 'right',
     className: String.raw`
+    .select__list-item--selected
+      [&_.select\\_\\_list-item--selected]:text-green-500
+      [&_.select\\_\\_list-item--selected]:[&>div]:text-green-500
+      [&_.select\\_\\_list-item--selected]:[&>div]:gap-2
+      [&_.select\\_\\_list-item--selected]:[&>svg]:text-green-500
+      [&_.select\\_\\list-item--selected]:[&>svg]:size-8
+    `,
+    contentClassName: String.raw`
     [&_.select\\_\\_content]:border-2
     [&_.select\\_\\_content]:rounded-lg
     [&_.select\\_\\_content]:border-cyan-400/30
