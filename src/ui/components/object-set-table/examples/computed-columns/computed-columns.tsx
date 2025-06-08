@@ -12,6 +12,7 @@ const ComputedColumnsExample = () => {
         field: 'email',
         title: 'Email Domain',
         width: '150px',
+        editable: true,
         valueFormatter: (value) => {
           if (typeof value !== 'string') return value?.toString() ?? 'N/A'
           return value.toString().split('@')[1]

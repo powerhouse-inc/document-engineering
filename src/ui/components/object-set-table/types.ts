@@ -33,6 +33,14 @@ export interface ObjectSetTableConfig<T> {
    * @default "auto"
    */
   width?: React.CSSProperties['width']
+
+  /**
+   * The minimum number of rows to display in the table. If the data is less than this number,
+   * the table will add empty rows to reach the minimum.
+   *
+   * @default 0
+   */
+  minRowCount?: number
 }
 
 export type ColumnType = 'text' | 'number' | 'boolean'

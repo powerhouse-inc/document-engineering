@@ -48,9 +48,15 @@ type TableAction<T extends DataType = DataType> =
     }
   | {
       type: 'TOGGLE_SELECT_ALL_ROWS'
+      payload: {
+        totalRows?: number
+      }
     }
   | {
       type: 'SELECT_ALL_ROWS'
+      payload: {
+        totalRows?: number
+      }
     }
   | {
       type: 'SELECT_ROW_RANGE'
@@ -124,26 +130,27 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
           : [...state.selectedRowIndexes, action.payload.index],
       }
     }
-    case 'TOGGLE_SELECT_ALL_ROWS':
+    case 'TOGGLE_SELECT_ALL_ROWS': {
+      const totalRows = action.payload.totalRows ?? state.data.length
       return {
         ...state,
         selectedCellIndex: null,
         lastSelectedRowIndex: null,
         selectedRowIndexes:
-          state.selectedRowIndexes.length === state.data.length
-            ? []
-            : Array.from({ length: state.data.length }, (_, index) => index),
+          state.selectedRowIndexes.length === totalRows ? [] : Array.from({ length: totalRows }, (_, index) => index),
       }
+    }
     case 'SELECT_ALL_ROWS': {
+      const totalRows = action.payload.totalRows ?? state.data.length
       // if all the rows are already selected, do nothing
-      if (state.selectedRowIndexes.length === state.data.length) {
+      if (state.selectedRowIndexes.length === totalRows) {
         return { ...state }
       }
       return {
         ...state,
         selectedCellIndex: null,
         lastSelectedRowIndex: null,
-        selectedRowIndexes: Array.from({ length: state.data.length }, (_, index) => index),
+        selectedRowIndexes: Array.from({ length: totalRows }, (_, index) => index),
       }
     }
     case 'SELECT_ROW_RANGE': {
