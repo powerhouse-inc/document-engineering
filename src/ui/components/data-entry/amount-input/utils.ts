@@ -58,7 +58,7 @@ export const displayValueAmount = (
     const formattedValue = parseFloat(value).toFixed(precision)
 
     // If the number of decimals is greater than or equal to the precision, apply toFixed
-    return parseFloat(formattedValue).toString()
+    return trailingZeros ? formattedValue : parseFloat(formattedValue).toString()
   }
 
   // If both are present, show the value with viewPrecision when focused
