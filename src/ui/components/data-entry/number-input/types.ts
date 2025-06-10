@@ -36,7 +36,7 @@ export interface InputNumberProps
   trailingZeros?: boolean
 }
 
-export interface NumberFieldProps extends InputNumberProps, WithDifference<string> {
+export interface NumberFieldProps extends InputNumberProps, Omit<WithDifference<string>, 'diffMode'> {
   name: string
   value?: number | bigint
   defaultValue?: number | bigint

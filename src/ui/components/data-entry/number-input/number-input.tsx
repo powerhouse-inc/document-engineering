@@ -36,7 +36,6 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
       // Difference Props
       baseValue,
       viewMode = 'edition',
-      diffMode = 'sentences',
       ...props
     },
     ref
@@ -168,7 +167,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
       <TextInputDiff
         value={value?.toString() ?? defaultValue?.toString() ?? ''}
         viewMode={viewMode}
-        diffMode={diffMode}
+        diffMode="sentences"
         baseValue={baseValue?.toString() ?? ''}
         label={label}
         required={props.required}
