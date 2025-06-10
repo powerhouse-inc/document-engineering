@@ -1,3 +1,27 @@
+# [1.12.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.11.0...v1.12.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* **scalars:** add foucs to div container ([9c6ae2e](https://github.com/powerhouse-inc/document-engineering/commit/9c6ae2e0405f07cdf351599ae57f6a5995456405))
+* **scalars:** add necesary class for popver content ([be195aa](https://github.com/powerhouse-inc/document-engineering/commit/be195aaa22ece496623b67d207591b494d94e36c))
+* **scalars:** add the container class popover ([b391fb8](https://github.com/powerhouse-inc/document-engineering/commit/b391fb84d13a0b70dc2abf3f8d6f053dce55b489))
+* **scalars:** allow show the ceros, when trallingzero its set ([164ad7d](https://github.com/powerhouse-inc/document-engineering/commit/164ad7d17a77c791e03d84fb52a3fd215b0080bd))
+* **scalars:** fix CR and chromatic changes ([4ce3a64](https://github.com/powerhouse-inc/document-engineering/commit/4ce3a64baad81c0087c4bd98fde2169d62558cd3))
+* **scalars:** fix the naming convention in modifier ([e2f63a0](https://github.com/powerhouse-inc/document-engineering/commit/e2f63a051a49939ccec2182c2174c01ab3588386))
+* **scalars:** fix the step when its decimal point ([46a99ba](https://github.com/powerhouse-inc/document-engineering/commit/46a99ba208c5d409093a9005c91481fca9e71246))
+* **scalars:** remove duplicate css ([9bc512c](https://github.com/powerhouse-inc/document-engineering/commit/9bc512c9a5d1b5c705a3889b4cc29fbdb9e4e02b))
+* **scalars:** remove duplicate message ([37ca9b5](https://github.com/powerhouse-inc/document-engineering/commit/37ca9b56de786da4514b76e5d59908858c3f1196))
+* **scalars:** update the snapshot ([190f1d5](https://github.com/powerhouse-inc/document-engineering/commit/190f1d5f62ef4e700fab68e1445fea9288cd760d))
+* url diff mode when the original value and the value are equals ([182d8d8](https://github.com/powerhouse-inc/document-engineering/commit/182d8d8b07a9931873a3afd0aa661ba81a97d2e1))
+
+
+### Features
+
+* add supprot for min row count ([18b82f2](https://github.com/powerhouse-inc/document-engineering/commit/18b82f21e9e70fdc0e4ce66a12974962f1173b54))
+* allow sorting ([f284078](https://github.com/powerhouse-inc/document-engineering/commit/f28407890c7f424ce8a1f064fa2d198c1ce1765b))
+* **scalars:** add new aproach for styling select component ([3c5549d](https://github.com/powerhouse-inc/document-engineering/commit/3c5549dfe71c2b8bd84ec86b00afa241a3639bc5))
+
 # [1.11.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.10.0...v1.11.0) (2025-06-05)
 
 
