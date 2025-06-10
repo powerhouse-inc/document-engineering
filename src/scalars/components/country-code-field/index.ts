@@ -1,1 +1,2 @@
-export * from './country-code-field.js'
+export { CountryCodeField } from './country-code-field.js'
+export type { CountryCodeFieldProps } from './types.js'

@@ -1,27 +1,43 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../lib/storybook-arg-types.js'
-import { CountryCodeField } from './country-code-field.js'
+} from '../../../../scalars/lib/storybook-arg-types.js'
+import { CountryCodePicker } from './country-code-picker.js'
 
-const meta: Meta<typeof CountryCodeField> = {
-  title: 'Scalars/Country Code Field',
-  component: CountryCodeField,
+/**
+ * The `CountryCodePicker` component provides a dropdown selection field for country codes.
+ *
+ * Features include:
+ * - Country filtering with allowed/excluded lists
+ * - Multiple display modes (codes only, names only, names and codes)
+ * - Optional flag icons display
+ * - Dependent territories inclusion option
+ * - Searchable dropdown functionality
+ *
+ * > **Note:** This component does not have built-in validation. If you need built-in validation
+ * > you can use the [CountryCodeField](?path=/docs/scalars-country-code-field--readme)
+ * > component.
+ */
+
+const meta: Meta<typeof CountryCodePicker> = {
+  title: 'Data Entry/Country Code Picker',
+  component: CountryCodePicker,
+  parameters: {
+    layout: 'padded',
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
   decorators: [
-    withForm,
     (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
       </div>
     ),
   ],
-  parameters: {
-    layout: 'padded',
-  },
   tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes(),
@@ -81,13 +97,19 @@ const meta: Meta<typeof CountryCodeField> = {
       },
     },
 
-    ...getValidationArgTypes(),
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
   },
   args: {
-    name: 'country-code-field',
+    name: 'country-code-picker',
     placeholder: 'Select a country',
   },
-} satisfies Meta<typeof CountryCodeField>
+} satisfies Meta<typeof CountryCodePicker>
 
 export default meta
 type Story = StoryObj<typeof meta>
