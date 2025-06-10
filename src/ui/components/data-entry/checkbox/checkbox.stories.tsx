@@ -46,6 +46,23 @@ const meta = {
         category: StorybookControlCategory.DEFAULT,
       },
     },
+    viewMode: {
+      control: 'select',
+      description: 'The mode of the checkbox field',
+      options: ['edition', 'addition', 'removal'],
+      table: {
+        type: { summary: 'edition | addition | removal' },
+        defaultValue: { summary: 'edition' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseValue: {
+      control: 'boolean',
+      description: 'The base value of the checkbox field',
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
 
     ...getValidationArgTypes({
       enabledArgTypes: {

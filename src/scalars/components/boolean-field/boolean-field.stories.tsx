@@ -53,7 +53,6 @@ const meta = {
         defaultValue: { summary: 'edition' },
         category: StorybookControlCategory.DIFF,
       },
-      if: { arg: 'isToggle', eq: true },
     },
     baseValue: {
       control: 'boolean',
@@ -61,7 +60,6 @@ const meta = {
       table: {
         category: StorybookControlCategory.DIFF,
       },
-      if: { arg: 'isToggle', eq: true },
     },
     ...getValidationArgTypes({
       enabledArgTypes: {
