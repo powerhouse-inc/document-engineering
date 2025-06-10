@@ -80,6 +80,8 @@ const meta = {
     ...PrebuiltArgTypes.maxValue,
     ...PrebuiltArgTypes.precision,
     ...PrebuiltArgTypes.trailingZeros,
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
   args: {
     name: 'number-field',
