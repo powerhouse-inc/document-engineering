@@ -1,81 +1,9 @@
-import { Select } from '../../../ui/components/data-entry/select/index.js'
-import React from 'react'
-import { CircleFlag } from 'react-circle-flags'
+import { CountryCodePicker } from '../../../ui/components/data-entry/country-code-picker/index.js'
+import { withFieldValidation } from '../fragments/with-field-validation/index.js'
+import type { CountryCodeFieldProps } from './types.js'
 import countries, { type Countries } from 'world-countries'
-import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
-import type { FieldErrorHandling, InputBaseProps } from '../types.js'
-import type { CountryCodeProps } from './types.js'
 
-type CountryCodeFieldBaseProps = Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  keyof InputBaseProps<string> | keyof FieldErrorHandling | keyof CountryCodeProps
->
-
-export type CountryCodeFieldProps = CountryCodeFieldBaseProps &
-  InputBaseProps<string> &
-  FieldErrorHandling &
-  CountryCodeProps
-
-const CountryCodeFieldRaw = React.forwardRef<HTMLButtonElement, CountryCodeFieldProps>(
-  (
-    {
-      onChange,
-      placeholder,
-      allowedCountries,
-      excludedCountries,
-      includeDependentAreas = false,
-      viewMode = 'NamesOnly',
-      showFlagIcons = true,
-      enableSearch,
-      ...props
-    },
-    ref
-  ) => {
-    const defaultOptions = (countries as unknown as Countries)
-      .filter(
-        (country) => (includeDependentAreas ? true : country.independent) && country.cca2 !== 'AQ' // exclude Antarctica
-      )
-      .map((country) => ({
-        value: country.cca2,
-        label:
-          viewMode === 'CodesOnly'
-            ? country.cca2
-            : viewMode === 'NamesAndCodes'
-              ? `${country.name.common} (${country.cca2})`
-              : country.name.common,
-        icon: showFlagIcons
-          ? () => <CircleFlag className="size-4" countryCode={country.cca2.toLowerCase()} height={16} />
-          : undefined,
-      }))
-      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0))
-
-    const options =
-      Array.isArray(allowedCountries) || Array.isArray(excludedCountries)
-        ? defaultOptions.filter(
-            (option) =>
-              (!allowedCountries || allowedCountries.includes(option.value)) &&
-              !excludedCountries?.includes(option.value)
-          )
-        : defaultOptions
-
-    return (
-      <Select
-        ref={ref}
-        options={options}
-        selectionIcon="checkmark"
-        selectionIconPosition="right"
-        searchable={enableSearch}
-        onChange={onChange}
-        placeholder={placeholder}
-        {...props}
-      />
-    )
-  }
-)
-
-CountryCodeFieldRaw.displayName = 'CountryCodeFieldRaw'
-
-export const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(CountryCodeFieldRaw, {
+const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(CountryCodePicker, {
   validations: {
     _validOption:
       ({ allowedCountries, excludedCountries, includeDependentAreas }) =>
@@ -107,3 +35,5 @@ export const CountryCodeField = withFieldValidation<CountryCodeFieldProps>(Count
 })
 
 CountryCodeField.displayName = 'CountryCodeField'
+
+export { CountryCodeField }

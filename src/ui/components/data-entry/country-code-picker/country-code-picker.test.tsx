@@ -1,57 +1,55 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import { renderWithForm } from '../../lib/testing.js'
-import { Form } from '../form/index.js'
-import { CountryCodeField } from './country-code-field.js'
+import { CountryCodePicker } from './country-code-picker.js'
 
-describe('CountryCodeField Component', () => {
+describe('CountryCodePicker Component', () => {
   const defaultProps = {
     name: 'country',
     label: 'Select Country',
   }
 
   it('should match snapshot', () => {
-    const { asFragment } = renderWithForm(<CountryCodeField {...defaultProps} />)
+    const { asFragment } = render(<CountryCodePicker {...defaultProps} />)
     expect(asFragment()).toMatchSnapshot()
   })
 
   it('should render with label', () => {
-    renderWithForm(<CountryCodeField {...defaultProps} />)
+    render(<CountryCodePicker {...defaultProps} />)
     expect(screen.getByText('Select Country')).toBeInTheDocument()
   })
 
   it('should render with description', () => {
-    renderWithForm(<CountryCodeField {...defaultProps} description="Please select your country" />)
+    render(<CountryCodePicker {...defaultProps} description="Please select your country" />)
     expect(screen.getByText('Please select your country')).toBeInTheDocument()
   })
 
   it('should show required indicator when required prop is true', () => {
-    renderWithForm(<CountryCodeField {...defaultProps} required />)
+    render(<CountryCodePicker {...defaultProps} required />)
     expect(screen.getByText('*')).toBeInTheDocument()
   })
 
   it('should disable the field when disabled prop is true', () => {
-    renderWithForm(<CountryCodeField {...defaultProps} disabled />)
+    render(<CountryCodePicker {...defaultProps} disabled />)
     expect(screen.getByRole('combobox')).toBeDisabled()
   })
 
   it('should display error messages', async () => {
-    renderWithForm(<CountryCodeField {...defaultProps} errors={['Country is required']} />)
+    render(<CountryCodePicker {...defaultProps} errors={['Country is required']} />)
     await waitFor(() => {
       expect(screen.getByText('Country is required')).toBeInTheDocument()
     })
   })
 
   it('should display warning messages', () => {
-    renderWithForm(<CountryCodeField {...defaultProps} warnings={['Some countries may not be available']} />)
+    render(<CountryCodePicker {...defaultProps} warnings={['Some countries may not be available']} />)
     expect(screen.getByText('Some countries may not be available')).toBeInTheDocument()
   })
 
   it('should handle value changes', async () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
-    renderWithForm(<CountryCodeField {...defaultProps} onChange={onChange} />)
+    render(<CountryCodePicker {...defaultProps} onChange={onChange} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)
@@ -61,7 +59,7 @@ describe('CountryCodeField Component', () => {
 
   it('should filter countries based on search when enableSearch is true', async () => {
     const user = userEvent.setup()
-    renderWithForm(<CountryCodeField {...defaultProps} enableSearch placeholder="Search..." />)
+    render(<CountryCodePicker {...defaultProps} enableSearch placeholder="Search..." />)
 
     await user.click(screen.getByRole('combobox'))
     await user.type(screen.getByPlaceholderText('Search...'), 'united')
@@ -74,7 +72,7 @@ describe('CountryCodeField Component', () => {
 
   it('should filter countries based on allowedCountries prop', async () => {
     const user = userEvent.setup()
-    renderWithForm(<CountryCodeField {...defaultProps} allowedCountries={['US', 'GB']} />)
+    render(<CountryCodePicker {...defaultProps} allowedCountries={['US', 'GB']} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)
@@ -86,7 +84,7 @@ describe('CountryCodeField Component', () => {
 
   it('should filter out countries based on excludedCountries prop', async () => {
     const user = userEvent.setup()
-    renderWithForm(<CountryCodeField {...defaultProps} excludedCountries={['FR', 'DE']} />)
+    render(<CountryCodePicker {...defaultProps} excludedCountries={['FR', 'DE']} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)
@@ -99,9 +97,7 @@ describe('CountryCodeField Component', () => {
 
   it('should handle both allowedCountries and excludedCountries props', async () => {
     const user = userEvent.setup()
-    renderWithForm(
-      <CountryCodeField {...defaultProps} allowedCountries={['US', 'GB', 'FR']} excludedCountries={['FR']} />
-    )
+    render(<CountryCodePicker {...defaultProps} allowedCountries={['US', 'GB', 'FR']} excludedCountries={['FR']} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)
@@ -115,7 +111,7 @@ describe('CountryCodeField Component', () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
 
-    renderWithForm(<CountryCodeField {...defaultProps} includeDependentAreas onChange={onChange} />)
+    render(<CountryCodePicker {...defaultProps} includeDependentAreas onChange={onChange} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)
@@ -127,30 +123,5 @@ describe('CountryCodeField Component', () => {
     expect(onChange).toHaveBeenCalledWith('PR')
 
     expect(screen.getByText('Puerto Rico')).toBeInTheDocument()
-  })
-
-  it('should show an error if trying to submit empty with required enabled', async () => {
-    const user = userEvent.setup()
-    renderWithForm(
-      <>
-        <CountryCodeField {...defaultProps} required />
-        <button type="submit">Submit</button>
-      </>
-    )
-    await user.click(screen.getByText('Submit'))
-    expect(screen.getByText('This field is required')).toBeInTheDocument()
-  })
-
-  it('should submit the country code', async () => {
-    const onSubmit = vi.fn()
-    const user = userEvent.setup()
-    render(
-      <Form onSubmit={onSubmit}>
-        <CountryCodeField {...defaultProps} value="US" />
-        <button type="submit">Submit</button>
-      </Form>
-    )
-    await user.click(screen.getByText('Submit'))
-    expect(onSubmit).toHaveBeenCalledWith({ country: 'US' })
   })
 })

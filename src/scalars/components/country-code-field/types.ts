@@ -1,10 +1,6 @@
-export interface CountryCodeProps {
-  onChange?: (value: string | string[]) => void
-  placeholder?: string
-  allowedCountries?: string[]
-  excludedCountries?: string[]
-  includeDependentAreas?: boolean
-  viewMode?: 'CodesOnly' | 'NamesOnly' | 'NamesAndCodes'
-  showFlagIcons?: boolean
-  enableSearch?: boolean
-}
+import type { CountryCodePickerProps } from '../../../ui/components/data-entry/country-code-picker/types.js'
+import type { FieldErrorHandling } from '../types.js'
+
+type CountryCodeFieldProps = CountryCodePickerProps & FieldErrorHandling
+
+export type { CountryCodeFieldProps }
