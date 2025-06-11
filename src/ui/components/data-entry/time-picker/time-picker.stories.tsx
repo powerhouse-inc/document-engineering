@@ -23,6 +23,8 @@ import { TimePicker } from './time-picker'
  * Each class should follow the format `[&_.time-picker\\_\\_{element}]:{tailwind-classes}`.
  *
  * Base classes available for customization:
+ * - .base-picker__input: Input field container
+ * - .base-picker__popover: Popover container
  * - .time-picker__content: Main container for the time picker
  * - .time-picker__period: AM/PM selector section
  * - .time-picker__selector: Time selection area (hours/minutes)
@@ -174,6 +176,8 @@ export const WithCustomizedCalendar: Story = {
     label: 'Pick a time',
     placeholder: 'HH:mm',
     className: String.raw`
+      [&.base-picker\\_\\_input]:w-[275px]
+      [&.base-picker\\_\\_popover]:w-[275px]
       [&_.time-picker\\_\\_content]:bg-red-300
       [&_.time-picker\\_\\_content]:border-2
       [&_.time-picker\\_\\_content]:border-cyan-400
