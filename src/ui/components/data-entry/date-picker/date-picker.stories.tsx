@@ -320,8 +320,8 @@ export const WithCustomizedCalendar: Story = {
       [&_.date-picker\\_\\_date-footer]:[&>button]:duration-300
       [&.input-field]:border-cyan-400
       [&.input-field]:rounded-md
-      [&.base-picker\\_\\_input]:w-[475px]
-      [&.base-picker\\_\\_popover]:w-[475px]
+      [&.base-picker\\_\\_input]:w-[275px]
+      [&.base-picker\\_\\_popover]:w-[75px]
     `,
   },
 }
