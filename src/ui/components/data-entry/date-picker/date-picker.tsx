@@ -114,7 +114,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           handleBlur={handleBlur}
           data-cast={`DateString:${dateFormat}`}
           className={String.raw`
-
+            [&.base-picker\\_\\_input]:w-[275px]
+            [&.base-picker\\_\\_popover]:w-[275px]
             [&.base-picker\\_\\_popover]:px-4
             [&.base-picker\\_\\_popover]:pb-6
             [&.base-picker\\_\\_popover]:pt-3

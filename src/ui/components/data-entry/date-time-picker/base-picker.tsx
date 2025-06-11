@@ -62,6 +62,7 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
             'dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white',
             disabled &&
               'dark:bg-charcoal-900 dark:hover:bg-charcoal-900 cursor-not-allowed bg-white hover:bg-transparent',
+            'base-picker__input',
             className
           )}
         >
