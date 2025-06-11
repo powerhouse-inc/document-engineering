@@ -112,6 +112,7 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
             className={cn(
               'w-full rounded-l-none border-none text-right placeholder:text-right',
               // focus
+              'input-field',
               'focus:bg-white focus-visible:ring-0 focus-visible:ring-offset-0'
             )}
             placeholder={placeholder}
