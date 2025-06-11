@@ -12,7 +12,6 @@ interface CheckboxDiffProps extends Omit<WithDifference<boolean>, 'diffMode'> {
   required?: boolean
   baseValue?: boolean
   name?: string
-  onChange?: (checked: boolean) => void
 }
 const CheckboxDiff = ({
   value,
@@ -21,7 +20,6 @@ const CheckboxDiff = ({
   disabled,
   baseValue = false,
   viewMode = 'edition',
-  onChange,
   name,
 }: CheckboxDiffProps) => {
   const generatedId = useId()
@@ -39,14 +37,7 @@ const CheckboxDiff = ({
 
   return (
     <div className="flex flex-row items-center gap-2">
-      <CheckboxBase
-        id={id}
-        name={name}
-        checked={value}
-        disabled={disabled}
-        onCheckedChange={onChange}
-        required={required}
-      />
+      <CheckboxBase id={id} name={name} checked={value} disabled={disabled} required={required} />
 
       <FormLabel
         htmlFor={id}
