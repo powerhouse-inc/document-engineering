@@ -4,7 +4,7 @@ import { FormLabel } from '../../../../scalars/components/fragments/form-label/i
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import { CheckboxBase, type CheckboxValue } from './checkbox-base.js'
-import { CheckboxDiff } from './subcomponents/checkboxdiff.js'
+import { CheckboxDiff } from './subcomponents/checkbox-diff.js'
 
 type CheckboxBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
