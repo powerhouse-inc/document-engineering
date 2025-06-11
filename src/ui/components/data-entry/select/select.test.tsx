@@ -175,4 +175,108 @@ describe('Select Component', () => {
     )
     expect(onChange).not.toHaveBeenCalled()
   })
+
+  // Tests for viewMode and diffs functionality
+  describe('viewMode and diffs', () => {
+    it('should render in edition mode by default', () => {
+      render(<Select name="select" options={defaultOptions} />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render in edition mode when viewMode is explicitly set to edition', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="edition" />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is addition', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="addition" value="Option 1" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 1')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is removal', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="removal" baseValue="Option 2" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 2')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is mixed', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="mixed" value="Option 1" baseValue="Option 2" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 1')).toBeInTheDocument()
+      expect(screen.getByText('Option 2')).toBeInTheDocument()
+    })
+
+    it('should pass correct props to SelectDiff component', () => {
+      render(
+        <Select
+          name="select"
+          options={defaultOptions}
+          viewMode="mixed"
+          value="Option 1"
+          baseValue="Option 2"
+          required
+          label="Test Label"
+        />
+      )
+
+      // Verify label is rendered
+      expect(screen.getByText('Test Label')).toBeInTheDocument()
+
+      // Verify required indicator
+      expect(screen.getByText('*')).toBeInTheDocument()
+
+      // Verify the diff component is rendered (not the select)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 1')).toBeInTheDocument()
+      expect(screen.getByText('Option 2')).toBeInTheDocument()
+    })
+
+    it('should handle empty value in diff mode', () => {
+      const { container } = render(
+        <Select name="select" options={defaultOptions} viewMode="addition" value="" label="Test Label" />
+      )
+
+      // Verify that diff component is rendered instead of select
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Test Label')).toBeInTheDocument()
+
+      // Find all span elements and verify they are empty
+      const diffSpans = container.querySelectorAll('span')
+      diffSpans.forEach((span) => {
+        expect(span).toHaveTextContent('')
+      })
+    })
+
+    it('should work with multiple selection in diff mode', () => {
+      render(
+        <Select name="select" options={defaultOptions} viewMode="addition" value={['Option 1', 'Option 2']} multiple />
+      )
+
+      // Should show both selected options
+      expect(screen.getByText('Option 1, Option 2')).toBeInTheDocument()
+    })
+
+    it('should maintain all existing functionality in edition mode with new props present', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+
+      render(
+        <Select
+          name="select"
+          options={defaultOptions}
+          viewMode="edition"
+          baseValue="Option 2"
+          searchable
+          onChange={onChange}
+        />
+      )
+
+      // Should still work as a normal select
+      const select = screen.getByRole('combobox')
+      await user.click(select)
+      await user.click(screen.getByText('Option 1'))
+      expect(onChange).toHaveBeenCalledWith('1')
+    })
+  })
 })

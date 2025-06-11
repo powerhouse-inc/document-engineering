@@ -124,4 +124,122 @@ describe('CountryCodePicker Component', () => {
 
     expect(screen.getByText('Puerto Rico')).toBeInTheDocument()
   })
+
+  // Tests for viewMode and diffs functionality
+  describe('viewMode and diffs', () => {
+    it('should render in edition mode by default', () => {
+      render(<CountryCodePicker {...defaultProps} />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render in edition mode when viewMode is explicitly set to edition', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="edition" />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is addition', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="addition" value="US" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('United States')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is removal', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="removal" baseValue="United Kingdom" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('United Kingdom')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is mixed', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="mixed" value="FR" baseValue="United States" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('France')).toBeInTheDocument()
+      expect(screen.getByText('United States')).toBeInTheDocument()
+    })
+
+    it('should pass correct props to CountryCodePickerDiff component', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="mixed" value="US" baseValue="United Kingdom" required />)
+
+      // Verify label is rendered
+      expect(screen.getByText('Select Country')).toBeInTheDocument()
+
+      // Verify required indicator
+      expect(screen.getByText('*')).toBeInTheDocument()
+
+      // Verify the diff component is rendered (not the select)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('United States')).toBeInTheDocument()
+      expect(screen.getByText('United Kingdom')).toBeInTheDocument()
+    })
+
+    it('should handle empty value in diff mode', () => {
+      const { container } = render(<CountryCodePicker {...defaultProps} viewMode="addition" value="" />)
+
+      // Verify that diff component is rendered instead of select
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Select Country')).toBeInTheDocument()
+
+      // Find all span elements and verify they are empty
+      const diffSpans = container.querySelectorAll('span')
+      diffSpans.forEach((span) => {
+        expect(span).toHaveTextContent('')
+      })
+    })
+
+    it('should handle invalid country code in diff mode', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="addition" value="INVALID" />)
+
+      // Should fallback to showing the raw value when no matching option is found
+      expect(screen.getByText('INVALID')).toBeInTheDocument()
+    })
+
+    it('should respect optionFormat in diff mode', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="addition" value="US" optionFormat="NamesAndCodes" />)
+
+      // Should show "United States (US)" format
+      expect(screen.getByText('United States (US)')).toBeInTheDocument()
+    })
+
+    it('should respect optionFormat CodesOnly in diff mode', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="addition" value="US" optionFormat="CodesOnly" />)
+
+      // Should show just "US"
+      expect(screen.getByText('US')).toBeInTheDocument()
+    })
+
+    it('should work with filtered countries in diff mode', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="addition" value="US" allowedCountries={['US', 'GB']} />)
+
+      // Should show the correct country name even when filtered
+      expect(screen.getByText('United States')).toBeInTheDocument()
+    })
+
+    it('should handle dependent areas in diff mode', () => {
+      render(<CountryCodePicker {...defaultProps} viewMode="addition" value="PR" includeDependentAreas />)
+
+      // Should show Puerto Rico
+      expect(screen.getByText('Puerto Rico')).toBeInTheDocument()
+    })
+
+    it('should maintain all existing functionality in edition mode with new props present', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+
+      render(
+        <CountryCodePicker
+          {...defaultProps}
+          viewMode="edition"
+          baseValue="US"
+          enableSearch
+          allowedCountries={['US', 'GB']}
+          onChange={onChange}
+        />
+      )
+
+      // Should still work as a normal select
+      const select = screen.getByRole('combobox')
+      await user.click(select)
+      await user.click(screen.getByText('United States'))
+      expect(onChange).toHaveBeenCalledWith('US')
+    })
+  })
 })
