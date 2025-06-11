@@ -13,19 +13,6 @@ import { SelectedContent } from './selected-content.js'
 import { useSelect } from './use-select.js'
 import type { SelectProps } from './types.js'
 
-const processValue = (
-  currentValue: string | string[] | undefined,
-  currentDefaultValue: string | string[] | undefined
-): string => {
-  const displayValue = currentValue ?? currentDefaultValue ?? ''
-
-  if (Array.isArray(displayValue)) {
-    return displayValue.join(', ')
-  }
-
-  return displayValue
-}
-
 const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   (
     {
@@ -63,7 +50,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
       // diff props
       viewMode = 'edition',
-      diffMode,
       baseValue,
       ...props
     },
@@ -207,11 +193,10 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
     return (
       <SelectDiff
-        value={processValue(value, defaultValue)}
+        value={selectedValues.join(', ')}
         label={label}
         required={required}
         viewMode={viewMode}
-        diffMode={diffMode}
         baseValue={baseValue}
       />
     )

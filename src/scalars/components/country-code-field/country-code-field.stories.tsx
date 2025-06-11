@@ -52,7 +52,7 @@ const meta: Meta<typeof CountryCodeField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    viewMode: {
+    optionFormat: {
       control: 'radio',
       options: ['CodesOnly', 'NamesOnly', 'NamesAndCodes'],
       description: 'How to display country options in dropdown',
@@ -82,6 +82,9 @@ const meta: Meta<typeof CountryCodeField> = {
     },
 
     ...getValidationArgTypes(),
+
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
   args: {
     name: 'country-code-field',
@@ -149,7 +152,7 @@ export const WithCodesOnly: Story = {
   args: {
     label: 'Country',
     description: 'Shows country codes only',
-    viewMode: 'CodesOnly',
+    optionFormat: 'CodesOnly',
   },
 }
 
@@ -157,7 +160,7 @@ export const WithNamesAndCodes: Story = {
   args: {
     label: 'Country',
     description: 'Shows country names and codes',
-    viewMode: 'NamesAndCodes',
+    optionFormat: 'NamesAndCodes',
   },
 }
 

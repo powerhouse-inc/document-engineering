@@ -1,14 +1,20 @@
 import { FormGroup, FormLabel } from '../../../../scalars/components/fragments/index.js'
 import { SplittedInputDiff } from '../input/splitted-input-diff.js'
-import type { SelectProps, SelectWithDifference } from './types.js'
+import type { CountryCodePickerProps, CountryCodePickerWithDifference } from './types.js'
 
-interface SelectDiffProps extends SelectWithDifference {
+interface CountryCodePickerDiffProps extends CountryCodePickerWithDifference {
   value: string
-  label: SelectProps['label']
-  required: SelectProps['required']
+  label: CountryCodePickerProps['label']
+  required: CountryCodePickerProps['required']
 }
 
-const SelectDiff = ({ value = '', label, required, viewMode, baseValue = '' }: SelectDiffProps) => {
+const CountryCodePickerDiff = ({
+  value = '',
+  label,
+  required,
+  viewMode,
+  baseValue = '',
+}: CountryCodePickerDiffProps) => {
   return (
     <FormGroup>
       {label && (
@@ -21,4 +27,4 @@ const SelectDiff = ({ value = '', label, required, viewMode, baseValue = '' }: S
   )
 }
 
-export { SelectDiff }
+export { CountryCodePickerDiff }
