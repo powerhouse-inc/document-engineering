@@ -119,8 +119,6 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
             onKeyDown: handleKeyDown,
           }}
           className={String.raw`
-            [&.base-picker\\_\\_input]:w-[275px]
-            [&.base-picker\\_\\_popover]:w-[275px]
             [&.base-picker\\_\\_popover]:pr-3
             [&.base-picker\\_\\_popover]:pb-4
             [&.base-picker\\_\\_popover]:pl-4

@@ -156,8 +156,6 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
           handleBlur={handleOnBlur}
           data-cast={`DateTimeString:${dateFormat}`}
           className={String.raw`
-            [&.base-picker\\_\\_input]:w-[275px]
-            [&.base-picker\\_\\_popover]:w-[275px]
             [&.base-picker\\_\\_popover]:px-4
             [&.base-picker\\_\\_popover]:pt-3
             [&.base-picker\\_\\_popover]:${isCalendarView ? 'pb-6' : 'pb-4'}
