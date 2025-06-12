@@ -93,11 +93,26 @@ const meta: Meta<typeof Select> = {
 
     options: {
       control: 'object',
-      description: 'Array of options to display in the select',
+      description:
+        'Array of options to display in the dropdown. These options will be displayed in the order they are provided.',
       table: {
         type: {
           summary:
-            'Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean; className?: string }>',
+            'Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean; }>',
+        },
+        defaultValue: { summary: '[]' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+
+    favoriteOptions: {
+      control: 'object',
+      description:
+        'Array of favorite options to display in the dropdown. These options will be displayed at the top of the list.',
+      table: {
+        type: {
+          summary:
+            'Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean; }>',
         },
         defaultValue: { summary: '[]' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -183,17 +198,14 @@ const meta: Meta<typeof Select> = {
     }),
 
     ...PrebuiltArgTypes.viewMode,
-    diffMode: {
-      control: 'select',
-      description: 'The mode of the input field',
-      options: ['sentences'],
+    baseValue: {
+      control: 'object',
+      description: 'The base value of the select field',
       table: {
-        type: { summary: 'sentences' },
-        defaultValue: { summary: 'sentences' },
+        type: { summary: 'string | string[]' },
         category: StorybookControlCategory.DIFF,
       },
     },
-    ...PrebuiltArgTypes.baseValue,
   },
   args: {
     name: 'select',
@@ -419,5 +431,16 @@ export const WithCustomizedSelect: Story = {
     [&_.select\\_\\_item--selected]:[&>svg]:text-red-500
     [&_.select\\_\\_item--selected]:[&>svg]:size-8
   `,
+  },
+}
+
+export const WithDifferences: Story = {
+  args: {
+    label: 'Icon names comparison',
+    options: defaultOptions,
+    value: ['Globe', 'Settings'],
+    baseValue: ['Briefcase', 'Drive'],
+    multiple: true,
+    viewMode: 'mixed',
   },
 }

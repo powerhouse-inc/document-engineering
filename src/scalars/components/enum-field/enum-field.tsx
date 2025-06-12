@@ -35,8 +35,11 @@ const EnumField = React.forwardRef<HTMLDivElement | HTMLButtonElement, EnumField
         return radio
       case 'Select':
         return select
-      case 'auto':
-        return options.length < 6 ? radio : select
+      case 'auto': {
+        const favoriteOptionsLength =
+          'favoriteOptions' in props && props.favoriteOptions !== undefined ? props.favoriteOptions.length : 0
+        return options.length + favoriteOptionsLength < 6 ? radio : select
+      }
     }
   }
 )

@@ -175,4 +175,80 @@ describe('Select Component', () => {
     )
     expect(onChange).not.toHaveBeenCalled()
   })
+
+  // Tests for viewMode and diffs functionality
+  describe('viewMode and diffs', () => {
+    it('should render in edition mode by default', () => {
+      render(<Select name="select" options={defaultOptions} />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render in edition mode when viewMode is explicitly set to edition', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="edition" />)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is addition', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="addition" value="1" baseValue="2" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 1')).toBeInTheDocument()
+      expect(screen.queryByText('Option 2')).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is removal', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="removal" value="1" baseValue="2" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.queryByText('Option 1')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 2')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is mixed', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="mixed" value="1" baseValue="2" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 1')).toBeInTheDocument()
+      expect(screen.getByText('Option 2')).toBeInTheDocument()
+    })
+
+    it('should pass correct props to SelectDiff component', () => {
+      render(
+        <Select
+          name="select"
+          options={defaultOptions}
+          viewMode="mixed"
+          value="1"
+          baseValue="2"
+          label="Test Label"
+          required
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('*')).toBeInTheDocument()
+      expect(screen.getByText('Option 1')).toBeInTheDocument()
+      expect(screen.getByText('Option 2')).toBeInTheDocument()
+    })
+
+    it('should handle empty value in diff mode', () => {
+      const { container } = render(<Select name="select" options={defaultOptions} viewMode="addition" value="" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      const diffSpans = container.querySelectorAll('span')
+      diffSpans.forEach((span) => {
+        expect(span).toHaveTextContent('')
+      })
+    })
+
+    it('should fallback to showing the raw value when no matching option is found', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="mixed" value="11" baseValue="22" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('11')).toBeInTheDocument()
+      expect(screen.getByText('22')).toBeInTheDocument()
+    })
+
+    it('should handle the multiple prop in diff mode', () => {
+      render(
+        <Select name="select" options={defaultOptions} viewMode="addition" value={['Option 1', 'Option 2']} multiple />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('Option 1, Option 2')).toBeInTheDocument()
+    })
+  })
 })

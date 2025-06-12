@@ -13,19 +13,6 @@ import { SelectedContent } from './selected-content.js'
 import { useSelect } from './use-select.js'
 import type { SelectProps } from './types.js'
 
-const processValue = (
-  currentValue: string | string[] | undefined,
-  currentDefaultValue: string | string[] | undefined
-): string => {
-  const displayValue = currentValue ?? currentDefaultValue ?? ''
-
-  if (Array.isArray(displayValue)) {
-    return displayValue.join(', ')
-  }
-
-  return displayValue
-}
-
 const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   (
     {
@@ -63,7 +50,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
       // diff props
       viewMode = 'edition',
-      diffMode,
       baseValue,
       ...props
     },
@@ -72,9 +58,10 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     const prefix = useId()
     const id = propId ?? `${prefix}-select`
 
+    const allOptions = [...favoriteOptions, ...options]
     const { selectedValues, isPopoverOpen, commandListRef, toggleOption, handleClear, toggleAll, handleOpenChange } =
       useSelect({
-        options,
+        options: allOptions,
         multiple,
         defaultValue,
         value,
@@ -91,6 +78,17 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       },
       [onBlur, isPopoverOpen]
     )
+
+    const selectedLabels = selectedValues
+      .map((val) => allOptions.find((opt) => opt.value === val)?.label ?? val)
+      .join(', ')
+
+    const baseLabels =
+      baseValue !== undefined && baseValue !== ''
+        ? (Array.isArray(baseValue) ? baseValue : [baseValue])
+            .map((val) => allOptions.find((opt) => opt.value === val)?.label ?? val)
+            .join(', ')
+        : baseValue
 
     if (viewMode === 'edition') {
       return (
@@ -160,7 +158,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               >
                 <SelectedContent
                   selectedValues={selectedValues}
-                  options={[...favoriteOptions, ...options]}
+                  options={allOptions}
                   multiple={multiple}
                   searchable={searchable}
                   placeholder={placeholder}
@@ -179,7 +177,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               <Command
                 defaultValue={
                   !multiple && selectedValues[0]
-                    ? options.find((opt) => opt.value === selectedValues[0])?.label
+                    ? allOptions.find((opt) => opt.value === selectedValues[0])?.label
                     : undefined
                 }
               >
@@ -206,14 +204,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     }
 
     return (
-      <SelectDiff
-        value={processValue(value, defaultValue)}
-        label={label}
-        required={required}
-        viewMode={viewMode}
-        diffMode={diffMode}
-        baseValue={baseValue}
-      />
+      <SelectDiff value={selectedLabels} label={label} required={required} viewMode={viewMode} baseValue={baseLabels} />
     )
   }
 )

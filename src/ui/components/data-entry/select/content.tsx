@@ -37,8 +37,9 @@ export const Content: React.FC<ContentProps> = ({
   toggleOption,
   favoriteOptions = [],
 }) => {
-  const enabledOptions = options.filter((opt) => !opt.disabled)
-  const hasAnyIcon = options.some((opt) => opt.icon)
+  const allOptions = [...favoriteOptions, ...options]
+  const enabledOptions = allOptions.filter((opt) => !opt.disabled)
+  const hasAnyIcon = allOptions.some((opt) => opt.icon)
 
   const cmdkSearch = useCommandState((state) => state.search)
   // scroll to top when search change
