@@ -47,15 +47,31 @@ const meta: Meta<typeof EnumField> = {
 
     options: {
       control: 'object',
-      description: 'Array of options with label, value, icon, description and disabled',
+      description:
+        'Array of options with value, label, icon, description and disabled properties. These options will be displayed in the order they are provided.',
       table: {
         type: {
           summary:
-            'Array<{ label: string; value: string; icon?: IconName | React.ComponentType<{ className?: string }>; description?: string; disabled?: boolean; }>',
+            'Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; description?: string; disabled?: boolean; }>',
         },
         defaultValue: { summary: '[]' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
+    },
+
+    favoriteOptions: {
+      control: 'object',
+      description:
+        'Array of favorite options with value, label, icon and disabled properties. These options will be displayed at the top of the list.',
+      table: {
+        type: {
+          summary:
+            'Array<{ value: string; label: string; icon?: IconName | React.ComponentType<{ className?: string }>; disabled?: boolean; }>',
+        },
+        defaultValue: { summary: '[]' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+      if: { arg: 'variant', neq: 'RadioGroup' },
     },
 
     multiple: {
@@ -105,7 +121,14 @@ const meta: Meta<typeof EnumField> = {
     ...getValidationArgTypes(),
 
     ...PrebuiltArgTypes.viewMode,
-    ...PrebuiltArgTypes.baseValue,
+    baseValue: {
+      control: 'object',
+      description: 'The base value of the enum field',
+      table: {
+        type: { summary: 'string | string[]' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
   args: {
     name: 'enum-field',
@@ -317,5 +340,17 @@ export const WithCustomStylesRadioGroup: Story = {
     selectionIconPosition: 'right',
     className:
       '[&>label]:text-red-900 [&_label]:text-blue-600 [&_label]:hover:text-green-600 [&_button]:border-blue-600 [&_button]:hover:border-green-600 [&_[data-state=checked]_span]:after:!bg-red-500',
+  },
+}
+
+export const SelectWithDifferences: Story = {
+  args: {
+    label: 'Icon names comparison',
+    variant: 'Select',
+    options: defaultOptions,
+    value: ['Globe', 'Settings'],
+    baseValue: ['Briefcase', 'Drive'],
+    multiple: true,
+    viewMode: 'mixed',
   },
 }

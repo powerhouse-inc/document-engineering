@@ -57,6 +57,7 @@ const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerP
         : defaultOptions
 
     const selectedLabel = options.find((option) => option.value === internalValue)?.label ?? internalValue
+    const baseLabel = options.find((option) => option.value === baseValue)?.label ?? baseValue
 
     const handleChange = useCallback(
       (value: string | string[]) => {
@@ -100,7 +101,7 @@ const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerP
         label={label}
         required={required}
         viewMode={viewMode}
-        baseValue={baseValue}
+        baseValue={baseLabel}
       />
     )
   }

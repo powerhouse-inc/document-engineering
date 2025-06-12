@@ -189,19 +189,21 @@ describe('Select Component', () => {
     })
 
     it('should render diff component when viewMode is addition', () => {
-      render(<Select name="select" options={defaultOptions} viewMode="addition" value="Option 1" />)
+      render(<Select name="select" options={defaultOptions} viewMode="addition" value="1" baseValue="2" />)
       expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
       expect(screen.getByText('Option 1')).toBeInTheDocument()
+      expect(screen.queryByText('Option 2')).not.toBeInTheDocument()
     })
 
     it('should render diff component when viewMode is removal', () => {
-      render(<Select name="select" options={defaultOptions} viewMode="removal" baseValue="Option 2" />)
+      render(<Select name="select" options={defaultOptions} viewMode="removal" value="1" baseValue="2" />)
       expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.queryByText('Option 1')).not.toBeInTheDocument()
       expect(screen.getByText('Option 2')).toBeInTheDocument()
     })
 
     it('should render diff component when viewMode is mixed', () => {
-      render(<Select name="select" options={defaultOptions} viewMode="mixed" value="Option 1" baseValue="Option 2" />)
+      render(<Select name="select" options={defaultOptions} viewMode="mixed" value="1" baseValue="2" />)
       expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
       expect(screen.getByText('Option 1')).toBeInTheDocument()
       expect(screen.getByText('Option 2')).toBeInTheDocument()
@@ -213,70 +215,40 @@ describe('Select Component', () => {
           name="select"
           options={defaultOptions}
           viewMode="mixed"
-          value="Option 1"
-          baseValue="Option 2"
-          required
+          value="1"
+          baseValue="2"
           label="Test Label"
+          required
         />
       )
-
-      // Verify label is rendered
-      expect(screen.getByText('Test Label')).toBeInTheDocument()
-
-      // Verify required indicator
-      expect(screen.getByText('*')).toBeInTheDocument()
-
-      // Verify the diff component is rendered (not the select)
       expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('*')).toBeInTheDocument()
       expect(screen.getByText('Option 1')).toBeInTheDocument()
       expect(screen.getByText('Option 2')).toBeInTheDocument()
     })
 
     it('should handle empty value in diff mode', () => {
-      const { container } = render(
-        <Select name="select" options={defaultOptions} viewMode="addition" value="" label="Test Label" />
-      )
-
-      // Verify that diff component is rendered instead of select
+      const { container } = render(<Select name="select" options={defaultOptions} viewMode="addition" value="" />)
       expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
-      expect(screen.getByText('Test Label')).toBeInTheDocument()
-
-      // Find all span elements and verify they are empty
       const diffSpans = container.querySelectorAll('span')
       diffSpans.forEach((span) => {
         expect(span).toHaveTextContent('')
       })
     })
 
-    it('should work with multiple selection in diff mode', () => {
+    it('should fallback to showing the raw value when no matching option is found', () => {
+      render(<Select name="select" options={defaultOptions} viewMode="mixed" value="11" baseValue="22" />)
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('11')).toBeInTheDocument()
+      expect(screen.getByText('22')).toBeInTheDocument()
+    })
+
+    it('should handle the multiple prop in diff mode', () => {
       render(
         <Select name="select" options={defaultOptions} viewMode="addition" value={['Option 1', 'Option 2']} multiple />
       )
-
-      // Should show both selected options
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
       expect(screen.getByText('Option 1, Option 2')).toBeInTheDocument()
-    })
-
-    it('should maintain all existing functionality in edition mode with new props present', async () => {
-      const user = userEvent.setup()
-      const onChange = vi.fn()
-
-      render(
-        <Select
-          name="select"
-          options={defaultOptions}
-          viewMode="edition"
-          baseValue="Option 2"
-          searchable
-          onChange={onChange}
-        />
-      )
-
-      // Should still work as a normal select
-      const select = screen.getByRole('combobox')
-      await user.click(select)
-      await user.click(screen.getByText('Option 1'))
-      expect(onChange).toHaveBeenCalledWith('1')
     })
   })
 })

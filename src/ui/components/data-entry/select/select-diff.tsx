@@ -1,8 +1,9 @@
 import { FormGroup, FormLabel } from '../../../../scalars/components/fragments/index.js'
 import { SplittedInputDiff } from '../input/splitted-input-diff.js'
-import type { SelectProps, SelectWithDifference } from './types.js'
+import type { WithDifference } from '../../../../scalars/components/types.js'
+import type { SelectProps } from './types.js'
 
-interface SelectDiffProps extends SelectWithDifference {
+interface SelectDiffProps extends Omit<WithDifference<string>, 'diffMode'> {
   value: string
   label: SelectProps['label']
   required: SelectProps['required']
