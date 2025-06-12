@@ -193,6 +193,23 @@ const meta: Meta<typeof DatePicker> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    viewMode: {
+      control: 'select',
+      options: ['edition', 'addition', 'removal', 'mixed'],
+      defaultValue: 'edition',
+      description: 'The mode of the date picker',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseValue: {
+      control: 'date',
+      description: 'The base value of the date picker',
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
   args: {
     name: 'date-picker-field',
@@ -315,5 +332,29 @@ export const WithCustomizedCalendar: Story = {
       [&.input-field]:rounded-md
   
     `,
+  },
+}
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Date difference addition',
+    value: '2025/01/27',
+    baseValue: '2024/01/27',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: '2025/01/27',
+    baseValue: '2024/01/27',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Date difference mixed',
+    value: '2025/01/27',
+    baseValue: '2024/01/27',
+    viewMode: 'mixed',
   },
 }
