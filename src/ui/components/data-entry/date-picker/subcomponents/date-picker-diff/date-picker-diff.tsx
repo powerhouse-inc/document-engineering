@@ -31,9 +31,6 @@ const DateInputDiff = ({
   const baseDate = baseValue ? format(new Date(baseValue), internalFormat) : ''
   const valueDate = value ? format(new Date(value), internalFormat) : ''
 
-  // const baseValueStringFormatted = baseDate
-  // const valueStringFormatted = valueDate
-  // console.log('>>>>>>>', baseValueStringFormatted, valueStringFormatted)
   return (
     <>
       {label && (
