@@ -104,14 +104,7 @@ const meta: Meta<typeof DatePicker> = {
       resetBehavior: 'unmount',
     },
   },
-  decorators: [
-    withTimestampsAsISOStrings,
-    (Story) => (
-      <div style={{ minWidth: '275px', margin: '1rem auto 0' }}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [withTimestampsAsISOStrings],
   tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
@@ -320,8 +313,10 @@ export const WithCustomizedCalendar: Story = {
       [&_.date-picker\\_\\_date-footer]:[&>button]:duration-300
       [&.input-field]:border-cyan-400
       [&.input-field]:rounded-md
-      [&.base-picker\\_\\_input]:w-[275px]
-      [&.base-picker\\_\\_popover]:w-[75px]
+  
     `,
   },
 }
+
+// [&.base-picker\\_\\_input]:w-[275px]
+// [&.base-picker\\_\\_popover]:w-[275px]
