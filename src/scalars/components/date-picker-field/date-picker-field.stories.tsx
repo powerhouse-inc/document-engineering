@@ -30,7 +30,15 @@ const meta: Meta<typeof DatePickerField> = {
       resetBehavior: 'unmount',
     },
   },
-  decorators: [withForm, withTimestampsAsISOStrings],
+  decorators: [
+    withForm,
+    withTimestampsAsISOStrings,
+    (Story) => (
+      <div style={{ minWidth: '275px', margin: '1rem auto 0' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({

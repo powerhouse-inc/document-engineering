@@ -24,7 +24,7 @@ exports[`TimePickerField > should match the snapshot 1`] = `
         class="flex flex-col space-y-2"
       >
         <div
-          class="flex w-full rounded-md text-sm focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white focus:[&_.input-field]:bg-transparent dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white base-picker__input [&.base-picker\\\\_\\\\_input]:w-[275px] [&.base-picker\\\\_\\\\_popover]:w-[275px] [&.base-picker\\\\_\\\\_popover]:pr-3 [&.base-picker\\\\_\\\\_popover]:pb-4 [&.base-picker\\\\_\\\\_popover]:pl-4 [&.base-picker\\\\_\\\\_popover]:pt-3 undefined"
+          class="flex w-full rounded-md text-sm focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white focus:[&_.input-field]:bg-transparent dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white base-picker__input [&.base-picker\\\\_\\\\_popover]:w-[275px] [&.base-picker\\\\_\\\\_popover]:pr-3 [&.base-picker\\\\_\\\\_popover]:pb-4 [&.base-picker\\\\_\\\\_popover]:pl-4 [&.base-picker\\\\_\\\\_popover]:pt-3 undefined"
         >
           <button
             aria-controls="radix-:r1:"

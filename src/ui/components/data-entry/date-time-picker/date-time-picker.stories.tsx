@@ -150,7 +150,14 @@ const meta: Meta<typeof DateTimePicker> = {
   title: 'Data Entry/Date Time Picker',
   component: DateTimePicker,
   tags: ['autodocs'],
-  decorators: [withTimestampsAsISOStrings],
+  decorators: [
+    withTimestampsAsISOStrings,
+    (Story) => (
+      <div style={{ minWidth: '275px', margin: '1rem auto 0' }}>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     ...getDefaultArgTypes({
       enabledArgTypes: {

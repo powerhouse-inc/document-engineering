@@ -321,7 +321,7 @@ export const WithCustomizedCalendar: Story = {
       [&.input-field]:border-cyan-400
       [&.input-field]:rounded-md
       [&.base-picker\\_\\_input]:w-[275px]
-      [&.base-picker\\_\\_popover]:w-[75px]
+      [&.base-picker\\_\\_popover]:w-[275px]
     `,
   },
 }

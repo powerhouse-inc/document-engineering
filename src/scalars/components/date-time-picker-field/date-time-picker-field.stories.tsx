@@ -19,7 +19,14 @@ import { DateTimePickerField } from './date-time-picker-field.js'
 const meta: Meta<typeof DateTimePickerField> = {
   title: 'Scalars/Date Time Picker Field',
   component: DateTimePickerField,
-  decorators: [withForm],
+  decorators: [
+    withForm,
+    (Story) => (
+      <div style={{ minWidth: '275px', margin: '1rem auto 0' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
