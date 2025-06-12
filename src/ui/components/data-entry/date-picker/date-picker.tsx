@@ -113,10 +113,14 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           inputProps={inputProps}
           handleBlur={handleBlur}
           data-cast={`DateString:${dateFormat}`}
-          className={cn(
-            // custom styles
-            'px-4 pb-6 pt-3'
-          )}
+          className={String.raw`
+            [&.base-picker\\_\\_input]:w-[275px]
+            [&.base-picker\\_\\_popover]:w-[275px]
+            [&.base-picker\\_\\_popover]:px-4
+            [&.base-picker\\_\\_popover]:pb-6
+            [&.base-picker\\_\\_popover]:pt-3
+            ${className}
+          `}
         >
           <Calendar
             mode="single"

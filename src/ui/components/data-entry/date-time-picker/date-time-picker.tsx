@@ -4,7 +4,6 @@ import {
   FormLabel,
   FormMessageList,
 } from '../../../../scalars/components/fragments/index.js'
-import { cn } from '../../../../scalars/lib/utils.js'
 import type { InputBaseProps } from '../../../../scalars/components/types.js'
 import { type ChangeEvent, type FocusEvent, forwardRef } from 'react'
 import type { DateFieldValue } from '../date-picker/types.js'
@@ -156,11 +155,14 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
           onInputChange={handleInputChangeField}
           handleBlur={handleOnBlur}
           data-cast={`DateTimeString:${dateFormat}`}
-          className={cn(
-            // Add custom styles when the time is open
-            isCalendarView ? 'px-4 pb-6 pt-3' : 'px-4 pb-4 pt-3',
-            className
-          )}
+          className={String.raw`
+            [&.base-picker\\_\\_input]:w-[275px]
+            [&.base-picker\\_\\_popover]:w-[275px]
+            [&.base-picker\\_\\_popover]:px-4
+            [&.base-picker\\_\\_popover]:pt-3
+            [&.base-picker\\_\\_popover]:${isCalendarView ? 'pb-6' : 'pb-4'}
+            ${className}
+          `}
         >
           <DateTimePickerContent
             activeTab={activeTab}

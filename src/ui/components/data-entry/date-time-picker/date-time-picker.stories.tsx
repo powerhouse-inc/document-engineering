@@ -50,6 +50,8 @@ import { FORMAT_MAPPING } from './utils.js'
  * - .date-time-picker__content: Main content container
  * - .date-time-picker__tabs: Tabs container
  * - .date-time-picker__tabs_svg: Tab icons
+ * - .base-picker__input: Input field container
+ * - .base-picker__popover: Popover container
  *
  * ### Date Picker Customization
  * For customizing the date picker part, you can use the following classes from the `DatePicker` component:

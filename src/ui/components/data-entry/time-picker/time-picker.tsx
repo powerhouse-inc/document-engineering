@@ -1,4 +1,3 @@
-import { cn } from '../../../../scalars/lib/utils.js'
 import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
 import { FormGroup } from '../../../../scalars/components/fragments/form-group/form-group.js'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
@@ -119,7 +118,15 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
             ...inputProps,
             onKeyDown: handleKeyDown,
           }}
-          className={cn('pb-4 pl-4 pr-4 pt-3', className)}
+          className={String.raw`
+            [&.base-picker\\_\\_input]:w-[275px]
+            [&.base-picker\\_\\_popover]:w-[275px]
+            [&.base-picker\\_\\_popover]:pr-3
+            [&.base-picker\\_\\_popover]:pb-4
+            [&.base-picker\\_\\_popover]:pl-4
+            [&.base-picker\\_\\_popover]:pt-3
+            ${className}
+          `}
         >
           <TimePickerContent
             selectedHour={selectedHour}

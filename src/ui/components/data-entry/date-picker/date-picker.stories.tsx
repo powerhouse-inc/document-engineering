@@ -28,6 +28,8 @@ import { DatePicker } from './date-picker.js'
  * Each class should follow the format `[&_.date-picker\\_\\_{element}]:{tailwind-classes}`.
  *
  * Base classes available for customization:
+ * - .base-picker__input: Input field container
+ * - .base-picker__popover: Popover container
  * - .date-picker__calendar: Calendar container
  * - .date-picker__button-next: Next month button
  * - .date-picker__button-previous: Previous month button
@@ -102,7 +104,14 @@ const meta: Meta<typeof DatePicker> = {
       resetBehavior: 'unmount',
     },
   },
-  decorators: [withTimestampsAsISOStrings],
+  decorators: [
+    withTimestampsAsISOStrings,
+    (Story) => (
+      <div style={{ minWidth: '275px', margin: '1rem auto 0' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     ...getDefaultArgTypes({
@@ -309,6 +318,10 @@ export const WithCustomizedCalendar: Story = {
       [&_.date-picker\\_\\_date-footer]:[&>button]:p-2
       [&_.date-picker\\_\\_date-footer]:[&>button]:transition-all
       [&_.date-picker\\_\\_date-footer]:[&>button]:duration-300
+      [&.input-field]:border-cyan-400
+      [&.input-field]:rounded-md
+      [&.base-picker\\_\\_input]:w-[275px]
+      [&.base-picker\\_\\_popover]:w-[75px]
     `,
   },
 }

@@ -54,14 +54,16 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
       <div className="flex flex-col space-y-2">
         <div
           className={cn(
-            'flex w-[275px] rounded-md text-sm',
+            'flex w-full rounded-md text-sm',
             'focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0',
             'dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white',
             // focus
             'focus:[&_.input-field]:bg-transparent',
             'dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white',
             disabled &&
-              'dark:bg-charcoal-900 dark:hover:bg-charcoal-900 cursor-not-allowed bg-white hover:bg-transparent'
+              'dark:bg-charcoal-900 dark:hover:bg-charcoal-900 cursor-not-allowed bg-white hover:bg-transparent',
+            'base-picker__input',
+            className
           )}
         >
           <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -94,6 +96,7 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
                 'mt-[14px]',
                 'dark:shadow-[1px_4px_15.3px_0px_#141921]',
                 '-translate-y-1',
+                'base-picker__popover',
                 className
               )}
             >
@@ -110,8 +113,8 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
             className={cn(
               'w-full rounded-l-none border-none text-right placeholder:text-right',
               // focus
-              'focus:bg-white focus-visible:ring-0 focus-visible:ring-offset-0',
-              'input-field'
+              'input-field',
+              'focus:bg-white focus-visible:ring-0 focus-visible:ring-offset-0'
             )}
             placeholder={placeholder}
             ref={ref}
