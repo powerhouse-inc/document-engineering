@@ -317,6 +317,3 @@ export const WithCustomizedCalendar: Story = {
     `,
   },
 }
-
-// [&.base-picker\\_\\_input]:w-[275px]
-// [&.base-picker\\_\\_popover]:w-[275px]
