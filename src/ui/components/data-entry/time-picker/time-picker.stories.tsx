@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { getDefaultArgTypes, StorybookControlCategory } from '../../../../scalars/lib/storybook-arg-types.js'
+import {
+  getDefaultArgTypes,
+  PrebuiltArgTypes,
+  StorybookControlCategory,
+} from '../../../../scalars/lib/storybook-arg-types.js'
 import { TimePicker } from './time-picker'
 
 /**
@@ -135,23 +139,8 @@ const meta: Meta<typeof TimePicker> = {
         type: { summary: 'string' },
       },
     },
-    viewMode: {
-      control: 'select',
-      options: ['edition', 'addition', 'removal', 'mixed'],
-      defaultValue: 'edition',
-      description: 'The mode of the time picker',
-      table: {
-        type: { summary: 'string' },
-        category: StorybookControlCategory.DIFF,
-      },
-    },
-    baseValue: {
-      control: 'text',
-      description: 'The base value of the time picker',
-      table: {
-        category: StorybookControlCategory.DIFF,
-      },
-    },
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
 
   args: {

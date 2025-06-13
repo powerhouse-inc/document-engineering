@@ -319,9 +319,11 @@ describe('TimePicker', () => {
       expect(screen.getByText('14:30')).toBeInTheDocument()
     })
 
-    it('should not render differences when viewMode is edition', () => {
-      render(<TimePicker name="test-time" label="Test Label" viewMode="edition" value="14:30" timeFormat="HH:mm" />)
-      expect(screen.queryByTestId('time-picker-diff')).not.toBeInTheDocument()
+    it('should render input field when viewMode is edition', () => {
+      render(<TimePicker name="test-time" label="Test Label" viewMode="edition" value="14:30" />)
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+      expect(input).toHaveValue('14:30')
     })
   })
 })

@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
-import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } from '../../lib/storybook-arg-types.js'
+import {
+  getDefaultArgTypes,
+  getValidationArgTypes,
+  PrebuiltArgTypes,
+  StorybookControlCategory,
+} from '../../lib/storybook-arg-types.js'
 import { TimePickerField } from './time-picker-field.js'
 
 /**
@@ -101,23 +106,8 @@ const meta: Meta<typeof TimePickerField> = {
         type: { summary: 'string' },
       },
     },
-    viewMode: {
-      control: 'select',
-      options: ['edition', 'addition', 'removal', 'mixed'],
-      defaultValue: 'edition',
-      description: 'The mode of the time picker',
-      table: {
-        type: { summary: 'string' },
-        category: StorybookControlCategory.DIFF,
-      },
-    },
-    baseValue: {
-      control: 'text',
-      description: 'The base value of the time picker',
-      table: {
-        category: StorybookControlCategory.DIFF,
-      },
-    },
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
 
   args: {
