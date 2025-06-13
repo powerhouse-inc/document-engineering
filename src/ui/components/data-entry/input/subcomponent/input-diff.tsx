@@ -1,6 +1,6 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 
-interface InputDiffProps {
+interface InputDiffProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   className?: string
   ellipsis?: boolean
@@ -16,6 +16,7 @@ export const InputDiff = ({
   multiline = false,
   rows = 3,
   hasPadding = false,
+  ...props
 }: InputDiffProps) => {
   return (
     <div
@@ -29,6 +30,7 @@ export const InputDiff = ({
       style={{
         minHeight: multiline ? `${rows * 1.5}rem` : '2.25rem',
       }}
+      {...props}
     >
       {children}
     </div>

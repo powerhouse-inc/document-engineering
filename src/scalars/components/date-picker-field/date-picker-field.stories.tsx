@@ -121,6 +121,23 @@ const meta: Meta<typeof DatePickerField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    viewMode: {
+      control: 'select',
+      options: ['edition', 'addition', 'removal', 'mixed'],
+      defaultValue: 'edition',
+      description: 'The mode of the date picker',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseValue: {
+      control: 'date',
+      description: 'The base value of the date picker',
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
   args: {
     name: 'date-picker-field',

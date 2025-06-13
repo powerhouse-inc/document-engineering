@@ -89,7 +89,6 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         disabled={disabled}
         baseValue={baseValue}
         viewMode={viewMode}
-        data-testid="checkbox-diff"
       />
     )
   }
