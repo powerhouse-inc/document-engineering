@@ -200,28 +200,51 @@ describe('DatePicker', () => {
   })
   describe('DateInputDiff differences', () => {
     it('should render DateInputDiff when viewMode is addition', () => {
-      render(<DatePicker {...defaultProps} viewMode="addition" value="2025-01-01" />)
+      render(
+        <DatePicker
+          {...defaultProps}
+          viewMode="addition"
+          value={new Date('2025-10-11T12:00:00.000Z')}
+          baseValue={new Date('2024-10-22T12:00:00.000Z')}
+          dateFormat="YYYY-MM-DD"
+        />
+      )
       expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       expect(screen.getByTestId('icon-fallback')).toBeInTheDocument()
-      const label = screen.getByText('Test Date')
-      expect(label).toBeInTheDocument()
+      expect(screen.getByText('2025-10-11')).toBeInTheDocument()
+      expect(screen.queryByText('2024-10-22')).not.toBeInTheDocument()
     })
 
     it('should render DateInputDiff when viewMode is removal', () => {
-      render(<DatePicker {...defaultProps} viewMode="removal" value="2025-01-01" />)
+      render(
+        <DatePicker
+          {...defaultProps}
+          viewMode="removal"
+          value={new Date('2025-02-11T12:00:00.000Z')}
+          baseValue={new Date('2024-10-22T12:00:00.000Z')}
+          dateFormat="YYYY-MM-DD"
+        />
+      )
       expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       expect(screen.getByTestId('icon-fallback')).toBeInTheDocument()
-      const label = screen.getByText('Test Date')
-      expect(label).toBeInTheDocument()
+      expect(screen.queryByText('2025-02-11')).not.toBeInTheDocument()
+      expect(screen.getByText('2024-10-22')).toBeInTheDocument()
     })
 
     it('should render DateInputDiff when viewMode is mixed', () => {
-      render(<DatePicker {...defaultProps} viewMode="mixed" value="2025-01-01" />)
+      render(
+        <DatePicker
+          {...defaultProps}
+          viewMode="mixed"
+          value={new Date('2025-01-01T12:00:00.000Z')}
+          baseValue={new Date('2024-01-01T12:00:00.000Z')}
+        />
+      )
       expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       const iconFallbacks = screen.getAllByTestId('icon-fallback')
       expect(iconFallbacks).toHaveLength(2)
-      const label = screen.getByText('Test Date')
-      expect(label).toBeInTheDocument()
+      expect(screen.getByText('01/01/2024')).toBeInTheDocument()
+      expect(screen.getByText('01/01/2025')).toBeInTheDocument()
     })
 
     it('should not render DateInputDiff when viewMode is edition', () => {
