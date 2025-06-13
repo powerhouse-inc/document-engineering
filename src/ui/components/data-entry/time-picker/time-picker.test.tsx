@@ -269,4 +269,61 @@ describe('TimePicker', () => {
     expect(select).toBeInTheDocument()
     expect(select).toHaveTextContent('(UTC-03) Montevideo')
   })
+
+  describe('TimePicker differences', () => {
+    it('should render differences when viewMode is addition', () => {
+      render(
+        <TimePicker
+          name="test-time"
+          label="Test Label"
+          viewMode="addition"
+          value="14:30"
+          baseValue="13:30"
+          timeFormat="HH:mm"
+        />
+      )
+      expect(screen.getByTestId('time-picker-diff')).toBeInTheDocument()
+      expect(screen.getByText('14:30')).toBeInTheDocument()
+      expect(screen.queryByText('13:30')).not.toBeInTheDocument()
+    })
+
+    it('should render differences when viewMode is removal', () => {
+      render(
+        <TimePicker
+          name="test-time"
+          label="Test Label"
+          viewMode="removal"
+          value="14:30"
+          baseValue="13:30"
+          timeFormat="HH:mm"
+        />
+      )
+      expect(screen.getByTestId('time-picker-diff')).toBeInTheDocument()
+      expect(screen.queryByText('14:30')).not.toBeInTheDocument()
+      expect(screen.getByText('13:30')).toBeInTheDocument()
+    })
+
+    it('should render differences when viewMode is mixed', () => {
+      render(
+        <TimePicker
+          name="test-time"
+          label="Test Label"
+          viewMode="mixed"
+          value="14:30"
+          baseValue="13:30"
+          timeFormat="HH:mm"
+        />
+      )
+      expect(screen.getByTestId('time-picker-diff')).toBeInTheDocument()
+      expect(screen.getByText('13:30')).toBeInTheDocument()
+      expect(screen.getByText('14:30')).toBeInTheDocument()
+    })
+
+    it('should render input field when viewMode is edition', () => {
+      render(<TimePicker name="test-time" label="Test Label" viewMode="edition" value="14:30" />)
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+      expect(input).toHaveValue('14:30')
+    })
+  })
 })
