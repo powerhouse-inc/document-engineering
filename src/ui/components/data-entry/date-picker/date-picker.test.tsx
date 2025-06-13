@@ -201,7 +201,7 @@ describe('DatePicker', () => {
   describe('DateInputDiff differences', () => {
     it('should render DateInputDiff when viewMode is addition', () => {
       render(<DatePicker {...defaultProps} viewMode="addition" value="2025-01-01" />)
-      expect(screen.getByTestId('date-picker-diff-input')).toBeInTheDocument()
+      expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       expect(screen.getByTestId('icon-fallback')).toBeInTheDocument()
       const label = screen.getByText('Test Date')
       expect(label).toBeInTheDocument()
@@ -210,7 +210,7 @@ describe('DatePicker', () => {
 
     it('should render DateInputDiff when viewMode is removal', () => {
       render(<DatePicker {...defaultProps} viewMode="removal" value="2025-01-01" />)
-      expect(screen.getByTestId('date-picker-diff-input')).toBeInTheDocument()
+      expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       expect(screen.getByTestId('icon-fallback')).toBeInTheDocument()
       const label = screen.getByText('Test Date')
       expect(label).toBeInTheDocument()
@@ -219,7 +219,7 @@ describe('DatePicker', () => {
 
     it('should render DateInputDiff when viewMode is mixed', () => {
       render(<DatePicker {...defaultProps} viewMode="mixed" value="2025-01-01" />)
-      expect(screen.getByTestId('date-picker-diff-input')).toBeInTheDocument()
+      expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       const iconFallbacks = screen.getAllByTestId('icon-fallback')
       expect(iconFallbacks).toHaveLength(2)
       const label = screen.getByText('Test Date')
@@ -229,7 +229,7 @@ describe('DatePicker', () => {
 
     it('should not render DateInputDiff when viewMode is edition', () => {
       render(<DatePicker {...defaultProps} viewMode="edition" value="2025-01-01" />)
-      expect(screen.queryByTestId('date-picker-diff-input')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('date-picker-diff')).not.toBeInTheDocument()
     })
   })
 })

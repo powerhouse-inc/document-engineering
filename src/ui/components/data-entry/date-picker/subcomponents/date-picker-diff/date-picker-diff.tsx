@@ -9,7 +9,7 @@ import { TextDiff } from '../../../input/subcomponent/text-diff.js'
 import type { DateFieldValue } from '../../types.js'
 import { getDateFormat } from '../../../date-time-picker/utils.js'
 
-interface DateInputDiffProps extends WithDifference<DateFieldValue> {
+interface DateInputDiffProps extends WithDifference<DateFieldValue>, React.HTMLAttributes<HTMLDivElement> {
   icon: IconName
   value: DateFieldValue
   label?: string
@@ -26,6 +26,7 @@ const DateInputDiff = ({
   label,
   required,
   dateFormat,
+  ...props
 }: DateInputDiffProps) => {
   const internalFormat = getDateFormat(dateFormat ?? '') ?? 'dd/MM/yyyy'
   const baseDate = baseValue ? format(new Date(baseValue), internalFormat) : ''
@@ -38,7 +39,7 @@ const DateInputDiff = ({
           {label}
         </FormLabel>
       )}
-      <InputDiff className={cn('group')} data-testid="date-picker-diff-input">
+      <InputDiff className={cn('group')} {...props}>
         {viewMode === 'mixed' ? (
           <>
             <div className={cn('flex flex-1 items-center gap-2 truncate [&>span]:truncate')}>
