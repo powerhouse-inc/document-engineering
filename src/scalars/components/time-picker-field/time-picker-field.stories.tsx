@@ -101,6 +101,23 @@ const meta: Meta<typeof TimePickerField> = {
         type: { summary: 'string' },
       },
     },
+    viewMode: {
+      control: 'select',
+      options: ['edition', 'addition', 'removal', 'mixed'],
+      defaultValue: 'edition',
+      description: 'The mode of the time picker',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseValue: {
+      control: 'text',
+      description: 'The base value of the time picker',
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
 
   args: {

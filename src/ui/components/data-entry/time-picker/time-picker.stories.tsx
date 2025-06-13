@@ -135,6 +135,23 @@ const meta: Meta<typeof TimePicker> = {
         type: { summary: 'string' },
       },
     },
+    viewMode: {
+      control: 'select',
+      options: ['edition', 'addition', 'removal', 'mixed'],
+      defaultValue: 'edition',
+      description: 'The mode of the time picker',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseValue: {
+      control: 'text',
+      description: 'The base value of the time picker',
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
 
   args: {
@@ -202,5 +219,30 @@ export const WithCustomizedCalendar: Story = {
       [&_.time-picker\\_\\_select]:[&>button]:transition-all
       [&_.time-picker\\_\\_select]:[&>button]:duration-300
     `,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Time difference addition',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Time difference removal',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Time difference mixed',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'mixed',
   },
 }

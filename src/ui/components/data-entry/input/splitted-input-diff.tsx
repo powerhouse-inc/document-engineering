@@ -49,7 +49,7 @@ const CopyIcon = ({ value, hasCopied, setHasCopied, hasHover }: CopyIconProps) =
   )
 }
 
-interface SplittedInputDiffProps extends WithDifference<string> {
+interface SplittedInputDiffProps extends WithDifference<string>, React.HTMLAttributes<HTMLDivElement> {
   value: string
   showCopyIcon?: boolean
   asLink?: boolean
@@ -64,13 +64,14 @@ const SplittedInputDiff = ({
   showCopyIcon = false,
   asLink = false,
   platformIcons,
+  ...props
 }: SplittedInputDiffProps) => {
   const [hasCopiedLeft, setHasCopiedLeft] = useState(false)
   const [hasCopiedRight, setHasCopiedRight] = useState(false)
   const hasHover = useMediaQuery('(hover: hover) and (pointer: fine)')
 
   return (
-    <InputDiff className={cn('group')}>
+    <InputDiff className={cn('group')} {...props}>
       {viewMode === 'mixed' ? (
         <>
           <div className={cn('flex flex-1 items-center gap-2 truncate [&>span]:truncate')}>
