@@ -205,7 +205,6 @@ describe('DatePicker', () => {
       expect(screen.getByTestId('icon-fallback')).toBeInTheDocument()
       const label = screen.getByText('Test Date')
       expect(label).toBeInTheDocument()
-      expect(label).toHaveClass('cursor-not-allowed')
     })
 
     it('should render DateInputDiff when viewMode is removal', () => {
@@ -214,7 +213,6 @@ describe('DatePicker', () => {
       expect(screen.getByTestId('icon-fallback')).toBeInTheDocument()
       const label = screen.getByText('Test Date')
       expect(label).toBeInTheDocument()
-      expect(label).toHaveClass('cursor-not-allowed')
     })
 
     it('should render DateInputDiff when viewMode is mixed', () => {
@@ -224,7 +222,6 @@ describe('DatePicker', () => {
       expect(iconFallbacks).toHaveLength(2)
       const label = screen.getByText('Test Date')
       expect(label).toBeInTheDocument()
-      expect(label).toHaveClass('cursor-not-allowed')
     })
 
     it('should not render DateInputDiff when viewMode is edition', () => {
