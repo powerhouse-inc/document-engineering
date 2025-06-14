@@ -265,4 +265,75 @@ describe('DateTimePicker', () => {
     expect(lastOnBlurCall.type).toBe('blur')
     expect(lastOnBlurCall.target.value).toBe('')
   })
+  describe('DateTimePicker differences', () => {
+    it('should show value when viewMode is addition', () => {
+      const value = '2025-06-05T11:47:34.000-03:00'
+      const baseValue = '2024-03-05T11:47:34.000-03:00'
+      render(
+        <DateTimePicker
+          {...defaultProps}
+          value={value}
+          baseValue={baseValue}
+          viewMode="addition"
+          dateFormat="MMM-DD-YYYY"
+          timeFormat="hh:mm"
+          timeIntervals={1}
+        />
+      )
+
+      const input = screen.getByTestId('date-time-picker-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('Jun-05-2025 11:47')).toBeInTheDocument()
+      expect(screen.queryByText('Mar-05-2024 11:47')).not.toBeInTheDocument()
+    })
+
+    it('should show baseValue when viewMode is removal', () => {
+      const value = '2024-01-02T11:55:34.000-03:00'
+      const baseValue = '2024-05-01T11:55:34.000-03:00'
+      render(
+        <DateTimePicker
+          {...defaultProps}
+          value={value}
+          baseValue={baseValue}
+          viewMode="removal"
+          dateFormat="MMM-DD-YYYY"
+          timeFormat="hh:mm"
+          timeIntervals={1}
+        />
+      )
+
+      const input = screen.getByTestId('date-time-picker-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.queryByText('Jan-02-2024 11:55')).not.toBeInTheDocument()
+      expect(screen.getByText('May-01-2024 11:55')).toBeInTheDocument()
+    })
+
+    it('should show value and baseValue when viewMode is mixed', () => {
+      const value = '2024-01-02T11:55:34.000-03:00'
+      const baseValue = '2024-05-01T11:55:34.000-03:00'
+      render(
+        <DateTimePicker
+          {...defaultProps}
+          value={value}
+          baseValue={baseValue}
+          viewMode="mixed"
+          dateFormat="MMM-DD-YYYY"
+          timeFormat="hh:mm a"
+          timeIntervals={1}
+        />
+      )
+
+      const input = screen.getByTestId('date-time-picker-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('Jan-02-2024 11:55 AM')).toBeInTheDocument()
+      expect(screen.getByText('May-01-2024 11:55 AM')).toBeInTheDocument()
+    })
+
+    it('should the input when viewMode is edition', () => {
+      const newValue = '2024-01-01T11:55:34.000-03:00'
+      render(<DateTimePicker {...defaultProps} value={newValue} viewMode="edition" />)
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+    })
+  })
 })

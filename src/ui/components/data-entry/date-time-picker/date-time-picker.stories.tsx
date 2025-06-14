@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { withTimestampsAsISOStrings } from '../../../../scalars/lib/decorators'
-import { getDefaultArgTypes, StorybookControlCategory } from '../../../../scalars/lib/storybook-arg-types'
+import {
+  getDefaultArgTypes,
+  PrebuiltArgTypes,
+  StorybookControlCategory,
+} from '../../../../scalars/lib/storybook-arg-types'
 import { DateTimePicker } from './date-time-picker.js'
 import { FORMAT_MAPPING } from './utils.js'
 
@@ -295,6 +299,8 @@ const meta: Meta<typeof DateTimePicker> = {
         category: StorybookControlCategory.DEFAULT,
       },
     },
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
 
   args: {
@@ -348,5 +354,35 @@ export const WithCustomizedContent: Story = {
       [&_.date-time-picker\\_\\_tabs_svg[data-selected=true]]:scale-110
       [&_.date-time-picker\\_\\_tabs_svg[data-selected=true]]:font-bold
     `,
+  },
+}
+export const WithDifferencesAddition: Story = {
+  args: {
+    name: 'date-time-picker',
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    value: '2024-06-12T11:47:34.000-03:00',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    name: 'date-time-picker',
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    baseValue: '2023-06-15T11:47:34.000-03:00',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    name: 'date-time-picker',
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'mixed',
   },
 }
