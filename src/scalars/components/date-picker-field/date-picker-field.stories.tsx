@@ -279,3 +279,33 @@ export const WithCustomizedCalendar: Story = {
     `,
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    name: 'date',
+    label: 'Date Picker Field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    name: 'date',
+    label: 'Date Picker Field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    name: 'date',
+    label: 'Date Picker Field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'mixed',
+  },
+}
