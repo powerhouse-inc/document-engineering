@@ -14,7 +14,7 @@ const meta = {
 } satisfies Meta<typeof FormDescription>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof FormDescription>
 
 export const Default: Story = {
   args: {

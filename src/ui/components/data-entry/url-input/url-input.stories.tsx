@@ -81,7 +81,7 @@ const meta: Meta<typeof UrlInput> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof UrlInput>
 
 export const Default: Story = {
   args: {

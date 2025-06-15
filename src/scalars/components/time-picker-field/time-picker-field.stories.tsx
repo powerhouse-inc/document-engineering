@@ -109,7 +109,7 @@ const meta: Meta<typeof TimePickerField> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof TimePickerField>
 
 export const Default: Story = {
   args: {

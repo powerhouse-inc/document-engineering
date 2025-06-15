@@ -45,7 +45,7 @@ const meta: Meta<typeof FormLabel> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof FormLabel>
 
 export const Default: Story = {
   args: {

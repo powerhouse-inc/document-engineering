@@ -25,7 +25,7 @@ const meta: Meta<typeof FormMessage> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof FormMessage>
 
 export const Info: Story = {
   args: {

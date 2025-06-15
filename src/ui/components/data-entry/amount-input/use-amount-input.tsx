@@ -216,7 +216,7 @@ export const useAmountInput = ({
     }
   }
   // Handle the change of the select
-  const handleOnChangeSelect = (e: string | string[]) => {
+  const handleOnChangeSelect = (e: string) => {
     let newValue: AmountFiat | AmountCrypto | AmountCurrency | Amount = {} as
       | AmountFiat
       | AmountCrypto

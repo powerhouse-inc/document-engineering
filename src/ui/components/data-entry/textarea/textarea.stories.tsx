@@ -77,7 +77,7 @@ const meta = {
 } satisfies Meta<typeof Textarea>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Textarea>
 
 export const Default: Story = {
   args: {

@@ -29,9 +29,11 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
 
   if (selectedValues.length === 0) {
     return (
-      <div className={cn('mx-auto flex w-full items-center', placeholder ? 'justify-between' : 'justify-end')}>
+      <div className={cn('mx-auto flex w-full items-center', placeholder ? 'justify-between gap-2' : 'justify-end')}>
         {placeholder && (
-          <span className="text-[14px] font-normal leading-5 text-gray-600 dark:text-gray-500">{placeholder}</span>
+          <span className="text-[14px] font-normal leading-5 truncate text-gray-600 dark:text-gray-500">
+            {placeholder}
+          </span>
         )}
         {searchable ? (
           <Icon name="CaretSort" size={16} className="cursor-pointer text-gray-700 dark:text-gray-400" />
@@ -50,7 +52,7 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
         {selectedValues.map((value, index) => {
           const option = options.find((o) => o.value === value)
           return !multiple ? (
-            <div key={value} className={cn('flex items-center gap-2')}>
+            <div key={value} className={cn('flex items-center gap-2 truncate')}>
               {renderIcon(option?.icon)}
               <span className={cn('truncate text-[14px] font-normal leading-5')}>{option?.label}</span>
             </div>
