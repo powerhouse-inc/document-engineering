@@ -30,7 +30,7 @@ exports[`CurrencyCodePicker > should match snapshot 1`] = `
           class="max-w-full truncate text-gray-900 dark:text-gray-50 flex items-center gap-2"
         >
           <div
-            class="flex items-center gap-2"
+            class="flex items-center gap-2 truncate"
           >
             <span
               class="truncate text-[14px] font-normal leading-5"

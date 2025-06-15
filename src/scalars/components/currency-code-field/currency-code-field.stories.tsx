@@ -90,13 +90,13 @@ type Story = StoryObj<typeof CurrencyCodeField>
 
 export const Default: Story = {
   args: {
-    label: 'Currency code',
+    label: 'Currency',
   },
 }
 
 export const Disabled: Story = {
   args: {
-    label: 'Currency code',
+    label: 'Currency',
     value: 'EUR',
     disabled: true,
     allowedTypes: 'Fiat',
@@ -105,7 +105,7 @@ export const Disabled: Story = {
 
 export const WithFavorites: Story = {
   args: {
-    label: 'Currency code',
+    label: 'Currency',
     currencies: [
       {
         ticker: 'BTC',
