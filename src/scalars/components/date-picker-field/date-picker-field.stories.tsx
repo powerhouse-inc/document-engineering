@@ -121,6 +121,23 @@ const meta: Meta<typeof DatePickerField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    viewMode: {
+      control: 'select',
+      options: ['edition', 'addition', 'removal', 'mixed'],
+      defaultValue: 'edition',
+      description: 'The mode of the date picker',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseValue: {
+      control: 'date',
+      description: 'The base value of the date picker',
+      table: {
+        category: StorybookControlCategory.DIFF,
+      },
+    },
   },
   args: {
     name: 'date-picker-field',
@@ -260,5 +277,35 @@ export const WithCustomizedCalendar: Story = {
       [&_.date-picker\\_\\_date-footer]:[&>button]:duration-200
       [&_.date-picker\\_\\_date-footer]:[&>button]:font-medium
     `,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    name: 'date',
+    label: 'Date Picker Field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    name: 'date',
+    label: 'Date Picker Field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    name: 'date',
+    label: 'Date Picker Field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'mixed',
   },
 }

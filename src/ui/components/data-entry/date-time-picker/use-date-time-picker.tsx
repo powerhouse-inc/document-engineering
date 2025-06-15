@@ -73,7 +73,7 @@ const todayDateInput = (dateFormat?: string) => {
   return format(new Date(), dateFormat ?? 'yyyy-MM-dd')
 }
 
-const parseDateTimeValueToInput = (value: DateFieldValue, dateFormat = 'yyyy-MM-dd') => {
+export const parseDateTimeValueToInput = (value: DateFieldValue, dateFormat = 'yyyy-MM-dd') => {
   const datePart = getDateFromValue(value)
   const dateFormatted = parseInputString(datePart, dateFormat)
 

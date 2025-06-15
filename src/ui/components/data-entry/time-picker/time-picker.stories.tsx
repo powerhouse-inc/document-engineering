@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { getDefaultArgTypes, StorybookControlCategory } from '../../../../scalars/lib/storybook-arg-types.js'
+import {
+  getDefaultArgTypes,
+  PrebuiltArgTypes,
+  StorybookControlCategory,
+} from '../../../../scalars/lib/storybook-arg-types.js'
 import { TimePicker } from './time-picker'
 
 /**
@@ -135,6 +139,8 @@ const meta: Meta<typeof TimePicker> = {
         type: { summary: 'string' },
       },
     },
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
 
   args: {
@@ -202,5 +208,30 @@ export const WithCustomizedCalendar: Story = {
       [&_.time-picker\\_\\_select]:[&>button]:transition-all
       [&_.time-picker\\_\\_select]:[&>button]:duration-300
     `,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Time difference addition',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Time difference removal',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Time difference mixed',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'mixed',
   },
 }

@@ -2,7 +2,7 @@ import { FormGroup } from '../../../../scalars/components/fragments/form-group/i
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import type { WithDifference } from '../../../../scalars/components/types.js'
 import { SplittedInputDiff } from '../input/splitted-input-diff.js'
-interface TextInputDiffProps extends WithDifference<string> {
+interface TextInputDiffProps extends WithDifference<string>, React.HTMLAttributes<HTMLDivElement> {
   value: string
   label?: React.ReactNode
   required?: boolean
@@ -14,6 +14,7 @@ const TextInputDiff = ({
   baseValue = '',
   viewMode = 'edition',
   diffMode = 'sentences',
+  ...props
 }: TextInputDiffProps) => {
   return (
     <FormGroup>
@@ -22,7 +23,7 @@ const TextInputDiff = ({
           {label}
         </FormLabel>
       )}
-      <SplittedInputDiff value={value} baseValue={baseValue} diffMode={diffMode} viewMode={viewMode} />
+      <SplittedInputDiff value={value} baseValue={baseValue} diffMode={diffMode} viewMode={viewMode} {...props} />
     </FormGroup>
   )
 }
