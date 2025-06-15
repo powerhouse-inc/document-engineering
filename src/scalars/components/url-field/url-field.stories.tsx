@@ -67,7 +67,7 @@ const meta: Meta<typeof UrlField> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof UrlField>
 
 export const Default: Story = {
   args: {

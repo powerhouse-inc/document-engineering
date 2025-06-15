@@ -132,8 +132,6 @@ const meta: Meta<typeof EnumField> = {
   },
   args: {
     name: 'enum-field',
-    errors: [],
-    warnings: [],
   },
 } satisfies Meta<typeof EnumField>
 
@@ -343,9 +341,34 @@ export const WithCustomStylesRadioGroup: Story = {
   },
 }
 
-export const SelectWithDifferences: Story = {
+// Differences examples
+export const WithDifferencesAddition: Story = {
   args: {
-    label: 'Icon names comparison',
+    label: 'Icon names addition',
+    variant: 'Select',
+    options: defaultOptions,
+    value: ['Globe', 'Settings'],
+    baseValue: ['Briefcase', 'Drive'],
+    multiple: true,
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Icon names removal',
+    variant: 'Select',
+    options: defaultOptions,
+    value: ['Globe', 'Settings'],
+    baseValue: ['Briefcase', 'Drive'],
+    multiple: true,
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Icon names mixed',
     variant: 'Select',
     options: defaultOptions,
     value: ['Globe', 'Settings'],

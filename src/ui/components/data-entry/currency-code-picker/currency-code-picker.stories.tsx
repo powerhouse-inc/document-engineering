@@ -128,7 +128,7 @@ const meta: Meta<typeof CurrencyCodePicker> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof CurrencyCodePicker>
 
 export const Default: Story = {
   args: {
@@ -174,5 +174,32 @@ export const WithFavorites: Story = {
       },
     ],
     favoriteCurrencies: ['BTC', 'ETH'],
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Currency addition',
+    value: 'DAI',
+    baseValue: 'ETH',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Currency removal',
+    value: 'DAI',
+    baseValue: 'ETH',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Currency mixed',
+    value: 'DAI',
+    baseValue: 'ETH',
+    viewMode: 'mixed',
   },
 }

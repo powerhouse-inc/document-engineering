@@ -58,7 +58,7 @@ const meta: Meta<typeof StringField> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof StringField>
 
 export const Default: Story = {
   args: {

@@ -180,7 +180,7 @@ const meta: Meta<typeof DateTimePickerField> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof DateTimePickerField>
 
 export const DateTimePicker: Story = {
   args: {

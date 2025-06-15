@@ -1,6 +1,8 @@
 import type React from 'react'
 import type { IconName } from '../../icon/index.js'
-import type { InputBaseProps } from '../../../../scalars/components/types.js'
+import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
+
+type CurrencyCodePickerWithDifference = Omit<WithDifference<string>, 'diffMode'>
 
 type AllowedTypes = 'Crypto' | 'Fiat' | 'Both'
 
@@ -14,13 +16,15 @@ interface Currency {
 
 type CurrencyCodePickerBaseProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  keyof InputBaseProps<string | string[]> | 'onChange' | 'onBlur'
+  keyof InputBaseProps<string> | 'onChange'
 >
 
-interface CurrencyCodePickerProps extends CurrencyCodePickerBaseProps, InputBaseProps<string | string[]> {
+interface CurrencyCodePickerProps
+  extends CurrencyCodePickerWithDifference,
+    CurrencyCodePickerBaseProps,
+    InputBaseProps<string> {
   placeholder?: string
-  onChange?: (value: string | string[]) => void
-  onBlur?: () => void
+  onChange?: (value: string) => void
   currencies?: Currency[]
   includeCurrencySymbols?: boolean
   favoriteCurrencies?: string[]
@@ -31,4 +35,4 @@ interface CurrencyCodePickerProps extends CurrencyCodePickerBaseProps, InputBase
   allowedTypes?: AllowedTypes
 }
 
-export type { AllowedTypes, Currency, CurrencyCodePickerProps }
+export type { AllowedTypes, Currency, CurrencyCodePickerProps, CurrencyCodePickerWithDifference }

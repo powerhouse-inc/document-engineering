@@ -45,7 +45,7 @@ const FormWithResetButton = () => {
 } satisfies Meta<typeof FormWithResetButton>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof FormWithResetButton>
 
 export const Default: Story = {
   args: {},

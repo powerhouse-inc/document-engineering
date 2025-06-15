@@ -66,7 +66,7 @@ const meta = {
 } satisfies Meta<typeof TextInput>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof TextInput>
 
 export const Default: Story = {
   args: {

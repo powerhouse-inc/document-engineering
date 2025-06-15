@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Select, type SelectOption } from '../select/index.js'
-import { FormGroup } from '../../../../scalars/components/fragments/index.js'
 import { getCurrencies } from './utils.js'
+import { CurrencyCodePickerDiff } from './currency-code-picker-diff.js'
 import type { CurrencyCodePickerProps } from './types.js'
 
 const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePickerProps>(
@@ -15,10 +15,19 @@ const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePicke
       searchable = false,
       contentAlign = 'start',
       allowedTypes = 'Both',
+      value,
+      defaultValue,
+      onChange,
+      label,
+      required,
+      viewMode = 'edition',
+      baseValue,
       ...props
     },
     ref
   ) => {
+    const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? '')
+
     const defaultCurrencies = currencies.length > 0 ? currencies : getCurrencies(allowedTypes)
     const options: SelectOption[] = useMemo(() => {
       const favoriteTickers = new Set(favoriteCurrencies)
@@ -69,20 +78,55 @@ const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePicke
         })
     }, [defaultCurrencies, favoriteCurrencies, includeCurrencySymbols, symbolPosition])
 
-    return (
-      <FormGroup>
+    const allOptions = [...favoriteOptions, ...options]
+    const selectedLabel = allOptions.find((option) => option.value === internalValue)?.label ?? internalValue
+    const baseLabel = allOptions.find((option) => option.value === baseValue)?.label ?? baseValue
+
+    const handleChange = useCallback(
+      (value: string | string[]) => {
+        if (Array.isArray(value)) {
+          console.warn('CurencyCodePicker received array value, expected string')
+          return
+        }
+        setInternalValue(value)
+        onChange?.(value)
+      },
+      [onChange]
+    )
+
+    useEffect(() => {
+      if (value !== undefined) {
+        setInternalValue(value)
+      }
+    }, [value])
+
+    if (viewMode === 'edition') {
+      return (
         <Select
           ref={ref}
           options={options}
           selectionIcon="checkmark"
           searchable={searchable}
-          multiple={false}
           placeholder={placeholder}
           contentAlign={contentAlign}
           favoriteOptions={favoriteOptions}
+          value={internalValue}
+          onChange={handleChange}
+          label={label}
+          required={required}
           {...props}
         />
-      </FormGroup>
+      )
+    }
+
+    return (
+      <CurrencyCodePickerDiff
+        value={selectedLabel}
+        label={label}
+        required={required}
+        viewMode={viewMode}
+        baseValue={baseLabel}
+      />
     )
   }
 )

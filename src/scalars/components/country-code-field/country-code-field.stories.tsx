@@ -93,7 +93,7 @@ const meta: Meta<typeof CountryCodeField> = {
 } satisfies Meta<typeof CountryCodeField>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof CountryCodeField>
 
 export const Default: Story = {
   args: {
@@ -169,5 +169,32 @@ export const WithDependentAreas: Story = {
     label: 'Country',
     description: 'Shows dependent areas',
     includeDependentAreas: true,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Country addition',
+    value: 'FR',
+    baseValue: 'US',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Country removal',
+    value: 'FR',
+    baseValue: 'US',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Country mixed',
+    value: 'FR',
+    baseValue: 'US',
+    viewMode: 'mixed',
   },
 }

@@ -209,8 +209,6 @@ const meta: Meta<typeof Select> = {
   },
   args: {
     name: 'select',
-    errors: [],
-    warnings: [],
   },
 } satisfies Meta<typeof Select>
 
@@ -434,9 +432,32 @@ export const WithCustomizedSelect: Story = {
   },
 }
 
-export const WithDifferences: Story = {
+// Differences examples
+export const WithDifferencesAddition: Story = {
   args: {
-    label: 'Icon names comparison',
+    label: 'Icon names addition',
+    options: defaultOptions,
+    value: ['Globe', 'Settings'],
+    baseValue: ['Briefcase', 'Drive'],
+    multiple: true,
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Icon names removal',
+    options: defaultOptions,
+    value: ['Globe', 'Settings'],
+    baseValue: ['Briefcase', 'Drive'],
+    multiple: true,
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Icon names mixed',
     options: defaultOptions,
     value: ['Globe', 'Settings'],
     baseValue: ['Briefcase', 'Drive'],

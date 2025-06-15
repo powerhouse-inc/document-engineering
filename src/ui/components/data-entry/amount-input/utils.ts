@@ -103,7 +103,6 @@ export const isValidUnit = (type: AmountInputPropsGeneric['type'], value: Amount
     return units.some((u) => u.ticker === value.unit)
   }
   if (type === 'AmountCurrency' && typeof value === 'object') {
-    console.log('ebtre')
     return units.some((u) => u.ticker === value.unit)
   }
   if (type === 'AmountCrypto' && typeof value === 'object') {
