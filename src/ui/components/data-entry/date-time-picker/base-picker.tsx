@@ -72,10 +72,12 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
                 variant="ghost"
                 disabled={disabled}
                 className={cn(
-                  'rounded-l-md border-none pl-3 pr-2',
+                  'pl-3 pr-2',
+                  'z-1',
                   'focus:text-selected-foreground focus:bg-none',
                   'button-ghost',
-                  disabled && 'cursor-not-allowed hover:bg-transparent'
+                  disabled && 'cursor-not-allowed hover:bg-transparent',
+                  'focus:outline-none focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:ring-gray-900'
                 )}
                 onClick={() => {
                   if (!disabled) {
