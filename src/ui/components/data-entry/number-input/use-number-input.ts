@@ -33,8 +33,6 @@ export const useNumberInput = ({
   const canDecrement =
     minValue !== undefined && (typeof value === 'bigint' ? value <= BigInt(minValue) : Number(value) <= minValue)
 
-  // const showSteps = isFocus
-
   // Boolean to no convert float values to BigInt
   const isBigInt = numericType && numericType === 'BigInt'
 
