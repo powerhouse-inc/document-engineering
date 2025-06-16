@@ -128,8 +128,6 @@ const meta: Meta<typeof RadioGroup> = {
   },
   args: {
     name: 'radio-group',
-    errors: [],
-    warnings: [],
   },
 } satisfies Meta<typeof RadioGroup>
 

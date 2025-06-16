@@ -102,13 +102,11 @@ const meta = {
   },
   args: {
     name: 'number-field',
-    errors: [],
-    warnings: [],
   },
 } satisfies Meta<typeof NumberInput>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof NumberInput>
 
 export const Default: Story = {
   args: {

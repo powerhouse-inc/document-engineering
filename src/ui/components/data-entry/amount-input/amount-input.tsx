@@ -7,7 +7,7 @@ import {
 } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import { type Currency, CurrencyCodePicker } from '../currency-code-picker/index.js'
-import type { SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
+import type { SelectProps } from '../select/index.js'
 import type { Amount, AmountInputPropsGeneric } from './types.js'
 import { useAmountInput } from './use-amount-input.js'
 import { NumberInput } from '../number-input/index.js'
@@ -17,7 +17,14 @@ type AdditionalProps = Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision
   className?: string
   name: string
   numberProps?: Omit<NumberFieldProps, 'name'>
-  selectProps?: Omit<SelectFieldProps, 'placeholder' | 'selectionIcon' | 'onBlur'>
+  selectProps?: Omit<
+    SelectProps,
+    'placeholder' | 'selectionIcon' | 'onBlur' | 'baseValue' | 'defaultValue' | 'value'
+  > & {
+    baseValue?: string
+    defaultValue?: string
+    value?: string
+  }
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   currencyPosition?: 'left' | 'right'
@@ -131,6 +138,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
               contentClassName="[&]:!w-[120px]"
               disabled={disabled}
               currencies={options}
+              value={valueSelect}
               onChange={handleOnChangeSelect}
               placeholder={placeholderSelect}
               includeCurrencySymbols={includeCurrencySymbols}

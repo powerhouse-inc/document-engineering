@@ -190,7 +190,7 @@ const meta: Meta<typeof DropdownExample> = {
 } satisfies Meta<typeof DropdownExample>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof DropdownExample>
 export const Default: Story = {
   args: {
     label: 'Export as',

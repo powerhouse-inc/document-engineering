@@ -11,7 +11,7 @@ const meta = {
 } satisfies Meta<typeof Icon>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Icon>
 
 export const AllIcons: Story = {
   args: {

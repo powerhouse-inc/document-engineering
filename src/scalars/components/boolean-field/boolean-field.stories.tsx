@@ -85,7 +85,7 @@ const meta = {
 } satisfies Meta<typeof BooleanField>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof BooleanField>
 
 export const Checkbox: Story = {
   args: {

@@ -20,7 +20,6 @@ const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerP
       optionFormat = 'NamesOnly',
       showFlagIcons = true,
       enableSearch,
-      // diff props
       viewMode = 'edition',
       baseValue,
       ...props

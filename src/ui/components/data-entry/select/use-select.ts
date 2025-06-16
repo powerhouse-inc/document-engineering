@@ -56,7 +56,7 @@ export function useSelect({ options = [], multiple = false, defaultValue, value,
       setSelectedValues(newValues)
       onChange?.(multiple ? newValues : (newValues[0] ?? ''))
     },
-    [multiple, selectedValues, options, onChange]
+    [multiple, selectedValues, onChange]
   )
 
   const handleClear = useCallback(() => {

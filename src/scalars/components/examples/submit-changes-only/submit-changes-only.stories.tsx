@@ -18,6 +18,6 @@ const meta = {
 } satisfies Meta<typeof SubmitChangesOnly>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof SubmitChangesOnly>
 
 export const Default: Story = {}

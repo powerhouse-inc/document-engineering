@@ -187,7 +187,7 @@ const meta = {
 } satisfies Meta<typeof AmountField>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof AmountField>
 
 export const Default: Story = {
   args: {

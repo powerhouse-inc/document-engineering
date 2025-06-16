@@ -145,7 +145,7 @@ const meta: Meta<typeof DatePickerField> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof DatePickerField>
 
 export const Default: Story = {
   args: {
