@@ -2,9 +2,9 @@ import { useMemo } from 'react'
 import { cn } from '../../../../../scalars/index.js'
 import { mockData, type MockedPerson } from '../../mock-data.js'
 import { ObjectSetTable } from '../../object-set-table.js'
-import type { ColumnDef } from '../../types.js'
+import type { ColumnDef, ObjectSetTableConfig } from '../../types.js'
 
-const ComputedColumnsExample = () => {
+const ComputedColumnsExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'columns' | 'data'>) => {
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
       { field: 'firstName', title: 'Name', width: '100px' },
@@ -62,6 +62,7 @@ const ComputedColumnsExample = () => {
       data={mockData.slice(0, 6)}
       allowRowSelection={true}
       showRowNumbers={true}
+      {...props}
     />
   )
 }
