@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import type { NumericType } from './types.js'
 import { getDisplayValue } from './utils.js'
 import { isNotSafeValue } from '../amount-input/utils.js'
@@ -13,7 +13,6 @@ interface UseNumberFieldProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   trailingZeros?: boolean
   precision?: number
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export const useNumberInput = ({
@@ -26,9 +25,7 @@ export const useNumberInput = ({
   onBlur,
   trailingZeros = false,
   precision = 0,
-  onFocus,
 }: UseNumberFieldProps) => {
-  const [isFocus, setIsFocus] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const canIncrement =
     maxValue !== undefined && (typeof value === 'bigint' ? value >= BigInt(maxValue) : Number(value) >= maxValue)
@@ -36,7 +33,7 @@ export const useNumberInput = ({
   const canDecrement =
     minValue !== undefined && (typeof value === 'bigint' ? value <= BigInt(minValue) : Number(value) <= minValue)
 
-  const showSteps = isFocus
+  // const showSteps = isFocus
 
   // Boolean to no convert float values to BigInt
   const isBigInt = numericType && numericType === 'BigInt'
@@ -107,7 +104,6 @@ export const useNumberInput = ({
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocus(false)
     const inputValue = e.target.value
 
     // If the value is not a number, not an empty string, or is empty, show the error message or keep it empty
@@ -157,24 +153,15 @@ export const useNumberInput = ({
     onBlur?.(e)
   }
 
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setIsFocus(true)
-    onFocus?.(e)
-  }
-
   return {
     canIncrement,
     canDecrement,
-    showSteps,
     preventInvalidCharsAndHandleArrows,
     stepValueHandler,
     blockInvalidPaste,
     preventLetterInput,
     isBigInt,
     handleBlur,
-    handleFocus,
-    isFocus,
     buttonRef,
   }
 }
