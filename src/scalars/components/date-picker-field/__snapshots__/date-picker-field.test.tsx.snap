@@ -24,7 +24,7 @@ exports[`DatePickerField > should match the snapshot 1`] = `
             aria-controls="radix-:r1:"
             aria-expanded="false"
             aria-haspopup="dialog"
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-l-md border-none pl-3 pr-2 focus:text-selected-foreground focus:bg-none button-ghost"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground pl-3 pr-3 mr-3 focus:text-selected-foreground focus:bg-none button-ghost focus:outline-none focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:ring-gray-900"
             data-state="closed"
             type="button"
           >
