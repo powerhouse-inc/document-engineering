@@ -2,11 +2,11 @@ import { useMemo } from 'react'
 import { cn } from '../../../../../scalars/index.js'
 import { mockData, type MockedPerson } from '../../mock-data.js'
 import { ObjectSetTable } from '../../object-set-table.js'
-import type { ColumnDef } from '../../types.js'
+import type { ColumnDef, ObjectSetTableConfig } from '../../types.js'
 import { Icon } from '../../../icon/icon.js'
 import { Tooltip, TooltipProvider } from '../../../tooltip/tooltip.js'
 
-const CustomRenderingExample = () => {
+const CustomRenderingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'columns' | 'data'>) => {
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
       {
@@ -76,7 +76,7 @@ const CustomRenderingExample = () => {
     []
   )
 
-  return <ObjectSetTable<MockedPerson> columns={columns} data={mockData} minRowCount={10} />
+  return <ObjectSetTable<MockedPerson> columns={columns} data={mockData} minRowCount={10} {...props} />
 }
 
 export default CustomRenderingExample

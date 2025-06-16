@@ -519,7 +519,7 @@ export const CellTypes: Story = {
  * This story renders the ComputedColumnsExample component from the examples.
  */
 export const ComputedColumns: StoryObj = {
-  render: () => <ComputedColumnsExample />,
+  render: (args) => <ComputedColumnsExample {...args} />,
 }
 
 /**
@@ -528,5 +528,5 @@ export const ComputedColumns: StoryObj = {
  * This story renders the CustomRenderingExample component from the examples.
  */
 export const CustomRendering: StoryObj = {
-  render: () => <CustomRenderingExample />,
+  render: (args) => <CustomRenderingExample {...args} />,
 }
