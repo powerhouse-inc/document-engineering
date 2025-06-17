@@ -10,16 +10,6 @@ import { Select } from './select.js'
 
 /**
  * The `Select` component provides a dropdown selection field.
- * It supports multiple configuration properties like:
- * - label
- * - description
- * - placeholder
- * - options
- * - multiple
- * - searchable
- * - selectionIcon
- * - selectionIconPosition
- * - contentAlign
  *
  * Features include:
  * - Single and multiple selection modes

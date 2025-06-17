@@ -9,17 +9,6 @@ import { CurrencyCodePicker } from './currency-code-picker.js'
 
 /**
  * The `CurrencyCodePicker` component provides a dropdown selection field for currency codes.
- * It supports multiple configuration properties like:
- * - label
- * - description
- * - placeholder
- * - currencies
- * - favoriteCurrencies
- * - includeCurrencySymbols
- * - symbolPosition
- * - allowedTypes
- * - searchable
- * - contentAlign
  *
  * Features include:
  * - Support for both fiat and crypto currencies

@@ -34,7 +34,7 @@ const IdAutocompleteList: React.FC<IdAutocompleteListProps> = ({
   previewPlaceholder,
 }) => {
   const cmdkSearch = useCommandState((state) => state.search)
-  const defaultOption: IdAutocompleteOption = previewPlaceholder || {
+  const defaultOption: IdAutocompleteOption = previewPlaceholder ?? {
     value: 'value not available',
     title: 'Title not available',
     path: 'Path not available',

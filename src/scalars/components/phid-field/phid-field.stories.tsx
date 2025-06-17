@@ -144,16 +144,6 @@ const meta: Meta<typeof PHIDField> = {
     },
 
     ...PrebuiltArgTypes.viewMode,
-    diffMode: {
-      control: 'select',
-      description: 'The mode of the input field',
-      options: ['sentences'],
-      table: {
-        type: { summary: 'sentences' },
-        defaultValue: { summary: 'sentences' },
-        category: StorybookControlCategory.DIFF,
-      },
-    },
     ...PrebuiltArgTypes.baseValue,
     basePreviewIcon: {
       control: 'text',
@@ -244,5 +234,62 @@ export const Filled: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'PHID field addition',
+    placeholder: 'phd:',
+    allowUris: true,
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'addition',
+    baseValue: 'phd:abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+    basePreviewIcon: 'PowerhouseLogoSmall',
+    basePreviewTitle: 'Old Document A',
+    basePreviewPath: 'old/projects/finance/document-a',
+    basePreviewDescription: 'Old Financial report for Q1 2024',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'PHID field removal',
+    placeholder: 'phd:',
+    allowUris: true,
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'removal',
+    baseValue: 'phd:abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+    basePreviewIcon: 'PowerhouseLogoSmall',
+    basePreviewTitle: 'Old Document A',
+    basePreviewPath: 'old/projects/finance/document-a',
+    basePreviewDescription: 'Old Financial report for Q1 2024',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'PHID field mixed',
+    placeholder: 'phd:',
+    allowUris: true,
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'mixed',
+    baseValue: 'phd:abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+    basePreviewIcon: 'PowerhouseLogoSmall',
+    basePreviewTitle: 'Old Document A',
+    basePreviewPath: 'old/projects/finance/document-a',
+    basePreviewDescription: 'Old Financial report for Q1 2024',
   },
 }

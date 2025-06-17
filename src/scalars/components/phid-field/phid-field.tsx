@@ -17,7 +17,7 @@ const PHIDField = withFieldValidation<PHIDFieldProps>(PHIDInput, {
         const domainSegment = '[a-zA-Z0-9](?:[a-zA-Z0-9\\-]*[a-zA-Z0-9])?'
         const domain = `${domainSegment}(?:\\.${domainSegment})*`
         const uuidPattern = '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
-        const genericIDPattern = '[A-Za-z0-9+/={\}\.\~?&]+'
+        const genericIDPattern = '[A-Za-z0-9+/={}.~?&]+'
         const documentIDPattern = `((${genericIDPattern})|(${uuidPattern}))`
         const URLFormat = `^phd://${domain}/${documentIDPattern}$`
 
@@ -50,7 +50,7 @@ const PHIDField = withFieldValidation<PHIDFieldProps>(PHIDInput, {
 
         // Validate scope
         if (Array.isArray(allowedScopes)) {
-          const scopeMatch = /.*:.*::([^:]+)$/.exec(value) || /.*:.*:.*:([^:]+)$/.exec(value)
+          const scopeMatch = /.*:.*::([^:]+)$/.exec(value) ?? /.*:.*:.*:([^:]+)$/.exec(value)
           if (scopeMatch && !allowedScopes.includes(scopeMatch[1])) {
             return `Invalid scope. Allowed scopes are: ${allowedScopes.join(', ')}`
           }

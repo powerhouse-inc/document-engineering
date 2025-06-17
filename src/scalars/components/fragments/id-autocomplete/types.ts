@@ -1,6 +1,6 @@
 import type { IconName } from '../../../../ui/components/icon/index.js'
 import type React from 'react'
-import type { InputBaseProps } from '../../types.js'
+import type { InputBaseProps, ViewMode } from '../../types.js'
 
 interface IdAutocompleteBaseConfigProps {
   onChange?: (value: string) => void
@@ -47,13 +47,6 @@ type IdAutocompleteConfigProps = IdAutocompleteBaseConfigProps &
       }
   )
 
-type IdAutocompleteProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  keyof InputBaseProps<string> | keyof IdAutocompleteConfigProps | 'pattern'
-> &
-  InputBaseProps<string> &
-  IdAutocompleteConfigProps
-
 interface IdAutocompleteBaseOption {
   icon?: IconName | React.ReactElement
   title?: string
@@ -68,5 +61,19 @@ interface IdAutocompleteBaseOption {
 }
 
 type IdAutocompleteOption<T extends Record<string, unknown> = Record<never, unknown>> = IdAutocompleteBaseOption & T
+
+type IdAutocompleteProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  keyof InputBaseProps<string> | keyof IdAutocompleteConfigProps | 'pattern'
+> &
+  InputBaseProps<string> &
+  IdAutocompleteConfigProps & {
+    viewMode?: ViewMode
+    baseValue?: IdAutocompleteBaseOption['value']
+    basePreviewIcon?: IdAutocompleteBaseOption['icon']
+    basePreviewTitle?: IdAutocompleteBaseOption['title']
+    basePreviewPath?: IdAutocompleteBaseOption['path']
+    basePreviewDescription?: IdAutocompleteBaseOption['description']
+  }
 
 export type { IdAutocompleteOption, IdAutocompleteProps }
