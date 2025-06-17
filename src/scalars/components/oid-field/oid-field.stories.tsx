@@ -79,6 +79,16 @@ const meta: Meta<typeof OIDField> = {
       if: { arg: 'autoComplete', neq: false },
     },
 
+    initialOptions: {
+      control: 'object',
+      description: 'Array of options to initially populate the autocomplete dropdown',
+      table: {
+        type: { summary: 'OIDOption[]' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+      if: { arg: 'autoComplete', neq: false },
+    },
+
     previewPlaceholder: {
       control: 'object',
       description:
@@ -109,6 +119,41 @@ const meta: Meta<typeof OIDField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
       if: { arg: 'autoComplete', neq: false },
+    },
+
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
+    basePreviewIcon: {
+      control: 'object',
+      description: 'The icon of the base preview',
+      table: {
+        type: { summary: 'IconName | React.ReactElement' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewTitle: {
+      control: 'text',
+      description: 'The title of the base preview',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewPath: {
+      control: 'object',
+      description: 'The path of the base preview',
+      table: {
+        type: { summary: 'string | { text: string; url: string; }' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewDescription: {
+      control: 'text',
+      description: 'The description of the base preview',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
     },
 
     ...getValidationArgTypes(),
@@ -165,5 +210,59 @@ export const Filled: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'OID field addition',
+    placeholder: 'uuid',
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'addition',
+    baseValue: 'abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+    basePreviewIcon: 'Braces',
+    basePreviewTitle: 'Old Object A',
+    basePreviewPath: 'old-rwa-portfolio-a',
+    basePreviewDescription: 'Old Object A description',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'OID field removal',
+    placeholder: 'uuid',
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'removal',
+    baseValue: 'abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+    basePreviewIcon: 'Braces',
+    basePreviewTitle: 'Old Object A',
+    basePreviewPath: 'old-rwa-portfolio-a',
+    basePreviewDescription: 'Old Object A description',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'OID field mixed',
+    placeholder: 'uuid',
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'mixed',
+    baseValue: 'abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+    basePreviewIcon: 'Braces',
+    basePreviewTitle: 'Old Object A',
+    basePreviewPath: 'old-rwa-portfolio-a',
+    basePreviewDescription: 'Old Object A description',
   },
 }

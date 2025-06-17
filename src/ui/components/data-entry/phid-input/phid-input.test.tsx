@@ -1,35 +1,22 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import { IdAutocomplete } from './id-autocomplete.js'
+import { PHIDInput } from './phid-input.js'
 
-describe('IdAutocomplete Component', () => {
-  window.HTMLElement.prototype.scrollIntoView = vi.fn()
-  window.Element.prototype.scrollTo = vi.fn()
-  window.matchMedia = vi.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query as string,
-    onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  }))
-
+describe('PHIDInput Component', () => {
   const mockedOptions = [
     {
-      icon: 'PowerhouseLogoSmall',
+      icon: 'PowerhouseLogoSmall' as const,
       title: 'Document A',
       path: 'projects/finance/document-a',
-      value: 'document-a',
+      value: 'phd:baefc2a4-f9a0-4950-8161-fd8d8cc7dea7:main:public',
       description: 'Financial report for Q1 2024',
     },
     {
-      icon: 'PowerhouseLogoSmall',
+      icon: 'PowerhouseLogoSmall' as const,
       title: 'Document B',
       path: 'projects/legal/document-b',
-      value: 'document-b',
+      value: 'phd:baefc2a4-f9a0-4950-8161-fd8d8cc6cdb8:main:public',
       description: 'Legal compliance documentation',
     },
   ]
@@ -41,10 +28,10 @@ describe('IdAutocomplete Component', () => {
 
   it('should match snapshot', () => {
     const { asFragment } = render(
-      <IdAutocomplete
-        name="id-autocomplete"
-        label="Id Autocomplete Input"
-        placeholder="Search..."
+      <PHIDInput
+        name="phid"
+        label="PHID Input"
+        placeholder="phd:"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
       />
@@ -54,8 +41,8 @@ describe('IdAutocomplete Component', () => {
 
   it('should render with label', () => {
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
@@ -66,8 +53,8 @@ describe('IdAutocomplete Component', () => {
 
   it('should render with description', () => {
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         description="Test Description"
         fetchOptionsCallback={defaultGetOptions}
@@ -79,8 +66,8 @@ describe('IdAutocomplete Component', () => {
 
   it('should handle disabled state', () => {
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         disabled
         fetchOptionsCallback={defaultGetOptions}
@@ -92,30 +79,30 @@ describe('IdAutocomplete Component', () => {
 
   it('should display error messages', async () => {
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
-        errors={['Invalid format']}
+        errors={['Invalid PHID format']}
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
       />
     )
     await waitFor(() => {
-      expect(screen.getByText('Invalid format')).toBeInTheDocument()
+      expect(screen.getByText('Invalid PHID format')).toBeInTheDocument()
     })
   })
 
   it('should display warning messages', () => {
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
-        warnings={['Option may be deprecated']}
+        warnings={['PHID may be deprecated']}
         fetchOptionsCallback={defaultGetOptions}
         fetchSelectedOptionCallback={defaultGetSelectedOption}
       />
     )
-    expect(screen.getByText('Option may be deprecated')).toBeInTheDocument()
+    expect(screen.getByText('PHID may be deprecated')).toBeInTheDocument()
   })
 
   it('should show autocomplete options', async () => {
@@ -124,8 +111,8 @@ describe('IdAutocomplete Component', () => {
     Math.random = vi.fn().mockReturnValue(1)
 
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         variant="withValueTitleAndDescription"
         fetchOptionsCallback={defaultGetOptions}
@@ -139,7 +126,10 @@ describe('IdAutocomplete Component', () => {
     await user.type(input, 'test')
 
     await waitFor(() => {
-      expect(defaultGetOptions).toHaveBeenCalledWith('test', {})
+      expect(defaultGetOptions).toHaveBeenCalledWith('test', {
+        allowUris: undefined,
+        allowedScopes: undefined,
+      })
     })
 
     await waitFor(() => {
@@ -153,8 +143,8 @@ describe('IdAutocomplete Component', () => {
 
   it('should have correct ARIA attributes', async () => {
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         required
         errors={['Error message']}
@@ -173,8 +163,8 @@ describe('IdAutocomplete Component', () => {
 
   it('should show correct placeholders for different variants', () => {
     const { rerender } = render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         variant="withValueTitleAndDescription"
         fetchOptionsCallback={defaultGetOptions}
@@ -183,12 +173,12 @@ describe('IdAutocomplete Component', () => {
     )
 
     expect(screen.getByText('Title not available')).toBeInTheDocument()
-    expect(screen.getByText('Path not available')).toBeInTheDocument()
+    expect(screen.getByText('Type not available')).toBeInTheDocument()
     expect(screen.getByText('Description not available')).toBeInTheDocument()
 
     rerender(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         variant="withValueAndTitle"
         fetchOptionsCallback={defaultGetOptions}
@@ -197,12 +187,12 @@ describe('IdAutocomplete Component', () => {
     )
 
     expect(screen.getByText('Title not available')).toBeInTheDocument()
-    expect(screen.getByText('Path not available')).toBeInTheDocument()
+    expect(screen.getByText('Type not available')).toBeInTheDocument()
     expect(screen.queryByText('Description not available')).not.toBeInTheDocument()
 
     rerender(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         variant="withValue"
         fetchOptionsCallback={defaultGetOptions}
@@ -216,7 +206,7 @@ describe('IdAutocomplete Component', () => {
   })
 
   it('should handle autoComplete disabled', () => {
-    render(<IdAutocomplete name="id-autocomplete" label="Test Label" autoComplete={false} />)
+    render(<PHIDInput name="phid" label="Test Label" autoComplete={false} />)
 
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
     expect(screen.getByRole('textbox')).toBeInTheDocument()
@@ -228,8 +218,8 @@ describe('IdAutocomplete Component', () => {
     Math.random = vi.fn().mockReturnValue(1)
 
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         variant="withValueTitleAndDescription"
         fetchOptionsCallback={defaultGetOptions}
@@ -257,8 +247,8 @@ describe('IdAutocomplete Component', () => {
   it('should not invoke onChange on mount when it has a defaultValue', () => {
     const onChange = vi.fn()
     render(
-      <IdAutocomplete
-        name="id-autocomplete"
+      <PHIDInput
+        name="phid"
         label="Test Label"
         defaultValue={mockedOptions[0].value}
         fetchOptionsCallback={defaultGetOptions}
@@ -267,5 +257,141 @@ describe('IdAutocomplete Component', () => {
       />
     )
     expect(onChange).not.toHaveBeenCalled()
+  })
+
+  // Tests for viewMode and diffs functionality
+  describe('viewMode and diffs', () => {
+    it('should render in edition mode by default', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render in edition mode when viewMode is explicitly set to edition', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="edition"
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is addition', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="addition"
+          value={mockedOptions[0].value}
+          baseValue={mockedOptions[1].value}
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].value)).toBeInTheDocument()
+      expect(screen.queryByText(mockedOptions[1].value)).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is removal', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="removal"
+          value={mockedOptions[0].value}
+          baseValue={mockedOptions[1].value}
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[1].value)).toBeInTheDocument()
+      expect(screen.queryByText(mockedOptions[0].value)).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is mixed', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="mixed"
+          value={mockedOptions[0].value}
+          baseValue={mockedOptions[1].value}
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].value)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[1].value)).toBeInTheDocument()
+    })
+
+    it('should pass correct props to diff component', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="mixed"
+          value={mockedOptions[0].value}
+          baseValue={mockedOptions[1].value}
+          required
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText('*')).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].value)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[1].value)).toBeInTheDocument()
+    })
+
+    it('should handle empty value in diff mode', () => {
+      const { container } = render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="addition"
+          value=""
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      const diffSpans = container.querySelectorAll('span')
+      diffSpans.forEach((span) => {
+        expect(span).toHaveTextContent('')
+      })
+    })
+
+    it('should respect variant in diff mode', () => {
+      render(
+        <PHIDInput
+          name="phid"
+          label="Test Label"
+          viewMode="addition"
+          value={mockedOptions[0].value}
+          initialOptions={mockedOptions}
+          variant="withValueAndTitle"
+          fetchOptionsCallback={defaultGetOptions}
+          fetchSelectedOptionCallback={defaultGetSelectedOption}
+        />
+      )
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].value)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].title)).toBeInTheDocument()
+      expect(screen.getByText(mockedOptions[0].path)).toBeInTheDocument()
+      expect(screen.queryByText(mockedOptions[0].description)).not.toBeInTheDocument()
+    })
   })
 })

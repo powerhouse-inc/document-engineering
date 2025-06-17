@@ -1,10 +1,10 @@
-import { Icon, type IconName } from '../../icon/index.js'
+import React from 'react'
+import { Icon, type IconName } from '../../../../ui/components/icon/index.js'
 import { FormLabel } from '../../../../scalars/components/fragments/index.js'
 import { cn } from '../../../../scalars/lib/index.js'
-import React from 'react'
-import { SplittedInputDiff } from '../input/splitted-input-diff.js'
-import { TextDiff } from '../input/subcomponent/text-diff.js'
-import type { PHIDInputProps, PHIDInputWithDifference } from './types.js'
+import { SplittedInputDiff } from '../../../../ui/components/data-entry/input/splitted-input-diff.js'
+import { TextDiff } from '../../../../ui/components/data-entry/input/subcomponent/text-diff.js'
+import type { IdAutocompleteOption, IdAutocompleteProps } from './types.js'
 
 interface IconRendererProps {
   customIcon?: IconName | React.ReactElement
@@ -13,77 +13,65 @@ interface IconRendererProps {
   isAddition?: boolean
 }
 
-const IconRenderer = ({ customIcon, asPlaceholder, isRemoval, isAddition }: IconRendererProps) => {
+const IconRenderer = ({ customIcon, asPlaceholder }: IconRendererProps) => {
   if (typeof customIcon === 'string') {
     return (
-      <Icon
-        name={customIcon}
-        size={24}
-        className={cn(
-          'shrink-0',
-          asPlaceholder ? 'text-gray-400' : 'text-gray-700',
-          isRemoval && 'rounded-md bg-red-600/30 p-1',
-          isAddition && 'rounded-md bg-green-600/30 p-1'
-        )}
-      />
+      <Icon name={customIcon} size={24} className={cn('shrink-0', asPlaceholder ? 'text-gray-400' : 'text-gray-700')} />
     )
   }
   if (React.isValidElement(customIcon)) {
-    return (
-      <div
-        className={cn(
-          'size-6 shrink-0 overflow-hidden',
-          isRemoval && 'rounded-md bg-red-600/30 p-1',
-          isAddition && 'rounded-md bg-green-600/30 p-1'
-        )}
-      >
-        {customIcon}
-      </div>
-    )
+    return <div className={cn('size-6 shrink-0 overflow-hidden')}>{customIcon}</div>
   }
   return null
 }
 
-interface PHIDInputDiffProps extends PHIDInputWithDifference {
-  value: PHIDInputProps['value']
-  label: PHIDInputProps['label']
-  required: PHIDInputProps['required']
-  autoComplete: PHIDInputProps['autoComplete']
-  initialOptions: PHIDInputProps['initialOptions']
-  previewPlaceholder: PHIDInputProps['previewPlaceholder']
-  variant: PHIDInputProps['variant']
+interface IdAutocompleteDiffProps {
+  value: IdAutocompleteProps['value']
+  currentOption?: IdAutocompleteOption
+  label: IdAutocompleteProps['label']
+  required: IdAutocompleteProps['required']
+  autoComplete: IdAutocompleteProps['autoComplete']
+  previewPlaceholder: IdAutocompleteProps['previewPlaceholder']
+  variant: IdAutocompleteProps['variant']
+  viewMode: IdAutocompleteProps['viewMode']
+  baseValue: IdAutocompleteProps['baseValue']
+  basePreviewIcon: IdAutocompleteProps['basePreviewIcon']
+  basePreviewTitle: IdAutocompleteProps['basePreviewTitle']
+  basePreviewPath: IdAutocompleteProps['basePreviewPath']
+  basePreviewDescription: IdAutocompleteProps['basePreviewDescription']
 }
 
-const PHIDInputDiff = ({
+const IdAutocompleteDiff = ({
   value = '',
+  currentOption,
   label,
   required,
   autoComplete,
-  initialOptions,
   previewPlaceholder,
   variant,
   viewMode,
-  diffMode = 'sentences',
   baseValue = '',
   basePreviewIcon,
   basePreviewTitle = '',
   basePreviewPath = '',
   basePreviewDescription = '',
-}: PHIDInputDiffProps) => {
-  const matchingOption = Array.isArray(initialOptions)
-    ? initialOptions.find((option) => option.value === value)
-    : undefined
+}: IdAutocompleteDiffProps) => {
   const previewPlaceholderPath =
     (typeof previewPlaceholder?.path === 'object' ? previewPlaceholder.path.text : previewPlaceholder?.path) ?? ''
+  const basePreviewPathText = typeof basePreviewPath === 'object' ? basePreviewPath.text : basePreviewPath
 
-  const previewTitle = matchingOption?.title ?? ''
-  const previewPath = (typeof matchingOption?.path === 'object' ? matchingOption.path.text : matchingOption?.path) ?? ''
-  const previewDescription = matchingOption?.description ?? ''
+  const previewTitle = currentOption?.title ?? ''
+  const previewPath = (typeof currentOption?.path === 'object' ? currentOption.path.text : currentOption?.path) ?? ''
+  const previewDescription = currentOption?.description ?? ''
 
-  // TODO: implement icon differences
-  // temporary logic to handle icon rendering
-  const asPlaceholder = matchingOption?.icon === undefined
-  const previewIcon = asPlaceholder ? (previewPlaceholder?.icon ?? 'PowerhouseLogoSmall') : matchingOption.icon
+  // TODO: implement real icon differences
+  const placeholderIcon = previewPlaceholder?.icon ?? 'PowerhouseLogoSmall'
+
+  const baseIcon = basePreviewIcon ?? placeholderIcon
+  const baseIconAsPlaceholder = !basePreviewIcon
+
+  const currentIcon = currentOption?.icon ?? placeholderIcon
+  const currentIconAsPlaceholder = !currentOption?.icon
 
   return (
     <div className={cn('flex flex-col gap-2')}>
@@ -101,7 +89,7 @@ const PHIDInputDiff = ({
             baseValue={baseValue}
             value={value}
             viewMode={viewMode}
-            diffMode={diffMode}
+            diffMode="sentences"
             showCopyIcon={true}
           />
         </div>
@@ -113,7 +101,10 @@ const PHIDInputDiff = ({
               <div className={cn('grid w-full', viewMode === 'mixed' && 'grid-cols-2 gap-4')}>
                 <div className={cn('flex gap-2 overflow-hidden', viewMode === 'mixed' && 'pr-1')}>
                   {/* left preview icon */}
-                  <IconRenderer customIcon={previewIcon} asPlaceholder={asPlaceholder} />
+                  <IconRenderer
+                    customIcon={viewMode === 'addition' ? currentIcon : baseIcon}
+                    asPlaceholder={viewMode === 'addition' ? currentIconAsPlaceholder : baseIconAsPlaceholder}
+                  />
 
                   <div className={cn('flex min-w-0 grow flex-col gap-1 overflow-hidden')}>
                     {/* left preview title */}
@@ -127,23 +118,23 @@ const PHIDInputDiff = ({
                         baseValue={basePreviewTitle}
                         value={previewTitle}
                         viewMode={viewMode === 'mixed' ? 'removal' : viewMode}
-                        diffMode={diffMode}
+                        diffMode="sentences"
                         className={cn('w-full truncate text-sm font-bold leading-[18px]')}
                       />
                     )}
 
                     {/* left preview path */}
-                    {((viewMode === 'removal' || viewMode === 'mixed') && basePreviewPath === '') ||
+                    {((viewMode === 'removal' || viewMode === 'mixed') && basePreviewPathText === '') ||
                     (viewMode === 'addition' && previewPath === '') ? (
                       <span className={cn('w-full truncate text-xs leading-[18px] text-gray-400')}>
                         {previewPlaceholderPath === '' ? 'Type not available' : previewPlaceholderPath}
                       </span>
                     ) : (
                       <TextDiff
-                        baseValue={basePreviewPath}
+                        baseValue={basePreviewPathText}
                         value={previewPath}
                         viewMode={viewMode === 'mixed' ? 'removal' : viewMode}
-                        diffMode={diffMode}
+                        diffMode="sentences"
                         className={cn('w-full truncate text-xs leading-[18px] text-gray-500')}
                       />
                     )}
@@ -153,7 +144,7 @@ const PHIDInputDiff = ({
                 {viewMode === 'mixed' && (
                   <div className={cn('flex gap-2 overflow-hidden pl-1')}>
                     {/* right preview icon */}
-                    <IconRenderer customIcon={previewIcon} asPlaceholder={asPlaceholder} />
+                    <IconRenderer customIcon={currentIcon} asPlaceholder={currentIconAsPlaceholder} />
 
                     <div className={cn('flex min-w-0 grow flex-col gap-1 overflow-hidden')}>
                       {/* right preview title */}
@@ -166,7 +157,7 @@ const PHIDInputDiff = ({
                           baseValue={basePreviewTitle}
                           value={previewTitle}
                           viewMode="addition"
-                          diffMode={diffMode}
+                          diffMode="sentences"
                           className={cn('w-full truncate text-sm font-bold leading-[18px]')}
                         />
                       )}
@@ -178,10 +169,10 @@ const PHIDInputDiff = ({
                         </span>
                       ) : (
                         <TextDiff
-                          baseValue={basePreviewPath}
+                          baseValue={basePreviewPathText}
                           value={previewPath}
                           viewMode="addition"
-                          diffMode={diffMode}
+                          diffMode="sentences"
                           className={cn('w-full truncate text-xs leading-[18px] text-gray-500')}
                         />
                       )}
@@ -204,7 +195,7 @@ const PHIDInputDiff = ({
                         baseValue={basePreviewDescription}
                         value={previewDescription}
                         viewMode={viewMode === 'mixed' ? 'removal' : viewMode}
-                        diffMode={diffMode}
+                        diffMode="sentences"
                         className={cn('w-full text-xs leading-5')}
                         childrenClassName={cn('line-clamp-2')}
                       />
@@ -223,7 +214,7 @@ const PHIDInputDiff = ({
                           baseValue={basePreviewDescription}
                           value={previewDescription}
                           viewMode="addition"
-                          diffMode={diffMode}
+                          diffMode="sentences"
                           className={cn('w-full text-xs leading-5')}
                           childrenClassName={cn('line-clamp-2')}
                         />
@@ -240,4 +231,4 @@ const PHIDInputDiff = ({
   )
 }
 
-export { PHIDInputDiff }
+export { IdAutocompleteDiff }

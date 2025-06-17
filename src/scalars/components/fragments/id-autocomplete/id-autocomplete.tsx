@@ -12,6 +12,7 @@ import ValueTransformer, { type TransformerType } from '../value-transformer/ind
 import { IdAutocompleteInputContainer } from './id-autocomplete-input-container.js'
 import { IdAutocompleteListOption } from './id-autocomplete-list-option.js'
 import { IdAutocompleteList } from './id-autocomplete-list.js'
+import { IdAutocompleteDiff } from './id-autocomplete-diff.js'
 import type { IdAutocompleteProps } from './types.js'
 import { useIdAutocomplete } from './use-id-autocomplete.js'
 
@@ -44,6 +45,12 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
       initialOptions,
       renderOption,
       previewPlaceholder,
+      viewMode = 'edition',
+      baseValue,
+      basePreviewIcon,
+      basePreviewTitle,
+      basePreviewPath,
+      basePreviewDescription,
       ...props
     },
     ref
@@ -105,6 +112,26 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
       () => [sharedValueTransformers.trimOnBlur(), sharedValueTransformers.trimOnEnter()],
       []
     )
+
+    if (viewMode !== 'edition') {
+      return (
+        <IdAutocompleteDiff
+          value={selectedValue}
+          currentOption={selectedOption}
+          label={label}
+          required={required}
+          autoComplete={autoComplete}
+          previewPlaceholder={previewPlaceholder}
+          variant={variant}
+          viewMode={viewMode}
+          baseValue={baseValue}
+          basePreviewIcon={basePreviewIcon}
+          basePreviewTitle={basePreviewTitle}
+          basePreviewPath={basePreviewPath}
+          basePreviewDescription={basePreviewDescription}
+        />
+      )
+    }
 
     return (
       <FormGroup>

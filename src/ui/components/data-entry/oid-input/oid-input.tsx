@@ -27,7 +27,7 @@ const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
       fetchOptionsCallback,
       fetchSelectedOptionCallback,
       isOpenByDefault, // to be used only in stories
-      initialOptions, // to be used only in stories
+      initialOptions,
       previewPlaceholder,
       ...props
     },
@@ -55,12 +55,12 @@ const OIDInput = React.forwardRef<HTMLInputElement, OIDInputProps>(
           title={option.title}
           path={
             displayProps?.asPlaceholder
-              ? previewPlaceholder?.path || 'Type not available'
-              : option.path || 'Type not available'
+              ? (previewPlaceholder?.path ?? 'Type not available')
+              : (option.path ?? 'Type not available')
           }
-          value={displayProps?.asPlaceholder ? previewPlaceholder?.value || 'oid not available' : option.value}
+          value={displayProps?.asPlaceholder ? (previewPlaceholder?.value ?? 'oid not available') : option.value}
           description={option.description}
-          placeholderIcon={previewPlaceholder?.icon || 'Braces'}
+          placeholderIcon={previewPlaceholder?.icon ?? 'Braces'}
           {...displayProps}
         />
       ),
