@@ -5,7 +5,7 @@ export type SupportedCurrency = string
 
 export interface AmountCurrency {
   unit: SupportedCurrency
-  value: number
+  value: string
 }
 
 export interface ScalarType {
@@ -13,16 +13,16 @@ export interface ScalarType {
   output: AmountCurrency
 }
 
-export const type = '{ unit: string, value: number }'
+export const type = '{ unit: string, value: string }'
 
 export const typedef = 'scalar Amount_Currency'
 
 export const schema = z.object({
   unit: z.string(),
-  value: z.number().finite(),
+  value: z.string(),
 })
 
-export const stringSchema = 'z.object({ unit: z.string(), value: z.number().finite() })'
+export const stringSchema = 'z.object({ unit: z.string(), value: z.string()})'
 
 const amountCurrencyValidation = (value: unknown): AmountCurrency => {
   if (typeof value !== 'object' || !value) {
@@ -54,15 +54,15 @@ export const config: GraphQLScalarTypeConfig<AmountCurrency, AmountCurrency> = {
       })
     }
 
-    if (!valueField || valueField.value.kind !== Kind.FLOAT) {
-      throw new GraphQLError('value must be a valid float value', {
+    if (!valueField || valueField.value.kind !== Kind.STRING) {
+      throw new GraphQLError('value must be a valid string value', {
         nodes: ast,
       })
     }
 
     const value = {
       unit: unitField.value.value,
-      value: parseFloat(valueField.value.value),
+      value: valueField.value.value,
     }
 
     return amountCurrencyValidation(value)
