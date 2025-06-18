@@ -24,17 +24,17 @@ const isAmount = (type: AmountInputPropsGeneric['type']): type is 'Amount' => ty
 const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): number | bigint | undefined => {
   if (isAmountCurrencyFiat(type) || isAmountCurrencyCrypto(type) || isAmountCurrencyUniversal(type) || isAmount(type)) {
     if (!value) return undefined
-    return (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).amount ?? undefined
+    return (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).value ?? undefined
   }
   return value as number
 }
 
 export const validateAmount =
-  ({ type, minValue, maxValue, allowNegative }: AmountFieldProps) =>
+  ({ type, minValue, maxValue, allowNegative, required }: AmountFieldProps) =>
   (value: unknown): ValidatorResult => {
     const amount = getAmount(value as AmountValue, type)
     if (amount === undefined) {
-      return true
+      return required ? 'Please enter a valid amount' : true
     }
 
     if (!isValidNumber(amount) && type !== 'AmountCurrency') {

@@ -197,7 +197,7 @@ export const Default: Story = {
     placeholderSelect: 'CUR',
     type: 'Amount',
     value: {
-      amount: undefined,
+      value: undefined,
       unit: '',
     },
   },
@@ -210,7 +210,7 @@ export const WithValue: Story = {
     label: 'Enter Amount',
     type: 'Amount',
     value: {
-      amount: 100,
+      value: 100,
     },
   },
 }
@@ -229,7 +229,7 @@ export const WithAmount: Story = {
     label: 'Enter Amout ',
     type: 'AmountFiat',
     value: {
-      amount: 345,
+      value: 345,
       unit: 'EUR',
     },
   },
@@ -242,7 +242,7 @@ export const CurrencyIcon: Story = {
     type: 'AmountCrypto',
     placeholderSelect: 'CUR',
     value: {
-      amount: 3454564564 as unknown as bigint,
+      value: 3454564564 as unknown as bigint,
       unit: 'BTC',
     },
   },
@@ -267,7 +267,7 @@ export const WithToken: Story = {
     placeholderSelect: 'CUR',
     units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
     value: {
-      amount: 123 as unknown as bigint,
+      value: 123 as unknown as bigint,
       unit: 'BTC',
     },
   },
@@ -297,7 +297,7 @@ export const Disable: Story = {
     placeholderSelect: 'CUR',
     disabled: true,
     value: {
-      amount: 9,
+      value: 9,
       unit: 'ETH',
     },
   },
@@ -321,7 +321,7 @@ export const WithValueUniversalAmountCurrency: Story = {
     placeholderSelect: 'CUR',
     type: 'AmountCurrency',
     value: {
-      amount: 123,
+      value: 123,
       unit: 'BTC',
     },
   },

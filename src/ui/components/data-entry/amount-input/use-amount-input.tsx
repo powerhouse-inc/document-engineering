@@ -45,7 +45,7 @@ export const useAmountInput = ({
 
     // If it's an object (for any type), we extract the amount property
     if (typeof currentValue === 'object') {
-      return currentValue.amount
+      return currentValue.value
     }
 
     // If it's a primitive value (for AmountPercentage)
@@ -56,11 +56,11 @@ export const useAmountInput = ({
     if (type === 'AmountPercentage') {
       if (typeof currentValue === 'object') {
         const newValue =
-          (currentValue.amount as unknown) === ''
+          (currentValue.value as unknown) === ''
             ? ''
-            : (currentValue.amount as unknown) === undefined
+            : (currentValue.value as unknown) === undefined
               ? ''
-              : currentValue.amount
+              : currentValue.value
         const nativeEvent = handleEventOnChange(newValue)
         onChange?.(nativeEvent)
         return
@@ -163,7 +163,7 @@ export const useAmountInput = ({
     if (type === 'AmountFiat' && typeof value === 'object') {
       const newValue = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
 
       const nativeEvent = handleEventOnChange(newValue)
@@ -175,7 +175,7 @@ export const useAmountInput = ({
     if (type === 'AmountCrypto' && typeof value === 'object') {
       const newValueCurrencyCrypto = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
       const nativeEvent = handleEventOnChange(newValueCurrencyCrypto)
 
@@ -191,7 +191,7 @@ export const useAmountInput = ({
     if (type === 'AmountCurrency' && typeof value === 'object') {
       const newValue = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
 
       const nativeEvent = handleEventOnChange(newValue)
@@ -204,13 +204,18 @@ export const useAmountInput = ({
       if (typeof value === 'object' && 'unit' in value) {
         const newValue = {
           ...value,
-          amount: createAmountValue(inputValue),
+          value: createAmountValue(inputValue),
         } as AmountValue
         const nativeEvent = handleEventOnChange(newValue)
         onChange?.(nativeEvent)
       } else {
-        // If it's Amount without units, just pass the value directly
-        const nativeEvent = handleEventOnChange(createAmountValue(inputValue))
+        // If it's Amount without units, just pass the value without unit
+        const newValue = {
+          value: createAmountValue(inputValue),
+        }
+
+        const nativeEvent = handleEventOnChange(newValue)
+
         onChange?.(nativeEvent)
       }
     }
