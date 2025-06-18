@@ -51,6 +51,7 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
       basePreviewTitle,
       basePreviewPath,
       basePreviewDescription,
+      renderExtraDiffs,
       ...props
     },
     ref
@@ -129,6 +130,7 @@ const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
           basePreviewTitle={basePreviewTitle}
           basePreviewPath={basePreviewPath}
           basePreviewDescription={basePreviewDescription}
+          renderExtraDiffs={renderExtraDiffs}
         />
       )
     }

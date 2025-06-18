@@ -8,19 +8,21 @@ interface Network {
   name?: string
 }
 
-interface AIDOptionProps {
+type AIDOption = IdAutocompleteOption & {
   agentType?: string
 }
 
-// TODO: fix this type
-// @ts-expect-error - this will be fixed soon
-type AIDOption = IdAutocompleteOption<AIDOptionProps>
-
 type AIDInputBaseProps = Omit<
   IdAutocompleteProps,
-  'autoComplete' | 'fetchOptionsCallback' | 'fetchSelectedOptionCallback' | 'previewPlaceholder' | 'renderOption'
+  | 'autoComplete'
+  | 'fetchOptionsCallback'
+  | 'fetchSelectedOptionCallback'
+  | 'previewPlaceholder'
+  | 'renderOption'
+  | 'renderExtraDiffs'
 > & {
   supportedNetworks?: Network[]
+  basePreviewAgentType?: string
 }
 
 type AIDInputProps = AIDInputBaseProps &

@@ -196,8 +196,8 @@ export function useIdAutocomplete({
 
         // Get current input element and selection positions
         const input = e.currentTarget
-        const start = input.selectionStart || 0
-        const end = input.selectionEnd || 0
+        const start = input.selectionStart ?? 0
+        const end = input.selectionEnd ?? 0
 
         // Create new value by inserting trimmed text at cursor position
         const currentValue = input.value

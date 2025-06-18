@@ -75,6 +75,8 @@ const meta: Meta<typeof CurrencyCodeField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
 
   args: {

@@ -65,7 +65,8 @@ type IdAutocompleteListOptionProps = {
   isFetchSelectedOptionSync?: boolean
   className?: string
   placeholderIcon?: IconName | React.ReactElement
-} & IdAutocompleteOption<Record<string, unknown>>
+} & IdAutocompleteOption &
+  Record<string, unknown>
 
 const IdAutocompleteListOption: React.FC<IdAutocompleteListOptionProps> = ({
   variant = 'withValue',
