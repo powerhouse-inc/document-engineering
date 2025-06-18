@@ -4,7 +4,7 @@ import { type AmountCrypto, scalar } from '../AmountCrypto.js'
 describe('AmountCrypto Scalar', () => {
   const validAmount: AmountCrypto = {
     unit: 'ETH',
-    value: 1.5,
+    value: '1.5',
   }
 
   describe('serialization', () => {
@@ -13,15 +13,15 @@ describe('AmountCrypto Scalar', () => {
     })
 
     it('should throw an error if the value is not an object', () => {
-      expect(() => scalar.serialize(123)).toThrow()
+      expect(() => scalar.serialize('123')).toThrow()
     })
 
     it('should support any string as currency', () => {
       expect(() => scalar.serialize({ ...validAmount, unit: 'INVALID' })).not.toThrow()
     })
 
-    it('should throw an error if amount is not a number', () => {
-      expect(() => scalar.serialize({ ...validAmount, value: '1.5' })).toThrow()
+    it('should throw an error if amount is a number', () => {
+      expect(() => scalar.serialize({ ...validAmount, value: 1.5 })).toThrow()
     })
 
     it('should throw an error if amount is not finite', () => {
@@ -37,9 +37,9 @@ describe('AmountCrypto Scalar', () => {
     it('should parse valid amounts for all supported currencies', () => {
       const currencies = ['DAI', 'ETH', 'MKR', 'SKY', 'USDC', 'USDS', 'INVALID']
       currencies.forEach((currency) => {
-        expect(scalar.parseValue({ unit: currency, value: 1.5 })).toEqual({
+        expect(scalar.parseValue({ unit: currency, value: '1.5' })).toEqual({
           unit: currency,
-          value: 1.5,
+          value: '1.5',
         })
       })
     })
@@ -48,8 +48,8 @@ describe('AmountCrypto Scalar', () => {
       expect(() => scalar.parseValue({ ...validAmount, unit: 'INVALID' })).not.toThrow()
     })
 
-    it('should throw an error if amount is not a number', () => {
-      expect(() => scalar.parseValue({ ...validAmount, value: '1.5' })).toThrow()
+    it('should throw an error if amount is not a string', () => {
+      expect(() => scalar.parseValue({ ...validAmount, value: 1.5 })).toThrow()
     })
   })
 
@@ -67,7 +67,7 @@ describe('AmountCrypto Scalar', () => {
             {
               kind: Kind.OBJECT_FIELD,
               name: { kind: Kind.NAME, value: 'value' },
-              value: { kind: Kind.FLOAT, value: '1.5' },
+              value: { kind: Kind.STRING, value: '1.5' },
             },
           ],
         })
@@ -126,14 +126,14 @@ describe('AmountCrypto Scalar', () => {
             {
               kind: Kind.OBJECT_FIELD,
               name: { kind: Kind.NAME, value: 'value' },
-              value: { kind: Kind.FLOAT, value: '1.5' },
+              value: { kind: Kind.STRING, value: '1.5' },
             },
           ],
         })
       ).toThrow()
     })
 
-    it('should throw an error if amount is not a float', () => {
+    it('should throw an error if amount is not a string', () => {
       expect(() =>
         scalar.parseLiteral({
           kind: Kind.OBJECT,
@@ -146,7 +146,7 @@ describe('AmountCrypto Scalar', () => {
             {
               kind: Kind.OBJECT_FIELD,
               name: { kind: Kind.NAME, value: 'value' },
-              value: { kind: Kind.STRING, value: '1.5' },
+              value: { kind: Kind.FLOAT, value: '1.5' },
             },
           ],
         })
