@@ -25,7 +25,6 @@ export type NumericType =
 export interface InputNumberProps
   extends Omit<
     InputBaseProps<string | number> &
-      FieldErrorHandling &
       NumberProps &
       Omit<React.InputHTMLAttributes<HTMLInputElement>, 'min' | 'max' | 'minLength' | 'maxLength'>,
     'value' | 'defaultValue' | 'name' | 'pattern'
@@ -36,7 +35,10 @@ export interface InputNumberProps
   trailingZeros?: boolean
 }
 
-export interface NumberFieldProps extends InputNumberProps, Omit<WithDifference<string>, 'diffMode'> {
+export interface NumberFieldProps
+  extends InputNumberProps,
+    FieldErrorHandling,
+    Omit<WithDifference<string>, 'diffMode'> {
   name: string
   value?: number | bigint
   defaultValue?: number | bigint
