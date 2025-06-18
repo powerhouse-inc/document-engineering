@@ -39,6 +39,7 @@ interface IdAutocompleteDiffProps {
   basePreviewTitle: IdAutocompleteProps['basePreviewTitle']
   basePreviewPath: IdAutocompleteProps['basePreviewPath']
   basePreviewDescription: IdAutocompleteProps['basePreviewDescription']
+  renderExtraDiffs: IdAutocompleteProps['renderExtraDiffs']
 }
 
 const IdAutocompleteDiff = ({
@@ -49,27 +50,28 @@ const IdAutocompleteDiff = ({
   autoComplete,
   previewPlaceholder,
   variant,
-  viewMode,
+  viewMode = 'addition',
   baseValue = '',
   basePreviewIcon,
   basePreviewTitle = '',
   basePreviewPath = '',
   basePreviewDescription = '',
+  renderExtraDiffs,
 }: IdAutocompleteDiffProps) => {
   const previewPlaceholderPath =
     (typeof previewPlaceholder?.path === 'object' ? previewPlaceholder.path.text : previewPlaceholder?.path) ?? ''
   const basePreviewPathText = typeof basePreviewPath === 'object' ? basePreviewPath.text : basePreviewPath
+  const basePreviewPathUrl = typeof basePreviewPath === 'object' ? basePreviewPath.url : undefined
 
   const previewTitle = currentOption?.title ?? ''
-  const previewPath = (typeof currentOption?.path === 'object' ? currentOption.path.text : currentOption?.path) ?? ''
+  const previewPathText =
+    (typeof currentOption?.path === 'object' ? currentOption.path.text : currentOption?.path) ?? ''
+  const previewPathUrl = typeof currentOption?.path === 'object' ? currentOption.path.url : undefined
   const previewDescription = currentOption?.description ?? ''
 
-  // TODO: implement real icon differences
   const placeholderIcon = previewPlaceholder?.icon ?? 'PowerhouseLogoSmall'
-
   const baseIcon = basePreviewIcon ?? placeholderIcon
   const baseIconAsPlaceholder = !basePreviewIcon
-
   const currentIcon = currentOption?.icon ?? placeholderIcon
   const currentIconAsPlaceholder = !currentOption?.icon
 
@@ -125,14 +127,32 @@ const IdAutocompleteDiff = ({
 
                     {/* left preview path */}
                     {((viewMode === 'removal' || viewMode === 'mixed') && basePreviewPathText === '') ||
-                    (viewMode === 'addition' && previewPath === '') ? (
+                    (viewMode === 'addition' && previewPathText === '') ? (
                       <span className={cn('w-full truncate text-xs leading-[18px] text-gray-400')}>
-                        {previewPlaceholderPath === '' ? 'Type not available' : previewPlaceholderPath}
+                        {previewPlaceholderPath === '' ? 'Path not available' : previewPlaceholderPath}
                       </span>
+                    ) : (viewMode === 'addition' && previewPathUrl) ||
+                      ((viewMode === 'removal' || viewMode === 'mixed') && basePreviewPathUrl) ? (
+                      <a
+                        href={viewMode === 'addition' ? previewPathUrl : basePreviewPathUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                          'truncate text-xs leading-[18px] text-blue-900 hover:underline focus-visible:outline-none'
+                        )}
+                      >
+                        <TextDiff
+                          baseValue={basePreviewPathText}
+                          value={previewPathText}
+                          viewMode={viewMode === 'mixed' ? 'removal' : viewMode}
+                          diffMode="sentences"
+                          className={cn('text-blue-900')}
+                        />
+                      </a>
                     ) : (
                       <TextDiff
                         baseValue={basePreviewPathText}
-                        value={previewPath}
+                        value={previewPathText}
                         viewMode={viewMode === 'mixed' ? 'removal' : viewMode}
                         diffMode="sentences"
                         className={cn('w-full truncate text-xs leading-[18px] text-gray-500')}
@@ -163,14 +183,31 @@ const IdAutocompleteDiff = ({
                       )}
 
                       {/* right preview path */}
-                      {previewPath === '' ? (
+                      {previewPathText === '' ? (
                         <span className={cn('w-full truncate text-xs leading-[18px] text-gray-400')}>
-                          {previewPlaceholderPath === '' ? 'Type not available' : previewPlaceholderPath}
+                          {previewPlaceholderPath === '' ? 'Path not available' : previewPlaceholderPath}
                         </span>
+                      ) : previewPathUrl ? (
+                        <a
+                          href={previewPathUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={cn(
+                            'truncate text-xs leading-[18px] text-blue-900 hover:underline focus-visible:outline-none'
+                          )}
+                        >
+                          <TextDiff
+                            baseValue={basePreviewPathText}
+                            value={previewPathText}
+                            viewMode="addition"
+                            diffMode="sentences"
+                            className={cn('text-blue-900')}
+                          />
+                        </a>
                       ) : (
                         <TextDiff
                           baseValue={basePreviewPathText}
-                          value={previewPath}
+                          value={previewPathText}
                           viewMode="addition"
                           diffMode="sentences"
                           className={cn('w-full truncate text-xs leading-[18px] text-gray-500')}
@@ -223,6 +260,9 @@ const IdAutocompleteDiff = ({
                   )}
                 </div>
               )}
+
+              {variant === 'withValueTitleAndDescription' &&
+                renderExtraDiffs?.(viewMode, previewPlaceholder, currentOption)}
             </div>
           </div>
         )}
