@@ -4,7 +4,7 @@ import { type AmountCurrency, scalar } from '../AmountCurrency.js'
 describe('AmountCurrency Scalar', () => {
   const validAmount: AmountCurrency = {
     unit: 'USD',
-    value: 1.5,
+    value: '1.5',
   }
 
   describe('serialization', () => {
@@ -20,11 +20,11 @@ describe('AmountCurrency Scalar', () => {
       expect(() => scalar.serialize({ ...validAmount, unit: 'BTC' })).not.toThrow()
     })
 
-    it('should throw an error if amount is not a number', () => {
-      expect(() => scalar.serialize({ ...validAmount, value: '1.5' })).toThrow()
+    it('should throw an error if amount is not a string', () => {
+      expect(() => scalar.serialize({ ...validAmount, value: 1.5 })).toThrow()
     })
 
-    it('should throw an error if amount is not finite', () => {
+    it('should throw an error if amount is Infinity', () => {
       expect(() => scalar.serialize({ ...validAmount, value: Infinity })).toThrow()
     })
   })
@@ -37,9 +37,9 @@ describe('AmountCurrency Scalar', () => {
     it('should parse valid amounts for all currencies', () => {
       const currencies = ['USD', 'EUR', 'GBP', 'DAI', 'ETH', 'MKR', 'SKY', 'USDC', 'USDS']
       currencies.forEach((currency) => {
-        expect(scalar.parseValue({ unit: currency, value: 1.5 })).toEqual({
+        expect(scalar.parseValue({ unit: currency, value: '1.5' })).toEqual({
           unit: currency,
-          value: 1.5,
+          value: '1.5',
         })
       })
     })
@@ -48,8 +48,8 @@ describe('AmountCurrency Scalar', () => {
       expect(() => scalar.parseValue({ ...validAmount, unit: 'INVALID' })).not.toThrow()
     })
 
-    it('should throw an error if amount is not a number', () => {
-      expect(() => scalar.parseValue({ ...validAmount, value: '1.5' })).toThrow()
+    it('should throw an error if amount is a number', () => {
+      expect(() => scalar.parseValue({ ...validAmount, value: 1.5 })).toThrow()
     })
   })
 
@@ -67,7 +67,7 @@ describe('AmountCurrency Scalar', () => {
             {
               kind: Kind.OBJECT_FIELD,
               name: { kind: Kind.NAME, value: 'value' },
-              value: { kind: Kind.FLOAT, value: '1.5' },
+              value: { kind: Kind.STRING, value: '1.5' },
             },
           ],
         })

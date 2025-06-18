@@ -1,3 +1,46 @@
+# [1.13.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.12.0...v1.13.0) (2025-06-17)
+
+
+### Bug Fixes
+
+* obkect set table stories control ([f02aa47](https://github.com/powerhouse-inc/document-engineering/commit/f02aa47f7b2ac529074562fd00de728e6fa78b83))
+* **scalars & ui:** improve tests & stories & fix logic related to favoriteOptions ([c8b838a](https://github.com/powerhouse-inc/document-engineering/commit/c8b838ac92e74994633b8b0021b706bba93af35c))
+* **scalars:** add avility for pass down html div props for data-testid ([c29981f](https://github.com/powerhouse-inc/document-engineering/commit/c29981fe557b1611b8ba396ef8d5f5e0847e057b))
+* **scalars:** add missing props for date-picker-field and remove clg ([ae0eb2c](https://github.com/powerhouse-inc/document-engineering/commit/ae0eb2ccd111bb7ab006b92f128bde3fa49d5789))
+* **scalars:** add prebuilt for props and fix logic in the test ([2944093](https://github.com/powerhouse-inc/document-engineering/commit/2944093cc0dbadebfd1a677c451ca9116bc8ca8f))
+* **scalars:** add two new class for the input and popover ([b9ceab9](https://github.com/powerhouse-inc/document-engineering/commit/b9ceab9cdbe1015c87ba2d54bb0033646017506e))
+* **scalars:** allow show complete border when icon is focus ([543ced8](https://github.com/powerhouse-inc/document-engineering/commit/543ced809724e073ca9cfecff25949e054261de7))
+* **scalars:** allow tab navigation in the amount field component ([8425d31](https://github.com/powerhouse-inc/document-engineering/commit/8425d31b6340635b037e59460b907b29177a20ee))
+* **scalars:** avoid focus get cut ([06423f5](https://github.com/powerhouse-inc/document-engineering/commit/06423f5d467af687c3974b067261dfd8c4ba329c))
+* **scalars:** fix the CR and fix the test ([2ae8dc9](https://github.com/powerhouse-inc/document-engineering/commit/2ae8dc93a544eb37cee7959db8de0ba676d5b382))
+* **scalars:** fix the naming ([2248ad0](https://github.com/powerhouse-inc/document-engineering/commit/2248ad0f29572d5f9605df3a21d77f8996ad2ce9))
+* **scalars:** fix the padding right and update snap-shot ([57e9a87](https://github.com/powerhouse-inc/document-engineering/commit/57e9a8762b7969dce663ad81685bb1fe106d60ad))
+* **scalars:** fix the test in differences ([cca4190](https://github.com/powerhouse-inc/document-engineering/commit/cca4190b86ef4d7869c5041f4cfcd62021ea811d))
+* **scalars:** fix the value and baseValue ([716015e](https://github.com/powerhouse-inc/document-engineering/commit/716015ea002b5b2cbc3f3432eb2bef4435970969))
+* **scalars:** fix the with as default ([af28d88](https://github.com/powerhouse-inc/document-engineering/commit/af28d88e2d1fdc3f42cf2122d3497eb388ee8226))
+* **scalars:** pass the class to input and update snapshot ([b1efcc6](https://github.com/powerhouse-inc/document-engineering/commit/b1efcc6ad51d06fb5aa2cfd0ec5d33331f26475c))
+* **scalars:** put back input field remove and fix the test ([d68e6a1](https://github.com/powerhouse-inc/document-engineering/commit/d68e6a16faabb4a83a9a5ce5444c18e2f1b84a94))
+* **scalars:** remove the clg ([b15cf67](https://github.com/powerhouse-inc/document-engineering/commit/b15cf67d32b0295bfe25dccdb1d9edf29d15815d))
+* **scalars:** remove the comment code ([a6b9f67](https://github.com/powerhouse-inc/document-engineering/commit/a6b9f67b3bebdaa6e3d735ac27bbd1f32f9d031b))
+* **scalars:** remove the fixed with ([c48f016](https://github.com/powerhouse-inc/document-engineering/commit/c48f0161ee0d5cc84a41e40c93399dd7459db135))
+* **scalars:** remove unnecesary props and omit from interface ([3aa6370](https://github.com/powerhouse-inc/document-engineering/commit/3aa6370d7c3d6066f68b4b69aabdb7c03309a8a7))
+* **scalars:** update the test snapShot ([919fc77](https://github.com/powerhouse-inc/document-engineering/commit/919fc779867e47151d3713a0b1d7f83c88e15b3d))
+* snapshots ([5f793e0](https://github.com/powerhouse-inc/document-engineering/commit/5f793e08dfbac339219229abf25fc178478cd5b2))
+
+
+### Features
+
+* **scalars & ui:** add diff status to CurrencyCodePicker & minor fixes ([503aee1](https://github.com/powerhouse-inc/document-engineering/commit/503aee17afb4fab41f8201c72def09359e99ff2c))
+* **scalars & ui:** detach the Country Code component from the form ([bac6cb4](https://github.com/powerhouse-inc/document-engineering/commit/bac6cb41ac1d4e2dd6aff8bdc400f6195e7e6ff6))
+* **scalars & ui:** read only diff status for the CountryCode component ([337339d](https://github.com/powerhouse-inc/document-engineering/commit/337339d4e2c56ce4b35cf67ffd64082b042a401d))
+* **scalars:** add diff component in date-picker ([822239a](https://github.com/powerhouse-inc/document-engineering/commit/822239a99d86fe36759a2f6e6c63fd3d8bb66073))
+* **scalars:** add new diff component for datetimepicker ([5196dad](https://github.com/powerhouse-inc/document-engineering/commit/5196dadc7f8113dbebcff9229362b8a899cf88c7))
+* **scalars:** add test for checkox-diff ([c54c02a](https://github.com/powerhouse-inc/document-engineering/commit/c54c02a2162fd04ec273da7d59cbe1932fa456d0))
+* **scalars:** add the diff mode for checkbox component ([9a5d7ea](https://github.com/powerhouse-inc/document-engineering/commit/9a5d7eab1fa6dd9f1ea9449df2fc72b207068376))
+* **scalars:** add time picker differences ([11c7793](https://github.com/powerhouse-inc/document-engineering/commit/11c7793c902fb1f48d76499348d0a02e4f1744ca))
+* **scalars:** feat add diff in number component ([b96654b](https://github.com/powerhouse-inc/document-engineering/commit/b96654b675ef7c853bd26269da203e6257423e64))
+* **scalars:** fix tab navigation to focus the icon correctly ([8964e25](https://github.com/powerhouse-inc/document-engineering/commit/8964e2519bce852a3c60432302c62e8a09aa6f05))
+
 # [1.12.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.11.0...v1.12.0) (2025-06-10)
 
 

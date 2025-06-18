@@ -186,6 +186,15 @@ const meta = {
     ...PrebuiltArgTypes.placeholder,
     ...PrebuiltArgTypes.minValue,
     ...PrebuiltArgTypes.maxValue,
+    ...PrebuiltArgTypes.viewMode,
+    baseValue: {
+      control: 'object',
+      description: 'The base value of the amount field.',
+      table: {
+        type: { summary: 'Amount | AmountFiat | AmountPercentage | AmountCrypto | AmountCurrency' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
     type: {
       control: 'select',
       options: ['Amount', 'AmountFiat', 'AmountPercentage', 'AmountCrypto', 'AmountCurrency'],
@@ -342,5 +351,54 @@ export const WithValueUniversalAmountCurrency: Story = {
       amount: 123,
       unit: 'BTC',
     },
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    type: 'AmountFiat',
+    units: mappedFiatCurrencies,
+    label: 'Icon names addition',
+    value: {
+      amount: 22233,
+      unit: 'USD',
+    },
+    baseValue: {
+      amount: 42323,
+      unit: 'THB',
+    },
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Icon names removal',
+    value: {
+      amount: 12323,
+      unit: 'ETH',
+    },
+    baseValue: {
+      amount: 413130,
+      unit: 'BTC',
+    },
+    type: 'AmountCurrency',
+    units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Icon names mixed',
+    value: {
+      amount: 909123223,
+      unit: 'BTC',
+    },
+    baseValue: {
+      amount: 49989822,
+      unit: 'ETH',
+    },
+    viewMode: 'mixed',
   },
 }
