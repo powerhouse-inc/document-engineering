@@ -10,8 +10,11 @@ import { FormMessageList } from '../../../../scalars/components/fragments/form-m
 import { cn } from '../../../../scalars/lib/index.js'
 import { Input } from '../input/index.js'
 import TextInputDiff from '../text-input/text-input-diff.js'
+import type { WithDifference } from '../../../../scalars/components/types.js'
 
-const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberProps>(
+type InputNumberPropsWithDifference = InputNumberProps & WithDifference<string | number | bigint>
+
+const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifference>(
   (
     {
       label,

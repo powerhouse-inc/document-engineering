@@ -39,7 +39,7 @@ interface AmountInputUncontrollerMain {
   trailingZeros?: boolean
 }
 
-type AmountInputUncontrollerProps = AmountInputUncontrollerMain & AdditionalProps
+type AmountInputUncontrollerProps = AmountInputUncontrollerMain & AdditionalProps & WithDifference<AmountValue>
 
 type AmountInputProps = AmountInputPropsGeneric & AdditionalProps & WithDifference<AmountValue>
 

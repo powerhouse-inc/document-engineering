@@ -1,4 +1,4 @@
-import type { FieldErrorHandling, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
+import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
 
 interface NumberProps {
   numericType?: NumericType | undefined
@@ -24,12 +24,11 @@ export type NumericType =
 
 export interface InputNumberProps
   extends Omit<
-      InputBaseProps<string | number> &
-        NumberProps &
-        Omit<React.InputHTMLAttributes<HTMLInputElement>, 'min' | 'max' | 'minLength' | 'maxLength'>,
-      'value' | 'defaultValue' | 'name' | 'pattern'
-    >,
-    Omit<WithDifference<string | number | bigint>, 'diffMode'> {
+    InputBaseProps<string | number> &
+      NumberProps &
+      Omit<React.InputHTMLAttributes<HTMLInputElement>, 'min' | 'max' | 'minLength' | 'maxLength'>,
+    'value' | 'defaultValue' | 'name' | 'pattern'
+  > {
   name: string
   step?: number
   precision?: number
