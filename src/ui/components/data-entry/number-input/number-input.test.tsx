@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { NumberInput } from './number-input'
 import { userEvent } from '@testing-library/user-event'
+import { MAX_SAFE_INTEGER } from '../../../../scalars/components/number-field/number-field-validations.js'
 
 describe('NumberInput', () => {
   const mockOnChange = vi.fn()
@@ -204,5 +205,49 @@ describe('NumberInput', () => {
     expect(eventArg.target).toMatchObject({
       value: 6,
     })
+  })
+  it('should disable increment button  and not call onChange when value exceeds MAX_SAFE_INTEGER and numericType is not BigInt', async () => {
+    const user = userEvent.setup()
+    const unsafeValue = MAX_SAFE_INTEGER + 1
+    render(
+      <NumberInput
+        label="Test Label"
+        name="Label"
+        value={unsafeValue}
+        step={1}
+        onChange={mockOnChange}
+        numericType="Float"
+      />
+    )
+    const input = screen.getByRole('spinbutton')
+    await user.click(input)
+    expect(input).toHaveFocus()
+    const incrementButton = screen.getByRole('button', { name: /Increment/i })
+    expect(incrementButton).toBeDisabled()
+    // Verify that clicking the disabled button doesn't trigger onChange
+    await user.click(incrementButton)
+    expect(mockOnChange).not.toHaveBeenCalled()
+  })
+  it('should disable decrement button  and not call onChange when value exceeds MAX_SAFE_INTEGER and numericType is not BigInt', async () => {
+    const user = userEvent.setup()
+    const unsafeValue = MAX_SAFE_INTEGER + 1
+    render(
+      <NumberInput
+        label="Test Label"
+        name="Label"
+        value={unsafeValue}
+        step={1}
+        onChange={mockOnChange}
+        numericType="Int"
+      />
+    )
+    const input = screen.getByRole('spinbutton')
+    await user.click(input)
+    expect(input).toHaveFocus()
+    const decrementButton = screen.getByRole('button', { name: /Decrement/i })
+    expect(decrementButton).toBeDisabled()
+    // Verify that clicking the disabled button doesn't trigger onChange
+    await user.click(decrementButton)
+    expect(mockOnChange).toHaveBeenCalledTimes(0)
   })
 })

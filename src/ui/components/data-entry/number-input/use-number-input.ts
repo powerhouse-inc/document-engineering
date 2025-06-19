@@ -2,9 +2,10 @@ import { useRef } from 'react'
 import type { NumericType } from './types.js'
 import { getDisplayValue } from './utils.js'
 import { isNotSafeValue } from '../amount-input/utils.js'
+import { MAX_SAFE_INTEGER } from '../../../../scalars/components/number-field/number-field-validations.js'
 
 interface UseNumberFieldProps {
-  value?: number | bigint
+  value?: number | bigint | string
   maxValue?: number
   minValue?: number
   step?: number
@@ -28,10 +29,12 @@ export const useNumberInput = ({
 }: UseNumberFieldProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const canIncrement =
-    maxValue !== undefined && (typeof value === 'bigint' ? value >= BigInt(maxValue) : Number(value) >= maxValue)
+    (maxValue !== undefined && (typeof value === 'bigint' ? value >= BigInt(maxValue) : Number(value) >= maxValue)) ||
+    (Number(value) > MAX_SAFE_INTEGER && numericType !== 'BigInt')
 
   const canDecrement =
-    minValue !== undefined && (typeof value === 'bigint' ? value <= BigInt(minValue) : Number(value) <= minValue)
+    (minValue !== undefined && (typeof value === 'bigint' ? value <= BigInt(minValue) : Number(value) <= minValue)) ||
+    (Number(value) > MAX_SAFE_INTEGER && numericType !== 'BigInt')
 
   // Boolean to no convert float values to BigInt
   const isBigInt = numericType && numericType === 'BigInt'
