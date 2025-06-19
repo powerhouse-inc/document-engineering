@@ -1,6 +1,16 @@
 import { format, isValid, parse } from 'date-fns'
 
-export const ALLOWED_FORMATS = ['yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy', 'dd-MMM-yyyy', 'MMM-dd-yyyy']
+export const ALLOWED_FORMATS = [
+  'yyyy-MM-dd',
+  'dd/MM/yyyy',
+  'MM/dd/yyyy',
+  'dd-MMM-yyyy',
+  'MMM-dd-yyyy',
+  'yyyy-MM',
+  'MM/yyyy',
+  'MMM-yyyy',
+  'yyyy',
+]
 
 export const isFormatAllowed = (dateString: string) =>
   Object.values(dateFormatRegexes).some((regex) => regex.test(dateString))
@@ -17,6 +27,9 @@ export const dateFormatRegexes = {
   'MM/dd/yyyy': /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/,
   'dd-MMM-yyyy': /^(0[1-9]|[12]\d|3[01])-(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{4}$/,
   'MMM-dd-yyyy': /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(0[1-9]|[12]\d|3[01])-\d{4}$/,
+  'yyyy-MM': /^\d{4}-(0[1-9]|1[0-2])$/,
+  'MM/yyyy': /^(0[1-9]|1[0-2])\/\d{4}$/,
+  'MMM-yyyy': /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{4}$/,
 }
 
 /**
@@ -146,7 +159,22 @@ export const createBlurEvent = (value: string): React.FocusEvent<HTMLInputElemen
   return nativeEvent as unknown as React.FocusEvent<HTMLInputElement>
 }
 
+// YYYY-MM .......................yyyy-MM
+// MM/YYYY........................MM/yyyy
+// MMM-YYYY.....................MMM-yyyy
+
 export const FORMAT_MAPPING = {
+  'YYYY-MM-DD': 'yyyy-MM-dd',
+  'DD/MM/YYYY': 'dd/MM/yyyy',
+  'MM/DD/YYYY': 'MM/dd/yyyy',
+  'DD-MMM-YYYY': 'dd-MMM-yyyy',
+  'MMM-DD-YYYY': 'MMM-dd-yyyy',
+  'YYYY-MM': 'yyyy-MM',
+  'MM/YYYY': 'MM/yyyy',
+  'MMM-YYYY': 'MMM-yyyy',
+  YYYY: 'yyyy',
+}
+export const FORMAT_MAPPING_DATE_TIME_PICKER = {
   'YYYY-MM-DD': 'yyyy-MM-dd',
   'DD/MM/YYYY': 'dd/MM/yyyy',
   'MM/DD/YYYY': 'MM/dd/yyyy',
@@ -166,6 +194,14 @@ export const getDateFormat = (displayFormat: string): string | undefined => {
       return 'dd-MMM-yyyy'
     case 'MMM-DD-YYYY':
       return 'MMM-dd-yyyy'
+    case 'YYYY-MM':
+      return 'yyyy-MM'
+    case 'MM/YYYY':
+      return 'MM/yyyy'
+    case 'MMM-YYYY':
+      return 'MMM-yyyy'
+    case 'YYYY':
+      return 'yyyy-MM-dd'
     default:
       return undefined
   }
@@ -218,4 +254,21 @@ export const parseDateValue = (dateValue: string | number | undefined) => {
   }
 
   return undefined
+}
+
+/**
+ * Determine the type of calendar to open based on the date format.
+ * @param dateFormat - The date format.
+ * @returns The type of calendar to open.
+ * @example
+ * getCalendarType('YYYY') // 'year'
+ * getCalendarType('YYYY-MM') // 'month'
+ * getCalendarType('YYYY-MM-DD') // 'day'
+ */
+
+export const getCalendarType = (dateFormat: string): 'years' | 'months' | 'days' => {
+  if (!dateFormat) return 'days'
+  const isDayFormat = ['YYYY-MM-DD', 'DD/MM/YYYY', 'MM/DD/YYYY', 'DD-MMM-YYYY', 'MMM-DD-YYYY'].includes(dateFormat)
+  if (isDayFormat) return 'days'
+  return 'years'
 }

@@ -15,6 +15,7 @@ import type { DatePickerView } from '../../types.js'
 import { NavCalendar } from '../calendar-nav/calendar-nav.js'
 import { CaptionLabel } from '../caption-label/caption-label.js'
 import { MonthGrid } from '../month-grid.js'
+import { getCalendarType } from '../../../date-time-picker/utils.js'
 
 const Chevron = (props: {
   className?: string
@@ -70,6 +71,8 @@ export type CalendarProps = DayPickerProps & {
   dayPickerClassName?: string
   disabledDates?: boolean
   className?: string
+  dateFormat?: string
+  handleCalendarMonthYearSelect?: (year: number, monthIndex: number) => void
 }
 
 /**
@@ -85,9 +88,12 @@ const Calendar = ({
   yearRange = 12,
   numberOfMonths,
   disabledDates = false,
+  dateFormat,
+  handleCalendarMonthYearSelect,
   ...props
 }: CalendarProps) => {
-  const [navView, setNavView] = React.useState<DatePickerView>('days')
+  const startNavView = getCalendarType(dateFormat ?? '')
+  const [navView, setNavView] = React.useState<DatePickerView>(startNavView)
   const [displayYears, setDisplayYears] = React.useState<{
     from: number
     to: number
@@ -200,21 +206,38 @@ const Calendar = ({
         />
       )
     },
-    [navView, displayYears, setDisplayYears, startMonth, endMonth, _buttonPreviousClassName, _buttonNextClassName]
+    [navView, displayYears, startMonth, endMonth, _buttonPreviousClassName, _buttonNextClassName]
   )
 
   const createCaptionLabel = React.useCallback(
     (props: CaptionLabelProps) => {
-      return <CaptionLabel {...props} showYearSwitcher={showYearSwitcher} navView={navView} setNavView={setNavView} />
+      return (
+        <CaptionLabel
+          {...props}
+          showYearSwitcher={showYearSwitcher}
+          navView={navView}
+          setNavView={setNavView}
+          dateFormat={dateFormat}
+        />
+      )
     },
-    [navView, showYearSwitcher]
+    [dateFormat, navView, showYearSwitcher]
   )
 
   const createMonthGrid = React.useCallback(
     (props: MonthGridProps) => {
-      return <MonthGrid navView={navView} displayYears={displayYears} setNavView={setNavView} {...props} />
+      return (
+        <MonthGrid
+          navView={navView}
+          displayYears={displayYears}
+          setNavView={setNavView}
+          dateFormat={dateFormat}
+          handleCalendarMonthYearSelect={handleCalendarMonthYearSelect}
+          {...props}
+        />
+      )
     },
-    [displayYears, navView]
+    [dateFormat, displayYears, handleCalendarMonthYearSelect, navView]
   )
   return (
     <DayPicker
