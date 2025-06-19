@@ -15,7 +15,7 @@ import type { InputNumberProps } from '../number-input/types.js'
 import type { WithDifference } from '#scalars'
 import { AmountInputDiff } from './subcomponents/amount-input-diff.js'
 
-type AdditionalProps = Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision'> & {
+type AdditionalProps = Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision' | 'value' | 'defaultValue'> & {
   className?: string
   name: string
   numberProps?: Omit<InputNumberProps, 'name'>
