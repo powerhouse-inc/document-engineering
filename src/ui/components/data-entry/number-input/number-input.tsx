@@ -174,7 +174,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
 
 NumberInputRaw.displayName = 'NumberInputRaw'
 
-const NumberInputUncontroller = forwardRef<HTMLInputElement, InputNumberProps>((props, ref) => {
+const NumberInputUncontroller = forwardRef<HTMLInputElement, InputNumberPropsWithDifference>((props, ref) => {
   const [value, setValue] = useState(props.value ?? props.defaultValue)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -185,7 +185,7 @@ const NumberInputUncontroller = forwardRef<HTMLInputElement, InputNumberProps>((
 })
 NumberInputUncontroller.displayName = 'NumberInputUncontroller'
 
-const NumberInput = forwardRef<HTMLInputElement, InputNumberProps>((props, ref) => {
+const NumberInput = forwardRef<HTMLInputElement, InputNumberPropsWithDifference>((props, ref) => {
   if (props.onChange) {
     return <NumberInputRaw {...props} ref={ref} />
   }
