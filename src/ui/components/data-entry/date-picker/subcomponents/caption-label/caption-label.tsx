@@ -8,10 +8,13 @@ interface CaptionLabelProps extends HTMLAttributes<HTMLSpanElement> {
   showYearSwitcher: boolean
   navView: DatePickerView
   setNavView: (navView: DatePickerView) => void
+  dateFormat?: string
 }
 
 const CaptionLabel = (props: CaptionLabelProps): JSX.Element => {
-  const { children, showYearSwitcher, navView, setNavView, ...rest } = props
+  const { children, showYearSwitcher, navView, setNavView, dateFormat, ...rest } = props
+  const isHiddenMonthButton = dateFormat !== 'YYYY'
+  const navigateTo = ['YYYY-MM', 'MMM-YYYY', 'MMM-YYYY'].includes(dateFormat ?? '')
 
   if (!showYearSwitcher) return <span {...rest}>{children}</span>
 
@@ -30,10 +33,12 @@ const CaptionLabel = (props: CaptionLabelProps): JSX.Element => {
           setNavView('years')
         }}
       >
-        <span className={cn(isSelectedMonth ? 'text-gray-900' : 'text-gray-600')}>{monthAbbreviation}</span>
+        {isHiddenMonthButton && (
+          <span className={cn(isSelectedMonth ? 'text-gray-900' : 'text-gray-600')}>{monthAbbreviation}</span>
+        )}
         <span className={cn(isSelectedYear ? 'text-gray-900' : 'text-gray-600')}>{yearNumber}</span>
       </Button>
-      {navView === 'days' ? (
+      {navView === 'days' && (
         <Icon
           className="size-[18px] cursor-pointer text-gray-600"
           name="TriangleDown"
@@ -41,11 +46,12 @@ const CaptionLabel = (props: CaptionLabelProps): JSX.Element => {
             setNavView('years')
           }}
         />
-      ) : (
+      )}
+      {navView !== 'days' && isHiddenMonthButton && (
         <Button
           variant="ghost"
           onClick={() => {
-            setNavView('days')
+            setNavView(navigateTo ? 'years' : 'days')
           }}
         >
           <Icon className="size-[18px] text-gray-900" name="CrossCircle" />

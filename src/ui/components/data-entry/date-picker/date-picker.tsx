@@ -15,7 +15,7 @@ import DateInputDiff from './subcomponents/date-picker-diff/date-picker-diff.js'
 
 interface DatePickerProps
   extends InputBaseProps<DateFieldValue>,
-    Omit<CalendarProps, 'mode'>,
+    Omit<CalendarProps, 'mode' | 'handleCalendarMonthYearSelect'>,
     WithDifference<DateFieldValue> {
   label?: string
   id?: string
@@ -82,6 +82,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       disabledDates,
       weekStartDay,
       handleDayClick,
+      handleCalendarMonthYearSelect,
     } = useDatePickerField({
       value,
       defaultValue,
@@ -131,6 +132,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             <Calendar
               mode="single"
               selected={date}
+              dateFormat={dateFormat}
+              handleCalendarMonthYearSelect={handleCalendarMonthYearSelect}
               weekStartsOn={weekStartDay}
               onSelect={handleDateSelect}
               disabled={disabledDates}
