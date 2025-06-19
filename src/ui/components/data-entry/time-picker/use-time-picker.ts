@@ -47,6 +47,8 @@ export const useTimePicker = ({
   includeContinent = false,
 }: TimePickerFieldProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod | undefined>(undefined)
+  const [selectedMinute, setSelectedMinute] = useState(getMinutes(value ?? defaultValue ?? ''))
   const is12HourFormat = timeFormat.includes('a') || timeFormat.includes('A')
   const [inputValue, setInputValue] = useState(getInputValue(value ?? defaultValue))
 
@@ -55,10 +57,6 @@ export const useTimePicker = ({
       ? convertTimeFrom24To12Hours(getHours(value ?? defaultValue ?? ''))
       : getHours(value ?? defaultValue ?? '')
   )
-
-  const [selectedMinute, setSelectedMinute] = useState(getMinutes(value ?? defaultValue ?? ''))
-
-  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod | undefined>(undefined)
 
   const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   const [selectedTimeZone, setSelectedTimeZone] = useState<string | string[] | undefined>(

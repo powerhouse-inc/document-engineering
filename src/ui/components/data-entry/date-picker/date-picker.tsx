@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -42,7 +42,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   (
     {
       label,
-      id,
+      id: propId,
       errors,
       name,
       disabled,
@@ -96,6 +96,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       minDate,
       maxDate,
     })
+    const generatedId = useId()
+    const id = propId ?? generatedId
 
     if (viewMode === 'edition') {
       return (
@@ -107,11 +109,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           )}
           <BasePickerField
             ref={ref}
-            label={label}
             id={id}
             value={inputValue}
             name={name}
-            errors={errors}
             disabled={disabled}
             required={required}
             iconName="CalendarTime"

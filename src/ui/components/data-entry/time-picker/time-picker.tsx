@@ -2,7 +2,7 @@ import { FormDescription } from '../../../../scalars/components/fragments/form-d
 import { FormGroup } from '../../../../scalars/components/fragments/form-group/form-group.js'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/message-list.js'
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import type { InputNumberProps } from '../number-input/types.js'
 import type { SelectFieldProps } from '../../../../scalars/components/fragments/select-field/index.js'
@@ -42,7 +42,7 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
   (
     {
       label,
-      id,
+      id: propId,
       errors,
       name,
       placeholder,
@@ -100,6 +100,8 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       showTimezoneSelect,
       includeContinent,
     })
+    const generatedId = useId()
+    const id = propId ?? generatedId
 
     if (viewMode === 'edition') {
       return (
@@ -110,10 +112,10 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
             </FormLabel>
           )}
           <BasePickerField
+            id={id}
             iconName="Clock"
             isOpen={isOpen}
             name={name}
-            errors={errors}
             disabled={disabled}
             required={required}
             value={inputValue}

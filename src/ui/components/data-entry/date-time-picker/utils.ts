@@ -159,10 +159,6 @@ export const createBlurEvent = (value: string): React.FocusEvent<HTMLInputElemen
   return nativeEvent as unknown as React.FocusEvent<HTMLInputElement>
 }
 
-// YYYY-MM .......................yyyy-MM
-// MM/YYYY........................MM/yyyy
-// MMM-YYYY.....................MMM-yyyy
-
 export const FORMAT_MAPPING = {
   'YYYY-MM-DD': 'yyyy-MM-dd',
   'DD/MM/YYYY': 'dd/MM/yyyy',
