@@ -24,25 +24,21 @@ export type NumericType =
 
 export interface InputNumberProps
   extends Omit<
-    InputBaseProps<string | number> &
-      NumberProps &
-      Omit<React.InputHTMLAttributes<HTMLInputElement>, 'min' | 'max' | 'minLength' | 'maxLength'>,
-    'value' | 'defaultValue' | 'name' | 'pattern'
-  > {
+      InputBaseProps<string | number> &
+        NumberProps &
+        Omit<React.InputHTMLAttributes<HTMLInputElement>, 'min' | 'max' | 'minLength' | 'maxLength'>,
+      'value' | 'defaultValue' | 'name' | 'pattern'
+    >,
+    Omit<WithDifference<string | number | bigint>, 'diffMode'> {
   name: string
   step?: number
   precision?: number
   trailingZeros?: boolean
-}
-
-export interface NumberFieldProps
-  extends InputNumberProps,
-    FieldErrorHandling,
-    Omit<WithDifference<string>, 'diffMode'> {
-  name: string
-  value?: number | bigint
-  defaultValue?: number | bigint
+  value?: number | bigint | string
+  defaultValue?: number | bigint | string
   className?: string
   pattern?: RegExp
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
+
+export interface NumberFieldProps extends InputNumberProps, FieldErrorHandling {}

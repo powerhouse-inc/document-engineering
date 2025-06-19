@@ -2,8 +2,8 @@ import { FormGroup } from '../../../../scalars/components/fragments/form-group/i
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import type { WithDifference } from '../../../../scalars/components/types.js'
 import { SplittedInputDiff } from '../input/splitted-input-diff.js'
-interface TextInputDiffProps extends WithDifference<string>, React.HTMLAttributes<HTMLDivElement> {
-  value: string
+interface TextInputDiffProps extends WithDifference<string | number | bigint>, React.HTMLAttributes<HTMLDivElement> {
+  value: string | number | bigint
   label?: React.ReactNode
   required?: boolean
 }
@@ -16,6 +16,9 @@ const TextInputDiff = ({
   diffMode = 'sentences',
   ...props
 }: TextInputDiffProps) => {
+  const valueString = typeof value === 'number' || typeof value === 'bigint' ? value.toString() : value
+  const baseValueString =
+    typeof baseValue === 'number' || typeof baseValue === 'bigint' ? baseValue.toString() : baseValue
   return (
     <FormGroup>
       {label && (
@@ -23,7 +26,13 @@ const TextInputDiff = ({
           {label}
         </FormLabel>
       )}
-      <SplittedInputDiff value={value} baseValue={baseValue} diffMode={diffMode} viewMode={viewMode} {...props} />
+      <SplittedInputDiff
+        value={valueString}
+        baseValue={baseValueString}
+        diffMode={diffMode}
+        viewMode={viewMode}
+        {...props}
+      />
     </FormGroup>
   )
 }

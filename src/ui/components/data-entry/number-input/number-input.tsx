@@ -1,5 +1,5 @@
 import { forwardRef, useId, useState } from 'react'
-import type { NumberFieldProps } from './types.js'
+import type { InputNumberProps, NumberFieldProps } from './types.js'
 import { useNumberInput } from './use-number-input.js'
 import { regex } from './utils.js'
 import { FormGroup } from '../../../../scalars/components/fragments/form-group/form-group.js'
@@ -11,7 +11,7 @@ import { cn } from '../../../../scalars/lib/index.js'
 import { Input } from '../input/index.js'
 import TextInputDiff from '../text-input/text-input-diff.js'
 
-const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
+const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberProps>(
   (
     {
       label,
@@ -158,10 +158,10 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
     }
     return (
       <TextInputDiff
-        value={value?.toString() ?? defaultValue?.toString() ?? ''}
+        value={value ?? defaultValue ?? ''}
         viewMode={viewMode}
         diffMode="sentences"
-        baseValue={baseValue?.toString() ?? ''}
+        baseValue={baseValue ?? ''}
         label={label}
         required={props.required}
       />
@@ -171,7 +171,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, NumberFieldProps>(
 
 NumberInputRaw.displayName = 'NumberInputRaw'
 
-const NumberInputUncontroller = forwardRef<HTMLInputElement, NumberFieldProps>((props, ref) => {
+const NumberInputUncontroller = forwardRef<HTMLInputElement, InputNumberProps>((props, ref) => {
   const [value, setValue] = useState(props.value ?? props.defaultValue)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +182,7 @@ const NumberInputUncontroller = forwardRef<HTMLInputElement, NumberFieldProps>((
 })
 NumberInputUncontroller.displayName = 'NumberInputUncontroller'
 
-const NumberInput = forwardRef<HTMLInputElement, NumberFieldProps>((props, ref) => {
+const NumberInput = forwardRef<HTMLInputElement, InputNumberProps>((props, ref) => {
   if (props.onChange) {
     return <NumberInputRaw {...props} ref={ref} />
   }
