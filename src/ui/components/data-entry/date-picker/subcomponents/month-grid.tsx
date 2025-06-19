@@ -16,7 +16,7 @@ interface Props extends PropsWithChildren<MonthGridProps> {
   endMonth?: Date
   setNavView: (view: DatePickerView) => void
   dateFormat?: string
-  handleCalendarMonthYearSelect: (year: number, monthIndex: number) => void
+  handleCalendarMonthYearSelect?: (year: number, monthIndex: number) => void
 }
 const MonthGrid = ({
   navView,
@@ -47,7 +47,7 @@ const MonthGrid = ({
           months={months}
           currentYear={new Date().getFullYear()}
           onYearSelect={(year) => {
-            handleCalendarMonthYearSelect(year, 0)
+            handleCalendarMonthYearSelect?.(year, 0)
           }}
         />
       </div>
@@ -82,7 +82,7 @@ const MonthGrid = ({
             actualMonth={actualMonth}
             actualYear={actualYear}
             onMonthSelect={(year, monthIndex) => {
-              handleCalendarMonthYearSelect(year, monthIndex)
+              handleCalendarMonthYearSelect?.(year, monthIndex)
             }}
           />
           <div>

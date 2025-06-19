@@ -72,7 +72,7 @@ export type CalendarProps = DayPickerProps & {
   disabledDates?: boolean
   className?: string
   dateFormat?: string
-  handleCalendarMonthYearSelect: (year: number, monthIndex: number) => void
+  handleCalendarMonthYearSelect?: (year: number, monthIndex: number) => void
 }
 
 /**
