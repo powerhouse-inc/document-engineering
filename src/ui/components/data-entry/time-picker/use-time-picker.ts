@@ -90,7 +90,7 @@ export const useTimePicker = ({
 
     const datetime = formatInputsToValueFormat(hours, minutes, offsetUTC)
     const clearMinutes = cleanTime(minutes)
-    const clearHours = convertTimeFrom24To12Hours(cleanTime(hours))
+    const clearHours = is12HourFormat ? convertTimeFrom24To12Hours(cleanTime(hours)) : cleanTime(hours)
     setSelectedHour(clearHours)
     setSelectedMinute(clearMinutes)
     onChange?.(createChangeEvent(datetime))

@@ -88,11 +88,17 @@ export const transformInputTime = (
   periodToCheck?: TimePeriod
 ): { hour: string; minute: string; period?: TimePeriod } => {
   if (!input) return { hour: '', minute: '', period: undefined }
+
   input = input.trim()
+  if (!input) return { hour: '', minute: '', period: undefined }
+  // If the input is less than 3 characters, return empty values
+  if (input.length < 3) return { hour: '', minute: '', period: undefined }
+
   let hourStr = ''
   let minuteStr = ''
   let period: TimePeriod | undefined = undefined
   if (input.includes(':')) {
+    if (!isValidTimeInput(input)) return { hour: '', minute: '', period: undefined }
     const [hourPart, rest] = input.split(':', 2)
     hourStr = hourPart
     const parts = rest.split(/\s+/)
@@ -101,16 +107,19 @@ export const transformInputTime = (
       period = parts[1].toUpperCase() as TimePeriod
     }
   } else {
+    if (!isValidTimeInput(input)) return { hour: '', minute: '', period: undefined }
     // Handle short hours: 8 -> 08:00, 12 -> 12:00
     const digits = input.padStart(4, '0')
     hourStr = digits.slice(0, 2)
     minuteStr = digits.slice(2, 4)
   }
-
   let hourNum = parseInt(hourStr, 10)
   let minuteNum = parseInt(minuteStr, 10) || 0
   if (isNaN(hourNum)) hourNum = 0
   if (isNaN(minuteNum)) minuteNum = 0
+
+  // Store original hour to determine if input was 24h format
+  const originalHour = hourNum
 
   // Apply the minute rounding using the interval
   minuteNum = roundMinute(minuteNum, interval)
@@ -122,8 +131,16 @@ export const transformInputTime = (
       hourNum = 12
     }
 
-    // If still no period assigned, determine based on hour
-    period ??= hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
+    // If still no period assigned, determine based on original hour
+    if (!period) {
+      if (originalHour > 12) {
+        // Input was in 24h format and > 12, so it's PM
+        period = 'PM'
+      } else {
+        // Input was in 12h format, use the 8-11 logic
+        period = hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
+      }
+    }
     if (periodToCheck) {
       period = periodToCheck
     }
@@ -158,27 +175,36 @@ export const isValidTimeInput = (input: string): boolean => {
   input = input.trim()
   // Allow change the format and convert the time
   if (input.includes(':')) {
-    // Must be exactly 5 characters for 24h format
-    if (input.length !== 5) {
-      return false
-    }
-
     // Split into hours and minutes
     const [hours, minutes] = input.split(':')
+    const cleanMinutes = cleanTime(minutes)
+    if (isNaN(Number(hours)) || isNaN(Number(cleanMinutes))) {
+      return false
+    }
+    // Remove the AM/PM from the minutes if exists
 
     // Hours and minutes must be numbers
     const hoursNum = parseInt(hours, 10)
-    const minutesNum = parseInt(minutes, 10)
-    if (isNaN(hoursNum) || isNaN(minutesNum)) return false
+    const minutesNum = parseInt(cleanMinutes, 10)
+
+    if (isNaN(hoursNum) || isNaN(minutesNum)) {
+      return false
+    }
 
     // Hours must be between 0 and 23
-    if (hoursNum < 0 || hoursNum > 23) return false
+    if (hoursNum < 0 || hoursNum > 23) {
+      return false
+    }
 
     // Minutes must be between 0 and 59
-    if (minutesNum < 0 || minutesNum > 59) return false
+    if (minutesNum < 0 || minutesNum > 59) {
+      return false
+    }
 
     // Minutes must be exactly 2 digits
-    if (minutes.length !== 2) return false
+    if (cleanMinutes.length !== 2) {
+      return false
+    }
 
     return true
   } else {
@@ -388,7 +414,7 @@ export const formatInputToDisplayValid = (
   timeIntervals?: number,
   periodToCheck?: TimePeriod
 ) => {
-  const { hour, minute, period } = transformInputTime(input, is12HourFormat, timeIntervals)
+  const { hour, minute, period } = transformInputTime(input, is12HourFormat, timeIntervals, periodToCheck)
   if (!hour && !minute) return ''
 
   return is12HourFormat ? `${hour}:${minute} ${periodToCheck ?? period ?? ''}` : `${hour}:${minute}`
