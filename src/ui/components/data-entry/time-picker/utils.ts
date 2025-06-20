@@ -36,9 +36,9 @@ export const cleanTime = (time: string) => {
  */
 export const convert24hTo12h = (input: string) => {
   const [hours, minutes] = input.split(':')
-  const hourNum = parseInt(hours, 10)
+  const hourNum = parseInt(hours)
   const period = hourNum >= 12 ? 'PM' : 'AM'
-  const hour12 = hourNum % 12 || 12 // Convierte 0 a 12
+  const hour12 = hourNum % 12 || 12
   return `${hour12}:${minutes} ${period}`
 }
 
@@ -65,7 +65,6 @@ export const roundMinute = (minute: number, interval: number): number => {
   if (remainder >= interval / 2) {
     roundedMinute = minute + (interval - remainder)
     if (roundedMinute >= 60) {
-      // If it exceeds 60, round down
       roundedMinute = minute - remainder
     }
   } else {
@@ -91,7 +90,6 @@ export const transformInputTime = (
 
   input = input.trim()
   if (!input) return { hour: '', minute: '', period: undefined }
-  // If the input is less than 3 characters, return empty values
   if (input.length < 3) return { hour: '', minute: '', period: undefined }
 
   let hourStr = ''
@@ -113,31 +111,26 @@ export const transformInputTime = (
     hourStr = digits.slice(0, 2)
     minuteStr = digits.slice(2, 4)
   }
-  let hourNum = parseInt(hourStr, 10)
-  let minuteNum = parseInt(minuteStr, 10) || 0
+  let hourNum = parseInt(hourStr)
+  let minuteNum = parseInt(minuteStr) || 0
   if (isNaN(hourNum)) hourNum = 0
   if (isNaN(minuteNum)) minuteNum = 0
 
   // Store original hour to determine if input was 24h format
   const originalHour = hourNum
 
-  // Apply the minute rounding using the interval
   minuteNum = roundMinute(minuteNum, interval)
   if (is12HourFormat) {
-    // First convert 24h to 12h format if needed
     if (hourNum > 12) {
       hourNum -= 12
     } else if (hourNum === 0) {
       hourNum = 12
     }
 
-    // If still no period assigned, determine based on original hour
     if (!period) {
       if (originalHour > 12) {
-        // Input was in 24h format and > 12, so it's PM
         period = 'PM'
       } else {
-        // Input was in 12h format, use the 8-11 logic
         period = hourNum >= 8 && hourNum <= 11 ? 'AM' : 'PM'
       }
     }
@@ -173,35 +166,28 @@ export const transformInputTime = (
 export const isValidTimeInput = (input: string): boolean => {
   if (!input) return true
   input = input.trim()
-  // Allow change the format and convert the time
   if (input.includes(':')) {
-    // Split into hours and minutes
     const [hours, minutes] = input.split(':')
     const cleanMinutes = cleanTime(minutes)
     if (isNaN(Number(hours)) || isNaN(Number(cleanMinutes))) {
       return false
     }
-    // Remove the AM/PM from the minutes if exists
 
-    // Hours and minutes must be numbers
-    const hoursNum = parseInt(hours, 10)
-    const minutesNum = parseInt(cleanMinutes, 10)
+    const hoursNum = parseInt(hours)
+    const minutesNum = parseInt(cleanMinutes)
 
     if (isNaN(hoursNum) || isNaN(minutesNum)) {
       return false
     }
 
-    // Hours must be between 0 and 23
     if (hoursNum < 0 || hoursNum > 23) {
       return false
     }
 
-    // Minutes must be between 0 and 59
     if (minutesNum < 0 || minutesNum > 59) {
       return false
     }
 
-    // Minutes must be exactly 2 digits
     if (cleanMinutes.length !== 2) {
       return false
     }
@@ -214,8 +200,8 @@ export const isValidTimeInput = (input: string): boolean => {
     }
     const hourStr = input.length === 3 ? input.slice(0, 1) : input.slice(0, 2)
     const minuteStr = input.slice(-2)
-    const hourNum = parseInt(hourStr, 10)
-    const minuteNum = parseInt(minuteStr, 10)
+    const hourNum = parseInt(hourStr)
+    const minuteNum = parseInt(minuteStr)
     return hourNum >= 0 && hourNum <= 23 && minuteNum >= 0 && minuteNum <= 59
   }
 }
@@ -378,7 +364,7 @@ export const convert12hTo24h = (input: string) => {
   const period = input.includes('AM') || input.includes('PM') ? input.slice(-2) : undefined
   let formattedHours = hours
   if (period === 'PM' && hours !== '12') {
-    formattedHours = (parseInt(hours, 10) + 12).toString()
+    formattedHours = (parseInt(hours) + 12).toString()
   } else if (period === 'AM' && hours === '12') {
     formattedHours = '00'
   }
@@ -456,13 +442,11 @@ export const getHoursAndMinutes = (input: string) => {
         period: undefined,
       }
     }
-    // Return and invalid value as cannot be a value time
     return { hours: '', minutes: '', period: undefined }
   }
 }
 
 export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  // Allow control keys (backspace, delete, arrows, etc)
   if (
     e.key === 'Backspace' ||
     e.key === 'Delete' ||
@@ -478,15 +462,12 @@ export const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     return
   }
 
-  // Allow numbers
   if (/^[0-9]$/.test(e.key)) {
     return
   }
-  // Allow ":"
   if (e.key === ':') {
     return
   }
-  // Allow "A", "M", "P" for AM/PM
   if (/^[AMP]$/i.test(e.key)) {
     return
   }
