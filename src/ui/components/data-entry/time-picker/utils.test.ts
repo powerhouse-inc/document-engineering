@@ -150,11 +150,6 @@ describe('transformInputTime', () => {
       expect(result).toEqual({ hour: '09', minute: '30', period: 'AM' })
     })
 
-    // it('should handle input with lowercase AM/PM', () => {
-    //   const result = transformInputTime('09:30 am', true)
-    //   expect(result).toEqual({ hour: '09', minute: '30', period: 'am' })
-    // })
-
     it('should convert 12h if had AM/PM', () => {
       const result = transformInputTime('02:30 PM', false)
       expect(result).toEqual({ hour: '14', minute: '30', period: undefined })
