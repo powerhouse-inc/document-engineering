@@ -11,7 +11,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
       />
@@ -26,7 +26,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
       />
@@ -41,7 +41,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         errors={['Error 1', 'Error 2']}
         validators={() => 'Error 3'}
@@ -67,7 +67,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
         disabled
@@ -85,7 +85,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         required
         units={commonCryptoCurrencies}
@@ -101,7 +101,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
         disabled
