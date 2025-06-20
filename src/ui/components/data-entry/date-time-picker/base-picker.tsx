@@ -1,12 +1,12 @@
 import { forwardRef, type PropsWithChildren } from 'react'
 import { Icon, type IconName } from '../../../components/icon/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
+import type { InputBaseProps } from '../../../../scalars/components/types.js'
 import { Button } from '../../../../scalars/components/fragments/button/index.js'
 import { Popover, PopoverContent, PopoverTrigger } from '../../../../scalars/components/fragments/popover/index.js'
 import { Input } from '../../data-entry/input/input.js'
 
-export interface BasePickerFieldProps extends InputBaseProps<string>, FieldErrorHandling {
+export interface BasePickerFieldProps extends PropsWithChildren {
   id?: string
   name: string
   disabled?: boolean
@@ -26,9 +26,10 @@ export interface BasePickerFieldProps extends InputBaseProps<string>, FieldError
     'name' | 'onChange' | 'value' | 'defaultValue' | 'onBlur'
   >
   className?: string
+  children: React.ReactNode
 }
 
-const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePickerFieldProps>>(
+const BasePickerField = forwardRef<HTMLInputElement, BasePickerFieldProps>(
   (
     {
       id,
@@ -53,6 +54,7 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
     return (
       <div className="flex flex-col space-y-2">
         <div
+          ref={ref}
           className={cn(
             'flex w-full rounded-md text-sm',
             'focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0',
@@ -119,7 +121,6 @@ const BasePickerField = forwardRef<HTMLInputElement, PropsWithChildren<BasePicke
               'focus:bg-white focus-visible:ring-0 focus-visible:ring-offset-0'
             )}
             placeholder={placeholder}
-            ref={ref}
             disabled={disabled}
             required={required}
             {...inputProps}
