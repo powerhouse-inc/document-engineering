@@ -218,9 +218,10 @@ export const useDateTimePicker = ({
       return
     }
     // Get the time and transform to 24 hours format and avoid undefined
-    const timeValue = inputValue.split(' ')[1] ?? ''
+    const inputSplited = inputValue.split(' ')
+    const timeValue = inputSplited[1] ?? ''
     // Get period from input if exists
-    const periodInput = inputValue.split(' ')[2] as TimePeriod
+    const periodInput = inputSplited[2] as TimePeriod
 
     if (!isValidTimeInput(timeValue)) {
       if (inputValue === '') {
@@ -296,9 +297,8 @@ export const useDateTimePicker = ({
 
   const handleInputChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
-
     if (isFormatDisabled(internalFormat, inputValue)) {
-      return
+      onChange?.(createChangeEvent(inputValue))
     }
     setDateTimeToDisplay(inputValue)
     const { date, time } = splitDateTimeStringFromInput(inputValue)
