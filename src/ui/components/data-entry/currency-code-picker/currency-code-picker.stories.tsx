@@ -106,6 +106,8 @@ const meta: Meta<typeof CurrencyCodePicker> = {
         showErrorOnChange: false,
       },
     }),
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
   },
 
   args: {

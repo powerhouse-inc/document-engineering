@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { FORMAT_MAPPING } from '../../../ui/components/data-entry/date-time-picker/utils.js'
+import { FORMAT_MAPPING_DATE_TIME_PICKER } from '../../../ui/components/data-entry/date-time-picker/utils.js'
 import { withForm } from '../../index.js'
 import { getDefaultArgTypes, getValidationArgTypes, StorybookControlCategory } from '../../lib/storybook-arg-types.js'
 import { DateTimePickerField } from './date-time-picker-field.js'
@@ -66,7 +66,7 @@ const meta: Meta<typeof DateTimePickerField> = {
         type: 'select',
       },
       description: 'The format of the date in the date picker',
-      options: Object.keys(FORMAT_MAPPING),
+      options: Object.keys(FORMAT_MAPPING_DATE_TIME_PICKER),
       table: {
         defaultValue: { summary: 'YYYY-MM-DD' },
         type: {

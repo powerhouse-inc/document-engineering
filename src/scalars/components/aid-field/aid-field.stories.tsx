@@ -93,6 +93,16 @@ const meta: Meta<typeof AIDField> = {
       if: { arg: 'autoComplete', neq: false },
     },
 
+    initialOptions: {
+      control: 'object',
+      description: 'Array of options to initially populate the autocomplete dropdown',
+      table: {
+        type: { summary: 'AIDOption[]' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+      if: { arg: 'autoComplete', neq: false },
+    },
+
     previewPlaceholder: {
       control: 'object',
       description:
@@ -124,6 +134,49 @@ const meta: Meta<typeof AIDField> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
       if: { arg: 'autoComplete', neq: false },
+    },
+
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
+    basePreviewIcon: {
+      control: 'object',
+      description: 'The icon of the base preview',
+      table: {
+        type: { summary: 'IconName | React.ReactElement' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewTitle: {
+      control: 'text',
+      description: 'The title of the base preview',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewPath: {
+      control: 'object',
+      description: 'The path of the base preview',
+      table: {
+        type: { summary: 'string | { text: string; url: string; }' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewDescription: {
+      control: 'text',
+      description: 'The description of the base preview',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    basePreviewAgentType: {
+      control: 'text',
+      description: 'The agent type of the base preview',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.DIFF,
+      },
     },
 
     ...getValidationArgTypes(),
@@ -180,5 +233,71 @@ export const Filled: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'AID field addition',
+    placeholder: 'did:ethr:',
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'addition',
+    baseValue: 'did:ethr:0xabcde14089478a327f09197987f16f9e5d936e8a',
+    basePreviewIcon: 'Person',
+    basePreviewTitle: 'Old Agent A',
+    basePreviewPath: {
+      text: 'old-renown.id/0xb9c5714089478a327f09197987f16f9e5d936e8a',
+      url: 'https://www.old-renown.id/',
+    },
+    basePreviewDescription: 'Old Agent A description',
+    basePreviewAgentType: 'Old Human Contributor',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'AID field removal',
+    placeholder: 'did:ethr:',
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'removal',
+    baseValue: 'did:ethr:0xabcde14089478a327f09197987f16f9e5d936e8a',
+    basePreviewIcon: 'Person',
+    basePreviewTitle: 'Old Agent A',
+    basePreviewPath: {
+      text: 'old-renown.id/0xb9c5714089478a327f09197987f16f9e5d936e8a',
+      url: 'https://www.old-renown.id/',
+    },
+    basePreviewDescription: 'Old Agent A description',
+    basePreviewAgentType: 'Old Human Contributor',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'AID field mixed',
+    placeholder: 'did:ethr:',
+    variant: 'withValueTitleAndDescription',
+    fetchOptionsCallback: fetchOptions,
+    fetchSelectedOptionCallback: fetchSelectedOption,
+    defaultValue: mockedOptions[0].value,
+    initialOptions: mockedOptions,
+    viewMode: 'mixed',
+    baseValue: 'did:ethr:0xabcde14089478a327f09197987f16f9e5d936e8a',
+    basePreviewIcon: 'Person',
+    basePreviewTitle: 'Old Agent A',
+    basePreviewPath: {
+      text: 'old-renown.id/0xb9c5714089478a327f09197987f16f9e5d936e8a',
+      url: 'https://www.old-renown.id/',
+    },
+    basePreviewDescription: 'Old Agent A description',
+    basePreviewAgentType: 'Old Human Contributor',
   },
 }

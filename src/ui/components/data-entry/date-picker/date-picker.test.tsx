@@ -252,4 +252,28 @@ describe('DatePicker', () => {
       expect(screen.queryByTestId('date-picker-diff')).not.toBeInTheDocument()
     })
   })
+  it('should show year only years when format is YYYY', async () => {
+    const date = new Date()
+    const year = date.getFullYear().toString()
+    render(<DatePicker {...defaultProps} dateFormat="YYYY" />)
+
+    const calendarTrigger = screen.getByTestId('icon-fallback')
+    await userEvent.click(calendarTrigger)
+
+    expect(screen.getAllByText(year)).toHaveLength(2)
+    expect(screen.queryByText('January')).not.toBeInTheDocument()
+  })
+  it('should show year and month only when format is YYYY-MM', async () => {
+    const date = new Date()
+    const year = date.getFullYear().toString()
+    const month = date.toLocaleString('en-US', { month: 'long' })
+
+    render(<DatePicker {...defaultProps} dateFormat="YYYY-MM" />)
+
+    const calendarTrigger = screen.getByTestId('icon-fallback')
+    await userEvent.click(calendarTrigger)
+
+    expect(screen.getAllByText(year)).toHaveLength(2)
+    expect(screen.getByText(month)).toBeInTheDocument()
+  })
 })

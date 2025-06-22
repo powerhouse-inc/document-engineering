@@ -15,7 +15,12 @@ type OIDOption = IdAutocompleteOption
 
 type OIDInputBaseProps = Omit<
   IdAutocompleteProps,
-  'autoComplete' | 'fetchOptionsCallback' | 'fetchSelectedOptionCallback' | 'previewPlaceholder' | 'renderOption'
+  | 'autoComplete'
+  | 'fetchOptionsCallback'
+  | 'fetchSelectedOptionCallback'
+  | 'previewPlaceholder'
+  | 'renderOption'
+  | 'renderExtraDiffs'
 >
 
 type OIDInputProps = OIDInputBaseProps &

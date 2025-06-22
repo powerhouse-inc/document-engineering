@@ -47,7 +47,7 @@ type IdAutocompleteConfigProps = IdAutocompleteBaseConfigProps &
       }
   )
 
-interface IdAutocompleteBaseOption {
+interface IdAutocompleteOption {
   icon?: IconName | React.ReactElement
   title?: string
   path?:
@@ -60,8 +60,6 @@ interface IdAutocompleteBaseOption {
   description?: string
 }
 
-type IdAutocompleteOption<T extends Record<string, unknown> = Record<never, unknown>> = IdAutocompleteBaseOption & T
-
 type IdAutocompleteProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   keyof InputBaseProps<string> | keyof IdAutocompleteConfigProps | 'pattern'
@@ -69,11 +67,16 @@ type IdAutocompleteProps = Omit<
   InputBaseProps<string> &
   IdAutocompleteConfigProps & {
     viewMode?: ViewMode
-    baseValue?: IdAutocompleteBaseOption['value']
-    basePreviewIcon?: IdAutocompleteBaseOption['icon']
-    basePreviewTitle?: IdAutocompleteBaseOption['title']
-    basePreviewPath?: IdAutocompleteBaseOption['path']
-    basePreviewDescription?: IdAutocompleteBaseOption['description']
+    baseValue?: IdAutocompleteOption['value']
+    basePreviewIcon?: IdAutocompleteOption['icon']
+    basePreviewTitle?: IdAutocompleteOption['title']
+    basePreviewPath?: IdAutocompleteOption['path']
+    basePreviewDescription?: IdAutocompleteOption['description']
+    renderExtraDiffs?: (
+      viewMode: ViewMode,
+      previewPlaceholder?: IdAutocompleteOption,
+      currentOption?: IdAutocompleteOption
+    ) => React.ReactNode
   }
 
 export type { IdAutocompleteOption, IdAutocompleteProps }

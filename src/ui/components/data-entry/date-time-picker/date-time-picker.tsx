@@ -147,11 +147,9 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
           ) : null}
           <BasePickerField
             ref={ref}
-            label={label}
             id={id}
             value={dateTimeToDisplay}
             name={name}
-            errors={errors}
             disabled={disabled}
             required={required}
             iconName="CalendarTime"

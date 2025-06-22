@@ -6,7 +6,7 @@ import {
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types'
 import { DateTimePicker } from './date-time-picker.js'
-import { FORMAT_MAPPING } from './utils.js'
+import { FORMAT_MAPPING_DATE_TIME_PICKER } from './utils.js'
 
 /**
  * The `DateTimePicker` component provides an input field for selecting both dates and times.
@@ -199,7 +199,7 @@ const meta: Meta<typeof DateTimePicker> = {
         type: 'select',
       },
       description: 'The format of the date in the date picker',
-      options: Object.keys(FORMAT_MAPPING),
+      options: Object.keys(FORMAT_MAPPING_DATE_TIME_PICKER),
       table: {
         defaultValue: { summary: 'YYYY-MM-DD' },
         type: {

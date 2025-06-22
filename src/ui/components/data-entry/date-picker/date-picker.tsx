@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 import {
   FormDescription,
   FormGroup,
@@ -15,7 +15,7 @@ import DateInputDiff from './subcomponents/date-picker-diff/date-picker-diff.js'
 
 interface DatePickerProps
   extends InputBaseProps<DateFieldValue>,
-    Omit<CalendarProps, 'mode'>,
+    Omit<CalendarProps, 'mode' | 'handleCalendarMonthYearSelect'>,
     WithDifference<DateFieldValue> {
   label?: string
   id?: string
@@ -42,7 +42,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   (
     {
       label,
-      id,
+      id: propId,
       errors,
       name,
       disabled,
@@ -82,6 +82,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       disabledDates,
       weekStartDay,
       handleDayClick,
+      handleCalendarMonthYearSelect,
     } = useDatePickerField({
       value,
       defaultValue,
@@ -95,6 +96,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       minDate,
       maxDate,
     })
+    const generatedId = useId()
+    const id = propId ?? generatedId
 
     if (viewMode === 'edition') {
       return (
@@ -106,11 +109,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           )}
           <BasePickerField
             ref={ref}
-            label={label}
             id={id}
             value={inputValue}
             name={name}
-            errors={errors}
             disabled={disabled}
             required={required}
             iconName="CalendarTime"
@@ -131,6 +132,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             <Calendar
               mode="single"
               selected={date}
+              dateFormat={dateFormat}
+              handleCalendarMonthYearSelect={handleCalendarMonthYearSelect}
               weekStartsOn={weekStartDay}
               onSelect={handleDateSelect}
               disabled={disabledDates}

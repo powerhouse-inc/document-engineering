@@ -1,4 +1,4 @@
-import { parse, startOfDay } from 'date-fns'
+import { format, parse, startOfDay } from 'date-fns'
 import React, { useCallback, useMemo } from 'react'
 
 import { getDateFormat, normalizeMonthFormat, parseDateValue, parseInputString } from '../date-time-picker/utils.js'
@@ -150,6 +150,15 @@ export const useDatePickerField = ({
     return fechaUTC
   }, [value, internalFormat])
 
+  const handleCalendarMonthYearSelect = (year: number, monthIndex: number) => {
+    const yearFormat = dateFormat === 'YYYY' && internalFormat === 'yyyy-MM-dd'
+    const newInputValue = format(new Date(year, monthIndex), internalFormat ?? 'yyyy-MM-dd')
+    const inputToShow = yearFormat ? `${year}` : newInputValue
+    setInputDisplay(inputToShow)
+    onChange?.(createChangeEvent(newInputValue))
+    setIsOpen(false)
+  }
+
   return {
     date,
     inputValue: inputDisplay,
@@ -161,5 +170,6 @@ export const useDatePickerField = ({
     disabledDates,
     weekStartDay,
     handleDayClick,
+    handleCalendarMonthYearSelect,
   }
 }
