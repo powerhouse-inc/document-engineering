@@ -11,7 +11,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
       />
@@ -26,7 +26,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
       />
@@ -46,7 +46,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
         disabled
@@ -64,7 +64,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         required
         units={commonCryptoCurrencies}
@@ -80,7 +80,7 @@ describe('AmountField Component', () => {
         name="amount"
         type="Amount"
         value={{
-          amount: 345,
+          value: 345,
         }}
         units={commonCryptoCurrencies}
         disabled
@@ -99,10 +99,10 @@ describe('AmountField Component', () => {
           viewMode="addition"
           onChange={onChange}
           value={{
-            amount: 345,
+            value: 345,
           }}
           baseValue={{
-            amount: 1345,
+            value: 1345,
           }}
         />
       )
@@ -118,11 +118,11 @@ describe('AmountField Component', () => {
           type="AmountCurrency"
           viewMode="removal"
           value={{
-            amount: 9345,
+            value: 9345,
             unit: 'USD',
           }}
           baseValue={{
-            amount: 2345,
+            value: 2345,
             unit: 'USD',
           }}
         />
@@ -139,11 +139,11 @@ describe('AmountField Component', () => {
           type="AmountCurrency"
           viewMode="mixed"
           value={{
-            amount: 2345,
+            value: 2345,
             unit: 'USD',
           }}
           baseValue={{
-            amount: 1345,
+            value: 1345,
             unit: 'USD',
           }}
         />
@@ -160,11 +160,11 @@ describe('AmountField Component', () => {
           name="amount"
           viewMode="edition"
           value={{
-            amount: 345,
+            value: 345,
             unit: 'USD',
           }}
           baseValue={{
-            amount: 345,
+            value: 345,
             unit: 'USD',
           }}
         />

@@ -1,7 +1,11 @@
-import { commonCryptoCurrencies } from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
+import {
+  commonCryptoCurrencies,
+  commonFiatCurrencies,
+} from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
 import { screen, waitFor } from '@testing-library/react'
 import { renderWithForm } from '../../lib/testing.js'
 import { AmountField } from './amount-field.js'
+import userEvent from '@testing-library/user-event'
 
 describe('AmountField Component', () => {
   it('should match snapshot', () => {
@@ -109,5 +113,28 @@ describe('AmountField Component', () => {
       />
     )
     expect(screen.getByText('This is a description')).toBeInTheDocument()
+  })
+
+  it('should show validation error when currency is not selected', async () => {
+    renderWithForm(
+      <AmountField
+        required
+        label="Amount Label"
+        name="amount"
+        type="AmountFiat"
+        showErrorOnBlur
+        value={{
+          value: 345,
+          unit: '',
+        }}
+        units={commonFiatCurrencies}
+        description="This is a description"
+      />
+    )
+
+    const numberInput = screen.getByRole('spinbutton')
+    await userEvent.click(numberInput)
+    await userEvent.tab()
+    expect(screen.getByText('Please select a valid currency')).toBeInTheDocument()
   })
 })

@@ -165,6 +165,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 disabled={disabled}
                 value={valueInput === undefined ? undefined : (valueInput as unknown as number)}
                 id={id}
+                numericType={type === 'AmountCurrency' || type === 'AmountCrypto' ? 'BigInt' : 'Float'}
                 maxValue={maxValue}
                 precision={precision}
                 minValue={minValue}

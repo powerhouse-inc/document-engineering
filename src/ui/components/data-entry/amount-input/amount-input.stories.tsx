@@ -360,11 +360,11 @@ export const WithDifferencesAddition: Story = {
     units: mappedFiatCurrencies,
     label: 'Icon names addition',
     value: {
-      amount: 22233,
+      value: 22233,
       unit: 'USD',
     },
     baseValue: {
-      amount: 42323,
+      value: 42323,
       unit: 'THB',
     },
     viewMode: 'addition',
@@ -375,11 +375,11 @@ export const WithDifferencesRemoval: Story = {
   args: {
     label: 'Icon names removal',
     value: {
-      amount: 12323,
+      value: 12323,
       unit: 'ETH',
     },
     baseValue: {
-      amount: 413130,
+      value: 413130,
       unit: 'BTC',
     },
     type: 'AmountCurrency',
@@ -392,11 +392,11 @@ export const WithDifferencesMixed: Story = {
   args: {
     label: 'Icon names mixed',
     value: {
-      amount: 909123223,
+      value: 909123223,
       unit: 'BTC',
     },
     baseValue: {
-      amount: 49989822,
+      value: 49989822,
       unit: 'ETH',
     },
     viewMode: 'mixed',
