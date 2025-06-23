@@ -2,6 +2,7 @@ import { commonCryptoCurrencies, commonFiatCurrencies } from '../currency-code-p
 import type { Meta, StoryObj } from '@storybook/react'
 import {
   getDefaultArgTypes,
+  getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
@@ -204,6 +205,13 @@ const meta = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
   },
 
   args: {

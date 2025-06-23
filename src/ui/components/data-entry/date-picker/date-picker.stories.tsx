@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { withTimestampsAsISOStrings } from '../../../../scalars/index.js'
-import { getDefaultArgTypes, StorybookControlCategory } from '../../../../scalars/lib/storybook-arg-types.js'
+import {
+  getDefaultArgTypes,
+  getValidationArgTypes,
+  StorybookControlCategory,
+} from '../../../../scalars/lib/storybook-arg-types.js'
 import { FORMAT_MAPPING } from '../date-time-picker/utils.js'
 import { DatePicker } from './date-picker.js'
 
@@ -210,6 +214,13 @@ const meta: Meta<typeof DatePicker> = {
         category: StorybookControlCategory.DIFF,
       },
     },
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
   },
   args: {
     name: 'date-picker-field',
