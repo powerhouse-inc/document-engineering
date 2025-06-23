@@ -5,7 +5,7 @@ import { isNotSafeValue } from '../amount-input/utils.js'
 import { MAX_SAFE_INTEGER } from '../../../../scalars/components/number-field/number-field-validations.js'
 
 interface UseNumberFieldProps {
-  value?: number | bigint | string
+  value?: number | bigint
   maxValue?: number
   minValue?: number
   step?: number

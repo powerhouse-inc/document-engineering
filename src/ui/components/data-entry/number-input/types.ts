@@ -24,7 +24,7 @@ export type NumericType =
 
 export interface InputNumberProps
   extends Omit<
-    InputBaseProps<string | number> &
+    InputBaseProps<number | bigint> &
       NumberProps &
       Omit<React.InputHTMLAttributes<HTMLInputElement>, 'min' | 'max' | 'minLength' | 'maxLength'>,
     'value' | 'defaultValue' | 'name' | 'pattern'
@@ -33,8 +33,8 @@ export interface InputNumberProps
   step?: number
   precision?: number
   trailingZeros?: boolean
-  value?: number | bigint | string
-  defaultValue?: number | bigint | string
+  value?: number | bigint
+  defaultValue?: number | bigint
   className?: string
   pattern?: RegExp
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
