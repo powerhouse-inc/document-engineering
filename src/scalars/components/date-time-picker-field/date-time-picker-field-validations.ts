@@ -14,10 +14,20 @@ import {
 import type { DateTimePickerFieldProps } from './types.js'
 
 export const dateTimeFieldValidations =
-  ({ dateFormat = 'YYYY-MM-DD', minDate, maxDate, disablePastDates, disableFutureDates }: DateTimePickerFieldProps) =>
+  ({
+    dateFormat = 'YYYY-MM-DD',
+    minDate,
+    maxDate,
+    disablePastDates,
+    disableFutureDates,
+    timeIntervals,
+  }: DateTimePickerFieldProps) =>
   (value: unknown) => {
     if (value === '' || value === undefined) {
       return true
+    }
+    if (timeIntervals === 0) {
+      return 'Please enter a valid timeIntervals'
     }
     const internalFormat = getDateFormat(dateFormat)
     // 1. Validate that it has date and time separated by space
