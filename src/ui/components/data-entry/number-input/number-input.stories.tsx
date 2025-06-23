@@ -91,7 +91,13 @@ const meta = {
       },
     },
     ...PrebuiltArgTypes.placeholder,
-    ...getValidationArgTypes(),
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
     ...PrebuiltArgTypes.minValue,
     ...PrebuiltArgTypes.maxValue,
     ...PrebuiltArgTypes.precision,
