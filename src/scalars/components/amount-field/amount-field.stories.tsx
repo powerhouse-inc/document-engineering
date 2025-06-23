@@ -382,5 +382,6 @@ export const WithDifferencesMixed: Story = {
       unit: 'ETH',
     },
     viewMode: 'mixed',
+    units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
   },
 }
