@@ -1,5 +1,6 @@
 import { GraphQLError, GraphQLScalarType, type GraphQLScalarTypeConfig, Kind } from 'graphql'
 import { z } from 'zod'
+export const NUMERIC_VALUE_REGEX = /^\d+(\.\d+)?$/
 
 export type SupportedCurrency = string
 
@@ -56,6 +57,12 @@ export const config: GraphQLScalarTypeConfig<AmountCurrency, AmountCurrency> = {
 
     if (!valueField || valueField.value.kind !== Kind.STRING) {
       throw new GraphQLError('value must be a valid string value', {
+        nodes: ast,
+      })
+    }
+
+    if (!NUMERIC_VALUE_REGEX.test(valueField.value.value)) {
+      throw new GraphQLError('value must be a valid numeric string (e.g., "123" or "123.45")', {
         nodes: ast,
       })
     }
