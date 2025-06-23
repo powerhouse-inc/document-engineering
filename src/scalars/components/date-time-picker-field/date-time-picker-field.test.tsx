@@ -90,12 +90,12 @@ describe('DateTimePickerField', () => {
 
   it('should handle time format changes correctly', async () => {
     const onChange = vi.fn()
-    renderWithForm(<DateTimePickerField {...defaultProps} timeFormat="hh:mm a" onChange={onChange} />)
+    renderWithForm(<DateTimePickerField {...defaultProps} timeFormat="HH:mm a" onChange={onChange} />)
 
     const input = screen.getByPlaceholderText<HTMLInputElement>('Select date and time')
     await userEvent.type(input, '2024-12-25 02:30 PM')
 
-    expect(input.value.trim()).toBe('2024-12-25 02:30')
+    expect(input.value.trim()).toBe('2024-12-25 02:30 PM')
 
     const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0] as ChangeEvent<HTMLInputElement>
     expect(lastCall.type).toBe('change')

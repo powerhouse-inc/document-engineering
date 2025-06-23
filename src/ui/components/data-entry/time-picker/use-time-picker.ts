@@ -14,6 +14,7 @@ import {
   getOffsetToDisplay,
   getOptions,
   getTimezone,
+  INVALID_TIME_INPUT,
   isValidTimeInput,
 } from './utils.js'
 
@@ -67,15 +68,20 @@ export const useTimePicker = ({
     const input = e.target.value
     setInputValue(input)
   }
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const input = e.target.value
+    if (!isValidTimeInput(input)) {
+      onChange?.(createChangeEvent(INVALID_TIME_INPUT))
+      onBlur?.(createBlurEvent(INVALID_TIME_INPUT))
+      return
+    }
     // Get the period from the input if exists to avoid use the default period
     const inputPeriod = input.split(' ')[1] as TimePeriod
 
     const validDisplay = formatInputToDisplayValid(input, is12HourFormat, timeIntervals, inputPeriod)
 
     const valueForInput = isValidTimeInput(input) ? validDisplay : input
-
     setInputValue(valueForInput)
 
     const validValue = convert12hTo24h(valueForInput)
@@ -117,8 +123,6 @@ export const useTimePicker = ({
     setIsOpen(false)
     const offsetUTC = timeZone ? getOffset(timeZone) : getOffset(selectedTimeZone as string)
 
-    // Value to save in the onSubmit
-    const datetime = formatInputsToValueFormat(selectedHour, selectedMinute, offsetUTC)
     // If there are no hours and minutes selected, do nothing
     if (!selectedHour && !selectedMinute) {
       return
@@ -144,8 +148,13 @@ export const useTimePicker = ({
 
     // Value to display in the input get values from the popover interface
     const valueToDisplay = is12HourFormat ? `${hourToUse}:${minuteToUse} ${periodToUse}` : `${hourToUse}:${minuteToUse}`
-
     setInputValue(valueToDisplay)
+
+    // Convert the value to display ISO time format
+    const validValue = convert12hTo24h(valueToDisplay)
+
+    const { minutes, hours } = getHoursAndMinutes(validValue)
+    const datetime = formatInputsToValueFormat(hours, minutes, offsetUTC)
     onChange?.(createChangeEvent(datetime))
   }
 

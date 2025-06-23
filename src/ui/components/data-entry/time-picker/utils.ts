@@ -27,7 +27,7 @@ export const TIME_PATTERNS = {
 } as const
 
 export const cleanTime = (time: string) => {
-  return time.replace(/\s*(AM|PM)\s*/i, '')
+  return time.replace(/\s*(AM|PM)\s*/i, '').trim()
 }
 /**
  * Convert a 24-hour format time to a 12-hour format time
@@ -86,6 +86,9 @@ export const transformInputTime = (
   interval = 1,
   periodToCheck?: TimePeriod
 ): { hour: string; minute: string; period?: TimePeriod } => {
+  if (interval === 0) {
+    return { hour: '', minute: '', period: undefined }
+  }
   if (!input) return { hour: '', minute: '', period: undefined }
 
   input = input.trim()
@@ -94,7 +97,7 @@ export const transformInputTime = (
 
   let hourStr = ''
   let minuteStr = ''
-  let period: TimePeriod | undefined = undefined
+  let period: TimePeriod | undefined = periodToCheck
   if (input.includes(':')) {
     if (!isValidTimeInput(input)) return { hour: '', minute: '', period: undefined }
     const [hourPart, rest] = input.split(':', 2)
@@ -360,7 +363,7 @@ export const formatInputsToValueFormat = (hours: string, minutes: string, timezo
 export const convert12hTo24h = (input: string) => {
   if (!input) return ''
   // convert from 12 format to 24 format
-  const [hours, minutes] = input.split(':')
+  const [hours, minutesWithPeriod] = input.split(':')
   const period = input.includes('AM') || input.includes('PM') ? input.slice(-2) : undefined
   let formattedHours = hours
   if (period === 'PM' && hours !== '12') {
@@ -368,6 +371,7 @@ export const convert12hTo24h = (input: string) => {
   } else if (period === 'AM' && hours === '12') {
     formattedHours = '00'
   }
+  const minutes = minutesWithPeriod.replace(period ?? '', '').trim()
   return `${formattedHours}:${minutes}`
 }
 
@@ -400,6 +404,9 @@ export const formatInputToDisplayValid = (
   timeIntervals?: number,
   periodToCheck?: TimePeriod
 ) => {
+  if (timeIntervals === 0) {
+    return input
+  }
   const { hour, minute, period } = transformInputTime(input, is12HourFormat, timeIntervals, periodToCheck)
   if (!hour && !minute) return ''
 
@@ -496,3 +503,5 @@ export const getHoursAndMinutesFromValue = (timeString: string) => {
   const match = /^([^:]+:\d{2,})/.exec(timeString)
   return match ? match[1] : ''
 }
+
+export const INVALID_TIME_INPUT = '9999:99999'
