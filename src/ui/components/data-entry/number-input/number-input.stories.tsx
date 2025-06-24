@@ -234,16 +234,16 @@ export const WithStep: Story = {
 export const WithDifferencesAddition: Story = {
   args: {
     label: 'Number difference addition',
-    value: 2025,
-    baseValue: 2024,
+    value: 345,
+    baseValue: 1345,
     viewMode: 'addition',
   },
 }
 export const WithDifferencesRemoval: Story = {
   args: {
     label: 'Date difference removal',
-    value: 205,
-    baseValue: 2924,
+    value: 454,
+    baseValue: 2024,
     viewMode: 'removal',
   },
 }
