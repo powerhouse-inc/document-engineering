@@ -1,3 +1,35 @@
+# [1.14.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.13.0...v1.14.0) (2025-06-24)
+
+
+### Bug Fixes
+
+* **scalars:** add missing props in the stories for ui component ([b7947cc](https://github.com/powerhouse-inc/document-engineering/commit/b7947cc04de764d4f055512e65b182e6a721e1a1))
+* **scalars:** add test for Amount_Crypto and Amount_Crypto ([e06c440](https://github.com/powerhouse-inc/document-engineering/commit/e06c440e394b0fa8eabf049745f4d27bd4c5b510))
+* **scalars:** add validation for intervals in date-time-field ([61f8398](https://github.com/powerhouse-inc/document-engineering/commit/61f8398b5939e7261b1340c30f81dffac73e1496))
+* **scalars:** avoid to show unnecesary props in the stories ([6dc4284](https://github.com/powerhouse-inc/document-engineering/commit/6dc42840c86422e7b1786dc360ed060cdf3c6a34))
+* **scalars:** fix error to include the differences ([bdf3ea6](https://github.com/powerhouse-inc/document-engineering/commit/bdf3ea6556bb48c5765a4dc4d5663f0deec1c4f3))
+* **scalars:** fix focus label and fix unnecesary props ([fdff240](https://github.com/powerhouse-inc/document-engineering/commit/fdff240483281ab4a2264fa34ce43b4d342c782c))
+* **scalars:** fix formatter function and add test for it ([442260c](https://github.com/powerhouse-inc/document-engineering/commit/442260c0115f7442d0e8ebc49bb6120925f1f757))
+* **scalars:** fix issues in date-time-picker and fix some ISO values ([1385022](https://github.com/powerhouse-inc/document-engineering/commit/1385022a6d4a80ef97ccda58b328c410075bbad8))
+* **scalars:** fix remove the commented code ([96d9ba4](https://github.com/powerhouse-inc/document-engineering/commit/96d9ba499628cbdbf701729c6e9a3b123556f266))
+* **scalars:** fix the interce and test ([b297c38](https://github.com/powerhouse-inc/document-engineering/commit/b297c38e0623802d83881d4af0038d638bb1cf2f))
+* **scalars:** fix the interface conflict ([f52a06e](https://github.com/powerhouse-inc/document-engineering/commit/f52a06e3c618c54847f181c8ddcbb1843e818d39))
+* **scalars:** fix the issues for increment and decrement ([bf22a4c](https://github.com/powerhouse-inc/document-engineering/commit/bf22a4c9c1ad8ecbf8b0f3ebea83cc2c6453620f))
+* **scalars:** fix the symbol colors when values are the same ([90f25aa](https://github.com/powerhouse-inc/document-engineering/commit/90f25aabebe098359d8fedf335573e778abc0b25))
+* **scalars:** fix the value and default props for number field ([44479bd](https://github.com/powerhouse-inc/document-engineering/commit/44479bdbdd742acf6e7aeafcefbc1299cc41f28a))
+* **scalars:** made optional the new format for calendar ([8ad2ac1](https://github.com/powerhouse-inc/document-engineering/commit/8ad2ac1e70632ca4cb039bb306d1f05f8b4c7238))
+* **scalars:** remove some unnecesary code ([a746d27](https://github.com/powerhouse-inc/document-engineering/commit/a746d27b91fd346143d1e3ccf3ee4a0c5af85da0))
+
+
+### Features
+
+* **scalars & ui:** add diff status to AIDInput & AIDField ([3874520](https://github.com/powerhouse-inc/document-engineering/commit/3874520581d36238db957341b08fc3b1211a091f))
+* **scalars & ui:** add diff status to OIDInput & OIDField + PHIDInput diff fixes ([11a6819](https://github.com/powerhouse-inc/document-engineering/commit/11a6819dd982173ff1edf5c53ef06d98ce5a24a0))
+* **scalars:** add diff for amount component and add diff test ([aac56a1](https://github.com/powerhouse-inc/document-engineering/commit/aac56a17de02c21711055203b74c8f247f21c5a0))
+* **scalars:** add diff props to amountfield component ([905002f](https://github.com/powerhouse-inc/document-engineering/commit/905002f63aaaaa0c76d553990cdcd59d3fa18911))
+* **scalars:** add new format for the date-picker-component ([79c69bb](https://github.com/powerhouse-inc/document-engineering/commit/79c69bb891e525910fcf07ce7126eda26a063375))
+* **scalars:** change value to string to add support to bigInt ([1f478e9](https://github.com/powerhouse-inc/document-engineering/commit/1f478e9d09f796dee4273237823a484011e078e9))
+
 # [1.13.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.12.0...v1.13.0) (2025-06-17)
 
 
