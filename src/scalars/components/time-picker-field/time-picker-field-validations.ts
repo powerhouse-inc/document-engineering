@@ -9,8 +9,11 @@ import {
 } from '../../../ui/components/data-entry/time-picker/utils.js'
 
 export const validateTimePicker =
-  ({ timeFormat }: TimeFieldProps) =>
+  ({ timeFormat, timeIntervals }: TimeFieldProps) =>
   (value: unknown) => {
+    if (timeIntervals === 0) {
+      return 'Please enter a valid timeIntervals'
+    }
     if (value === '') {
       return true
     }

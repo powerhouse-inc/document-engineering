@@ -65,9 +65,9 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
       maxDate,
       onChangeDate,
       onBlurDate,
-      timeFormat,
+      timeFormat = 'hh:mm a',
       // Time Picker Field
-      timeIntervals,
+      timeIntervals = 1,
       timeZone,
       showTimezoneSelect,
       includeContinent,

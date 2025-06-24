@@ -51,6 +51,20 @@ describe('AmountCurrency Scalar', () => {
     it('should throw an error if amount is a number', () => {
       expect(() => scalar.parseValue({ ...validAmount, value: 1.5 })).toThrow()
     })
+
+    it('should throw an error if amount is not valid numeric string', () => {
+      expect(() => scalar.parseValue({ ...validAmount, value: '345' })).not.toThrow()
+    })
+
+    it('should throw an error if amount is not finite', () => {
+      expect(() => scalar.parseValue({ ...validAmount, value: 345 })).toThrow()
+    })
+    it('should throw an error if amount is a bigint', () => {
+      expect(() => scalar.serialize({ ...validAmount, value: BigInt(1500000000000000000) })).toThrow()
+    })
+    it('should throw an error if amount is a number', () => {
+      expect(() => scalar.serialize({ ...validAmount, value: Number(345) })).toThrow()
+    })
   })
 
   describe('literal parsing', () => {

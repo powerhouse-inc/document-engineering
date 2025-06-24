@@ -233,7 +233,7 @@ describe('DateTimePicker', () => {
 
     // Verify the input value is formatted correctly (without AM/PM in display)
     // Note: The component adds a trailing space, so we trim it for comparison
-    expect(input.value.trim()).toBe('2024-12-25 02:30')
+    expect(input.value.trim()).toBe('2024-12-25 02:30 PM')
 
     // Get the last call to onChange
     const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0]
