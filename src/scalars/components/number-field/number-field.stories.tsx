@@ -208,3 +208,28 @@ export const WithStep: Story = {
     placeholder: 'Enter a number',
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: 2025,
+    baseValue: 2024,
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: 205,
+    baseValue: 2924,
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Date difference mixed',
+    value: 3345,
+    baseValue: 345,
+    viewMode: 'mixed',
+  },
+}

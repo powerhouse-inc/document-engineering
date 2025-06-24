@@ -1,4 +1,4 @@
-import type { FieldErrorHandling, InputBaseProps } from '../../../../scalars/components/types.js'
+import type { FieldErrorHandling, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 
 interface NumberProps {
   numericType?: NumericType | undefined
@@ -40,4 +40,7 @@ export interface InputNumberProps
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export interface NumberFieldProps extends InputNumberProps, FieldErrorHandling {}
+export interface NumberFieldProps
+  extends InputNumberProps,
+    WithDifference<string | number | bigint>,
+    FieldErrorHandling {}
