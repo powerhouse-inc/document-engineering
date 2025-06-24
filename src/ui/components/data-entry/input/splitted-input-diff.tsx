@@ -54,6 +54,8 @@ interface SplittedInputDiffProps extends WithDifference<string>, React.HTMLAttri
   showCopyIcon?: boolean
   asLink?: boolean
   platformIcons?: Record<string, PlatformIcon>
+  baseIcon?: JSX.Element | null
+  icon?: JSX.Element | null
 }
 
 const SplittedInputDiff = ({
@@ -64,6 +66,8 @@ const SplittedInputDiff = ({
   showCopyIcon = false,
   asLink = false,
   platformIcons,
+  baseIcon,
+  icon,
   ...props
 }: SplittedInputDiffProps) => {
   const [hasCopiedLeft, setHasCopiedLeft] = useState(false)
@@ -82,7 +86,7 @@ const SplittedInputDiff = ({
               diffMode={diffMode}
               className={cn('flex-1')}
               asLink={asLink}
-              icon={<UrlFavicon url={baseValue ?? ''} platformIcons={platformIcons} />}
+              icon={baseIcon ?? <UrlFavicon url={baseValue ?? ''} platformIcons={platformIcons} />}
             />
             {showCopyIcon && baseValue !== undefined && baseValue !== '' && (
               <CopyIcon
@@ -102,7 +106,7 @@ const SplittedInputDiff = ({
               diffMode={diffMode}
               className={cn('flex-1')}
               asLink={asLink}
-              icon={<UrlFavicon url={value} platformIcons={platformIcons} />}
+              icon={icon ?? <UrlFavicon url={value} platformIcons={platformIcons} />}
             />
             {showCopyIcon && value !== '' && (
               <CopyIcon value={value} hasCopied={hasCopiedRight} setHasCopied={setHasCopiedRight} hasHover={hasHover} />
@@ -118,7 +122,11 @@ const SplittedInputDiff = ({
             diffMode={diffMode}
             className={cn('flex-1')}
             asLink={asLink}
-            icon={<UrlFavicon url={viewMode === 'removal' ? (baseValue ?? '') : value} platformIcons={platformIcons} />}
+            icon={
+              viewMode === 'removal'
+                ? (baseIcon ?? <UrlFavicon url={baseValue ?? ''} platformIcons={platformIcons} />)
+                : (icon ?? <UrlFavicon url={value} platformIcons={platformIcons} />)
+            }
           />
           {showCopyIcon &&
             ((viewMode === 'removal' && baseValue !== undefined && baseValue !== '') ||

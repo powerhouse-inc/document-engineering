@@ -33,9 +33,26 @@ export const TextDiff = ({
     }
   }, [diff])
 
+  // Check if current viewMode has relevant content to show
+  const hasRelevantContent = useMemo(() => {
+    if (!viewMode) return false
+
+    switch (viewMode) {
+      case 'addition':
+        return hasAdditions
+      case 'removal':
+        return hasRemovals
+      case 'mixed':
+      case 'edition':
+        return hasAdditions || hasRemovals
+      default:
+        return false
+    }
+  }, [viewMode, hasAdditions, hasRemovals])
+
   // Get background color for sentence-level diffs
   const getSentenceBackgroundColor = () => {
-    if (diffMode !== 'sentences' || (!hasAdditions && !hasRemovals)) {
+    if (diffMode !== 'sentences' || !hasRelevantContent) {
       return undefined
     }
 
@@ -106,7 +123,7 @@ export const TextDiff = ({
   if (asLink && diffMode === 'sentences') {
     return (
       <div className={cn('flex flex-1 items-center gap-2 truncate leading-[18px]', bgColor, className)}>
-        {icon && icon}
+        {hasRelevantContent && icon && icon}
         <a
           href={viewMode === 'removal' ? baseValue : value}
           target="_blank"
@@ -115,6 +132,17 @@ export const TextDiff = ({
         >
           {content}
         </a>
+      </div>
+    )
+  }
+
+  if (icon && diffMode === 'sentences') {
+    return (
+      <div
+        className={cn('flex flex-1 items-center gap-2 truncate [&>span]:truncate leading-[18px]', bgColor, className)}
+      >
+        {hasRelevantContent && icon}
+        {content}
       </div>
     )
   }

@@ -78,7 +78,10 @@ const meta: Meta<typeof Select> = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    ...getDefaultArgTypes(),
+    ...getDefaultArgTypes({
+      valueControlType: 'object',
+      valueType: 'string | string[]',
+    }),
     ...PrebuiltArgTypes.placeholder,
 
     options: {
@@ -193,6 +196,14 @@ const meta: Meta<typeof Select> = {
       description: 'The base value of the select field',
       table: {
         type: { summary: 'string | string[]' },
+        category: StorybookControlCategory.DIFF,
+      },
+    },
+    baseIcon: {
+      control: 'object',
+      description: 'The base value icon. (Displayed if baseValue is a string)',
+      table: {
+        type: { summary: 'IconName | React.ComponentType<{ className?: string }>' },
         category: StorybookControlCategory.DIFF,
       },
     },
@@ -425,33 +436,33 @@ export const WithCustomizedSelect: Story = {
 // Differences examples
 export const WithDifferencesAddition: Story = {
   args: {
-    label: 'Icon names addition',
-    options: defaultOptions,
-    value: ['Globe', 'Settings'],
-    baseValue: ['Briefcase', 'Drive'],
-    multiple: true,
+    label: 'Icon name addition',
+    options: defaultOptionsWithIcon,
+    value: 'Settings',
+    baseValue: 'Briefcase',
+    baseIcon: 'Briefcase',
     viewMode: 'addition',
   },
 }
 
 export const WithDifferencesRemoval: Story = {
   args: {
-    label: 'Icon names removal',
-    options: defaultOptions,
-    value: ['Globe', 'Settings'],
-    baseValue: ['Briefcase', 'Drive'],
-    multiple: true,
+    label: 'Icon name removal',
+    options: defaultOptionsWithIcon,
+    value: 'Settings',
+    baseValue: 'Briefcase',
+    baseIcon: 'Briefcase',
     viewMode: 'removal',
   },
 }
 
 export const WithDifferencesMixed: Story = {
   args: {
-    label: 'Icon names mixed',
-    options: defaultOptions,
-    value: ['Globe', 'Settings'],
-    baseValue: ['Briefcase', 'Drive'],
-    multiple: true,
+    label: 'Icon name mixed',
+    options: defaultOptionsWithIcon,
+    value: 'Settings',
+    baseValue: 'Briefcase',
+    baseIcon: 'Briefcase',
     viewMode: 'mixed',
   },
 }

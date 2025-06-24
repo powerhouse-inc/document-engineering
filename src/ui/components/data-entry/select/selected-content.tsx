@@ -1,5 +1,6 @@
-import { Icon, type IconName } from '../../../components/icon/index.js'
 import type React from 'react'
+import { Icon } from '../../../components/icon/index.js'
+import { renderIcon } from './render-icon.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { SelectProps } from './types.js'
 
@@ -20,13 +21,6 @@ export const SelectedContent: React.FC<SelectedContentProps> = ({
   placeholder,
   handleClear,
 }) => {
-  const renderIcon = (IconComponent: IconName | React.ComponentType<{ className?: string }> | undefined) => {
-    if (typeof IconComponent === 'string') {
-      return <Icon name={IconComponent} size={16} />
-    }
-    return IconComponent && <IconComponent className={cn('size-4')} />
-  }
-
   if (selectedValues.length === 0) {
     return (
       <div className={cn('mx-auto flex w-full items-center', placeholder ? 'justify-between gap-2' : 'justify-end')}>

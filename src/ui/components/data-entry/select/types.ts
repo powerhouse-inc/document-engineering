@@ -2,8 +2,6 @@ import type { IconName } from '../../../components/icon/index.js'
 import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import type React from 'react'
 
-type SelectWithDifference = Omit<WithDifference<string | string[]>, 'diffMode'>
-
 interface SelectOption {
   icon?: IconName | React.ComponentType<{ className?: string }>
   value: string
@@ -30,6 +28,10 @@ type SelectConfigProps =
       selectionIcon: 'checkmark'
       selectionIconPosition?: 'left' | 'right'
     })
+
+type SelectWithDifference = Omit<WithDifference<string | string[]>, 'diffMode'> & {
+  baseIcon?: SelectOption['icon']
+}
 
 type SelectProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

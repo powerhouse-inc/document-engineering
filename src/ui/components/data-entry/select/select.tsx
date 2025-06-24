@@ -10,6 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../../../../scalars/com
 import { Content } from './content.js'
 import { SelectDiff } from './select-diff.js'
 import { SelectedContent } from './selected-content.js'
+import { renderIcon } from './render-icon.js'
 import { useSelect } from './use-select.js'
 import type { SelectProps } from './types.js'
 
@@ -51,6 +52,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       // diff props
       viewMode = 'edition',
       baseValue,
+      baseIcon,
       ...props
     },
     ref
@@ -89,6 +91,9 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             .map((val) => allOptions.find((opt) => opt.value === val)?.label ?? val)
             .join(', ')
         : baseValue
+
+    const icon =
+      selectedValues.length === 1 ? allOptions.find((opt) => opt.value === selectedValues[0])?.icon : undefined
 
     if (viewMode === 'edition') {
       return (
@@ -204,7 +209,15 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     }
 
     return (
-      <SelectDiff value={selectedLabels} label={label} required={required} viewMode={viewMode} baseValue={baseLabels} />
+      <SelectDiff
+        value={selectedLabels}
+        label={label}
+        required={required}
+        viewMode={viewMode}
+        baseValue={baseLabels}
+        baseIcon={renderIcon(baseIcon)}
+        icon={renderIcon(icon)}
+      />
     )
   }
 )

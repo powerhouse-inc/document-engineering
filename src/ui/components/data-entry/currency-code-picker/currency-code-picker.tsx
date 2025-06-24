@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Select, type SelectOption } from '../select/index.js'
 import { getCurrencies } from './utils.js'
-import { CurrencyCodePickerDiff } from './currency-code-picker-diff.js'
+import { SelectDiff } from '../select/select-diff.js'
 import type { CurrencyCodePickerProps } from './types.js'
 
 const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePickerProps>(
@@ -120,13 +120,7 @@ const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePicke
     }
 
     return (
-      <CurrencyCodePickerDiff
-        value={selectedLabel}
-        label={label}
-        required={required}
-        viewMode={viewMode}
-        baseValue={baseLabel}
-      />
+      <SelectDiff value={selectedLabel} label={label} required={required} viewMode={viewMode} baseValue={baseLabel} />
     )
   }
 )

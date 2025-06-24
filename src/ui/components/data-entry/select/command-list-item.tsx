@@ -1,6 +1,7 @@
-import { Icon, type IconName } from '../../../components/icon/index.js'
+import { Icon } from '../../../components/icon/index.js'
 import type React from 'react'
 import { CommandItem } from '../../../../scalars/components/fragments/command/index.js'
+import { renderIcon } from './render-icon.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { SelectProps } from './types.js'
 
@@ -14,13 +15,6 @@ interface FavoriteOptionsProps {
   toggleOption: (value: string) => void
   tabIndex?: number
   className?: string
-}
-
-const renderIcon = (IconComponent: IconName | React.ComponentType<{ className?: string }> | undefined) => {
-  if (typeof IconComponent === 'string') {
-    return <Icon name={IconComponent} size={16} className={cn('text-gray-700 dark:text-gray-400')} />
-  }
-  return IconComponent && <IconComponent className={cn('size-4', 'text-gray-700 dark:text-gray-400')} />
 }
 
 export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
@@ -89,7 +83,7 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
                 )}
               </div>
             )}
-            {renderIcon(opt.icon)}
+            {renderIcon(opt.icon, 'text-gray-700 dark:text-gray-400')}
             <span
               className={cn(
                 'flex-1 truncate text-[14px] font-normal leading-4',
