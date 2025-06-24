@@ -7,9 +7,11 @@ interface SelectDiffProps extends Omit<WithDifference<string>, 'diffMode'> {
   value: string
   label: SelectProps['label']
   required: SelectProps['required']
+  baseIcon?: JSX.Element | null
+  icon?: JSX.Element | null
 }
 
-const SelectDiff = ({ value = '', label, required, viewMode, baseValue = '' }: SelectDiffProps) => {
+const SelectDiff = ({ value = '', label, required, viewMode, baseValue = '', baseIcon, icon }: SelectDiffProps) => {
   return (
     <FormGroup>
       {label && (
@@ -17,7 +19,14 @@ const SelectDiff = ({ value = '', label, required, viewMode, baseValue = '' }: S
           {label}
         </FormLabel>
       )}
-      <SplittedInputDiff baseValue={baseValue} value={value} viewMode={viewMode} diffMode="sentences" />
+      <SplittedInputDiff
+        baseValue={baseValue}
+        value={value}
+        viewMode={viewMode}
+        diffMode="sentences"
+        baseIcon={baseIcon}
+        icon={icon}
+      />
     </FormGroup>
   )
 }

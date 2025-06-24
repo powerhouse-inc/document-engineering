@@ -2,8 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Select } from '../select/index.js'
 import { CircleFlag } from 'react-circle-flags'
 import countries, { type Countries } from 'world-countries'
-import { CountryCodePickerDiff } from './country-code-picker-diff.js'
+import { SelectDiff } from '../select/select-diff.js'
 import type { CountryCodePickerProps } from './types.js'
+
+const renderCountryIcon = (showFlagIcons: boolean, countryCode: string) => {
+  if (!showFlagIcons || !countryCode) return undefined
+  return <CircleFlag className="size-4" countryCode={countryCode.toLowerCase()} height={16} />
+}
 
 const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerProps>(
   (
@@ -55,8 +60,14 @@ const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerP
           )
         : defaultOptions
 
-    const selectedLabel = options.find((option) => option.value === internalValue)?.label ?? internalValue
-    const baseLabel = options.find((option) => option.value === baseValue)?.label ?? baseValue
+    const selectedOption = options.find((option) => option.value === internalValue)
+    const baseOption = options.find((option) => option.value === baseValue)
+
+    const selectedLabel = selectedOption?.label ?? internalValue
+    const baseLabel = baseOption?.label ?? baseValue
+
+    const baseIcon = baseOption ? renderCountryIcon(showFlagIcons, baseValue ?? '') : undefined
+    const icon = selectedOption ? renderCountryIcon(showFlagIcons, internalValue) : undefined
 
     const handleChange = useCallback(
       (value: string | string[]) => {
@@ -95,12 +106,14 @@ const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerP
     }
 
     return (
-      <CountryCodePickerDiff
+      <SelectDiff
         value={selectedLabel}
         label={label}
         required={required}
         viewMode={viewMode}
         baseValue={baseLabel}
+        baseIcon={baseIcon}
+        icon={icon}
       />
     )
   }

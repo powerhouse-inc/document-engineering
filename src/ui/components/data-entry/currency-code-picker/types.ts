@@ -1,6 +1,6 @@
 import type React from 'react'
-import type { IconName } from '../../icon/index.js'
 import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
+import type { SelectOption } from '../select/types.js'
 
 type CurrencyCodePickerWithDifference = Omit<WithDifference<string>, 'diffMode'>
 
@@ -11,7 +11,7 @@ interface Currency {
   crypto: boolean
   label?: string
   symbol?: string
-  icon?: IconName | React.ComponentType<{ className?: string }>
+  icon?: SelectOption['icon']
 }
 
 type CurrencyCodePickerBaseProps = Omit<
