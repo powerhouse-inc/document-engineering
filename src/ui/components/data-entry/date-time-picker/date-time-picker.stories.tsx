@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { withTimestampsAsISOStrings } from '../../../../scalars/lib/decorators'
 import {
   getDefaultArgTypes,
+  getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types'
@@ -299,6 +300,13 @@ const meta: Meta<typeof DateTimePicker> = {
         category: StorybookControlCategory.DEFAULT,
       },
     },
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+        showErrorOnBlur: false,
+        showErrorOnChange: false,
+      },
+    }),
     ...PrebuiltArgTypes.viewMode,
     ...PrebuiltArgTypes.baseValue,
   },

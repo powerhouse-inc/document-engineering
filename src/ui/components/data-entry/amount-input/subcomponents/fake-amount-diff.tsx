@@ -109,11 +109,10 @@ const AmountDiff = ({
 
   const amountContent = renderDiffContent(diffAmount)
   const unitContent = renderDiffContent(diffUnit)
-
   const showUnit = typeof value === 'object' && 'unit' in value
 
-  // Get the same className as unit to pass to symbol as its not part of value
-  const symbolClassName = viewMode === 'addition' ? 'bg-green-600/30' : 'bg-red-600/30'
+  const symbolClassName =
+    unitContent.length > 0 ? (unitContent[0] as { props?: { className?: string } }).props?.className : undefined
 
   const actualSymbol = viewMode === 'addition' ? currentUnit : currentBaseUnit
   const symbol = useMemo(() => {
