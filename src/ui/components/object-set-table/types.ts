@@ -176,6 +176,12 @@ export type RenderHeaderFn<T, V = string> = (value: V, context: CellContext<T>) 
  */
 export type OnCellSaveFn<TData, TCellValue> = (newValue: TCellValue, context: CellContext<TData>) => boolean
 
+export type RenderCellEditorFn<TData, TCellValue> = (
+  value: TCellValue,
+  onChange: (newValue: TCellValue) => void,
+  context: CellContext<TData>
+) => React.ReactNode
+
 export type SortDirection = 'asc' | 'desc'
 
 export interface SortableColumnDef<T = unknown> {
@@ -348,6 +354,23 @@ export interface ColumnDef<T = any> extends SortableColumnDef<T> {
    * @returns Whether the value was saved.
    */
   onSave?: OnCellSaveFn<T, unknown>
+
+  /**
+   * A function that renders the cell editor. The editor requires to be a controlled component
+   * to save and validate the value properly using the `value` and `onChange` parameters.
+   *
+   * @param value The value to display in the cell editor.
+   * @param onChange The function to call when the value changes.
+   * @param context The cell context.
+   *
+   * @example
+   * ```ts
+   * const renderCellEditor = (value: unknown, onChange: (newValue: unknown) => unknown, context: CellContext<T>) => {
+   *   return <Input value={value} onChange={(e) => onChange(e.target.value)} />
+   * }
+   * ```
+   */
+  renderCellEditor?: RenderCellEditorFn<T, unknown>
 
   /**
    * The width of the column. It accepts any valid CSS width value.

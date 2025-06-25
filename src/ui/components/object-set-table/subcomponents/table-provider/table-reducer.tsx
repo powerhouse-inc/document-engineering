@@ -1,4 +1,6 @@
 import type { ColumnDef, DataType, ObjectSetTableConfig, SortDirection, TableCellIndex } from '../../types.js'
+import type { UseFormReturn } from 'react-hook-form'
+import { createFormReferences } from '../../utils.js'
 
 interface TableState<T extends DataType = DataType> {
   dispatch?: React.Dispatch<TableAction<T>>
@@ -7,6 +9,7 @@ interface TableState<T extends DataType = DataType> {
 
   columns: ColumnDef[]
   data: T[]
+  dataFormReferences: Array<Array<React.RefObject<UseFormReturn> | null>>
   allowRowSelection: boolean
   showRowNumbers: boolean
   selectedRowIndexes: number[]
@@ -95,11 +98,13 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
       return {
         ...state,
         columns: action.payload,
+        dataFormReferences: createFormReferences(state.data.length, action.payload),
       }
     case 'SET_DATA':
       return {
         ...state,
         data: action.payload,
+        dataFormReferences: createFormReferences(action.payload.length, state.columns),
       }
     case 'UPDATE_COLUMN':
       return {

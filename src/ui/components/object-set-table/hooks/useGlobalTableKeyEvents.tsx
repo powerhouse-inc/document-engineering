@@ -12,13 +12,16 @@ const useGlobalTableKeyEvents = () => {
 
       if (isEditing) {
         if (e.key === 'Enter') {
-          api.exitCellEditMode(true)
+          // TODO: uncomment this once the exit cell mode is enabled
+          // api.exitCellEditMode(true)
         }
         if (e.key === 'Escape' && !!selectedCell) {
           api.exitCellEditMode(false)
         }
       } else {
         if (e.key === 'Enter' && !!selectedCell && api.canEditCell(selectedCell.row, selectedCell.column)) {
+          // prevent the form from being submitted when the cell enters in edit mode
+          e.preventDefault()
           api.enterCellEditMode(selectedCell.row, selectedCell.column)
         }
 

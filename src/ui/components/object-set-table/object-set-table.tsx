@@ -10,6 +10,7 @@ import type { ColumnType, DataType, ObjectSetTableConfig } from './types.js'
 import { defaultColumnAlignment } from './subcomponents/default-fns/default-column-config.js'
 import { defaultHeaderRenderer } from './subcomponents/default-header-renderers/default-header-renderer.js'
 import { defaultSortFns } from './subcomponents/default-sort-columns/default-sort-fns.js'
+import { getCellEditorFn } from './subcomponents/default-cell-editors/get-cell-editor-fn.js'
 
 /**
  * The ObjectSetTable component is a table component that displays a list of objects.
@@ -43,6 +44,7 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
             config.data[context.rowIndex][context.column.field as keyof T] = value as T[keyof T]
             return true
           }),
+        renderCellEditor: column.renderCellEditor ?? getCellEditorFn(column.type),
         // sorting
         sortable: column.sortable ?? false,
         defaultSortDirection: column.defaultSortDirection ?? 'asc',
