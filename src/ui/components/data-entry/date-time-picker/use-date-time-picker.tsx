@@ -168,14 +168,20 @@ export const useDateTimePicker = ({
     const datetimeFormatted = formatInputToDisplayValid(timeValue, is12HourFormat, timeIntervals, periodInput)
     const validValue = convert12hTo24h(datetimeFormatted)
     const offsetUTC = getOffset(timeZone ?? (selectedTimeZone as string))
-    const { minutes, hours, period } = getHoursAndMinutes(validValue)
+    const { minutes, hours } = getHoursAndMinutes(validValue)
 
     const clearMinutes = cleanTime(minutes)
     const clearHours = convertTimeFrom24To12Hours(cleanTime(hours))
     setSelectedHour(clearHours)
     setSelectedMinute(clearMinutes)
+    const getFormattedTime = datetimeFormatted.split(' ')[1]
+    // Get period from input if exists to avoid use the default period
+    const newPeriod =
+      datetimeFormatted.includes('AM') || datetimeFormatted.includes('PM')
+        ? (datetimeFormatted.split(' ')[1] as TimePeriod)
+        : getFormattedTime
     if (is12HourFormat) {
-      setSelectedPeriod(period as TimePeriod)
+      setSelectedPeriod(newPeriod as TimePeriod)
     }
     const timeFormat = formatInputsToValueFormat(hours, minutes, offsetUTC)
     const newValue = putTimeInValue(value ?? defaultValue ?? '', timeFormat)

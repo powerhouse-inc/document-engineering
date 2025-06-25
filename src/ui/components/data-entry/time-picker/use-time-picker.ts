@@ -71,19 +71,17 @@ export const useTimePicker = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value
-    if (!isValidTimeInput(input)) {
-      onChange?.(createChangeEvent(INVALID_TIME_INPUT))
-    }
     setInputValue(input)
     const offsetUTC = getOffset(selectedTimeZone as string)
     const { minutes, hours } = getHoursAndMinutes(input)
     const datetime = formatInputsToValueFormat(hours, minutes, offsetUTC)
-    const period = getPeriodFromTime(datetime, is12HourFormat)
+    const newDatetime = datetime === '' ? INVALID_TIME_INPUT : datetime
+    const period = getPeriodFromTime(newDatetime, is12HourFormat)
+    // Get period from input if exists to avoid use the default period
+    const newPeriod = input.includes('AM') || input.includes('PM') ? (input.split(' ')[1] as TimePeriod) : period
 
-    setSelectedPeriod(period)
-
-    onChange?.(createChangeEvent(datetime))
-    onBlur?.(createBlurEvent(datetime))
+    setSelectedPeriod(newPeriod)
+    onChange?.(createChangeEvent(newDatetime))
   }
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const input = e.target.value
