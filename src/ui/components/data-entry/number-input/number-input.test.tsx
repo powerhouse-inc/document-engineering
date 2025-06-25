@@ -250,4 +250,32 @@ describe('NumberInput', () => {
     await user.click(decrementButton)
     expect(mockOnChange).toHaveBeenCalledTimes(0)
   })
+  describe('NumberInput differences', () => {
+    it('should show value when viewMode is addition', () => {
+      render(<NumberInput value={345} baseValue={1345} viewMode="addition" name="Label" />)
+
+      const input = screen.getByTestId('number-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('345')).toBeInTheDocument()
+      expect(screen.queryByText('1345')).not.toBeInTheDocument()
+    })
+
+    it('should show baseValue when viewMode is removal', () => {
+      render(<NumberInput value={454} baseValue={2024} viewMode="removal" name="Label" />)
+
+      const input = screen.getByTestId('number-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.queryByText('454')).not.toBeInTheDocument()
+      expect(screen.getByText('2024')).toBeInTheDocument()
+    })
+
+    it('should show value and baseValue when viewMode is mixed', () => {
+      render(<NumberInput value={878} baseValue={454} viewMode="mixed" name="Label" />)
+
+      const input = screen.getByTestId('number-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('878')).toBeInTheDocument()
+      expect(screen.getByText('454')).toBeInTheDocument()
+    })
+  })
 })

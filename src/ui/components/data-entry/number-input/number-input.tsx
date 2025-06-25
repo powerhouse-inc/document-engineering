@@ -167,6 +167,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
         baseValue={baseValue ?? ''}
         label={label}
         required={props.required}
+        data-testid="number-input-diff"
       />
     )
   }
