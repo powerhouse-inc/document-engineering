@@ -52,7 +52,7 @@ exports[`DateTimePicker > should match the snapshot 1`] = `
           data-cast="DateTimeString:yyyy-MM-dd"
           name="test-date"
           placeholder="Select date and time"
-          value="2025-01-01 12:00"
+          value="2025-01-01 12:00 PM"
         />
       </div>
     </div>

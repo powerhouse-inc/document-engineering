@@ -13,6 +13,7 @@ import {
   getMinutes,
   getOffsetToDisplay,
   getOptions,
+  getPeriodFromTime,
   getTimezone,
   INVALID_TIME_INPUT,
   isValidTimeInput,
@@ -48,11 +49,15 @@ export const useTimePicker = ({
   includeContinent = false,
 }: TimePickerFieldProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod | undefined>(undefined)
-  const [selectedMinute, setSelectedMinute] = useState(getMinutes(value ?? defaultValue ?? ''))
   const is12HourFormat = timeFormat.includes('a') || timeFormat.includes('A')
-  const [inputValue, setInputValue] = useState(getInputValue(value ?? defaultValue))
+  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod | undefined>(
+    getPeriodFromTime(value ?? defaultValue ?? '', is12HourFormat)
+  )
+  const [selectedMinute, setSelectedMinute] = useState(getMinutes(value ?? defaultValue ?? ''))
 
+  const [inputValue, setInputValue] = useState(
+    formatInputToDisplayValid(getInputValue(value ?? defaultValue), is12HourFormat, timeIntervals, selectedPeriod)
+  )
   const [selectedHour, setSelectedHour] = useState(
     is12HourFormat
       ? convertTimeFrom24To12Hours(getHours(value ?? defaultValue ?? ''))
@@ -66,9 +71,20 @@ export const useTimePicker = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value
+    if (!isValidTimeInput(input)) {
+      onChange?.(createChangeEvent(INVALID_TIME_INPUT))
+    }
     setInputValue(input)
-  }
+    const offsetUTC = getOffset(selectedTimeZone as string)
+    const { minutes, hours } = getHoursAndMinutes(input)
+    const datetime = formatInputsToValueFormat(hours, minutes, offsetUTC)
+    const period = getPeriodFromTime(datetime, is12HourFormat)
 
+    setSelectedPeriod(period)
+
+    onChange?.(createChangeEvent(datetime))
+    onBlur?.(createBlurEvent(datetime))
+  }
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const input = e.target.value
     if (!isValidTimeInput(input)) {
@@ -86,13 +102,9 @@ export const useTimePicker = ({
 
     const validValue = convert12hTo24h(valueForInput)
 
-    const { minutes, hours, period } = getHoursAndMinutes(validValue)
+    const { minutes, hours } = getHoursAndMinutes(validValue)
 
     const offsetUTC = getOffset(selectedTimeZone as string)
-
-    if (is12HourFormat) {
-      setSelectedPeriod(period as TimePeriod)
-    }
 
     const datetime = formatInputsToValueFormat(hours, minutes, offsetUTC)
     const clearMinutes = cleanTime(minutes)

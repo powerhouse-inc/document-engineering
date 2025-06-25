@@ -1,4 +1,8 @@
 import { format, isValid, parse } from 'date-fns'
+import { getDateFromValue, getTimeFromValue } from '../date-picker/utils.js'
+import type { DateFieldValue } from '../date-picker/types.js'
+import { getInputValue, roundMinute } from '../time-picker/utils.js'
+import type { TimeFieldValue } from '../time-picker/type.js'
 
 export const ALLOWED_FORMATS = [
   'yyyy-MM-dd',
@@ -267,4 +271,95 @@ export const getCalendarType = (dateFormat: string): 'years' | 'months' | 'days'
   const isDayFormat = ['YYYY-MM-DD', 'DD/MM/YYYY', 'MM/DD/YYYY', 'DD-MMM-YYYY', 'MMM-DD-YYYY'].includes(dateFormat)
   if (isDayFormat) return 'days'
   return 'years'
+}
+
+export const formatToISODateTimeWithOffset = (datePart: string, timePart: string, timeZone?: string): string => {
+  // WIP: think if we need validate timePart before format it with 00 at the end
+  const formattedTime = timePart ? `${timePart}:00` : '00:00:00'
+  // const formattedTime = timePart ? `${timePart}:00` : "00:00:00";
+  const formattedDateTime = `${datePart}T${formattedTime}${getOffset(timeZone)}`
+  // WIP: check the replace sentence
+  const formattedTimeWithMiliseconds = formattedDateTime.replace(/(:\d{2})([+-].*|Z)/, '$1.000$2') || ''
+  return formattedTimeWithMiliseconds
+}
+
+export const todayInIsoFormat = () => {
+  return format(new Date(), "yyyy-MM-dd'T'HH:mm:ssXXX")
+}
+
+export const todayTimeInput = () => {
+  return format(new Date(), 'HH:mm:ss')
+}
+export const todayDateInput = (dateFormat?: string) => {
+  return format(new Date(), dateFormat ?? 'yyyy-MM-dd')
+}
+
+export const parseDateTimeValueToInput = (
+  value: DateFieldValue,
+  dateFormat = 'yyyy-MM-dd',
+  is12HourFormat: boolean,
+  timeIntervals: number
+) => {
+  const datePart = getDateFromValue(value)
+  const dateFormatted = parseInputString(datePart, dateFormat)
+
+  const timePart = getTimeFromValue(value)
+
+  const timeFormatted = getInputValue(timePart)
+  let date = dateFormatted
+  let time = timeFormatted
+
+  if (!dateFormatted && !timeFormatted) {
+    return ''
+  }
+
+  const dateDefault = todayDateInput()
+  const timeDefault = todayTimeInput()
+
+  if (!dateFormatted) {
+    // set date to today in string format
+    date = dateDefault
+  }
+
+  if (!timeFormatted) {
+    // set time to current time in string format
+    time = timeDefault
+  }
+  const hours = Number(time.split(':')[0])
+  const minutesWithInterval = String(roundMinute(Number(time.split(':')[1]), timeIntervals)).padStart(2, '0')
+
+  const period = is12HourFormat ? (hours >= 8 && hours <= 11 ? 'AM' : 'PM') : undefined
+  const hoursToShow12HoursFormat = String(hours > 12 ? hours - 12 : hours).padStart(2, '0')
+  const hoursToShow24HoursFormat = String(hours).padStart(2, '0')
+  // const hours12Hours = Number(time.split(':')[0]) - 12
+  const formattedDateTime = is12HourFormat
+    ? `${date} ${hoursToShow12HoursFormat}:${minutesWithInterval} ${period}`
+    : `${date} ${hoursToShow24HoursFormat}:${minutesWithInterval}`
+
+  return formattedDateTime
+}
+
+export const putTimeInValue = (value: DateFieldValue, time: TimeFieldValue) => {
+  let datePart = getDateFromValue(value)
+  // put today if datePart is empty
+  if (!datePart) {
+    const today = todayInIsoFormat()
+    datePart = getDateFromValue(today)
+  }
+  return `${datePart}T${time}`
+}
+
+export const putDateInValue = (value: DateFieldValue, date: DateFieldValue) => {
+  let timePart = getTimeFromValue(value)
+
+  // if dont have timePart add default time today
+  if (!timePart) {
+    const today = todayInIsoFormat()
+    timePart = getTimeFromValue(today)
+  }
+
+  const datePart = getDateFromValue(date)
+  const newValue = `${datePart}T${timePart}`
+  const formattedTime = newValue.replace(/(:\d{2})([+-].*|Z)/, '$1.000$2') || ''
+  return formattedTime
 }
