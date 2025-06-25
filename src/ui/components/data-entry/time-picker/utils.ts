@@ -505,3 +505,13 @@ export const getHoursAndMinutesFromValue = (timeString: string) => {
 }
 
 export const INVALID_TIME_INPUT = '9999:99999'
+
+export const getPeriodFromTime = (time: string, is12HourFormat: boolean) => {
+  if (!time) return undefined
+  if (!is12HourFormat) return undefined
+  if (time.includes('AM') || time.includes('PM')) {
+    return time.split(' ')[1] as TimePeriod
+  }
+  const hours = Number(time.split(':')[0])
+  return hours >= 8 && hours <= 11 ? 'AM' : 'PM'
+}

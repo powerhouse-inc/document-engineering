@@ -323,7 +323,7 @@ describe('TimePicker', () => {
       render(<TimePicker name="test-time" label="Test Label" viewMode="edition" value="14:30" />)
       const input = screen.getByRole('textbox')
       expect(input).toBeInTheDocument()
-      expect(input).toHaveValue('14:30')
+      expect(input).toHaveValue('02:30 PM')
     })
   })
 })

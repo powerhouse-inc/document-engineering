@@ -6,8 +6,7 @@ import { cn } from '../../../../../scalars/lib/utils.js'
 import { InputDiff } from '../../input/subcomponent/input-diff.js'
 import { TextDiff } from '../../input/subcomponent/text-diff.js'
 import type { DateFieldValue } from '../../date-picker/types.js'
-import { getDateFormat } from '../utils.js'
-import { parseDateTimeValueToInput } from '../use-date-time-picker.js'
+import { getDateFormat, parseDateTimeValueToInput } from '../utils.js'
 import { formatInputToDisplayValid } from '../../time-picker/utils.js'
 
 interface DateTimeInputDiffProps
@@ -34,11 +33,11 @@ const DateTimeInputDiff = ({
   timeIntervals = 1,
   ...props
 }: DateTimeInputDiffProps) => {
-  const internalFormat = getDateFormat(dateFormat ?? '')
-  const newValue = parseDateTimeValueToInput(value ?? '', internalFormat)
-  const newBaseValue = parseDateTimeValueToInput(baseValue ?? '', internalFormat)
-
   const is12HourFormat = timeFormat.includes('a') || timeFormat.includes('A')
+  const internalFormat = getDateFormat(dateFormat ?? '')
+  const newValue = parseDateTimeValueToInput(value ?? '', internalFormat, is12HourFormat, timeIntervals)
+  const newBaseValue = parseDateTimeValueToInput(baseValue ?? '', internalFormat, is12HourFormat, timeIntervals)
+
   const valueSplitDate = newValue.split(' ')[0]
   const valueSplitTime = newValue.split(' ')[1]
   const formattedValueTime = formatInputToDisplayValid(valueSplitTime, is12HourFormat, timeIntervals)
