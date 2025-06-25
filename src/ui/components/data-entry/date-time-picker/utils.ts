@@ -274,11 +274,8 @@ export const getCalendarType = (dateFormat: string): 'years' | 'months' | 'days'
 }
 
 export const formatToISODateTimeWithOffset = (datePart: string, timePart: string, timeZone?: string): string => {
-  // WIP: think if we need validate timePart before format it with 00 at the end
   const formattedTime = timePart ? `${timePart}:00` : '00:00:00'
-  // const formattedTime = timePart ? `${timePart}:00` : "00:00:00";
   const formattedDateTime = `${datePart}T${formattedTime}${getOffset(timeZone)}`
-  // WIP: check the replace sentence
   const formattedTimeWithMiliseconds = formattedDateTime.replace(/(:\d{2})([+-].*|Z)/, '$1.000$2') || ''
   return formattedTimeWithMiliseconds
 }
@@ -317,12 +314,10 @@ export const parseDateTimeValueToInput = (
   const timeDefault = todayTimeInput()
 
   if (!dateFormatted) {
-    // set date to today in string format
     date = dateDefault
   }
 
   if (!timeFormatted) {
-    // set time to current time in string format
     time = timeDefault
   }
   const hours = Number(time.split(':')[0])
@@ -331,7 +326,6 @@ export const parseDateTimeValueToInput = (
   const period = is12HourFormat ? (hours >= 8 && hours <= 11 ? 'AM' : 'PM') : undefined
   const hoursToShow12HoursFormat = String(hours > 12 ? hours - 12 : hours).padStart(2, '0')
   const hoursToShow24HoursFormat = String(hours).padStart(2, '0')
-  // const hours12Hours = Number(time.split(':')[0]) - 12
   const formattedDateTime = is12HourFormat
     ? `${date} ${hoursToShow12HoursFormat}:${minutesWithInterval} ${period}`
     : `${date} ${hoursToShow24HoursFormat}:${minutesWithInterval}`
@@ -341,7 +335,6 @@ export const parseDateTimeValueToInput = (
 
 export const putTimeInValue = (value: DateFieldValue, time: TimeFieldValue) => {
   let datePart = getDateFromValue(value)
-  // put today if datePart is empty
   if (!datePart) {
     const today = todayInIsoFormat()
     datePart = getDateFromValue(today)
@@ -352,7 +345,6 @@ export const putTimeInValue = (value: DateFieldValue, time: TimeFieldValue) => {
 export const putDateInValue = (value: DateFieldValue, date: DateFieldValue) => {
   let timePart = getTimeFromValue(value)
 
-  // if dont have timePart add default time today
   if (!timePart) {
     const today = todayInIsoFormat()
     timePart = getTimeFromValue(today)
