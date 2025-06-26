@@ -4,6 +4,7 @@ import { isCellEqual } from '../../utils.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { DefaultTableCell } from './default-cell.js'
 import { Form } from '../../../../../scalars/components/form/form.js'
+import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface RenderCellProps<T extends DataType> {
   rowItem: T
@@ -98,16 +99,12 @@ const RenderCell = <T extends DataType>({
       isSelected={isThisCellSelected}
       isEditable={column.editable ?? false}
     >
-      {isThisCellEditMode ? (
-        // The `onSubmit` callback is required by the `Form` component, but we don't need it here
-        // as the actual save is done in the API logic to reuse the same logic when the developer
-        // programatically save the cell and when the default behavior is triggered
-        <Form ref={formRef} onSubmit={() => undefined} submitChangesOnly>
+      <Form ref={formRef} onSubmit={() => undefined} submitChangesOnly>
+        <div className={cn({ hidden: !isThisCellEditMode })}>
           {column.renderCellEditor?.(cellValue, () => null, cellContext)}
-        </Form>
-      ) : (
-        column.renderCell?.(cellValue, cellContext)
-      )}
+        </div>
+        <div className={cn({ hidden: isThisCellEditMode })}>{column.renderCell?.(cellValue, cellContext)}</div>
+      </Form>
     </DefaultTableCell>
   )
 }

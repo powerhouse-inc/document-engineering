@@ -113,10 +113,23 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
   enterCellEditMode(row: number, column: number) {
     if (!this.canEditCell(row, column)) throw new Error('Cell is not editable')
 
+    // restore the form value
+    const formRef = this._getState().dataFormReferences[row][column]
+    const columnDef = this._getConfig().columns[column]
+    if (formRef) {
+      const originalValue = columnDef.valueGetter?.(this._getState().data[row], this._createCellContext(row, column))
+      formRef.current?.setValue(columnDef.field, originalValue)
+    }
+
     this._getState().dispatch?.({
       type: 'ENTER_CELL_EDIT_MODE',
       payload: { row, column },
     })
+
+    // restore focus to the field one the edit mode is entered
+    setTimeout(() => {
+      formRef?.current?.setFocus(columnDef.field)
+    }, 30)
   }
 
   /**
