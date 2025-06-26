@@ -126,7 +126,6 @@ describe('transformInputTime', () => {
     })
     it('should handle invalid numeric values', () => {
       const result = transformInputTime('ab:cd', true)
-      console.log('result', result)
       expect(result).toEqual({ hour: '', minute: '', period: undefined })
     })
 

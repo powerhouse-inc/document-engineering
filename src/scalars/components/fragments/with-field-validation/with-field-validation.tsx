@@ -88,7 +88,6 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
           render={({
             field: {
               // just preventing that onChange is included in the rest of the props
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               onChange: _,
               onBlur: onBlurController,
               value: internalValue,

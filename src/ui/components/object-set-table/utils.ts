@@ -1,4 +1,6 @@
+import type { UseFormReturn } from 'react-hook-form'
 import type { ColumnDef, DataType, TableCellIndex } from './types.js'
+import { createRef } from 'react'
 
 /**
  * Get the title of a column.
@@ -197,4 +199,32 @@ export const isCellEqual = (cell1: TableCellIndex | null, cell2: TableCellIndex 
     return false
   }
   return cell1.row === cell2.row && cell1.column === cell2.column
+}
+
+/**
+ * Create form references for the for of the editable cells in the table.
+ *
+ * @param rowCount - The number of rows in the table.
+ * @param columnDefs - The column definitions.
+ * @returns The form references.
+ */
+export const createFormReferences = (
+  rowCount: number,
+  columnDefs: ColumnDef[]
+): Array<Array<React.RefObject<UseFormReturn> | null>> => {
+  if (rowCount === 0 || columnDefs.length === 0) {
+    return []
+  }
+
+  const formReferences: Array<Array<React.RefObject<UseFormReturn> | null>> = []
+
+  for (let row = 0; row < rowCount; row++) {
+    const refs: Array<React.RefObject<UseFormReturn> | null> = []
+    columnDefs.forEach((columnDef) => {
+      refs.push(columnDef.editable ? createRef<UseFormReturn>() : null)
+    })
+    formReferences.push(refs)
+  }
+
+  return formReferences
 }

@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
-import { Input } from '../../../data-entry/input/index.js'
 import type { CellContext, ColumnDef, DataType } from '../../types.js'
 import { isCellEqual } from '../../utils.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { DefaultTableCell } from './default-cell.js'
+import { Form } from '../../../../../scalars/components/form/form.js'
 
 interface RenderCellProps<T extends DataType> {
   rowItem: T
@@ -87,6 +87,8 @@ const RenderCell = <T extends DataType>({
 
   const isThisCellEditMode = isCellEditMode && isThisCellSelected
 
+  const formRef = api._getState().dataFormReferences[rowIndex][columnIndex]
+
   return (
     <DefaultTableCell
       key={column.field}
@@ -95,17 +97,17 @@ const RenderCell = <T extends DataType>({
       isEditable={column.editable ?? false}
     >
       {isThisCellEditMode ? (
-        <Input
-          className="max-w-full"
-          autoFocus
-          defaultValue={column.valueGetter?.(rowItem, cellContext) as string}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              const newValue = (e.target as HTMLInputElement).value
-              column.onSave?.(newValue, cellContext)
-            }
+        <Form
+          ref={formRef}
+          onSubmit={(data: Record<string, unknown>) => {
+            const value = data[column.field]
+            column.onSave?.(value, cellContext)
+            api.exitCellEditMode()
           }}
-        />
+          submitChangesOnly
+        >
+          {column.renderCellEditor?.(cellValue, () => null, cellContext)}
+        </Form>
       ) : (
         column.renderCell?.(cellValue, cellContext)
       )}

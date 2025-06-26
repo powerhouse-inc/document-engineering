@@ -4,6 +4,7 @@ import { tableReducer, type TableState } from './table-reducer.js'
 import { createPublicTableApi } from '../../logic/public-table-api.js'
 import type { PrivateTableApiBase, TableApiBase } from '../../logic/types.js'
 import { TableApi } from '../../logic/table-api.js'
+import { createFormReferences } from '../../utils.js'
 
 interface TableContextValue<T extends DataType = DataType> {
   config: ObjectSetTableConfig<T>
@@ -30,6 +31,7 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
   const [state, dispatch] = useReducer(tableReducer<T>, {
     columns: config.columns,
     defaultData: [...config.data],
+    dataFormReferences: createFormReferences(config.data.length, config.columns),
     data: config.data,
     allowRowSelection: config.allowRowSelection ?? true,
     showRowNumbers: config.showRowNumbers ?? true,

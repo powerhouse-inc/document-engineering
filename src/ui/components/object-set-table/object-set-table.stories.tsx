@@ -505,9 +505,9 @@ export const ReadOnly: Story = {
 export const CellTypes: Story = {
   args: {
     columns: [
-      { field: 'firstName', type: 'text', title: 'Text Field' },
-      { field: 'payment', type: 'number', title: 'Number Field' },
-      { field: 'isActive', type: 'boolean', title: 'Boolean Field' },
+      { field: 'firstName', type: 'text', title: 'Text Field', editable: true },
+      { field: 'payment', type: 'number', title: 'Number Field', editable: true },
+      { field: 'isActive', type: 'boolean', title: 'Boolean Field', editable: true },
     ],
     data: mockData.slice(0, 5),
   },
