@@ -22,7 +22,7 @@ const RenderCell = <T extends DataType>({
 }: RenderCellProps<T>) => {
   const {
     config,
-    state: { dispatch, selectedCellIndex, isCellEditMode },
+    state: { selectedCellIndex, isCellEditMode },
     api,
   } = useInternalTableState<T>()
 
@@ -33,24 +33,26 @@ const RenderCell = <T extends DataType>({
   const createCellClickHandler = useCallback(
     (index: number, column: number, columnDef: ColumnDef<T>) => (e: React.MouseEvent<HTMLTableCellElement>) => {
       // if the cell is being edited, ignore clicking on it
-      if (isCellEditMode && selectedCellIndex?.row === index && selectedCellIndex.column === column) {
+      if (api.isEditing() && selectedCellIndex?.row === index && selectedCellIndex.column === column) {
         return
       }
 
-      // if shift or ctrl is pressed, the user is probably trying to select rows
+      // if shift, cmd or ctrl is pressed, the user is probably trying to select rows
       if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        // if a cell is being edited but the cell being clicked is not the same
+        // we need to save it before exiting edit mode and selecting a new cell
+        if (api.isEditing()) {
+          api.exitCellEditMode(true)
+        }
+
         if (e.detail === 2 && columnDef.editable) {
-          // TODO: move this to the api
-          dispatch?.({
-            type: 'ENTER_CELL_EDIT_MODE',
-            payload: { row: index, column },
-          })
+          api.enterCellEditMode(index, column)
         } else {
           api.selection.selectCell(index, column)
         }
       }
     },
-    [dispatch, isCellEditMode]
+    [selectedCellIndex, api]
   )
 
   const currentCellIndex = {
@@ -97,15 +99,10 @@ const RenderCell = <T extends DataType>({
       isEditable={column.editable ?? false}
     >
       {isThisCellEditMode ? (
-        <Form
-          ref={formRef}
-          onSubmit={(data: Record<string, unknown>) => {
-            const value = data[column.field]
-            column.onSave?.(value, cellContext)
-            api.exitCellEditMode()
-          }}
-          submitChangesOnly
-        >
+        // The `onSubmit` callback is required by the `Form` component, but we don't need it here
+        // as the actual save is done in the API logic to reuse the same logic when the developer
+        // programatically save the cell and when the default behavior is triggered
+        <Form ref={formRef} onSubmit={() => undefined} submitChangesOnly>
           {column.renderCellEditor?.(cellValue, () => null, cellContext)}
         </Form>
       ) : (

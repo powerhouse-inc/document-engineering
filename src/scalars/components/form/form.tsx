@@ -137,7 +137,6 @@ const Form = forwardRef<UseFormReturn, FormProps>(
       submissionErrorMatcher = defaultOnError,
       className,
       extraFormProps,
-      ...props
     },
     ref
   ) => {
@@ -238,7 +237,7 @@ const Form = forwardRef<UseFormReturn, FormProps>(
 
         {/* This is how react-hook-form works, it expects a promise to be returned from the onSubmit callback */}
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form id={formId} onSubmit={methods.handleSubmit(wrappedOnSubmit)} className={className} noValidate {...props}>
+        <form id={formId} onSubmit={methods.handleSubmit(wrappedOnSubmit)} className={className} noValidate>
           {typeof children === 'function'
             ? children({
                 ...methods,

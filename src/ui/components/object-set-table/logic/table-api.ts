@@ -135,6 +135,16 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     this.selection.selectCell(selectedCell.row, selectedCell.column)
 
     if (save) {
+      const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
+      if (formRef) {
+        const columnDef = this._getConfig().columns[selectedCell.column]
+
+        const formData = formRef.current?.getValues()
+        const value = formData?.[columnDef.field] as unknown
+        // TODO: save only if the value changed
+        columnDef.onSave?.(value, this._createCellContext(selectedCell.row, selectedCell.column))
+      }
+
       // the actual save is done in the form onSubmit callback
       // so we just asume that the save was done and we can move to the next cell
       const nextCell = getNextSelectedCell({

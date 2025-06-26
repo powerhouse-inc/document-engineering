@@ -12,8 +12,7 @@ const useGlobalTableKeyEvents = () => {
 
       if (isEditing) {
         if (e.key === 'Enter') {
-          // TODO: uncomment this once the exit cell mode is enabled
-          // api.exitCellEditMode(true)
+          api.exitCellEditMode(true)
         }
         if (e.key === 'Escape' && !!selectedCell) {
           api.exitCellEditMode(false)
