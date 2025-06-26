@@ -373,7 +373,7 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `isEditing()` | Checks if table is in edit mode | None | `boolean` |
  * | `isEditingCell(row, column)` | Checks if specific cell is being edited | `row: number, column: number` | `boolean` |
  * | `enterCellEditMode(row, column)` | Enters edit mode for a cell | `row: number, column: number` | `void` |
- * | `exitCellEditMode(save?)` | Exits edit mode | `save?: boolean = true` | `void` |
+ * | `exitCellEditMode(save?)` | Exits edit mode | `save?: boolean = true` | `Promise<void>` |
  *
  * ### Sorting API
  *

@@ -24,7 +24,7 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
 
     if (api.selection.haveSelectedCells()) {
       if (api.isEditing()) {
-        api.exitCellEditMode(true)
+        void api.exitCellEditMode(true)
       }
       api.selection.clearCellSelection()
     }

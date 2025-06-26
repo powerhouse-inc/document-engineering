@@ -137,7 +137,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    *
    * @param save - Whether to save the changes made in the cell
    */
-  exitCellEditMode(save = true) {
+  async exitCellEditMode(save = true) {
     // TODO: before exiting, check if the ${value} edited is valid
 
     // exit edit mode
@@ -151,6 +151,11 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
       if (formRef) {
         const columnDef = this._getConfig().columns[selectedCell.column]
+
+        const isValid = await formRef.current?.trigger()
+        if (!isValid) {
+          return
+        }
 
         const formData = formRef.current?.getValues()
         const value = formData?.[columnDef.field] as unknown

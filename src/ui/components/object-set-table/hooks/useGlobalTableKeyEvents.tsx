@@ -12,10 +12,10 @@ const useGlobalTableKeyEvents = () => {
 
       if (isEditing) {
         if (e.key === 'Enter') {
-          api.exitCellEditMode(true)
+          void api.exitCellEditMode(true)
         }
         if (e.key === 'Escape' && !!selectedCell) {
-          api.exitCellEditMode(false)
+          void api.exitCellEditMode(false)
         }
       } else {
         if (e.key === 'Enter' && !!selectedCell && api.canEditCell(selectedCell.row, selectedCell.column)) {

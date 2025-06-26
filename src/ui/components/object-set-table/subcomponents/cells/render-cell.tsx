@@ -43,7 +43,7 @@ const RenderCell = <T extends DataType>({
         // if a cell is being edited but the cell being clicked is not the same
         // we need to save it before exiting edit mode and selecting a new cell
         if (api.isEditing()) {
-          api.exitCellEditMode(true)
+          void api.exitCellEditMode(true)
         }
 
         if (e.detail === 2 && columnDef.editable) {
