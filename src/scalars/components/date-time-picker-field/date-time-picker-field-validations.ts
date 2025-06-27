@@ -23,11 +23,16 @@ export const dateTimeFieldValidations =
     timeIntervals,
   }: DateTimePickerFieldProps) =>
   (value: unknown) => {
+    const valueString = value?.toString()
+
     if (value === '' || value === undefined) {
       return true
     }
     if (timeIntervals === 0) {
       return 'Please enter a valid timeIntervals'
+    }
+    if (!valueString?.toString().includes('T')) {
+      return 'Invalid format. Use Date and Time separated by a space.'
     }
     const internalFormat = getDateFormat(dateFormat)
     // 1. Validate that it has date and time separated by space
