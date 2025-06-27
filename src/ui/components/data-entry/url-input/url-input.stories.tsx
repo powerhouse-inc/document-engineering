@@ -153,3 +153,30 @@ export const WithPlatformIcon: Story = {
     },
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: 'https://github.com/test',
+    baseValue: 'https://example.com',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Number difference removal',
+    value: 'https://google.com',
+    baseValue: 'https://example.com',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Number difference mixed',
+    value: 'https://google.com',
+    baseValue: 'https://github.com/test',
+    viewMode: 'mixed',
+  },
+}

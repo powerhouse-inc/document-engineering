@@ -127,6 +127,7 @@ const UrlInput = React.forwardRef<HTMLInputElement, UrlInputProps>(
         viewMode={viewMode}
         baseValue={baseValue}
         platformIcons={platformIcons}
+        data-testid="url-input-diff"
       />
     )
   }
