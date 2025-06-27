@@ -297,6 +297,7 @@ export const parseDateTimeValueToInput = (
   is12HourFormat: boolean,
   timeIntervals: number
 ) => {
+  if (value && !value.toString().includes('T')) return value.toString()
   const datePart = getDateFromValue(value)
   const dateFormatted = parseInputString(datePart, dateFormat)
 

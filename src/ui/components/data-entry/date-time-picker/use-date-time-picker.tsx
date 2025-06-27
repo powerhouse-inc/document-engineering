@@ -138,6 +138,13 @@ export const useDateTimePicker = ({
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
+    const currentValue = value ?? defaultValue ?? ''
+
+    if (!currentValue.toString().includes('T') || currentValue.toString().includes(' ')) {
+      onChange?.(createChangeEvent(inputValue))
+      onBlur?.(createBlurEvent(inputValue))
+      return
+    }
     if (!inputValue) {
       setDateTimeToDisplay(inputValue)
       onChange?.(createChangeEvent(''))
