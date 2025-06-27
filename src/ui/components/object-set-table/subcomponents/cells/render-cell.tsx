@@ -4,6 +4,7 @@ import { isCellEqual } from '../../utils.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { DefaultTableCell } from './default-cell.js'
 import { Form } from '../../../../../scalars/components/form/form.js'
+import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface RenderCellProps<T extends DataType> {
   rowItem: T
@@ -22,7 +23,7 @@ const RenderCell = <T extends DataType>({
 }: RenderCellProps<T>) => {
   const {
     config,
-    state: { dispatch, selectedCellIndex, isCellEditMode },
+    state: { selectedCellIndex, isCellEditMode },
     api,
   } = useInternalTableState<T>()
 
@@ -33,24 +34,26 @@ const RenderCell = <T extends DataType>({
   const createCellClickHandler = useCallback(
     (index: number, column: number, columnDef: ColumnDef<T>) => (e: React.MouseEvent<HTMLTableCellElement>) => {
       // if the cell is being edited, ignore clicking on it
-      if (isCellEditMode && selectedCellIndex?.row === index && selectedCellIndex.column === column) {
+      if (api.isEditing() && selectedCellIndex?.row === index && selectedCellIndex.column === column) {
         return
       }
 
-      // if shift or ctrl is pressed, the user is probably trying to select rows
+      // if shift, cmd or ctrl is pressed, the user is probably trying to select rows
       if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        // if a cell is being edited but the cell being clicked is not the same
+        // we need to save it before exiting edit mode and selecting a new cell
+        if (api.isEditing()) {
+          void api.exitCellEditMode(true)
+        }
+
         if (e.detail === 2 && columnDef.editable) {
-          // TODO: move this to the api
-          dispatch?.({
-            type: 'ENTER_CELL_EDIT_MODE',
-            payload: { row: index, column },
-          })
+          api.enterCellEditMode(index, column)
         } else {
           api.selection.selectCell(index, column)
         }
       }
     },
-    [dispatch, isCellEditMode]
+    [selectedCellIndex, api]
   )
 
   const currentCellIndex = {
@@ -96,21 +99,12 @@ const RenderCell = <T extends DataType>({
       isSelected={isThisCellSelected}
       isEditable={column.editable ?? false}
     >
-      {isThisCellEditMode ? (
-        <Form
-          ref={formRef}
-          onSubmit={(data: Record<string, unknown>) => {
-            const value = data[column.field]
-            column.onSave?.(value, cellContext)
-            api.exitCellEditMode()
-          }}
-          submitChangesOnly
-        >
+      <Form ref={formRef} onSubmit={() => undefined} submitChangesOnly>
+        <div className={cn({ hidden: !isThisCellEditMode })}>
           {column.renderCellEditor?.(cellValue, () => null, cellContext)}
-        </Form>
-      ) : (
-        column.renderCell?.(cellValue, cellContext)
-      )}
+        </div>
+        <div className={cn({ hidden: isThisCellEditMode })}>{column.renderCell?.(cellValue, cellContext)}</div>
+      </Form>
     </DefaultTableCell>
   )
 }

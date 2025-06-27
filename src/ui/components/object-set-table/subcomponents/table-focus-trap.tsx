@@ -10,8 +10,22 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
   } = useInternalTableState()
   const ref = useRef<HTMLTableElement>(null)
 
-  useOnClickOutside(ref, () => {
+  useOnClickOutside(ref, (event) => {
+    const { x, y } = (event.target as HTMLElement).getBoundingClientRect()
+
+    // if the click was inside the table, we don't need to do anything
+    // this could happen if a dropdown, tooltip or any other element is mounted outside the table in the DOM
+    const tableRect = ref.current?.getBoundingClientRect()
+    if (tableRect) {
+      if (x >= tableRect.left && x <= tableRect.right && y >= tableRect.top && y <= tableRect.bottom) {
+        return
+      }
+    }
+
     if (api.selection.haveSelectedCells()) {
+      if (api.isEditing()) {
+        void api.exitCellEditMode(true)
+      }
       api.selection.clearCellSelection()
     }
   })

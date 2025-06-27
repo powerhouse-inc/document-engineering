@@ -113,10 +113,23 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
   enterCellEditMode(row: number, column: number) {
     if (!this.canEditCell(row, column)) throw new Error('Cell is not editable')
 
+    // restore the form value
+    const formRef = this._getState().dataFormReferences[row][column]
+    const columnDef = this._getConfig().columns[column]
+    if (formRef) {
+      const originalValue = columnDef.valueGetter?.(this._getState().data[row], this._createCellContext(row, column))
+      formRef.current?.setValue(columnDef.field, originalValue)
+    }
+
     this._getState().dispatch?.({
       type: 'ENTER_CELL_EDIT_MODE',
       payload: { row, column },
     })
+
+    // restore focus to the field one the edit mode is entered
+    setTimeout(() => {
+      formRef?.current?.setFocus(columnDef.field)
+    }, 30)
   }
 
   /**
@@ -124,7 +137,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    *
    * @param save - Whether to save the changes made in the cell
    */
-  exitCellEditMode(save = true) {
+  async exitCellEditMode(save = true) {
     // TODO: before exiting, check if the ${value} edited is valid
 
     // exit edit mode
@@ -135,6 +148,21 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     this.selection.selectCell(selectedCell.row, selectedCell.column)
 
     if (save) {
+      const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
+      if (formRef) {
+        const columnDef = this._getConfig().columns[selectedCell.column]
+
+        const isValid = await formRef.current?.trigger()
+        if (!isValid) {
+          return
+        }
+
+        const formData = formRef.current?.getValues()
+        const value = formData?.[columnDef.field] as unknown
+        // TODO: save only if the value changed
+        columnDef.onSave?.(value, this._createCellContext(selectedCell.row, selectedCell.column))
+      }
+
       // the actual save is done in the form onSubmit callback
       // so we just asume that the save was done and we can move to the next cell
       const nextCell = getNextSelectedCell({

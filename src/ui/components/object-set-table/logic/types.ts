@@ -38,7 +38,7 @@ export interface TableApiBase {
   isEditing(): boolean
   isEditingCell(row: number, column: number): boolean
   enterCellEditMode(row: number, column: number): void
-  exitCellEditMode(save?: boolean): void
+  exitCellEditMode(save?: boolean): Promise<void>
 
   // sorting
   sortRows(columnIndex: number, direction: SortDirection | null): void
