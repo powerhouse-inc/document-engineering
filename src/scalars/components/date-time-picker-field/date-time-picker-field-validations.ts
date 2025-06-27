@@ -38,6 +38,10 @@ export const dateTimeFieldValidations =
     }
 
     const stringDate = normalizeMonthFormat(getDateFromValue(value as DateFieldValue))
+
+    if (stringDate.length === 4 && internalFormat === 'yyyy-MM-dd') {
+      return true
+    }
     const isValidFormat = isDateFormatAllowed(stringDate, internalFormat)
 
     if (!isValidFormat) {
