@@ -1,3 +1,23 @@
+# [1.15.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.14.0...v1.15.0) (2025-06-27)
+
+
+### Bug Fixes
+
+* **scalars:** add diff stories for number-field ([335c194](https://github.com/powerhouse-inc/document-engineering/commit/335c194306c22f5d4464b8961ac89922a6f879bd))
+* **scalars:** add missing test for number differences ([3160404](https://github.com/powerhouse-inc/document-engineering/commit/3160404a1b9ba86442a05cab0425427740dc4b8a))
+* **scalars:** applay default format to value in timepicker and datetime-picker ([916055f](https://github.com/powerhouse-inc/document-engineering/commit/916055ff263a0a63745664cff8d35cf93e71f3eb))
+* **scalars:** fix the cr and delete unnecesry code ([6ec9eaa](https://github.com/powerhouse-inc/document-engineering/commit/6ec9eaaa0f837a8782a0fba79a1a3c4de0b24911))
+* **scalars:** get correct period of in timepicker and datetimepicker ([41927f1](https://github.com/powerhouse-inc/document-engineering/commit/41927f1ecdeb1c9bcae9d2eee3c10a7c33ec6b43))
+
+
+### Features
+
+* add support for custom editor renderers ([6b76d73](https://github.com/powerhouse-inc/document-engineering/commit/6b76d731bea4ac9f6139c54017d7bf438b810b8a))
+* restore focus when entering in edit mode ([863ea32](https://github.com/powerhouse-inc/document-engineering/commit/863ea32e763e92affc4229b11305c73d300b278d))
+* save valid data only ([bb0f1b7](https://github.com/powerhouse-inc/document-engineering/commit/bb0f1b7b8d075725fe89b79fbeb2b95672da086a))
+* save values and fix issues ([b19f1a8](https://github.com/powerhouse-inc/document-engineering/commit/b19f1a81313b6d456d1ecdf97ebcd1183448b059))
+* **ui:** add icons support to SelectDiff & other Select-based Diffs components ([c825439](https://github.com/powerhouse-inc/document-engineering/commit/c8254391861ff993ac9146ffbbb63bfd496284c5))
+
 # [1.14.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.13.0...v1.14.0) (2025-06-24)
 
 
