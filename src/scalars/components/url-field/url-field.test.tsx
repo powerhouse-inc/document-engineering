@@ -190,4 +190,58 @@ describe('UrlField', () => {
     await user.click(screen.getByTestId('reset-button'))
     expect(screen.queryByText('URL may be truncated')).toBeNull()
   })
+  describe('UrlField differences', () => {
+    it('should show value when viewMode is addition', () => {
+      renderWithForm(
+        <UrlField
+          data-testid="url-input-diff"
+          name="test-url"
+          label="Website URL"
+          value="https://github.com/test"
+          viewMode="addition"
+        />
+      )
+
+      const input = screen.getByTestId('url-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('https://github.com/test')).toBeInTheDocument()
+      expect(screen.queryByText('https://example.com')).not.toBeInTheDocument()
+    })
+
+    it('should show baseValue when viewMode is removal', () => {
+      renderWithForm(
+        <UrlField
+          data-testid="url-input-diff"
+          name="test-url"
+          label="Website URL"
+          value="https://github.com/test"
+          baseValue="https://example.com"
+          viewMode="removal"
+        />
+      )
+
+      const input = screen.getByTestId('url-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.queryByText('https://github.com/test')).not.toBeInTheDocument()
+      expect(screen.getByText('https://example.com')).toBeInTheDocument()
+    })
+
+    it('should show value and baseValue when viewMode is mixed', () => {
+      renderWithForm(
+        <UrlField
+          data-testid="url-input-diff"
+          name="test-url"
+          label="Website URL"
+          value="https://github.com/test"
+          baseValue="https://example.com"
+          viewMode="mixed"
+        />
+      )
+
+      const input = screen.getByTestId('url-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('https://github.com/test')).toBeInTheDocument()
+      expect(screen.getByText('https://example.com')).toBeInTheDocument()
+    })
+  })
 })
