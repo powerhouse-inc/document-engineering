@@ -97,4 +97,32 @@ describe('TextField', () => {
     renderWithForm(<TextField name="name" label="Name" />)
     expect(screen.getByRole('textbox')).not.toHaveAttribute('spellcheck')
   })
+  describe('TextField differences', () => {
+    it('should show value when viewMode is addition', () => {
+      renderWithForm(<TextField value="Some value" baseValue="Some base value" viewMode="addition" name="Label" />)
+
+      const input = screen.getByTestId('text-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('Some value')).toBeInTheDocument()
+      expect(screen.queryByText('Some base value')).not.toBeInTheDocument()
+    })
+
+    it('should show baseValue when viewMode is removal', () => {
+      renderWithForm(<TextField value="Some value" baseValue="Some base value" viewMode="removal" name="Label" />)
+
+      const input = screen.getByTestId('text-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.queryByText('Some value')).not.toBeInTheDocument()
+      expect(screen.getByText('Some base value')).toBeInTheDocument()
+    })
+
+    it('should show value and baseValue when viewMode is mixed', () => {
+      renderWithForm(<TextField value="Some value" baseValue="Some base value" viewMode="mixed" name="Label" />)
+
+      const input = screen.getByTestId('text-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('Some value')).toBeInTheDocument()
+      expect(screen.getByText('Some base value')).toBeInTheDocument()
+    })
+  })
 })
