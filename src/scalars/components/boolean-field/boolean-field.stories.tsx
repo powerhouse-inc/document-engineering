@@ -102,3 +102,22 @@ export const Toggle: Story = {
     isToggle: true,
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: true,
+    baseValue: false,
+    isToggle: true,
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Number difference removal',
+    value: false,
+    baseValue: true,
+    isToggle: false,
+    viewMode: 'removal',
+  },
+}

@@ -64,4 +64,31 @@ describe('ToggleField Component', () => {
     const toggle = screen.getByTestId('custom-class')
     expect(toggle).toHaveClass('custom-class')
   })
+
+  describe('ToggleField differences', () => {
+    it('should show value when viewMode is addition', () => {
+      renderWithForm(<ToggleField name="test" label="Toggle" value={true} baseValue={false} viewMode="addition" />)
+      const toggle = screen.getByTestId('toggle-diff')
+      expect(toggle).toBeInTheDocument()
+      expect(screen.getByText('Toggle')).toBeInTheDocument()
+      const toggleSwitch = screen.getByRole('switch')
+      expect(toggleSwitch).toHaveAttribute('aria-checked', 'true')
+    })
+    it('should show baseValue when viewMode is removal', () => {
+      renderWithForm(
+        <ToggleField
+          name="test"
+          label="Toggle"
+          value={false}
+          baseValue={true}
+          viewMode="removal"
+          optionalLabel="Optional Label"
+        />
+      )
+      const toggle = screen.getByTestId('toggle-diff')
+      expect(toggle).toBeInTheDocument()
+      const toggleSwitch = screen.getByRole('switch')
+      expect(toggleSwitch).toHaveAttribute('aria-checked', 'false')
+    })
+  })
 })
