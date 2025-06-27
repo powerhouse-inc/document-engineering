@@ -125,3 +125,28 @@ export const WithWarnings: Story = {
     placeholder: 'Enter your username',
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: 'Lorem ipsum dolor sit amet',
+    baseValue: 'Dolor sit amet consectetur ',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: 'Lorem ipsum dolor sit amet',
+    baseValue: 'Dolor sit amet consectetur ',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Date difference mixed',
+    value: 'Lorem ipsum dolor sit amet',
+    baseValue: 'Dolor sit amet consectetur ',
+    viewMode: 'mixed',
+  },
+}

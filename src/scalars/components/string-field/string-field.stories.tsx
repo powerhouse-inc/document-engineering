@@ -135,3 +135,28 @@ export const WithDefaultValue: Story = {
     placeholder: 'Enter your favorite color',
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
+    baseValue: 'Dolor sit amet consectetur adipiscing elit quisque faucibus.',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
+    baseValue: 'Dolor sit amet consectetur adipiscing elit quisque faucibus.',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Date difference mixed',
+    value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
+    baseValue: 'Dolor sit amet consectetur adipiscing elit quisque faucibus.',
+    viewMode: 'mixed',
+  },
+}

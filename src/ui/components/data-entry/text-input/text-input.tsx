@@ -107,6 +107,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         baseValue={baseValue}
         label={label}
         required={props.required}
+        data-testid="text-input-diff"
       />
     )
   }
