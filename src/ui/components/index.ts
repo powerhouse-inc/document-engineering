@@ -1,4 +1,20 @@
 // export all components accessible outside the package
+
+// alert-dialog
+export {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+  confirm,
+  type ConfirmOptions,
+} from './alert-dialog/index.js'
+
 // data-entry
 export { AIDInput, type AIDInputProps, type AIDOption } from './data-entry/aid-input/index.js'
 export { Checkbox, type CheckboxProps, type CheckboxValue } from './data-entry/checkbox/index.js'

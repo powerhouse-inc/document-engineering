@@ -4,6 +4,7 @@ import type { CellContext, ObjectSetTableConfig, SortDirection } from '../types.
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
 import type { PrivateTableApiBase, SortingInfo } from './types.js'
+import { confirm } from '../../alert-dialog/index.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
@@ -229,9 +230,16 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     if (!this.canDelete()) return
 
     const rowsData = rows.map((row) => this._getState().data[row])
-    // TODO: use a confirmation modal instead of alert
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure you want to delete these rows?')) {
+    const count = rows.length
+    const confirmed = await confirm({
+      title: 'Delete entries',
+      description: `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`,
+      confirmLabel: 'Continue',
+      cancelLabel: 'Cancel',
+      variant: 'destructive',
+    })
+
+    if (confirmed) {
       await this._getConfig().onDelete?.(rowsData)
       this.selection.clear()
     }
