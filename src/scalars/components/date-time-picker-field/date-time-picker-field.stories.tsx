@@ -203,3 +203,34 @@ export const WithCustomizedContent: Story = {
     `,
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    name: 'date-time-picker',
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    value: '2024-06-12T11:47:34.000-03:00',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    name: 'date-time-picker',
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    baseValue: '2023-06-15T11:47:34.000-03:00',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    name: 'date-time-picker',
+    label: 'Date Time Picker Field',
+    description: 'This is a date time picker field',
+    value: '2025-06-05T11:47:34.000-03:00',
+    baseValue: '2024-06-05T11:47:34.000-03:00',
+    viewMode: 'mixed',
+  },
+}

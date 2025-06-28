@@ -139,3 +139,20 @@ export const WithErrorsAndWarnings: Story = {
     warnings: ['Please review our privacy policy carefully'],
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: true,
+    baseValue: false,
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: false,
+    baseValue: true,
+    viewMode: 'removal',
+  },
+}
