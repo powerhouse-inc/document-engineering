@@ -41,6 +41,13 @@ export interface ObjectSetTableConfig<T> {
    * @default 0
    */
   minRowCount?: number
+
+  /**
+   * A function that is called when one or multiple rows are deleted.
+   *
+   * @param rows The rows that are being deleted.
+   */
+  onDelete?: (rows: T[]) => Promise<void> | void
 }
 
 export type ColumnType = 'text' | 'number' | 'boolean'

@@ -115,6 +115,13 @@ class SelectionManager<TData> implements TableSelectionManager {
   }
 
   /**
+   * Returns the indexes of the selected rows
+   */
+  getSelectedRowIndexes(): number[] {
+    return this.api._getState().selectedRowIndexes
+  }
+
+  /**
    * Selects a cell in the table.
    *
    * @param rowIndex - The index of the row to select

@@ -42,9 +42,23 @@ const useGlobalTableKeyEvents = () => {
       }
     }
 
+    const handleDeleteRows = (e: KeyboardEvent) => {
+      if (e.key === 'Delete' && api.canDelete()) {
+        const selectedRowIndexes = api.selection
+          .getSelectedRowIndexes()
+          // we need to filter out the rows as generated empty rows might be selected
+          .filter((index) => index < api._getState().data.length)
+        if (selectedRowIndexes.length > 0) {
+          api.deleteRows(selectedRowIndexes)
+        }
+      }
+    }
+
     api.getHTMLTable()?.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', handleDeleteRows)
     return () => {
       api.getHTMLTable()?.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keydown', handleDeleteRows)
     }
   }, [api])
 }

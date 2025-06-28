@@ -124,7 +124,22 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
     []
   )
 
-  return <ObjectSetTable<MockedPerson> columns={columns} data={data} minRowCount={10} {...props} />
+  return (
+    <ObjectSetTable<MockedPerson>
+      columns={columns}
+      data={data}
+      minRowCount={10}
+      {...props}
+      onDelete={(rows) => {
+        setData((prevData) => {
+          const newData = [...prevData]
+          const filteredData = newData.filter((row) => !rows.some((person) => person.email === row.email))
+
+          return filteredData
+        })
+      }}
+    />
+  )
 }
 
 export default TableEditingExample

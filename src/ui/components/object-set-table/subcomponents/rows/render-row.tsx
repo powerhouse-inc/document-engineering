@@ -95,7 +95,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: Ren
         )
       })}
 
-      {api.isEditable() && <InformationCell />}
+      {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} emptyRow={emptyRow} />}
     </TableRow>
   )
 }

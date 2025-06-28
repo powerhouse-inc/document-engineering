@@ -104,6 +104,7 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
       return {
         ...state,
         data: action.payload,
+        defaultData: action.payload,
         dataFormReferences: createFormReferences(action.payload.length, state.columns),
       }
     case 'UPDATE_COLUMN':

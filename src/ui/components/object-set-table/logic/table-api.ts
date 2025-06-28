@@ -209,6 +209,33 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
   getCurrentSortInfo(): SortingInfo | null {
     return this._getState().sortState
   }
+
+  // deletion
+  /**
+   * Checks if the table can be deleted
+   *
+   * @returns `true` if the table can be deleted, `false` otherwise
+   */
+  canDelete(): boolean {
+    return typeof this._getConfig().onDelete === 'function'
+  }
+
+  /**
+   * Deletes the rows at the given indexes
+   *
+   * @param rows - The indexes of the rows to delete
+   */
+  async deleteRows(rows: number[]): Promise<void> {
+    if (!this.canDelete()) return
+
+    const rowsData = rows.map((row) => this._getState().data[row])
+    // TODO: use a confirmation modal instead of alert
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure you want to delete these rows?')) {
+      await this._getConfig().onDelete?.(rowsData)
+      this.selection.clear()
+    }
+  }
 }
 
 export { TableApi }

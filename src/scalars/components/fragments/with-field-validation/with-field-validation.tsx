@@ -73,7 +73,7 @@ export const withFieldValidation = <T extends PossibleProps, R extends React.Ele
         // a change of the value on initial render
       }, [name, value])
 
-      if (value !== undefined && !onChangeProp) {
+      if (value !== undefined && !onChangeProp && process.env.NODE_ENV === 'development') {
         console.warn(
           `[Field: ${name}] Value prop provided without onChange so it will be ignored. Use disabled/readOnly if you want to prevent changes.`
         )
