@@ -34,6 +34,7 @@ export const useDatePickerField = ({
   maxDate,
 }: DatePickerFieldProps) => {
   const internalFormat = getDateFormat(dateFormat ?? '')
+  const yearFormat = dateFormat === 'YYYY'
   const [isOpen, setIsOpen] = React.useState(false)
   const [inputDisplay, setInputDisplay] = React.useState<string | undefined>(
     parseInputString(getDateFromValue(value ?? defaultValue ?? ''), internalFormat)
@@ -151,7 +152,6 @@ export const useDatePickerField = ({
   }, [value, internalFormat])
 
   const handleCalendarMonthYearSelect = (year: number, monthIndex: number) => {
-    const yearFormat = dateFormat === 'YYYY' && internalFormat === 'yyyy-MM-dd'
     const newInputValue = format(new Date(year, monthIndex), internalFormat ?? 'yyyy-MM-dd')
     const inputToShow = yearFormat ? `${year}` : newInputValue
     setInputDisplay(inputToShow)
