@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from './alert-dialog.js'
 import type { VariantProps } from 'class-variance-authority'
-import type { buttonVariants } from '../../../scalars/components/fragments/button/button.js'
+import type { buttonVariants } from '../button/button.js'
 
 export interface ConfirmOptions {
   title: string
