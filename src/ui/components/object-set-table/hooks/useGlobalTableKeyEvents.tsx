@@ -49,7 +49,7 @@ const useGlobalTableKeyEvents = () => {
           // we need to filter out the rows as generated empty rows might be selected
           .filter((index) => index < api._getState().data.length)
         if (selectedRowIndexes.length > 0) {
-          api.deleteRows(selectedRowIndexes)
+          void api.deleteRows(selectedRowIndexes)
         }
       }
     }

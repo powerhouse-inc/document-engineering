@@ -21,7 +21,7 @@ const InformationCell = ({ rowIndex, emptyRow }: InformationCellProps) => {
         <div
           className="flex h-full w-full items-center justify-center cursor-pointer text-red-900"
           onClick={() => {
-            api.deleteRows([rowIndex])
+            void api.deleteRows([rowIndex])
           }}
         >
           <Icon name="Trash" size={16} />
