@@ -91,7 +91,6 @@ export const Default: Story = {
   },
 }
 
-// State variants
 export const Disabled: Story = {
   args: {
     children: 'Disabled',
@@ -99,7 +98,6 @@ export const Disabled: Story = {
   },
 }
 
-// With icons
 export const WithIcon: Story = {
   args: {
     children: (
@@ -122,7 +120,6 @@ export const IconTrailing: Story = {
   },
 }
 
-// Loading state
 export const Loading: Story = {
   args: {
     disabled: true,
@@ -135,7 +132,6 @@ export const Loading: Story = {
   },
 }
 
-// AsChild example
 export const AsChild: Story = {
   args: {
     asChild: true,
@@ -147,7 +143,6 @@ export const AsChild: Story = {
   },
 }
 
-// All variants showcase
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">

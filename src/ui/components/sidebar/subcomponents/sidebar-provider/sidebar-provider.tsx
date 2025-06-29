@@ -258,7 +258,7 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
 
   useEffect(() => {
     const debounceTimeout = 300 // Adjust the debounce delay as needed
-    let timeoutId: number | null = null
+    let timeoutId: NodeJS.Timeout
 
     if (_state.searchTerm) {
       // Set isSearching to true when starting the search
@@ -300,9 +300,7 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
 
     // Cleanup the timeout on component unmount or when dependencies change
     return () => {
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId)
-      }
+      clearTimeout(timeoutId)
     }
   }, [currentRoots, _state.searchTerm, openPathToNode])
 

@@ -23,7 +23,7 @@ export const useTimeSelector = ({
 }: UseTimeSelectorProps): UseTimeSelectorReturn => {
   const [shouldCenter, setShouldCenter] = useState(false)
   const lastScrollTop = useRef(0)
-  const scrollTimeoutRef = useRef<number | null>(null)
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const initialRenderRef = useRef(true)
 
   // Initial centering on component mount
