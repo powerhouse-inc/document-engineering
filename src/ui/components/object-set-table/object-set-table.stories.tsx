@@ -3,6 +3,7 @@ import { mockData, type MockedPerson } from './mock-data.js'
 import { ObjectSetTable } from './object-set-table.js'
 import ComputedColumnsExample from './examples/computed-columns/computed-columns.js'
 import CustomRenderingExample from './examples/custom-rendering/custom-rendering.js'
+import TableEditingExample from './examples/table-editing/table-editing.js'
 
 /**
  * The `ObjectSetTable` component is a powerful data table that displays collections of objects in a structured format.
@@ -550,11 +551,12 @@ const meta: Meta<typeof ObjectSetTable> = {
       },
     },
     onDelete: {
-      action: 'onDelete',
+      control: false,
       description: 'Function called when rows are deleted. Enables row deletion functionality when provided.',
       table: {
         type: { summary: '(rows: T[]) => Promise<void> | void' },
         defaultValue: { summary: 'undefined' },
+        readonly: true,
       },
     },
     apiRef: {
@@ -563,6 +565,7 @@ const meta: Meta<typeof ObjectSetTable> = {
       table: {
         type: { summary: 'React.MutableRefObject<TableApiBase | null>' },
         defaultValue: { summary: 'undefined' },
+        readonly: true,
       },
     },
   },
@@ -620,4 +623,8 @@ export const ComputedColumns: StoryObj = {
  */
 export const CustomRendering: StoryObj = {
   render: (args) => <CustomRenderingExample {...args} />,
+}
+
+export const EditableTable: StoryObj = {
+  render: (args) => <TableEditingExample {...args} />,
 }
