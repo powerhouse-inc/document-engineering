@@ -57,7 +57,6 @@ const CustomRenderingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 
           </div>
         ),
         sortable: true,
-        defaultSortDirection: 'desc',
       },
       {
         field: 'isActive',

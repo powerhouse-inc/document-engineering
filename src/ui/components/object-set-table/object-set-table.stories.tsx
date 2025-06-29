@@ -96,6 +96,13 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `editable` | `boolean` | `false` | Enable inline cell editing |
  * | `onSave` | `(newValue: any, context: CellContext<T>) => boolean` | Update data array | Handle cell value changes |
  *
+ * ### Sorting Configuration
+ *
+ * | Property | Type | Default | Description |
+ * |----------|------|---------|-------------|
+ * | `sortable` | `boolean` | `false` | Enable column sorting |
+ * | `rowComparator` | `(a: unknown, b: unknown, context: SortableColumnContext<T>) => number` | Type-based comparator | Custom sorting logic |
+ *
  * ---
  *
  * ## Usage Patterns
@@ -361,6 +368,7 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `canSelectRows()` | Checks if row selection is enabled | `boolean` |
  * | `canSelectCells()` | Checks if cell selection is enabled | `boolean` |
  * | `haveSelectedCells()` | Checks if any cells are selected | `boolean` |
+ * | `getSelectedRowIndexes()` | Gets the indexes of selected rows | `number[]` |
  *
  * ### Cell Editing API
  *
@@ -374,6 +382,18 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `isEditingCell(row, column)` | Checks if specific cell is being edited | `row: number, column: number` | `boolean` |
  * | `enterCellEditMode(row, column)` | Enters edit mode for a cell | `row: number, column: number` | `void` |
  * | `exitCellEditMode(save?)` | Exits edit mode | `save?: boolean = true` | `Promise<void>` |
+ *
+ * ### Row Deletion API
+ *
+ * Control row deletion programmatically:
+ *
+ * | Method | Description | Parameters | Returns |
+ * |--------|-------------|------------|---------|
+ * | `canDelete()` | Checks if row deletion is enabled | None | `boolean` |
+ * | `deleteRows(rows)` | Deletes rows with confirmation dialog | `rows: number[]` | `Promise<void>` |
+ *
+ * **Note:** Row deletion requires the `onDelete` prop to be provided in the table configuration.
+ * The `deleteRows` method will show a confirmation dialog before proceeding with deletion.
  *
  * ### Sorting API
  *
@@ -407,6 +427,61 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * const handleSelectRange = () => {
  *   apiRef.current?.selection.selectRange(0, 2); // Select first 3 rows
  * };
+ * ```
+ *
+ * #### Row Deletion Control
+ *
+ * ```tsx
+ * const handleDeleteSelected = async () => {
+ *   const selectedIndexes = apiRef.current?.selection.getSelectedRowIndexes() ?? [];
+ *   if (selectedIndexes.length > 0) {
+ *     await apiRef.current?.deleteRows(selectedIndexes);
+ *   }
+ * };
+ *
+ * const checkCanDelete = () => {
+ *   return apiRef.current?.canDelete() ?? false;
+ * };
+ * ```
+ *
+ * #### Sorting Control
+ *
+ * ```tsx
+ * const handleSort = () => {
+ *   // Sort by first column in ascending order
+ *   apiRef.current?.sortRows(0, 'asc');
+ * };
+ *
+ * const handleClearSort = () => {
+ *   // Clear sorting
+ *   apiRef.current?.sortRows(0, null);
+ * };
+ *
+ * const getCurrentSort = () => {
+ *   const sortInfo = apiRef.current?.getCurrentSortInfo();
+ *   console.log(sortInfo); // { columnIndex: 0, direction: 'asc' } or null
+ * };
+ * ```
+ *
+ * ### Row Deletion
+ *
+ * Enable row deletion with confirmation:
+ *
+ * ```tsx
+ * const handleDelete = async (rows: Person[]) => {
+ *   // Perform deletion logic (API calls, etc.)
+ *   console.log('Deleting rows:', rows);
+ *   // Remove from your data source
+ *   setData(prevData =>
+ *     prevData.filter(item => !rows.includes(item))
+ *   );
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   onDelete={handleDelete}  // Enables deletion functionality
+ * />
  * ```
  */
 const meta: Meta<typeof ObjectSetTable> = {
@@ -472,6 +547,22 @@ const meta: Meta<typeof ObjectSetTable> = {
       table: {
         type: { summary: 'number' },
         defaultValue: { summary: '0' },
+      },
+    },
+    onDelete: {
+      action: 'onDelete',
+      description: 'Function called when rows are deleted. Enables row deletion functionality when provided.',
+      table: {
+        type: { summary: '(rows: T[]) => Promise<void> | void' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
+    apiRef: {
+      control: false,
+      description: 'Reference to the table API for programmatic control.',
+      table: {
+        type: { summary: 'React.MutableRefObject<TableApiBase | null>' },
+        defaultValue: { summary: 'undefined' },
       },
     },
   },

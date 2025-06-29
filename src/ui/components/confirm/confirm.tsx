@@ -33,7 +33,12 @@ const ConfirmDialog = ({
 }: ConfirmDialogProps<ConfirmOptions, boolean>) => {
   return (
     <AlertDialog open={show}>
-      <AlertDialogContent className={show ? 'animate-in' : 'animate-out'}>
+      <AlertDialogContent
+        className={show ? 'animate-in' : 'animate-out'}
+        onOpenAutoFocus={(e) => {
+          e.preventDefault()
+        }}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>
@@ -48,6 +53,7 @@ const ConfirmDialog = ({
             {cancelLabel}
           </AlertDialogCancel>
           <AlertDialogAction
+            autoFocus
             variant={confirmVariant}
             onClick={() => {
               proceed(true)

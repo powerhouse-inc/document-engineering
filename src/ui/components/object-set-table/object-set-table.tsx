@@ -52,7 +52,6 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
         renderCellEditor: column.renderCellEditor ?? getCellEditorFn(column.type),
         // sorting
         sortable: column.sortable ?? false,
-        defaultSortDirection: column.defaultSortDirection ?? 'asc',
         rowComparator: column.rowComparator ?? defaultSortFns(column.type ?? defaultColumnType),
       })),
       width: config.width ?? 'auto',

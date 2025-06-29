@@ -93,7 +93,6 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           </div>
         ),
         sortable: true,
-        defaultSortDirection: 'desc',
       },
       {
         field: 'isActive',

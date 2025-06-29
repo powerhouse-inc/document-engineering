@@ -200,11 +200,6 @@ export interface SortableColumnDef<T = unknown> {
   sortable?: boolean
 
   /**
-   * The default sort direction, only one column can be sorted at a time.
-   */
-  defaultSortDirection?: SortDirection
-
-  /**
    * A function that compares two rows.
    *
    * @default The value is compared using the `rowComparator` function.
