@@ -41,13 +41,17 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
         onSave:
           column.onSave ??
           ((value, context) => {
+            if (import.meta.env.DEV) {
+              // This is a warning that is only shown in development mode for better DX
+              // eslint-disable-next-line no-console
+              console.warn(`onSave is not implemented for column %c${column.field}`, 'font-weight: bold')
+            }
             config.data[context.rowIndex][context.column.field as keyof T] = value as T[keyof T]
             return true
           }),
         renderCellEditor: column.renderCellEditor ?? getCellEditorFn(column.type),
         // sorting
         sortable: column.sortable ?? false,
-        defaultSortDirection: column.defaultSortDirection ?? 'asc',
         rowComparator: column.rowComparator ?? defaultSortFns(column.type ?? defaultColumnType),
       })),
       width: config.width ?? 'auto',

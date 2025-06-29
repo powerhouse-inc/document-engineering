@@ -46,14 +46,14 @@ const RenderCell = <T extends DataType>({
           void api.exitCellEditMode(true)
         }
 
-        if (e.detail === 2 && columnDef.editable) {
+        if (e.detail === 2 && columnDef.editable && !renderEmptyCell) {
           api.enterCellEditMode(index, column)
         } else {
           api.selection.selectCell(index, column)
         }
       }
     },
-    [selectedCellIndex, api]
+    [selectedCellIndex, api, renderEmptyCell]
   )
 
   const currentCellIndex = {

@@ -4,6 +4,7 @@ import type { CellContext, ObjectSetTableConfig, SortDirection } from '../types.
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
 import type { PrivateTableApiBase, SortingInfo } from './types.js'
+import { confirm } from '../../confirm/index.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
@@ -208,6 +209,41 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    */
   getCurrentSortInfo(): SortingInfo | null {
     return this._getState().sortState
+  }
+
+  // deletion
+  /**
+   * Checks if the table can be deleted
+   *
+   * @returns `true` if the table can be deleted, `false` otherwise
+   */
+  canDelete(): boolean {
+    return typeof this._getConfig().onDelete === 'function'
+  }
+
+  /**
+   * Deletes the rows at the given indexes
+   *
+   * @param rows - The indexes of the rows to delete
+   */
+  async deleteRows(rows: number[]): Promise<void> {
+    if (!this.canDelete()) return
+
+    const rowsData = rows.map((row) => this._getState().data[row])
+    const count = rows.length
+    const confirmed = await confirm({
+      title: 'Delete entries',
+      description: `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`,
+      confirmLabel: 'Continue',
+      confirmVariant: 'default',
+      cancelLabel: 'Cancel',
+      cancelVariant: 'secondary',
+    })
+
+    if (confirmed) {
+      await this._getConfig().onDelete?.(rowsData)
+      this.selection.clear()
+    }
   }
 }
 
