@@ -1,4 +1,4 @@
-import { Button } from '@powerhousedao/design-system'
+import { Button } from '../../../../ui/components/button/index.js'
 import { Form } from '../../form/index.js'
 import { StringField } from '../../string-field/index.js'
 
@@ -34,8 +34,8 @@ const SubmitChangesOnly = () => {
 
           <div className="flex gap-2">
             <Button
-              className="w-full"
-              color="light"
+              className="flex-1"
+              variant="secondary"
               type="reset"
               onClick={() => {
                 reset()
@@ -43,7 +43,7 @@ const SubmitChangesOnly = () => {
             >
               Reset
             </Button>
-            <Button className="w-full" type="submit">
+            <Button className="flex-1" type="submit">
               Submit
             </Button>
           </div>

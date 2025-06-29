@@ -41,7 +41,7 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
         onSave:
           column.onSave ??
           ((value, context) => {
-            if (process.env.NODE_ENV === 'development') {
+            if (import.meta.env.DEV) {
               // This is a warning that is only shown in development mode for better DX
               // eslint-disable-next-line no-console
               console.warn(`onSave is not implemented for column %c${column.field}`, 'font-weight: bold')

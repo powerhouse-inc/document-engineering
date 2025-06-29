@@ -27,7 +27,7 @@ import { Button } from '../../../scalars/components/fragments/button/index.js'
  * ```
  */
 const meta: Meta<typeof confirm> = {
-  title: 'UI/Confirm',
+  title: 'Feedback/Confirm',
   parameters: {
     layout: 'centered',
     chromatic: {

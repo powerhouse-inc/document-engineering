@@ -23,7 +23,7 @@ import { Button } from './button.js'
  */
 
 const meta: Meta<typeof Button> = {
-  title: 'UI/Button',
+  title: 'Data Display/Button',
   component: Button,
   parameters: {
     layout: 'centered',

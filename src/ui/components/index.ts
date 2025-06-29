@@ -1,8 +1,5 @@
 // export all components accessible outside the package
 
-// confirm
-export { confirm, type ConfirmOptions } from './confirm/index.js'
-
 // data-entry
 export { AIDInput, type AIDInputProps, type AIDOption } from './data-entry/aid-input/index.js'
 export { Checkbox, type CheckboxProps, type CheckboxValue } from './data-entry/checkbox/index.js'
@@ -53,6 +50,10 @@ export {
   type SidebarNode,
   type SidebarProps,
 } from './sidebar/index.js'
+
+// data display
+export { Button, buttonVariants } from './button/index.js'
+export { confirm, type ConfirmOptions } from './confirm/index.js'
 
 // export object set table and types
 export * from './object-set-table/index.js'
