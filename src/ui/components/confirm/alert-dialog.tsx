@@ -5,6 +5,7 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
 
 import { cn } from '../../../scalars/lib/utils.js'
 import { buttonVariants } from '../../../scalars/components/fragments/button/index.js'
+import type { VariantProps } from 'class-variance-authority'
 
 const AlertDialog = ({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) => {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
@@ -90,12 +91,32 @@ const AlertDialogDescription = ({
   )
 }
 
-const AlertDialogAction = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Action>) => {
-  return <AlertDialogPrimitive.Action className={cn(buttonVariants(), className)} {...props} />
+const AlertDialogAction = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Action> & {
+  variant?: VariantProps<typeof buttonVariants>['variant']
+}) => {
+  return (
+    <AlertDialogPrimitive.Action
+      className={cn(buttonVariants({ variant: props.variant ?? 'default' }), className)}
+      {...props}
+    />
+  )
 }
 
-const AlertDialogCancel = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) => {
-  return <AlertDialogPrimitive.Cancel className={cn(buttonVariants({ variant: 'outline' }), className)} {...props} />
+const AlertDialogCancel = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Cancel> & {
+  variant?: VariantProps<typeof buttonVariants>['variant']
+}) => {
+  return (
+    <AlertDialogPrimitive.Cancel
+      className={cn(buttonVariants({ variant: props.variant ?? 'outline' }), className)}
+      {...props}
+    />
+  )
 }
 
 export {

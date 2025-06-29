@@ -4,7 +4,7 @@ import type { CellContext, ObjectSetTableConfig, SortDirection } from '../types.
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
 import type { PrivateTableApiBase, SortingInfo } from './types.js'
-import { confirm } from '../../alert-dialog/index.js'
+import { confirm } from '../../confirm/index.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
@@ -235,8 +235,9 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       title: 'Delete entries',
       description: `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`,
       confirmLabel: 'Continue',
+      confirmVariant: 'default',
       cancelLabel: 'Cancel',
-      variant: 'destructive',
+      cancelVariant: 'secondary',
     })
 
     if (confirmed) {

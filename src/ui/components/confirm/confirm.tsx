@@ -9,13 +9,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from './alert-dialog.js'
+import type { VariantProps } from 'class-variance-authority'
+import type { buttonVariants } from '../../../scalars/components/fragments/button/button.js'
 
 export interface ConfirmOptions {
   title: string
   description: string
   confirmLabel?: string
+  confirmVariant?: VariantProps<typeof buttonVariants>['variant']
   cancelLabel?: string
-  variant?: 'destructive' | 'default'
+  cancelVariant?: VariantProps<typeof buttonVariants>['variant']
 }
 
 const ConfirmDialog = ({
@@ -25,22 +28,11 @@ const ConfirmDialog = ({
   description,
   confirmLabel = 'Continue',
   cancelLabel = 'Cancel',
-  variant = 'default',
+  confirmVariant = 'default',
+  cancelVariant = 'secondary',
 }: ConfirmDialogProps<ConfirmOptions, boolean>) => {
-  const getActionStyles = () => {
-    if (variant === 'destructive') {
-      return 'bg-gray-900 text-white hover:bg-gray-800 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200'
-    }
-    return ''
-  }
-
   return (
-    <AlertDialog
-      open={show}
-      onOpenChange={(open) => {
-        proceed(open)
-      }}
-    >
+    <AlertDialog open={show}>
       <AlertDialogContent className={show ? 'animate-in' : 'animate-out'}>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -48,6 +40,7 @@ const ConfirmDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
+            variant={cancelVariant}
             onClick={() => {
               proceed(false)
             }}
@@ -55,7 +48,7 @@ const ConfirmDialog = ({
             {cancelLabel}
           </AlertDialogCancel>
           <AlertDialogAction
-            className={getActionStyles()}
+            variant={confirmVariant}
             onClick={() => {
               proceed(true)
             }}
