@@ -38,6 +38,8 @@ interface DateTimePickerContentProps {
   timeZone?: string
   onSave: () => void
   onCancel: () => void
+  dateFormat?: string
+  handleCalendarMonthYearSelect?: (year: number, monthIndex: number) => void
 }
 
 const DateTimePickerContent = ({
@@ -69,6 +71,8 @@ const DateTimePickerContent = ({
   selectedTimeZone,
   setSelectedTimeZone,
   timeZone,
+  dateFormat,
+  handleCalendarMonthYearSelect,
 }: DateTimePickerContentProps) => {
   return (
     <div className={cn('mx-auto w-full max-w-md', 'date-time-picker__content', className)}>
@@ -113,6 +117,8 @@ const DateTimePickerContent = ({
             onSelect={handleDateSelect}
             disabled={disabledDates}
             onDayClick={handleDayClick}
+            dateFormat={dateFormat}
+            handleCalendarMonthYearSelect={handleCalendarMonthYearSelect}
             className={cn(
               'w-full',
               'p-0',

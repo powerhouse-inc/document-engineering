@@ -33,7 +33,7 @@ const MonthGrid = ({
   const { goToMonth, months } = useDayPicker()
   const internalFormat = getDateFormat(dateFormat ?? '')
   const monthFormat = ['yyyy-MM', 'MM/yyyy', 'MM/yyyy', 'MMM-yyyy', 'YYYY'].includes(internalFormat ?? '')
-  const yearFormat = dateFormat === 'YYYY' && internalFormat === 'yyyy-MM-dd'
+  const yearFormat = dateFormat === 'YYYY'
   const actualYear = format(months[0].date, 'yyyy')
   const actualMonth = format(months[0].date, 'MMMM')
 

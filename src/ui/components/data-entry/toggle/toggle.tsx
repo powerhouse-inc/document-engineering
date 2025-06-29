@@ -97,6 +97,7 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
         label={label}
         optionalLabel={optionalLabel}
         disabled={disabled}
+        data-testid="toggle-diff"
       />
     )
   }

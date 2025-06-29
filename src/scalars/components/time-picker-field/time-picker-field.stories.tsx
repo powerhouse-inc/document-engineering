@@ -142,3 +142,27 @@ export const Filled: Story = {
     placeholder: 'HH:mm',
   },
 }
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Time difference addition',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Time difference removal',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Time difference mixed',
+    value: '12:00 PM',
+    baseValue: '11:00 AM',
+    viewMode: 'mixed',
+  },
+}

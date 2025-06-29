@@ -34,6 +34,7 @@ export const dateFormatRegexes = {
   'yyyy-MM': /^\d{4}-(0[1-9]|1[0-2])$/,
   'MM/yyyy': /^(0[1-9]|1[0-2])\/\d{4}$/,
   'MMM-yyyy': /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{4}$/,
+  yyyy: /^\d{4}$/,
 }
 
 /**
@@ -201,7 +202,7 @@ export const getDateFormat = (displayFormat: string): string | undefined => {
     case 'MMM-YYYY':
       return 'MMM-yyyy'
     case 'YYYY':
-      return 'yyyy-MM-dd'
+      return 'yyyy'
     default:
       return undefined
   }

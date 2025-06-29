@@ -3,7 +3,9 @@ import type { ViewMode, WithDifference } from '../../../../../scalars/components
 import { useId, useMemo } from 'react'
 import { ToggleBase } from '../toggle-base.js'
 
-interface ToggleDiffProps extends Omit<WithDifference<boolean>, 'diffMode' | 'viewMode'> {
+interface ToggleDiffProps
+  extends Omit<WithDifference<boolean>, 'diffMode' | 'viewMode'>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: boolean
   label?: React.ReactNode
   optionalLabel?: React.ReactNode
@@ -24,6 +26,7 @@ const ToggleDiff = ({
   viewMode = 'edition',
   onChange,
   name,
+  ...props
 }: ToggleDiffProps) => {
   const generatedId = useId()
   const id = generatedId
@@ -39,7 +42,7 @@ const ToggleDiff = ({
   }, [baseValue, value])
 
   return (
-    <div className="flex flex-row items-center justify-end gap-2">
+    <div className="flex flex-row items-center justify-end gap-2" {...props}>
       <span
         className={cn(
           'text-gray-700',

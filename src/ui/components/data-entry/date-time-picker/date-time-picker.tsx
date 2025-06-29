@@ -113,6 +113,7 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
       is12HourFormat,
       setSelectedTimeZone,
       isDisableSelect,
+      handleCalendarMonthYearSelect,
     } = useDateTimePicker({
       value,
       defaultValue,
@@ -192,6 +193,8 @@ const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
               isDisableSelect={isDisableSelect}
               onCancel={onCancel}
               onSave={handleSave}
+              dateFormat={dateFormat}
+              handleCalendarMonthYearSelect={handleCalendarMonthYearSelect}
             />
           </BasePickerField>
           {description ? <FormDescription>{description}</FormDescription> : null}

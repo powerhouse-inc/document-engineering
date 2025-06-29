@@ -25,6 +25,7 @@ import {
   splitDateTimeStringFromInput,
   todayDateInput,
 } from './utils.js'
+import { format } from 'date-fns'
 
 interface DateTimeFieldProps {
   value?: DateFieldValue
@@ -78,9 +79,9 @@ export const useDateTimePicker = ({
 }: DateTimeFieldProps) => {
   const internalFormat = getDateFormat(dateFormat ?? '')
   const is12HourFormat = timeFormat.includes('a') || timeFormat.includes('A')
+  const isYearFormat = dateFormat === 'YYYY' && internalFormat === 'yyyy-MM-dd'
   const [isOpen, setIsOpen] = React.useState(false)
   const [activeTab, setActiveTab] = useState<'date' | 'time'>('date')
-
   const [dateTimeToDisplay, setDateTimeToDisplay] = useState(
     parseDateTimeValueToInput(value ?? defaultValue ?? '', internalFormat ?? '', is12HourFormat, timeIntervals)
   )
@@ -192,7 +193,7 @@ export const useDateTimePicker = ({
     }
     const timeFormat = formatInputsToValueFormat(hours, minutes, offsetUTC)
     const newValue = putTimeInValue(value ?? defaultValue ?? '', timeFormat)
-    const newVInput = newValue.split('T')[0]
+    const newVInput = isYearFormat ? newValue.split('T')[0].split('-')[0] : newValue.split('T')[0]
 
     // Check if the date is empty when split the value by T
     const valueEmptyDate = (value as string | undefined)?.split('T')[0] === ''
@@ -203,7 +204,7 @@ export const useDateTimePicker = ({
       return
     }
 
-    const valueFormatted = `${newVInput} ${datetimeFormatted}`
+    const valueFormatted = `${newVInput.toUpperCase()} ${datetimeFormatted}`
     setDateTimeToDisplay(valueFormatted)
     onChange?.(createChangeEvent(newValue))
     onBlur?.(createBlurEvent(newValue))
@@ -241,8 +242,10 @@ export const useDateTimePicker = ({
     }
     setDateTimeToDisplay(inputValue)
     const { date, time } = splitDateTimeStringFromInput(inputValue)
+    const datePartCorrected = isYearFormat ? new Date(Number(date), 0, 1).toISOString() : date
+    // const datePartCorrected = isYearFormat ? yearInput : date
     const offset = getOffset(timeZone ?? (selectedTimeZone as string))
-    let formattedDateTime = formatToISODateTimeWithOffset(date, time, offset)
+    let formattedDateTime = formatToISODateTimeWithOffset(datePartCorrected, time, offset)
     if (!time && !date) {
       formattedDateTime = inputValue
     }
@@ -311,14 +314,28 @@ export const useDateTimePicker = ({
     if (!isValid) {
       valueDate = todayDateInput(internalFormat)
     }
-    // Convert to uppercase for the value and for the input display
-    const upperValueDate = valueDate.toUpperCase()
 
+    const upperValueDate = valueDate.toUpperCase()
+    const upperValueDateYear = isYearFormat ? upperValueDate.split('-')[0] : upperValueDate
     const valueWithFormat = putDateInValue(newValue, upperValueDate)
-    const inputDisplay = `${upperValueDate} ${timeToDisplay}`
+    const inputDisplay = `${upperValueDateYear} ${timeToDisplay}`
     setDateTimeToDisplay(inputDisplay)
     onChange?.(createChangeEvent(valueWithFormat))
     onBlur?.(createBlurEvent(valueWithFormat))
+  }
+
+  const handleCalendarMonthYearSelect = (year: number, monthIndex: number) => {
+    const newInputValue = format(new Date(year, monthIndex), internalFormat ?? 'yyyy-MM-dd').toUpperCase()
+    const yearInput = new Date(year, 0, 1).toISOString()
+    const inputToShow = isYearFormat ? `${year}` : newInputValue
+    const newDateTime = putDateInValue(value ?? defaultValue ?? '', inputToShow)
+    const newValueDateTimeYear = putDateInValue(value ?? defaultValue ?? '', yearInput)
+    const newInputToShow = parseDateTimeValueToInput(newDateTime, internalFormat, is12HourFormat, timeIntervals)
+
+    const dateTimeISO = isYearFormat ? newValueDateTimeYear : newDateTime
+    setDateTimeToDisplay(newInputToShow.toUpperCase())
+    onChange?.(createChangeEvent(dateTimeISO))
+    setIsOpen(false)
   }
 
   return {
@@ -354,5 +371,6 @@ export const useDateTimePicker = ({
     setSelectedTimeZone,
     is12HourFormat,
     isDisableSelect,
+    handleCalendarMonthYearSelect,
   }
 }

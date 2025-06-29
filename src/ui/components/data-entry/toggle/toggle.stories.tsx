@@ -128,3 +128,20 @@ export const WithErrorsAndWarnings: Story = {
     warnings: ['Enabling this will share your data with third parties'],
   },
 }
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Label default',
+    value: true,
+    baseValue: false,
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Label default',
+    optionalLabel: 'Optional label',
+    value: false,
+    baseValue: true,
+    viewMode: 'removal',
+  },
+}
