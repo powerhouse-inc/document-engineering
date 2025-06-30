@@ -105,7 +105,7 @@ export const getOffset = (timeZone?: string) => {
 
     if (!offsetPart) return getLocalOffset()
     const offsetMatch =
-      /^(?:GMT|UTC)?([+-])(\d{1,2})(?::?(\d{2}))?/i.exec(offsetPart) || /(UTC|GMT)([+-]\d{2}:\d{2})/.exec(offsetPart)
+      /^(?:GMT|UTC)?([+-])(\d{1,2})(?::?(\d{2}))?/i.exec(offsetPart) ?? /(UTC|GMT)([+-]\d{2}:\d{2})/.exec(offsetPart)
 
     if (!offsetMatch) return getLocalOffset()
     const sign = offsetMatch[1] || '+'
@@ -183,7 +183,7 @@ export const FORMAT_MAPPING_DATE_TIME_PICKER = {
   'MMM-DD-YYYY': 'MMM-dd-yyyy',
 }
 
-export const getDateFormat = (displayFormat: string): string | undefined => {
+export const getDateFormat = (displayFormat: string): string => {
   switch (displayFormat) {
     case 'YYYY-MM-DD':
       return 'yyyy-MM-dd'
@@ -204,7 +204,7 @@ export const getDateFormat = (displayFormat: string): string | undefined => {
     case 'YYYY':
       return 'yyyy'
     default:
-      return undefined
+      return 'yyyy-MM-dd'
   }
 }
 

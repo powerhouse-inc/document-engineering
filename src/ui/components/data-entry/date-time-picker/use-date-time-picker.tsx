@@ -79,7 +79,7 @@ export const useDateTimePicker = ({
 }: DateTimeFieldProps) => {
   const internalFormat = getDateFormat(dateFormat ?? '')
   const is12HourFormat = timeFormat.includes('a') || timeFormat.includes('A')
-  const isYearFormat = dateFormat === 'YYYY' && internalFormat === 'yyyy-MM-dd'
+  const isYearFormat = dateFormat === 'YYYY'
   const [isOpen, setIsOpen] = React.useState(false)
   const [activeTab, setActiveTab] = useState<'date' | 'time'>('date')
   const [dateTimeToDisplay, setDateTimeToDisplay] = useState(
