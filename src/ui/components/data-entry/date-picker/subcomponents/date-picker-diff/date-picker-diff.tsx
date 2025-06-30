@@ -28,7 +28,7 @@ const DateInputDiff = ({
   dateFormat,
   ...props
 }: DateInputDiffProps) => {
-  const internalFormat = getDateFormat(dateFormat ?? '') ?? 'dd/MM/yyyy'
+  const internalFormat = getDateFormat(dateFormat ?? '')
   const baseDate = baseValue ? format(new Date(baseValue), internalFormat) : ''
   const valueDate = value ? format(new Date(value), internalFormat) : ''
 

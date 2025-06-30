@@ -8,11 +8,26 @@ export const getRelativeDate = (daysFromToday: number) => {
   const date = addDays(new Date(), daysFromToday)
   return format(date, 'yyyy-MM-dd')
 }
+
+const fixedDate = new Date('2025-01-01T12:00:00Z')
+
+beforeEach(() => {
+  vi.setSystemTime(fixedDate)
+})
+
+afterEach(() => {
+  vi.useRealTimers()
+})
+
 describe('DatePicker', () => {
   const defaultProps = {
     name: 'test-date',
     label: 'Test Date',
   }
+  it('should mock the system date to fixedDate', () => {
+    const now = new Date()
+    expect(now.toISOString()).toBe(fixedDate.toISOString())
+  })
 
   it('should match the snapshot', () => {
     const { container } = render(
@@ -174,8 +189,13 @@ describe('DatePicker', () => {
     // Act: Open calendar and select date
     const calendarButton = screen.getByTestId('icon-fallback').closest('button')
     await userEvent.click(calendarButton!)
+
+    const newDate = new Date(fixedDate)
+    // We Get next day of the mockDate (fixedDate) that will always be in the calendar
+    newDate.setDate(newDate.getDate() + 1)
+    // We format the date to the expected format
     const dateButton = screen.getByRole('button', {
-      name: 'Sunday, June 29th, 2025',
+      name: format(newDate, 'EEEE, MMMM do, yyyy'),
     })
     await userEvent.click(dateButton)
 
@@ -243,8 +263,8 @@ describe('DatePicker', () => {
       expect(screen.getByTestId('date-picker-diff')).toBeInTheDocument()
       const iconFallbacks = screen.getAllByTestId('icon-fallback')
       expect(iconFallbacks).toHaveLength(2)
-      expect(screen.getByText('01/01/2024')).toBeInTheDocument()
-      expect(screen.getByText('01/01/2025')).toBeInTheDocument()
+      expect(screen.getByText('2024-01-01')).toBeInTheDocument()
+      expect(screen.getByText('2025-01-01')).toBeInTheDocument()
     })
 
     it('should not render DateInputDiff when viewMode is edition', () => {

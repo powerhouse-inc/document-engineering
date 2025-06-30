@@ -55,7 +55,7 @@ export const castFunctions: Record<ValueCast, (value: any, castParams?: string) 
     const correctFormat = getDateFormat(dateFormat)
     const newValue = parseInputString(date, correctFormat)
 
-    const fechaUTC = parse(newValue, correctFormat ?? 'yyyy-MM-dd', new Date())
+    const fechaUTC = parse(newValue, correctFormat, new Date())
 
     const isoDate = format(fechaUTC, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     return isoDate
@@ -68,7 +68,7 @@ export const castFunctions: Record<ValueCast, (value: any, castParams?: string) 
     const correctFormat = getDateFormat(dateFormat)
 
     const normalizedDate = parseInputString(date, correctFormat)
-    const parsedDate = parse(normalizedDate, correctFormat ?? 'yyyy-MM-dd', new Date())
+    const parsedDate = parse(normalizedDate, correctFormat, new Date())
 
     const isoDate = format(parsedDate, 'yyyy-MM-dd')
 
