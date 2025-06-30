@@ -83,7 +83,7 @@ export const useDateTimePicker = ({
   const [isOpen, setIsOpen] = React.useState(false)
   const [activeTab, setActiveTab] = useState<'date' | 'time'>('date')
   const [dateTimeToDisplay, setDateTimeToDisplay] = useState(
-    parseDateTimeValueToInput(value ?? defaultValue ?? '', internalFormat ?? '', is12HourFormat, timeIntervals)
+    parseDateTimeValueToInput(value ?? defaultValue ?? '', internalFormat, is12HourFormat, timeIntervals)
   )
 
   const onChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -325,7 +325,7 @@ export const useDateTimePicker = ({
   }
 
   const handleCalendarMonthYearSelect = (year: number, monthIndex: number) => {
-    const newInputValue = format(new Date(year, monthIndex), internalFormat ?? 'yyyy-MM-dd').toUpperCase()
+    const newInputValue = format(new Date(year, monthIndex), internalFormat).toUpperCase()
     const yearInput = new Date(year, 0, 1).toISOString()
     const inputToShow = isYearFormat ? `${year}` : newInputValue
     const newDateTime = putDateInValue(value ?? defaultValue ?? '', inputToShow)
