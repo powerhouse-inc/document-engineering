@@ -1,7 +1,3 @@
-import {
-  commonCryptoCurrencies,
-  commonFiatCurrencies,
-} from '../../../ui/components/data-entry/currency-code-picker/defaults.js'
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
 import {
@@ -11,14 +7,6 @@ import {
   StorybookControlCategory,
 } from '../../lib/storybook-arg-types.js'
 import { AmountField } from './amount-field.js'
-const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
-  ...currency,
-  label: currency.ticker,
-}))
-const mappedCryptoCurrencies = commonCryptoCurrencies.map((currency) => ({
-  ...currency,
-  label: currency.ticker,
-}))
 
 const meta = {
   title: 'Scalars/Amount Field',
@@ -201,7 +189,6 @@ type Story = StoryObj<typeof AmountField>
 export const Default: Story = {
   args: {
     placeholder: '0',
-    units: mappedFiatCurrencies,
     label: 'Enter Amount and Select Currency',
     placeholderSelect: 'CUR',
     type: 'Amount',
@@ -232,7 +219,6 @@ export const WithAmount: Story = {
     },
   },
   args: {
-    units: mappedFiatCurrencies,
     placeholder: 'Enter Amount',
     placeholderSelect: 'CUR',
     label: 'Enter Amout ',
@@ -245,7 +231,6 @@ export const WithAmount: Story = {
 }
 export const CurrencyIcon: Story = {
   args: {
-    units: mappedCryptoCurrencies,
     placeholder: 'Enter Amount',
     label: 'Enter Amount and Select Currency',
     type: 'AmountCrypto',
@@ -259,7 +244,6 @@ export const CurrencyIcon: Story = {
 
 export const WithToken: Story = {
   parameters: {
-    units: mappedCryptoCurrencies,
     form: {
       defaultValues: {
         'amount-field': {
@@ -274,7 +258,6 @@ export const WithToken: Story = {
     label: 'Enter Amount and Select Currency',
     type: 'AmountCurrency',
     placeholderSelect: 'CUR',
-    units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
     value: {
       amount: 123 as unknown as bigint,
       unit: 'BTC',
@@ -299,7 +282,6 @@ export const WithValuePercent: Story = {
 }
 export const Disable: Story = {
   args: {
-    units: mappedCryptoCurrencies,
     label: 'Enter Amount ',
     placeholder: 'Enter Amount',
     type: 'AmountFiat',
@@ -324,7 +306,6 @@ export const WithValueUniversalAmountCurrency: Story = {
     },
   },
   args: {
-    units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
     label: 'Label',
     placeholder: 'Enter Amount',
     placeholderSelect: 'CUR',
@@ -339,8 +320,8 @@ export const WithValueUniversalAmountCurrency: Story = {
 export const WithDifferencesAddition: Story = {
   args: {
     type: 'AmountFiat',
-    units: mappedFiatCurrencies,
     label: 'Icon names addition',
+    placeholderSelect: 'CUR',
     value: {
       amount: 22233,
       unit: 'USD',
@@ -356,6 +337,7 @@ export const WithDifferencesAddition: Story = {
 export const WithDifferencesRemoval: Story = {
   args: {
     label: 'Icon names removal',
+    placeholderSelect: 'CUR',
     value: {
       amount: 12323,
       unit: 'ETH',
@@ -365,7 +347,6 @@ export const WithDifferencesRemoval: Story = {
       unit: 'BTC',
     },
     type: 'AmountCurrency',
-    units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
     viewMode: 'removal',
   },
 }
@@ -373,6 +354,7 @@ export const WithDifferencesRemoval: Story = {
 export const WithDifferencesMixed: Story = {
   args: {
     label: 'Icon names mixed',
+    placeholderSelect: 'CUR',
     value: {
       amount: 909123223,
       unit: 'BTC',
@@ -381,7 +363,7 @@ export const WithDifferencesMixed: Story = {
       amount: 49989822,
       unit: 'ETH',
     },
+    type: 'AmountCurrency',
     viewMode: 'mixed',
-    units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
   },
 }
