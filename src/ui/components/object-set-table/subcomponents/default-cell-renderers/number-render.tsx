@@ -1,5 +1,21 @@
-const renderNumberCell = (value: unknown) => {
-  return <div className="text-right font-semibold">{value as number}</div>
+import { cn } from '../../../../../scalars/lib/utils.js'
+import type { CellContext } from '../../types.js'
+
+const renderNumberCell = (value: unknown, context: CellContext) => {
+  return (
+    <div
+      className={cn(
+        {
+          'text-right': context.column.align === 'right',
+          'text-center': context.column.align === 'center',
+          'text-left': context.column.align === 'left' || !context.column.align,
+        },
+        'font-semibold'
+      )}
+    >
+      {value?.toString() ?? ''}
+    </div>
+  )
 }
 
 export { renderNumberCell }
