@@ -171,6 +171,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 onChange={handleOnChangeInput}
                 onFocus={handleIsInputFocused}
                 placeholder={placeholder}
+                numericType={type === 'AmountCurrency' || type === 'AmountCrypto' ? 'BigInt' : 'Float'}
                 className={cn(
                   currencyPosition === 'left' && 'rounded-l-none border-l-[0.5px]',
                   currencyPosition === 'right' && 'rounded-r-none border-r-[0.5px]',

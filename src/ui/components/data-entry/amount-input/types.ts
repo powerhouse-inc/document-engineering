@@ -14,12 +14,12 @@ export interface AmountFiat {
 }
 
 export interface AmountCrypto {
-  amount?: bigint
+  amount?: string
   unit: CurrencyTicker
 }
 
 export interface AmountCurrency {
-  amount?: number | bigint
+  amount?: string
   unit: CurrencyTicker
 }
 
