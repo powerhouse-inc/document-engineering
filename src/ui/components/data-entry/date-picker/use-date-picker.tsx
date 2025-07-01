@@ -146,13 +146,13 @@ export const useDatePickerField = ({
     if (!isValidDate) return undefined
 
     const dateStringFormatted = parseInputString(dateString, internalFormat)
-    const fechaUTC = parse(dateStringFormatted, internalFormat ?? 'yyyy-MM-dd', new Date())
+    const fechaUTC = parse(dateStringFormatted, internalFormat, new Date())
 
     return fechaUTC
   }, [value, internalFormat])
 
   const handleCalendarMonthYearSelect = (year: number, monthIndex: number) => {
-    const newInputValue = format(new Date(year, monthIndex), internalFormat ?? 'yyyy-MM-dd')
+    const newInputValue = format(new Date(year, monthIndex), internalFormat)
     const inputToShow = yearFormat ? `${year}` : newInputValue
     setInputDisplay(inputToShow)
     onChange?.(createChangeEvent(newInputValue))

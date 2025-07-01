@@ -94,18 +94,19 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
         ...state,
         dispatch: action.payload,
       }
-    case 'SET_COLUMNS':
+    case 'SET_COLUMNS': {
       return {
         ...state,
         columns: action.payload,
-        dataFormReferences: createFormReferences(state.data.length, action.payload),
+        dataFormReferences: createFormReferences(state.data.length + 1, action.payload),
       }
+    }
     case 'SET_DATA':
       return {
         ...state,
         data: action.payload,
         defaultData: action.payload,
-        dataFormReferences: createFormReferences(action.payload.length, state.columns),
+        dataFormReferences: createFormReferences(action.payload.length + 1, state.columns),
       }
     case 'UPDATE_COLUMN':
       return {

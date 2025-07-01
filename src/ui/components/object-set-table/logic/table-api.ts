@@ -160,6 +160,12 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
 
         const formData = formRef.current?.getValues()
         const value = formData?.[columnDef.field] as unknown
+
+        if (selectedCell.row === this._getState().data.length) {
+          await this._getConfig().onAdd?.({ [columnDef.field]: value })
+          return
+        }
+
         // TODO: save only if the value changed
         columnDef.onSave?.(value, this._createCellContext(selectedCell.row, selectedCell.column))
       }
@@ -244,6 +250,27 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       await this._getConfig().onDelete?.(rowsData)
       this.selection.clear()
     }
+  }
+
+  // insertion
+  /**
+   * Checks if the table can be added
+   *
+   * @returns `true` if the table can be added, `false` otherwise
+   */
+  canAdd(): boolean {
+    return typeof this._getConfig().onAdd === 'function'
+  }
+
+  /**
+   * Checks if the table is currently in adding mode
+   *
+   * @returns `true` if the table is in adding mode, `false` otherwise
+   */
+  isAdding(): boolean {
+    const editingRow = this._getState().selectedCellIndex?.row
+    const rowCount = this._getState().data.length
+    return this.isEditing() && editingRow === rowCount
   }
 }
 

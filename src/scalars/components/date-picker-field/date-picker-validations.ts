@@ -64,24 +64,24 @@ export const validateDatePicker =
     // Validate against the effective dates
     if (effectiveMinDate && effectiveMaxDate) {
       if (effectiveMinDate > effectiveMaxDate) {
-        const formattedMinDate = format(effectiveMinDate, internalFormat ?? 'yyyy-MM-dd')
-        const formattedMaxDate = format(effectiveMaxDate, internalFormat ?? 'yyyy-MM-dd')
+        const formattedMinDate = format(effectiveMinDate, internalFormat)
+        const formattedMaxDate = format(effectiveMaxDate, internalFormat)
         return `Invalid date range: ${formattedMinDate.toUpperCase()} is after ${formattedMaxDate.toUpperCase()}`
       }
 
       if (validDateStartOfDay < effectiveMinDate || validDateStartOfDay > effectiveMaxDate) {
-        const formattedMinDate = format(effectiveMinDate, internalFormat ?? 'yyyy-MM-dd')
-        const formattedMaxDate = format(effectiveMaxDate, internalFormat ?? 'yyyy-MM-dd')
+        const formattedMinDate = format(effectiveMinDate, internalFormat)
+        const formattedMaxDate = format(effectiveMaxDate, internalFormat)
         return `Date should be between ${formattedMinDate.toUpperCase()} - ${formattedMaxDate.toUpperCase()}`
       }
     } else if (effectiveMinDate) {
       if (validDateStartOfDay < effectiveMinDate) {
-        const formattedMinDate = format(effectiveMinDate, internalFormat ?? 'yyyy-MM-dd')
+        const formattedMinDate = format(effectiveMinDate, internalFormat)
         return `Date must be after ${formattedMinDate.toUpperCase()}`
       }
     } else if (effectiveMaxDate) {
       if (validDateStartOfDay > effectiveMaxDate) {
-        const formattedMaxDate = format(effectiveMaxDate, internalFormat ?? 'yyyy-MM-dd')
+        const formattedMaxDate = format(effectiveMaxDate, internalFormat)
         return `Date must be before ${formattedMaxDate.toUpperCase()}`
       }
     }

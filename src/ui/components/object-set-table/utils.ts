@@ -60,12 +60,12 @@ export const getColumnTitle = (column: ColumnDef) => {
  */
 export const getColumnValue = (value: DataType, field: string): unknown => {
   const keys = field.split('.')
-  let current = value as Record<string, unknown>
+  let current: unknown = value
   for (const key of keys) {
-    if (typeof current !== 'object' || !(key in current)) {
+    if (typeof current !== 'object' || current === null || !(key in current)) {
       return undefined
     }
-    current = current[key] as Record<string, unknown>
+    current = (current as Record<string, unknown>)[key]
   }
   return current
 }
