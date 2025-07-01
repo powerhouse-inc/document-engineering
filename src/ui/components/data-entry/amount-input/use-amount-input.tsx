@@ -85,7 +85,7 @@ export const useAmountInput = ({
       const newValue = {
         amount: currentValue,
         unit: '',
-      } as AmountCurrency
+      }
       const nativeEvent = handleEventOnChange(newValue)
       onChange?.(nativeEvent)
     }
