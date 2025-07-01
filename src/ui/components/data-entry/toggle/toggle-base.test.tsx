@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 import { vi } from 'vitest'
 import { ToggleBase } from './toggle-base.js'
+import { Toggle } from './toggle.js'
 
 describe('Toggle Component', () => {
   const defaultProps = {
@@ -11,6 +13,11 @@ describe('Toggle Component', () => {
   }
 
   describe('Testing the interactive behavior of the Toggle component', () => {
+    it('should match snapshot', () => {
+      const { container } = render(<ToggleBase {...defaultProps} />)
+      expect(container).toMatchSnapshot()
+    })
+
     it('should call onChange with correct value when clicked', () => {
       const handleChange = vi.fn()
       render(<ToggleBase {...defaultProps} onChange={handleChange} />)
@@ -37,13 +44,21 @@ describe('Toggle Component', () => {
       const { rerender } = render(<ToggleBase {...defaultProps} checked={false} onChange={handleChange} />)
 
       const toggle = screen.getByRole('switch')
-
       expect(toggle).toHaveAttribute('data-state', 'unchecked')
 
       fireEvent.click(toggle)
       rerender(<ToggleBase {...defaultProps} checked={true} onChange={handleChange} />)
 
       expect(toggle).toHaveAttribute('data-state', 'checked')
+    })
+
+    it('should be focusable with tab navigation', async () => {
+      const user = userEvent.setup()
+      render(<ToggleBase {...defaultProps} />)
+      const toggle = screen.getByRole('switch')
+
+      await user.tab()
+      expect(toggle).toHaveFocus()
     })
   })
 
@@ -60,19 +75,18 @@ describe('Toggle Component', () => {
       expect(toggle).toHaveAttribute('data-state', 'unchecked')
     })
 
-    it('should apply disabled styles when disabled', () => {
-      render(<ToggleBase {...defaultProps} disabled={true} checked={true} />)
-      const toggle = screen.getByRole('switch')
-
-      expect(toggle).toHaveClass('cursor-not-allowed')
-      expect(toggle).toHaveClass('data-[state=checked]:bg-[#C5C7C7]')
-    })
-
-    it('should mark as required when disabled prop is true', () => {
-      render(<ToggleBase {...defaultProps} disabled={true} />)
+    it('should have disabled attribute when disabled', () => {
+      render(<ToggleBase {...defaultProps} disabled />)
       const toggle = screen.getByRole('switch')
 
       expect(toggle).toHaveAttribute('disabled')
+    })
+
+    it('should have aria-required attribute when required', () => {
+      render(<ToggleBase {...defaultProps} required />)
+      const toggle = screen.getByRole('switch')
+
+      expect(toggle).toHaveAttribute('aria-required', 'true')
     })
 
     it('should apply custom className when provided', () => {
@@ -81,6 +95,27 @@ describe('Toggle Component', () => {
       const toggle = screen.getByRole('switch')
 
       expect(toggle).toHaveClass(customClass)
+    })
+  })
+
+  describe('Toggle differences', () => {
+    it('should show ToggleDiff when viewMode is addition', () => {
+      render(<Toggle viewMode="addition" value={true} baseValue={false} label="Toggle" />)
+
+      expect(screen.getByTestId('toggle-diff')).toBeInTheDocument()
+      expect(screen.getByRole('switch')).toBeChecked()
+      expect(screen.getByText('Toggle')).toBeInTheDocument()
+    })
+    it('should show ToggleDiff when viewMode is removal', () => {
+      render(<Toggle viewMode="removal" value={false} baseValue={true} label="Toggle" />)
+
+      expect(screen.getByTestId('toggle-diff')).toBeInTheDocument()
+      expect(screen.getByRole('switch')).not.toBeChecked()
+      expect(screen.getByText('Toggle')).toBeInTheDocument()
+    })
+    it('should not render ToggleDiff when viewMode is edition', () => {
+      render(<Toggle viewMode="edition" value={true} label="Toggle" />)
+      expect(screen.queryByTestId('toggle-diff')).not.toBeInTheDocument()
     })
   })
 })

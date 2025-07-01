@@ -36,7 +36,7 @@ const CheckboxDiff = ({
   }, [baseValue, value])
 
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-row items-center gap-2" data-testid="checkbox-diff">
       <CheckboxBase id={id} name={name} checked={value} disabled={disabled} required={required} />
 
       <FormLabel

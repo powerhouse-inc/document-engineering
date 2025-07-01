@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { renderWithForm } from '../../../lib/testing.js'
 import { CheckboxField } from './checkbox-field.js'
 
-describe('CheckboxField', () => {
+describe('CheckboxField Component', () => {
   it('should match snapshot', () => {
     const { container } = renderWithForm(<CheckboxField name="test" label="Test Label" />)
     expect(container).toMatchSnapshot()
@@ -26,20 +26,22 @@ describe('CheckboxField', () => {
     const checkbox = screen.getByRole('checkbox')
     fireEvent.click(checkbox)
     expect(handleChange).toHaveBeenCalledWith(true)
+    expect(checkbox).toHaveAttribute('data-state', 'checked')
   })
 
   it('should be disabled when disabled prop is true', () => {
     renderWithForm(<CheckboxField name="test" label="Test checkbox" disabled />)
-
     const checkbox = screen.getByRole('checkbox')
     expect(checkbox).toBeDisabled()
   })
 
   it('should show required indicator when required', () => {
     renderWithForm(<CheckboxField name="test" label="Test checkbox" required />)
-
     const checkbox = screen.getByRole('checkbox')
+
     expect(checkbox).toBeRequired()
+    expect(checkbox).toHaveAttribute('aria-required', 'true')
+    expect(screen.getByText('*')).toBeInTheDocument()
   })
 
   it('should render with errors', async () => {
