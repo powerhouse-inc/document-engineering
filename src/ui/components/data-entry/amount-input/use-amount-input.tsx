@@ -375,9 +375,7 @@ export const useAmountInput = ({
   }
   const options = units ?? getDefaultUnits(type)
   // Put the placeholder in case that value its not in the options
-  const validatedValueSelect =
-    valueSelect && units?.some((unit) => unit.ticker === valueSelect) ? valueSelect : undefined
-
+  const validatedValueSelect = valueSelect && options.some((unit) => unit.ticker === valueSelect) ? valueSelect : ''
   return {
     isPercent,
     isShowSelect,

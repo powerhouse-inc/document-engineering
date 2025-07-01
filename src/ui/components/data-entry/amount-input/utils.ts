@@ -13,6 +13,8 @@ export const getDefaultUnits = (type: AmountInputPropsGeneric['type']) => {
     case 'Amount':
     case 'AmountPercentage':
       return []
+    default:
+      return []
   }
 }
 

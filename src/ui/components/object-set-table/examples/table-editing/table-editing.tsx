@@ -37,14 +37,15 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           })
           return true
         },
-        renderCell: (value: 'active' | 'inactive') => (
-          <div className="flex items-center gap-2">
-            <div className={cn('h-2 w-2 rounded-full', value === 'active' ? 'bg-green-500' : 'bg-red-500')} />
-            <span className={cn('font-medium', value === 'active' ? 'text-green-700' : 'text-red-700')}>
-              {value.charAt(0).toUpperCase() + value.slice(1)}
-            </span>
-          </div>
-        ),
+        renderCell: (value?: 'active' | 'inactive') =>
+          !value ? null : (
+            <div className="flex items-center gap-2">
+              <div className={cn('h-2 w-2 rounded-full', value === 'active' ? 'bg-green-500' : 'bg-red-500')} />
+              <span className={cn('font-medium', value === 'active' ? 'text-green-700' : 'text-red-700')}>
+                {value.charAt(0).toUpperCase() + value.slice(1)}
+              </span>
+            </div>
+          ),
         renderCellEditor: (
           value: unknown,
           onChange: (newValue: 'active' | 'inactive') => void,
@@ -82,16 +83,17 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           })
           return true
         },
-        renderCell: (value: number) => (
-          <div className="flex items-center justify-end">
-            <span className="font-semibold text-gray-900">${value.toLocaleString()}</span>
-            {value > 1000000 ? (
-              <Icon name="ArrowUp" size={16} className="ml-1 text-green-500" />
-            ) : (
-              <Icon name="ArrowUp" size={16} className="ml-1 text-red-500 rotate-180" />
-            )}
-          </div>
-        ),
+        renderCell: (value?: string) =>
+          !value ? null : (
+            <div className="flex items-center justify-end">
+              <span className="font-semibold text-gray-900">${value}</span>
+              {Number(value) > 1000000 ? (
+                <Icon name="ArrowUp" size={16} className="ml-1 text-green-500" />
+              ) : (
+                <Icon name="ArrowUp" size={16} className="ml-1 text-red-500 rotate-180" />
+              )}
+            </div>
+          ),
         sortable: true,
       },
       {
@@ -109,15 +111,25 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           })
           return true
         },
-        renderCell: (value: string) => (
-          <div className="flex justify-center">
-            {value === 'true' ? (
-              <Icon name="CheckCircle" size={20} className="text-green-500" />
-            ) : (
-              <Icon name="CrossCircle" size={20} className="text-red-500" />
-            )}
-          </div>
-        ),
+        renderCell: (value: string, context: CellContext<MockedPerson>) =>
+          !value ? null : (
+            <div
+              className={cn(
+                {
+                  'justify-end': context.column.align === 'right',
+                  'justify-center': context.column.align === 'center',
+                  'justify-start': context.column.align === 'left' || !context.column.align,
+                },
+                'flex w-full'
+              )}
+            >
+              {value === 'true' ? (
+                <Icon name="CheckCircle" size={20} className="text-green-500" />
+              ) : (
+                <Icon name="CrossCircle" size={20} className="text-red-500" />
+              )}
+            </div>
+          ),
       },
     ],
     []
@@ -136,6 +148,25 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
 
           return filteredData
         })
+      }}
+      onAdd={(data) => {
+        const newPerson: MockedPerson = {
+          firstName: '',
+          status: 'inactive',
+          payment: 0,
+          isActive: false,
+          walletAddress: '',
+          email: '',
+          address: {
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            state: '',
+            zip: '',
+          },
+          ...data,
+        }
+        setData((prevData) => [...prevData, newPerson])
       }}
     />
   )
