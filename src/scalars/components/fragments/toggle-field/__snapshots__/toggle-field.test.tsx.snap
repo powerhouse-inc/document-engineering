@@ -38,6 +38,13 @@ exports[`ToggleField Component > should match snapshot 1`] = `
           type="checkbox"
           value="on"
         />
+        <label
+          class="inline-flex items-center text-sm font-medium leading-[22px] text-gray-900 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-slate-50 ml-2"
+          for=":r1:"
+          id=":r1:-label"
+        >
+          Test Label
+        </label>
       </div>
     </div>
   </form>

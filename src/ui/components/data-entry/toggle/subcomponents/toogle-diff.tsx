@@ -26,7 +26,6 @@ const ToggleDiff = ({
   viewMode = 'edition',
   onChange,
   name,
-  ...props
 }: ToggleDiffProps) => {
   const generatedId = useId()
   const id = generatedId
@@ -42,7 +41,7 @@ const ToggleDiff = ({
   }, [baseValue, value])
 
   return (
-    <div className="flex flex-row items-center justify-end gap-2" {...props}>
+    <div className="flex flex-row items-center justify-end gap-2" data-testid="toggle-diff">
       <span
         className={cn(
           'text-gray-700',
