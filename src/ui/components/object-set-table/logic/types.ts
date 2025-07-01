@@ -45,6 +45,10 @@ export interface TableApiBase {
   canDelete(): boolean
   deleteRows(rows: number[]): Promise<void>
 
+  // insertion
+  canAdd(): boolean
+  isAdding(): boolean
+
   // sorting
   sortRows(columnIndex: number, direction: SortDirection | null): void
   getCurrentSortInfo(): SortingInfo | null

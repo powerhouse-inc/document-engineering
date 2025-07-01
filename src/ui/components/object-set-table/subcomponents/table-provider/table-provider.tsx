@@ -31,7 +31,7 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
   const [state, dispatch] = useReducer(tableReducer<T>, {
     columns: config.columns,
     defaultData: [...config.data],
-    dataFormReferences: createFormReferences(config.data.length, config.columns),
+    dataFormReferences: createFormReferences(config.data.length + 1, config.columns),
     data: config.data,
     allowRowSelection: config.allowRowSelection ?? true,
     showRowNumbers: config.showRowNumbers ?? true,

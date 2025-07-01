@@ -48,6 +48,13 @@ export interface ObjectSetTableConfig<T> {
    * @param rows The rows that are being deleted.
    */
   onDelete?: (rows: T[]) => Promise<void> | void
+
+  /**
+   * A function that is called when a new row is added.
+   *
+   * @param data The data of the new row.
+   */
+  onAdd?: (data: Record<string, unknown>) => Promise<void> | void
 }
 
 export type ColumnType = 'text' | 'number' | 'boolean'
