@@ -243,7 +243,7 @@ export const CurrencyIcon: Story = {
     placeholderSelect: 'CUR',
     value: {
       amount: 3454564564 as unknown as bigint,
-      unit: 'BTC',
+      unit: 'DAI',
     },
   },
 }
@@ -266,7 +266,7 @@ export const WithToken: Story = {
     placeholderSelect: 'CUR',
     value: {
       amount: 123 as unknown as bigint,
-      unit: 'BTC',
+      unit: 'ETH',
     },
   },
 }
@@ -295,7 +295,7 @@ export const Disable: Story = {
     disabled: true,
     value: {
       amount: 9,
-      unit: 'ETH',
+      unit: 'USD',
     },
   },
 }
@@ -318,7 +318,7 @@ export const WithValueUniversalAmountCurrency: Story = {
     type: 'AmountCurrency',
     value: {
       amount: 123,
-      unit: 'BTC',
+      unit: 'ETH',
     },
   },
 }
