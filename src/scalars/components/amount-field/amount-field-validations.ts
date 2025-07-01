@@ -24,7 +24,8 @@ const isAmount = (type: AmountInputPropsGeneric['type']): type is 'Amount' => ty
 const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): number | string | undefined => {
   if (isAmountCurrencyFiat(type) || isAmountCurrencyCrypto(type) || isAmountCurrencyUniversal(type) || isAmount(type)) {
     if (!value) return undefined
-    return (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).amount ?? undefined
+    const amount = (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).amount ?? undefined
+    return amount
   }
   return value as number
 }
@@ -33,8 +34,7 @@ export const validateAmount =
   ({ type, minValue, maxValue, allowNegative, required }: AmountFieldProps) =>
   (value: unknown): ValidatorResult => {
     const amount = getAmount(value as AmountValue, type)
-
-    if (amount === undefined) {
+    if (amount === '' || amount === undefined) {
       return required ? 'Please enter a valid number' : true
     }
 
@@ -59,6 +59,7 @@ export const validateAmount =
       }
       return true
     }
+
     if (Math.abs(Number(amount.toString())) > Number.MAX_SAFE_INTEGER) {
       return 'Value is too large for number'
     }

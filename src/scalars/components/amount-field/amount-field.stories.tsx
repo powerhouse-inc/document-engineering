@@ -231,7 +231,7 @@ export const WithAmount: Story = {
     type: 'AmountFiat',
     value: {
       amount: 345,
-      unit: 'EUR',
+      unit: 'USDS',
     },
   },
 }
@@ -243,7 +243,7 @@ export const CurrencyIcon: Story = {
     placeholderSelect: 'CUR',
     value: {
       amount: '3454564564',
-      unit: 'BTC',
+      unit: 'DAI',
     },
   },
 }
@@ -266,7 +266,7 @@ export const WithToken: Story = {
     placeholderSelect: 'CUR',
     value: {
       amount: '123',
-      unit: 'BTC',
+      unit: 'ETH',
     },
   },
 }
@@ -318,7 +318,7 @@ export const WithValueUniversalAmountCurrency: Story = {
     type: 'AmountCurrency',
     value: {
       amount: '123',
-      unit: 'BTC',
+      unit: 'ETH',
     },
   },
 }

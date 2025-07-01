@@ -117,6 +117,10 @@ export const useAmountInput = ({
       return rawAmountState
     }
 
+    if (!rawAmountState || rawAmountState === '') {
+      return ''
+    }
+
     if (type === 'Amount' || type === 'AmountPercentage' || type === 'AmountFiat') {
       if (!isValidNumber(rawAmountState) || isNotSafeValue(rawAmountState)) {
         // Return the value without formatting if not valid
@@ -137,7 +141,8 @@ export const useAmountInput = ({
       }
     }
     // Here its safe to format the value
-    return displayValueAmount({ value: baseValue?.toString() ?? '', precision, viewPrecision, trailingZeros })
+    const formattedValue = displayValueAmount({ value: rawAmountState, precision, viewPrecision, trailingZeros })
+    return formattedValue
   }, [inputFocused, type, baseValue, precision, viewPrecision, trailingZeros, rawAmountState])
 
   const isPercent = type === 'AmountPercentage'
@@ -183,7 +188,7 @@ export const useAmountInput = ({
     }
 
     if (type === 'AmountPercentage') {
-      const amountValue = createAmountValue(inputValue)
+      const amountValue = inputValue
       const nativeEvent = handleEventOnChange(amountValue)
       onChange?.(nativeEvent)
     }
@@ -195,26 +200,19 @@ export const useAmountInput = ({
       } as AmountValue
 
       const nativeEvent = handleEventOnChange(newValue)
-
       onChange?.(nativeEvent)
     }
 
-    if (type === 'Amount') {
-      // For Amount type, we need to check if it should have units
-      if (typeof value === 'object' && 'unit' in value) {
-        const newValue = {
-          ...value,
-          amount: createAmountValue(inputValue),
-        } as AmountValue
-        const nativeEvent = handleEventOnChange(newValue)
-        onChange?.(nativeEvent)
-      } else {
-        // If it's Amount without units, just pass the value directly
-        const nativeEvent = handleEventOnChange(createAmountValue(inputValue))
-        onChange?.(nativeEvent)
-      }
+    if (type === 'Amount' && typeof value === 'object') {
+      const newValue = {
+        ...value,
+        amount: createAmountValue(inputValue),
+      } as AmountValue
+      const nativeEvent = handleEventOnChange(newValue)
+      onChange?.(nativeEvent)
     }
   }
+
   // Handle the change of the select
   const handleOnChangeSelect = (e: string) => {
     let newValue: AmountFiat | AmountCrypto | AmountCurrency | Amount = {} as
@@ -308,7 +306,7 @@ export const useAmountInput = ({
       onBlur?.(nativeEventBlur)
     }
 
-    if (type === 'Amount' || type === 'AmountPercentage') {
+    if (type === 'AmountPercentage') {
       if (!isValidNumber(inputValue)) {
         const nativeEventBlur = handleEventOnBlur(inputValue)
         onBlur?.(nativeEventBlur)
@@ -327,6 +325,40 @@ export const useAmountInput = ({
       const nativeEventBlur = handleEventOnBlur(formatValue)
       onBlur?.(nativeEventBlur)
       return
+    }
+
+    if (type === 'Amount' && typeof value === 'object') {
+      if (!isValidNumber(inputValue)) {
+        const newValue = {
+          ...value,
+          amount: inputValue,
+        }
+        const nativeEvent = handleEventOnBlur(newValue)
+
+        onBlur?.(nativeEvent)
+        return
+      }
+
+      // Avoid transformation if the value is not a number
+      if (isNotSafeValue(inputValue)) {
+        const newValue = {
+          ...value,
+          amount: inputValue,
+        }
+        const nativeEvent = handleEventOnBlur(newValue)
+
+        onBlur?.(nativeEvent)
+        return
+      }
+      const formatValue = displayValueAmount({ value: inputValue, precision, viewPrecision, trailingZeros })
+      // Update the state with the formatted value
+      const newValue = {
+        ...value,
+        amount: formatValue,
+      }
+      const nativeEvent = handleEventOnBlur(newValue)
+
+      onBlur?.(nativeEvent)
     }
 
     // Handle the blur event for AmountCurrency

@@ -29,7 +29,7 @@ export const getDefaultUnits = (type: AmountInputPropsGeneric['type']) => {
 export const isValidBigInt = (value: string | undefined): boolean => {
   // If the value is undefined or an empty string, it's not a valid BigInt.
   if (!value) {
-    return false
+    return true
   }
 
   const bigintRegex = /^-?\d+$/
@@ -58,7 +58,7 @@ interface DisplayValueAmountProps {
 
 export const displayValueAmount = ({ value, precision, viewPrecision, trailingZeros }: DisplayValueAmountProps) => {
   if (!value) {
-    return undefined // Return undefined if no value is provided
+    return undefined
   }
 
   // If viewPrecision is provided but not precision, format to viewPrecision
