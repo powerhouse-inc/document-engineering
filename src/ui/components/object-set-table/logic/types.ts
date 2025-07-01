@@ -17,6 +17,7 @@ export interface TableSelectionManager {
   selectAllRows(): void
   toggleSelectAll(): void
   selectRange(from: number, to: number): void
+  getSelectedRowIndexes(): number[]
 
   selectCell(rowIndex: number, columnIndex: number): void
 
@@ -39,6 +40,14 @@ export interface TableApiBase {
   isEditingCell(row: number, column: number): boolean
   enterCellEditMode(row: number, column: number): void
   exitCellEditMode(save?: boolean): Promise<void>
+
+  // deletion
+  canDelete(): boolean
+  deleteRows(rows: number[]): Promise<void>
+
+  // insertion
+  canAdd(): boolean
+  isAdding(): boolean
 
   // sorting
   sortRows(columnIndex: number, direction: SortDirection | null): void

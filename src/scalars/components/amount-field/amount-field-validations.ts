@@ -30,11 +30,11 @@ const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): n
 }
 
 export const validateAmount =
-  ({ type, minValue, maxValue, allowNegative }: AmountFieldProps) =>
+  ({ type, minValue, maxValue, allowNegative, required }: AmountFieldProps) =>
   (value: unknown): ValidatorResult => {
     const amount = getAmount(value as AmountValue, type)
     if (amount === undefined) {
-      return true
+      return required ? 'Please enter a valid number' : true
     }
 
     if (!isValidNumber(amount) && type !== 'AmountCurrency') {

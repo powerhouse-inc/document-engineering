@@ -19,6 +19,9 @@ import { getCellEditorFn } from './subcomponents/default-cell-editors/get-cell-e
  * @param data The data to display in the table.
  * @param allowRowSelection Whether to allow row selection.
  * @param showRowNumbers Whether to show row numbers.
+ * @param onAdd Function called when a new row is added. Enables insertion row when provided.
+ * @param onDelete Function called when rows are deleted. Enables deletion functionality when provided.
+ * @param apiRef Reference to the table API for programmatic control.
  */
 const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableConfig<T>) => {
   /**
@@ -41,13 +44,17 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
         onSave:
           column.onSave ??
           ((value, context) => {
+            if (import.meta.env.DEV) {
+              // This is a warning that is only shown in development mode for better DX
+              // eslint-disable-next-line no-console
+              console.warn(`onSave is not implemented for column %c${column.field}`, 'font-weight: bold')
+            }
             config.data[context.rowIndex][context.column.field as keyof T] = value as T[keyof T]
             return true
           }),
         renderCellEditor: column.renderCellEditor ?? getCellEditorFn(column.type),
         // sorting
         sortable: column.sortable ?? false,
-        defaultSortDirection: column.defaultSortDirection ?? 'asc',
         rowComparator: column.rowComparator ?? defaultSortFns(column.type ?? defaultColumnType),
       })),
       width: config.width ?? 'auto',

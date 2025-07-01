@@ -1,4 +1,4 @@
-import { Button } from '@powerhousedao/design-system'
+import { Button } from '../../../../ui/components/button/index.js'
 import { BooleanField } from '../../boolean-field/index.js'
 import { Form } from '../../form/index.js'
 import { RadioGroupField } from '../../fragments/radio-group-field/index.js'
@@ -105,7 +105,7 @@ const MultipleFieldsWithComplexLayout = () => {
               required
             />
           </div>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button className="flex-1" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         </div>

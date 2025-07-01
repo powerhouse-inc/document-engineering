@@ -1,3 +1,33 @@
+# [1.16.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.15.0...v1.16.0) (2025-07-01)
+
+
+### Bug Fixes
+
+* build ([aa26fc7](https://github.com/powerhouse-inc/document-engineering/commit/aa26fc7acbcf3891e270d89721e7ff57487ba243))
+* confirm stories & styles ([b1a1de5](https://github.com/powerhouse-inc/document-engineering/commit/b1a1de5b1b4593f46733a5cd65929180badb2b7e))
+* lint errors ([3a7e435](https://github.com/powerhouse-inc/document-engineering/commit/3a7e435a0114b81b2c0ecc9b9b043be8e1cc7118))
+* object set table custom rendering stories ([8b4aa23](https://github.com/powerhouse-inc/document-engineering/commit/8b4aa235ad2d38a02c30e43fcc7fd95f74ff4db5))
+* primary styles ([7a46878](https://github.com/powerhouse-inc/document-engineering/commit/7a468786dc1a2cf733898df2c99006f74eeaa59a))
+* **scalars:** add missing stories for boolean component ([42744bc](https://github.com/powerhouse-inc/document-engineering/commit/42744bc76ed4a794a2a0b9d573cf88aa9a417f11))
+* **scalars:** add missing stories for the string form ([f1eab42](https://github.com/powerhouse-inc/document-engineering/commit/f1eab42078654a2037264839624dba1ac7dae9f3))
+* **scalars:** add missing stories for url and add test for diff ([c914369](https://github.com/powerhouse-inc/document-engineering/commit/c914369e58254d456f00c82b1c66a4953cae1830))
+* **scalars:** add the missing stories in timepickerfield and datetimepciker ([69591a0](https://github.com/powerhouse-inc/document-engineering/commit/69591a01f8ad483ac6e947628c529679df3495fa))
+* **scalars:** add validations for invalid values ([8ac9cfb](https://github.com/powerhouse-inc/document-engineering/commit/8ac9cfb0ae56f0292609d0b46000c6c5ef3bade3))
+* **scalars:** fix all lint problems ([e308bf5](https://github.com/powerhouse-inc/document-engineering/commit/e308bf571588a4ee49f17c35e3a8a959e045af6f))
+* **scalars:** fix issue when for year format and mock the date test ([c7b5c1d](https://github.com/powerhouse-inc/document-engineering/commit/c7b5c1d07cbc06b457dd02f0ece04935ec05bf0b))
+* **scalars:** fix the validations in the currency ([6b03796](https://github.com/powerhouse-inc/document-engineering/commit/6b037969c559b86c6d899efda0b33821b51f9287))
+
+
+### Features
+
+* add confirm and alert components ([a6bb786](https://github.com/powerhouse-inc/document-engineering/commit/a6bb786cba3e0185da74dae4aff527a2bb7406a7))
+* add new button component to avoid conflicts with the button fragment ([e682e0d](https://github.com/powerhouse-inc/document-engineering/commit/e682e0dabe3af8d821f3565036cb21635bceb0bd))
+* allow to add new records ([65fc0c4](https://github.com/powerhouse-inc/document-engineering/commit/65fc0c4c0b4e7d93949eb370f02e6ea285a6a644))
+* enable row deletion ([48b5b23](https://github.com/powerhouse-inc/document-engineering/commit/48b5b233d0907065db029ad00957c8abc44cc6e4))
+* **scalars:** add new format for the date-time-picker ([90c35af](https://github.com/powerhouse-inc/document-engineering/commit/90c35af171a2c05ca40670ab04240e194fa5614d))
+* **scalars:** add yyyy format to check period of year ([df96110](https://github.com/powerhouse-inc/document-engineering/commit/df96110a9044ecf4c1cede4bb35b7d95345e2c84))
+* update object set table documentation ([dc8c277](https://github.com/powerhouse-inc/document-engineering/commit/dc8c277b16416fce5b7ee7599d79d3cf84ff2286))
+
 # [1.15.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.14.0...v1.15.0) (2025-06-27)
 
 

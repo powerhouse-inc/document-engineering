@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Button } from '@powerhousedao/design-system'
+import { Button } from '../../ui/components/button/index.js'
 import type { Decorator } from '@storybook/react'
 import type { Args, DecoratorFunction } from '@storybook/types'
 import { format } from 'date-fns'
@@ -87,11 +87,11 @@ export const withForm: Decorator = (Story, context) => {
         <Story args={overrideArgs} />
 
         {showFormButtons || isDocs ? (
-          <div className="flex gap-2">
-            <Button className="mt-4 w-full" color="light" type="reset" onClick={onReset}>
+          <div className="flex gap-2 w-full">
+            <Button className="mt-4 flex-1" variant="secondary" type="reset" onClick={onReset}>
               Reset
             </Button>
-            <Button className="mt-4 w-full" color="dark" type="submit">
+            <Button className="mt-4 flex-1" type="submit">
               Submit
             </Button>
           </div>

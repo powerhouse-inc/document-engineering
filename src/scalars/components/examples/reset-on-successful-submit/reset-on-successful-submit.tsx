@@ -1,4 +1,4 @@
-import { Button } from '@powerhousedao/design-system'
+import { Button } from '../../../../ui/components/button/index.js'
 import { Form } from '../../form/index.js'
 import { IdField } from '../../id-field/index.js'
 import { NumberField } from '../../number-field/index.js'
@@ -25,7 +25,9 @@ const FormWithResetOnSuccessfulSubmit = () => {
         <div className="w-72 text-sm text-gray-500">
           After submitting the form, all form fields will be reset to their initial values
         </div>
-        <Button type="submit">Submit</Button>
+        <Button className="flex-1" type="submit">
+          Submit
+        </Button>
       </div>
     </Form>
   )

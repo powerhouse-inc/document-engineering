@@ -11,11 +11,23 @@ export const getRelativeDate = (daysFromToday: number) => {
 }
 
 describe('DatePickerField', () => {
+  const fixedDate = new Date('2025-01-01T12:00:00Z')
+
+  beforeEach(() => {
+    vi.setSystemTime(fixedDate)
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
   const defaultProps = {
     name: 'test-date',
     label: 'Test Label',
   }
-
+  it('should mock the system date to fixedDate', () => {
+    const now = new Date()
+    expect(now.toISOString()).toBe(fixedDate.toISOString())
+  })
   it('should match the snapshot', () => {
     const { container } = renderWithForm(
       <DatePickerField {...defaultProps} value="2025-01-01" dateFormat="yyyy-MM-dd" />
@@ -118,5 +130,14 @@ describe('DatePickerField', () => {
 
     // Assert: Error message is shown
     expect(screen.getByText(/Date must be before/i)).toBeInTheDocument()
+  })
+
+  it('should show error when its valid for(YYYY) and format its undefined', async () => {
+    renderWithForm(<DatePickerField {...defaultProps} showErrorOnBlur />)
+
+    const input = screen.getByRole('textbox')
+    await userEvent.type(input, '3455')
+    await userEvent.tab()
+    expect(screen.getByText(/Invalid date format. Please use a valid format/i)).toBeInTheDocument()
   })
 })

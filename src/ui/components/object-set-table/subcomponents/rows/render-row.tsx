@@ -3,7 +3,7 @@ import type { DataType } from '../../types.js'
 import { RowNumberCell } from '../cells/row-number-cell.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { TableRow } from './table-row.js'
-import { RenderCell } from '../cells/render-cell.js'
+import { RenderCell } from '../cells/render-cell/render-cell.js'
 import { InformationCell } from '../cells/information-cell.js'
 
 interface RenderRowProps<T extends DataType> {
@@ -95,7 +95,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: Ren
         )
       })}
 
-      {api.isEditable() && <InformationCell />}
+      {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} emptyRow={emptyRow} />}
     </TableRow>
   )
 }

@@ -3,6 +3,7 @@ import { mockData, type MockedPerson } from './mock-data.js'
 import { ObjectSetTable } from './object-set-table.js'
 import ComputedColumnsExample from './examples/computed-columns/computed-columns.js'
 import CustomRenderingExample from './examples/custom-rendering/custom-rendering.js'
+import TableEditingExample from './examples/table-editing/table-editing.js'
 
 /**
  * The `ObjectSetTable` component is a powerful data table that displays collections of objects in a structured format.
@@ -13,6 +14,8 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * The `ObjectSetTable` displays data in a structured tabular format with support for:
  * - **Interactive Editing**: Click cells to edit values inline
  * - **Row Selection**: Multi-row selection with keyboard shortcuts
+ * - **Row Addition**: Add new rows inline with automatic form validation
+ * - **Row Deletion**: Remove rows with confirmation dialogs
  * - **Flexible Columns**: Configurable display, formatting, and behavior
  * - **Type Safety**: Full TypeScript support for data and configurations
  * - **Keyboard Navigation**: Navigate and interact using keyboard only
@@ -95,6 +98,13 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * |----------|------|---------|-------------|
  * | `editable` | `boolean` | `false` | Enable inline cell editing |
  * | `onSave` | `(newValue: any, context: CellContext<T>) => boolean` | Update data array | Handle cell value changes |
+ *
+ * ### Sorting Configuration
+ *
+ * | Property | Type | Default | Description |
+ * |----------|------|---------|-------------|
+ * | `sortable` | `boolean` | `false` | Enable column sorting |
+ * | `rowComparator` | `(a: unknown, b: unknown, context: SortableColumnContext<T>) => number` | Type-based comparator | Custom sorting logic |
  *
  * ---
  *
@@ -252,6 +262,59 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * />
  * ```
  *
+ * ### Row Addition
+ *
+ * Enable inline row addition with automatic form validation:
+ *
+ * ```tsx
+ * const handleAdd = async (newRowData: Record<string, unknown>) => {
+ *   // Create new item with proper structure
+ *   const newItem: Person = {
+ *     id: generateId(),
+ *     name: '',
+ *     email: '',
+ *     status: 'inactive',
+ *     ...newRowData, // Apply the edited data
+ *   };
+ *
+ *   // Add to your data source
+ *   setData(prevData => [...prevData, newItem]);
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   onAdd={handleAdd}  // Enables row addition functionality
+ * />
+ * ```
+ *
+ * When `onAdd` is provided:
+ * - An empty insertion row automatically appears at the bottom of the table
+ * - Users can click on cells in the insertion row to start editing
+ * - After editing a cell and pressing Enter or navigating away, the `onAdd` callback is triggered
+ * - The insertion row integrates with the existing form validation system
+ *
+ * ### Row Deletion
+ *
+ * Enable row deletion with confirmation:
+ *
+ * ```tsx
+ * const handleDelete = async (rows: Person[]) => {
+ *   // Perform deletion logic (API calls, etc.)
+ *   console.log('Deleting rows:', rows);
+ *   // Remove from your data source
+ *   setData(prevData =>
+ *     prevData.filter(item => !rows.includes(item))
+ *   );
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   onDelete={handleDelete}  // Enables deletion functionality
+ * />
+ * ```
+ *
  * ---
  *
  * ## Keyboard Shortcuts
@@ -361,6 +424,7 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `canSelectRows()` | Checks if row selection is enabled | `boolean` |
  * | `canSelectCells()` | Checks if cell selection is enabled | `boolean` |
  * | `haveSelectedCells()` | Checks if any cells are selected | `boolean` |
+ * | `getSelectedRowIndexes()` | Gets the indexes of selected rows | `number[]` |
  *
  * ### Cell Editing API
  *
@@ -374,6 +438,30 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * | `isEditingCell(row, column)` | Checks if specific cell is being edited | `row: number, column: number` | `boolean` |
  * | `enterCellEditMode(row, column)` | Enters edit mode for a cell | `row: number, column: number` | `void` |
  * | `exitCellEditMode(save?)` | Exits edit mode | `save?: boolean = true` | `Promise<void>` |
+ *
+ * ### Row Deletion API
+ *
+ * Control row deletion programmatically:
+ *
+ * | Method | Description | Parameters | Returns |
+ * |--------|-------------|------------|---------|
+ * | `canDelete()` | Checks if row deletion is enabled | None | `boolean` |
+ * | `deleteRows(rows)` | Deletes rows with confirmation dialog | `rows: number[]` | `Promise<void>` |
+ *
+ * **Note:** Row deletion requires the `onDelete` prop to be provided in the table configuration.
+ * The `deleteRows` method will show a confirmation dialog before proceeding with deletion.
+ *
+ * ### Row Addition API
+ *
+ * Control row addition programmatically:
+ *
+ * | Method | Description | Parameters | Returns |
+ * |--------|-------------|------------|---------|
+ * | `canAdd()` | Checks if row addition is enabled | None | `boolean` |
+ * | `isAdding()` | Checks if table is currently in adding mode | None | `boolean` |
+ *
+ * **Note:** Row addition requires the `onAdd` prop to be provided in the table configuration.
+ * When `onAdd` is provided, an insertion row automatically appears that allows users to add new data.
  *
  * ### Sorting API
  *
@@ -407,6 +495,80 @@ import CustomRenderingExample from './examples/custom-rendering/custom-rendering
  * const handleSelectRange = () => {
  *   apiRef.current?.selection.selectRange(0, 2); // Select first 3 rows
  * };
+ * ```
+ *
+ * #### Row Deletion Control
+ *
+ * ```tsx
+ * const handleDeleteSelected = async () => {
+ *   const selectedIndexes = apiRef.current?.selection.getSelectedRowIndexes() ?? [];
+ *   if (selectedIndexes.length > 0) {
+ *     await apiRef.current?.deleteRows(selectedIndexes);
+ *   }
+ * };
+ *
+ * const checkCanDelete = () => {
+ *   return apiRef.current?.canDelete() ?? false;
+ * };
+ * ```
+ *
+ * #### Sorting Control
+ *
+ * ```tsx
+ * const handleSort = () => {
+ *   // Sort by first column in ascending order
+ *   apiRef.current?.sortRows(0, 'asc');
+ * };
+ *
+ * const handleClearSort = () => {
+ *   // Clear sorting
+ *   apiRef.current?.sortRows(0, null);
+ * };
+ *
+ * const getCurrentSort = () => {
+ *   const sortInfo = apiRef.current?.getCurrentSortInfo();
+ *   console.log(sortInfo); // { columnIndex: 0, direction: 'asc' } or null
+ * };
+ * ```
+ *
+ * #### Row Addition Control
+ *
+ * ```tsx
+ * const checkCanAdd = () => {
+ *   return apiRef.current?.canAdd() ?? false;
+ * };
+ *
+ * const checkIsAdding = () => {
+ *   return apiRef.current?.isAdding() ?? false;
+ * };
+ *
+ * // The insertion row is automatically managed, but you can check its state
+ * const handleCellEdit = () => {
+ *   if (apiRef.current?.isAdding()) {
+ *     console.log('User is currently adding a new row');
+ *   }
+ * };
+ * ```
+ *
+ * ### Row Deletion
+ *
+ * Enable row deletion with confirmation:
+ *
+ * ```tsx
+ * const handleDelete = async (rows: Person[]) => {
+ *   // Perform deletion logic (API calls, etc.)
+ *   console.log('Deleting rows:', rows);
+ *   // Remove from your data source
+ *   setData(prevData =>
+ *     prevData.filter(item => !rows.includes(item))
+ *   );
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   onDelete={handleDelete}  // Enables deletion functionality
+ * />
  * ```
  */
 const meta: Meta<typeof ObjectSetTable> = {
@@ -474,6 +636,33 @@ const meta: Meta<typeof ObjectSetTable> = {
         defaultValue: { summary: '0' },
       },
     },
+    onDelete: {
+      control: false,
+      description: 'Function called when rows are deleted. Enables row deletion functionality when provided.',
+      table: {
+        type: { summary: '(rows: T[]) => Promise<void> | void' },
+        defaultValue: { summary: 'undefined' },
+        readonly: true,
+      },
+    },
+    onAdd: {
+      control: false,
+      description: 'Function called when a new row is added. Enables row addition functionality when provided.',
+      table: {
+        type: { summary: '(data: Record<string, unknown>) => Promise<void> | void' },
+        defaultValue: { summary: 'undefined' },
+        readonly: true,
+      },
+    },
+    apiRef: {
+      control: false,
+      description: 'Reference to the table API for programmatic control.',
+      table: {
+        type: { summary: 'React.MutableRefObject<TableApiBase | null>' },
+        defaultValue: { summary: 'undefined' },
+        readonly: true,
+      },
+    },
   },
 }
 
@@ -529,4 +718,8 @@ export const ComputedColumns: StoryObj = {
  */
 export const CustomRendering: StoryObj = {
   render: (args) => <CustomRenderingExample {...args} />,
+}
+
+export const EditableTable: StoryObj = {
+  render: (args) => <TableEditingExample {...args} />,
 }

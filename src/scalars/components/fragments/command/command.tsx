@@ -31,6 +31,8 @@ const CommandInput = React.forwardRef<
       'focus-within:bg-gray-100 dark:focus-within:bg-gray-900',
       wrapperClassName
     )}
+    // this is a custom property from the shadcn command component
+    // eslint-disable-next-line react/no-unknown-property
     cmdk-input-wrapper=""
   >
     <Icon
