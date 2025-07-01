@@ -14,6 +14,8 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * The `ObjectSetTable` displays data in a structured tabular format with support for:
  * - **Interactive Editing**: Click cells to edit values inline
  * - **Row Selection**: Multi-row selection with keyboard shortcuts
+ * - **Row Addition**: Add new rows inline with automatic form validation
+ * - **Row Deletion**: Remove rows with confirmation dialogs
  * - **Flexible Columns**: Configurable display, formatting, and behavior
  * - **Type Safety**: Full TypeScript support for data and configurations
  * - **Keyboard Navigation**: Navigate and interact using keyboard only
@@ -260,6 +262,59 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * />
  * ```
  *
+ * ### Row Addition
+ *
+ * Enable inline row addition with automatic form validation:
+ *
+ * ```tsx
+ * const handleAdd = async (newRowData: Record<string, unknown>) => {
+ *   // Create new item with proper structure
+ *   const newItem: Person = {
+ *     id: generateId(),
+ *     name: '',
+ *     email: '',
+ *     status: 'inactive',
+ *     ...newRowData, // Apply the edited data
+ *   };
+ *
+ *   // Add to your data source
+ *   setData(prevData => [...prevData, newItem]);
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   onAdd={handleAdd}  // Enables row addition functionality
+ * />
+ * ```
+ *
+ * When `onAdd` is provided:
+ * - An empty insertion row automatically appears at the bottom of the table
+ * - Users can click on cells in the insertion row to start editing
+ * - After editing a cell and pressing Enter or navigating away, the `onAdd` callback is triggered
+ * - The insertion row integrates with the existing form validation system
+ *
+ * ### Row Deletion
+ *
+ * Enable row deletion with confirmation:
+ *
+ * ```tsx
+ * const handleDelete = async (rows: Person[]) => {
+ *   // Perform deletion logic (API calls, etc.)
+ *   console.log('Deleting rows:', rows);
+ *   // Remove from your data source
+ *   setData(prevData =>
+ *     prevData.filter(item => !rows.includes(item))
+ *   );
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   onDelete={handleDelete}  // Enables deletion functionality
+ * />
+ * ```
+ *
  * ---
  *
  * ## Keyboard Shortcuts
@@ -396,6 +451,18 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * **Note:** Row deletion requires the `onDelete` prop to be provided in the table configuration.
  * The `deleteRows` method will show a confirmation dialog before proceeding with deletion.
  *
+ * ### Row Addition API
+ *
+ * Control row addition programmatically:
+ *
+ * | Method | Description | Parameters | Returns |
+ * |--------|-------------|------------|---------|
+ * | `canAdd()` | Checks if row addition is enabled | None | `boolean` |
+ * | `isAdding()` | Checks if table is currently in adding mode | None | `boolean` |
+ *
+ * **Note:** Row addition requires the `onAdd` prop to be provided in the table configuration.
+ * When `onAdd` is provided, an insertion row automatically appears that allows users to add new data.
+ *
  * ### Sorting API
  *
  * Control table sorting programmatically:
@@ -461,6 +528,25 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * const getCurrentSort = () => {
  *   const sortInfo = apiRef.current?.getCurrentSortInfo();
  *   console.log(sortInfo); // { columnIndex: 0, direction: 'asc' } or null
+ * };
+ * ```
+ *
+ * #### Row Addition Control
+ *
+ * ```tsx
+ * const checkCanAdd = () => {
+ *   return apiRef.current?.canAdd() ?? false;
+ * };
+ *
+ * const checkIsAdding = () => {
+ *   return apiRef.current?.isAdding() ?? false;
+ * };
+ *
+ * // The insertion row is automatically managed, but you can check its state
+ * const handleCellEdit = () => {
+ *   if (apiRef.current?.isAdding()) {
+ *     console.log('User is currently adding a new row');
+ *   }
  * };
  * ```
  *
@@ -555,6 +641,15 @@ const meta: Meta<typeof ObjectSetTable> = {
       description: 'Function called when rows are deleted. Enables row deletion functionality when provided.',
       table: {
         type: { summary: '(rows: T[]) => Promise<void> | void' },
+        defaultValue: { summary: 'undefined' },
+        readonly: true,
+      },
+    },
+    onAdd: {
+      control: false,
+      description: 'Function called when a new row is added. Enables row addition functionality when provided.',
+      table: {
+        type: { summary: '(data: Record<string, unknown>) => Promise<void> | void' },
         defaultValue: { summary: 'undefined' },
         readonly: true,
       },
