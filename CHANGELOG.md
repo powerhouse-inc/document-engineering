@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.16.0...v1.16.1) (2025-07-01)
+
+
+### Bug Fixes
+
+* column alignment ([5f8497d](https://github.com/powerhouse-inc/document-engineering/commit/5f8497d6cc121135c6ff1fb299509bef6882f607))
+
 # [1.16.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.15.0...v1.16.0) (2025-07-01)
 
 
