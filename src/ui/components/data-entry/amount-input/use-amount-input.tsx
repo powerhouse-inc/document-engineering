@@ -137,7 +137,7 @@ export const useAmountInput = ({
       }
     }
     // Here its safe to format the value
-    return displayValueAmount(baseValue?.toString() ?? '', precision, viewPrecision, trailingZeros)
+    return displayValueAmount({ value: baseValue?.toString() ?? '', precision, viewPrecision, trailingZeros })
   }, [inputFocused, type, baseValue, precision, viewPrecision, trailingZeros, rawAmountState])
 
   const isPercent = type === 'AmountPercentage'
@@ -278,7 +278,7 @@ export const useAmountInput = ({
         onBlur?.(nativeEvent)
         return
       }
-      const formatValue = displayValueAmount(inputValue, precision, viewPrecision, trailingZeros)
+      const formatValue = displayValueAmount({ value: inputValue, precision, viewPrecision, trailingZeros })
       // Update the state with the formatted value
       const newValue = {
         ...value,
@@ -323,7 +323,7 @@ export const useAmountInput = ({
         onBlur?.(nativeEventBlur)
         return
       }
-      const formatValue = displayValueAmount(inputValue, precision, viewPrecision, trailingZeros)
+      const formatValue = displayValueAmount({ value: inputValue, precision, viewPrecision, trailingZeros })
       const nativeEventBlur = handleEventOnBlur(formatValue)
       onBlur?.(nativeEventBlur)
       return

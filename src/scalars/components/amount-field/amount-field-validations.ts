@@ -21,7 +21,7 @@ const isAmountCurrencyUniversal = (type: AmountInputPropsGeneric['type']): type 
 
 const isAmount = (type: AmountInputPropsGeneric['type']): type is 'Amount' => type === 'Amount'
 
-const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): number | bigint | undefined => {
+const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): number | string | undefined => {
   if (isAmountCurrencyFiat(type) || isAmountCurrencyCrypto(type) || isAmountCurrencyUniversal(type) || isAmount(type)) {
     if (!value) return undefined
     return (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).amount ?? undefined
@@ -33,51 +33,50 @@ export const validateAmount =
   ({ type, minValue, maxValue, allowNegative, required }: AmountFieldProps) =>
   (value: unknown): ValidatorResult => {
     const amount = getAmount(value as AmountValue, type)
+
     if (amount === undefined) {
       return required ? 'Please enter a valid number' : true
     }
 
-    if (!isValidNumber(amount) && type !== 'AmountCurrency') {
-      return 'Value is not a valid number'
-    }
-    if (!allowNegative && amount < 0) {
-      return 'Value must be positive'
-    }
-    if (type === 'AmountCrypto') {
+    // This case are types that are strings but hndle as bigint
+    if (type === 'AmountCurrency' || type === 'AmountCrypto') {
       if (!isValidBigInt(amount.toString())) {
         return 'Value is not an bigint'
       }
+
+      if (!allowNegative && BigInt(amount) < 0) {
+        return 'Value must be positive'
+      }
+      if (maxValue) {
+        if (BigInt(amount) > BigInt(maxValue)) {
+          return `This field must be less than ${maxValue}`
+        }
+      }
+      if (minValue) {
+        if (BigInt(amount) < BigInt(minValue)) {
+          return `This field must be more than ${minValue}`
+        }
+      }
       return true
     }
-    if (type === 'AmountCurrency') {
-      if (!isValidNumber(amount)) {
-        return 'Value is not a valid number'
-      }
-      if (Math.abs(Number(amount)) > Number.MAX_SAFE_INTEGER) {
-        const amountStr = amount.toString()
-        if (!/^\d+$/.test(amountStr)) {
-          return 'Value is not a valid bigint'
-        }
-        return true
-      }
+    if (Math.abs(Number(amount.toString())) > Number.MAX_SAFE_INTEGER) {
+      return 'Value is too large for number'
     }
-
+    if (!isValidNumber(amount)) {
+      return 'Value is not a valid number'
+    }
+    if (!allowNegative && Number(amount) < 0) {
+      return 'Value must be positive'
+    }
     if (maxValue) {
-      if (amount > maxValue) {
+      if (Number(amount) > maxValue) {
         return `This field must be less than ${maxValue}`
       }
     }
     if (minValue) {
-      if (amount < minValue) {
+      if (Number(amount) < minValue) {
         return `This field must be more than ${minValue}`
       }
     }
-    if (
-      Math.abs(Number(amount)) > Number.MAX_SAFE_INTEGER &&
-      (type === 'AmountFiat' || type === 'AmountPercentage' || type === 'Amount')
-    ) {
-      return 'Value is too large for number'
-    }
-
     return true
   }

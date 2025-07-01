@@ -16,12 +16,22 @@ export const getDefaultUnits = (type: AmountInputPropsGeneric['type']) => {
   }
 }
 
+/**
+ * Checks if a given string value represents a valid BigInt.
+ * A valid BigInt can be a positive or negative integer, or zero,
+ * without decimal points or other non-digit characters (except for the leading minus sign).
+ *
+ * @param value The string to validate.
+ * @returns True if the value is a valid BigInt string, false otherwise.
+ */
 export const isValidBigInt = (value: string | undefined): boolean => {
+  // If the value is undefined or an empty string, it's not a valid BigInt.
   if (!value) {
     return false
   }
-  // Ensure the value contains only digits (no decimal points)
-  const bigintRegex = /^\d+$/
+
+  const bigintRegex = /^-?\d+$/
+
   return bigintRegex.test(value)
 }
 
@@ -37,12 +47,14 @@ export const isNotSafeValue = (value: string) => {
   return Math.abs(Number(value)) > Number.MAX_SAFE_INTEGER
 }
 
-export const displayValueAmount = (
-  value?: string,
-  precision?: number,
-  viewPrecision?: number,
+interface DisplayValueAmountProps {
+  value?: string
+  precision?: number
+  viewPrecision?: number
   trailingZeros?: boolean
-) => {
+}
+
+export const displayValueAmount = ({ value, precision, viewPrecision, trailingZeros }: DisplayValueAmountProps) => {
   if (!value) {
     return undefined // Return undefined if no value is provided
   }

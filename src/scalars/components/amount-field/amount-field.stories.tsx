@@ -251,7 +251,7 @@ export const CurrencyIcon: Story = {
     type: 'AmountCrypto',
     placeholderSelect: 'CUR',
     value: {
-      amount: 3454564564 as unknown as bigint,
+      amount: '3454564564',
       unit: 'BTC',
     },
   },
@@ -276,7 +276,7 @@ export const WithToken: Story = {
     placeholderSelect: 'CUR',
     units: [...mappedCryptoCurrencies, ...mappedFiatCurrencies],
     value: {
-      amount: 123 as unknown as bigint,
+      amount: '123',
       unit: 'BTC',
     },
   },
@@ -330,7 +330,7 @@ export const WithValueUniversalAmountCurrency: Story = {
     placeholderSelect: 'CUR',
     type: 'AmountCurrency',
     value: {
-      amount: 123,
+      amount: '123',
       unit: 'BTC',
     },
   },
@@ -357,7 +357,7 @@ export const WithDifferencesRemoval: Story = {
   args: {
     label: 'Icon names removal',
     value: {
-      amount: 12323,
+      amount: '12323',
       unit: 'ETH',
     },
     baseValue: {
