@@ -6,6 +6,7 @@ import {
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
 import { AmountInput } from './index.js'
+import { commonFiatCurrencies } from '../currency-code-picker/index.js'
 
 /**
  * The `AmountInput` component provides an input field for entering and selecting monetary amounts.
@@ -30,6 +31,10 @@ import { AmountInput } from './index.js'
  * > you can use the [AmountField](?path=/docs/scalars-amount-field--readme)
  * > component.
  */
+const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
+  ...currency,
+  label: currency.ticker,
+}))
 const meta = {
   title: 'Data Entry/Amount Input',
   component: AmountInput,
@@ -215,6 +220,7 @@ type Story = StoryObj<typeof AmountInput>
 export const Default: Story = {
   args: {
     placeholder: '0',
+    units: [...mappedFiatCurrencies],
     label: 'Enter Amount and Select Currency',
     placeholderSelect: 'CUR',
     type: 'Amount',

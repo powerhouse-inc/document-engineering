@@ -7,6 +7,11 @@ import {
   StorybookControlCategory,
 } from '../../lib/storybook-arg-types.js'
 import { AmountField } from './amount-field.js'
+import { commonFiatCurrencies } from '#ui/components/data-entry/currency-code-picker/index.js'
+const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
+  ...currency,
+  label: currency.ticker,
+}))
 
 const meta = {
   title: 'Scalars/Amount Field',
@@ -189,6 +194,7 @@ type Story = StoryObj<typeof AmountField>
 export const Default: Story = {
   args: {
     placeholder: '0',
+    units: [...mappedFiatCurrencies],
     label: 'Enter Amount and Select Currency',
     placeholderSelect: 'CUR',
     type: 'Amount',
