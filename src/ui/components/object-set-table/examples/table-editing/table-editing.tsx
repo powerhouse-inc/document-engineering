@@ -111,9 +111,18 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           })
           return true
         },
-        renderCell: (value?: string) =>
+        renderCell: (value: string, context: CellContext<MockedPerson>) =>
           !value ? null : (
-            <div className="flex justify-center">
+            <div
+              className={cn(
+                {
+                  'justify-end': context.column.align === 'right',
+                  'justify-center': context.column.align === 'center',
+                  'justify-start': context.column.align === 'left' || !context.column.align,
+                },
+                'flex w-full'
+              )}
+            >
               {value === 'true' ? (
                 <Icon name="CheckCircle" size={20} className="text-green-500" />
               ) : (
