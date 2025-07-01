@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { vi } from 'vitest'
 import { renderWithForm } from '../../lib/testing.js'
-import { Form } from '../form/index.js'
 import { BooleanField } from './boolean-field.js'
 
 describe('BooleanField Component', () => {
@@ -57,16 +56,17 @@ describe('BooleanField Component', () => {
     const mockOnSubmit = vi.fn()
     const user = userEvent.setup()
 
-    render(
-      <Form onSubmit={mockOnSubmit} defaultValues={{ test: true }}>
-        <BooleanField name="test" label="Test Toggle" isToggle={true} />
+    const { getByRole, getByText } = renderWithForm(
+      <>
+        <BooleanField name="test" label="Test Toggle" isToggle={true} value={true} />
         <button type="submit">Submit</button>
-      </Form>
+      </>,
+      mockOnSubmit
     )
 
-    const toggle = screen.getByRole('switch')
+    const toggle = getByRole('switch')
 
-    await user.click(screen.getByText('Submit'))
+    await user.click(getByText('Submit'))
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith({ test: true })
     })
@@ -74,7 +74,7 @@ describe('BooleanField Component', () => {
     mockOnSubmit.mockClear()
 
     await user.click(toggle)
-    await user.click(screen.getByText('Submit'))
+    await user.click(getByText('Submit'))
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith({ test: false })
     })
@@ -84,16 +84,17 @@ describe('BooleanField Component', () => {
     const mockOnSubmit = vi.fn()
     const user = userEvent.setup()
 
-    render(
-      <Form onSubmit={mockOnSubmit} defaultValues={{ test: false }}>
-        <BooleanField name="test" label="Test Checkbox" isToggle={false} />
+    const { getByRole, getByText } = renderWithForm(
+      <>
+        <BooleanField name="test" label="Test Checkbox" isToggle={false} value={false} />
         <button type="submit">Submit</button>
-      </Form>
+      </>,
+      mockOnSubmit
     )
 
-    const checkbox = screen.getByRole('checkbox')
+    const checkbox = getByRole('checkbox')
 
-    await user.click(screen.getByText('Submit'))
+    await user.click(getByText('Submit'))
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith({ test: false })
     })
@@ -101,7 +102,7 @@ describe('BooleanField Component', () => {
     mockOnSubmit.mockClear()
 
     await user.click(checkbox)
-    await user.click(screen.getByText('Submit'))
+    await user.click(getByText('Submit'))
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith({ test: true })
     })
