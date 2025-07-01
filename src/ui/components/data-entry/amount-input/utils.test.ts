@@ -65,8 +65,8 @@ describe('displayValueAmount', () => {
 it('should handle zero correctly', () => {
   expect(displayValueAmount({ value: '0', viewPrecision: 2, trailingZeros: true })).toBe('0.00')
   expect(displayValueAmount({ value: '0.000', viewPrecision: 2, trailingZeros: false })).toBe('0')
-  expect(displayValueAmount({ value: '-0.005', viewPrecision: 2, trailingZeros: true })).toBe('-0.01') // Rounds to -0.01
-  expect(displayValueAmount({ value: '-0.004', viewPrecision: 2, trailingZeros: true })).toBe('-0.00') // Rounds to -0.00
+  expect(displayValueAmount({ value: '-0.005', viewPrecision: 2, trailingZeros: true })).toBe('-0.01')
+  expect(displayValueAmount({ value: '-0.004', viewPrecision: 2, trailingZeros: true })).toBe('-0.00')
 })
 
 it('should handle very small numbers correctly (rounding up)', () => {

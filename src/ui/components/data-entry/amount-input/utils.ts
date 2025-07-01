@@ -27,7 +27,6 @@ export const getDefaultUnits = (type: AmountInputPropsGeneric['type']) => {
  * @returns True if the value is a valid BigInt string, false otherwise.
  */
 export const isValidBigInt = (value: string | undefined): boolean => {
-  // If the value is undefined or an empty string, it's not a valid BigInt.
   if (!value) {
     return true
   }

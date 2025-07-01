@@ -231,7 +231,7 @@ export const WithAmount: Story = {
     type: 'AmountFiat',
     value: {
       amount: 345,
-      unit: 'USDS',
+      unit: 'EUR',
     },
   },
 }
