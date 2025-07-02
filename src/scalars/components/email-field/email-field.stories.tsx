@@ -34,7 +34,7 @@ const meta: Meta<typeof EmailField> = {
       table: {
         type: { summary: 'string[]' },
         detail: 'Array of allowed domains',
-        category: StorybookControlCategory.DEFAULT,
+        category: StorybookControlCategory.VALIDATION,
       },
     },
   },
