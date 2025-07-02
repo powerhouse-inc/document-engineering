@@ -243,7 +243,7 @@ export const WithValue: Story = {
     },
   },
 }
-export const WithAmount: Story = {
+export const WithAmountFiat: Story = {
   parameters: {
     form: {
       defaultValues: {
@@ -263,11 +263,11 @@ export const WithAmount: Story = {
     },
   },
 }
-export const CurrencyIcon: Story = {
+export const WithAmountCurrency: Story = {
   args: {
     placeholder: 'Enter Amount',
     label: 'Enter Amount and Select Currency',
-    type: 'AmountCrypto',
+    type: 'AmountCurrency',
     placeholderSelect: 'CUR',
     value: {
       amount: '3454564564',
@@ -276,7 +276,7 @@ export const CurrencyIcon: Story = {
   },
 }
 
-export const WithToken: Story = {
+export const WithAmountCrypto: Story = {
   parameters: {
     form: {
       defaultValues: {
@@ -290,7 +290,7 @@ export const WithToken: Story = {
   args: {
     placeholder: 'Enter Amount',
     label: 'Enter Amount and Select Currency',
-    type: 'AmountCurrency',
+    type: 'AmountCrypto',
     placeholderSelect: 'CUR',
     value: {
       amount: '123',
@@ -324,29 +324,6 @@ export const Disable: Story = {
     value: {
       amount: 9,
       unit: 'USD',
-    },
-  },
-}
-
-export const WithValueUniversalAmountCurrency: Story = {
-  parameters: {
-    form: {
-      defaultValues: {
-        'amount-field': {
-          amount: 123,
-          unit: 'ETH',
-        },
-      },
-    },
-  },
-  args: {
-    label: 'Label',
-    placeholder: 'Enter Amount',
-    placeholderSelect: 'CUR',
-    type: 'AmountCurrency',
-    value: {
-      amount: '123',
-      unit: 'ETH',
     },
   },
 }
