@@ -8,19 +8,7 @@ import {
 import { EmailInput } from './email-input.js'
 
 /**
- * The `EmailInput` component provides an input field for selecting email.
- * It supports multiple configuration properties like:
-- `label`: string — Label of the field (e.g., "Email Address")
-- `description`: string — A short description of the field's purpose (e.g., "Enter your primary email address.")
-- `errors`: array — A list of `{ code: string, message: string }` objects indicating validation errors
-- `required`: boolean — Indicates whether the field is mandatory (`true`) or optional (`false`)
-- `value`: string | null — The current email address entered by the user, or `null` if not set
-- `defaultValue`: string | null — A default email value if one is provided, or `null` if there is no default
- *
- * Features include:
- * - `autoComplete`: boolean — Indicates whether the browser's auto-complete feature is enabled (`true`) or disabled (`false`)
- * - `placeholder`: string — Placeholder text displayed inside the input field when empty
-
+ * The `EmailInput` component provides an input field for entering email addresses.
  * > **Note:** This component does not have built-in validation. If you need built-in validation
  * > you can use the [EmailField](?path=/docs/scalars-email-field--readme)
  * > component.
