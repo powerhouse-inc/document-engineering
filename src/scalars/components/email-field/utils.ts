@@ -5,30 +5,15 @@ export interface DomainValidationOptions {
   allowedDomains: string[]
 }
 
-/**
- * Validates if a string is a valid email address format
- * @param value - The email string to validate
- * @returns true if valid, error message if invalid
- */
 export const validateEmailFormat = (value: string): ValidatorResult => {
   return emailRegex.test(value) || 'Please enter a valid email address'
 }
-/**
- * Extracts domain from email address
- * @param email - The email address
- * @returns The domain part of the email or null if invalid
- */
+
 export const extractEmailDomain = (email: string): string | null => {
   const domain = email.split('@')[1]?.toLowerCase()
   return domain || null
 }
 
-/**
- * Checks if a domain is in the allowed domains list
- * @param domain - The domain to check
- * @param allowedDomains - Array of allowed domains
- * @returns true if domain is allowed
- */
 export const isDomainAllowed = (domain: string, allowedDomains: string[]): boolean => {
   if (allowedDomains.length === 0) return true
 
