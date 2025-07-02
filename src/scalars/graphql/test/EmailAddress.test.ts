@@ -70,4 +70,11 @@ describe('EmailAddress Scalar', () => {
       })
     ).toThrow()
   })
+  it('debería renderizar correctamente y sin errores cuando el valor es null', () => {
+    expect(() =>
+      scalar.parseLiteral({
+        kind: Kind.NULL,
+      })
+    ).not.toThrow()
+  })
 })
