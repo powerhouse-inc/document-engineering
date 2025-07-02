@@ -72,4 +72,31 @@ describe('EmailField', () => {
     renderWithForm(<EmailField label="Email" name="email" />)
     expect(screen.getByLabelText('Email')).not.toHaveAttribute('autoComplete')
   })
+
+  it('should validate email domain', async () => {
+    const allowedDomains = ['example.com', 'company.org']
+    renderWithForm(
+      <EmailField label="Email" name="email" allowedDomains={allowedDomains} value="test@test.co" showErrorOnBlur />
+    )
+    const input = screen.getByLabelText('Email')
+    await userEvent.type(input, 'user@invalid.com')
+    await userEvent.tab()
+    expect(screen.getByText('Email domain must be one of: example.com, company.org')).toBeInTheDocument()
+  })
+  it('should validate email', async () => {
+    renderWithForm(<EmailField label="Email" name="email" showErrorOnBlur />)
+    const input = screen.getByLabelText('Email')
+    await userEvent.type(input, 'test@.org')
+    await userEvent.tab()
+    expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument()
+  })
+  it('should validate email domain', async () => {
+    const allowedDomains = ['example.com', 'company.org']
+    renderWithForm(<EmailField label="Email" name="email" allowedDomains={allowedDomains} showErrorOnBlur />)
+    const input = screen.getByLabelText('Email')
+    await userEvent.type(input, 'test@company.org')
+    await userEvent.tab()
+    expect(screen.queryByText('Email domain must be one of: example.com, company.org')).not.toBeInTheDocument()
+    expect(input).toHaveValue('test@company.org')
+  })
 })
