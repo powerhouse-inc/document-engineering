@@ -4,7 +4,7 @@ import { FormGroup } from '../../../../scalars/components/fragments/form-group/i
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import { Input } from '../input/index.js'
-import useControllableState from './use-controllable-state.js'
+import useControllableState from '../../../../scalars/hooks/use-controllable-state.js'
 import type { EmailInputProps } from './types.js'
 import { useUniqueId } from '../../../../scalars/lib/utils.js'
 
