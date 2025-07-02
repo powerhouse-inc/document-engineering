@@ -8,7 +8,7 @@ describe('EmailInput', () => {
     const { container } = renderWithForm(<EmailInput name="test" label="Test Label" />)
     expect(container).toMatchSnapshot()
   })
-  it('renders with a label and input', () => {
+  it('should render with a label and input', () => {
     renderWithForm(<EmailInput label="Email Address" name="email" />)
     expect(screen.getByLabelText('Email Address')).toBeInTheDocument()
 
@@ -23,7 +23,7 @@ describe('EmailInput', () => {
     expect(screen.getByText('*')).toBeInTheDocument()
   })
 
-  it('handles defaultValue correctly', async () => {
+  it('should handle defaultValue correctly', async () => {
     renderWithForm(<EmailInput label="Email" name="email" />)
     const inputElement = screen.getByLabelText('Email')
     await userEvent.type(inputElement, 'changed@example.com')
@@ -40,7 +40,7 @@ describe('EmailInput', () => {
     expect(screen.getByDisplayValue('default@example.com')).toBeInTheDocument()
   })
 
-  it('renders description, warnings, and errors', () => {
+  it('should render description, warnings, and errors', () => {
     const warnings = ['This is a warning']
     const errors = ['This is an error']
     renderWithForm(
@@ -52,22 +52,22 @@ describe('EmailInput', () => {
     expect(screen.getByText('This is an error')).toBeInTheDocument()
   })
 
-  it('disables the input when disabled prop is true', () => {
+  it('should disable the input when disabled prop is true', () => {
     render(<EmailInput label="Email" name="email" disabled />)
     expect(screen.getByLabelText('Email')).toBeDisabled()
   })
 
-  it('sets autoComplete to "email" when autoComplete is true', () => {
+  it('should set autoComplete to "email" when autoComplete is true', () => {
     render(<EmailInput label="Email" name="email" autoComplete={true} />)
     expect(screen.getByLabelText('Email')).toHaveAttribute('autoComplete', 'email')
   })
 
-  it('sets autoComplete to "off" when autoComplete is false', () => {
+  it('should set autoComplete to "off" when autoComplete is false', () => {
     render(<EmailInput label="Email" name="email" autoComplete={false} />)
     expect(screen.getByLabelText('Email')).toHaveAttribute('autoComplete', 'off')
   })
 
-  it('does not set autoComplete when autoComplete is undefined', () => {
+  it('should not set autoComplete when autoComplete is undefined', () => {
     render(<EmailInput label="Email" name="email" />)
     expect(screen.getByLabelText('Email')).not.toHaveAttribute('autoComplete')
   })
