@@ -55,6 +55,55 @@ export interface ObjectSetTableConfig<T> {
    * @param data The data of the new row.
    */
   onAdd?: (data: Record<string, unknown>) => Promise<void> | void
+
+  /**
+   * The actions to display in the table when the rows are hovered.
+   */
+  actions?: {
+    /**
+     * The primary action to display in the table when the rows are hovered.
+     */
+    primary?: RowAction<T>
+
+    /**
+     * The secondary actions to display in the table when the rows are hovered.
+     */
+    secondary?: Array<Omit<RowAction<T>, 'icon'>>
+  }
+}
+
+export interface RowContext<T> {
+  /**
+   * The row object.
+   */
+  row: T
+
+  /**
+   * The index of the row.
+   */
+  rowIndex: number
+
+  /**
+   * The table configuration.
+   */
+  tableConfig: ObjectSetTableConfig<T>
+}
+
+export interface RowAction<T> {
+  /**
+   * The label of the action.
+   */
+  label: string
+
+  /**
+   * The callback to call when the action is clicked.
+   */
+  callback: (context: RowContext<T>) => Promise<void> | void
+
+  /**
+   * The icon to display in the action. Recommended to be 16x16px.
+   */
+  icon?: React.ReactNode
 }
 
 export type ColumnType = 'text' | 'number' | 'boolean'

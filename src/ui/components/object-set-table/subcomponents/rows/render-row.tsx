@@ -1,18 +1,19 @@
-import { useCallback } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import type { DataType } from '../../types.js'
 import { RowNumberCell } from '../cells/row-number-cell.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { TableRow } from './table-row.js'
 import { RenderCell } from '../cells/render-cell/render-cell.js'
 import { InformationCell } from '../cells/information-cell.js'
+import { RowActions } from './row-actions.js'
 
 interface RenderRowProps<T extends DataType> {
   item: T
   rowIndex: number
-  emptyRow?: boolean
+  mode?: 'default' | 'inserting' | 'empty'
 }
 
-const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: RenderRowProps<T>) => {
+const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: RenderRowProps<T>) => {
   const {
     config,
     state: { selectedRowIndexes, selectedCellIndex },
@@ -27,12 +28,12 @@ const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: Ren
    * or select single rows when the index is clicked
    */
   const createSelectRowOnClickHandler = useCallback(
-    (index: number) => (e: React.MouseEvent<HTMLTableCellElement>) => {
+    (index: number) => (event: React.MouseEvent<HTMLTableCellElement>) => {
       if (!allowRowSelection) return
-      if (e.ctrlKey || e.metaKey) {
-        e.stopPropagation()
+      if (event.ctrlKey || event.metaKey) {
+        event.stopPropagation()
         api.selection.toggleRow(index)
-      } else if (e.shiftKey) {
+      } else if (event.shiftKey) {
         return // just let the row handle it
       } else {
         api.selection.selectRow(index)
@@ -48,12 +49,12 @@ const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: Ren
    * when the shift key is pressed
    */
   const createAddSelectedRowHandler = useCallback(
-    (index: number) => (e: React.MouseEvent<HTMLTableRowElement>) => {
+    (index: number) => (event: React.MouseEvent<HTMLTableRowElement>) => {
       if (!allowRowSelection) return
 
-      if (e.ctrlKey || e.metaKey) {
+      if (event.ctrlKey || event.metaKey) {
         api.selection.toggleRow(index)
-      } else if (e.shiftKey) {
+      } else if (event.shiftKey) {
         // Prevent text selection when shift key is pressed
         document.getSelection()?.removeAllRanges()
         api.selection.selectFromLastActiveRow(index)
@@ -72,8 +73,33 @@ const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: Ren
     }
   }, [])
 
+  const rowRef = useRef<HTMLTableRowElement>(null)
+
+  // actions state management
+  const [actionsOpen, setActionsOpen] = useState(false)
+  const [isSecondaryActionsOpen, setIsSecondaryActionsOpen] = useState(false)
+  const handleRowMouseEnter = useCallback(() => {
+    setActionsOpen(true)
+  }, [])
+  const handleRowMouseLeave = useCallback(() => {
+    setActionsOpen(false)
+  }, [])
+  const handleSecondaryActionsOpen = useCallback(() => {
+    setIsSecondaryActionsOpen(true)
+  }, [])
+  const handleSecondaryActionsClose = useCallback(() => {
+    setIsSecondaryActionsOpen(false)
+  }, [])
+
   return (
-    <TableRow index={rowIndex} onClick={createAddSelectedRowHandler(rowIndex)} onMouseDown={handleMouseDown}>
+    <TableRow
+      ref={rowRef}
+      index={rowIndex}
+      onClick={createAddSelectedRowHandler(rowIndex)}
+      onMouseDown={handleMouseDown}
+      onMouseEnter={handleRowMouseEnter}
+      onMouseLeave={handleRowMouseLeave}
+    >
       {/* The row number cell handles internally if it needs to be rendered or not */}
       <RowNumberCell
         index={rowIndex + 1}
@@ -90,12 +116,26 @@ const RenderRow = <T extends DataType>({ item, rowIndex, emptyRow = false }: Ren
             column={column}
             rowIndex={rowIndex}
             columnIndex={columnIndex}
-            renderEmptyCell={emptyRow}
+            renderEmptyCell={mode === 'empty'}
           />
         )
       })}
 
-      {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} emptyRow={emptyRow} />}
+      {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} emptyRow={mode === 'empty'} />}
+
+      {config.actions && mode === 'default' && (
+        <RowActions
+          row={item}
+          open={actionsOpen}
+          rowIndex={rowIndex}
+          rowRef={rowRef}
+          primaryAction={config.actions.primary}
+          secondaryActions={config.actions.secondary}
+          isSecondaryActionsOpen={isSecondaryActionsOpen}
+          handleSecondaryActionsOpen={handleSecondaryActionsOpen}
+          handleSecondaryActionsClose={handleSecondaryActionsClose}
+        />
+      )}
     </TableRow>
   )
 }
