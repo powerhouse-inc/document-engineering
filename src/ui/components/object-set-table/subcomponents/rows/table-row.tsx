@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 
@@ -5,7 +6,7 @@ interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   index: number
 }
 
-const TableRow: React.FC<TableRowProps> = ({ children, className, index, ...props }) => {
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ children, className, index, ...props }, ref) => {
   const {
     state: { selectedRowIndexes },
   } = useInternalTableState()
@@ -16,7 +17,9 @@ const TableRow: React.FC<TableRowProps> = ({ children, className, index, ...prop
 
   return (
     <tr
+      ref={ref}
       className={cn(
+        'group/row',
         isSelected ? 'border-b border-t bg-blue-50 hover:bg-blue-100' : 'hover:bg-gray-100',
         !isSelected && !isNextRowSelected && 'not-last:border-b border-gray-100',
         isSelected && (isPrevRowSelected ? 'border-t-transparent' : 'border-t-blue-900'),
@@ -29,6 +32,8 @@ const TableRow: React.FC<TableRowProps> = ({ children, className, index, ...prop
       {children}
     </tr>
   )
-}
+})
+
+TableRow.displayName = 'TableRow'
 
 export { TableRow }

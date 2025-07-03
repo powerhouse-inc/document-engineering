@@ -19,6 +19,9 @@
   --color-accent-foreground: oklch(0.205 0 0);
   --color-destructive: oklch(0.577 0.245 27.325);
 
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0 0);
+
   --color-white: hsl(0 0% 100%);
   --color-black: hsl(0 0% 0%);
   --color-gray-50: hsl(0 0% 99%);

@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react'
 import { cn, EnumField } from '../../../../../scalars/index.js'
 import { mockData, type MockedPerson } from '../../mock-data.js'
 import { ObjectSetTable } from '../../object-set-table.js'
-import type { CellContext, ColumnDef, ObjectSetTableConfig } from '../../types.js'
+import type { CellContext, ColumnDef, ObjectSetTableConfig, RowContext } from '../../types.js'
 import { Icon } from '../../../icon/icon.js'
+import { confirm } from '../../../confirm/confirm.js'
 
 const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'columns' | 'data'>) => {
   const [data, setData] = useState<MockedPerson[]>(mockData)
@@ -135,11 +136,51 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
     []
   )
 
+  const actions = useMemo<ObjectSetTableConfig<MockedPerson>['actions']>(() => {
+    return {
+      primary: {
+        label: 'Edit',
+        icon: <Icon name="DownloadFile" size={16} />,
+        callback: async (context: RowContext<MockedPerson>) => {
+          if (
+            await confirm({
+              title: `Print ${context.row.firstName} data?`,
+              description: 'This will log the context to console.',
+            })
+          ) {
+            // this is just for example purposes
+            // eslint-disable-next-line no-console
+            console.log(context)
+          }
+        },
+      },
+      secondary: [
+        {
+          label: 'Delete',
+          callback: () => {
+            // this is just for example purposes
+            // eslint-disable-next-line no-alert
+            alert('You clicked the delete button')
+          },
+        },
+        {
+          label: 'Edit',
+          callback: () => {
+            // this is just for example purposes
+            // eslint-disable-next-line no-alert
+            alert('You clicked the edit button')
+          },
+        },
+      ],
+    } satisfies ObjectSetTableConfig<MockedPerson>['actions']
+  }, [])
+
   return (
     <ObjectSetTable<MockedPerson>
       columns={columns}
       data={data}
       minRowCount={10}
+      actions={actions}
       {...props}
       onDelete={(rows) => {
         setData((prevData) => {

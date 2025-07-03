@@ -25,7 +25,7 @@ const TableBody = <T extends DataType>() => {
         <RenderRow key={JSON.stringify({ data, _reactKeyIndex: index })} item={data} rowIndex={index} />
       ))}
 
-      {canRenderInsertRow && <RenderRow item={{}} rowIndex={config.data.length} />}
+      {canRenderInsertRow && <RenderRow item={{}} rowIndex={config.data.length} mode="inserting" />}
 
       {emptyRowsCount > 0 &&
         Array.from({ length: emptyRowsCount }).map((_, index) => (
@@ -33,7 +33,7 @@ const TableBody = <T extends DataType>() => {
             key={index}
             item={{}}
             rowIndex={index + config.data.length + (canRenderInsertRow ? 1 : 0)}
-            emptyRow
+            mode="empty"
           />
         ))}
     </tbody>
