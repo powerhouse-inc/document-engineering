@@ -43,7 +43,7 @@ const meta = {
     form: {
       defaultValues: {
         'amount-field': {
-          amount: undefined,
+          value: undefined,
           unit: '',
         },
       },
@@ -226,7 +226,7 @@ export const Default: Story = {
     type: 'Amount',
     name: 'amount-field',
     value: {
-      amount: undefined,
+      value: undefined,
       unit: '',
     },
   },
@@ -239,7 +239,7 @@ export const WithValue: Story = {
     label: 'Enter Amount',
     type: 'Amount',
     value: {
-      amount: 100,
+      value: 100,
     },
   },
 }
@@ -258,7 +258,7 @@ export const WithAmountFiat: Story = {
     type: 'AmountFiat',
     name: 'amount-field',
     value: {
-      amount: 345,
+      value: 345,
       unit: 'EUR',
     },
   },
@@ -270,7 +270,7 @@ export const WithAmountCurrency: Story = {
     type: 'AmountCurrency',
     placeholderSelect: 'CUR',
     value: {
-      amount: '3454564564',
+      value: '3454564564',
       unit: 'DAI',
     },
   },
@@ -281,7 +281,7 @@ export const WithAmountCrypto: Story = {
     form: {
       defaultValues: {
         'amount-field': {
-          amount: '',
+          value: '',
           unit: '',
         },
       },
@@ -293,7 +293,7 @@ export const WithAmountCrypto: Story = {
     type: 'AmountCrypto',
     placeholderSelect: 'CUR',
     value: {
-      amount: '123',
+      value: '123',
       unit: 'ETH',
     },
   },
@@ -322,7 +322,7 @@ export const Disable: Story = {
     placeholderSelect: 'CUR',
     disabled: true,
     value: {
-      amount: 9,
+      value: 9,
       unit: 'USD',
     },
   },
@@ -333,11 +333,11 @@ export const WithDifferencesAddition: Story = {
     type: 'AmountFiat',
     label: 'Icon names addition',
     value: {
-      amount: 22233,
+      value: 22233,
       unit: 'USD',
     },
     baseValue: {
-      amount: 42323,
+      value: 42323,
       unit: 'THB',
     },
     viewMode: 'addition',
@@ -348,11 +348,11 @@ export const WithDifferencesRemoval: Story = {
   args: {
     label: 'Icon names removal',
     value: {
-      amount: '12323',
+      value: '12323',
       unit: 'ETH',
     },
     baseValue: {
-      amount: 413130,
+      value: 413130,
       unit: 'BTC',
     },
     type: 'AmountCurrency',
@@ -364,11 +364,11 @@ export const WithDifferencesMixed: Story = {
   args: {
     label: 'Icon names mixed',
     value: {
-      amount: '909123223',
+      value: '909123223',
       unit: 'BTC',
     },
     baseValue: {
-      amount: '49989822',
+      value: '49989822',
       unit: 'ETH',
     },
     viewMode: 'mixed',

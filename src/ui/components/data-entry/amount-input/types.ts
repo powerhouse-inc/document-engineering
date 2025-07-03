@@ -1,7 +1,7 @@
 import type { Currency } from '../currency-code-picker/types.js'
 
 export interface Amount {
-  amount?: number
+  value?: number
   unit?: CurrencyTicker
 }
 
@@ -9,17 +9,17 @@ export type AmountPercentage = number | undefined
 export type CurrencyTicker = Currency['ticker']
 
 export interface AmountFiat {
-  amount?: number
+  value?: number
   unit: CurrencyTicker
 }
 
 export interface AmountCrypto {
-  amount?: string
+  value?: string
   unit: CurrencyTicker
 }
 
 export interface AmountCurrency {
-  amount?: string
+  value?: string
   unit: CurrencyTicker
 }
 

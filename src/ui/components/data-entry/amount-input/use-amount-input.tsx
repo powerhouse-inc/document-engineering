@@ -45,7 +45,7 @@ export const useAmountInput = ({
 
     // If it's an object (for any type), we extract the amount property
     if (typeof currentValue === 'object') {
-      return currentValue.amount
+      return currentValue.value
     }
 
     // If it's a primitive value (for AmountPercentage)
@@ -56,11 +56,11 @@ export const useAmountInput = ({
     if (type === 'AmountPercentage') {
       if (typeof currentValue === 'object') {
         const newValue =
-          (currentValue.amount as unknown) === ''
+          (currentValue.value as unknown) === ''
             ? ''
-            : (currentValue.amount as unknown) === undefined
+            : (currentValue.value as unknown) === undefined
               ? ''
-              : currentValue.amount
+              : currentValue.value
         const nativeEvent = handleEventOnChange(newValue)
         onChange?.(nativeEvent)
         return
@@ -83,7 +83,7 @@ export const useAmountInput = ({
       (typeof currentValue === 'number' || typeof currentValue === 'string')
     ) {
       const newValue = {
-        amount: currentValue,
+        value: currentValue,
         unit: '',
       }
       const nativeEvent = handleEventOnChange(newValue)
@@ -168,7 +168,7 @@ export const useAmountInput = ({
     if (type === 'AmountFiat' && typeof value === 'object') {
       const newValue = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
 
       const nativeEvent = handleEventOnChange(newValue)
@@ -180,7 +180,7 @@ export const useAmountInput = ({
     if (type === 'AmountCrypto' && typeof value === 'object') {
       const newValueCurrencyCrypto = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
       const nativeEvent = handleEventOnChange(newValueCurrencyCrypto)
 
@@ -196,7 +196,7 @@ export const useAmountInput = ({
     if (type === 'AmountCurrency' && typeof value === 'object') {
       const newValue = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
 
       const nativeEvent = handleEventOnChange(newValue)
@@ -206,7 +206,7 @@ export const useAmountInput = ({
     if (type === 'Amount' && typeof value === 'object') {
       const newValue = {
         ...value,
-        amount: createAmountValue(inputValue),
+        value: createAmountValue(inputValue),
       } as AmountValue
       const nativeEvent = handleEventOnChange(newValue)
       onChange?.(nativeEvent)
@@ -257,7 +257,7 @@ export const useAmountInput = ({
       if (!isValidNumber(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
         const nativeEvent = handleEventOnBlur(newValue)
 
@@ -269,7 +269,7 @@ export const useAmountInput = ({
       if (isNotSafeValue(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
         const nativeEvent = handleEventOnBlur(newValue)
 
@@ -280,7 +280,7 @@ export const useAmountInput = ({
       // Update the state with the formatted value
       const newValue = {
         ...value,
-        amount: formatValue,
+        value: formatValue,
       }
       const nativeEvent = handleEventOnBlur(newValue)
 
@@ -291,7 +291,7 @@ export const useAmountInput = ({
       if (!isValidBigInt(inputValue) || isNotSafeValue(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
 
         const nativeEventBlur = handleEventOnBlur(newValue)
@@ -300,7 +300,7 @@ export const useAmountInput = ({
       }
       const newValue = {
         ...value,
-        amount: inputValue,
+        value: inputValue,
       }
       const nativeEventBlur = handleEventOnBlur(newValue)
       onBlur?.(nativeEventBlur)
@@ -331,7 +331,7 @@ export const useAmountInput = ({
       if (!isValidNumber(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
         const nativeEvent = handleEventOnBlur(newValue)
 
@@ -343,7 +343,7 @@ export const useAmountInput = ({
       if (isNotSafeValue(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
         const nativeEvent = handleEventOnBlur(newValue)
 
@@ -354,7 +354,7 @@ export const useAmountInput = ({
       // Update the state with the formatted value
       const newValue = {
         ...value,
-        amount: formatValue,
+        value: formatValue,
       }
       const nativeEvent = handleEventOnBlur(newValue)
 
@@ -374,7 +374,7 @@ export const useAmountInput = ({
       if (!isValidNumber(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
         onBlur?.(newValue as unknown as React.FocusEvent<HTMLInputElement>)
         return
@@ -388,7 +388,7 @@ export const useAmountInput = ({
       if (isNotSafeValue(inputValue)) {
         const newValue = {
           ...value,
-          amount: inputValue,
+          value: inputValue,
         }
         const nativeEventBlur = handleEventOnBlur(newValue)
         onBlur?.(nativeEventBlur)
@@ -396,7 +396,7 @@ export const useAmountInput = ({
       }
       const newValue = {
         ...value,
-        amount: formatValue,
+        value: formatValue,
       }
       onBlur?.(newValue as unknown as React.FocusEvent<HTMLInputElement>)
     }

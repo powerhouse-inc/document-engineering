@@ -25,7 +25,7 @@ export const castFunctions: Record<ValueCast, (value: any, castParams?: string) 
       return {
         ...value,
 
-        amount: value.amount !== undefined ? Number(value.amount) : null,
+        value: value.value !== undefined ? Number(value.value) : null,
         unit: value.unit !== '' ? value.unit : '',
       }
     }
@@ -33,10 +33,10 @@ export const castFunctions: Record<ValueCast, (value: any, castParams?: string) 
       return {
         ...value,
 
-        amount: Number(value.amount),
+        value: value.value !== undefined ? Number(value.value) : null,
       }
     }
-    return Number(value)
+    return value !== undefined ? Number(value) : null
   },
 
   AmountBigInt: (value: AmountValue) => {
@@ -44,7 +44,7 @@ export const castFunctions: Record<ValueCast, (value: any, castParams?: string) 
       return {
         ...value,
 
-        amount: value.amount !== undefined ? BigInt(value.amount) : null,
+        value: value.value !== undefined ? BigInt(value.value) : null,
         unit: value.unit !== '' ? value.unit : '',
       }
     }
