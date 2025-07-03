@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { withForm } from '../../lib/decorators.js'
-import { getDefaultArgTypes, getValidationArgTypes, PrebuiltArgTypes } from '../../lib/storybook-arg-types.js'
+import {
+  getDefaultArgTypes,
+  getValidationArgTypes,
+  PrebuiltArgTypes,
+  StorybookControlCategory,
+} from '../../lib/storybook-arg-types.js'
 import { EmailField } from './email-field.js'
 
 const meta: Meta<typeof EmailField> = {
@@ -15,13 +20,26 @@ const meta: Meta<typeof EmailField> = {
     ...getDefaultArgTypes(),
     ...PrebuiltArgTypes.placeholder,
     ...PrebuiltArgTypes.autoComplete,
-    ...getValidationArgTypes(),
+    ...getValidationArgTypes({
+      enabledArgTypes: {
+        validators: false,
+      },
+    }),
     ...PrebuiltArgTypes.minLength,
     ...PrebuiltArgTypes.maxLength,
     ...PrebuiltArgTypes.pattern,
+    allowedDomains: {
+      control: 'object',
+      description: 'Allowed domains for the email field',
+      table: {
+        type: { summary: 'string[]' },
+        detail: 'Array of allowed domains',
+        category: StorybookControlCategory.VALIDATION,
+      },
+    },
   },
   args: {
-    name: 'string-field',
+    name: 'email-field',
   },
 }
 
