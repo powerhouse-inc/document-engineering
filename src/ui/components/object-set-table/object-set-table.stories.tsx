@@ -16,6 +16,7 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * - **Row Selection**: Multi-row selection with keyboard shortcuts
  * - **Row Addition**: Add new rows inline with automatic form validation
  * - **Row Deletion**: Remove rows with confirmation dialogs
+ * - **Row Actions**: Context-sensitive actions that appear on row hover
  * - **Flexible Columns**: Configurable display, formatting, and behavior
  * - **Type Safety**: Full TypeScript support for data and configurations
  * - **Keyboard Navigation**: Navigate and interact using keyboard only
@@ -315,6 +316,76 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * />
  * ```
  *
+ * ### Row Actions
+ *
+ * Enable contextual actions that appear when hovering over table rows. Row actions provide a clean interface for performing operations on individual rows without cluttering the table interface.
+ *
+ * ```tsx
+ * const actions = {
+ *   primary: {
+ *     label: 'Edit',
+ *     icon: <Icon name="EditPencil" size={16} />,
+ *     callback: async (context: RowContext<Person>) => {
+ *       // Handle primary action
+ *       console.log('Editing row:', context.row);
+ *     },
+ *   },
+ *   secondary: [
+ *     {
+ *       label: 'Duplicate',
+ *       callback: async (context: RowContext<Person>) => {
+ *         // Handle secondary action
+ *         const newRow = { ...context.row, id: generateId() };
+ *         setData(prevData => [...prevData, newRow]);
+ *       },
+ *     },
+ *     {
+ *       label: 'Archive',
+ *       callback: async (context: RowContext<Person>) => {
+ *         // Handle archive action
+ *         await archiveUser(context.row.id);
+ *       },
+ *     },
+ *   ],
+ * };
+ *
+ * <ObjectSetTable
+ *   data={data}
+ *   columns={columns}
+ *   actions={actions}  // Enables row actions
+ * />
+ * ```
+ *
+ * **Row Actions Configuration:**
+ *
+ * | Property | Type | Description |
+ * |----------|------|-------------|
+ * | `primary` | `RowAction<T>` | Single primary action displayed as main button |
+ * | `secondary` | `Array<Omit<RowAction<T>, 'icon'>>` | Secondary actions in dropdown menu |
+ *
+ * **RowAction Interface:**
+ *
+ * ```tsx
+ * interface RowAction<T> {
+ *   label: string;                           // Action display name
+ *   callback: (context: RowContext<T>) => Promise<void> | void;  // Action handler
+ *   icon?: React.ReactNode;                  // Optional icon (primary only, recommended 16x16 pixels)
+ * }
+ *
+ * interface RowContext<T> {
+ *   row: T;                                  // Current row data
+ *   rowIndex: number;                        // Row position in table
+ *   tableConfig: ObjectSetTableConfig<T>;    // Full table configuration
+ * }
+ * ```
+ *
+ * **Action Behavior:**
+ * - Actions appear on the right side of the table when hovering over a row
+ * - Primary action displays with its icon as a clickable button
+ * - Secondary actions appear in a dropdown menu triggered by a "more" button
+ * - Actions automatically hide when the mouse leaves the row area
+ * - Both action types receive the same `RowContext<T>` for consistent data access
+ *
  * ---
  *
  * ## Keyboard Shortcuts
@@ -363,6 +434,33 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  *         {value}
  *       </span>
  *     );
+ *   }
+ * }
+ * ```
+ *
+ * ### Row Actions Context
+ *
+ * Row actions receive a `RowContext<T>` object providing access to complete row information:
+ *
+ * ```tsx
+ * {
+ *   primary: {
+ *     label: "Edit User",
+ *     callback: (context) => {
+ *       // Access current row data
+ *       const user = context.row;
+ *
+ *       // Use row position for tracking
+ *       console.log(`Editing row ${context.rowIndex + 1}`);
+ *
+ *       // Access table configuration for conditional logic
+ *       const canEdit = context.tableConfig.columns
+ *         .some(col => col.editable);
+ *
+ *       if (canEdit) {
+ *         openEditDialog(user);
+ *       }
+ *     }
  *   }
  * }
  * ```
@@ -654,6 +752,17 @@ const meta: Meta<typeof ObjectSetTable> = {
         readonly: true,
       },
     },
+    actions: {
+      control: false,
+      description: 'Configuration for row actions that appear on hover. Supports primary and secondary actions.',
+      table: {
+        type: {
+          summary: '{ primary?: RowAction<T>; secondary?: Array<Omit<RowAction<T>, "icon">> }',
+        },
+        defaultValue: { summary: 'undefined' },
+        readonly: true,
+      },
+    },
     apiRef: {
       control: false,
       description: 'Reference to the table API for programmatic control.',
@@ -722,4 +831,54 @@ export const CustomRendering: StoryObj = {
 
 export const EditableTable: StoryObj = {
   render: (args) => <TableEditingExample {...args} />,
+}
+
+/**
+ * Demonstrates row actions functionality with both primary and secondary actions.
+ * Shows how to configure hover-based contextual actions for individual rows.
+ * The primary action displays with an icon, while secondary actions appear in a dropdown menu.
+ */
+export const RowActions: Story = {
+  args: {
+    columns: [
+      { field: 'firstName', title: 'Name' },
+      { field: 'email', title: 'Email' },
+      { field: 'status', title: 'Status' },
+      { field: 'payment', type: 'number', title: 'Payment' },
+    ],
+    data: mockData.slice(0, 6),
+    actions: {
+      primary: {
+        label: 'Edit',
+        icon: '✏️', // Using emoji for simplicity in the story
+        callback: (context) => {
+          // eslint-disable-next-line no-alert
+          alert(`Editing ${context.row.firstName} (Row ${context.rowIndex + 1})`)
+        },
+      },
+      secondary: [
+        {
+          label: 'View Details',
+          callback: (context) => {
+            // eslint-disable-next-line no-alert
+            alert(`Viewing details for ${context.row.firstName}`)
+          },
+        },
+        {
+          label: 'Duplicate',
+          callback: (context) => {
+            // eslint-disable-next-line no-alert
+            alert(`Duplicating ${context.row.firstName}`)
+          },
+        },
+        {
+          label: 'Archive',
+          callback: (context) => {
+            // eslint-disable-next-line no-alert
+            alert(`Archiving ${context.row.firstName}`)
+          },
+        },
+      ],
+    },
+  },
 }

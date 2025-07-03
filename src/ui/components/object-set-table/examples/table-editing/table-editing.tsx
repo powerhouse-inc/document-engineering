@@ -156,19 +156,19 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
       },
       secondary: [
         {
-          label: 'Delete',
+          label: 'Action 1',
           callback: () => {
             // this is just for example purposes
             // eslint-disable-next-line no-alert
-            alert('You clicked the delete button')
+            alert('You clicked the action 1 button')
           },
         },
         {
-          label: 'Edit',
+          label: 'Action 2',
           callback: () => {
             // this is just for example purposes
             // eslint-disable-next-line no-alert
-            alert('You clicked the edit button')
+            alert('You clicked the action 2 button')
           },
         },
       ],
