@@ -24,7 +24,7 @@ const isAmount = (type: AmountInputPropsGeneric['type']): type is 'Amount' => ty
 const getAmount = (value: AmountValue, type: AmountInputPropsGeneric['type']): number | string | undefined => {
   if (isAmountCurrencyFiat(type) || isAmountCurrencyCrypto(type) || isAmountCurrencyUniversal(type) || isAmount(type)) {
     if (!value) return undefined
-    const amount = (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).amount ?? undefined
+    const amount = (value as AmountFiat | AmountCrypto | AmountCurrency | Amount).value ?? undefined
     return amount
   }
   return value as number

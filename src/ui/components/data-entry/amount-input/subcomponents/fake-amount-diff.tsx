@@ -31,13 +31,13 @@ const AmountDiff = ({
 }: SelectDiffProps) => {
   const currentValue = useMemo(() => {
     if (typeof value === 'object') {
-      return value.amount?.toString() ?? ''
+      return value.value?.toString() ?? ''
     }
     return value?.toString() ?? ''
   }, [value])
   const currentBaseValue = useMemo(() => {
     if (typeof baseValue === 'object') {
-      return baseValue.amount?.toString() ?? ''
+      return baseValue.value?.toString() ?? ''
     }
     return baseValue?.toString() ?? ''
   }, [baseValue])
