@@ -1,3 +1,42 @@
+# [1.17.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.16.1...v1.17.0) (2025-07-04)
+
+
+### Bug Fixes
+
+* **scalars & ui:** improve tests for the Boolean-related components ([5c72c5b](https://github.com/powerhouse-inc/document-engineering/commit/5c72c5bfb193c027d50c47b6b28f7a999685bf46))
+* **scalars:** add correct section for allowedDomains ([5f7befe](https://github.com/powerhouse-inc/document-engineering/commit/5f7befeaa531993cfe2642ca8b7e688b731b18ad))
+* **scalars:** add correct values to make stories works ([7756caf](https://github.com/powerhouse-inc/document-engineering/commit/7756caf6ac5e5023cd3d68eedcafb2acdf99046f))
+* **scalars:** add missing test for email field ([5aecb8f](https://github.com/powerhouse-inc/document-engineering/commit/5aecb8f15912a59c488023454620ee3e4786ef2f))
+* **scalars:** add missing test for emailfield component ([e19abdc](https://github.com/powerhouse-inc/document-engineering/commit/e19abdccb7fe08fed4136fc07801cd6be7b38d9e))
+* **scalars:** add test for display value and fix some types ([33f3edf](https://github.com/powerhouse-inc/document-engineering/commit/33f3edf99b680ae2dd7ccdc70ab44637a879e762))
+* **scalars:** add the same format for the test ([347bb60](https://github.com/powerhouse-inc/document-engineering/commit/347bb60e035d58c6f29fe14f657f815eb211d6fe))
+* **scalars:** add units for default stories in amount ([9cc4161](https://github.com/powerhouse-inc/document-engineering/commit/9cc416169d0efcc2962d69a49236279d1f69a8a6))
+* **scalars:** chage value in bigInt to string in amount ([e216cef](https://github.com/powerhouse-inc/document-engineering/commit/e216ceff94f94af69a90d38d3aed5bba910ff410))
+* **scalars:** filter values that had ticker and cripto properties ([63f5f79](https://github.com/powerhouse-inc/document-engineering/commit/63f5f79d4b17ffd0ba69c50df71df9f613c633b5))
+* **scalars:** fix change type should show different currencies ([ddf7086](https://github.com/powerhouse-inc/document-engineering/commit/ddf70868748689a25fd84c867d5e245ec48ba612))
+* **scalars:** fix the CR ([5d05bb9](https://github.com/powerhouse-inc/document-engineering/commit/5d05bb98395761b75f46410622814c486012180f))
+* **scalars:** fix the stories ([bd17ac0](https://github.com/powerhouse-inc/document-engineering/commit/bd17ac02e9e93662444a8abc682359c6adca6521))
+* **scalars:** fix the type in test ([ac5c136](https://github.com/powerhouse-inc/document-engineering/commit/ac5c13670c326c456753918996f8951abab0aef3))
+* **scalars:** fix validations per type and add test per amount type ([a45687c](https://github.com/powerhouse-inc/document-engineering/commit/a45687ce07fcd38ba0cf4a00afabbe3b2cb0808d))
+* **scalars:** match the same name as the Scalat api in connect ([fd4a7d0](https://github.com/powerhouse-inc/document-engineering/commit/fd4a7d03f696e5e0aba31cfde8f71258574db6bb))
+* **scalars:** move hook inside of ui folder and add memo for maxLength property ([f84a838](https://github.com/powerhouse-inc/document-engineering/commit/f84a838587cafaee593b61cd3f9981545af8c501))
+* **scalars:** move the hook to better localition in the code ([d01e23b](https://github.com/powerhouse-inc/document-engineering/commit/d01e23bb084bb29e0d87fa79eb9b6b9c643faf79))
+* **scalars:** remove the duplicate test ([5b3db75](https://github.com/powerhouse-inc/document-engineering/commit/5b3db75ef0e068899eddbba5f9f8af808c0b7575))
+* **scalars:** remove unnecesary code and fix stories values ([3a73399](https://github.com/powerhouse-inc/document-engineering/commit/3a7339962c04a86c31065e0b7e3531d636acf880))
+* **scalars:** remove unnecesary comments ([c38a33e](https://github.com/powerhouse-inc/document-engineering/commit/c38a33ee7989c1337b938a97d97d098e7836e7c2))
+* **scalars:** replace Form with renderWithForm in Boolean tests ([e0dc3ef](https://github.com/powerhouse-inc/document-engineering/commit/e0dc3efd09c057a819386d68844ae8e1ae80d97a))
+* **scalars:** update the name stories ([4378129](https://github.com/powerhouse-inc/document-engineering/commit/4378129d681bbc6c4b727afbffa41baaddae001b))
+* semantic errors in row actions ([1803930](https://github.com/powerhouse-inc/document-engineering/commit/18039302b87147506379800459c8f35886406463))
+
+
+### Features
+
+* row actions ([c4bf15c](https://github.com/powerhouse-inc/document-engineering/commit/c4bf15cc5346e9db784c26e4af1d1d34caebe9be))
+* **scalars:** add basic props and stories for emailfield ([8ae1244](https://github.com/powerhouse-inc/document-engineering/commit/8ae124493c0efdfb225dbdc8dd40fa054ee345e4))
+* **scalars:** add basic props for email-input component ([ff58a19](https://github.com/powerhouse-inc/document-engineering/commit/ff58a19dddf2e2ee83e93270b1bf3f0754d85f4e))
+* **scalars:** add validations for allow props and check default props ([7558bc8](https://github.com/powerhouse-inc/document-engineering/commit/7558bc86564ea378f60a62fb41c4daa9382230ab))
+* **scalars:** update the snaphot test ([9072755](https://github.com/powerhouse-inc/document-engineering/commit/90727554f20534023f9cb7d08ca37c275f7489fa))
+
 ## [1.16.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.16.0...v1.16.1) (2025-07-01)
 
 
