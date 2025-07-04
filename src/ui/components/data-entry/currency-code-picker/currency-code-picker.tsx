@@ -31,8 +31,8 @@ const CurrencyCodePicker = React.forwardRef<HTMLButtonElement, CurrencyCodePicke
     const defaultCurrencies = currencies.length > 0 ? currencies : getCurrencies(allowedTypes)
     const options: SelectOption[] = useMemo(() => {
       const favoriteTickers = new Set(favoriteCurrencies)
-
       return defaultCurrencies
+        .filter((currency) => currency.ticker && typeof currency.crypto === 'boolean')
         .map((currency) => {
           if (favoriteTickers.has(currency.ticker)) {
             return null

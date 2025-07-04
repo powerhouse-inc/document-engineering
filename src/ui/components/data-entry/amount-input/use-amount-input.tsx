@@ -146,7 +146,7 @@ export const useAmountInput = ({
   }, [inputFocused, type, baseValue, precision, viewPrecision, trailingZeros, rawAmountState])
 
   const isPercent = type === 'AmountPercentage'
-  const isAmountWithUnit = type === 'Amount' && typeof value === 'object' && 'unit' in value
+  const isAmountWithUnit = type === 'Amount' && value && typeof value === 'object' && 'unit' in value
   const isAmountWithoutUnit = type === 'Amount' && !isAmountWithUnit
 
   const isShowSelect =
