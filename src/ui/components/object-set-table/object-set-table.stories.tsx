@@ -39,10 +39,13 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  *   renderCell?: (value: unknown, context: CellContext<T>) => React.ReactNode;
  *   editable?: boolean;
  *   onSave?: (newValue: unknown, context: CellContext<T>) => boolean;
+ *   renderCellEditor?: (value: unknown, onChange: (newValue: unknown) => unknown, context: CellContext<T>) => React.ReactNode;
  *   width?: React.CSSProperties["width"];
  *   minWidth?: React.CSSProperties["minWidth"];
  *   maxWidth?: React.CSSProperties["maxWidth"];
  *   align?: "left" | "center" | "right";
+ *   sortable?: boolean;
+ *   rowComparator?: (a: unknown, b: unknown, context: SortableColumnContext<T>) => number;
  * }
  * ```
  *
