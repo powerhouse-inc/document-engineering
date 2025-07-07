@@ -3,6 +3,7 @@ import type { ValidatorResult } from '../../components/types.js'
 export interface MatchFieldValidationOptions {
   matchFieldName?: string
   errorMessage?: string
+  matchFieldLabelError?: string
 }
 
 /**
@@ -17,14 +18,13 @@ export const validateFieldMatch = (
   formState: Record<string, unknown>,
   options: MatchFieldValidationOptions
 ): ValidatorResult => {
-  const { matchFieldName, errorMessage } = options
+  const { matchFieldName, errorMessage, matchFieldLabelError } = options
 
   if (!matchFieldName) return true
 
   const targetValue = formState[matchFieldName] as string
-
   if (value !== targetValue) {
-    return errorMessage ?? `Field must match the ${matchFieldName} field`
+    return errorMessage ?? `Field must match the ${matchFieldLabelError} label`
   }
 
   return true
