@@ -59,17 +59,19 @@ export interface ObjectSetTableConfig<T> {
   /**
    * The actions to display in the table when the rows are hovered.
    */
-  actions?: {
-    /**
-     * The primary action to display in the table when the rows are hovered.
-     */
-    primary?: RowAction<T>
+  actions?: ActionConfig<T>
+}
 
-    /**
-     * The secondary actions to display in the table when the rows are hovered.
-     */
-    secondary?: Array<Omit<RowAction<T>, 'icon'>>
-  }
+export interface ActionConfig<T> {
+  /**
+   * The primary action to display in the table when the rows are hovered.
+   */
+  primary?: RowAction<T>
+
+  /**
+   * The secondary actions to display in the table when the rows are hovered.
+   */
+  secondary?: Array<Omit<RowAction<T>, 'icon'>>
 }
 
 export interface RowContext<T> {
