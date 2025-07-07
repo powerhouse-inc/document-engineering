@@ -28,6 +28,8 @@ const meta: Meta<typeof EmailField> = {
     ...PrebuiltArgTypes.minLength,
     ...PrebuiltArgTypes.maxLength,
     ...PrebuiltArgTypes.pattern,
+    ...PrebuiltArgTypes.viewMode,
+    ...PrebuiltArgTypes.baseValue,
     allowedDomains: {
       control: 'object',
       description: 'Allowed domains for the email field',
@@ -57,5 +59,30 @@ export const Filled: Story = {
     label: 'Email Input',
     placeholder: 'Enter your email',
     value: 'john.doe@example.com',
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: 'test@gmail.com',
+    baseValue: 'other@example.com',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: 'test@gmail.com',
+    baseValue: 'test@example.com',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Date difference mixed',
+    value: 'other@example.com',
+    baseValue: 'test@example.com',
+    viewMode: 'mixed',
   },
 }

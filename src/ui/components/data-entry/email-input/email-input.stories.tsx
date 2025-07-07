@@ -63,3 +63,28 @@ export const Filled: Story = {
     value: 'test@example.com',
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Number difference addition',
+    value: 'test@gmail.com',
+    baseValue: 'other@example.com',
+    viewMode: 'addition',
+  },
+}
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Date difference removal',
+    value: 'test@gmail.com',
+    baseValue: 'test@example.com',
+    viewMode: 'removal',
+  },
+}
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Date difference mixed',
+    value: 'other@example.com',
+    baseValue: 'test@example.com',
+    viewMode: 'mixed',
+  },
+}
