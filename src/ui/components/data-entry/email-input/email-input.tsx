@@ -7,6 +7,7 @@ import { Input } from '../input/index.js'
 import type { EmailInputProps } from './types.js'
 import { useUniqueId } from '../../../../scalars/lib/utils.js'
 import useControllableState from '../../../hooks/use-controllable-state.js'
+import { SplittedInputDiff } from '../input/splitted-input-diff.js'
 
 const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
   (
@@ -24,6 +25,8 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
       id: propId,
       onChange,
       onBlur,
+      baseValue,
+      viewMode = 'edition',
       ...props
     },
     ref
@@ -43,29 +46,39 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
       () => Object.fromEntries(Object.entries(props).filter(([key]) => key !== 'maxLength')),
       [props]
     )
-
+    if (viewMode === 'edition') {
+      return (
+        <FormGroup>
+          <FormLabel htmlFor={id} required={required} disabled={disabled} hasError={!!errors?.length}>
+            {label}
+          </FormLabel>
+          <Input
+            name={name}
+            value={emailValue ?? ''}
+            onChange={handleChange}
+            onBlur={onBlur}
+            disabled={disabled}
+            id={id}
+            type="email"
+            autoComplete={autoCompleteValue}
+            required={required}
+            ref={ref}
+            {...filteredProps}
+          />
+          {description && <FormDescription>{description}</FormDescription>}
+          {warnings && <FormMessageList messages={warnings} type="warning" />}
+          {errors && <FormMessageList messages={errors} type="error" />}
+        </FormGroup>
+      )
+    }
     return (
-      <FormGroup>
-        <FormLabel htmlFor={id} required={required} disabled={disabled} hasError={!!errors?.length}>
-          {label}
-        </FormLabel>
-        <Input
-          name={name}
-          value={emailValue ?? ''}
-          onChange={handleChange}
-          onBlur={onBlur}
-          disabled={disabled}
-          id={id}
-          type="email"
-          autoComplete={autoCompleteValue}
-          required={required}
-          ref={ref}
-          {...filteredProps}
-        />
-        {description && <FormDescription>{description}</FormDescription>}
-        {warnings && <FormMessageList messages={warnings} type="warning" />}
-        {errors && <FormMessageList messages={errors} type="error" />}
-      </FormGroup>
+      <SplittedInputDiff
+        baseValue={baseValue}
+        value={emailValue ?? ''}
+        viewMode={viewMode}
+        diffMode="sentences"
+        data-testid="email-input-diff"
+      />
     )
   }
 )

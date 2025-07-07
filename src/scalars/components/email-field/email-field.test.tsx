@@ -89,4 +89,38 @@ describe('EmailField', () => {
     expect(screen.queryByText('Email domain must be one of: example.com, company.org')).not.toBeInTheDocument()
     expect(input).toHaveValue('test@company.org')
   })
+  describe('EmailField differences', () => {
+    it('should show value when viewMode is addition', () => {
+      renderWithForm(
+        <EmailField value="test@example.com" baseValue="other@example.com" viewMode="addition" name="Label" />
+      )
+
+      const input = screen.getByTestId('email-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('test@example.com')).toBeInTheDocument()
+      expect(screen.queryByText('other@example.com')).not.toBeInTheDocument()
+    })
+
+    it('should show baseValue when viewMode is removal', () => {
+      renderWithForm(
+        <EmailField value="test@example.com" baseValue="other@example.com" viewMode="removal" name="Label" />
+      )
+
+      const input = screen.getByTestId('email-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.queryByText('test@example.com')).not.toBeInTheDocument()
+      expect(screen.getByText('other@example.com')).toBeInTheDocument()
+    })
+
+    it('should show value and baseValue when viewMode is mixed', () => {
+      renderWithForm(
+        <EmailField value="test@example.com" baseValue="other@example.com" viewMode="mixed" name="Label" />
+      )
+
+      const input = screen.getByTestId('email-input-diff')
+      expect(input).toBeInTheDocument()
+      expect(screen.getByText('test@example.com')).toBeInTheDocument()
+      expect(screen.getByText('other@example.com')).toBeInTheDocument()
+    })
+  })
 })
