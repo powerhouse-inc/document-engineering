@@ -23,7 +23,17 @@ const meta: Meta<typeof CurrencyCodeField> = {
 
     currencies: {
       control: 'object',
-      description: 'Array of Currency objects',
+      description: `Array of Currency objects. Each Currency object has:<br/>
+
+**Required fields:**
+- \`ticker\`: string - The currency ticker/symbol (e.g., "USD", "BTC", "ETH")
+- \`crypto\`: boolean - Whether this is a cryptocurrency (true) or fiat currency (false)<br/><br/>
+
+**Optional fields:**
+
+- \`label\`: string - Display label for the currency (e.g., "US Dollar", "Bitcoin")
+- \`symbol\`: string - Currency symbol (e.g., "$", "€", "₿")
+- \`icon\`: IconName | React.ComponentType - Icon to display for the currency`,
       table: {
         type: { summary: 'Currency[]' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
