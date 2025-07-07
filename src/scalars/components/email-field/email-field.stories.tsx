@@ -86,3 +86,12 @@ export const WithDifferencesMixed: Story = {
     viewMode: 'mixed',
   },
 }
+
+export const WithEmailMatchForm: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <EmailField label="Email" name="email" placeholder="Enter your email" />
+      <EmailField label="Confirm Email" name="confirmEmail" placeholder="Confirm your email" matchFieldName="email" />
+    </div>
+  ),
+}
