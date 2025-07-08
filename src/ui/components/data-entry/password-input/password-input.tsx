@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Input } from '../input/index.js'
-import { cn } from '../../../../scalars/lib/index.js'
+import { cn, useUniqueId } from '../../../../scalars/lib/index.js'
 import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
 import { FormGroup } from '../../../../scalars/components/fragments/form-group/index.js'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
@@ -39,8 +39,12 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     },
     ref
   ) => {
-    const prefix = useId()
+    const prefix = useUniqueId()
     const id = idProp ?? `${prefix}-password-input`
+
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+    const [password, setPassword] = useState(value ?? defaultValue ?? '')
+    const [showPassword, setShowPassword] = useState(false)
 
     const containerRef = useRef<HTMLDivElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
@@ -53,14 +57,6 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         ref.current = node
       }
     }
-
-    const hasWarning = Array.isArray(warnings) && warnings.length > 0
-    const hasError = Array.isArray(errors) && errors.length > 0
-
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-
-    const [password, setPassword] = useState(value ?? defaultValue ?? '')
-    const [showPassword, setShowPassword] = useState(false)
 
     const handleChange = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +72,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         setPassword(value)
       }
     }, [value])
+
+    const hasWarning = Array.isArray(warnings) && warnings.length > 0
+    const hasError = Array.isArray(errors) && errors.length > 0
 
     // TODO: Implement PasswordInputDiff
     if (viewMode !== 'edition') {
