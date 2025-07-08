@@ -1,3 +1,15 @@
+# [1.18.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.17.0...v1.18.0) (2025-07-08)
+
+
+### Bug Fixes
+
+* **scalars:** add missing docs for currency ([8b5562c](https://github.com/powerhouse-inc/document-engineering/commit/8b5562c01337b7a04a2b734e7f0f50d8ce6ef164))
+
+
+### Features
+
+* **scalars:** add diff for simple value in email component ([ef87916](https://github.com/powerhouse-inc/document-engineering/commit/ef87916100d2b76cba7af7341390f921d6c76e16))
+
 # [1.17.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.16.1...v1.17.0) (2025-07-04)
 
 
