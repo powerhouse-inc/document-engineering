@@ -1,1 +1,1 @@
-export * from './email-field.js'
+export { EmailField, type EmailFieldProps } from './email-field.js'
