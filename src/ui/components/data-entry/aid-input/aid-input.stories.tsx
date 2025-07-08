@@ -210,12 +210,69 @@ export default meta
 
 type Story = StoryObj<typeof AIDInput>
 
+const createCodeExample = (props: Record<string, any>) => {
+  const propsString = Object.entries(props)
+    .map(([key, value]) => {
+      if (typeof value === 'string') return `  ${key}="${value}"`
+      if (typeof value === 'boolean') return `  ${key}={${value}}`
+      if (value && typeof value === 'object') {
+        return `  ${key}={${JSON.stringify(value, null, 4).replace(/\n/g, '\n  ')}}`
+      }
+      return `  ${key}={${value}}`
+    })
+    .join('\n')
+
+  return `<AIDInput
+${propsString}
+  // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
+  // Please, note that you should implement your own functions.
+  // In this examples the functions are async and return a Promise but you can also implement both as sync functions.
+  fetchOptionsCallback={async (userInput: string) => {
+    // fetch agents from your API endpoint
+    const response = await fetch(\`/your-api-endpoint?search=\${userInput}\`)
+    const agents = await response.json()
+    
+    return agents.map(agent => ({
+      value: agent.id,
+      title: agent.name,
+      description: agent.role,
+      agentType: agent.type,
+      icon: 'Person'
+    }))
+  }}
+  fetchSelectedOptionCallback={async (id: string) => {
+    // fetch specific agent details from your API endpoint
+    const response = await fetch(\`/your-api-endpoint/\${id}\`)
+    if (!response.ok) return undefined
+    
+    const agent = await response.json()
+    return {
+      value: agent.id,
+      title: agent.name,
+      description: agent.role,
+      agentType: agent.type,
+      icon: 'Person'
+    }
+  }}
+/>`
+}
+
 export const Default: Story = {
   args: {
     label: 'AID input',
     placeholder: 'did:ethr:',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input',
+          placeholder: 'did:ethr:',
+        }),
+      },
+    },
   },
 }
 
@@ -228,6 +285,19 @@ export const Empty: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input',
+          placeholder: 'did:ethr:',
+          isOpenByDefault: true,
+          defaultValue: 'did:ethr:',
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
   },
 }
 
@@ -242,6 +312,20 @@ export const Open: Story = {
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input',
+          placeholder: 'did:ethr:',
+          isOpenByDefault: true,
+          defaultValue: 'did:ethr:',
+          variant: 'withValueTitleAndDescription',
+          initialOptions: mockedOptions,
+        }),
+      },
+    },
+  },
 }
 
 export const Filled: Story = {
@@ -253,6 +337,19 @@ export const Filled: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input',
+          placeholder: 'did:ethr:',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
   },
 }
 
@@ -276,6 +373,29 @@ export const WithDifferencesAddition: Story = {
     basePreviewDescription: 'Old Agent A description',
     basePreviewAgentType: 'Old Human Contributor',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input addition',
+          placeholder: 'did:ethr:',
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'addition',
+          baseValue: 'did:ethr:0xabcde14089478a327f09197987f16f9e5d936e8a',
+          basePreviewIcon: 'Person',
+          basePreviewTitle: 'Old Agent A',
+          basePreviewPath: {
+            text: 'old-renown.id/0xb9c5714089478a327f09197987f16f9e5d936e8a',
+            url: 'https://www.old-renown.id/',
+          },
+          basePreviewDescription: 'Old Agent A description',
+          basePreviewAgentType: 'Old Human Contributor',
+        }),
+      },
+    },
+  },
 }
 
 export const WithDifferencesRemoval: Story = {
@@ -298,6 +418,29 @@ export const WithDifferencesRemoval: Story = {
     basePreviewDescription: 'Old Agent A description',
     basePreviewAgentType: 'Old Human Contributor',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input removal',
+          placeholder: 'did:ethr:',
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'removal',
+          baseValue: 'did:ethr:0xabcde14089478a327f09197987f16f9e5d936e8a',
+          basePreviewIcon: 'Person',
+          basePreviewTitle: 'Old Agent A',
+          basePreviewPath: {
+            text: 'old-renown.id/0xb9c5714089478a327f09197987f16f9e5d936e8a',
+            url: 'https://www.old-renown.id/',
+          },
+          basePreviewDescription: 'Old Agent A description',
+          basePreviewAgentType: 'Old Human Contributor',
+        }),
+      },
+    },
+  },
 }
 
 export const WithDifferencesMixed: Story = {
@@ -319,5 +462,28 @@ export const WithDifferencesMixed: Story = {
     },
     basePreviewDescription: 'Old Agent A description',
     basePreviewAgentType: 'Old Human Contributor',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'AID input mixed',
+          placeholder: 'did:ethr:',
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'mixed',
+          baseValue: 'did:ethr:0xabcde14089478a327f09197987f16f9e5d936e8a',
+          basePreviewIcon: 'Person',
+          basePreviewTitle: 'Old Agent A',
+          basePreviewPath: {
+            text: 'old-renown.id/0xb9c5714089478a327f09197987f16f9e5d936e8a',
+            url: 'https://www.old-renown.id/',
+          },
+          basePreviewDescription: 'Old Agent A description',
+          basePreviewAgentType: 'Old Human Contributor',
+        }),
+      },
+    },
   },
 }
