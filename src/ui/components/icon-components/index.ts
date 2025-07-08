@@ -65,6 +65,7 @@ import Github from './Github.js'
 import Globe from './Globe.js'
 import GlobeWww from './GlobeWww.js'
 import Hdd from './Hdd.js'
+import Hide from './Hide.js'
 import History from './History.js'
 import InfoSquare from './InfoSquare.js'
 import Link from './Link.js'
@@ -98,6 +99,7 @@ import Save from './Save.js'
 import Search from './Search.js'
 import Server from './Server.js'
 import Settings from './Settings.js'
+import Show from './Show.js'
 import Synced from './Synced.js'
 import Syncing from './Syncing.js'
 import Tabler from './Tabler.js'
@@ -182,6 +184,7 @@ export const iconNames = [
   'Globe',
   'GlobeWww',
   'Hdd',
+  'Hide',
   'History',
   'InfoSquare',
   'Link',
@@ -215,6 +218,7 @@ export const iconNames = [
   'Search',
   'Server',
   'Settings',
+  'Show',
   'Synced',
   'Syncing',
   'Tabler',
@@ -301,6 +305,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Globe,
   GlobeWww,
   Hdd,
+  Hide,
   History,
   InfoSquare,
   Link,
@@ -334,6 +339,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Search,
   Server,
   Settings,
+  Show,
   Synced,
   Syncing,
   Tabler,
