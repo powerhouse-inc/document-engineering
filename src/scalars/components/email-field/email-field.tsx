@@ -4,7 +4,7 @@ import { withFieldValidation } from '../fragments/with-field-validation/index.js
 import type { FieldErrorHandling } from '../types.js'
 import { validateEmailDomain, validateEmailFormat } from './utils.js'
 
-type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
+export type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
   FieldErrorHandling & {
     allowedDomains?: string[]
   }
