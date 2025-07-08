@@ -28,6 +28,7 @@ export {
   type RadioGroupProps,
 } from './data-entry/radio-group/index.js'
 export { UrlInput, type PlatformIcon, type UrlInputProps } from './data-entry/url-input/index.js'
+export { EmailInput, type EmailInputProps } from './data-entry/email-input/index.js'
 
 // dropdown
 export {
