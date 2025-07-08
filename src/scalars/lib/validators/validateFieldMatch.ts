@@ -24,7 +24,7 @@ export const validateFieldMatch = (
 
   const targetValue = formState[matchFieldName] as string
   if (value !== targetValue) {
-    return errorMessage ?? `Field must match the ${matchFieldLabelError} label`
+    return errorMessage ?? `Field must match the ${matchFieldLabelError} field`
   }
 
   return true

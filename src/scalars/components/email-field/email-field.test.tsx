@@ -143,13 +143,7 @@ describe('EmailField', () => {
     renderWithForm(
       <div>
         <EmailField label="Email" name="email" showErrorOnBlur value="example@example.com" />
-        <EmailField
-          label="Confirm Email"
-          name="confirmEmail"
-          matchFieldName="email"
-          matchFieldLabelError="Email"
-          showErrorOnBlur
-        />
+        <EmailField label="Confirm Email" name="confirmEmail" matchFieldName="email" showErrorOnBlur />
       </div>
     )
     const input = screen.getByRole('textbox', { name: 'Confirm Email' })
@@ -163,19 +157,13 @@ describe('EmailField', () => {
     renderWithForm(
       <div>
         <EmailField label="Email Address" name="email" showErrorOnBlur value="example@example.com" />
-        <EmailField
-          label="Confirm Email"
-          name="confirmEmail"
-          matchFieldName="email"
-          matchFieldLabelError="Email"
-          showErrorOnBlur
-        />
+        <EmailField label="Confirm Email" name="confirmEmail" matchFieldName="email" showErrorOnBlur />
       </div>
     )
     const input = screen.getByRole('textbox', { name: 'Confirm Email' })
     await userEvent.type(input, 'test@example.com')
     await userEvent.tab()
-
-    expect(screen.queryByText('Email must match the Email field')).toBeInTheDocument()
+    const errorMessage = screen.getByText('Email must match the Email Address field')
+    expect(errorMessage).toBeInTheDocument()
   })
 })

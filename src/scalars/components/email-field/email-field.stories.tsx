@@ -39,6 +39,14 @@ const meta: Meta<typeof EmailField> = {
         category: StorybookControlCategory.VALIDATION,
       },
     },
+    matchFieldName: {
+      control: 'text',
+      description: 'Name of the field to match',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.VALIDATION,
+      },
+    },
   },
   args: {
     name: 'email-field',
@@ -90,15 +98,8 @@ export const WithDifferencesMixed: Story = {
 export const WithEmailMatchForm: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <EmailField label="Email" name="email" placeholder="Enter your email" key="email" />
-      <EmailField
-        label="Confirm Email"
-        name="confirmEmail"
-        placeholder="Confirm your email"
-        matchFieldName="email"
-        matchFieldLabelError="Email"
-        key="confirmEmail"
-      />
+      <EmailField label="Email Address" name="email" placeholder="Enter your email" />
+      <EmailField label="Confirm Email" name="confirmEmail" placeholder="Confirm your email" matchFieldName="email" />
     </div>
   ),
 }

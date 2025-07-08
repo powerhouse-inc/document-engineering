@@ -3,6 +3,7 @@ import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { StringField } from '../string-field/index.js'
 import { Form } from './form.js'
+import { EmailField } from '../email-field/email-field.js'
 
 describe('Form', () => {
   it('should render children as React nodes', () => {
@@ -115,5 +116,48 @@ describe('Form', () => {
       </Form>
     )
     expect(screen.getByText('Test')).toHaveClass('test-class')
+  })
+
+  describe('EmailField with matchFieldName', () => {
+    it('should not submit field when it has matchFieldName and data-exclude attributes', async () => {
+      const handleSubmit = vi.fn()
+
+      render(
+        <Form onSubmit={handleSubmit}>
+          <EmailField name="email" value="test@example.com" />
+          <EmailField name="confirmEmail" matchFieldName="email" value="test@example.com" />
+          <button type="submit">Submit</button>
+        </Form>
+      )
+
+      fireEvent.click(screen.getByText('Submit'))
+
+      await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({
+          email: 'test@example.com',
+        })
+      })
+    })
+
+    it('should submit both fields when matchFieldName is not provided', async () => {
+      const handleSubmit = vi.fn()
+
+      render(
+        <Form onSubmit={handleSubmit}>
+          <EmailField name="email" value="test@example.com" />
+          <EmailField name="confirmEmail" value="test@example.com" />
+          <button type="submit">Submit</button>
+        </Form>
+      )
+
+      fireEvent.click(screen.getByText('Submit'))
+
+      await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({
+          email: 'test@example.com',
+          confirmEmail: 'test@example.com',
+        })
+      })
+    })
   })
 })

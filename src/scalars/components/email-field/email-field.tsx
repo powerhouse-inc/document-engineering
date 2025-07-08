@@ -9,7 +9,6 @@ type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
   FieldErrorHandling & {
     allowedDomains?: string[]
     matchFieldName?: string
-    matchFieldLabelError?: string
   }
 
 const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {
@@ -25,12 +24,17 @@ const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {
         return validateEmailDomain(value, { allowedDomains })
       },
     _matchEmail:
-      ({ matchFieldName, matchFieldLabelError }) =>
+      ({ matchFieldName }) =>
       (value: string, formState: Record<string, unknown>) => {
+        if (!matchFieldName) return true
+
+        const matchFieldSelector = `input[name="${matchFieldName}"]`
+
+        const matchFieldLabel = document.querySelector(matchFieldSelector)?.getAttribute('data-label') ?? ''
+
         return validateFieldMatch(value, formState, {
           matchFieldName,
-          errorMessage: `Email must match the ${matchFieldLabelError} field`,
-          matchFieldLabelError,
+          errorMessage: `Email must match the ${matchFieldLabel} field`,
         })
       },
   },

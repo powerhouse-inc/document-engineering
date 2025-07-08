@@ -188,6 +188,12 @@ const Form = forwardRef<UseFormReturn, FormProps>(
               if (value !== null) {
                 const field = form?.querySelector(`[name="${key}"]`)
                 const dataCast = field?.getAttribute('data-cast')
+                const fieldToExclude = field?.getAttribute('data-exclude')
+                const matchFieldName = field?.getAttribute('matchFieldName')
+                if (matchFieldName && fieldToExclude === 'true') {
+                  delete data[key]
+                  return
+                }
                 if (dataCast) {
                   data[key] = castValue(value, dataCast as ValueCast) as unknown
                 }
