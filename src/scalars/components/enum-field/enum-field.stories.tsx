@@ -1,6 +1,4 @@
-import { Icon, type IconName } from '../../../ui/components/icon/index.js'
 import type { Meta, StoryObj } from '@storybook/react'
-
 import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
@@ -9,6 +7,33 @@ import {
   StorybookControlCategory,
 } from '../../lib/storybook-arg-types.js'
 import { EnumField } from './enum-field.js'
+import { Icon, type IconName } from '../../../ui/components/icon/index.js'
+
+/**
+ * A `EnumField` component designed for form usage with built-in validation.
+ * It renders a `SelectField` or `RadioGroupField` component.
+ *
+ * ### Example Usage
+ *
+ * ```tsx
+ * <EnumField
+ *   name="favorite-icon"
+ *   label="Favorite icon"
+ *   placeholder="Choose from the list"
+ *   variant="Select"
+ *   selectionIcon="checkmark"
+ *   options={[
+ *     { value: 'Briefcase', label: 'Briefcase' },
+ *     { value: 'Drive', label: 'Drive' },
+ *     { value: 'Globe', label: 'Globe' },
+ *     { value: 'Settings', label: 'Settings' },
+ *   ]}
+ * />
+ * ```
+ *
+ * > **Note:** Must be used within a form context provider.
+ * > Use the `withForm` decorator in Storybook for quick testing.
+ */
 
 const meta: Meta<typeof EnumField> = {
   title: 'Scalars/Enum Field',

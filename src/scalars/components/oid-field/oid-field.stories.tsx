@@ -9,6 +9,54 @@ import {
 } from '../../lib/storybook-arg-types.js'
 import { OIDField } from './oid-field.js'
 
+/**
+ * A `OIDField` component designed for form usage with built-in validation.
+ *
+ * ### Example Usage
+ *
+ * ```tsx
+ * <OIDField
+ *   name="oid-field"
+ *   label="OID field"
+ *   placeholder="uuid"
+ *   variant="withValueTitleAndDescription"
+ *   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
+ *   // Please, note that you should implement your own functions.
+ *   // In this example the functions are async and return a Promise but you can also implement both as sync functions.
+ *   fetchOptionsCallback={async (userInput: string) => {
+ *     // fetch objects from your API endpoint
+ *     const response = await fetch(`/your-api-endpoint?search=${userInput}`)
+ *     const objects = await response.json()
+ *
+ *     return objects.map(object => ({
+ *       value: object.id,
+ *       title: object.name,
+ *       path: object.path,
+ *       description: object.description,
+ *       icon: 'Braces'
+ *     }))
+ *   }}
+ *   fetchSelectedOptionCallback={async (id: string) => {
+ *     // fetch specific object details from your API endpoint
+ *     const response = await fetch(`/your-api-endpoint/${id}`)
+ *     if (!response.ok) return undefined
+ *
+ *     const object = await response.json()
+ *     return {
+ *       value: object.id,
+ *       title: object.name,
+ *       path: object.path,
+ *       description: object.description,
+ *       icon: 'Braces'
+ *     }
+ *   }}
+ * />
+ * ```
+ *
+ * > **Note:** Must be used within a form context provider.
+ * > Use the `withForm` decorator in Storybook for quick testing.
+ */
+
 const meta: Meta<typeof OIDField> = {
   title: 'Scalars/OID Field',
   component: OIDField,
@@ -167,12 +215,69 @@ export default meta
 
 type Story = StoryObj<typeof OIDField>
 
+const createCodeExample = (props: Record<string, any>) => {
+  const propsString = Object.entries(props)
+    .map(([key, value]) => {
+      if (typeof value === 'string') return `  ${key}="${value}"`
+      if (typeof value === 'boolean') return `  ${key}={${value}}`
+      if (value && typeof value === 'object') {
+        return `  ${key}={${JSON.stringify(value, null, 4).replace(/\n/g, '\n  ')}}`
+      }
+      return `  ${key}={${value}}`
+    })
+    .join('\n')
+
+  return `<OIDField
+${propsString}
+  // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
+  // Please, note that you should implement your own functions.
+  // In this example the functions are async and return a Promise but you can also implement both as sync functions.
+  fetchOptionsCallback={async (userInput: string) => {
+    // fetch objects from your API endpoint
+    const response = await fetch(\`/your-api-endpoint?search=\${userInput}\`)
+    const objects = await response.json()
+    
+    return objects.map(object => ({
+      value: object.id,
+      title: object.name,
+      path: object.path,
+      description: object.description,
+      icon: 'Braces'
+    }))
+  }}
+  fetchSelectedOptionCallback={async (id: string) => {
+    // fetch specific object details from your API endpoint
+    const response = await fetch(\`/your-api-endpoint/\${id}\`)
+    if (!response.ok) return undefined
+    
+    const object = await response.json()
+    return {
+      value: object.id,
+      title: object.name,
+      path: object.path,
+      description: object.description,
+      icon: 'Braces'
+    }
+  }}
+/>`
+}
+
 export const Default: Story = {
   args: {
     label: 'OID field',
     placeholder: 'uuid',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field',
+          placeholder: 'uuid',
+        }),
+      },
+    },
   },
 }
 
@@ -185,6 +290,19 @@ export const Empty: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field',
+          placeholder: 'uuid',
+          isOpenByDefault: true,
+          defaultValue: 'uuid',
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
   },
 }
 
@@ -199,6 +317,20 @@ export const Open: Story = {
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field',
+          placeholder: 'uuid',
+          isOpenByDefault: true,
+          defaultValue: 'uuid',
+          variant: 'withValueTitleAndDescription',
+          initialOptions: mockedOptions,
+        }),
+      },
+    },
+  },
 }
 
 export const Filled: Story = {
@@ -210,6 +342,19 @@ export const Filled: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field',
+          placeholder: 'uuid',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
   },
 }
 
@@ -229,6 +374,25 @@ export const WithDifferencesAddition: Story = {
     basePreviewPath: 'old-rwa-portfolio-a',
     basePreviewDescription: 'Old Object A description',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field addition',
+          placeholder: 'uuid',
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'addition',
+          baseValue: 'abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+          basePreviewIcon: 'Braces',
+          basePreviewTitle: 'Old Object A',
+          basePreviewPath: 'old-rwa-portfolio-a',
+          basePreviewDescription: 'Old Object A description',
+        }),
+      },
+    },
+  },
 }
 
 export const WithDifferencesRemoval: Story = {
@@ -247,6 +411,25 @@ export const WithDifferencesRemoval: Story = {
     basePreviewPath: 'old-rwa-portfolio-a',
     basePreviewDescription: 'Old Object A description',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field removal',
+          placeholder: 'uuid',
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'removal',
+          baseValue: 'abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+          basePreviewIcon: 'Braces',
+          basePreviewTitle: 'Old Object A',
+          basePreviewPath: 'old-rwa-portfolio-a',
+          basePreviewDescription: 'Old Object A description',
+        }),
+      },
+    },
+  },
 }
 
 export const WithDifferencesMixed: Story = {
@@ -264,5 +447,24 @@ export const WithDifferencesMixed: Story = {
     basePreviewTitle: 'Old Object A',
     basePreviewPath: 'old-rwa-portfolio-a',
     basePreviewDescription: 'Old Object A description',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'OID field mixed',
+          placeholder: 'uuid',
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'mixed',
+          baseValue: 'abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+          basePreviewIcon: 'Braces',
+          basePreviewTitle: 'Old Object A',
+          basePreviewPath: 'old-rwa-portfolio-a',
+          basePreviewDescription: 'Old Object A description',
+        }),
+      },
+    },
   },
 }

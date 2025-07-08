@@ -17,6 +17,47 @@ import { PHIDInput } from './phid-input.js'
  * - Async and sync options fetching
  * - Customizable preview placeholder with icon, title, path and description
  *
+ * ### Example Usage
+ *
+ * ```tsx
+ * <PHIDInput
+ *   name="phid-input"
+ *   label="PHID input"
+ *   placeholder="phd:"
+ *   variant="withValueTitleAndDescription"
+ *   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
+ *   // Please, note that you should implement your own functions.
+ *   // In this example the functions are async and return a Promise but you can also implement both as sync functions.
+ *   fetchOptionsCallback={async (userInput: string) => {
+ *     // fetch documents from your API endpoint
+ *     const response = await fetch(`/your-api-endpoint?search=${userInput}`)
+ *     const documents = await response.json()
+ *
+ *     return documents.map(document => ({
+ *       value: document.id,
+ *       title: document.name,
+ *       path: document.path,
+ *       description: document.description,
+ *       icon: 'PowerhouseLogoSmall'
+ *     }))
+ *   }}
+ *   fetchSelectedOptionCallback={async (id: string) => {
+ *     // fetch specific document details from your API endpoint
+ *     const response = await fetch(`/your-api-endpoint/${id}`)
+ *     if (!response.ok) return undefined
+ *
+ *     const document = await response.json()
+ *     return {
+ *       value: document.id,
+ *       title: document.name,
+ *       path: document.path,
+ *       description: document.description,
+ *       icon: 'PowerhouseLogoSmall'
+ *     }
+ *   }}
+ * />
+ * ```
+ *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
  * > you can use the [PHIDField](?path=/docs/scalars-phid-field--readme)
  * > component.
@@ -209,12 +250,69 @@ export default meta
 
 type Story = StoryObj<typeof PHIDInput>
 
+const createCodeExample = (props: Record<string, any>) => {
+  const propsString = Object.entries(props)
+    .map(([key, value]) => {
+      if (typeof value === 'string') return `  ${key}="${value}"`
+      if (typeof value === 'boolean') return `  ${key}={${value}}`
+      if (value && typeof value === 'object') {
+        return `  ${key}={${JSON.stringify(value, null, 4).replace(/\n/g, '\n  ')}}`
+      }
+      return `  ${key}={${value}}`
+    })
+    .join('\n')
+
+  return `<PHIDInput
+${propsString}
+  // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
+  // Please, note that you should implement your own functions.
+  // In this example the functions are async and return a Promise but you can also implement both as sync functions.
+  fetchOptionsCallback={async (userInput: string) => {
+    // fetch documents from your API endpoint
+    const response = await fetch(\`/your-api-endpoint?search=\${userInput}\`)
+    const documents = await response.json()
+    
+    return documents.map(document => ({
+      value: document.id,
+      title: document.name,
+      path: document.path,
+      description: document.description,
+      icon: 'PowerhouseLogoSmall'
+    }))
+  }}
+  fetchSelectedOptionCallback={async (id: string) => {
+    // fetch specific document details from your API endpoint
+    const response = await fetch(\`/your-api-endpoint/\${id}\`)
+    if (!response.ok) return undefined
+    
+    const document = await response.json()
+    return {
+      value: document.id,
+      title: document.name,
+      path: document.path,
+      description: document.description,
+      icon: 'PowerhouseLogoSmall'
+    }
+  }}
+/>`
+}
+
 export const Default: Story = {
   args: {
     label: 'PHID input',
     placeholder: 'phd:',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input',
+          placeholder: 'phd:',
+        }),
+      },
+    },
   },
 }
 
@@ -227,6 +325,19 @@ export const Empty: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input',
+          placeholder: 'phd:',
+          isOpenByDefault: true,
+          defaultValue: 'phd:',
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
   },
 }
 
@@ -242,6 +353,21 @@ export const Open: Story = {
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input',
+          placeholder: 'phd:',
+          isOpenByDefault: true,
+          defaultValue: 'phd:',
+          initialOptions: mockedOptions,
+          allowUris: true,
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
+  },
 }
 
 export const Filled: Story = {
@@ -254,6 +380,20 @@ export const Filled: Story = {
     variant: 'withValueTitleAndDescription',
     fetchOptionsCallback: fetchOptions,
     fetchSelectedOptionCallback: fetchSelectedOption,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input',
+          placeholder: 'phd:',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          allowUris: true,
+          variant: 'withValueTitleAndDescription',
+        }),
+      },
+    },
   },
 }
 
@@ -274,6 +414,26 @@ export const WithDifferencesAddition: Story = {
     basePreviewPath: 'old/projects/finance/document-a',
     basePreviewDescription: 'Old Financial report for Q1 2024',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input addition',
+          placeholder: 'phd:',
+          allowUris: true,
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'addition',
+          baseValue: 'phd:abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+          basePreviewIcon: 'PowerhouseLogoSmall',
+          basePreviewTitle: 'Old Document A',
+          basePreviewPath: 'old/projects/finance/document-a',
+          basePreviewDescription: 'Old Financial report for Q1 2024',
+        }),
+      },
+    },
+  },
 }
 
 export const WithDifferencesRemoval: Story = {
@@ -293,6 +453,26 @@ export const WithDifferencesRemoval: Story = {
     basePreviewPath: 'old/projects/finance/document-a',
     basePreviewDescription: 'Old Financial report for Q1 2024',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input removal',
+          placeholder: 'phd:',
+          allowUris: true,
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'removal',
+          baseValue: 'phd:abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+          basePreviewIcon: 'PowerhouseLogoSmall',
+          basePreviewTitle: 'Old Document A',
+          basePreviewPath: 'old/projects/finance/document-a',
+          basePreviewDescription: 'Old Financial report for Q1 2024',
+        }),
+      },
+    },
+  },
 }
 
 export const WithDifferencesMixed: Story = {
@@ -311,5 +491,25 @@ export const WithDifferencesMixed: Story = {
     basePreviewTitle: 'Old Document A',
     basePreviewPath: 'old/projects/finance/document-a',
     basePreviewDescription: 'Old Financial report for Q1 2024',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: createCodeExample({
+          label: 'PHID input mixed',
+          placeholder: 'phd:',
+          allowUris: true,
+          variant: 'withValueTitleAndDescription',
+          defaultValue: mockedOptions[0].value,
+          initialOptions: mockedOptions,
+          viewMode: 'mixed',
+          baseValue: 'phd:abcde2a4-f9a0-4950-8161-fd8d8cc7dea7',
+          basePreviewIcon: 'PowerhouseLogoSmall',
+          basePreviewTitle: 'Old Document A',
+          basePreviewPath: 'old/projects/finance/document-a',
+          basePreviewDescription: 'Old Financial report for Q1 2024',
+        }),
+      },
+    },
   },
 }

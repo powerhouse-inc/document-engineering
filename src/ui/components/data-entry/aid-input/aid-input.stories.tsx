@@ -17,6 +17,49 @@ import { fetchOptions, fetchSelectedOption, mockedOptions } from './mocks.js'
  * - Async and sync options fetching
  * - Customizable preview placeholder with icon, title, path, description and agent type
  *
+ * ### Example Usage
+ *
+ * ```tsx
+ * <AIDInput
+ *   name="aid-input"
+ *   label="AID input"
+ *   placeholder="did:ethr:"
+ *   variant="withValueTitleAndDescription"
+ *   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
+ *   // Please, note that you should implement your own functions.
+ *   // In this example the functions are async and return a Promise but you can also implement both as sync functions.
+ *   fetchOptionsCallback={async (userInput: string) => {
+ *     // fetch agents from your API endpoint
+ *     const response = await fetch(`/your-api-endpoint?search=${userInput}`)
+ *     const agents = await response.json()
+ *
+ *     return agents.map(agent => ({
+ *       value: agent.id,
+ *       title: agent.name,
+ *       path: agent.path,
+ *       description: agent.role,
+ *       agentType: agent.type,
+ *       icon: 'Person'
+ *     }))
+ *   }}
+ *   fetchSelectedOptionCallback={async (id: string) => {
+ *     // fetch specific agent details from your API endpoint
+ *     const response = await fetch(`/your-api-endpoint/${id}`)
+ *     if (!response.ok) return undefined
+ *
+ *     const agent = await response.json()
+ *     return {
+ *       value: agent.id,
+ *       title: agent.name,
+ *       path: agent.path,
+ *       description: agent.role,
+ *       agentType: agent.type,
+ *       icon: 'Person'
+ *     }
+ *   }}
+ * />
+ * ```
+ *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
  * > you can use the [AIDField](?path=/docs/scalars-aid-field--readme)
  * > component.
@@ -226,7 +269,7 @@ const createCodeExample = (props: Record<string, any>) => {
 ${propsString}
   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
   // Please, note that you should implement your own functions.
-  // In this examples the functions are async and return a Promise but you can also implement both as sync functions.
+  // In this example the functions are async and return a Promise but you can also implement both as sync functions.
   fetchOptionsCallback={async (userInput: string) => {
     // fetch agents from your API endpoint
     const response = await fetch(\`/your-api-endpoint?search=\${userInput}\`)
@@ -235,6 +278,7 @@ ${propsString}
     return agents.map(agent => ({
       value: agent.id,
       title: agent.name,
+      path: agent.path,
       description: agent.role,
       agentType: agent.type,
       icon: 'Person'
@@ -249,6 +293,7 @@ ${propsString}
     return {
       value: agent.id,
       title: agent.name,
+      path: agent.path,
       description: agent.role,
       agentType: agent.type,
       icon: 'Person'
