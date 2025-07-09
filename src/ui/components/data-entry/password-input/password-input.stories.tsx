@@ -5,7 +5,7 @@ import {
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
-import { specialCharacters } from '../../../../scalars/lib/utils.js'
+import { specialCharacters } from './utils.js'
 import { PasswordInput } from './password-input.js'
 
 /**

@@ -6,7 +6,7 @@ import {
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../lib/storybook-arg-types.js'
-import { specialCharacters } from '../../lib/utils.js'
+import { specialCharacters } from '../../../ui/components/data-entry/password-input/utils.js'
 import { PasswordField } from './password-field.js'
 
 /**

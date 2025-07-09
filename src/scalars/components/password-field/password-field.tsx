@@ -1,6 +1,6 @@
 import { PasswordInput } from '../../../ui/components/data-entry/password-input/index.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
-import { specialCharacters } from '../../lib/utils.js'
+import { specialCharacters } from '../../../ui/components/data-entry/password-input/utils.js'
 import type { PasswordFieldProps } from './types.js'
 
 const PasswordField = withFieldValidation<PasswordFieldProps>(PasswordInput, {
