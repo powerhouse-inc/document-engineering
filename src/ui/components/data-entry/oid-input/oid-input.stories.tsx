@@ -9,50 +9,55 @@ import { fetchOptions, fetchSelectedOption, mockedOptions } from './mocks.js'
 import { OIDInput } from './oid-input.js'
 
 /**
- * The `OIDInput` component provides an input field for Object IDs (typically UUIDs).
+ * ## Autocomplete input component
  *
- * Features include:
- * - Multiple display variants for autocomplete options
- * - Copy paste support
- * - Async and sync options fetching
- * - Customizable preview placeholder with icon, title, path and description
+ * `OIDInput` is a specialized input component for handling OIDs (Object Identifiers) with advanced
+ * autocomplete functionality. It allows users to search and select items intuitively as they type.
  *
- * ### Example Usage
+ * ### Key features:
+ *
+ * **1. Dynamic autocomplete (`fetchOptionsCallback`)**
+ * - Executes while the user types in the input field
+ * - Receives the user's input text as a parameter
+ * - Must return a list of options that match the search criteria
+ * - Enables real-time search from APIs, databases, or others external or internal data sources
+ *
+ * **2. Selected option retrieval (`fetchSelectedOptionCallback`)**
+ * - Called when the "refetch" icon in the preview of the selected option is clicked
+ * - Receives the selected option's ID/value as a parameter
+ * - Must return the updated details of that specific option or undefined if the option is not found for some reason
+ * - As `fetchOptionsCallback` can be used synchronously or asynchronously
+ *
+ * ### Basic usage example:
  *
  * ```tsx
  * <OIDInput
- *   name="oid-input"
- *   label="OID input"
+ *   name="object-selector"
+ *   label="Select Object"
  *   placeholder="uuid"
  *   variant="withValueTitleAndDescription"
- *   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
- *   // Please, note that you should implement your own functions.
- *   // In this example the functions are async and return a Promise but you can also implement both as sync functions.
- *   fetchOptionsCallback={async (userInput: string) => {
- *     // fetch objects from your API endpoint
- *     const response = await fetch(`/your-api-endpoint?search=${userInput}`)
- *     const objects = await response.json()
  *
- *     return objects.map(object => ({
- *       value: object.id,
- *       title: object.name,
- *       path: object.path,
- *       description: object.description,
- *       icon: 'Braces'
+ *   // search options as the user types
+ *   fetchOptionsCallback={async (userInput) => {
+ *     const results = await searchObjects(userInput)
+ *     return results.map(obj => ({
+ *       value: obj.id, // unique object ID
+ *       title: obj.title, // object title or name
+ *       path: obj.path, // object path or location
+ *       description: obj.description, // object description or summary
+ *       icon: obj.icon // object icon
  *     }))
  *   }}
- *   fetchSelectedOptionCallback={async (id: string) => {
- *     // fetch specific object details from your API endpoint
- *     const response = await fetch(`/your-api-endpoint/${id}`)
- *     if (!response.ok) return undefined
  *
- *     const object = await response.json()
+ *   // get details of a specific option by its ID/value
+ *   fetchSelectedOptionCallback={async (objectId) => {
+ *     const obj = await getObjectById(objectId)
  *     return {
- *       value: object.id,
- *       title: object.name,
- *       path: object.path,
- *       description: object.description,
- *       icon: 'Braces'
+ *       value: obj.id,
+ *       title: obj.title,
+ *       path: obj.path,
+ *       description: obj.description,
+ *       icon: obj.icon
  *     }
  *   }}
  * />
@@ -252,7 +257,7 @@ ${propsString}
     
     return objects.map(object => ({
       value: object.id,
-      title: object.name,
+      title: object.title,
       path: object.path,
       description: object.description,
       icon: 'Braces'
@@ -266,7 +271,7 @@ ${propsString}
     const object = await response.json()
     return {
       value: object.id,
-      title: object.name,
+      title: object.title,
       path: object.path,
       description: object.description,
       icon: 'Braces'

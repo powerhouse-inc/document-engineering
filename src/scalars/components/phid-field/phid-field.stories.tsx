@@ -10,44 +10,56 @@ import {
 import { PHIDField } from './phid-field.js'
 
 /**
- * A `PHIDField` component designed for form usage with built-in validation.
+ * ## Autocomplete field component
  *
- * ### Example Usage
+ * `PHIDField` is a specialized form component for handling PHIDs (Powerhouse IDs) with advanced
+ * autocomplete functionality and built-in validation. It allows users to search and select items intuitively
+ * as they type.
+ *
+ * ### Key features:
+ *
+ * **1. Dynamic autocomplete (`fetchOptionsCallback`)**
+ * - Executes while the user types in the input field
+ * - Receives the user's input text as a parameter
+ * - Must return a list of options that match the search criteria
+ * - Enables real-time search from APIs, databases, or others external or internal data sources
+ *
+ * **2. Selected option retrieval (`fetchSelectedOptionCallback`)**
+ * - Called when the "refetch" icon in the preview of the selected option is clicked
+ * - Receives the selected option's ID/value as a parameter
+ * - Must return the updated details of that specific option or undefined if the option is not found for some reason
+ * - As `fetchOptionsCallback` can be used synchronously or asynchronously
+ *
+ * ### Basic usage example:
  *
  * ```tsx
  * <PHIDField
- *   name="phid-field"
- *   label="PHID field"
+ *   name="document-selector"
+ *   label="Select Document"
  *   placeholder="phd:"
  *   variant="withValueTitleAndDescription"
- *   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
- *   // Please, note that you should implement your own functions.
- *   // In this example the functions are async and return a Promise but you can also implement both as sync functions.
- *   fetchOptionsCallback={async (userInput: string) => {
- *     // fetch documents from your API endpoint
- *     const response = await fetch(`/your-api-endpoint?search=${userInput}`)
- *     const documents = await response.json()
  *
- *     return documents.map(document => ({
- *       value: document.id,
- *       title: document.name,
- *       path: document.path,
- *       description: document.description,
- *       icon: 'PowerhouseLogoSmall'
+ *   // search options as the user types
+ *   fetchOptionsCallback={async (userInput) => {
+ *     const results = await searchDocuments(userInput)
+ *     return results.map(doc => ({
+ *       value: doc.id, // unique document ID
+ *       title: doc.title, // document title or name
+ *       path: doc.path, // document path or location
+ *       description: doc.description, // document description or summary
+ *       icon: doc.icon // document icon
  *     }))
  *   }}
- *   fetchSelectedOptionCallback={async (id: string) => {
- *     // fetch specific document details from your API endpoint
- *     const response = await fetch(`/your-api-endpoint/${id}`)
- *     if (!response.ok) return undefined
  *
- *     const document = await response.json()
+ *   // get details of a specific option by its ID/value
+ *   fetchSelectedOptionCallback={async (documentId) => {
+ *     const doc = await getDocumentById(documentId)
  *     return {
- *       value: document.id,
- *       title: document.name,
- *       path: document.path,
- *       description: document.description,
- *       icon: 'PowerhouseLogoSmall'
+ *       value: doc.id,
+ *       title: doc.title,
+ *       path: doc.path,
+ *       description: doc.description,
+ *       icon: doc.icon
  *     }
  *   }}
  * />

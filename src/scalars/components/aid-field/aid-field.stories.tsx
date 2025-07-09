@@ -10,46 +10,58 @@ import {
 import { AIDField } from './aid-field.js'
 
 /**
- * A `AIDField` component designed for form usage with built-in validation.
+ * ## Autocomplete field component
  *
- * ### Example Usage
+ * `AIDField` is a specialized form component for handling AIDs (Agent Identifiers) with advanced
+ * autocomplete functionality and built-in validation. It allows users to search and select items intuitively
+ * as they type.
+ *
+ * ### Key features:
+ *
+ * **1. Dynamic autocomplete (`fetchOptionsCallback`)**
+ * - Executes while the user types in the input field
+ * - Receives the user's input text as a parameter
+ * - Must return a list of options that match the search criteria
+ * - Enables real-time search from APIs, databases, or others external or internal data sources
+ *
+ * **2. Selected option retrieval (`fetchSelectedOptionCallback`)**
+ * - Called when the "refetch" icon in the preview of the selected option is clicked
+ * - Receives the selected option's ID/value as a parameter
+ * - Must return the updated details of that specific option or undefined if the option is not found for some reason
+ * - As `fetchOptionsCallback` can be used synchronously or asynchronously
+ *
+ * ### Basic usage example:
  *
  * ```tsx
  * <AIDField
- *   name="aid-field"
- *   label="AID field"
+ *   name="agent-selector"
+ *   label="Select Agent"
  *   placeholder="did:ethr:"
  *   variant="withValueTitleAndDescription"
- *   // Example definition of fetchOptionsCallback and fetchSelectedOptionCallback functions.
- *   // Please, note that you should implement your own functions.
- *   // In this example the functions are async and return a Promise but you can also implement both as sync functions.
- *   fetchOptionsCallback={async (userInput: string) => {
- *     // fetch agents from your API endpoint
- *     const response = await fetch(`/your-api-endpoint?search=${userInput}`)
- *     const agents = await response.json()
  *
- *     return agents.map(agent => ({
- *       value: agent.id,
- *       title: agent.name,
- *       path: agent.path,
- *       description: agent.role,
- *       agentType: agent.type,
- *       icon: 'Person'
+ *   // search options as the user types
+ *   fetchOptionsCallback={async (userInput) => {
+ *     const results = await searchAgents(userInput)
+ *     return results.map(agent => ({
+ *       value: agent.id, // unique agent ID
+ *       title: agent.title, // agent title or name
+ *       path: agent.path, // agent path or location
+ *       description: agent.description, // agent description or summary
+ *       agentType: agent.type, // agent type (e.g. "human", "bot", "organization", etc.)
+ *       icon: agent.icon // agent icon
  *     }))
  *   }}
- *   fetchSelectedOptionCallback={async (id: string) => {
- *     // fetch specific agent details from your API endpoint
- *     const response = await fetch(`/your-api-endpoint/${id}`)
- *     if (!response.ok) return undefined
  *
- *     const agent = await response.json()
+ *   // get details of a specific option by its ID/value
+ *   fetchSelectedOptionCallback={async (agentId) => {
+ *     const agent = await getAgentById(agentId)
  *     return {
  *       value: agent.id,
- *       title: agent.name,
+ *       title: agent.title,
  *       path: agent.path,
- *       description: agent.role,
+ *       description: agent.description,
  *       agentType: agent.type,
- *       icon: 'Person'
+ *       icon: agent.icon
  *     }
  *   }}
  * />
