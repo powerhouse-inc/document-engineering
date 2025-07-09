@@ -80,6 +80,7 @@ describe('EmailField', () => {
     await userEvent.tab()
     expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument()
   })
+
   it('should validate email with the allowed domains', async () => {
     const allowedDomains = ['example.com', 'company.org']
     renderWithForm(<EmailField label="Email" name="email" allowedDomains={allowedDomains} showErrorOnBlur />)
@@ -165,5 +166,46 @@ describe('EmailField', () => {
     await userEvent.tab()
     const errorMessage = screen.getByText('Email must match the Email Address field')
     expect(errorMessage).toBeInTheDocument()
+  })
+  it('should accept valid email formats with special characters', async () => {
+    renderWithForm(<EmailField label="Email" name="email" showErrorOnBlur />)
+    const input = screen.getByLabelText('Email')
+
+    // Test valid emails with special characters allowed by the regex
+    const validEmails = [
+      'user+tag@example.com',
+      'user.name@domain.co.uk',
+      'user_name@subdomain.example.org',
+      'user-name@domain.com',
+    ]
+
+    for (const email of validEmails) {
+      await userEvent.clear(input)
+      await userEvent.type(input, email)
+      await userEvent.tab()
+      expect(screen.queryByText('Please enter a valid email address')).not.toBeInTheDocument()
+    }
+  })
+
+  it('should reject invalid email formats', async () => {
+    renderWithForm(<EmailField label="Email" name="email" showErrorOnBlur />)
+    const input = screen.getByLabelText('Email')
+
+    // Test invalid emails that should be rejected by the regex
+    const invalidEmails = [
+      'user@',
+      '@domain.com',
+      'user@domain',
+      'user..name@domain.com',
+      'user@domain..com',
+      'user name@domain.com',
+    ]
+
+    for (const email of invalidEmails) {
+      await userEvent.clear(input)
+      await userEvent.type(input, email)
+      await userEvent.tab()
+      expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument()
+    }
   })
 })

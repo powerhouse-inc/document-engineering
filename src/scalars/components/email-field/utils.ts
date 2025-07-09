@@ -1,5 +1,6 @@
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
+// Email regex that doesn't allow consecutive dots
+const emailRegex =
+  /^(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?!.*\.\.)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/
 import type { ValidatorResult } from '../types.js'
 export interface DomainValidationOptions {
   allowedDomains: string[]
