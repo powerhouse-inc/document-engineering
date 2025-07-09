@@ -37,3 +37,7 @@ export const validateEmailDomain = (value: string, options: DomainValidationOpti
 
   return isAllowed || `Email domain must be one of: ${options.allowedDomains.join(', ')}`
 }
+
+export const escapeIdForSelector = (id: string): string => {
+  return id.replace(/[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g, '\\$&')
+}

@@ -3,7 +3,7 @@ import type { EmailInputProps } from '../../../ui/components/data-entry/email-in
 import { validateFieldMatch } from '../../lib/validators/validateFieldMatch.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
 import type { FieldErrorHandling } from '../types.js'
-import { validateEmailDomain, validateEmailFormat } from './utils.js'
+import { escapeIdForSelector, validateEmailDomain, validateEmailFormat } from './utils.js'
 
 type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
   FieldErrorHandling & {
@@ -27,10 +27,18 @@ const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {
       ({ matchFieldName }) =>
       (value: string, formState: Record<string, unknown>) => {
         if (!matchFieldName) return true
+        const currentField = document.querySelector(`input[name="${matchFieldName}"]`)
+        const form = currentField?.closest('form')
+        const formId = form?.id
 
-        const matchFieldSelector = `input[name="${matchFieldName}"]`
+        const matchFieldSelector = formId
+          ? `#${escapeIdForSelector(formId)} input[name="${matchFieldName}"]`
+          : `input[name="${matchFieldName}"]`
+        const matchFieldElement = document.querySelector(matchFieldSelector)
 
-        const matchFieldLabel = document.querySelector(matchFieldSelector)?.getAttribute('data-label') ?? ''
+        if (!matchFieldElement) return true
+
+        const matchFieldLabel = matchFieldElement.getAttribute('data-label') ?? ''
 
         return validateFieldMatch(value, formState, {
           matchFieldName,
