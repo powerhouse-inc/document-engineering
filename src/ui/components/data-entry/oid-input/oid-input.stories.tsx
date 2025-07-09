@@ -14,16 +14,16 @@ import { OIDInput } from './oid-input.js'
  * `OIDInput` is a specialized input component for handling OIDs (Object Identifiers) with advanced
  * autocomplete functionality. It allows users to search and select items intuitively as they type.
  *
- * ### Key features:
+ * ### Important configs:
  *
- * **1. Dynamic autocomplete (`fetchOptionsCallback`)**
+ * **1.`fetchOptionsCallback` (for dynamic autocomplete)**
  * - Executes while the user types in the input field
  * - Receives the user's input text as a parameter
  * - Must return a list of options that match the search criteria
  * - Enables real-time search from APIs, databases, or others external or internal data sources
  *
- * **2. Selected option retrieval (`fetchSelectedOptionCallback`)**
- * - Called when the "refetch" icon in the preview of the selected option is clicked
+ * **2.`fetchSelectedOptionCallback` (to update the preview of the selected option)**
+ * - Called when the "refresh" button in the preview of the selected option is clicked
  * - Receives the selected option's ID/value as a parameter
  * - Must return the updated details of that specific option or undefined if the option is not found for some reason
  * - As `fetchOptionsCallback` can be used synchronously or asynchronously

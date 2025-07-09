@@ -20,9 +20,6 @@ import { TimePickerField } from './time-picker-field.js'
  * For styling examples and implementation details:
  * See our Storybook docs → 🎨
  * [Time Picker Examples](?path=/docs/data-entry-time-picker--readme)
- *
- * Note: Must be used within a form context provider.
- * Use the `withForm` decorator in Storybook for quick testing.
  */
 
 const meta: Meta<typeof TimePickerField> = {

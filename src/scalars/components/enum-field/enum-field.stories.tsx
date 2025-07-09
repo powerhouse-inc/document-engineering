@@ -30,9 +30,6 @@ import { Icon, type IconName } from '../../../ui/components/icon/index.js'
  *   ]}
  * />
  * ```
- *
- * > **Note:** Must be used within a form context provider.
- * > Use the `withForm` decorator in Storybook for quick testing.
  */
 
 const meta: Meta<typeof EnumField> = {
