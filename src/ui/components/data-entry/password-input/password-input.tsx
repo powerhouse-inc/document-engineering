@@ -1,3 +1,5 @@
+/* TODO: Remove this eslint-disable rule and pass requireUppercase, requireLowercase, requireNumbers, requireSpecialCharacters to PasswordStrengthMeter */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Input } from '../input/index.js'
 import { cn, useUniqueId } from '../../../../scalars/lib/index.js'
@@ -24,16 +26,18 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       required,
       errors,
       warnings,
-      // TODO: Implement commented props
-      // minLength = 15,
-      // maxLength = 256,
-      // requireUppercase = true,
-      // requireLowercase = true,
-      // requireNumbers = true,
-      // requireSpecialCharacters = true,
+      minLength,
+      maxLength,
+      pattern,
+      requireUppercase = true,
+      requireLowercase = true,
+      requireNumbers = true,
+      requireSpecialCharacters = true,
+      // TODO: Implement disallowCommonPasswords
       // disallowCommonPasswords = true,
       showPasswordStrength = true,
       viewMode = 'edition',
+      // TODO: Implement diffs
       // baseValue,
       ...props
     },
@@ -115,8 +119,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                 aria-label={!label ? 'Password input' : undefined}
                 aria-required={required}
                 type={showPassword ? 'text' : 'password'}
-                minLength={undefined} // TODO: remove this line
-                maxLength={undefined} // TODO: remove this line
+                minLength={minLength}
+                maxLength={maxLength}
+                pattern={pattern?.source}
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck={false}
@@ -158,7 +163,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             }}
             className={cn('border-none shadow-[0px_2px_12px_0px_rgba(37,42,52,0.10)]')}
           >
-            {/* TODO: Implement Password Strength Meter */}
+            {/* TODO: Implement PasswordStrengthMeter */}
             {showPasswordStrength && (
               <div className={cn('w-full flex flex-col gap-4 px-4 pt-2 pb-4 rounded-md')}>
                 <div className={cn('w-full flex flex-col gap-2')}>
