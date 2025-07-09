@@ -1,31 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../../../scalars/lib/storybook-arg-types.js'
-import { specialCharacters } from '../../../../scalars/lib/utils.js'
-import { PasswordInput } from './password-input.js'
+} from '../../lib/storybook-arg-types.js'
+import { specialCharacters } from '../../lib/utils.js'
+import { PasswordField } from './password-field.js'
 
 /**
- * The `PasswordInput` component provides an input field for password entry.
+ * A `PasswordField` component designed for form usage with built-in validation.
  *
- * Features include:
- * - Secure password masking with toggle visibility
- * - Password strength meter with suggestions display
- * - Character requirements (uppercase, lowercase, numbers, special characters)
- * - Common password detection and prevention
- *
- * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [PasswordField](?path=/docs/scalars-password-field--readme)
- * > component.
+ * > **Note:** Must be used within a form context provider.
+ * > Use the `withForm` decorator in Storybook for quick testing.
  */
 
-const meta: Meta<typeof PasswordInput> = {
-  title: 'Data Entry/Password Input',
-  component: PasswordInput,
+const meta: Meta<typeof PasswordField> = {
+  title: 'Scalars/Password Field',
+  component: PasswordField,
   decorators: [
+    withForm,
     (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
@@ -42,13 +37,7 @@ const meta: Meta<typeof PasswordInput> = {
     ...PrebuiltArgTypes.minLength,
     ...PrebuiltArgTypes.maxLength,
     ...PrebuiltArgTypes.pattern,
-    ...getValidationArgTypes({
-      enabledArgTypes: {
-        validators: false,
-        showErrorOnBlur: false,
-        showErrorOnChange: false,
-      },
-    }),
+    ...getValidationArgTypes(),
 
     requireUppercase: {
       control: 'boolean',
@@ -115,24 +104,24 @@ const meta: Meta<typeof PasswordInput> = {
     ...PrebuiltArgTypes.baseValue,
   },
   args: {
-    name: 'password-input',
+    name: 'password-field',
   },
-} satisfies Meta<typeof PasswordInput>
+} satisfies Meta<typeof PasswordField>
 
 export default meta
 
-type Story = StoryObj<typeof PasswordInput>
+type Story = StoryObj<typeof PasswordField>
 
 export const Default: Story = {
   args: {
-    label: 'Password input',
+    label: 'Password field',
     placeholder: 'Password',
   },
 }
 
 export const Filled: Story = {
   args: {
-    label: 'Password input',
+    label: 'Password field',
     placeholder: 'Password',
     defaultValue: 'H0l4.mundo',
   },

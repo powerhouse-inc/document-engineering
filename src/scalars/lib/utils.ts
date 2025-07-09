@@ -9,3 +9,5 @@ export function cn(...inputs: ClassValue[]) {
 export const useUniqueId = () => {
   return useId()
 }
+
+export const specialCharacters = ' !"#$%&\'()*+,-./:;<?>@=[\\]^_`{|}~'

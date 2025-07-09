@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { PasswordInput } from './password-input.js'
 
@@ -49,6 +50,18 @@ describe('PasswordInput Component', () => {
     await waitFor(() => {
       expect(input).toHaveAttribute('aria-invalid', 'true')
     })
+  })
+
+  it('should handle value changes', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+
+    render(<PasswordInput name="password" label="Password input" onChange={onChange} />)
+
+    const input = screen.getByLabelText('Password input')
+    await user.type(input, 'H0l4.mundo')
+    expect(onChange).toHaveBeenCalledTimes(10)
+    expect(input).toHaveValue('H0l4.mundo')
   })
 
   it('should not invoke onChange on mount when it has a defaultValue', () => {
