@@ -29,11 +29,12 @@ const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {
         if (!matchFieldName) return true
         const currentField = document.querySelector(`input[name="${matchFieldName}"]`)
         const form = currentField?.closest('form')
-        const formId = form?.id
+        const formId = form?.getAttribute('id')
 
         const matchFieldSelector = formId
           ? `#${escapeIdForSelector(formId)} input[name="${matchFieldName}"]`
           : `input[name="${matchFieldName}"]`
+
         const matchFieldElement = document.querySelector(matchFieldSelector)
 
         if (!matchFieldElement) return true
