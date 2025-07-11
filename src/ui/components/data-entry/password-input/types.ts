@@ -20,6 +20,10 @@ interface PasswordInputProps
   // TODO: Implement disallowCommonPasswords
   // disallowCommonPasswords?: boolean
   showPasswordStrength?: boolean
+  /**
+   * Intended for exclusive use in Storybook stories to force the password strength popover to open by default.
+   */
+  showPasswordStrengthOpen?: boolean
 }
 
 export type { PasswordInputProps }

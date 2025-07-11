@@ -1,5 +1,3 @@
-/* TODO: Remove this eslint-disable rule and pass requireUppercase, requireLowercase, requireNumbers, requireSpecialCharacters to PasswordStrengthMeter */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Input } from '../input/index.js'
 import { cn, useUniqueId } from '../../../../scalars/lib/index.js'
@@ -8,7 +6,7 @@ import { FormGroup } from '../../../../scalars/components/fragments/form-group/i
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import { Popover, PopoverAnchor, PopoverContent } from '../../../../scalars/components/fragments/popover/index.js'
-import { ProgressBar } from '../../../../scalars/components/fragments/progress-bar/index.js'
+import { PasswordStrength } from './password-strength.js'
 import { Icon } from '../../icon/index.js'
 import type { PasswordInputProps } from './types.js'
 
@@ -26,16 +24,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       required,
       errors,
       warnings,
-      minLength,
-      maxLength,
       pattern,
-      requireUppercase = true,
-      requireLowercase = true,
-      requireNumbers = true,
-      requireSpecialCharacters = true,
-      // TODO: Implement disallowCommonPasswords
-      // disallowCommonPasswords = true,
       showPasswordStrength = true,
+      showPasswordStrengthOpen = false,
       viewMode = 'edition',
       // TODO: Implement diffs
       // baseValue,
@@ -46,21 +37,11 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const prefix = useUniqueId()
     const id = idProp ?? `${prefix}-password-input`
 
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+    const [isPopoverOpen, setIsPopoverOpen] = useState(showPasswordStrengthOpen)
     const [password, setPassword] = useState(value ?? defaultValue ?? '')
     const [showPassword, setShowPassword] = useState(false)
 
     const containerRef = useRef<HTMLDivElement | null>(null)
-    const inputRef = useRef<HTMLInputElement | null>(null)
-
-    const mergedRef = (node: HTMLInputElement | null) => {
-      inputRef.current = node
-      if (typeof ref === 'function') {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
-    }
 
     const handleChange = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +86,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           <PopoverAnchor asChild={true}>
             <div ref={containerRef} className={cn('relative')}>
               <Input
-                ref={mergedRef}
+                ref={ref}
                 id={id}
                 value={password}
                 onChange={handleChange}
@@ -119,8 +100,6 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                 aria-label={!label ? 'Password input' : undefined}
                 aria-required={required}
                 type={showPassword ? 'text' : 'password'}
-                minLength={minLength}
-                maxLength={maxLength}
                 pattern={pattern?.source}
                 autoCorrect="off"
                 autoCapitalize="off"
@@ -163,31 +142,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             }}
             className={cn('border-none shadow-[0px_2px_12px_0px_rgba(37,42,52,0.10)]')}
           >
-            {/* TODO: Implement PasswordStrengthMeter */}
-            {showPasswordStrength && (
-              <div className={cn('w-full flex flex-col gap-4 px-4 pt-2 pb-4 rounded-md')}>
-                <div className={cn('w-full flex flex-col gap-2')}>
-                  <h3 className={cn('text-sm font-semibold text-gray-900')}>Password strength</h3>
-                  <ProgressBar value={33} className="[&_[data-slot=progress-bar-indicator]]:bg-red-900" />
-                  <span className={cn('text-xs font-medium text-gray-600')}>Weak</span>
-                </div>
-
-                <hr className={cn('w-full border-t border-gray-300')} />
-
-                <div className={cn('w-full flex flex-col gap-4')}>
-                  <h4 className={cn('text-sm leading-[18px] font-medium text-gray-500')}>Suggestion</h4>
-                  <FormMessageList
-                    messages={[
-                      'At least one lowercase',
-                      'At least one uppercase',
-                      'At least one numeric',
-                      'Minimum 8 characters',
-                    ]}
-                    className={cn('gap-2 [&>li]:text-gray-500 [&>li]:before:bg-gray-500')}
-                  />
-                </div>
-              </div>
-            )}
+            {showPasswordStrength && <PasswordStrength password={password} />}
           </PopoverContent>
         </Popover>
         {!!description && <FormDescription>{description}</FormDescription>}

@@ -40,7 +40,7 @@ const PasswordField = withFieldValidation<PasswordFieldProps>(PasswordInput, {
             return true
           }
         }
-        return `The field value must contain at least one special character from the list between double quotes: "${specialCharacters}"`
+        return `The field value must contain at least one special character: ${specialCharacters}`
       },
   },
 })

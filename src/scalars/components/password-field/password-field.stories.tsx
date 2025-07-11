@@ -71,7 +71,7 @@ const meta: Meta<typeof PasswordField> = {
 
     requireSpecialCharacters: {
       control: 'boolean',
-      description: `The field value requires at least one special character from the list between double quotes: "${specialCharacters}"`,
+      description: `The field value requires at least one special character: ${specialCharacters}`,
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'true' },
@@ -124,5 +124,14 @@ export const Filled: Story = {
     label: 'Password field',
     placeholder: 'Password',
     defaultValue: 'H0l4.mundo',
+  },
+}
+
+export const WithPasswordStrength: Story = {
+  args: {
+    label: 'Password field',
+    placeholder: 'Password',
+    defaultValue: 'weakpassword',
+    showPasswordStrengthOpen: true,
   },
 }
