@@ -11,9 +11,6 @@ import { DateTimePickerField } from './date-time-picker-field.js'
  * For styling examples:
  * See our Storybook docs → 🎨
  * [Date Time Picker Examples](?path=/docs/data-entry-date-time-picker--readme)
- *
- * > **Note:** Must be used within a form context provider.
- * > Use the `withForm` decorator in Storybook for quick testing.
  */
 
 const meta: Meta<typeof DateTimePickerField> = {
