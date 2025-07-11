@@ -26,6 +26,8 @@ const meta: Meta<typeof EmailField> = {
       },
     }),
     ...PrebuiltArgTypes.pattern,
+    ...PrebuiltArgTypes.minLength,
+    ...PrebuiltArgTypes.maxLength,
     ...PrebuiltArgTypes.viewMode,
     ...PrebuiltArgTypes.baseValue,
     allowedDomains: {
@@ -45,24 +47,6 @@ const meta: Meta<typeof EmailField> = {
         type: { summary: 'string' },
         detail:
           'When provided, this field will validate that its value matches the value of the field with the specified name. Common use case: email confirmation fields.',
-        category: StorybookControlCategory.VALIDATION,
-      },
-    },
-    minLength: {
-      control: 'number',
-      description: 'Minimum length of the email field',
-      table: {
-        type: { summary: 'number' },
-        detail: 'Minimum length of the email field',
-        category: StorybookControlCategory.VALIDATION,
-      },
-    },
-    maxLength: {
-      control: 'number',
-      description: 'Maximum length of the email field',
-      table: {
-        type: { summary: 'number' },
-        detail: 'Maximum length of the email field',
         category: StorybookControlCategory.VALIDATION,
       },
     },
