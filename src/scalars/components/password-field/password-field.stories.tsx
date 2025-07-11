@@ -134,6 +134,11 @@ export const WithPasswordStrength: Story = {
     placeholder: 'Password',
     defaultValue: 'weakpassword',
   },
+  parameters: {
+    chromatic: {
+      delay: 1000,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
