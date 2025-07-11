@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/test'
 import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
@@ -133,16 +132,6 @@ export const WithPasswordStrength: Story = {
     label: 'Password field',
     placeholder: 'Password',
     defaultValue: 'weakpassword',
-  },
-  parameters: {
-    chromatic: {
-      delay: 1000,
-    },
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-
-    const passwordInput = canvas.getByLabelText('Password field')
-    await userEvent.click(passwordInput)
+    showPasswordStrengthOpen: true,
   },
 }

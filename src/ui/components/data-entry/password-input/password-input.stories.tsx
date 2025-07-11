@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/test'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
@@ -91,16 +90,6 @@ export const WithPasswordStrength: Story = {
     label: 'Password input',
     placeholder: 'Password',
     defaultValue: 'weakpassword',
-  },
-  parameters: {
-    chromatic: {
-      delay: 1000,
-    },
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-
-    const passwordInput = canvas.getByLabelText('Password input')
-    await userEvent.click(passwordInput)
+    showPasswordStrengthOpen: true,
   },
 }

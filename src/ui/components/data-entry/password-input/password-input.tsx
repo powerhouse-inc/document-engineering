@@ -26,6 +26,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       warnings,
       pattern,
       showPasswordStrength = true,
+      showPasswordStrengthOpen = false,
       viewMode = 'edition',
       // TODO: Implement diffs
       // baseValue,
@@ -36,7 +37,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const prefix = useUniqueId()
     const id = idProp ?? `${prefix}-password-input`
 
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+    const [isPopoverOpen, setIsPopoverOpen] = useState(showPasswordStrengthOpen)
     const [password, setPassword] = useState(value ?? defaultValue ?? '')
     const [showPassword, setShowPassword] = useState(false)
 
