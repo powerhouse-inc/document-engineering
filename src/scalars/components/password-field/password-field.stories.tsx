@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/test'
 import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
@@ -71,7 +72,7 @@ const meta: Meta<typeof PasswordField> = {
 
     requireSpecialCharacters: {
       control: 'boolean',
-      description: `The field value requires at least one special character from the list between double quotes: "${specialCharacters}"`,
+      description: `The field value requires at least one special character: ${specialCharacters}`,
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'true' },
@@ -124,5 +125,19 @@ export const Filled: Story = {
     label: 'Password field',
     placeholder: 'Password',
     defaultValue: 'H0l4.mundo',
+  },
+}
+
+export const WithPasswordStrength: Story = {
+  args: {
+    label: 'Password field',
+    placeholder: 'Password',
+    defaultValue: 'weakpassword',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const passwordInput = canvas.getByLabelText('Password field')
+    await userEvent.click(passwordInput)
   },
 }

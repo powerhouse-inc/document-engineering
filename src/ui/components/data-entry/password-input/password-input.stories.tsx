@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/test'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
 } from '../../../../scalars/lib/storybook-arg-types.js'
-import { specialCharacters } from './utils.js'
 import { PasswordInput } from './password-input.js'
 
 /**
@@ -14,7 +14,6 @@ import { PasswordInput } from './password-input.js'
  * Features include:
  * - Secure password masking with toggle visibility
  * - Password strength meter with suggestions display
- * - Character requirements (uppercase, lowercase, numbers, special characters)
  * - Common password detection and prevention
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
@@ -50,57 +49,6 @@ const meta: Meta<typeof PasswordInput> = {
       },
     }),
 
-    requireUppercase: {
-      control: 'boolean',
-      description: 'The field value requires at least one capital letter',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
-    requireLowercase: {
-      control: 'boolean',
-      description: 'The field value requires at least one lowercase letter',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
-    requireNumbers: {
-      control: 'boolean',
-      description: 'The field value requires at least one number',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
-    requireSpecialCharacters: {
-      control: 'boolean',
-      description: `The field value requires at least one special character from the list between double quotes: "${specialCharacters}"`,
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    },
-
-    // TODO: Implement disallowCommonPasswords
-    /* disallowCommonPasswords: {
-      control: 'boolean',
-      description: 'Disallows commonly used or compromised passwords as valid input in the field',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    }, */
-
     showPasswordStrength: {
       control: 'boolean',
       description: 'Displays a password strength meter',
@@ -135,5 +83,19 @@ export const Filled: Story = {
     label: 'Password input',
     placeholder: 'Password',
     defaultValue: 'H0l4.mundo',
+  },
+}
+
+export const WithPasswordStrength: Story = {
+  args: {
+    label: 'Password input',
+    placeholder: 'Password',
+    defaultValue: 'weakpassword',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const passwordInput = canvas.getByLabelText('Password input')
+    await userEvent.click(passwordInput)
   },
 }
