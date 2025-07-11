@@ -9,6 +9,8 @@ export type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
   FieldErrorHandling & {
     allowedDomains?: string[]
     matchFieldName?: string
+    maxLength?: number
+    minLength?: number
   }
 
 const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {

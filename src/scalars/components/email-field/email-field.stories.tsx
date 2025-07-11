@@ -25,8 +25,6 @@ const meta: Meta<typeof EmailField> = {
         validators: false,
       },
     }),
-    ...PrebuiltArgTypes.minLength,
-    ...PrebuiltArgTypes.maxLength,
     ...PrebuiltArgTypes.pattern,
     ...PrebuiltArgTypes.viewMode,
     ...PrebuiltArgTypes.baseValue,
@@ -50,9 +48,30 @@ const meta: Meta<typeof EmailField> = {
         category: StorybookControlCategory.VALIDATION,
       },
     },
+    minLength: {
+      control: 'number',
+      description: 'Minimum length of the email field',
+      table: {
+        type: { summary: 'number' },
+        detail: 'Minimum length of the email field',
+        category: StorybookControlCategory.VALIDATION,
+      },
+    },
+    maxLength: {
+      control: 'number',
+      description: 'Maximum length of the email field',
+      table: {
+        type: { summary: 'number' },
+        detail: 'Maximum length of the email field',
+        category: StorybookControlCategory.VALIDATION,
+      },
+    },
   },
   args: {
     name: 'email-field',
+    allowedDomains: [],
+    errors: [],
+    warnings: [],
   },
 }
 
