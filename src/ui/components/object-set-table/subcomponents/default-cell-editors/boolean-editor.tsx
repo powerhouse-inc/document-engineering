@@ -1,11 +1,11 @@
 import { BooleanField } from '../../../../../scalars/components/boolean-field/boolean-field.js'
 import { cn } from '../../../../../scalars/lib/utils.js'
-import type { CellContext, RenderCellEditorFn } from '../../types.js'
+import type { CellContext, DataType } from '../../types.js'
 
-const BooleanCellEditor: RenderCellEditorFn<any, unknown> = (
+export const booleanCellEditor = <T extends DataType>(
   value: unknown,
   onChange: (newValue: unknown) => void,
-  context: CellContext<any>
+  context: CellContext<T>
 ) => {
   const booleanValue = (() => {
     if (typeof value === 'boolean') {
@@ -36,5 +36,3 @@ const BooleanCellEditor: RenderCellEditorFn<any, unknown> = (
     </div>
   )
 }
-
-export const booleanCellEditor = BooleanCellEditor

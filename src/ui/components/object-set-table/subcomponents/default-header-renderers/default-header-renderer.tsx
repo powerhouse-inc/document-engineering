@@ -1,9 +1,9 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
-import type { CellContext } from '../../types.js'
+import type { CellContext, DataType } from '../../types.js'
 import { SortIndicator } from '../sort-indicator.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 
-const DefaultHeaderContent = ({ value, context }: { value: string; context: CellContext }) => {
+const DefaultHeaderContent = ({ value, context }: { value: string; context: CellContext<DataType> }) => {
   const { state } = useInternalTableState()
 
   let classes = ''
@@ -43,7 +43,7 @@ const DefaultHeaderContent = ({ value, context }: { value: string; context: Cell
 }
 
 const defaultHeaderRenderer = <T, V = string>(value: V, context: CellContext<T>) => {
-  return <DefaultHeaderContent value={value as string} context={context} />
+  return <DefaultHeaderContent value={value as string} context={context as CellContext<DataType>} />
 }
 
 export { defaultHeaderRenderer }

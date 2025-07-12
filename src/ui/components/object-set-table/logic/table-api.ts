@@ -27,7 +27,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
 
   _createCellContext(row: number, column: number): CellContext<TData> {
     return {
-      row: this._getState().data[row],
+      row: this._getState().data[row].data,
       column: this._getConfig().columns[column],
       rowIndex: row,
       columnIndex: column,
@@ -118,7 +118,10 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     const formRef = this._getState().dataFormReferences[row][column]
     const columnDef = this._getConfig().columns[column]
     if (formRef) {
-      const originalValue = columnDef.valueGetter?.(this._getState().data[row], this._createCellContext(row, column))
+      const originalValue = columnDef.valueGetter?.(
+        this._getState().data[row].data,
+        this._createCellContext(row, column)
+      )
       formRef.current?.setValue(columnDef.field, originalValue)
     }
 
@@ -235,7 +238,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
   async deleteRows(rows: number[]): Promise<void> {
     if (!this.canDelete()) return
 
-    const rowsData = rows.map((row) => this._getState().data[row])
+    const rowsData = rows.map((row) => this._getState().data[row].data)
     const count = rows.length
     const confirmed = await confirm({
       title: 'Delete entries',

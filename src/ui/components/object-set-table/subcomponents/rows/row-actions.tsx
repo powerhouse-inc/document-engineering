@@ -11,7 +11,7 @@ import {
 } from '../../../dropdown-menu/index.js'
 import { cn } from '../../../../../scalars/lib/utils.js'
 
-interface RowActionsProps<T> {
+interface RowActionsProps<T extends DataType> {
   open: boolean
   row: T
   rowIndex: number

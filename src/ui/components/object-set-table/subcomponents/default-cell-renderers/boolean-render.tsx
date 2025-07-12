@@ -1,8 +1,8 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { Checkbox } from '../../../data-entry/checkbox/checkbox.js'
-import type { CellContext } from '../../types.js'
+import type { CellContext, DataType } from '../../types.js'
 
-const renderBooleanCell = (value: unknown, context: CellContext) => {
+const renderBooleanCell = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
   return (
     <div
       className={cn(
