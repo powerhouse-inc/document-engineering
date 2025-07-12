@@ -237,16 +237,27 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
             columnIndex: action.payload.columnIndex,
             tableConfig: action.payload.tableConfig,
           })
-          return sortFn!(columnValueA, columnValueB, {
+
+          // ensure null values are at the end
+          if (columnValueA !== null && columnValueB === null) {
+            return -1
+          }
+          if (columnValueA === null && columnValueB !== null) {
+            return 1
+          }
+
+          const sortIndex = sortFn!(columnValueA, columnValueB, {
             tableConfig: action.payload.tableConfig,
             columnDef: column,
             data: state.data.map((item) => item.data),
           })
+
+          return sortDirection === 'asc' ? sortIndex : -sortIndex
         })
 
       return {
         ...state,
-        data: sortDirection === 'asc' ? data : data.reverse(),
+        data,
         sortState: {
           columnIndex: action.payload.columnIndex,
           direction: sortDirection,

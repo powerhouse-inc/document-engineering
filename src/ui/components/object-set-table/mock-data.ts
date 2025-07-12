@@ -1,5 +1,5 @@
 export interface MockedPerson {
-  firstName: string
+  firstName: string | null
   walletAddress: string
   isActive: boolean
   payment: number
@@ -46,7 +46,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Charlie',
+    firstName: null,
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 14522,
@@ -76,7 +76,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
-    firstName: 'Edward',
+    firstName: null,
     walletAddress: '0x1234567890abcdef',
     isActive: true,
     payment: 10234234230,
