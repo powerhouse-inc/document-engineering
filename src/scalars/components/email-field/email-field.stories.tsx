@@ -53,9 +53,6 @@ const meta: Meta<typeof EmailField> = {
   },
   args: {
     name: 'email-field',
-    allowedDomains: [],
-    errors: [],
-    warnings: [],
   },
 }
 
