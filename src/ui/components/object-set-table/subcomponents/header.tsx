@@ -1,4 +1,4 @@
-import { type FC, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { CellContext, ColumnDef } from '../types.js'
 import { getColumnTitle } from '../utils.js'
@@ -6,10 +6,10 @@ import { HeaderNumberTd } from './header/header-number-td.js'
 import { useInternalTableState } from './table-provider/table-provider.js'
 
 interface TableHeaderProps {
-  columns: ColumnDef[]
+  columns: Array<ColumnDef<any>>
 }
 
-const TableHeader: FC<TableHeaderProps> = ({ columns }) => {
+const TableHeader = ({ columns }: TableHeaderProps) => {
   const {
     config,
     state: { selectedRowIndexes },
@@ -26,7 +26,7 @@ const TableHeader: FC<TableHeaderProps> = ({ columns }) => {
 
   const columnHeaders = useMemo(() => {
     return columns.map((column, columnIndex) => {
-      const cellContext: CellContext<unknown> = {
+      const cellContext: CellContext<any> = {
         rowIndex: -1, // the header row has no row
         row: undefined,
         column,

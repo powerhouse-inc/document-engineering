@@ -1,7 +1,7 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
-import type { CellContext } from '../../types.js'
+import type { CellContext, DataType } from '../../types.js'
 
-const renderTextCell = (value: unknown, context: CellContext) => {
+const renderTextCell = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
   return (
     <div
       className={cn({

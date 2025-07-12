@@ -15,7 +15,7 @@ import { createRef } from 'react'
  * const title = getColumnTitle({ field: "address.code", title: "Country" }) // "Country"
  * ```
  */
-export const getColumnTitle = (column: ColumnDef) => {
+export const getColumnTitle = <T extends DataType = DataType>(column: ColumnDef<T>) => {
   if (column.title) {
     return column.title
   }
@@ -208,9 +208,9 @@ export const isCellEqual = (cell1: TableCellIndex | null, cell2: TableCellIndex 
  * @param columnDefs - The column definitions.
  * @returns The form references.
  */
-export const createFormReferences = (
+export const createFormReferences = <T extends DataType = DataType>(
   rowCount: number,
-  columnDefs: ColumnDef[]
+  columnDefs: Array<ColumnDef<T>>
 ): Array<Array<React.RefObject<UseFormReturn> | null>> => {
   if (rowCount === 0 || columnDefs.length === 0) {
     return []

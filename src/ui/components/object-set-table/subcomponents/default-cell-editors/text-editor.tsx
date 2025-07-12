@@ -1,10 +1,10 @@
 import { StringField } from '../../../../../scalars/components/string-field/string-field.js'
-import type { CellContext, RenderCellEditorFn } from '../../types.js'
+import type { CellContext, DataType } from '../../types.js'
 
-export const textCellEditor: RenderCellEditorFn<any, unknown> = (
+export const textCellEditor = <T extends DataType>(
   value: unknown,
   onChange: (newValue: unknown) => void,
-  context: CellContext<unknown>
+  context: CellContext<T>
 ) => {
   const stringValue = typeof value === 'string' ? value : String(value ?? '')
   return (
