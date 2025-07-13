@@ -43,6 +43,13 @@ export interface ObjectSetTableConfig<T extends DataType> {
   minRowCount?: number
 
   /**
+   * The minimum height in pixels of the rows.
+   *
+   * @default "auto"
+   */
+  minRowHeight?: number | 'auto'
+
+  /**
    * A function that is called when one or multiple rows are deleted.
    *
    * @param rows The rows that are being deleted.

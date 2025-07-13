@@ -737,6 +737,14 @@ const meta: Meta<typeof ObjectSetTable> = {
         defaultValue: { summary: '0' },
       },
     },
+    minRowHeight: {
+      control: 'text',
+      description: 'The minimum height in pixels of the rows.',
+      table: {
+        type: { summary: 'number | "auto"' },
+        defaultValue: { summary: 'auto' },
+      },
+    },
     onDelete: {
       control: false,
       description: 'Function called when rows are deleted. Enables row deletion functionality when provided.',

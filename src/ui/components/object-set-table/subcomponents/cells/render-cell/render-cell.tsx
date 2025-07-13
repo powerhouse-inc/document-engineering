@@ -54,6 +54,7 @@ const RenderCell = <T extends DataType>({
       onClick={handleCellClick}
       isSelected={isThisCellSelected}
       isEditable={column.editable ?? false}
+      isEditing={isThisCellEditMode}
     >
       <Form ref={formRef} onSubmit={() => undefined} submitChangesOnly>
         <div className={cn({ hidden: !isThisCellEditMode })}>
