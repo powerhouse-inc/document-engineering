@@ -3,7 +3,7 @@ import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { StringField } from '../string-field/index.js'
 import { Form } from './form.js'
-import { EmailField } from '../email-field/email-field.js'
+import { PasswordField } from '../password-field/index.js'
 
 describe('Form', () => {
   it('should render children as React nodes', () => {
@@ -118,14 +118,14 @@ describe('Form', () => {
     expect(screen.getByText('Test')).toHaveClass('test-class')
   })
 
-  describe('EmailField with matchFieldName', () => {
-    it('should not submit field when it has matchFieldName and data-exclude attributes', async () => {
+  describe('PasswordField with matchFieldName', () => {
+    it('should not submit field when it has matchFieldName set', async () => {
       const handleSubmit = vi.fn()
 
       render(
         <Form onSubmit={handleSubmit}>
-          <EmailField name="email" value="test@example.com" />
-          <EmailField name="confirmEmail" matchFieldName="email" value="test@example.com" />
+          <PasswordField name="password" defaultValue="@A1a" />
+          <PasswordField name="confirmPassword" defaultValue="@A1a" matchFieldName="password" />
           <button type="submit">Submit</button>
         </Form>
       )
@@ -134,18 +134,18 @@ describe('Form', () => {
 
       await waitFor(() => {
         expect(handleSubmit).toHaveBeenCalledWith({
-          email: 'test@example.com',
+          password: '@A1a',
         })
       })
     })
 
-    it('should submit both fields when matchFieldName is not provided', async () => {
+    it('should submit fields when matchFieldName is not set', async () => {
       const handleSubmit = vi.fn()
 
       render(
         <Form onSubmit={handleSubmit}>
-          <EmailField name="email" value="test@example.com" />
-          <EmailField name="confirmEmail" value="test@example.com" />
+          <PasswordField name="password" defaultValue="@A1a" />
+          <PasswordField name="confirmPassword" defaultValue="@A1a" />
           <button type="submit">Submit</button>
         </Form>
       )
@@ -154,8 +154,8 @@ describe('Form', () => {
 
       await waitFor(() => {
         expect(handleSubmit).toHaveBeenCalledWith({
-          email: 'test@example.com',
-          confirmEmail: 'test@example.com',
+          password: '@A1a',
+          confirmPassword: '@A1a',
         })
       })
     })

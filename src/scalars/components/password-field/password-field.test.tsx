@@ -135,4 +135,21 @@ describe('PasswordField Component', () => {
       })
     })
   })
+
+  it('should not show error when matchFieldName is set and passwords match', async () => {
+    const user = userEvent.setup()
+
+    renderWithForm(
+      <>
+        <PasswordField name="password" label="Password" defaultValue="@A1a" />
+        <PasswordField name="confirmPassword" label="Confirm password" matchFieldName="password" showErrorOnBlur />
+      </>
+    )
+
+    const input = screen.getByLabelText('Confirm password')
+    await user.type(input, '@A1a')
+    await user.tab()
+
+    expect(input).toHaveAttribute('aria-invalid', 'false')
+  })
 })

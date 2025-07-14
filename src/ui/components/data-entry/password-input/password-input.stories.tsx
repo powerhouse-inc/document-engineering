@@ -8,12 +8,9 @@ import {
 import { PasswordInput } from './password-input.js'
 
 /**
- * The `PasswordInput` component provides an input field for password entry.
+ * ## Password input component
  *
- * Features include:
- * - Secure password masking with toggle visibility
- * - Password strength meter with suggestions display
- * - Common password detection and prevention
+ * `PasswordInput` is a specialized input component for handling passwords.
  *
  * > **Note:** This component does not have built-in validation. If you need built-in validation
  * > you can use the [PasswordField](?path=/docs/scalars-password-field--readme)
@@ -91,5 +88,35 @@ export const WithPasswordStrength: Story = {
     placeholder: 'Password',
     defaultValue: 'weakpassword',
     showPasswordStrengthOpen: true,
+  },
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Password input addition',
+    placeholder: 'Password',
+    defaultValue: 'new password',
+    baseValue: 'old password',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Password input removal',
+    placeholder: 'Password',
+    defaultValue: 'new password',
+    baseValue: 'old password',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Password input mixed',
+    placeholder: 'Password',
+    defaultValue: 'new password',
+    baseValue: 'old password',
+    viewMode: 'mixed',
   },
 }

@@ -10,10 +10,15 @@ import { specialCharacters } from '../../../ui/components/data-entry/password-in
 import { PasswordField } from './password-field.js'
 
 /**
- * A `PasswordField` component designed for form usage with built-in validation.
+ * ## Password field component
  *
- * > **Note:** Must be used within a form context provider.
- * > Use the `withForm` decorator in Storybook for quick testing.
+ * `PasswordField` is a specialized form component for handling passwords with built-in validation.
+ *
+ * ### Example of use with custom validation:
+ *
+ * ```tsx
+ * // TODO: add a custom validation example
+ * ```
  */
 
 const meta: Meta<typeof PasswordField> = {
@@ -79,17 +84,6 @@ const meta: Meta<typeof PasswordField> = {
       },
     },
 
-    // TODO: Implement disallowCommonPasswords
-    /* disallowCommonPasswords: {
-      control: 'boolean',
-      description: 'Disallows commonly used or compromised passwords as valid input in the field',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-      },
-    }, */
-
     showPasswordStrength: {
       control: 'boolean',
       description: 'Displays a password strength meter',
@@ -97,6 +91,18 @@ const meta: Meta<typeof PasswordField> = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'true' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+
+    matchFieldName: {
+      control: 'text',
+      description:
+        'Name of another password field in the form to validate the value match. Useful for confirmation fields like "Confirm Password" which must match the value of the original field.',
+      table: {
+        type: { summary: 'string' },
+        detail:
+          'When provided, this field will validate that its value matches the value of the field with the specified name. Common use case: email confirmation fields.',
+        category: StorybookControlCategory.VALIDATION,
       },
     },
 
@@ -133,5 +139,66 @@ export const WithPasswordStrength: Story = {
     placeholder: 'Password',
     defaultValue: 'weakpassword',
     showPasswordStrengthOpen: true,
+  },
+}
+
+export const WithPasswordConfirmation: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Form defaultValues={{ password: '', confirmPassword: '' }}>
+  <PasswordField name="password" label="Password" placeholder="Enter your password" />
+  <PasswordField name="confirmPassword" label="Confirm Password" placeholder="Confirm your password" matchFieldName="password" />
+  <Button type="submit">Submit</Button>
+</Form>
+        `,
+      },
+      description: {
+        story:
+          'This story variant shows how to use `matchFieldName` prop to create password confirmation fields. The second field validates that it matches the value of the first one.',
+      },
+    },
+  },
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <PasswordField name="password" label="Password" placeholder="Enter your password" />
+      <PasswordField
+        name="confirmPassword"
+        label="Confirm Password"
+        placeholder="Confirm your password"
+        matchFieldName="password"
+      />
+    </div>
+  ),
+}
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Password field addition',
+    placeholder: 'Password',
+    defaultValue: 'new password',
+    baseValue: 'old password',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Password field removal',
+    placeholder: 'Password',
+    defaultValue: 'new password',
+    baseValue: 'old password',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Password field mixed',
+    placeholder: 'Password',
+    defaultValue: 'new password',
+    baseValue: 'old password',
+    viewMode: 'mixed',
   },
 }

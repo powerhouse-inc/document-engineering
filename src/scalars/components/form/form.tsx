@@ -180,20 +180,21 @@ const Form = forwardRef<UseFormReturn, FormProps>(
             Object.entries(data).map(([fieldName, value]) => [fieldName, isEmpty(value) ? null : value])
           )
 
-          // cast data if needed to prevent submitting wrong data type
+          // exclude or cast data if needed to prevent submitting wrong data type
           const form = document.getElementById(formId)
           Object.keys(data).map((key) => {
             try {
               const value: unknown = data[key]
+              const field = form?.querySelector(`[name="${key}"]`)
+
+              const fieldToExclude = field?.getAttribute('data-exclude')
+              if (fieldToExclude === 'true') {
+                delete data[key]
+                return
+              }
+
               if (value !== null) {
-                const field = form?.querySelector(`[name="${key}"]`)
                 const dataCast = field?.getAttribute('data-cast')
-                const fieldToExclude = field?.getAttribute('data-exclude')
-                const matchFieldName = field?.getAttribute('matchFieldName')
-                if (matchFieldName && fieldToExclude === 'true') {
-                  delete data[key]
-                  return
-                }
                 if (dataCast) {
                   data[key] = castValue(value, dataCast as ValueCast) as unknown
                 }
