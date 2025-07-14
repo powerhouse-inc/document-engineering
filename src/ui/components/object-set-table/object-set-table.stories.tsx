@@ -109,6 +109,7 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * |----------|------|---------|-------------|
  * | `sortable` | `boolean` | `false` | Enable column sorting |
  * | `rowComparator` | `(a: unknown, b: unknown, context: SortableColumnContext<T>) => number` | Type-based comparator | Custom sorting logic |
+ * | `onSort` | `(context: SortableColumnContext<T>) => void` | `undefined` | Callback function called when column is sorted |
  *
  * ---
  *
