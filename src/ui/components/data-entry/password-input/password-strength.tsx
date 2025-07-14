@@ -5,7 +5,7 @@ import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en'
 import { cn } from '../../../../scalars/lib/index.js'
 import { ProgressBar } from '../../../../scalars/components/fragments/progress-bar/index.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
-import { specialCharacters, strengthColors, strengthLabels, strengthValues } from './utils.js'
+import { adjustStrengthScore, specialCharacters, strengthColors, strengthLabels, strengthValues } from './utils.js'
 
 const options = {
   dictionary: {
@@ -48,7 +48,7 @@ const PasswordStrength = ({ password }: { password: string }) => {
     }
   }, [password, result])
 
-  const score = result?.score
+  const score = adjustStrengthScore(password, result?.score)
   const showWeak = password === '' || (score === undefined && wasEmpty)
 
   return (

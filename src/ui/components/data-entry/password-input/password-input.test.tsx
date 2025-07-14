@@ -69,4 +69,48 @@ describe('PasswordInput Component', () => {
     render(<PasswordInput name="password" label="Password input" defaultValue="H0l4.mundo" onChange={onChange} />)
     expect(onChange).not.toHaveBeenCalled()
   })
+
+  describe('viewMode and diffs', () => {
+    it('should not render diff component by default', () => {
+      render(<PasswordInput name="password" label="Password input" />)
+      expect(screen.queryByTestId('password-input-diff')).not.toBeInTheDocument()
+    })
+
+    it('should not render diff component when viewMode is explicitly set to edition', () => {
+      render(<PasswordInput name="password" label="Password input" viewMode="edition" />)
+      expect(screen.queryByTestId('password-input-diff')).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is addition', () => {
+      render(<PasswordInput name="password" label="Password input" viewMode="addition" value="new" baseValue="old" />)
+      expect(screen.getByTestId('password-input-diff')).toBeInTheDocument()
+      expect(screen.getByText('new')).toBeInTheDocument()
+      expect(screen.queryByText('old')).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is removal', () => {
+      render(<PasswordInput name="password" label="Password input" viewMode="removal" value="new" baseValue="old" />)
+      expect(screen.getByTestId('password-input-diff')).toBeInTheDocument()
+      expect(screen.queryByText('new')).not.toBeInTheDocument()
+      expect(screen.getByText('old')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is mixed', () => {
+      render(<PasswordInput name="password" label="Password input" viewMode="mixed" value="new" baseValue="old" />)
+      expect(screen.getByTestId('password-input-diff')).toBeInTheDocument()
+      expect(screen.getByText('new')).toBeInTheDocument()
+      expect(screen.getByText('old')).toBeInTheDocument()
+    })
+
+    it('should handle empty value in diff mode', () => {
+      const { container } = render(
+        <PasswordInput name="password" label="Password input" viewMode="addition" value="" />
+      )
+      expect(screen.getByTestId('password-input-diff')).toBeInTheDocument()
+      const diffSpans = container.querySelectorAll('span')
+      diffSpans.forEach((span) => {
+        expect(span).toHaveTextContent('')
+      })
+    })
+  })
 })
