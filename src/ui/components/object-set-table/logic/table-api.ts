@@ -193,12 +193,6 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @param direction - The direction to sort the rows. Null if the sorting should be removed
    */
   sortRows(columnIndex: number, direction: SortDirection | null) {
-    if (direction === null) {
-      this._getState().dispatch?.({
-        type: 'SORT_COLUMN',
-        payload: { columnIndex, direction: 'asc', tableConfig: this._getConfig() },
-      })
-    }
     this._getState().dispatch?.({
       type: 'SORT_COLUMN',
       payload: { columnIndex, direction, tableConfig: this._getConfig() },

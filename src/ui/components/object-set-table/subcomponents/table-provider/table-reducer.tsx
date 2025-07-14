@@ -4,6 +4,7 @@ import type {
   IndexedData,
   ObjectSetTableConfig,
   SortDirection,
+  SortState,
   TableCellIndex,
 } from '../../types.js'
 import type { UseFormReturn } from 'react-hook-form'
@@ -25,10 +26,7 @@ interface TableState<T extends DataType = DataType> {
   selectedCellIndex: TableCellIndex | null
   isCellEditMode: boolean
 
-  sortState: {
-    columnIndex: number
-    direction: SortDirection
-  } | null
+  sortState: SortState | null
 }
 
 type TableAction<T extends DataType = DataType> =
@@ -213,14 +211,28 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
 
       if (sortDirection === null) {
         // do not sort the data, just use the default unsorted data
+        const nextData = [...state.defaultData].map((data, index) => ({ data, __index: index }))
+        if (column.onSort) {
+          column.onSort({
+            tableConfig: action.payload.tableConfig,
+            columnDef: column,
+            data: nextData.map((item) => item.data),
+            sortState: null,
+          })
+        }
         return {
           ...state,
-          data: [...state.defaultData].map((data, index) => ({ data, __index: index })),
+          data: nextData,
           sortState: null,
         }
       }
 
-      const data: Array<IndexedData<T>> = [...state.defaultData]
+      const sortState: SortState = {
+        columnIndex: action.payload.columnIndex,
+        direction: sortDirection,
+      }
+
+      const sortedData: Array<IndexedData<T>> = [...state.defaultData]
         .map((data, index) => ({ data, __index: index }))
         .sort((rowA, rowB) => {
           const columnValueA = column.valueGetter!(rowA.data, {
@@ -250,18 +262,25 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
             tableConfig: action.payload.tableConfig,
             columnDef: column,
             data: state.data.map((item) => item.data),
+            sortState,
           })
 
           return sortDirection === 'asc' ? sortIndex : -sortIndex
         })
 
+      if (column.onSort) {
+        column.onSort({
+          tableConfig: action.payload.tableConfig,
+          columnDef: column,
+          data: sortedData.map((item) => item.data),
+          sortState,
+        })
+      }
+
       return {
         ...state,
-        data,
-        sortState: {
-          columnIndex: action.payload.columnIndex,
-          direction: sortDirection,
-        },
+        data: sortedData,
+        sortState,
       }
     }
     default:

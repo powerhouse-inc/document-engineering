@@ -16,6 +16,14 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
         title: 'User',
         editable: true,
         sortable: true,
+        onSort: ({ sortState, data }) => {
+          // This is just for example purposes
+          // eslint-disable-next-line no-console
+          console.log(
+            `----> onSort (${sortState?.direction ?? 'unsorted'})`,
+            data.reduce((acc, curr) => `${acc}${curr.firstName}, `, '')
+          )
+        },
         width: 140,
         onSave: (value: unknown, context: CellContext<MockedPerson>) => {
           setData((prevData) => {
