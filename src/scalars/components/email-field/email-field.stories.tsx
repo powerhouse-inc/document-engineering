@@ -25,9 +25,9 @@ const meta: Meta<typeof EmailField> = {
         validators: false,
       },
     }),
+    ...PrebuiltArgTypes.pattern,
     ...PrebuiltArgTypes.minLength,
     ...PrebuiltArgTypes.maxLength,
-    ...PrebuiltArgTypes.pattern,
     ...PrebuiltArgTypes.viewMode,
     ...PrebuiltArgTypes.baseValue,
     allowedDomains: {

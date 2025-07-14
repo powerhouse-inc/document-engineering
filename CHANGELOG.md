@@ -1,3 +1,31 @@
+# [1.19.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.18.0...v1.19.0) (2025-07-11)
+
+
+### Bug Fixes
+
+* **scalars & ui:** add example usage to stories ([0cdbf8d](https://github.com/powerhouse-inc/document-engineering/commit/0cdbf8dbe90ba12d9b1ed14ba04fa0d38d7be623))
+* **scalars & ui:** improve AID docs ([5d75150](https://github.com/powerhouse-inc/document-engineering/commit/5d7515012e18e18f12ad8725229811add65547f6))
+* **scalars:** add hatche to get the ID ([a559f5c](https://github.com/powerhouse-inc/document-engineering/commit/a559f5c8065abfafefb9be5bb24045e6f9ca1afb))
+* **scalars:** export the component to test in connent ([b35486d](https://github.com/powerhouse-inc/document-engineering/commit/b35486dd22d1ce70096e3bc316422f78b46fc28a))
+* **scalars:** export the type of email field ([490462c](https://github.com/powerhouse-inc/document-engineering/commit/490462cd45eba39b083652cc23cbd3d698a1f95b))
+* **scalars:** fix submit id in id-field correct-way get id email ([3d20b66](https://github.com/powerhouse-inc/document-engineering/commit/3d20b66cec300ab3333a33d0ce04ee9fbc6a924b))
+* **scalars:** improve the message and fix CR ([f6d2fe2](https://github.com/powerhouse-inc/document-engineering/commit/f6d2fe289be67a7db5e4481d9c138e561571ecdd))
+* **scalars:** remove properties before submit and add some test ([9eee9e4](https://github.com/powerhouse-inc/document-engineering/commit/9eee9e40555cf329665785fad3eb591b838e6305))
+* **test:** snapshots ([a615942](https://github.com/powerhouse-inc/document-engineering/commit/a615942a9b85d12c4f739b4b78b931fb3be8156f))
+* **ui:** add 1s delay to WithPasswordStrength chromatic snapshot ([b6632f3](https://github.com/powerhouse-inc/document-engineering/commit/b6632f36f39748f359a6dd3ab1a1bc984533a0b5))
+* **ui:** improve WithPasswordStrength story variant ([262f9cf](https://github.com/powerhouse-inc/document-engineering/commit/262f9cfec330d2309c6ed691d692c8d13b5d9375))
+
+
+### Features
+
+* export icon component ([fd81478](https://github.com/powerhouse-inc/document-engineering/commit/fd81478207d59da54bc2014590f1784e05211dce))
+* **scalars:** add field match function and add test ([79c9e1a](https://github.com/powerhouse-inc/document-engineering/commit/79c9e1a3a487435182b8e4cb289f5c2aec9a033a))
+* **scalars:** add PasswordField base + password format validatios ([67a12a3](https://github.com/powerhouse-inc/document-engineering/commit/67a12a327b4ce59956b4395bb49623e6118059b7))
+* **scalars:** adds PasswordField + password format validations ([158a554](https://github.com/powerhouse-inc/document-engineering/commit/158a554a6676872f18ab587b1727470e07bc4732))
+* **scalars:** improve the regex and stories description ([5576098](https://github.com/powerhouse-inc/document-engineering/commit/55760980e7d0d83cc7491773bb9663a8b2bb3857))
+* **ui:** add the PasswordStrength component ([f07d9a2](https://github.com/powerhouse-inc/document-engineering/commit/f07d9a23307e9f342f858909ed271ac6685944f1))
+* **ui:** adds password input component base ([d6b51f0](https://github.com/powerhouse-inc/document-engineering/commit/d6b51f0e45debbf20f8b0c6aa448633c08133292))
+
 # [1.18.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.17.0...v1.18.0) (2025-07-08)
 
 

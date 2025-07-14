@@ -44,4 +44,4 @@ const Icon = ({ name, size = 24, color, style, ...props }: IconProps) => {
   )
 }
 
-export { Icon, type IconProps }
+export { Icon, type IconProps, type IconName }
