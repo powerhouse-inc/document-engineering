@@ -1,4 +1,11 @@
-import type { ColumnDef, DataType, ObjectSetTableConfig, SortDirection, TableCellIndex } from '../../types.js'
+import type {
+  ColumnDef,
+  DataType,
+  IndexedData,
+  ObjectSetTableConfig,
+  SortDirection,
+  TableCellIndex,
+} from '../../types.js'
 import type { UseFormReturn } from 'react-hook-form'
 import { createFormReferences } from '../../utils.js'
 
@@ -7,8 +14,8 @@ interface TableState<T extends DataType = DataType> {
 
   defaultData: T[]
 
-  columns: ColumnDef[]
-  data: T[]
+  columns: Array<ColumnDef<T>>
+  data: Array<IndexedData<T>>
   dataFormReferences: Array<Array<React.RefObject<UseFormReturn> | null>>
   allowRowSelection: boolean
   showRowNumbers: boolean
@@ -31,7 +38,7 @@ type TableAction<T extends DataType = DataType> =
     }
   | {
       type: 'SET_COLUMNS'
-      payload: ColumnDef[]
+      payload: Array<ColumnDef<T>>
     }
   | {
       type: 'SET_DATA'
@@ -41,7 +48,7 @@ type TableAction<T extends DataType = DataType> =
       type: 'UPDATE_COLUMN'
       payload: {
         index: number
-        column: Partial<ColumnDef>
+        column: Partial<ColumnDef<T>>
       }
     }
   // Row selection
@@ -87,7 +94,7 @@ type TableAction<T extends DataType = DataType> =
       }
     }
 
-const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAction<T>): TableState<T> => {
+const tableReducer = <T extends DataType = DataType>(state: TableState<T>, action: TableAction<T>): TableState<T> => {
   switch (action.type) {
     case 'SET_DISPATCH':
       return {
@@ -104,7 +111,7 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
     case 'SET_DATA':
       return {
         ...state,
-        data: action.payload,
+        data: action.payload.map((data, index) => ({ data, __index: index })),
         defaultData: action.payload,
         dataFormReferences: createFormReferences(action.payload.length + 1, state.columns),
       }
@@ -208,36 +215,49 @@ const tableReducer = <T extends DataType>(state: TableState<T>, action: TableAct
         // do not sort the data, just use the default unsorted data
         return {
           ...state,
-          data: [...state.defaultData],
+          data: [...state.defaultData].map((data, index) => ({ data, __index: index })),
           sortState: null,
         }
       }
 
-      const data = [...state.defaultData].sort((rowA, rowB) => {
-        const columnValueA = column.valueGetter!(rowA, {
-          row: rowA,
-          rowIndex: -1,
-          column,
-          columnIndex: action.payload.columnIndex,
-          tableConfig: action.payload.tableConfig,
+      const data: Array<IndexedData<T>> = [...state.defaultData]
+        .map((data, index) => ({ data, __index: index }))
+        .sort((rowA, rowB) => {
+          const columnValueA = column.valueGetter!(rowA.data, {
+            row: rowA.data,
+            rowIndex: -1,
+            column,
+            columnIndex: action.payload.columnIndex,
+            tableConfig: action.payload.tableConfig,
+          })
+          const columnValueB = column.valueGetter!(rowB.data, {
+            row: rowB.data,
+            rowIndex: -1,
+            column,
+            columnIndex: action.payload.columnIndex,
+            tableConfig: action.payload.tableConfig,
+          })
+
+          // ensure null values are at the end
+          if (columnValueA !== null && columnValueB === null) {
+            return -1
+          }
+          if (columnValueA === null && columnValueB !== null) {
+            return 1
+          }
+
+          const sortIndex = sortFn!(columnValueA, columnValueB, {
+            tableConfig: action.payload.tableConfig,
+            columnDef: column,
+            data: state.data.map((item) => item.data),
+          })
+
+          return sortDirection === 'asc' ? sortIndex : -sortIndex
         })
-        const columnValueB = column.valueGetter!(rowB, {
-          row: rowB,
-          rowIndex: -1,
-          column,
-          columnIndex: action.payload.columnIndex,
-          tableConfig: action.payload.tableConfig,
-        })
-        return sortFn!(columnValueA, columnValueB, {
-          tableConfig: action.payload.tableConfig,
-          columnDef: column,
-          data: state.data,
-        })
-      })
 
       return {
         ...state,
-        data: sortDirection === 'asc' ? data : data.reverse(),
+        data,
         sortState: {
           columnIndex: action.payload.columnIndex,
           direction: sortDirection,

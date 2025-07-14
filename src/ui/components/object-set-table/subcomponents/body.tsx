@@ -4,7 +4,7 @@ import { useInternalTableState } from './table-provider/table-provider.js'
 import { RenderRow } from './rows/render-row.js'
 
 const TableBody = <T extends DataType>() => {
-  const { config, api } = useInternalTableState<T>()
+  const { config, state, api } = useInternalTableState<T>()
 
   // add global key events to the table
   useGlobalTableKeyEvents()
@@ -21,17 +21,19 @@ const TableBody = <T extends DataType>() => {
 
   return (
     <tbody className="text-sm leading-5 text-gray-900">
-      {config.data.map((data, index) => (
+      {state.data.map((data, index) => (
         <RenderRow key={JSON.stringify({ data, _reactKeyIndex: index })} item={data} rowIndex={index} />
       ))}
 
-      {canRenderInsertRow && <RenderRow item={{}} rowIndex={config.data.length} mode="inserting" />}
+      {canRenderInsertRow && (
+        <RenderRow item={{ data: {}, __index: state.data.length }} rowIndex={config.data.length} mode="inserting" />
+      )}
 
       {emptyRowsCount > 0 &&
         Array.from({ length: emptyRowsCount }).map((_, index) => (
           <RenderRow
             key={index}
-            item={{}}
+            item={{ data: {}, __index: state.data.length + 1 + index }}
             rowIndex={index + config.data.length + (canRenderInsertRow ? 1 : 0)}
             mode="empty"
           />

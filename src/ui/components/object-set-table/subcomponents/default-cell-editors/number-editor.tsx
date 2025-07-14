@@ -1,10 +1,10 @@
 import { NumberField } from '../../../../../scalars/components/number-field/number-field.js'
-import type { CellContext, RenderCellEditorFn } from '../../types.js'
+import type { CellContext, DataType } from '../../types.js'
 
-export const numberCellEditor: RenderCellEditorFn<any, unknown> = (
+export const numberCellEditor = <T extends DataType>(
   value: unknown,
   onChange: (newValue: unknown) => unknown,
-  context: CellContext<any>
+  context: CellContext<T>
 ) => {
   const numericValue = typeof value === 'number' ? value : Number(value) || 0
 

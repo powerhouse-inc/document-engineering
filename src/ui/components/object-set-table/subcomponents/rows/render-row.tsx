@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import type { DataType } from '../../types.js'
+import type { DataType, IndexedData } from '../../types.js'
 import { RowNumberCell } from '../cells/row-number-cell.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { TableRow } from './table-row.js'
@@ -8,7 +8,7 @@ import { InformationCell } from '../cells/information-cell.js'
 import { RowActions } from './row-actions.js'
 
 interface RenderRowProps<T extends DataType> {
-  item: T
+  item: IndexedData<T>
   rowIndex: number
   mode?: 'default' | 'inserting' | 'empty'
 }
@@ -102,7 +102,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
     >
       {/* The row number cell handles internally if it needs to be rendered or not */}
       <RowNumberCell
-        index={rowIndex + 1}
+        index={mode === 'default' ? item.__index + 1 : rowIndex + 1}
         handleSelectRowOnClick={createSelectRowOnClickHandler(rowIndex)}
         selected={selectedRowIndexes.includes(rowIndex) || selectedCellIndex?.row === rowIndex}
       />
@@ -112,7 +112,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
         return (
           <RenderCell
             key={column.field}
-            rowItem={item}
+            rowItem={item.data}
             column={column}
             rowIndex={rowIndex}
             columnIndex={columnIndex}
@@ -125,7 +125,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
 
       {config.actions && mode === 'default' && (
         <RowActions
-          row={item}
+          row={item.data}
           open={actionsOpen}
           rowIndex={rowIndex}
           rowRef={rowRef}

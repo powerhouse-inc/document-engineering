@@ -10,7 +10,7 @@ interface RowNumberCellProps {
 
 const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnClick, selected }) => {
   const {
-    config: { showRowNumbers, allowRowSelection },
+    config: { showRowNumbers, allowRowSelection, minRowHeight },
   } = useInternalTableState()
 
   if (!showRowNumbers && !allowRowSelection) {
@@ -28,7 +28,9 @@ const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnC
       )}
       onClick={handleSelectRowOnClick}
     >
-      {showRowNumbers ? index : ''}
+      <div className="flex flex-1 items-center justify-center py-4" style={{ minHeight: minRowHeight }}>
+        {showRowNumbers ? index : ''}
+      </div>
     </TableCellBasic>
   )
 }
