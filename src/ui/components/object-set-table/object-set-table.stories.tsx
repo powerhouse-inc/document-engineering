@@ -32,7 +32,7 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * interface ColumnDef<T = any> {
  *   field: string;
  *   title?: string;
- *   type?: "text" | "number" | "boolean";
+ *   type?: "string" | "number" | "boolean";
  *   valueGetter?: (row: T, context: CellContext<T>) => unknown;
  *   valueFormatter?: (value: unknown, context: CellContext<T>) => string;
  *   renderHeader?: (value: unknown, context: CellContext<T>) => React.ReactNode;
@@ -76,7 +76,7 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  * | Property | Type | Default | Description |
  * |----------|------|---------|-------------|
  * | `title` | `string` | Field name (capitalized) | Column header text |
- * | `type` | `"text" | "number" | "boolean"` | `"text"` | Determines default formatting and editing behavior |
+ * | `type` | `"string" | "number" | "boolean"` | `"string"` | Determines default formatting and editing behavior |
  * | `align` | `"left" | "center" | "right"` | `"left"` | Text alignment within cells |
  *
  * ### Layout Configuration
@@ -154,7 +154,7 @@ import TableEditingExample from './examples/table-editing/table-editing.js'
  *
  * ```tsx
  * const columns = [
- *   { field: "name", type: "text" },           // Text input when editing
+ *   { field: "name", type: "string" },           // String input when editing
  *   { field: "age", type: "number" },          // Number input, right-aligned
  *   { field: "active", type: "boolean" },      // Checkbox display and editing
  * ];
@@ -810,12 +810,12 @@ export const ReadOnly: Story = {
 
 /**
  * Demonstrates different cell types and their default rendering.
- * Shows how text, number, and boolean types are displayed differently.
+ * Shows how string, number, and boolean types are displayed differently.
  */
 export const CellTypes: Story = {
   args: {
     columns: [
-      { field: 'firstName', type: 'text', title: 'Text Field', editable: true },
+      { field: 'firstName', type: 'string', title: 'String Field', editable: true },
       { field: 'payment', type: 'number', title: 'Number Field', editable: true },
       { field: 'isActive', type: 'boolean', title: 'Boolean Field', editable: true },
     ],

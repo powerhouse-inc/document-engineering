@@ -5,7 +5,7 @@ import { renderTextCell } from './text-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
-    case 'text':
+    case 'string':
       return renderTextCell
     case 'number':
       return renderNumberCell

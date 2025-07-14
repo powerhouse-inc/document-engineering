@@ -32,7 +32,7 @@ export const defaultSortFns = <T = unknown>(columnType: ColumnType): SortFn<T> =
       return defaultSortNumberFn as SortFn<T>
 
     case 'boolean':
-    case 'text':
+    case 'string':
     default:
       return defaultSortTextFn as SortFn<T>
   }
