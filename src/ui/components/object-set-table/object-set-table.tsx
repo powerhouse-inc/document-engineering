@@ -28,7 +28,7 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
    * Extend the config with default values in case they are not provided
    */
   const extendedConfig = useMemo(() => {
-    const defaultColumnType: ColumnType = 'text'
+    const defaultColumnType: ColumnType = 'string'
     const _config: ObjectSetTableConfig<T> = {
       ...config,
       columns: config.columns.map((column) => ({

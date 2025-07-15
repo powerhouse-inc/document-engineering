@@ -115,7 +115,7 @@ export interface RowAction<T extends DataType> {
   icon?: React.ReactNode
 }
 
-export type ColumnType = 'text' | 'number' | 'boolean'
+export type ColumnType = 'string' | 'number' | 'boolean'
 
 export interface CellContext<T extends DataType = DataType> {
   /**

@@ -5,7 +5,7 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
     case 'number':
       return 'right'
 
-    case 'text':
+    case 'string':
     case 'boolean':
     default:
       return 'left'
