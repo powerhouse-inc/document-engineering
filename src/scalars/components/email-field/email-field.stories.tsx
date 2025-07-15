@@ -100,25 +100,20 @@ export const WithDifferencesMixed: Story = {
 
 export const WithEmailMatchForm: Story = {
   parameters: {
+    controls: { disable: true },
     docs: {
       source: {
-        language: 'tsx',
-        format: true,
         code: `
-        <EmailField label="Email Address" name="email" placeholder="Enter your email" />
-        <EmailField label="Confirm Email" name="confirmEmail" placeholder="Confirm your email" matchFieldName="email" />
+<Form defaultValues={{ email: '', confirmEmail: '' }}>
+  <EmailField label="Email Address" name="email" placeholder="Enter your email" />
+  <EmailField label="Confirm Email" name="confirmEmail" placeholder="Confirm your email" matchFieldName="email" />
+  <Button type="submit">Submit</Button>
+</Form>
         `,
       },
       description: {
         story:
           'Example showing how to use `matchFieldName` prop to create email confirmation fields. The second field validates that it matches the value of the first field.',
-      },
-      code: {
-        language: 'tsx',
-        code: `
-        <EmailField label="Email Address" name="email" placeholder="Enter your email" />
-        <EmailField label="Confirm Email" name="confirmEmail" placeholder="Confirm your email" matchFieldName="email" />
-        `,
       },
     },
   },
