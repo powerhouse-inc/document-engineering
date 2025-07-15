@@ -1,3 +1,22 @@
+# [1.20.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.19.0...v1.20.0) (2025-07-15)
+
+
+### Bug Fixes
+
+* **scalars:** fix the CR ([28f08ba](https://github.com/powerhouse-inc/document-engineering/commit/28f08ba5d1ebed32d609e21f93f4efa686c0c37b))
+* **scalars:** pass min and max values to field ([6b48834](https://github.com/powerhouse-inc/document-engineering/commit/6b48834c1afc12db54b60177598b7b4ef1d7d6a2))
+* **scalars:** using the already create min and max values ([a785a02](https://github.com/powerhouse-inc/document-engineering/commit/a785a0261f5f153d3c1f50d580952df0c6185e4b))
+* **table:** number row vertical slignment ([e657cc1](https://github.com/powerhouse-inc/document-engineering/commit/e657cc1ed4f0eb3dafc7fdacef730e085c963f04))
+
+
+### Features
+
+* keep row index when sorting ([29115fa](https://github.com/powerhouse-inc/document-engineering/commit/29115fa308288ae443ec1ba812155533ff280e2a))
+* **table:** add onSort callback to be invoked when the sorting change ([269d757](https://github.com/powerhouse-inc/document-engineering/commit/269d757771ee1b2154a75be7f938db503c32afb7))
+* **table:** add support for min row height ([4453be2](https://github.com/powerhouse-inc/document-engineering/commit/4453be2deed1896d64013071f967c31a1f36326a))
+* **table:** export table editor factories ([defd8cb](https://github.com/powerhouse-inc/document-engineering/commit/defd8cb808b843e9ba5a022fd4441773963f8587))
+* **table:** null values remain at the end on sorting ([d3138cb](https://github.com/powerhouse-inc/document-engineering/commit/d3138cbd3c24fbc08d3bc4c540afa10634ae429c))
+
 # [1.19.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.18.0...v1.19.0) (2025-07-11)
 
 
