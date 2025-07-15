@@ -58,13 +58,12 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
             onChange={handleChange}
             onBlur={onBlur}
             disabled={disabled}
-            data-label={label}
             id={id}
             type="email"
             autoComplete={autoCompleteValue}
-            data-exclude={true}
             required={required}
             ref={ref}
+            {...(label && { 'data-label': label })}
             {...filteredProps}
           />
           {description && <FormDescription>{description}</FormDescription>}
