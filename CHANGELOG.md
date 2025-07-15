@@ -1,3 +1,16 @@
+# [1.21.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.20.0...v1.21.0) (2025-07-15)
+
+
+### Bug Fixes
+
+* **scalars:** add text for form and fix some text with the new aproach ([f74372c](https://github.com/powerhouse-inc/document-engineering/commit/f74372c5a930b750961d26681c2ab007e8065a08))
+* **scalars:** apply new aproach for matchFieldName in email ([f90c989](https://github.com/powerhouse-inc/document-engineering/commit/f90c989569eb42db7f2b6f139d72fdf091b61acb))
+
+
+### Features
+
+* **scalars & ui:** add diffs, matchFieldName validation + tests & improve password strength score ([5da675c](https://github.com/powerhouse-inc/document-engineering/commit/5da675c7ee6a71fc2626c2258d975bcb737df353))
+
 # [1.20.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.19.0...v1.20.0) (2025-07-15)
 
 
