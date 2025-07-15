@@ -142,6 +142,7 @@ export const WithPasswordStrength: Story = {
 
 export const WithPasswordConfirmation: Story = {
   parameters: {
+    controls: { disable: true },
     docs: {
       source: {
         code: `
@@ -158,19 +159,26 @@ export const WithPasswordConfirmation: Story = {
       },
     },
   },
-  args: {
-    name: 'password',
-    label: 'Password',
-    placeholder: 'Enter your password',
-  },
-  render: (args) => (
+  render: () => (
     <div className="flex flex-col gap-4">
-      <PasswordField {...args} />
+      <PasswordField
+        name="password"
+        label="Password"
+        placeholder="Enter your password"
+        requireUppercase={false}
+        requireLowercase={false}
+        requireNumbers={false}
+        requireSpecialCharacters={false}
+      />
       <PasswordField
         name="confirmPassword"
         label="Confirm Password"
         placeholder="Confirm your password"
         matchFieldName="password"
+        requireUppercase={false}
+        requireLowercase={false}
+        requireNumbers={false}
+        requireSpecialCharacters={false}
         showPasswordStrength={false}
       />
     </div>
