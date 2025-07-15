@@ -1,6 +1,6 @@
 import type { TableApiBase } from './logic/types.js'
 
-export interface ObjectSetTableConfig<T> {
+export interface ObjectSetTableConfig<T extends DataType> {
   apiRef?: React.MutableRefObject<TableApiBase | null>
 
   /**
@@ -43,6 +43,13 @@ export interface ObjectSetTableConfig<T> {
   minRowCount?: number
 
   /**
+   * The minimum height in pixels of the rows.
+   *
+   * @default "auto"
+   */
+  minRowHeight?: number | 'auto'
+
+  /**
    * A function that is called when one or multiple rows are deleted.
    *
    * @param rows The rows that are being deleted.
@@ -62,7 +69,7 @@ export interface ObjectSetTableConfig<T> {
   actions?: ActionConfig<T>
 }
 
-export interface ActionConfig<T> {
+export interface ActionConfig<T extends DataType> {
   /**
    * The primary action to display in the table when the rows are hovered.
    */
@@ -74,7 +81,7 @@ export interface ActionConfig<T> {
   secondary?: Array<Omit<RowAction<T>, 'icon'>>
 }
 
-export interface RowContext<T> {
+export interface RowContext<T extends DataType> {
   /**
    * The row object.
    */
@@ -91,7 +98,7 @@ export interface RowContext<T> {
   tableConfig: ObjectSetTableConfig<T>
 }
 
-export interface RowAction<T> {
+export interface RowAction<T extends DataType> {
   /**
    * The label of the action.
    */
@@ -108,9 +115,9 @@ export interface RowAction<T> {
   icon?: React.ReactNode
 }
 
-export type ColumnType = 'text' | 'number' | 'boolean'
+export type ColumnType = 'string' | 'number' | 'boolean'
 
-export interface CellContext<T = any> {
+export interface CellContext<T extends DataType = DataType> {
   /**
    * The row object.
    */
@@ -146,14 +153,32 @@ export interface CellContext<T = any> {
  *
  * @example
  */
-export type SortFn<T = unknown> = (a: unknown, b: unknown, context: SortableColumnContext<T>) => number
+export type SortFn<T extends DataType = DataType> = (
+  a: unknown,
+  b: unknown,
+  context: SortableColumnContext<T>
+) => number
+
+export type OnSortCallbackFn<T extends DataType = DataType> = (context: SortableColumnContext<T>) => void
+
+export interface SortState {
+  /**
+   * The index of the column that is being sorted.
+   */
+  columnIndex: number
+
+  /**
+   * The direction of the sort.
+   */
+  direction: SortDirection
+}
 
 /**
  * The context for a sortable column.
  *
  * @param T The type of the row object.
  */
-export interface SortableColumnContext<T = unknown> {
+export interface SortableColumnContext<T extends DataType> {
   /**
    * The table configuration.
    */
@@ -168,6 +193,11 @@ export interface SortableColumnContext<T = unknown> {
    * The data.
    */
   data: T[]
+
+  /**
+   * The sort state.
+   */
+  sortState: SortState | null
 }
 
 /**
@@ -181,7 +211,7 @@ export interface SortableColumnContext<T = unknown> {
  * const valueGetter = (row: T) => row.firstName;
  * ```
  */
-export type ValueGetterFn<T> = (row: T, context: CellContext<T>) => unknown
+export type ValueGetterFn<T extends DataType = DataType> = (row: T, context: CellContext<T>) => unknown
 
 /**
  * A function that formats a value for display in the table.
@@ -199,7 +229,7 @@ export type ValueGetterFn<T> = (row: T, context: CellContext<T>) => unknown
  * };
  * ```
  */
-export type ValueFormatterFn<T> = (value: unknown, context: CellContext<T>) => string
+export type ValueFormatterFn<T extends DataType = DataType> = (value: unknown, context: CellContext<T>) => string
 
 /**
  * A function that renders a cell.
@@ -214,7 +244,10 @@ export type ValueFormatterFn<T> = (value: unknown, context: CellContext<T>) => s
  * };
  * ```
  */
-export type RenderCellFn<T, V = unknown> = (value: V, context: CellContext<T>) => React.ReactNode
+export type RenderCellFn<T extends DataType = DataType, V = unknown> = (
+  value: V,
+  context: CellContext<T>
+) => React.ReactNode
 
 /**
  * A function that renders the header of the column.
@@ -229,7 +262,7 @@ export type RenderCellFn<T, V = unknown> = (value: V, context: CellContext<T>) =
  * };
  * ```
  */
-export type RenderHeaderFn<T, V = string> = (value: V, context: CellContext<T>) => React.ReactNode
+export type RenderHeaderFn<T extends DataType, V = string> = (value: V, context: CellContext<T>) => React.ReactNode
 
 /**
  * A function that is called when a cell is saved.
@@ -239,9 +272,12 @@ export type RenderHeaderFn<T, V = string> = (value: V, context: CellContext<T>) 
  *
  * @returns Whether the value was saved.
  */
-export type OnCellSaveFn<TData, TCellValue> = (newValue: TCellValue, context: CellContext<TData>) => boolean
+export type OnCellSaveFn<TData extends DataType, TCellValue> = (
+  newValue: TCellValue,
+  context: CellContext<TData>
+) => boolean
 
-export type RenderCellEditorFn<TData, TCellValue> = (
+export type RenderCellEditorFn<TData extends DataType, TCellValue> = (
   value: TCellValue,
   onChange: (newValue: TCellValue) => void,
   context: CellContext<TData>
@@ -249,7 +285,7 @@ export type RenderCellEditorFn<TData, TCellValue> = (
 
 export type SortDirection = 'asc' | 'desc'
 
-export interface SortableColumnDef<T = unknown> {
+export interface SortableColumnDef<T extends DataType> {
   /**
    * Whether the column is sortable.
    *
@@ -269,9 +305,16 @@ export interface SortableColumnDef<T = unknown> {
    * }
    */
   rowComparator?: SortFn<T>
+
+  /**
+   * A function that is called when the column is sorted.
+   *
+   * @param context The sort context.
+   */
+  onSort?: OnSortCallbackFn<T>
 }
 
-export interface ColumnDef<T = any> extends SortableColumnDef<T> {
+export interface ColumnDef<T extends DataType = DataType> extends SortableColumnDef<T> {
   /**
    * The field from the row object to display in the column.
    * You can use dot notation to access nested fields.
@@ -463,9 +506,14 @@ export interface ColumnDef<T = any> extends SortableColumnDef<T> {
 
 export type ColumnAlignment = 'left' | 'center' | 'right'
 
-export type DataType = any
+export type DataType = unknown
 
 export interface TableCellIndex {
   row: number
   column: number
+}
+
+export interface IndexedData<T extends DataType = DataType> {
+  data: T
+  __index: number
 }

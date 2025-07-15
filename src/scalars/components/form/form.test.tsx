@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { StringField } from '../string-field/index.js'
 import { Form } from './form.js'
 import { PasswordField } from '../password-field/index.js'
+import { EmailField } from '../email-field/index.js'
 
 describe('Form', () => {
   it('should render children as React nodes', () => {
@@ -158,6 +159,68 @@ describe('Form', () => {
           confirmPassword: '@A1a',
         })
       })
+    })
+  })
+
+  describe('EmailField with matchFieldName', () => {
+    it('should submit field when it has matchFieldName set', async () => {
+      const handleSubmit = vi.fn()
+
+      render(
+        <Form onSubmit={handleSubmit}>
+          <EmailField name="email" defaultValue="test@example.com" />
+          <EmailField name="confirmEmail" defaultValue="test@example.com" matchFieldName="email" />
+          <button type="submit">Submit</button>
+        </Form>
+      )
+
+      fireEvent.click(screen.getByText('Submit'))
+
+      await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({
+          email: 'test@example.com',
+        })
+      })
+    })
+
+    it('should submit fields when matchFieldName is not set', async () => {
+      const handleSubmit = vi.fn()
+
+      render(
+        <Form onSubmit={handleSubmit}>
+          <EmailField name="email" defaultValue="test@example.com" />
+          <EmailField name="confirmEmail" defaultValue="test@example.com" />
+          <button type="submit">Submit</button>
+        </Form>
+      )
+
+      fireEvent.click(screen.getByText('Submit'))
+
+      await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({
+          email: 'test@example.com',
+          confirmEmail: 'test@example.com',
+        })
+      })
+    })
+
+    it('should show validation error when matchFieldName values do not match', async () => {
+      const user = userEvent.setup()
+      const handleSubmit = vi.fn()
+
+      render(
+        <Form onSubmit={handleSubmit}>
+          <EmailField name="email" label="Email" value="test@example.com" />
+          <EmailField name="confirmEmail" label="Confirm Email" matchFieldName="email" showErrorOnBlur />
+          <button type="submit">Submit</button>
+        </Form>
+      )
+
+      const confirmInput = screen.getByLabelText('Confirm Email')
+      await user.type(confirmInput, 'different@example.com')
+      await user.tab()
+
+      expect(screen.getByText('Email must match the "Email" field')).toBeInTheDocument()
     })
   })
 })

@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
+import { type Context, createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
 import type { DataType, ObjectSetTableConfig } from '../../types.js'
 import { tableReducer, type TableState } from './table-reducer.js'
 import { createPublicTableApi } from '../../logic/public-table-api.js'
@@ -13,7 +13,7 @@ interface TableContextValue<T extends DataType = DataType> {
   publicApi: TableApiBase
 }
 
-const TableContext = createContext<TableContextValue | null>(null)
+const TableContext = createContext<TableContextValue<DataType> | null>(null)
 
 interface TableProviderProps<T extends DataType = DataType> {
   children: ReactNode
@@ -27,12 +27,12 @@ interface TableProviderProps<T extends DataType = DataType> {
   tableRef: React.RefObject<HTMLTableElement>
 }
 
-const TableProvider = <T extends DataType>({ children, config, tableRef }: TableProviderProps<T>) => {
+const TableProvider = <T extends DataType = DataType>({ children, config, tableRef }: TableProviderProps<T>) => {
   const [state, dispatch] = useReducer(tableReducer<T>, {
     columns: config.columns,
     defaultData: [...config.data],
     dataFormReferences: createFormReferences(config.data.length + 1, config.columns),
-    data: config.data,
+    data: config.data.map((item, index) => ({ data: item, __index: index })),
     allowRowSelection: config.allowRowSelection ?? true,
     showRowNumbers: config.showRowNumbers ?? true,
     selectedRowIndexes: [],
@@ -73,20 +73,22 @@ const TableProvider = <T extends DataType>({ children, config, tableRef }: Table
 
   return (
     <TableContext.Provider
-      value={{
-        config,
-        state,
-        api,
-        publicApi,
-      }}
+      value={
+        {
+          config,
+          state,
+          api,
+          publicApi,
+        } as TableContextValue<DataType>
+      }
     >
       {children}
     </TableContext.Provider>
   )
 }
 
-const useInternalTableState = <T extends DataType = unknown>() => {
-  const context = useContext<TableContextValue<T> | null>(TableContext)
+const useInternalTableState = <T extends DataType = DataType>() => {
+  const context = useContext<TableContextValue<T> | null>(TableContext as Context<TableContextValue<T> | null>)
   if (!context) {
     throw new Error('useTable must be used within a TableProvider')
   }

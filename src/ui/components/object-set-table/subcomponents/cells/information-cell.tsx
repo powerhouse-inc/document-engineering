@@ -19,7 +19,7 @@ const InformationCell = ({ rowIndex, emptyRow }: InformationCellProps) => {
     <TableCellBasic className="min-w-[40px] max-w-[40px]">
       {!emptyRow && canDelete && selectedRowIndexes.includes(rowIndex) && (
         <div
-          className="flex h-full w-full items-center justify-center cursor-pointer text-red-900"
+          className="flex flex-1 w-full items-center justify-center cursor-pointer text-red-900"
           onClick={() => {
             void api.deleteRows([rowIndex])
           }}

@@ -5,6 +5,7 @@ import { ObjectSetTable } from '../../object-set-table.js'
 import type { CellContext, ColumnDef, ObjectSetTableConfig, RowContext } from '../../types.js'
 import { Icon } from '../../../icon/icon.js'
 import { confirm } from '../../../confirm/confirm.js'
+import { numberCellEditorFactory } from '../../subcomponents/default-cell-editors/number-editor.js'
 
 const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'columns' | 'data'>) => {
   const [data, setData] = useState<MockedPerson[]>(mockData)
@@ -16,6 +17,14 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
         title: 'User',
         editable: true,
         sortable: true,
+        onSort: ({ sortState, data }) => {
+          // This is just for example purposes
+          // eslint-disable-next-line no-console
+          console.log(
+            `----> onSort (${sortState?.direction ?? 'unsorted'})`,
+            data.reduce((acc, curr) => `${acc}${curr.firstName}, `, '')
+          )
+        },
         width: 140,
         onSave: (value: unknown, context: CellContext<MockedPerson>) => {
           setData((prevData) => {
@@ -95,6 +104,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
               )}
             </div>
           ),
+        renderCellEditor: numberCellEditorFactory({ step: 100 }),
         sortable: true,
       },
       {

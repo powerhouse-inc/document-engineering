@@ -1,22 +1,26 @@
 import { NumberField } from '../../../../../scalars/components/number-field/number-field.js'
-import type { CellContext, RenderCellEditorFn } from '../../types.js'
+import type { NumberFieldProps } from '../../../data-entry/number-input/types.js'
+import type { CellContext, DataType } from '../../types.js'
 
-export const numberCellEditor: RenderCellEditorFn<any, unknown> = (
-  value: unknown,
-  onChange: (newValue: unknown) => unknown,
-  context: CellContext<any>
+export const numberCellEditorFactory = <T extends DataType>(
+  numberFieldProps: Omit<NumberFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
-  const numericValue = typeof value === 'number' ? value : Number(value) || 0
+  const NumberCellEditor = (value: unknown, onChange: (newValue: unknown) => unknown, context: CellContext<T>) => {
+    const numericValue = typeof value === 'number' ? value : Number(value) || 0
 
-  return (
-    <NumberField
-      name={context.column.field}
-      className="max-w-full"
-      autoFocus
-      value={numericValue}
-      onChange={(event) => {
-        onChange(Number(event.target.value))
-      }}
-    />
-  )
+    return (
+      <NumberField
+        name={context.column.field}
+        className="max-w-full"
+        autoFocus
+        {...numberFieldProps}
+        value={numericValue}
+        onChange={(event) => {
+          onChange(Number(event.target.value))
+        }}
+      />
+    )
+  }
+
+  return NumberCellEditor
 }
