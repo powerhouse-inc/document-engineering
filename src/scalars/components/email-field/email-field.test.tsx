@@ -150,7 +150,7 @@ describe('EmailField', () => {
     const input = screen.getByRole('textbox', { name: 'Confirm Email' })
     await userEvent.type(input, 'test@example.com')
     await userEvent.tab()
-    const errorMessage = screen.getByText('Email must match the Email field')
+    const errorMessage = screen.getByText('Email must match the "Email" field')
     expect(errorMessage).toBeInTheDocument()
   })
 
@@ -164,7 +164,7 @@ describe('EmailField', () => {
     const input = screen.getByRole('textbox', { name: 'Confirm Email' })
     await userEvent.type(input, 'test@example.com')
     await userEvent.tab()
-    const errorMessage = screen.getByText('Email must match the Email Address field')
+    const errorMessage = screen.getByText('Email must match the "Email Address" field')
     expect(errorMessage).toBeInTheDocument()
   })
   it('should accept valid email formats with special characters', async () => {
