@@ -21,6 +21,8 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       value,
       defaultValue,
       onChange,
+      onKeyDown,
+      onClick,
       disabled,
       required,
       errors,
@@ -42,14 +44,35 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const [showPassword, setShowPassword] = useState(false)
 
     const containerRef = useRef<HTMLDivElement | null>(null)
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const handleChange = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsPopoverOpen(true)
         setPassword(event.target.value)
         onChange?.(event)
+
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current)
+        }
+        timeoutRef.current = setTimeout(() => {
+          setIsPopoverOpen(false)
+        }, 10000)
       },
       [onChange]
+    )
+
+    const handleKeyDown = useCallback(
+      (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter' && isPopoverOpen) {
+          setIsPopoverOpen(false)
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+          }
+        }
+        onKeyDown?.(event)
+      },
+      [isPopoverOpen, onKeyDown]
     )
 
     useEffect(() => {
@@ -57,6 +80,14 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         setPassword(value)
       }
     }, [value])
+
+    useEffect(() => {
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current)
+        }
+      }
+    }, [])
 
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const hasError = Array.isArray(errors) && errors.length > 0
@@ -97,9 +128,17 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                 id={id}
                 value={password}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 onClick={(e) => {
                   setIsPopoverOpen(true)
-                  props.onClick?.(e)
+                  onClick?.(e)
+
+                  if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current)
+                  }
+                  timeoutRef.current = setTimeout(() => {
+                    setIsPopoverOpen(false)
+                  }, 10000)
                 }}
                 className={cn('pr-9', className)}
                 disabled={disabled}

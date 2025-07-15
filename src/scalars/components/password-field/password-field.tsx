@@ -26,7 +26,7 @@ const PasswordField = withFieldValidation<PasswordFieldProps>(PasswordInputWrapp
         if (!requireUppercase || value === '' || value === undefined) {
           return true
         }
-        return /[A-Z]/.test(value) || 'The field value must contain at least one uppercase letter'
+        return /[A-Z]/.test(value) || 'This field must contain at least one uppercase letter'
       },
     _requireLowercase:
       ({ requireLowercase = true }) =>
@@ -34,7 +34,7 @@ const PasswordField = withFieldValidation<PasswordFieldProps>(PasswordInputWrapp
         if (!requireLowercase || value === '' || value === undefined) {
           return true
         }
-        return /[a-z]/.test(value) || 'The field value must contain at least one lowercase letter'
+        return /[a-z]/.test(value) || 'This field must contain at least one lowercase letter'
       },
     _requireNumbers:
       ({ requireNumbers = true }) =>
@@ -42,7 +42,7 @@ const PasswordField = withFieldValidation<PasswordFieldProps>(PasswordInputWrapp
         if (!requireNumbers || value === '' || value === undefined) {
           return true
         }
-        return /[0-9]/.test(value) || 'The field value must contain at least one number'
+        return /[0-9]/.test(value) || 'This field must contain at least one number'
       },
     _requireSpecialCharacters:
       ({ requireSpecialCharacters = true }) =>
@@ -55,7 +55,7 @@ const PasswordField = withFieldValidation<PasswordFieldProps>(PasswordInputWrapp
             return true
           }
         }
-        return `The field value must contain at least one special character: ${specialCharacters}`
+        return `This field must contain at least one special character: ${specialCharacters}`
       },
     _matchPassword:
       ({ matchFieldName }) =>

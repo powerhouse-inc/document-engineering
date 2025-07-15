@@ -13,12 +13,10 @@ import { PasswordField } from './password-field.js'
  * ## Password field component
  *
  * `PasswordField` is a specialized form component for handling passwords with built-in validation.
- *
- * ### Example of use with custom validation:
- *
- * ```tsx
- * // TODO: add a custom validation example
- * ```
+ * It is based on [PasswordInput](?path=/docs/data-entry-password-input--readme) component
+ * which uses the
+ * <a href="https://zxcvbn-ts.github.io/zxcvbn/guide/" target="_blank" rel="noopener noreferrer">zxcvbn-ts</a>
+ *  library to determine the strength of the password.
  */
 
 const meta: Meta<typeof PasswordField> = {
@@ -160,14 +158,20 @@ export const WithPasswordConfirmation: Story = {
       },
     },
   },
-  render: () => (
+  args: {
+    name: 'password',
+    label: 'Password',
+    placeholder: 'Enter your password',
+  },
+  render: (args) => (
     <div className="flex flex-col gap-4">
-      <PasswordField name="password" label="Password" placeholder="Enter your password" />
+      <PasswordField {...args} />
       <PasswordField
         name="confirmPassword"
         label="Confirm Password"
         placeholder="Confirm your password"
         matchFieldName="password"
+        showPasswordStrength={false}
       />
     </div>
   ),
@@ -200,5 +204,82 @@ export const WithDifferencesMixed: Story = {
     defaultValue: 'new password',
     baseValue: 'old password',
     viewMode: 'mixed',
+  },
+}
+
+export const WithCustomValidator: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `
+// Custom validator that checks against a database of leaked passwords
+const leakedPasswordValidator = async (value: string) => {
+  if (!value) return true
+  
+  // Simulate API call to check password breach database
+  const isLeaked = await checkPasswordBreach(value)
+  
+  if (isLeaked) {
+    return 'This password has been found in data breaches and is not secure. Please choose a different password.'
+  }
+  
+  return true
+}
+
+<PasswordField
+  name="password"
+  label="Password"
+  placeholder="Enter a secure password"
+  validators={leakedPasswordValidator}
+/>
+        `,
+      },
+      description: {
+        story:
+          'This story variant demonstrates custom password validation using the `validators` prop. It simulates checking the password against a database of leaked passwords and shows an error message if the password has been exposed. ' +
+          'For demonstration purposes, the following passwords are considered leaked: ' +
+          '12345678, password, password1, password123, admin, qwerty, welcome, monkey, dragon, master, admin123, welcome123, Password1, Password123',
+      },
+    },
+  },
+  args: {
+    label: 'Secure password',
+    placeholder: 'Enter a secure password',
+    description:
+      'Enter any of the following passwords to see the validation in action: 12345678, password, password1, password123, admin, qwerty, welcome, monkey, dragon, master, admin123, welcome123, Password1, Password123',
+    showPasswordStrength: false,
+    requireUppercase: false,
+    requireLowercase: false,
+    requireNumbers: false,
+    requireSpecialCharacters: false,
+    showErrorOnChange: true,
+    validators: async (value: string) => {
+      if (!value) return true
+
+      const leakedPasswords = [
+        '12345678',
+        'password',
+        'password1',
+        'password123',
+        'admin',
+        'qwerty',
+        'welcome',
+        'monkey',
+        'dragon',
+        'master',
+        'admin123',
+        'welcome123',
+        'Password1',
+        'Password123',
+      ]
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      if (leakedPasswords.includes(value)) {
+        return 'This password has been found in data breaches and is not secure. Please choose a different password.'
+      }
+
+      return true
+    },
   },
 }
