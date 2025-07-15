@@ -1,3 +1,12 @@
+## [1.21.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.21.0...v1.21.1) (2025-07-15)
+
+
+### Bug Fixes
+
+* improve code structure ([02c6fcc](https://github.com/powerhouse-inc/document-engineering/commit/02c6fccffcaf43a8e50404f57d986b7ba9655c42))
+* **scalars & ui:** improve logic & docs ([bc9fcef](https://github.com/powerhouse-inc/document-engineering/commit/bc9fcef9c7ee236883462b9b950afaa77ad5cc21))
+* **scalars:** improve & disable controls in "matchFieldName" prop related story variants ([cf0923c](https://github.com/powerhouse-inc/document-engineering/commit/cf0923c071653c736e22f380a8bacf66b8206b4b))
+
 # [1.21.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.20.0...v1.21.0) (2025-07-15)
 
 
