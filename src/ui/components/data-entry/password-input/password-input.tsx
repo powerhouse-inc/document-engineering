@@ -46,20 +46,23 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const containerRef = useRef<HTMLDivElement | null>(null)
     const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+    const resetPopoverTimeout = useCallback(() => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+      timeoutRef.current = setTimeout(() => {
+        setIsPopoverOpen(false)
+      }, 10000)
+    }, [])
+
     const handleChange = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsPopoverOpen(true)
         setPassword(event.target.value)
         onChange?.(event)
-
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current)
-        }
-        timeoutRef.current = setTimeout(() => {
-          setIsPopoverOpen(false)
-        }, 10000)
+        resetPopoverTimeout()
       },
-      [onChange]
+      [onChange, resetPopoverTimeout]
     )
 
     const handleKeyDown = useCallback(
@@ -73,6 +76,15 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         onKeyDown?.(event)
       },
       [isPopoverOpen, onKeyDown]
+    )
+
+    const handleClick = useCallback(
+      (event: React.MouseEvent<HTMLInputElement>) => {
+        setIsPopoverOpen(true)
+        onClick?.(event)
+        resetPopoverTimeout()
+      },
+      [onClick, resetPopoverTimeout]
     )
 
     useEffect(() => {
@@ -129,17 +141,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                 value={password}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                onClick={(e) => {
-                  setIsPopoverOpen(true)
-                  onClick?.(e)
-
-                  if (timeoutRef.current) {
-                    clearTimeout(timeoutRef.current)
-                  }
-                  timeoutRef.current = setTimeout(() => {
-                    setIsPopoverOpen(false)
-                  }, 10000)
-                }}
+                onClick={handleClick}
                 className={cn('pr-9', className)}
                 disabled={disabled}
                 aria-invalid={hasError}
