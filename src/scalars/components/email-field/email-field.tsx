@@ -1,9 +1,9 @@
+import React from 'react'
 import { EmailInput } from '../../../ui/components/data-entry/email-input/index.js'
 import type { EmailInputProps } from '../../../ui/components/data-entry/email-input/types.js'
-import { validateFieldMatch } from '../../lib/validators/validateFieldMatch.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
 import type { FieldErrorHandling } from '../types.js'
-import { escapeIdForSelector, validateEmailDomain, validateEmailFormat } from './utils.js'
+import { validateEmailDomain, validateEmailFormat } from './utils.js'
 
 export type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
   FieldErrorHandling & {
@@ -13,7 +13,14 @@ export type EmailFieldProps = Omit<EmailInputProps, 'maxLength' | 'minLength'> &
     minLength?: number
   }
 
-const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {
+const EmailInputWrapper = React.forwardRef<HTMLInputElement, EmailFieldProps>((props, ref) => {
+  const { allowedDomains: _1, matchFieldName, ...rest } = props
+
+  return <EmailInput ref={ref} {...rest} {...(!!matchFieldName && { 'data-exclude': 'true' })} />
+})
+EmailInputWrapper.displayName = 'EmailInputWrapper'
+
+const EmailField = withFieldValidation<EmailFieldProps>(EmailInputWrapper, {
   validations: {
     _validEmail: () => (value: string) => {
       if (!value) return true
@@ -29,24 +36,19 @@ const EmailField = withFieldValidation<EmailFieldProps>(EmailInput, {
       ({ matchFieldName }) =>
       (value: string, formState: Record<string, unknown>) => {
         if (!matchFieldName) return true
-        const currentField = document.querySelector(`input[name="${matchFieldName}"]`)
-        const form = currentField?.closest('form')
-        const formId = form?.getAttribute('id')
 
-        const matchFieldSelector = formId
-          ? `#${escapeIdForSelector(formId)} input[name="${matchFieldName}"]`
-          : `input[name="${matchFieldName}"]`
+        if (value !== formState[matchFieldName]) {
+          const matchFieldElements = document.querySelectorAll(`input[name="${matchFieldName}"]`)
+          if (matchFieldElements.length === 1) {
+            const matchFieldLabel = matchFieldElements[0].getAttribute('data-label')
+            if (matchFieldLabel) {
+              return `Email must match the "${matchFieldLabel}" field`
+            }
+          }
+          return 'Email does not match'
+        }
 
-        const matchFieldElement = document.querySelector(matchFieldSelector)
-
-        if (!matchFieldElement) return true
-
-        const matchFieldLabel = matchFieldElement.getAttribute('data-label') ?? ''
-
-        return validateFieldMatch(value, formState, {
-          matchFieldName,
-          errorMessage: `Email must match the ${matchFieldLabel} field`,
-        })
+        return true
       },
   },
 })
