@@ -115,7 +115,7 @@ export interface RowAction<T extends DataType> {
   icon?: React.ReactNode
 }
 
-export type ColumnType = 'text' | 'number' | 'boolean'
+export type ColumnType = 'string' | 'number' | 'boolean'
 
 export interface CellContext<T extends DataType = DataType> {
   /**
@@ -159,6 +159,20 @@ export type SortFn<T extends DataType = DataType> = (
   context: SortableColumnContext<T>
 ) => number
 
+export type OnSortCallbackFn<T extends DataType = DataType> = (context: SortableColumnContext<T>) => void
+
+export interface SortState {
+  /**
+   * The index of the column that is being sorted.
+   */
+  columnIndex: number
+
+  /**
+   * The direction of the sort.
+   */
+  direction: SortDirection
+}
+
 /**
  * The context for a sortable column.
  *
@@ -179,6 +193,11 @@ export interface SortableColumnContext<T extends DataType> {
    * The data.
    */
   data: T[]
+
+  /**
+   * The sort state.
+   */
+  sortState: SortState | null
 }
 
 /**
@@ -286,6 +305,13 @@ export interface SortableColumnDef<T extends DataType> {
    * }
    */
   rowComparator?: SortFn<T>
+
+  /**
+   * A function that is called when the column is sorted.
+   *
+   * @param context The sort context.
+   */
+  onSort?: OnSortCallbackFn<T>
 }
 
 export interface ColumnDef<T extends DataType = DataType> extends SortableColumnDef<T> {
