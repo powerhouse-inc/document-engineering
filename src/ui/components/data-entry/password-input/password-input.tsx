@@ -8,6 +8,7 @@ import { FormMessageList } from '../../../../scalars/components/fragments/form-m
 import { Popover, PopoverAnchor, PopoverContent } from '../../../../scalars/components/fragments/popover/index.js'
 import { PasswordStrength } from './password-strength.js'
 import { Icon } from '../../icon/index.js'
+import { PasswordInputDiff } from './password-input-diff.js'
 import type { PasswordInputProps } from './types.js'
 
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
@@ -28,8 +29,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       showPasswordStrength = true,
       showPasswordStrengthOpen = false,
       viewMode = 'edition',
-      // TODO: Implement diffs
-      // baseValue,
+      baseValue,
       ...props
     },
     ref
@@ -61,9 +61,16 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const hasError = Array.isArray(errors) && errors.length > 0
 
-    // TODO: Implement PasswordInputDiff
     if (viewMode !== 'edition') {
-      return null
+      return (
+        <PasswordInputDiff
+          value={password}
+          label={label}
+          required={required}
+          viewMode={viewMode}
+          baseValue={baseValue}
+        />
+      )
     }
 
     return (
@@ -104,6 +111,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck={false}
+                {...(!!label && { 'data-label': label })}
                 {...props}
               />
               <div className={cn('absolute right-3 top-1/2 flex size-4 -translate-y-1/2 items-center')}>

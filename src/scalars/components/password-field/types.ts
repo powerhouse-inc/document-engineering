@@ -7,8 +7,7 @@ type PasswordFieldProps = PasswordInputProps &
     requireLowercase?: boolean
     requireNumbers?: boolean
     requireSpecialCharacters?: boolean
-    // TODO: Implement disallowCommonPasswords if applicable
-    // disallowCommonPasswords = true,
+    matchFieldName?: string
   }
 
 export type { PasswordFieldProps }
