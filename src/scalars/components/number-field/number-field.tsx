@@ -1,6 +1,7 @@
 import { validateNumericType } from './number-field-validations.js'
-import { type NumberFieldProps, NumberInput } from '../../../ui/components/data-entry/number-input/number-input.js'
+import { NumberInput } from '../../../ui/components/data-entry/number-input/number-input.js'
 import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
+import type { NumberFieldProps } from './types.js'
 
 const NumberField = withFieldValidation<NumberFieldProps>(NumberInput, {
   validations: {
@@ -9,4 +10,4 @@ const NumberField = withFieldValidation<NumberFieldProps>(NumberInput, {
 })
 
 NumberField.displayName = 'NumberField'
-export { NumberField }
+export { NumberField, NumberFieldProps }
