@@ -3,7 +3,7 @@ import type { TableState } from '../subcomponents/table-provider/table-reducer.j
 import type { CellContext, ObjectSetTableConfig, SortDirection } from '../types.js'
 import { getNextSelectedCell } from '../utils.js'
 import { SelectionManager } from './selection-manager.js'
-import type { PrivateTableApiBase, SortingInfo } from './types.js'
+import type { ConfirmationOptions, PrivateTableApiBase, SortingInfo } from './types.js'
 import { confirm } from '../../confirm/index.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
@@ -117,11 +117,11 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     // restore the form value
     const formRef = this._getState().dataFormReferences[row][column]
     const columnDef = this._getConfig().columns[column]
-    if (formRef) {
-      const originalValue = columnDef.valueGetter?.(
-        this._getState().data[row].data,
-        this._createCellContext(row, column)
-      )
+    const stateData = this._getState().data
+    // if stateData[row] is undefined is probably because we're inserting a new row
+    // or because the row is empty, so we don't need to restore the value at all
+    if (formRef && stateData[row]) {
+      const originalValue = columnDef.valueGetter?.(stateData[row]?.data, this._createCellContext(row, column))
       formRef.current?.setValue(columnDef.field, originalValue)
     }
 
@@ -228,20 +228,40 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * Deletes the rows at the given indexes
    *
    * @param rows - The indexes of the rows to delete
+   * @param confirmationOptions - The confirmation options. If `askConfirmation` is `true`, the confirmation dialog will be shown.
+   *
+   * @example
+   * ```tsx
+   * api.deleteRows([1, 2], {
+   *   askConfirmation: true,
+   *   title: 'Delete Accounts',
+   *   description: 'Are you sure you want to delete 2 accounts?',
+   * })
+   * ```
    */
-  async deleteRows(rows: number[]): Promise<void> {
+  async deleteRows(
+    rows: number[],
+    confirmationOptions: ConfirmationOptions = { askConfirmation: true }
+  ): Promise<void> {
     if (!this.canDelete()) return
 
-    const rowsData = rows.map((row) => this._getState().data[row].data)
-    const count = rows.length
-    const confirmed = await confirm({
-      title: 'Delete entries',
-      description: `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`,
-      confirmLabel: 'Continue',
-      confirmVariant: 'default',
-      cancelLabel: 'Cancel',
-      cancelVariant: 'secondary',
-    })
+    const actualRows = rows.filter((rowIndex) => rowIndex < this._getState().data.length)
+    const rowsData = actualRows.map((row) => this._getState().data[row].data)
+
+    let confirmed = true
+    if (confirmationOptions.askConfirmation) {
+      const count = actualRows.length
+      confirmed = await confirm({
+        title: confirmationOptions.title ?? 'Delete entries',
+        description:
+          confirmationOptions.description ??
+          `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`,
+        confirmLabel: 'Continue',
+        confirmVariant: 'default',
+        cancelLabel: 'Cancel',
+        cancelVariant: 'secondary',
+      })
+    }
 
     if (confirmed) {
       await this._getConfig().onDelete?.(rowsData)

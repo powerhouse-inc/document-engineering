@@ -6,6 +6,12 @@ export interface SortingInfo {
   direction: SortDirection
 }
 
+export interface ConfirmationOptions {
+  askConfirmation?: boolean
+  title?: string
+  description?: string
+}
+
 export interface TableSelectionManager {
   canSelectRows(): boolean
   canSelectCells(): boolean
@@ -43,7 +49,7 @@ export interface TableApiBase {
 
   // deletion
   canDelete(): boolean
-  deleteRows(rows: number[]): Promise<void>
+  deleteRows(rows: number[], confirmationOptions?: ConfirmationOptions): Promise<void>
 
   // insertion
   canAdd(): boolean

@@ -76,6 +76,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
   const rowRef = useRef<HTMLTableRowElement>(null)
 
   // actions state management
+  const canShowActions = mode === 'default' && !!config.onDelete
   const [actionsOpen, setActionsOpen] = useState(false)
   const [isSecondaryActionsOpen, setIsSecondaryActionsOpen] = useState(false)
   const handleRowMouseEnter = useCallback(() => {
@@ -121,16 +122,16 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
         )
       })}
 
-      {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} emptyRow={mode === 'empty'} />}
+      {(api.isEditable() || api.canDelete()) && <InformationCell />}
 
-      {config.actions && mode === 'default' && (
+      {canShowActions && (
         <RowActions
-          row={item.data}
+          data={item}
           open={actionsOpen}
           rowIndex={rowIndex}
           rowRef={rowRef}
-          primaryAction={config.actions.primary}
-          secondaryActions={config.actions.secondary}
+          primaryAction={config.actions?.primary}
+          secondaryActions={config.actions?.secondary}
           isSecondaryActionsOpen={isSecondaryActionsOpen}
           handleSecondaryActionsOpen={handleSecondaryActionsOpen}
           handleSecondaryActionsClose={handleSecondaryActionsClose}

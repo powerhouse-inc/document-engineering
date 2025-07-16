@@ -1,19 +1,20 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { Portal } from 'react-portal'
-import type { DataType, ObjectSetTableConfig, RowAction } from '../../types.js'
+import type { DataType, IndexedData, RowAction } from '../../types.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
 import { Icon } from '../../../icon/icon.js'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../../../dropdown-menu/index.js'
 import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface RowActionsProps<T extends DataType> {
   open: boolean
-  row: T
+  data: IndexedData<T>
   rowIndex: number
   rowRef: React.RefObject<HTMLTableRowElement>
   primaryAction?: RowAction<T>
@@ -26,7 +27,7 @@ interface RowActionsProps<T extends DataType> {
 
 const RowActions = <T extends DataType>({
   open,
-  row,
+  data,
   rowIndex,
   rowRef,
   primaryAction,
@@ -36,7 +37,7 @@ const RowActions = <T extends DataType>({
   handleSecondaryActionsOpen,
   handleSecondaryActionsClose,
 }: RowActionsProps<T>) => {
-  const { api, config } = useInternalTableState()
+  const { api, config, state } = useInternalTableState<T>()
 
   const selfRef = useRef<HTMLDivElement>(null)
   const tableRect = api.getHTMLTable()?.getBoundingClientRect()
@@ -44,14 +45,36 @@ const RowActions = <T extends DataType>({
   const handlePrimaryAction = useCallback(() => {
     if (primaryAction) {
       void primaryAction.callback({
-        row,
+        row: data.data,
         rowIndex,
-        tableConfig: config as ObjectSetTableConfig<T>,
+        tableConfig: config,
       })
     }
-  }, [config, primaryAction, row, rowIndex])
+  }, [config, primaryAction, data, rowIndex])
 
-  const haveOnlyOneAction = (!!primaryAction && !secondaryActions) || (!!secondaryActions && !primaryAction)
+  const deleteActions: Array<RowAction<T>> = useMemo(() => {
+    return [
+      {
+        label: 'Delete',
+        callback: async (_context) =>
+          api.deleteRows([rowIndex], {
+            askConfirmation: true,
+            description: `Are you sure you want to delete row #${data.__index + 1}?`,
+          }),
+      },
+      ...(state.selectedRowIndexes.length > 1 && state.selectedRowIndexes.includes(rowIndex)
+        ? ([
+            {
+              label: `Delete ${Math.min(state.selectedRowIndexes.length, state.defaultData.length)} selected rows`,
+              callback: async (_context) => api.deleteRows(state.selectedRowIndexes),
+            },
+          ] satisfies Array<RowAction<T>>)
+        : []),
+    ]
+  }, [api, data.__index, rowIndex, state.defaultData.length, state.selectedRowIndexes])
+
+  const hasSecondaryActions = !!secondaryActions || deleteActions.length > 0
+  const haveOnlyOneAction = (!!primaryAction && !hasSecondaryActions) || (hasSecondaryActions && !primaryAction)
 
   return (
     <Portal>
@@ -77,7 +100,7 @@ const RowActions = <T extends DataType>({
                   {primaryAction.icon ?? <Icon name="ArrowLeft" className="rotate-180" size={16} />}
                 </div>
               )}
-              {secondaryActions && (
+              {(deleteActions.length > 0 || secondaryActions) && (
                 <DropdownMenu
                   open={isSecondaryActionsOpen}
                   onOpenChange={(open) => {
@@ -99,14 +122,33 @@ const RowActions = <T extends DataType>({
                     sideOffset={6}
                     onMouseLeave={handleSecondaryActionsClose}
                   >
-                    {secondaryActions.map((action) => (
+                    {secondaryActions?.map((action) => (
                       <DropdownMenuItem
                         key={action.label}
                         onClick={() => {
+                          handleSecondaryActionsClose()
                           void action.callback({
-                            row,
+                            row: data.data,
                             rowIndex,
-                            tableConfig: config as ObjectSetTableConfig<T>,
+                            tableConfig: config,
+                          })
+                        }}
+                      >
+                        {action.icon && action.icon} {action.label}
+                      </DropdownMenuItem>
+                    ))}
+
+                    {/* delete actions */}
+                    {deleteActions.length > 0 && (secondaryActions ?? []).length > 0 && <DropdownMenuSeparator />}
+                    {deleteActions.map((action) => (
+                      <DropdownMenuItem
+                        key={action.label}
+                        onClick={() => {
+                          handleSecondaryActionsClose()
+                          void action.callback({
+                            row: data.data,
+                            rowIndex,
+                            tableConfig: config,
                           })
                         }}
                       >
