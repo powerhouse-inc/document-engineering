@@ -228,7 +228,16 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * Deletes the rows at the given indexes
    *
    * @param rows - The indexes of the rows to delete
-   * @param askConfirmation - Whether to ask for confirmation before deleting the rows
+   * @param confirmationOptions - The confirmation options. If `askConfirmation` is `true`, the confirmation dialog will be shown.
+   *
+   * @example
+   * ```tsx
+   * api.deleteRows([1, 2], {
+   *   askConfirmation: true,
+   *   title: 'Delete Accounts',
+   *   description: 'Are you sure you want to delete 2 accounts?',
+   * })
+   * ```
    */
   async deleteRows(
     rows: number[],
