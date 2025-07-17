@@ -1,4 +1,4 @@
-import type { NumberFieldProps } from '../../../ui/components/data-entry/number-input/types.js'
+import type { NumberFieldProps } from './types.js'
 
 export const isInteger = (value: unknown): boolean => Number.isInteger(Number(value))
 

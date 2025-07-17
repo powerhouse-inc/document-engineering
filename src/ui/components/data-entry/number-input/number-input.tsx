@@ -1,5 +1,5 @@
 import { forwardRef, useId, useState } from 'react'
-import type { InputNumberProps, NumberFieldProps } from './types.js'
+import type { InputNumberProps } from './types.js'
 import { useNumberInput } from './use-number-input.js'
 import { regex } from './utils.js'
 import { FormGroup } from '../../../../scalars/components/fragments/form-group/form-group.js'
@@ -195,4 +195,4 @@ const NumberInput = forwardRef<HTMLInputElement, InputNumberPropsWithDifference>
 
 NumberInput.displayName = 'NumberInput'
 
-export { NumberInput, NumberFieldProps }
+export { NumberInput }
