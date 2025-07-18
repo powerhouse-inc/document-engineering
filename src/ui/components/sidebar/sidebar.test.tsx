@@ -1,8 +1,9 @@
-import { Icon } from '../../components/icon/index.js'
-import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { act, render, screen, waitFor } from '@testing-library/react'
+
+import { Icon } from '../../components/icon/index.js'
 import { Sidebar } from './sidebar.js'
-import { SidebarProvider } from './subcomponents/sidebar-provider/index.js'
+import { SidebarProvider, useSidebar } from './subcomponents/sidebar-provider/index.js'
 
 const mockNodes = [
   {
@@ -19,6 +20,20 @@ const mockNodes = [
   {
     id: '2',
     title: 'Node 2',
+    children: [],
+  },
+]
+
+const mockNodesWithClassName = [
+  {
+    id: '1',
+    title: 'Node with custom class',
+    className: 'custom-node-class text-blue-500',
+    children: [],
+  },
+  {
+    id: '2',
+    title: 'Normal node',
     children: [],
   },
 ]
@@ -76,5 +91,30 @@ describe('Sidebar Component', () => {
 
     // Initially pinning area should not be visible
     expect(screen.queryByTestId('pinning-area')).not.toBeInTheDocument()
+  })
+
+  it('should apply className when node is pinned via user interaction', async () => {
+    let sidebarContext: ReturnType<typeof useSidebar> | null = null
+
+    const TestComponent = () => {
+      sidebarContext = useSidebar()
+      return <Sidebar allowPinning={true} />
+    }
+
+    render(
+      <SidebarProvider nodes={mockNodesWithClassName}>
+        <TestComponent />
+      </SidebarProvider>
+    )
+
+    act(() => {
+      sidebarContext?.togglePin('1')
+    })
+
+    await waitFor(() => {
+      const pinnedNode = screen.getByText('Node with custom class')
+      expect(pinnedNode).toBeInTheDocument()
+      expect(pinnedNode).toHaveClass('custom-node-class', 'text-blue-500')
+    })
   })
 })

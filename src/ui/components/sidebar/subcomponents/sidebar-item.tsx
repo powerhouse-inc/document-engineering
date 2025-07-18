@@ -159,6 +159,7 @@ export const SidebarItem = ({
                 searchTerm={searchTerm}
                 isSearchActive={isSearchActive}
                 pinnedMode={pinnedMode}
+                className={node.className}
               />
 
               {allowPinning && (
@@ -204,18 +205,21 @@ const RenderTitle = forwardRef<
     searchTerm: string
     isSearchActive: boolean
     pinnedMode: boolean
+    className?: string
   }
->(({ title, searchTerm, isSearchActive, pinnedMode }, ref) => {
+>(({ title, searchTerm, isSearchActive, pinnedMode, className }, ref) => {
   return (
-    <div ref={ref} className="truncate text-sm leading-5">
+    <div ref={ref} className={cn('truncate text-sm leading-5', className)}>
       {title.toLowerCase().includes(searchTerm.toLowerCase()) && !pinnedMode ? (
         <span
           dangerouslySetInnerHTML={{
-            __html: title.replace(
-              new RegExp(searchTerm, 'gi'),
-              (match) =>
-                `<span class="${isSearchActive ? 'bg-yellow-300 dark:bg-[#604B00]' : 'bg-gray-300 dark:bg-charcoal-800'}">${match}</span>`
-            ),
+            __html: title.replace(new RegExp(searchTerm, 'gi'), (match) => {
+              const baseClasses = isSearchActive
+                ? 'bg-yellow-300 dark:bg-[#604B00]'
+                : 'bg-gray-300 dark:bg-charcoal-800'
+              const combinedClasses = className ? `${baseClasses} ${className}` : baseClasses
+              return `<span class="${combinedClasses}">${match}</span>`
+            }),
           }}
         />
       ) : (
