@@ -18,6 +18,7 @@ export interface SidebarNode {
   icon?: SidebarIcon
   expandedIcon?: SidebarIcon
   status?: NodeStatus
+  className?: string
 }
 
 export interface FlattenedNode extends SidebarNode {
