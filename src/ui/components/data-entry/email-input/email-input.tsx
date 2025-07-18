@@ -7,7 +7,7 @@ import { Input } from '../input/index.js'
 import type { EmailInputProps } from './types.js'
 import { useUniqueId } from '../../../../scalars/lib/utils.js'
 import useControllableState from '../../../hooks/use-controllable-state.js'
-import { SplittedInputDiff } from '../input/splitted-input-diff.js'
+import { EmailInputDiff } from './subcomponents/email-input-diff.js'
 
 const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
   (
@@ -73,12 +73,12 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
       )
     }
     return (
-      <SplittedInputDiff
+      <EmailInputDiff
+        label={label}
         baseValue={baseValue}
         value={emailValue ?? ''}
         viewMode={viewMode}
-        diffMode="sentences"
-        data-testid="email-input-diff"
+        required={required}
       />
     )
   }
