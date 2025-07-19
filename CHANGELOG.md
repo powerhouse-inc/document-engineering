@@ -1,3 +1,17 @@
+# [1.22.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.21.1...v1.22.0) (2025-07-19)
+
+
+### Bug Fixes
+
+* **altas:** add placeholder for document without number and name ([7ca9ff9](https://github.com/powerhouse-inc/document-engineering/commit/7ca9ff99c2ec91961d94ed96a47c2a12bdf4994a))
+* **scalars:** add label for diff comparison ([d93984a](https://github.com/powerhouse-inc/document-engineering/commit/d93984afe9da425a25228892ba4de2134dd5f7cc))
+* **scalars:** fix the import in the number inpunt and number field ([1310054](https://github.com/powerhouse-inc/document-engineering/commit/1310054d1cf0e986348872fc5ebea43d61b07f38))
+
+
+### Features
+
+* **table:** move delete options to the secondary row actions ([a851e0e](https://github.com/powerhouse-inc/document-engineering/commit/a851e0ebb55eff61beb9a27ba99d09330b73ad34))
+
 ## [1.21.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.21.0...v1.21.1) (2025-07-15)
 
 
