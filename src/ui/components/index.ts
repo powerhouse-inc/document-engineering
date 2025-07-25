@@ -30,6 +30,7 @@ export {
 export { UrlInput, type PlatformIcon, type UrlInputProps } from './data-entry/url-input/index.js'
 export { EmailInput, type EmailInputProps } from './data-entry/email-input/index.js'
 export { PasswordInput, type PasswordInputProps } from './data-entry/password-input/index.js'
+export { FileInput, type FileInputProps } from './data-entry/file-input/index.js'
 
 // dropdown
 export {
