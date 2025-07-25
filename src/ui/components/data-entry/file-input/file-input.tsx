@@ -112,7 +112,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   'inline-block h-10 bg-[#FFF] border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-[20px]',
                   // padding
                   'px-4 py-2',
-                  // disabled && 'pointer-events-none',
                   // hover
                   'hover:bg-[#FFF] hover:text-gray-500'
                 )}
