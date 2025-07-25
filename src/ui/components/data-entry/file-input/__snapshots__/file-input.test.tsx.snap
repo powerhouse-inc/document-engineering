@@ -1,0 +1,118 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FileInput Component > should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col"
+  >
+    <label
+      class="inline-flex items-center text-sm font-medium leading-4 text-gray-900 dark:text-gray-50 mb-[3px]"
+      for=":r0:-file"
+    >
+      Upload File
+    </label>
+    <div
+      class="flex flex-col w-full h-full pt-[14px] min-h-[148px] min-w-[247px]"
+    >
+      <div
+        class="relative h-[148px]"
+      >
+        <div
+          class="absolute z-0 h-full w-full"
+        >
+          <svg
+            class="w-full opacity-50"
+            fill="none"
+            viewBox="0 0 251 152"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.875 1V2H25.625V1H37.375V2H49.125V1H60.875V2H72.625V1H84.375V2H96.125V1H107.875V2H119.625V1H131.375V2H143.125V1H154.875V2H166.625V1H178.375V2H190.125V1H201.875V2H213.625V1H225.375V2H237.125V1H243C246.866 1 250 4.13401 250 8V13.667H249V25H250V36.333H249V47.667H250V59H249V70.333H250V81.667H249V93H250V104.333H249V115.667H250V127H249V138.333H250V144C250 147.866 246.866 151 243 151H237.125V150H225.375V151H213.625V150H201.875V151H190.125V150H178.375V151H166.625V150H154.875V151H143.125V150H131.375V151H119.625V150H107.875V151H96.125V150H84.375V151H72.625V150H60.875V151H49.125V150H37.375V151H25.625V150H13.875V151H8C4.13401 151 1 147.866 1 144V138.333H2V127H1V115.667H2V104.333H1V93H2V81.667H1V70.333H2V59H1V47.667H2V36.333H1V25H2V13.667H1V8L1.00879 7.63965C1.19633 3.94111 4.25486 1 8 1H13.875Z"
+              fill="#F4F4F4"
+            />
+            <path
+              d="M13.875 1V2H25.625V1H37.375V2H49.125V1H60.875V2H72.625V1H84.375V2H96.125V1H107.875V2H119.625V1H131.375V2H143.125V1H154.875V2H166.625V1H178.375V2H190.125V1H201.875V2H213.625V1H225.375V2H237.125V1H243C246.866 1 250 4.13401 250 8V13.667H249V25H250V36.333H249V47.667H250V59H249V70.333H250V81.667H249V93H250V104.333H249V115.667H250V127H249V138.333H250V144C250 147.866 246.866 151 243 151H237.125V150H225.375V151H213.625V150H201.875V151H190.125V150H178.375V151H166.625V150H154.875V151H143.125V150H131.375V151H119.625V150H107.875V151H96.125V150H84.375V151H72.625V150H60.875V151H49.125V150H37.375V151H25.625V150H13.875V151H8C4.13401 151 1 147.866 1 144V138.333H2V127H1V115.667H2V104.333H1V93H2V81.667H1V70.333H2V59H1V47.667H2V36.333H1V25H2V13.667H1V8L1.00879 7.63965C1.19633 3.94111 4.25486 1 8 1H13.875Z"
+              stroke="#D7D8D9"
+              stroke-dasharray="12 12"
+              stroke-width="2"
+            />
+          </svg>
+        </div>
+        <div
+          class="relative flex w-full flex-col h-full"
+        >
+          <label
+            aria-label="Drop your file here or click to choose files"
+            class="flex w-full h-full flex-col px-3 py-4 cursor-pointer"
+            data-testid="file-drop-area"
+            for=":r0:-file"
+          >
+            <div
+              class="flex flex-col items-center justify-center gap-2"
+            >
+              <svg
+                class="text-gray-500"
+                data-testid="icon-fallback"
+                fill="none"
+                height="40"
+                style="width: 40px; height: 40px;"
+                viewBox="0 0 41 40"
+                width="41"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20.5 4C26.134 4 29.33 7.846 29.794 12.492H29.934C33.564 12.492 36.5 15.516 36.5 19.246C36.5 19.4367 36.4927 19.6253 36.478 19.812C35.0422 18.0186 33.1023 16.6963 30.9081 16.0156C28.7139 15.3349 26.3662 15.3269 24.1675 15.9927C21.9687 16.6586 20.0198 17.9677 18.572 19.7513C17.1241 21.535 16.2436 23.7114 16.044 26H11.064C7.438 26 4.5 22.976 4.5 19.246C4.5 15.516 7.44 12.492 11.064 12.492H11.206C11.674 7.816 14.866 4 20.5 4Z"
+                  fill="#9EA0A1"
+                />
+                <path
+                  clip-rule="evenodd"
+                  d="M27.5 36C25.1131 36 22.8239 35.0518 21.136 33.364C19.4482 31.6761 18.5 29.3869 18.5 27C18.5 24.6131 19.4482 22.3239 21.136 20.636C22.8239 18.9482 25.1131 18 27.5 18C29.8869 18 32.1761 18.9482 33.864 20.636C35.5518 22.3239 36.5 24.6131 36.5 27C36.5 29.3869 35.5518 31.6761 33.864 33.364C32.1761 35.0518 29.8869 36 27.5 36ZM26.5003 25.718V31.126C26.5003 31.3912 26.6056 31.6455 26.7932 31.8331C26.9807 32.0206 27.235 32.126 27.5003 32.126C27.7655 32.126 28.0198 32.0206 28.2074 31.8331C28.3949 31.6455 28.5003 31.3912 28.5003 31.126V25.718L30.7043 27.922C30.9154 28.1331 31.2017 28.2517 31.5003 28.2517C31.7988 28.2517 32.0852 28.1331 32.2963 27.922C32.5074 27.7109 32.626 27.4245 32.626 27.126C32.626 26.8274 32.5074 26.5411 32.2963 26.33L28.2963 22.33C27.8563 21.89 27.1443 21.89 26.7043 22.33L22.7043 26.33C22.4932 26.5411 22.3745 26.8274 22.3745 27.126C22.3745 27.4245 22.4932 27.7109 22.7043 27.922C22.9154 28.1331 23.2017 28.2517 23.5003 28.2517C23.7988 28.2517 24.0852 28.1331 24.2963 27.922L26.5003 25.718Z"
+                  fill="#9EA0A1"
+                  fill-rule="evenodd"
+                />
+              </svg>
+              <p
+                class="text-gray-500 font-normal text-[14px] leading-[20px]"
+              />
+            </div>
+          </label>
+          <input
+            aria-describedby=":r0:-file-hint :r0:-file-support"
+            aria-invalid="false"
+            aria-label="Drop your file here or click to choose files"
+            class="flex h-9 w-full rounded-md text-sm font-normal leading-5 text-gray-900 dark:text-gray-50 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white px-3 py-2 font-sans placeholder:text-gray-500 dark:placeholder:text-gray-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-900 focus-visible:ring-offset-0 focus-visible:ring-offset-white dark:focus-visible:ring-charcoal-300 dark:focus-visible:ring-offset-charcoal-900 dark:focus:bg-charcoal-900 focus:bg-gray-50 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-50 disabled:text-gray-700 disabled:dark:border-charcoal-800 disabled:dark:bg-charcoal-900 disabled:dark:text-gray-300 sr-only"
+            id=":r0:-file"
+            name="file"
+            type="file"
+          />
+        </div>
+        <div
+          class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-1 pointer-events-auto"
+        >
+          <label
+            class="inline-block h-10 bg-[#FFF] border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-[20px] px-4 py-2 hover:bg-[#FFF] hover:text-gray-500"
+            for=":r0:-file"
+            role="button"
+          >
+            Search File
+          </label>
+        </div>
+      </div>
+      <div
+        class="flex flex-col gap-2 mt-2"
+      >
+        <span
+          class="text-gray-500 font-normal text-[12px] leading-[18px] truncate"
+        >
+          Supports: 
+        </span>
+        <span
+          class="text-gray-500 font-medium text-[12px] leading-[18px] truncate"
+        >
+          Max: 0 Bytes
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
