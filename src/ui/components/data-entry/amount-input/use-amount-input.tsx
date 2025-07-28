@@ -105,9 +105,7 @@ export const useAmountInput = ({
     return undefined
   }, [currentValue])
 
-  const isBigInt =
-    type === 'AmountCrypto' ||
-    (type === 'AmountCurrency' && isValidNumberGreaterThanMaxSafeInteger(baseValue?.toString()))
+  const isBigInt = type === 'AmountCrypto' || type === 'AmountCurrency'
 
   const [inputFocused, setInputFocused] = useState(false)
 
