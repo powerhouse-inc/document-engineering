@@ -10,20 +10,39 @@ export const strengthColors = [
 export const strengthLabels = ['Weak', 'Weak', 'Weak', 'Medium', 'Strong']
 export const strengthValues = [33, 33, 33, 66, 100]
 
-const validatePasswordSuggestions = (password: string): boolean => {
-  if (password.length < 8) return false
+const validateMinLength = (password: string): boolean => {
+  return password.length >= 8
+}
 
-  if (!/[A-Z]/.test(password)) return false
-  if (!/[a-z]/.test(password)) return false
-  if (!/[0-9]/.test(password)) return false
+const validateUppercase = (password: string): boolean => {
+  return /[A-Z]/.test(password)
+}
 
+const validateLowercase = (password: string): boolean => {
+  return /[a-z]/.test(password)
+}
+
+const validateNumber = (password: string): boolean => {
+  return /[0-9]/.test(password)
+}
+
+const validateSpecialCharacter = (password: string): boolean => {
   for (const char of specialCharacters) {
     if (password.includes(char)) {
       return true
     }
   }
-
   return false
+}
+
+const validatePasswordSuggestions = (password: string): boolean => {
+  return (
+    validateMinLength(password) &&
+    validateUppercase(password) &&
+    validateLowercase(password) &&
+    validateNumber(password) &&
+    validateSpecialCharacter(password)
+  )
 }
 
 export const adjustStrengthScore = (password: string, score: number | undefined): number | undefined => {
@@ -31,4 +50,29 @@ export const adjustStrengthScore = (password: string, score: number | undefined)
     return 3
   }
   return score
+}
+
+export const getPasswordRequirements = (password: string) => {
+  return [
+    {
+      text: 'Minimum 8 characters',
+      isValid: validateMinLength(password),
+    },
+    {
+      text: 'At least one uppercase letter',
+      isValid: validateUppercase(password),
+    },
+    {
+      text: 'At least one lowercase letter',
+      isValid: validateLowercase(password),
+    },
+    {
+      text: 'At least one number',
+      isValid: validateNumber(password),
+    },
+    {
+      text: `At least one special character: ${specialCharacters}`,
+      isValid: validateSpecialCharacter(password),
+    },
+  ]
 }
