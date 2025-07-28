@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useId, useImperativeHandle } from 'react'
 import type { FileInputProps } from './types.js'
-import { cn, useUniqueId } from '../../../../scalars/lib/utils.js'
-import { useInputFile } from './use-input-file.js'
+import { cn } from '../../../../scalars/lib/utils.js'
 import { Icon } from '../../icon/icon.js'
 import FileBackground from '../../icon-components/FileBackground.js'
+import { Input } from '../../../../ui/components/data-entry/input/index.js'
 import { FormLabel, FormMessageList } from '../../../../scalars/components/index.js'
-import { Input } from '../input/index.js'
 import { formatBytes } from './utils.js'
+import { useDropzone } from 'react-dropzone'
+import { Button } from '../../button/button.js'
 
 const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
@@ -17,8 +18,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       required,
       disabled = false,
       errors = [],
-      value,
-      defaultValue,
       id: propId,
       maxFileSize,
       allowedFileTypes,
@@ -27,21 +26,26 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     },
     ref
   ) => {
-    const prefix = useUniqueId()
+    const prefix = useId()
     const id = propId ?? `${prefix}-file`
     const hasError = Array.isArray(errors) && errors.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes.join(', ') : ''
 
-    const { handleDragEnter, handleDragLeave, handleDragOver, handleDrop } = useInputFile({
-      value,
-      defaultValue,
-    })
+    const { getInputProps, getRootProps, inputRef, open } = useDropzone()
+
+    useImperativeHandle(ref, () => {
+      if (!inputRef.current) {
+        throw new Error('FileInput ref not available')
+      }
+      return inputRef.current
+    }, [inputRef])
 
     return (
       <div className="flex flex-col">
         {!!label && (
           <FormLabel
             htmlFor={id}
+            id={`${id}-label`}
             disabled={disabled}
             hasError={hasError}
             required={required}
@@ -58,45 +62,37 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             </div>
 
             <div
-              className={cn(
-                'relative flex w-full flex-col h-full',
-                !dragAndDropEnabled && 'opacity-50',
-                disabled && 'cursor-not-allowed'
-              )}
+              {...getRootProps({
+                role: 'group',
+                className: cn(
+                  'dropzone',
+                  'relative flex w-full flex-col h-full cursor-pointer',
+                  !dragAndDropEnabled && 'opacity-50 pointer-events-none cursor-not-allowed',
+                  disabled && 'cursor-not-allowed',
+                  // padding
+                  'px-3 py-4'
+                ),
+                tabIndex: disabled ? -1 : 0,
+              })}
+              data-testid="file-drop-area"
             >
-              <label
-                htmlFor={id}
-                onDragEnter={dragAndDropEnabled && !disabled ? handleDragEnter : undefined}
-                onDragLeave={dragAndDropEnabled && !disabled ? handleDragLeave : undefined}
-                onDragOver={dragAndDropEnabled && !disabled ? handleDragOver : undefined}
-                onDrop={dragAndDropEnabled && !disabled ? handleDrop : undefined}
-                aria-label="Drop your file here or click to choose files"
-                data-testid="file-drop-area"
-                className={cn(
-                  'flex w-full h-full flex-col px-3 py-4',
-                  dragAndDropEnabled && !disabled ? 'cursor-pointer' : 'cursor-not-allowed',
-                  !dragAndDropEnabled && 'pointer-events-none'
-                )}
-              >
-                <div className="flex flex-col items-center justify-center gap-2">
-                  <Icon name="FileUpload" size={40} className="text-gray-500" />
-                  <p className="text-gray-500 font-normal text-[14px] leading-[20px]">{description}</p>
-                </div>
-              </label>
-
+              <div className="flex flex-col items-center justify-center gap-2">
+                <Icon name="FileUpload" size={40} className="text-gray-500" aria-hidden="true" />
+                <p className="text-gray-500 font-normal text-[14px] leading-[20px]">{description}</p>
+              </div>
               <Input
-                name={name}
-                id={id}
-                required={required}
-                disabled={disabled}
-                aria-required={required}
+                {...getInputProps({
+                  name,
+                  id,
+                  required,
+                  disabled,
+                  type: 'file',
+                  accept: props.accept,
+                  multiple: false,
+                })}
                 aria-invalid={hasError}
-                type="file"
-                ref={ref}
-                aria-describedby={`${id}-hint ${id}-support`}
-                aria-label={description ?? 'Drop your file here or click to choose files'}
-                className="sr-only"
-                {...props}
+                aria-required={required}
+                aria-labelledby={label ? `${id}-label` : undefined}
               />
             </div>
             <div
@@ -105,19 +101,21 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 disabled && 'pointer-events-none'
               )}
             >
-              <label
-                role="button"
-                htmlFor={id}
+              <Button
+                type="button"
+                onClick={open}
+                disabled={disabled}
+                aria-label="Search File"
                 className={cn(
                   'inline-block h-10 bg-[#FFF] border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-[20px]',
                   // padding
                   'px-4 py-2',
                   // hover
-                  'hover:bg-[#FFF] hover:text-gray-500'
+                  'hover:bg-[#FFF] hover:text-gray-500 hover:cursor-pointer'
                 )}
               >
                 Search File
-              </label>
+              </Button>
             </div>
           </div>
 

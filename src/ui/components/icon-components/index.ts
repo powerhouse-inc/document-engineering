@@ -55,7 +55,6 @@ import ExportPdf from './ExportPdf.js'
 import ExportUbl from './ExportUbl.js'
 import ExportZip from './ExportZip.js'
 import File from './File.js'
-import FileBackground from './FileBackground.js'
 import FileUpload from './FileUpload.js'
 import FilesEarmark from './FilesEarmark.js'
 import FolderClose from './FolderClose.js'
@@ -176,7 +175,6 @@ export const iconNames = [
   'ExportUbl',
   'ExportZip',
   'File',
-  'FileBackground',
   'FileUpload',
   'FilesEarmark',
   'FolderClose',
@@ -299,7 +297,6 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   ExportUbl,
   ExportZip,
   File,
-  FileBackground,
   FileUpload,
   FilesEarmark,
   FolderClose,
