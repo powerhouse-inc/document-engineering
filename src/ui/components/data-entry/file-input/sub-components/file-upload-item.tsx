@@ -30,8 +30,8 @@ export const FileUploadItem = ({
   status,
 }: FileUploadItemProps) => {
   const showProgress = status === 'uploading' && progress !== undefined && progress >= 0 && progress < 100
-  const showSuccess = progress === 100 && status === 'success'
-  const showError = status === 'error' && progress === 0
+  const showSuccess = status === 'success'
+  const showError = status === 'error'
 
   return (
     <div
