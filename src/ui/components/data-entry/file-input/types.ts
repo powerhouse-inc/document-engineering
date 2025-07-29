@@ -8,3 +8,5 @@ export interface FileInputProps
   maxFileSize?: number
   dragAndDropEnabled?: boolean
 }
+
+export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'
