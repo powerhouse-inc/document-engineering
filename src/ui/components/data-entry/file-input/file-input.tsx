@@ -1,4 +1,4 @@
-import React, { useId, useImperativeHandle } from 'react'
+import React, { useId, useImperativeHandle, useRef } from 'react'
 import type { FileInputProps } from './types.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import { Icon } from '../../icon/icon.js'
@@ -31,14 +31,10 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const hasError = Array.isArray(errors) && errors.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes.join(', ') : ''
 
-    const { getInputProps, getRootProps, inputRef, open } = useDropzone()
+    const { getInputProps, getRootProps, open, inputRef } = useDropzone()
 
-    useImperativeHandle(ref, () => {
-      if (!inputRef.current) {
-        throw new Error('FileInput ref not available')
-      }
-      return inputRef.current
-    }, [inputRef])
+    const internalRef = useRef<HTMLInputElement | null>(null)
+    useImperativeHandle(ref, () => internalRef.current!, [internalRef])
 
     return (
       <div className="flex flex-col">
@@ -55,7 +51,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           </FormLabel>
         )}
 
-        <div className="flex flex-col w-full h-full pt-[14px] min-h-[148px] min-w-[247px]">
+        <div className="flex flex-col w-full h-full pt-[14px] min-h-[148px]">
           <div className="relative h-[148px]">
             <div className="absolute z-0 h-full w-full">
               <FileBackground className="w-full opacity-50" />
@@ -93,6 +89,10 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 aria-invalid={hasError}
                 aria-required={required}
                 aria-labelledby={label ? `${id}-label` : undefined}
+                ref={(node: HTMLInputElement | null) => {
+                  internalRef.current = node
+                  ;(inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node
+                }}
               />
             </div>
             <div
@@ -107,11 +107,11 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 disabled={disabled}
                 aria-label="Search File"
                 className={cn(
-                  'inline-block h-10 bg-[#FFF] border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-[20px]',
+                  'inline-block h-10 bg-[white] border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-[20px]',
                   // padding
                   'px-4 py-2',
                   // hover
-                  'hover:bg-[#FFF] hover:text-gray-500 hover:cursor-pointer'
+                  'hover:bg-[white] hover:text-gray-500 hover:cursor-pointer'
                 )}
               >
                 Search File
@@ -120,10 +120,10 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           </div>
 
           <div className="flex flex-col gap-2 mt-2">
-            <span className="text-gray-500 font-normal text-[12px] leading-[18px] truncate">
+            <span className="text-gray-500 font-normal text-xs leading-4.5 truncate">
               Supports: {allowedFileTypesString}
             </span>
-            <span className="text-gray-500 font-medium text-[12px] leading-[18px] truncate">
+            <span className="text-gray-500 font-medium text-xs leading-4.5 truncate">
               Max: {formatBytes(maxFileSize, 2)}
             </span>
           </div>
