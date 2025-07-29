@@ -44,7 +44,7 @@ export const castFunctions: Record<ValueCast, (value: any, castParams?: string) 
       return {
         ...value,
 
-        value: value.value !== undefined ? BigInt(value.value) : null,
+        value: value.value !== undefined ? value.value.toString() : null,
         unit: value.unit !== '' ? value.unit : '',
       }
     }
