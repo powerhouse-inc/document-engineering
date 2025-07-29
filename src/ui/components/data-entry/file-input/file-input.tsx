@@ -1,4 +1,4 @@
-import React, { useId, useImperativeHandle, useRef } from 'react'
+import React, { useCallback, useId } from 'react'
 import type { FileInputProps } from './types.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import { Icon } from '../../icon/icon.js'
@@ -33,8 +33,18 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
     const { getInputProps, getRootProps, open, inputRef } = useDropzone()
 
-    const internalRef = useRef<HTMLInputElement | null>(null)
-    useImperativeHandle(ref, () => internalRef.current!, [internalRef])
+    const mergedRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        if (typeof ref === 'function') {
+          ref(node)
+        } else if (ref) {
+          ref.current = node
+        }
+
+        ;(inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node
+      },
+      [ref, inputRef]
+    )
 
     return (
       <div className="flex flex-col">
@@ -51,7 +61,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           </FormLabel>
         )}
 
-        <div className="flex flex-col w-full h-full pt-[14px] min-h-[148px]">
+        <div className="flex flex-col w-full h-full pt-3.5 min-h-[148px]">
           <div className="relative h-[148px]">
             <div className="absolute z-0 h-full w-full">
               <FileBackground className="w-full opacity-50" />
@@ -74,7 +84,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             >
               <div className="flex flex-col items-center justify-center gap-2">
                 <Icon name="FileUpload" size={40} className="text-gray-500" aria-hidden="true" />
-                <p className="text-gray-500 font-normal text-[14px] leading-[20px]">{description}</p>
+                <p className="text-gray-500 font-normal text-sm leading-5">{description}</p>
               </div>
               <Input
                 {...getInputProps({
@@ -89,10 +99,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 aria-invalid={hasError}
                 aria-required={required}
                 aria-labelledby={label ? `${id}-label` : undefined}
-                ref={(node: HTMLInputElement | null) => {
-                  internalRef.current = node
-                  ;(inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node
-                }}
+                ref={mergedRef}
               />
             </div>
             <div
@@ -107,11 +114,11 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 disabled={disabled}
                 aria-label="Search File"
                 className={cn(
-                  'inline-block h-10 bg-[white] border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-[20px]',
+                  'inline-block h-10 bg-white border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-5',
                   // padding
                   'px-4 py-2',
                   // hover
-                  'hover:bg-[white] hover:text-gray-500 hover:cursor-pointer'
+                  'hover:bg-white hover:text-gray-500 hover:cursor-pointer'
                 )}
               >
                 Search File
