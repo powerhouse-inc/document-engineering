@@ -1,3 +1,15 @@
+# [1.23.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.22.0...v1.23.0) (2025-07-29)
+
+
+### Bug Fixes
+
+* **scalars:** remove the bigInt convertions ([50438a3](https://github.com/powerhouse-inc/document-engineering/commit/50438a3816ada521f7d53b328c2d1035e40d7538))
+
+
+### Features
+
+* **ui:** add color transition when a password suggestion is met ([07f9938](https://github.com/powerhouse-inc/document-engineering/commit/07f9938df95ed5933eead4616929eb68fe98e610))
+
 # [1.22.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.21.1...v1.22.0) (2025-07-19)
 
 
