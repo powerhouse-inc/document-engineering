@@ -67,10 +67,10 @@ const meta: Meta<typeof PhoneNumberInput> = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    optionFormat: {
+    prefixOptionFormat: {
       control: 'radio',
       options: ['CodesOnly', 'NumbersOnly', 'FlagsOnly', 'FlagsAndCodes', 'FlagsAndNumbers'],
-      description: 'How to display country options in dropdown',
+      description: 'How to display country options in the prefix dropdown',
       table: {
         type: { summary: '"CodesOnly" | "NumbersOnly" | "FlagsOnly" | "FlagsAndCodes" | "FlagsAndNumbers"' },
         defaultValue: { summary: '"FlagsAndNumbers"' },
@@ -84,10 +84,6 @@ const meta: Meta<typeof PhoneNumberInput> = {
   args: {
     name: 'phone-number-input',
     label: 'Phone number input',
-    placeholder: '4155552671',
-    selectProps: {
-      placeholder: '+1',
-    },
   },
 } satisfies Meta<typeof PhoneNumberInput>
 

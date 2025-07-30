@@ -16,6 +16,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       className,
       label,
       description,
+      placeholder = '4155552671',
       value,
       defaultValue,
       onChange,
@@ -26,8 +27,8 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       allowedCountries,
       excludedCountries,
       includeDependentAreas,
-      optionFormat = 'FlagsAndNumbers',
-      selectProps,
+      prefixOptionFormat = 'FlagsAndNumbers',
+      prefixProps,
       viewMode = 'edition',
       // TODO: implement diffs
       // baseValue,
@@ -45,7 +46,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       allowedCountries,
       excludedCountries,
       includeDependentAreas,
-      optionFormat,
+      prefixOptionFormat,
     })
 
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
@@ -73,26 +74,27 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
             options={options}
             selectionIcon="checkmark"
             selectionIconPosition="right"
-            searchable={selectProps?.searchable ?? true}
+            searchable={prefixProps?.searchable ?? true}
             disabled={disabled}
             value={selectValue}
             onChange={(newValue) => {
               handleSelectOnChange(newValue as string)
             }}
-            placeholder={selectProps?.placeholder}
+            placeholder={prefixProps?.placeholder ?? '+1'}
             className={cn(
               'focus:ring-0 focus:ring-offset-0',
               'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
               'h-full border-none rounded-l-md rounded-r-none',
               'bg-transparent focus:bg-transparent hover:bg-transparent',
-              selectProps?.className
+              prefixProps?.className
             )}
-            contentClassName={cn('w-30', selectProps?.contentClassName)}
+            contentClassName={cn('w-30', prefixProps?.contentClassName)}
           />
           <div className="flex items-center h-full border-l border-gray-300" />
           <Input
             ref={ref}
             id={id}
+            placeholder={placeholder}
             value={inputValue}
             onChange={handleInputOnChange}
             disabled={disabled}

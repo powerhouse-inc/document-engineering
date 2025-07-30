@@ -2,15 +2,18 @@ import type React from 'react'
 import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import type { SelectProps } from '../select/types.js'
 
+type PrefixOptionFormat = 'CodesOnly' | 'NumbersOnly' | 'FlagsOnly' | 'FlagsAndCodes' | 'FlagsAndNumbers'
+
 interface PhoneNumberInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof InputBaseProps<string>>,
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof InputBaseProps<string> | 'onChange'>,
     InputBaseProps<string>,
     Omit<WithDifference<string>, 'diffMode'> {
+  onChange?: (value: string) => void
   allowedCountries?: string[]
   excludedCountries?: string[]
   includeDependentAreas?: boolean
-  optionFormat?: 'CodesOnly' | 'NumbersOnly' | 'FlagsOnly' | 'FlagsAndCodes' | 'FlagsAndNumbers'
-  selectProps?: Pick<SelectProps, 'placeholder' | 'searchable' | 'className' | 'contentClassName'>
+  prefixOptionFormat?: PrefixOptionFormat
+  prefixProps?: Pick<SelectProps, 'placeholder' | 'searchable' | 'className' | 'contentClassName'>
 }
 
 export type { PhoneNumberInputProps }

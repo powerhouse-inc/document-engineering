@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
 import type { PhoneNumberInputProps } from './types.js'
-import { createSyntheticChangeEvent } from './utils.js'
 import type { SelectOption } from '../select/types.js'
 
 interface UsePhoneNumberInputProps {
@@ -10,7 +9,7 @@ interface UsePhoneNumberInputProps {
   allowedCountries: PhoneNumberInputProps['allowedCountries']
   excludedCountries: PhoneNumberInputProps['excludedCountries']
   includeDependentAreas: PhoneNumberInputProps['includeDependentAreas']
-  optionFormat: PhoneNumberInputProps['optionFormat']
+  prefixOptionFormat: PhoneNumberInputProps['prefixOptionFormat']
 }
 
 export const usePhoneNumberInput = ({
@@ -21,7 +20,7 @@ export const usePhoneNumberInput = ({
   // allowedCountries,
   // excludedCountries,
   // includeDependentAreas,
-  // optionFormat,
+  // prefixOptionFormat,
 }: UsePhoneNumberInputProps) => {
   const [selectValue, setSelectValue] = useState('')
   const [inputValue, setInputValue] = useState('')
@@ -31,10 +30,8 @@ export const usePhoneNumberInput = ({
   const handleSelectOnChange = useCallback(
     (newSelectValue: string) => {
       setSelectValue(newSelectValue)
-
       const fullValue = `${newSelectValue}${inputValue}`
-      const syntheticEvent = createSyntheticChangeEvent(fullValue)
-      onChange?.(syntheticEvent)
+      onChange?.(fullValue)
     },
     [inputValue, onChange]
   )
@@ -45,8 +42,7 @@ export const usePhoneNumberInput = ({
       setInputValue(newInputValue)
 
       const fullValue = `${selectValue}${newInputValue}`
-      const syntheticEvent = createSyntheticChangeEvent(fullValue)
-      onChange?.(syntheticEvent)
+      onChange?.(fullValue)
     },
     [selectValue, onChange]
   )

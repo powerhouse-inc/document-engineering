@@ -6,14 +6,7 @@ import * as usePhoneNumberInputModule from './use-phone-number-input.js'
 
 describe('PhoneNumberInput Component', () => {
   it('should match snapshot', () => {
-    const { asFragment } = render(
-      <PhoneNumberInput
-        name="phone"
-        label="Phone number input"
-        placeholder="4155552671"
-        selectProps={{ placeholder: '+1' }}
-      />
-    )
+    const { asFragment } = render(<PhoneNumberInput name="phone" label="Phone number input" />)
     expect(asFragment()).toMatchSnapshot()
   })
 
@@ -55,7 +48,7 @@ describe('PhoneNumberInput Component', () => {
     })
   })
 
-  it('should handle value changes', async () => {
+  it('should handle input value changes', async () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
 
