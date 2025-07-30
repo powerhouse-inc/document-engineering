@@ -111,6 +111,7 @@ import TrashFill from './TrashFill.js'
 import TreeViewSlash from './TreeViewSlash.js'
 import TriangleDown from './TriangleDown.js'
 import Tube from './Tube.js'
+import UploadImage from './UploadImage.js'
 import VariantArrowLeft from './VariantArrowLeft.js'
 import VerticalDots from './VerticalDots.js'
 import WarningFill from './WarningFill.js'
@@ -231,6 +232,7 @@ export const iconNames = [
   'TreeViewSlash',
   'TriangleDown',
   'Tube',
+  'UploadImage',
   'VariantArrowLeft',
   'VerticalDots',
   'WarningFill',
@@ -353,6 +355,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   TreeViewSlash,
   TriangleDown,
   Tube,
+  UploadImage,
   VariantArrowLeft,
   VerticalDots,
   WarningFill,

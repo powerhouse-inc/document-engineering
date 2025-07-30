@@ -47,8 +47,8 @@ export const FileUploadItem = ({
           <Icon name={icon} size={36} />
 
           <div className="flex w-23 flex-col">
-            <span className={cn('text-gray-900 text-[12px] font-medium leading-[18px]', 'truncate')}>{fileName}</span>
-            <span className="text-gray-500 text-[12px] leading-[18px] font-medium">{fileSize}</span>
+            <span className={cn('text-gray-900 text-xs font-medium leading-4.5', 'truncate')}>{fileName}</span>
+            <span className="text-gray-500 text-xs leading-4.5 font-medium">{fileSize}</span>
           </div>
         </div>
 
@@ -62,7 +62,7 @@ export const FileUploadItem = ({
                 className="text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Reload upload"
               >
-                <Icon name="Reload" size={16} className="text-[#343839]" />
+                <Icon name="Reload" size={16} className="text-gray-900" />
               </button>
             )}
 
@@ -72,7 +72,7 @@ export const FileUploadItem = ({
               className="text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Cancel Upload"
             >
-              <Icon name="XmarkLight" size={16} className="text-[#343839]" />
+              <Icon name="XmarkLight" size={16} className="text-gray-900" />
             </button>
           </div>
         </div>
