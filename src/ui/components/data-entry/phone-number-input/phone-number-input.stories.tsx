@@ -83,13 +83,11 @@ const meta: Meta<typeof PhoneNumberInput> = {
   },
   args: {
     name: 'phone-number-input',
-    label: 'Phone number input',
+    label: 'Phone number',
   },
 } satisfies Meta<typeof PhoneNumberInput>
 
 export default meta
 type Story = StoryObj<typeof PhoneNumberInput>
 
-export const Default: Story = {
-  args: {},
-}
+export const Default: Story = {}
