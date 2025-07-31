@@ -1,3 +1,4 @@
+import mime from 'mime/lite'
 export const MESSAGES = {
   success: 'Upload successful',
   error: 'Upload failed',
@@ -19,4 +20,28 @@ export const formatBytes = (bytes?: number, decimals = 2, binaryUnits = false): 
   const formatted = Number(num.toFixed(dm))
 
   return `${formatted} ${units[i]}`
+}
+
+export function getExtensionsFromMimeTypes(mimeTypes?: string[]): string[] {
+  if (!mimeTypes) return []
+  return mimeTypes.map((type) => mime.getExtension(type)).filter((ext): ext is string => Boolean(ext))
+}
+
+type Accept = Record<string, string[]>
+
+export const convertirMimesAObjetoAccept = (allowedFileTypes?: string[]): Accept => {
+  if (!allowedFileTypes) return {}
+  if (!Array.isArray(allowedFileTypes) || allowedFileTypes.length === 0) {
+    return {}
+  }
+  const acceptObject: Accept = {}
+
+  allowedFileTypes.forEach((mimeType) => {
+    const extension = mime.getExtension(mimeType)
+    if (extension) {
+      acceptObject[mimeType] = [`.${extension}`]
+    }
+  })
+
+  return acceptObject
 }
