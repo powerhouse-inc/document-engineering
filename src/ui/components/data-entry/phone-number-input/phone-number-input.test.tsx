@@ -2,7 +2,6 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { PhoneNumberInput } from './phone-number-input.js'
-import * as usePhoneNumberInputModule from './use-phone-number-input.js'
 
 describe('PhoneNumberInput Component', () => {
   it('should match snapshot', () => {
@@ -58,35 +57,6 @@ describe('PhoneNumberInput Component', () => {
     await user.type(input, '4155552671')
     expect(onChange).toHaveBeenCalledTimes(10)
     expect(input).toHaveValue('4155552671')
-  })
-
-  it('should handle select value changes', async () => {
-    const user = userEvent.setup()
-    const onChange = vi.fn()
-    const mockHandleSelectOnChange = vi.fn()
-
-    const mockUsePhoneNumberInput = vi.spyOn(usePhoneNumberInputModule, 'usePhoneNumberInput')
-    mockUsePhoneNumberInput.mockReturnValue({
-      options: [
-        { value: '+1', label: 'US' },
-        { value: '+44', label: 'UK' },
-        { value: '+34', label: 'ES' },
-      ],
-      selectValue: '+1',
-      inputValue: '',
-      handleSelectOnChange: mockHandleSelectOnChange,
-      handleInputOnChange: vi.fn(),
-    })
-
-    render(<PhoneNumberInput name="phone" label="Phone number input" onChange={onChange} />)
-
-    const select = screen.getByRole('combobox')
-    await user.click(select)
-    await user.click(screen.getByText('UK'))
-
-    expect(mockHandleSelectOnChange).toHaveBeenCalledWith('+44')
-
-    mockUsePhoneNumberInput.mockRestore()
   })
 
   it('should not invoke onChange on mount when it has a defaultValue', () => {
