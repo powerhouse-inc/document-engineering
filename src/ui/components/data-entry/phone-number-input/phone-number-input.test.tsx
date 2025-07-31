@@ -5,18 +5,18 @@ import { PhoneNumberInput } from './phone-number-input.js'
 
 describe('PhoneNumberInput Component', () => {
   it('should match snapshot', () => {
-    const { asFragment } = render(<PhoneNumberInput name="phone" label="Phone number input" />)
+    const { asFragment } = render(<PhoneNumberInput name="phone" label="Phone number" />)
     expect(asFragment()).toMatchSnapshot()
   })
 
   it('should render with label', () => {
-    render(<PhoneNumberInput name="phone" label="Phone number input" />)
-    expect(screen.getByText('Phone number input')).toBeInTheDocument()
+    render(<PhoneNumberInput name="phone" label="Phone number" />)
+    expect(screen.getByText('Phone number')).toBeInTheDocument()
   })
 
   it('should render with description', () => {
-    render(<PhoneNumberInput name="phone" description="Phone number input description" />)
-    expect(screen.getByText('Phone number input description')).toBeInTheDocument()
+    render(<PhoneNumberInput name="phone" description="Phone number description" />)
+    expect(screen.getByText('Phone number description')).toBeInTheDocument()
   })
 
   it('should handle disabled state', () => {
@@ -33,12 +33,12 @@ describe('PhoneNumberInput Component', () => {
   })
 
   it('should display warning messages', () => {
-    render(<PhoneNumberInput name="phone" warnings={['Please change your phone number']} />)
-    expect(screen.getByText('Please change your phone number')).toBeInTheDocument()
+    render(<PhoneNumberInput name="phone" warnings={['You must change your phone number']} />)
+    expect(screen.getByText('You must change your phone number')).toBeInTheDocument()
   })
 
   it('should have correct ARIA attributes', async () => {
-    render(<PhoneNumberInput name="phone" label="Phone number input" required errors={['Invalid phone number']} />)
+    render(<PhoneNumberInput name="phone" required errors={['Invalid phone number']} />)
 
     const input = screen.getByRole('textbox')
     expect(input).toHaveAttribute('aria-required', 'true')
@@ -51,7 +51,7 @@ describe('PhoneNumberInput Component', () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
 
-    render(<PhoneNumberInput name="phone" label="Phone number input" onChange={onChange} />)
+    render(<PhoneNumberInput name="phone" onChange={onChange} />)
 
     const input = screen.getByRole('textbox')
     await user.type(input, '4155552671')
@@ -61,7 +61,7 @@ describe('PhoneNumberInput Component', () => {
 
   it('should not invoke onChange on mount when it has a defaultValue', () => {
     const onChange = vi.fn()
-    render(<PhoneNumberInput name="phone" label="Phone number input" defaultValue="+14155552671" onChange={onChange} />)
+    render(<PhoneNumberInput name="phone" defaultValue="+14155552671" onChange={onChange} />)
     expect(onChange).not.toHaveBeenCalled()
   })
 })
