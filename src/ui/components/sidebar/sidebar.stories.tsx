@@ -276,7 +276,6 @@ export const WithCustomTitleNavigation: Story = {
     const handleTitleClick = useCallback(() => {
       const timestamp = new Date().toLocaleTimeString()
       setNavigationLog((prev) => [...prev, `Title clicked at ${timestamp} - Navigate to root/home`])
-      console.log('Sidebar title clicked - navigating to root/home')
     }, [])
 
     return (
