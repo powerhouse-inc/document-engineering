@@ -171,6 +171,7 @@
     "document-model": "^2.28.1-dev.9",
     "focus-trap-react": "^11.0.3",
     "graphql": "^16.9.0",
+    "libphonenumber-js": "^1.12.10",
     "nanoid": "^5.0.9",
     "react-circle-flags": "^0.0.22",
     "react-confirm": "^0.4.0",
