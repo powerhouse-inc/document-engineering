@@ -89,6 +89,9 @@ importers:
       graphql-upload:
         specifier: ^17.0.0
         version: 17.0.0(@types/express@5.0.3)(graphql@16.11.0)
+      mime:
+        specifier: ^4.0.7
+        version: 4.0.7
       nanoid:
         specifier: ^5.0.9
         version: 5.1.5

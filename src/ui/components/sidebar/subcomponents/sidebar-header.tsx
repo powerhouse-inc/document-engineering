@@ -7,19 +7,36 @@ interface SidebarHeaderProps {
   sidebarTitle?: string
   sidebarIcon?: React.ReactNode
   enableMacros?: number
+  handleOnTitleClick?: () => void
 }
 
-export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ sidebarTitle, sidebarIcon, enableMacros = 0 }) => {
+export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
+  sidebarTitle,
+  sidebarIcon,
+  enableMacros = 0,
+  handleOnTitleClick,
+}) => {
   const { maxDepth, openLevel } = useSidebar()
   if (!sidebarTitle && !sidebarIcon && !enableMacros) {
     return null
+  }
+  let titleElement
+  const baseTitleClasses = 'truncate text-sm font-semibold text-gray-700 dark:text-gray-300'
+  if (handleOnTitleClick) {
+    titleElement = (
+      <button type="button" className={cn(baseTitleClasses, 'cursor-pointer')} onClick={handleOnTitleClick}>
+        {sidebarTitle}
+      </button>
+    )
+  } else {
+    titleElement = <div className={baseTitleClasses}>{sidebarTitle}</div>
   }
 
   return (
     <header className="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600">
       <div className="flex items-center gap-2 truncate">
         {sidebarIcon}
-        <div className="truncate text-sm font-semibold text-gray-700 dark:text-gray-300">{sidebarTitle}</div>
+        {titleElement}
       </div>
 
       {enableMacros > 0 && (

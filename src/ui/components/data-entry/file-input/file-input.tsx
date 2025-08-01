@@ -5,9 +5,9 @@ import { Icon } from '../../icon/icon.js'
 import FileBackground from '../../icon-components/FileBackground.js'
 import { Input } from '../../../../ui/components/data-entry/input/index.js'
 import { FormLabel, FormMessageList } from '../../../../scalars/components/index.js'
-import { formatBytes } from './utils.js'
 import { useDropzone } from 'react-dropzone'
-import { Button } from '../../button/button.js'
+import { convertirMimesAObjetoAccept, formatBytes, getExtensionsFromMimeTypes } from './utils.js'
+import { Button } from '../../../../scalars/components/fragments/button/button.js'
 
 const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
@@ -26,12 +26,18 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     },
     ref
   ) => {
+    // TODO: Implementar value y defaultValue pass hook to handle file upload
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { value, defaultValue, ...rest } = props
     const prefix = useId()
     const id = propId ?? `${prefix}-file`
     const hasError = Array.isArray(errors) && errors.length > 0
-    const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes.join(', ') : ''
+    const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
-    const { getInputProps, getRootProps, open, inputRef } = useDropzone()
+    const { getInputProps, getRootProps, open, inputRef } = useDropzone({
+      maxSize: maxFileSize,
+      accept: convertirMimesAObjetoAccept(allowedFileTypes ?? []),
+    })
 
     const mergedRef = useCallback(
       (node: HTMLInputElement | null) => {
@@ -86,6 +92,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 <Icon name="FileUpload" size={40} className="text-gray-500" aria-hidden="true" />
                 <p className="text-gray-500 font-normal text-sm leading-5">{description}</p>
               </div>
+
               <Input
                 {...getInputProps({
                   name,
@@ -93,8 +100,8 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   required,
                   disabled,
                   type: 'file',
-                  accept: props.accept,
                   multiple: false,
+                  ...rest,
                 })}
                 aria-invalid={hasError}
                 aria-required={required}
@@ -102,6 +109,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 ref={mergedRef}
               />
             </div>
+
             <div
               className={cn(
                 'absolute bottom-4 left-1/2 transform -translate-x-1/2 z-1 pointer-events-auto',
@@ -128,12 +136,13 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
           <div className="flex flex-col gap-2 mt-2">
             <span className="text-gray-500 font-normal text-xs leading-4.5 truncate">
-              Supports: {allowedFileTypesString}
+              Supports: {getExtensionsFromMimeTypes(allowedFileTypesString).join(', ')}
             </span>
             <span className="text-gray-500 font-medium text-xs leading-4.5 truncate">
               Max: {formatBytes(maxFileSize, 2)}
             </span>
           </div>
+
           {hasError && <FormMessageList messages={errors} type="error" />}
         </div>
       </div>

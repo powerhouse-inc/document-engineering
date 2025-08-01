@@ -39,10 +39,13 @@ describe('FileInput Component', () => {
   })
 
   it('should accept allowedFileTypes prop', () => {
-    const allowedTypes = ['.pdf', '.doc', '.docx']
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png']
     render(<FileInput name="file" label="Upload File" allowedFileTypes={allowedTypes} />)
 
-    expect(screen.getByText('Supports: .pdf, .doc, .docx')).toBeInTheDocument()
+    expect(screen.getByText(/Supports:/)).toBeInTheDocument()
+    expect(screen.getByText(/pdf/)).toBeInTheDocument()
+    expect(screen.getByText(/jpg/)).toBeInTheDocument()
+    expect(screen.getByText(/png/)).toBeInTheDocument()
   })
 
   it('should accept maxFileSize prop', () => {

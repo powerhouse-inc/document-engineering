@@ -85,6 +85,11 @@ export interface SidebarProps {
    * Optional className for the sidebar container
    */
   className?: string
+
+  /**
+   * Callback function triggered when the sidebar title is clicked.
+   */
+  handleOnTitleClick?: () => void
 }
 
 /**
@@ -108,6 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   maxWidth,
   allowCollapsingInactiveNodes = false,
   className,
+  handleOnTitleClick,
 }) => {
   const { sidebarRef, startResizing, isResizing, isSidebarOpen, handleToggleSidebar } = useSidebarResize({
     defaultWidth: initialWidth,
@@ -171,7 +177,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
     >
       {isSidebarOpen && (
         <>
-          <SidebarHeader sidebarTitle={sidebarTitle} sidebarIcon={sidebarIcon} enableMacros={enableMacros} />
+          <SidebarHeader
+            sidebarTitle={sidebarTitle}
+            sidebarIcon={sidebarIcon}
+            enableMacros={enableMacros}
+            handleOnTitleClick={handleOnTitleClick}
+          />
 
           {allowPinning && pinnedNodePath.length > 0 && <SidebarPinningArea />}
           <SidebarContentArea allowPinning={allowPinning} allowCollapsingInactiveNodes={allowCollapsingInactiveNodes} />
