@@ -95,7 +95,7 @@ export const Default: Story = {
     name: 'file-input',
     label: 'Upload File',
     description: 'Click to chose files',
-    allowedFileTypes: ['xls', 'xlsx', 'png', 'docs'],
+    allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf', 'text/plain', 'application/epub+zip'],
     maxFileSize: 15728640,
   },
 }
