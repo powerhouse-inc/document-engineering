@@ -83,6 +83,7 @@ import PeopleFill from './PeopleFill.js'
 import Person from './Person.js'
 import Pin from './Pin.js'
 import PinFilled from './PinFilled.js'
+import PlaceholderImage from './PlaceholderImage.js'
 import Plus from './Plus.js'
 import PlusCircle from './PlusCircle.js'
 import PlusSquare from './PlusSquare.js'
@@ -111,7 +112,6 @@ import TrashFill from './TrashFill.js'
 import TreeViewSlash from './TreeViewSlash.js'
 import TriangleDown from './TriangleDown.js'
 import Tube from './Tube.js'
-import UploadImage from './UploadImage.js'
 import VariantArrowLeft from './VariantArrowLeft.js'
 import VerticalDots from './VerticalDots.js'
 import WarningFill from './WarningFill.js'
@@ -204,6 +204,7 @@ export const iconNames = [
   'Person',
   'Pin',
   'PinFilled',
+  'PlaceholderImage',
   'Plus',
   'PlusCircle',
   'PlusSquare',
@@ -232,7 +233,6 @@ export const iconNames = [
   'TreeViewSlash',
   'TriangleDown',
   'Tube',
-  'UploadImage',
   'VariantArrowLeft',
   'VerticalDots',
   'WarningFill',
@@ -327,6 +327,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Person,
   Pin,
   PinFilled,
+  PlaceholderImage,
   Plus,
   PlusCircle,
   PlusSquare,
@@ -355,7 +356,6 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   TreeViewSlash,
   TriangleDown,
   Tube,
-  UploadImage,
   VariantArrowLeft,
   VerticalDots,
   WarningFill,
