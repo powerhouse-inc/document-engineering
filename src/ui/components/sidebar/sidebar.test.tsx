@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { act, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { Icon } from '../../components/icon/index.js'
 import { Sidebar } from './sidebar.js'
@@ -115,6 +116,24 @@ describe('Sidebar Component', () => {
       const pinnedNode = screen.getByText('Node with custom class')
       expect(pinnedNode).toBeInTheDocument()
       expect(pinnedNode).toHaveClass('custom-node-class', 'text-blue-500')
+    })
+  })
+
+  describe('Sidebar Header Button Interactions', () => {
+    it('should call handleOnTitleClick when sidebar title button is clicked', async () => {
+      const user = userEvent.setup()
+      const handleOnTitleClick = vi.fn()
+
+      renderSidebar({
+        sidebarTitle: 'Test Sidebar',
+        handleOnTitleClick,
+      })
+
+      const titleButton = screen.getByRole('button', { name: 'Test Sidebar' })
+      expect(titleButton).toBeInTheDocument()
+
+      await user.click(titleButton)
+      expect(handleOnTitleClick).toHaveBeenCalledTimes(1)
     })
   })
 })
