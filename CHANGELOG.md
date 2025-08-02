@@ -1,3 +1,31 @@
+# [1.24.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.23.0...v1.24.0) (2025-08-02)
+
+
+### Bug Fixes
+
+* delete a test related to implementation details ([095eb29](https://github.com/powerhouse-inc/document-engineering/commit/095eb296b7ebf3b41417dcbea4dc76a7d241a783))
+* improve tests ([0c0bbab](https://github.com/powerhouse-inc/document-engineering/commit/0c0bbab235545a6df9ac4320d9c48be4e089a65b))
+* **scalars:** give a more descriptive name and avoid custom classes ([3420278](https://github.com/powerhouse-inc/document-engineering/commit/3420278dbe9d92bdc43f5e194d8cceca890a7402))
+* **scalars:** improve stories, and fix some conflcit with fixed values ([1ad1571](https://github.com/powerhouse-inc/document-engineering/commit/1ad1571189d7864ce744bf9a2c93dc064c6a3721))
+* **scalars:** improve the file componente using drag-and-drop library and improve accessibility ([03a6c6c](https://github.com/powerhouse-inc/document-engineering/commit/03a6c6c8f6f384eb06e77a37841c616457f79249))
+* **scalars:** improve the logic to show correct message ([5080f14](https://github.com/powerhouse-inc/document-engineering/commit/5080f140d3f228b9b7e66af3fa75c0d574513e7e))
+* **scalars:** improve the test ([b81cdff](https://github.com/powerhouse-inc/document-engineering/commit/b81cdff5dbcda71eb3f01ce5b46d7db01b5af806))
+* **scalars:** merge parent ref with dropZone to make botn to work with the input ([fec4eca](https://github.com/powerhouse-inc/document-engineering/commit/fec4eca5e667941bd257f710f2ca2d7525a1218c))
+* **scalars:** pass props to hook and remove props for accept from input ([cefb561](https://github.com/powerhouse-inc/document-engineering/commit/cefb56166c9287c4fbc256b9af80d463e8fd516d))
+* **scalars:** remove the comnent code ([5a1bb82](https://github.com/powerhouse-inc/document-engineering/commit/5a1bb82736e899fc69f53001ea4f9ac644119c55))
+* **scalars:** render correct element base if function its passed ([aa6ed13](https://github.com/powerhouse-inc/document-engineering/commit/aa6ed1304b68f055c95ddf055d779ebe1262f3ad))
+* **ui:** default label in stories ([945c33d](https://github.com/powerhouse-inc/document-engineering/commit/945c33d95e2f1a4aa477187f6c15a34d116eb405))
+* **ui:** remove utils.ts and improve types & code quality ([579ff2c](https://github.com/powerhouse-inc/document-engineering/commit/579ff2c65a49dfcd9fc3476b96da309b7ed87abb))
+
+
+### Features
+
+* add sidebar loading ([c6d2d70](https://github.com/powerhouse-inc/document-engineering/commit/c6d2d70a930a4f00e4cfdbf4f3ad3ab658073f05))
+* **scalars:** add basic for input file add test for it ([21cb3a1](https://github.com/powerhouse-inc/document-engineering/commit/21cb3a1c8cf4c823a7cc63bb837ec2d9d5155fa7))
+* **scalars:** add file-upload-item component ([0ca1501](https://github.com/powerhouse-inc/document-engineering/commit/0ca1501800c21896ec5089e8a6a3490b2db72215))
+* **scalars:** make sidebar title clickable ([45fc65c](https://github.com/powerhouse-inc/document-engineering/commit/45fc65ca2fd8d8da3bf6033810129abec129a288))
+* **ui:** add the base for PhoneNumberInput UI component ([37a0f6f](https://github.com/powerhouse-inc/document-engineering/commit/37a0f6fae7dab092ddad15199db635a709fc8aa1))
+
 # [1.23.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.22.0...v1.23.0) (2025-07-29)
 
 
