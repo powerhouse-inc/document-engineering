@@ -8,6 +8,7 @@ export interface FileInputProps
   maxFileSize?: number
   dragAndDropEnabled?: boolean
   onChange?: (file: File | null) => void
+  onCancel?: () => void
 }
 
 export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'

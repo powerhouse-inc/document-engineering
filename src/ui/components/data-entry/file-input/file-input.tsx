@@ -27,6 +27,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       defaultValue,
       dragAndDropEnabled = true,
       onChange,
+      onCancel,
       ...props
     },
     ref
@@ -36,12 +37,12 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const hasError = Array.isArray(errors) && errors.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
-    const { onHandleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange })
+    const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange, onCancel })
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       maxSize: maxFileSize,
       accept: convertirMimesAObjetoAccept(allowedFileTypes ?? []),
       onDropAccepted: (acceptedFiles) => {
-        onHandleDrop(acceptedFiles)
+        handleDrop(acceptedFiles)
       },
     })
 

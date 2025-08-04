@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react'
 
 interface UseFileUploadProps {
-  value?: File
-  defaultValue?: File
+  value?: File | null
+  defaultValue?: File | null
   onChange?: (file: File | null) => void
+  onCancel?: () => void
 }
-export const useFileUpload = ({ onChange }: UseFileUploadProps) => {
-  const [file, setFile] = useState<File | null>(null)
-
-  const onHandleDrop = useCallback(
+export const useFileUpload = ({ value, defaultValue, onChange, onCancel }: UseFileUploadProps) => {
+  const [file, setFile] = useState<File | null>(value ?? defaultValue ?? null)
+  const handleDrop = useCallback(
     (acceptedFiles?: File[]) => {
       if (!acceptedFiles || acceptedFiles.length === 0) return
       const file = acceptedFiles[0]
@@ -17,12 +17,17 @@ export const useFileUpload = ({ onChange }: UseFileUploadProps) => {
     },
     [onChange]
   )
-  const onCancel = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    setFile(null)
-  }, [])
+  const handleCancel = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation()
+      setFile(null)
+      onChange?.(null)
+      onCancel?.()
+    },
+    [onChange, onCancel]
+  )
 
   const borderIndicator = file ? 'text-blue-900' : 'text-gray-300'
 
-  return { onHandleDrop, onCancel, file, borderIndicator }
+  return { handleDrop, onCancel, file, borderIndicator, handleCancel }
 }
