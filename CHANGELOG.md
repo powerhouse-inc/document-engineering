@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.24.0...v1.25.0) (2025-08-04)
+
+
+### Features
+
+* **scalars:** add graphql-upload for the upload file scalar ([cddcf57](https://github.com/powerhouse-inc/document-engineering/commit/cddcf575ce0b3dd7879b92e87002ed2a0434dd7e))
+
 # [1.24.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.23.0...v1.24.0) (2025-08-02)
 
 
