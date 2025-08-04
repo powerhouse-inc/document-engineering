@@ -4,10 +4,12 @@ import { cn } from '../../../../scalars/lib/utils.js'
 import { Icon } from '../../icon/icon.js'
 import FileBackground from '../../icon-components/FileBackground.js'
 import { Input } from '../../../../ui/components/data-entry/input/index.js'
-import { FormLabel, FormMessageList } from '../../../../scalars/components/index.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import { useDropzone } from 'react-dropzone'
 import { convertirMimesAObjetoAccept, formatBytes, getExtensionsFromMimeTypes } from './utils.js'
 import { Button } from '../../../../scalars/components/fragments/button/button.js'
+import { useFileUpload } from './useUploadFile.js'
 
 const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
@@ -21,22 +23,27 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       id: propId,
       maxFileSize,
       allowedFileTypes,
+      value,
+      defaultValue,
       dragAndDropEnabled = true,
+      onChange,
+      onCancel,
       ...props
     },
     ref
   ) => {
-    // TODO: Implementar value y defaultValue pass hook to handle file upload
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { value, defaultValue, ...rest } = props
     const prefix = useId()
     const id = propId ?? `${prefix}-file`
     const hasError = Array.isArray(errors) && errors.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
+    const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange, onCancel })
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       maxSize: maxFileSize,
       accept: convertirMimesAObjetoAccept(allowedFileTypes ?? []),
+      onDropAccepted: (acceptedFiles) => {
+        handleDrop(acceptedFiles)
+      },
     })
 
     const mergedRef = useCallback(
@@ -69,7 +76,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
         <div className="flex flex-col w-full h-full pt-3.5 min-h-[148px]">
           <div className="relative h-[148px]">
-            <div className="absolute z-0 h-full w-full">
+            <div className={cn('absolute z-0 h-full w-full', borderIndicator)}>
               <FileBackground className="w-full opacity-50" />
             </div>
 
@@ -92,7 +99,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 <Icon name="FileUpload" size={40} className="text-gray-500" aria-hidden="true" />
                 <p className="text-gray-500 font-normal text-sm leading-5">{description}</p>
               </div>
-
               <Input
                 {...getInputProps({
                   name,
@@ -101,7 +107,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   disabled,
                   type: 'file',
                   multiple: false,
-                  ...rest,
+                  ...props,
                 })}
                 aria-invalid={hasError}
                 aria-required={required}
@@ -142,8 +148,9 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               Max: {formatBytes(maxFileSize, 2)}
             </span>
           </div>
-
-          {hasError && <FormMessageList messages={errors} type="error" />}
+          <div className="flex flex-col gap-2 mt-2">
+            {hasError && <FormMessageList messages={errors} type="error" />}
+          </div>
         </div>
       </div>
     )

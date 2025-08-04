@@ -19,7 +19,7 @@ exports[`FileInput Component > should match snapshot 1`] = `
         class="relative h-[148px]"
       >
         <div
-          class="absolute z-0 h-full w-full"
+          class="absolute z-0 h-full w-full text-gray-300"
         >
           <svg
             class="w-full opacity-50"
@@ -33,7 +33,7 @@ exports[`FileInput Component > should match snapshot 1`] = `
             />
             <path
               d="M13.875 1V2H25.625V1H37.375V2H49.125V1H60.875V2H72.625V1H84.375V2H96.125V1H107.875V2H119.625V1H131.375V2H143.125V1H154.875V2H166.625V1H178.375V2H190.125V1H201.875V2H213.625V1H225.375V2H237.125V1H243C246.866 1 250 4.13401 250 8V13.667H249V25H250V36.333H249V47.667H250V59H249V70.333H250V81.667H249V93H250V104.333H249V115.667H250V127H249V138.333H250V144C250 147.866 246.866 151 243 151H237.125V150H225.375V151H213.625V150H201.875V151H190.125V150H178.375V151H166.625V150H154.875V151H143.125V150H131.375V151H119.625V150H107.875V151H96.125V150H84.375V151H72.625V150H60.875V151H49.125V150H37.375V151H25.625V150H13.875V151H8C4.13401 151 1 147.866 1 144V138.333H2V127H1V115.667H2V104.333H1V93H2V81.667H1V70.333H2V59H1V47.667H2V36.333H1V25H2V13.667H1V8L1.00879 7.63965C1.19633 3.94111 4.25486 1 8 1H13.875Z"
-              stroke="#D7D8D9"
+              stroke="currentColor"
               stroke-dasharray="12 12"
               stroke-width="2"
             />
@@ -112,6 +112,9 @@ exports[`FileInput Component > should match snapshot 1`] = `
           Max: 0 Bytes
         </span>
       </div>
+      <div
+        class="flex flex-col gap-2 mt-2"
+      />
     </div>
   </div>
 </DocumentFragment>
