@@ -1,10 +1,9 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { ProgressBar } from '../../../../../scalars/components/fragments/progress-bar/progress-bar.js'
-import type { IconName } from '../../../icon-components/index.js'
 import { Icon } from '../../../icon/icon.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
 import type { UploadFile } from '../types.js'
-import { MESSAGES } from '../utils.js'
+import { getIconKey, MESSAGES } from '../utils.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -13,7 +12,7 @@ interface FileUploadItemProps {
   onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onReload?: (e: React.MouseEvent<HTMLButtonElement>) => void
   className?: string
-  icon?: IconName
+  mimeType?: string
   errorsUpload?: string[]
   status?: UploadFile
 }
@@ -25,7 +24,7 @@ export const FileUploadItem = ({
   onCancel,
   onReload,
   className,
-  icon = 'DownloadFile',
+  mimeType = '',
   errorsUpload,
   status = 'idle',
 }: FileUploadItemProps) => {
@@ -56,7 +55,7 @@ export const FileUploadItem = ({
     >
       <div className="flex items-start gap-2">
         <div className="flex flex-1 gap-2 ">
-          <Icon name={icon} size={36} />
+          <Icon name={getIconKey(mimeType)} size={36} />
 
           <div className="flex w-23 flex-col">
             <span className={cn('text-gray-900 text-xs font-medium leading-4.5', 'truncate')}>{fileName}</span>

@@ -10,6 +10,7 @@ export interface FileInputProps
   onChange?: (file: File | null) => void
   // Item Props
   fileName?: string
+  mimeType?: string
   fileSize?: number
   progress?: number
   onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void

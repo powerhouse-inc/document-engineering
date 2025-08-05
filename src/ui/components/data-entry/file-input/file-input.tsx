@@ -7,7 +7,7 @@ import { Input } from '../../../../ui/components/data-entry/input/index.js'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import { useDropzone } from 'react-dropzone'
-import { convertirMimesAObjetoAccept, formatBytes, getExtensionsFromMimeTypes, getIconKey } from './utils.js'
+import { convertirMimesAObjetoAccept, formatBytes, getExtensionsFromMimeTypes } from './utils.js'
 import { Button } from '../../../../scalars/components/fragments/button/button.js'
 import { useFileUpload } from './useUploadFile.js'
 import { FileUploadItem } from './sub-components/file-upload-item.js'
@@ -32,6 +32,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       // Item Props
       fileName,
       fileSize,
+      mimeType,
       progress,
       onCancel,
       onReload,
@@ -46,7 +47,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const hasError = Array.isArray(errors) && errors.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
-    const { handleDrop, borderIndicator, file } = useFileUpload({ value, defaultValue, onChange })
+    const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange })
 
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       maxSize: maxFileSize,
@@ -112,17 +113,19 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 </div>
               )}
               {status !== 'idle' && (
-                <div className="flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)]">
-                  <FileUploadItem
-                    errorsUpload={errorsUpload}
-                    icon={getIconKey(file?.type ?? '')}
-                    fileName={fileName}
-                    fileSize={formatBytes(fileSize ?? 0, 2)}
-                    progress={progress}
-                    status={status}
-                    onCancel={onCancel}
-                    onReload={onReload}
-                  />
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                  <div className="w-full max-w-full">
+                    <FileUploadItem
+                      errorsUpload={errorsUpload}
+                      mimeType={mimeType}
+                      fileName={fileName}
+                      fileSize={formatBytes(fileSize ?? 0, 2)}
+                      progress={progress}
+                      status={status}
+                      onCancel={onCancel}
+                      onReload={onReload}
+                    />
+                  </div>
                 </div>
               )}
               <Input
