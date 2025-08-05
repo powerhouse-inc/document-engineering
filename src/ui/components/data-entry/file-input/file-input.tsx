@@ -10,6 +10,7 @@ import { useDropzone } from 'react-dropzone'
 import { convertirMimesAObjetoAccept, formatBytes, getExtensionsFromMimeTypes } from './utils.js'
 import { Button } from '../../../../scalars/components/fragments/button/button.js'
 import { useFileUpload } from './useUploadFile.js'
+import { FileUploadItem } from './sub-components/file-upload-item.js'
 
 const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
@@ -27,7 +28,16 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       defaultValue,
       dragAndDropEnabled = true,
       onChange,
+
+      // Item Props
+      fileName,
+      fileSize,
+      mimeType,
+      progress,
       onCancel,
+      onReload,
+      errorsUpload,
+      status,
       ...props
     },
     ref
@@ -37,7 +47,8 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const hasError = Array.isArray(errors) && errors.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
-    const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange, onCancel })
+    const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange })
+
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       maxSize: maxFileSize,
       accept: convertirMimesAObjetoAccept(allowedFileTypes ?? []),
@@ -95,10 +106,28 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               })}
               data-testid="file-drop-area"
             >
-              <div className="flex flex-col items-center justify-center gap-2">
-                <Icon name="FileUpload" size={40} className="text-gray-500" aria-hidden="true" />
-                <p className="text-gray-500 font-normal text-sm leading-5">{description}</p>
-              </div>
+              {status === 'idle' && (
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <Icon name="FileUpload" size={40} className="text-gray-500" aria-hidden="true" />
+                  <p className="text-gray-500 font-normal text-sm leading-5">{description}</p>
+                </div>
+              )}
+              {status !== 'idle' && (
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                  <div className="w-full max-w-full">
+                    <FileUploadItem
+                      errorsUpload={errorsUpload}
+                      mimeType={mimeType}
+                      fileName={fileName}
+                      fileSize={formatBytes(fileSize ?? 0, 2)}
+                      progress={progress}
+                      status={status}
+                      onCancel={onCancel}
+                      onReload={onReload}
+                    />
+                  </div>
+                </div>
+              )}
               <Input
                 {...getInputProps({
                   name,
@@ -115,29 +144,30 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 ref={mergedRef}
               />
             </div>
-
-            <div
-              className={cn(
-                'absolute bottom-4 left-1/2 transform -translate-x-1/2 z-1 pointer-events-auto',
-                disabled && 'pointer-events-none'
-              )}
-            >
-              <Button
-                type="button"
-                onClick={open}
-                disabled={disabled}
-                aria-label="Search File"
+            {status === 'idle' && (
+              <div
                 className={cn(
-                  'inline-block h-10 bg-white border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-5',
-                  // padding
-                  'px-4 py-2',
-                  // hover
-                  'hover:bg-white hover:text-gray-500 hover:cursor-pointer'
+                  'absolute bottom-4 left-1/2 transform -translate-x-1/2 z-1 pointer-events-auto',
+                  disabled && 'pointer-events-none'
                 )}
               >
-                Search File
-              </Button>
-            </div>
+                <Button
+                  type="button"
+                  onClick={open}
+                  disabled={disabled}
+                  aria-label="Search File"
+                  className={cn(
+                    'inline-block h-10 bg-white border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-5',
+                    // padding
+                    'px-4 py-2',
+                    // hover
+                    'hover:bg-white hover:text-gray-500 hover:cursor-pointer'
+                  )}
+                >
+                  Search File
+                </Button>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col gap-2 mt-2">
