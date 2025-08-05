@@ -21,6 +21,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       required,
       disabled = false,
       errors = [],
+      warnings = [],
       id: propId,
       maxFileSize,
       allowedFileTypes,
@@ -37,7 +38,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       onCancel,
       onReload,
       errorsUpload,
-      status,
+      status = 'idle',
       ...props
     },
     ref
@@ -45,6 +46,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const prefix = useId()
     const id = propId ?? `${prefix}-file`
     const hasError = Array.isArray(errors) && errors.length > 0
+    const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
     const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange })
@@ -180,6 +182,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           </div>
           <div className="flex flex-col gap-2 mt-2">
             {hasError && <FormMessageList messages={errors} type="error" />}
+            {hasWarning && <FormMessageList messages={warnings} type="warning" />}
           </div>
         </div>
       </div>

@@ -54,6 +54,10 @@ const ICON_CODE_TO_NAME: Record<string, IconName> = {
   JSON: 'ExportJson',
   UBL: 'ExportUbl',
   CSV: 'ExportCsv',
+  PNG: 'PlaceholderImage',
+  JPG: 'PlaceholderImage',
+  JPEG: 'PlaceholderImage',
+  WEBP: 'PlaceholderImage',
 }
 
 export const getIconKey = (mimeType: string): IconName => {
