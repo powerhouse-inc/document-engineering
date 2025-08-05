@@ -121,6 +121,7 @@ const meta: Meta<typeof FileInput> = {
       control: 'select',
       options: ['idle', 'uploading', 'success', 'error'],
       description: 'Current upload status',
+      defaultValue: 'idle',
       table: {
         type: { summary: 'UploadFile' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -149,5 +150,16 @@ export const Default: Story = {
     fileName: 'example.png',
     fileSize: 256000,
     status: 'idle',
+  },
+}
+
+export const WithUploadedFile: Story = {
+  args: {
+    ...Default.args,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'uploading',
+    mimeType: 'image/png',
+    progress: 90,
   },
 }

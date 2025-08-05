@@ -3,7 +3,7 @@ import type { InputBaseProps } from '../../../../scalars/components/types.js'
 
 export interface FileInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange'>,
-    Omit<InputBaseProps<File>, 'warnings'> {
+    InputBaseProps<File> {
   allowedFileTypes?: string[]
   maxFileSize?: number
   dragAndDropEnabled?: boolean
