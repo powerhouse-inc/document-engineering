@@ -95,6 +95,7 @@ const meta: Meta<typeof FileInput> = {
     },
     progress: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
+      if: { arg: 'status', eq: 'uploading' },
       description: 'Upload progress percentage (0-100)',
       table: {
         type: { summary: 'number' },
@@ -104,10 +105,18 @@ const meta: Meta<typeof FileInput> = {
     onCancel: {
       action: 'cancel',
       description: 'Callback when cancel button is clicked',
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        type: { summary: 'function' },
+      },
     },
     onReload: {
       action: 'reload',
       description: 'Callback when reload button is clicked',
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        type: { summary: 'function' },
+      },
     },
     errorsUpload: {
       control: 'object',
