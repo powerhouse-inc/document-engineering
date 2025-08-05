@@ -19,19 +19,31 @@ interface FileUploadItemProps {
 }
 
 export const FileUploadItem = ({
-  fileName,
-  fileSize,
-  progress,
+  fileName = '',
+  fileSize = '',
+  progress = undefined,
   onCancel,
   onReload,
   className,
   icon = 'DownloadFile',
   errorsUpload,
-  status,
+  status = 'idle',
 }: FileUploadItemProps) => {
   const showProgress = status === 'uploading' && progress !== undefined && progress >= 0 && progress < 100
   const showSuccess = status === 'success'
   const showError = status === 'error'
+
+  const showErrorsUpload = Array.isArray(errorsUpload) && errorsUpload.length > 0
+
+  const handleOnCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    onCancel?.(e)
+  }
+
+  const handleOnReload = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    onReload?.(e)
+  }
 
   return (
     <div
@@ -58,7 +70,7 @@ export const FileUploadItem = ({
             {status === 'error' && (
               <button
                 type="button"
-                onClick={onReload}
+                onClick={handleOnReload}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Reload upload"
               >
@@ -68,7 +80,7 @@ export const FileUploadItem = ({
 
             <button
               type="button"
-              onClick={onCancel}
+              onClick={handleOnCancel}
               className="text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Cancel Upload"
             >
@@ -89,7 +101,7 @@ export const FileUploadItem = ({
         {showError && <span className="text-red-900 text-xs leading-4.5 font-normal">{MESSAGES.error}</span>}
       </div>
 
-      {errorsUpload && <FormMessageList messages={errorsUpload} type="error" className="gap-0.5" />}
+      {showErrorsUpload && <FormMessageList messages={errorsUpload} type="error" className="gap-0.5" />}
     </div>
   )
 }

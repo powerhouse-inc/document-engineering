@@ -14,7 +14,14 @@ describe('FileInput Component', () => {
   })
 
   it('should render with description', () => {
-    render(<FileInput name="file" label="Upload File" description="Drop your file here or click to chose files" />)
+    render(
+      <FileInput
+        name="file"
+        label="Upload File"
+        description="Drop your file here or click to chose files"
+        status="idle"
+      />
+    )
     expect(screen.getByText('Drop your file here or click to chose files')).toBeInTheDocument()
   })
 

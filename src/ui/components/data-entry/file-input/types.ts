@@ -8,7 +8,14 @@ export interface FileInputProps
   maxFileSize?: number
   dragAndDropEnabled?: boolean
   onChange?: (file: File | null) => void
-  onCancel?: () => void
+  // Item Props
+  fileName?: string
+  fileSize?: number
+  progress?: number
+  onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onReload?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  errorsUpload?: string[]
+  status?: UploadFile
 }
 
 export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'

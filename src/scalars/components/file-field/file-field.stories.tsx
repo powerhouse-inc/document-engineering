@@ -78,6 +78,55 @@ const meta: Meta<typeof FileField> = {
         category: StorybookControlCategory.DEFAULT,
       },
     },
+    fileName: {
+      control: 'text',
+      description: 'Name of the uploaded file',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    fileSize: {
+      control: 'number',
+      description: 'Size of the uploaded file in bytes',
+      table: {
+        type: { summary: 'number' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    progress: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      description: 'Upload progress percentage (0-100)',
+      table: {
+        type: { summary: 'number' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    onCancel: {
+      action: 'cancel',
+      description: 'Callback when cancel button is clicked',
+    },
+    onReload: {
+      action: 'reload',
+      description: 'Callback when reload button is clicked',
+    },
+    errorsUpload: {
+      control: 'object',
+      description: 'Array of upload error messages',
+      table: {
+        type: { summary: 'string[]' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    status: {
+      control: 'select',
+      options: ['idle', 'uploading', 'success', 'error'],
+      description: 'Current upload status',
+      table: {
+        type: { summary: 'UploadFile' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
     ...getValidationArgTypes({
       enabledArgTypes: {
         validators: false,
@@ -97,5 +146,8 @@ export const Default: Story = {
     description: 'Click to chose files',
     allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'text/plain', 'application/epub+zip'],
     maxFileSize: 15728640,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'idle',
   },
 }
