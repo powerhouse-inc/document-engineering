@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { RadioGroupField, type RadioGroupFieldProps } from '../fragments/radio-group-field/index.js'
 import { SelectField, type SelectFieldProps } from '../fragments/select-field/index.js'

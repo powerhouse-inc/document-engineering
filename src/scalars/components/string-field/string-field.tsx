@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { TextField, type TextFieldProps } from '../fragments/text-field/index.js'
 import { TextareaField, type TextareaFieldProps } from '../fragments/textarea-field/index.js'

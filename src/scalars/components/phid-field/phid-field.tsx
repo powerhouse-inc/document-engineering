@@ -1,3 +1,5 @@
+'use client'
+
 import { PHIDInput } from '../../../ui/components/data-entry/phid-input/index.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
 import type { PHIDFieldProps } from './types.js'
