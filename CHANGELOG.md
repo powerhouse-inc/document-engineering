@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.26.0...v1.26.1) (2025-08-06)
+
+
+### Bug Fixes
+
+* **scalars:** fix the export GraphQLUpload type from the correct path ([a72202c](https://github.com/powerhouse-inc/document-engineering/commit/a72202cb5fbcca67a9d1c8c84853d547ad7ce00e))
+
 # [1.26.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.25.0...v1.26.0) (2025-08-06)
 
 
