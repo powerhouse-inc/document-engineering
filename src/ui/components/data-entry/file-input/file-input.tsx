@@ -89,7 +89,11 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
         <div className="flex flex-col w-full h-full pt-3.5 min-h-[148px]">
           <div className="relative h-[148px]">
-            <div className={cn('absolute z-0 h-full w-full', borderIndicator)}>
+            <div
+              className={cn('absolute z-0 h-full w-full', borderIndicator)}
+              data-state={value ? 'selected' : 'idle'}
+              data-testid="file-input-border"
+            >
               <FileBackground className="w-full h-full opacity-50" />
             </div>
 

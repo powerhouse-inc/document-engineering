@@ -106,20 +106,19 @@ describe('FileInput Component', () => {
     expect(fileSizeElement).toBeInTheDocument()
   })
 
-  it('should show border indicator when file is selected', () => {
+  it('should reflect a "selected" state when a file is provided', () => {
     const mockFile = new File(['test content'], 'test.pdf', { type: 'application/pdf' })
-
     render(<FileInput name="file" label="Upload File" value={mockFile} />)
 
-    const backgroundDiv = screen.getByTestId('file-drop-area').previousElementSibling
-    expect(backgroundDiv).toHaveClass('text-blue-900')
+    const borderContainer = screen.getByTestId('file-input-border')
+    expect(borderContainer).toHaveAttribute('data-state', 'selected')
   })
 
-  it('should show gray indicator when no file is selected ', () => {
+  it('should reflect an "idle" state when no file is provided', () => {
     render(<FileInput name="file" label="Upload File" />)
 
-    const backgroundDiv = screen.getByTestId('file-drop-area').previousElementSibling
-    expect(backgroundDiv).toHaveClass('text-gray-300')
+    const borderContainer = screen.getByTestId('file-input-border')
+    expect(borderContainer).toHaveAttribute('data-state', 'idle')
   })
 
   it('should hide upload interface when status is not idle', () => {

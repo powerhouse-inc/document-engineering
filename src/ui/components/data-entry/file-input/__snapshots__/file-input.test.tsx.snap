@@ -20,6 +20,8 @@ exports[`FileInput Component > should match snapshot 1`] = `
       >
         <div
           class="absolute z-0 h-full w-full text-gray-300"
+          data-state="idle"
+          data-testid="file-input-border"
         >
           <svg
             class="w-full h-full opacity-50"
