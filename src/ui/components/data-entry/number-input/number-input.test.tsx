@@ -278,4 +278,35 @@ describe('NumberInput', () => {
       expect(screen.getByText('454')).toBeInTheDocument()
     })
   })
+
+  describe('Controlled and Uncontrolled Input Behavior', () => {
+    it('should display empty input when no value is provided', () => {
+      render(<NumberInput label="Test Label" name="Label" onChange={mockOnChange} />)
+
+      const input = screen.getByRole('spinbutton')
+      expect(input).toHaveValue('')
+    })
+
+    it('should display defaultValue when value is undefined', () => {
+      render(<NumberInput label="Test Label" name="Label" defaultValue={100} onChange={mockOnChange} />)
+
+      const input = screen.getByRole('spinbutton')
+      expect(input).toHaveValue('100')
+    })
+
+    it('should handle dynamic value changes without warnings', () => {
+      const { rerender } = render(<NumberInput label="Test Label" name="Label" onChange={mockOnChange} />)
+
+      const input = screen.getByRole('spinbutton')
+      expect(input).toHaveValue('')
+
+      // Simulate value being set dynamically
+      rerender(<NumberInput label="Test Label" name="Label" value={25} onChange={mockOnChange} />)
+      expect(input).toHaveValue('25')
+
+      // Simulate value being cleared
+      rerender(<NumberInput label="Test Label" name="Label" onChange={mockOnChange} />)
+      expect(input).toHaveValue('')
+    })
+  })
 })
