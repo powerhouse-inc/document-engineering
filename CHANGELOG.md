@@ -1,3 +1,27 @@
+# [1.26.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.25.0...v1.26.0) (2025-08-06)
+
+
+### Bug Fixes
+
+* add use client directive ([5f2ccf5](https://github.com/powerhouse-inc/document-engineering/commit/5f2ccf5004e1c816df51fd8f8cdd08b331e5be76))
+* **scalars:** add date-state and idTesing for check file select ([fc52715](https://github.com/powerhouse-inc/document-engineering/commit/fc5271547c4a1ffd84a2327c7e64bb90a7c95413))
+* **scalars:** add test for the upload item ([bea1eb3](https://github.com/powerhouse-inc/document-engineering/commit/bea1eb306ebc398b80eb979568fd9e16393e193e))
+* **scalars:** avoid warning caused by using both value and defaultValue ([9c0691d](https://github.com/powerhouse-inc/document-engineering/commit/9c0691d0ec610576d61b006f2d9a3f570a30c3b4))
+* **scalars:** fix default value in input ([f5448e4](https://github.com/powerhouse-inc/document-engineering/commit/f5448e43e376f3ec2f79a58d304988e2cf4cd1de))
+* **scalars:** improve name test and remove the unnecesary comments ([a4900b6](https://github.com/powerhouse-inc/document-engineering/commit/a4900b6029924f0122e813c970e1478887df8d72))
+* **scalars:** improve the stories in the input and field component ([49c9383](https://github.com/powerhouse-inc/document-engineering/commit/49c938354e9208c220f2fe4d92864a457fb927ee))
+* **scalars:** remove unnecesary code ([acf87fc](https://github.com/powerhouse-inc/document-engineering/commit/acf87fc6374c32806abf47f6704c6809a6871a57))
+* **scalars:** update the test ([24c446f](https://github.com/powerhouse-inc/document-engineering/commit/24c446ff0a7507504f78d1cfed3e4f8a0c0f07d7))
+
+
+### Features
+
+* **scalars:** add cancel function and improve the naming ([c540c55](https://github.com/powerhouse-inc/document-engineering/commit/c540c5548e65104b27e71366bd04cefc0175c6e8))
+* **scalars:** add file field component with value state indicator ([fa33e60](https://github.com/powerhouse-inc/document-engineering/commit/fa33e60a53346a0981ee78f4855e0a0b5d3cd563))
+* **scalars:** add function onrealod and test for it ([d89774d](https://github.com/powerhouse-inc/document-engineering/commit/d89774d9ff50bfcc5845934b07e885795defce85))
+* **scalars:** add image as icon and add stories for loading ([50f8929](https://github.com/powerhouse-inc/document-engineering/commit/50f89296a7b74b0d48e4ce6e27b415f4ce31292d))
+* **scalars:** add the item-upload and the props necessary for it ([1234482](https://github.com/powerhouse-inc/document-engineering/commit/1234482f482fc05f4c870579dc31b4099d358772))
+
 # [1.25.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.24.0...v1.25.0) (2025-08-04)
 
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { castValue, type ValueCast } from '../../lib/value-cast.js'
 import { deepEqual } from '../../lib/deep-equal.js'
 import { isEmpty } from '../../lib/is-empty.js'

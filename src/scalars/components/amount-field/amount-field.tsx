@@ -1,3 +1,5 @@
+'use client'
+
 import { AmountInput } from '../../../ui/components/data-entry/amount-input/amount-input.js'
 import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
 import type { AmountFieldProps } from './types.js'

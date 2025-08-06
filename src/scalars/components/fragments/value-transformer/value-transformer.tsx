@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect } from 'react'
 import { type FieldValues, useFormContext, type UseFormReturn } from 'react-hook-form'
 import { deepEqual } from '../../../lib/deep-equal.js'

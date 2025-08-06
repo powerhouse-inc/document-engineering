@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { PasswordInput } from '../../../ui/components/data-entry/password-input/index.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
