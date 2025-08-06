@@ -89,8 +89,12 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
         <div className="flex flex-col w-full h-full pt-3.5 min-h-[148px]">
           <div className="relative h-[148px]">
-            <div className={cn('absolute z-0 h-full w-full', borderIndicator)}>
-              <FileBackground className="w-full opacity-50" />
+            <div
+              className={cn('absolute z-0 h-full w-full', borderIndicator)}
+              data-state={value ? 'selected' : 'idle'}
+              data-testid="file-input-border"
+            >
+              <FileBackground className="w-full h-full opacity-50" />
             </div>
 
             <div
@@ -171,19 +175,18 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               </div>
             )}
           </div>
-
-          <div className="flex flex-col gap-2 mt-2">
-            <span className="text-gray-500 font-normal text-xs leading-4.5 truncate">
-              Supports: {getExtensionsFromMimeTypes(allowedFileTypesString).join(', ')}
-            </span>
-            <span className="text-gray-500 font-medium text-xs leading-4.5 truncate">
-              Max: {formatBytes(maxFileSize, 2)}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2 mt-2">
-            {hasError && <FormMessageList messages={errors} type="error" />}
-            {hasWarning && <FormMessageList messages={warnings} type="warning" />}
-          </div>
+        </div>
+        <div className="flex flex-col gap-2 mt-2">
+          <span className="text-gray-500 font-normal text-xs leading-4.5 truncate">
+            Supports: {getExtensionsFromMimeTypes(allowedFileTypesString).join(', ')}
+          </span>
+          <span className="text-gray-500 font-medium text-xs leading-4.5 truncate">
+            Max: {formatBytes(maxFileSize, 2)}
+          </span>
+        </div>
+        <div className="flex flex-col gap-2 mt-2">
+          {hasError && <FormMessageList messages={errors} type="error" />}
+          {hasWarning && <FormMessageList messages={warnings} type="warning" />}
         </div>
       </div>
     )

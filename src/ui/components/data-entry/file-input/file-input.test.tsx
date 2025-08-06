@@ -78,13 +78,13 @@ describe('FileInput Component', () => {
     expect(handleCancel).toHaveBeenCalledTimes(1)
   })
   it('should call onReload when the onReload button is clicked', () => {
-    const handleCancel = vi.fn()
-    render(<FileInput status="uploading" onCancel={handleCancel} />)
+    const onReload = vi.fn()
+    render(<FileInput status="error" onReload={onReload} />)
 
-    const cancelButton = screen.getByRole('button', { name: /cancel upload/i })
-    fireEvent.click(cancelButton)
+    const reloadButton = screen.getByRole('button', { name: /Reload upload/i })
+    fireEvent.click(reloadButton)
 
-    expect(handleCancel).toHaveBeenCalledTimes(1)
+    expect(onReload).toHaveBeenCalledTimes(1)
   })
   it('should show fileName when file is uploaded', () => {
     const handleCancel = vi.fn()
@@ -104,5 +104,63 @@ describe('FileInput Component', () => {
 
     const fileSizeElement = screen.getByText('256 kB')
     expect(fileSizeElement).toBeInTheDocument()
+  })
+
+  it('should reflect a "selected" state when a file is provided', () => {
+    const mockFile = new File(['test content'], 'test.pdf', { type: 'application/pdf' })
+    render(<FileInput name="file" label="Upload File" value={mockFile} />)
+
+    const borderContainer = screen.getByTestId('file-input-border')
+    expect(borderContainer).toHaveAttribute('data-state', 'selected')
+  })
+
+  it('should reflect an "idle" state when no file is provided', () => {
+    render(<FileInput name="file" label="Upload File" />)
+
+    const borderContainer = screen.getByTestId('file-input-border')
+    expect(borderContainer).toHaveAttribute('data-state', 'idle')
+  })
+
+  it('should hide upload interface when status is not idle', () => {
+    render(<FileInput name="file" label="Upload File" status="uploading" fileName="test.pdf" fileSize={1024} />)
+
+    expect(screen.queryByText('Drop your file here or click to chose files')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /search file/i })).not.toBeInTheDocument()
+  })
+
+  it('should display FileUploadItem when status is uploading', () => {
+    render(
+      <FileInput name="file" label="Upload File" status="uploading" fileName="test.pdf" fileSize={1024} progress={50} />
+    )
+
+    expect(screen.getByText('test.pdf')).toBeInTheDocument()
+    expect(screen.getByText('1.02 kB')).toBeInTheDocument()
+    expect(screen.getByText('50%')).toBeInTheDocument()
+  })
+
+  it('should display FileUploadItem when status is success', () => {
+    render(<FileInput name="file" label="Upload File" status="success" fileName="test.pdf" fileSize={1024} />)
+
+    expect(screen.getByText('test.pdf')).toBeInTheDocument()
+    expect(screen.getByText('1.02 kB')).toBeInTheDocument()
+    expect(screen.getByText('Upload successful')).toBeInTheDocument()
+  })
+
+  it('should display FileUploadItem when status is error', () => {
+    render(
+      <FileInput
+        name="file"
+        label="Upload File"
+        status="error"
+        fileName="test.pdf"
+        fileSize={1024}
+        errorsUpload={['Upload failed']}
+      />
+    )
+
+    expect(screen.getByText('test.pdf')).toBeInTheDocument()
+    expect(screen.getByText('1.02 kB')).toBeInTheDocument()
+    const errorMessages = screen.getAllByText('Upload failed')
+    expect(errorMessages).toHaveLength(2)
   })
 })
