@@ -11,7 +11,6 @@ import { cn } from '../../../../scalars/lib/index.js'
 import { Input } from '../input/index.js'
 import TextInputDiff from '../text-input/text-input-diff.js'
 import type { WithDifference } from '../../../../scalars/components/types.js'
-import { de } from 'date-fns/locale'
 
 type InputNumberPropsWithDifference = InputNumberProps & WithDifference<string | number | bigint>
 
@@ -66,10 +65,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
       trailingZeros,
       precision,
     })
-console.log({
-  value,
-  defaultValue,
-})
+
     if (viewMode === 'edition') {
       return (
         <FormGroup>
