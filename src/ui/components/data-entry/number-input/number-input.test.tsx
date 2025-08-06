@@ -294,17 +294,15 @@ describe('NumberInput', () => {
       expect(input).toHaveValue('100')
     })
 
-    it('should handle dynamic value changes without warnings', () => {
+    it('should switch between controlled and uncontrolled modes without warnings', () => {
       const { rerender } = render(<NumberInput label="Test Label" name="Label" onChange={mockOnChange} />)
 
       const input = screen.getByRole('spinbutton')
       expect(input).toHaveValue('')
 
-      // Simulate value being set dynamically
       rerender(<NumberInput label="Test Label" name="Label" value={25} onChange={mockOnChange} />)
       expect(input).toHaveValue('25')
 
-      // Simulate value being cleared
       rerender(<NumberInput label="Test Label" name="Label" onChange={mockOnChange} />)
       expect(input).toHaveValue('')
     })
