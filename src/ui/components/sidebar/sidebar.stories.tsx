@@ -193,6 +193,13 @@ const meta: Meta<typeof Sidebar> = {
         readonly: true,
       },
     },
+    isLoading: {
+      control: 'boolean',
+      description: 'Whether the sidebar is in a loading state, displaying skeleton items instead of actual content.',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+    },
   },
   args: {
     sidebarTitle: 'Title Sidebar',
@@ -308,6 +315,50 @@ export const WithCustomTitleNavigation: Story = {
                   ))}
                 </ul>
               )}
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
+
+/**
+ * Demonstrates the loading state of the sidebar when data is being fetched.
+ * The sidebar displays skeleton items with animated placeholders while preserving
+ * all other functionality like header, search bar, and footer content.
+ */
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+    showStatusFilter: true,
+  },
+  render: function LoadingRender(args) {
+    const [isLoading, setIsLoading] = useState(true)
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar className="sidebar" {...args} isLoading={isLoading} />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Sidebar Status: {isLoading ? 'Loading...' : 'Ready'}
+          </p>
+
+          <div className="mt-4">
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLoading(!isLoading)
+                }}
+                className="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
+              >
+                {isLoading ? 'Stop Loading' : 'Start Loading'}
+              </button>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Toggle loading state to see the skeleton animation
+              </p>
             </div>
           </div>
         </div>

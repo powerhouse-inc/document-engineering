@@ -18,6 +18,7 @@ export * from './time-picker-field/index.js'
 export * from './types.js'
 export * from './url-field/index.js'
 export * from './email-field/index.js'
+export * from './file-field/index.js'
 
 // deprecated components
 export {

@@ -90,6 +90,12 @@ export interface SidebarProps {
    * Callback function triggered when the sidebar title is clicked.
    */
   handleOnTitleClick?: () => void
+
+  /**
+   * Whether the sidebar is in a loading state, displaying skeleton items
+   * @default false
+   */
+  isLoading?: boolean
 }
 
 /**
@@ -114,6 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   allowCollapsingInactiveNodes = false,
   className,
   handleOnTitleClick,
+  isLoading = false,
 }) => {
   const { sidebarRef, startResizing, isResizing, isSidebarOpen, handleToggleSidebar } = useSidebarResize({
     defaultWidth: initialWidth,
@@ -185,7 +192,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           />
 
           {allowPinning && pinnedNodePath.length > 0 && <SidebarPinningArea />}
-          <SidebarContentArea allowPinning={allowPinning} allowCollapsingInactiveNodes={allowCollapsingInactiveNodes} />
+          <SidebarContentArea
+            allowPinning={allowPinning}
+            allowCollapsingInactiveNodes={allowCollapsingInactiveNodes}
+            isLoading={isLoading}
+          />
           {showSearchBar && <SidebarSearch showStatusFilter={showStatusFilter} />}
           {extraFooterContent && (
             <div className="w-full border-t border-gray-300 p-2 dark:border-gray-800">{extraFooterContent}</div>

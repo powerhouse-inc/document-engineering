@@ -4,21 +4,22 @@ import {
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../../../scalars/lib/storybook-arg-types.js'
-import { FileInput } from './file-input.js'
+} from '../../lib/storybook-arg-types.js'
+import { FileField } from './file-field.js'
+import { withForm } from '#scalars/lib/decorators.js'
 
 /**
- * ## FileInput Component
  *
- * `FileInput` is a form input component for uploading a single file, supporting drag-and-drop and manual selection.
+ * `FileField` is an enhanced file picker component that wraps `FileInput` with built-in validation support.
+ * It provides automatic validation for file types and file size limits.
  *
- * > **Note:** This component acts as a form input and can be used within forms. For enhanced validation and form integration, consider using the [`FileField`](?path=/docs/scalars-file-field--readme) component, which wraps `FileInput` with validation support and form bindings.
  */
-const meta: Meta<typeof FileInput> = {
-  title: 'Data Entry/File Input',
-  component: FileInput,
+const meta: Meta<typeof FileField> = {
+  title: 'Scalars/File Field',
+  component: FileField,
 
   decorators: [
+    withForm,
     (Story) => (
       <div className="w-[247px]">
         <Story />
@@ -53,24 +54,24 @@ const meta: Meta<typeof FileInput> = {
     },
     allowedFileTypes: {
       control: 'object',
-      description: 'Allowed file types',
+      description: 'Array of allowed MIME types for file uploads',
       table: {
         type: { summary: 'string[]' },
-        category: StorybookControlCategory.DEFAULT,
+        category: StorybookControlCategory.VALIDATION,
       },
     },
     maxFileSize: {
       control: 'number',
-      description: 'Maximum file size',
+      description: 'Maximum file size in bytes',
       table: {
         type: { summary: 'number' },
-        category: StorybookControlCategory.DEFAULT,
+        category: StorybookControlCategory.VALIDATION,
       },
     },
     dragAndDropEnabled: {
       control: 'boolean',
       defaultValue: true,
-      description: 'Drag and drop enabled',
+      description: 'Enable or disable drag-and-drop functionality',
       table: {
         defaultValue: { summary: 'true' },
         type: { summary: 'boolean' },
@@ -130,7 +131,6 @@ const meta: Meta<typeof FileInput> = {
       control: 'select',
       options: ['idle', 'uploading', 'success', 'error'],
       description: 'Current upload status',
-      defaultValue: 'idle',
       table: {
         type: { summary: 'UploadFile' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -140,35 +140,23 @@ const meta: Meta<typeof FileInput> = {
       enabledArgTypes: {
         validators: false,
         showErrorOnBlur: false,
-        showErrorOnChange: false,
       },
     }),
   },
 }
 
 export default meta
-type Story = StoryObj<typeof FileInput>
+type Story = StoryObj<typeof FileField>
 
 export const Default: Story = {
   args: {
     name: 'file-input',
     label: 'Upload File',
     description: 'Click to chose files',
-    allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf', 'text/plain', 'application/epub+zip'],
+    allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'text/plain', 'application/epub+zip'],
     maxFileSize: 15728640,
     fileName: 'example.png',
     fileSize: 256000,
     status: 'idle',
-  },
-}
-
-export const WithUploadedFile: Story = {
-  args: {
-    ...Default.args,
-    fileName: 'example.png',
-    fileSize: 256000,
-    status: 'uploading',
-    mimeType: 'image/png',
-    progress: 90,
   },
 }

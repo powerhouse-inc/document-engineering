@@ -5,13 +5,20 @@ import { cn } from '../../../../scalars/lib/index.js'
 import { AutoSizer, List } from 'react-virtualized'
 import { SidebarItem } from './sidebar-item.js'
 import { useSidebar } from './sidebar-provider/index.js'
+import { SidebarSkeleton } from './sidebar-skeleton.js'
+import { useEffect, useState } from 'react'
 
 interface SidebarContentAreaProps {
   allowPinning?: boolean
   allowCollapsingInactiveNodes?: boolean
+  isLoading?: boolean
 }
 
-export const SidebarContentArea = ({ allowPinning, allowCollapsingInactiveNodes }: SidebarContentAreaProps) => {
+export const SidebarContentArea = ({
+  allowPinning,
+  allowCollapsingInactiveNodes,
+  isLoading,
+}: SidebarContentAreaProps) => {
   const {
     flattenedNodes,
     toggleNode,
@@ -47,9 +54,16 @@ export const SidebarContentArea = ({ allowPinning, allowCollapsingInactiveNodes 
     )
   }
 
+  const [mounted, setMounted] = useState<boolean>(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
     <div className={cn('flex flex-1 flex-col gap-1 overflow-y-auto', hasPinnedItems && 'pt-0.5')}>
-      {flattenedNodes.length === 0 ? (
+      {isLoading || !mounted ? (
+        <SidebarSkeleton />
+      ) : flattenedNodes.length === 0 ? (
         <div className="flex max-w-full items-center gap-2 p-2 text-sm leading-5 text-gray-400 dark:text-gray-400">
           <Icon name="TreeViewSlash" size={16} className="min-w-4" />
           <span className="truncate">This node is empty</span>

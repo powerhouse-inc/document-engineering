@@ -1,6 +1,6 @@
 {
   "name": "@powerhousedao/document-engineering",
-  "version": "1.23.0",
+  "version": "1.25.0",
   "description": "",
   "files": [
     "/dist"
@@ -102,6 +102,7 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/diff": "^7.0.2",
+    "@types/graphql-upload": "^17.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.15",
     "@types/react": "^18.3.12",
@@ -171,11 +172,13 @@
     "document-model": "^2.28.1-dev.9",
     "focus-trap-react": "^11.0.3",
     "graphql": "^16.9.0",
+    "graphql-upload": "^17.0.0",
     "mime": "^4.0.7",
     "nanoid": "^5.0.9",
     "react-circle-flags": "^0.0.22",
     "react-confirm": "^0.4.0",
     "react-day-picker": "9.4.3",
+    "react-docgen": "^8.0.0",
     "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.53.0",
     "react-portal": "^4.3.0",
