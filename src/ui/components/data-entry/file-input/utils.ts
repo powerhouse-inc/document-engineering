@@ -28,25 +28,6 @@ export function getExtensionsFromMimeTypes(mimeTypes?: string[]): string[] {
   return mimeTypes.map((type) => mime.getExtension(type)).filter((ext): ext is string => Boolean(ext))
 }
 
-type Accept = Record<string, string[]>
-
-export const convertirMimesAObjetoAccept = (allowedFileTypes?: string[]): Accept => {
-  if (!allowedFileTypes) return {}
-  if (!Array.isArray(allowedFileTypes) || allowedFileTypes.length === 0) {
-    return {}
-  }
-  const acceptObject: Accept = {}
-
-  allowedFileTypes.forEach((mimeType) => {
-    const extension = mime.getExtension(mimeType)
-    if (extension) {
-      acceptObject[mimeType] = [`.${extension}`]
-    }
-  })
-
-  return acceptObject
-}
-
 const ICON_CODE_TO_NAME: Record<string, IconName> = {
   DOC: 'ExportCsv',
   ZIP: 'ExportZip',

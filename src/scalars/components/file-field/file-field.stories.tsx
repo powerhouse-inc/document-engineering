@@ -153,10 +153,21 @@ export const Default: Story = {
     name: 'file-input',
     label: 'Upload File',
     description: 'Click to chose files',
-    allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'text/plain', 'application/epub+zip'],
+    allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf', 'text/plain', 'application/epub+zip'],
     maxFileSize: 15728640,
     fileName: 'example.png',
     fileSize: 256000,
     status: 'idle',
+  },
+}
+
+export const WithUploadedFile: Story = {
+  args: {
+    ...Default.args,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'uploading',
+    mimeType: 'image/png',
+    progress: 90,
   },
 }

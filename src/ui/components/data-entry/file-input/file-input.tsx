@@ -7,7 +7,7 @@ import { Input } from '../../../../ui/components/data-entry/input/index.js'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import { useDropzone } from 'react-dropzone'
-import { convertirMimesAObjetoAccept, formatBytes, getExtensionsFromMimeTypes } from './utils.js'
+import { formatBytes, getExtensionsFromMimeTypes } from './utils.js'
 import { Button } from '../../../../scalars/components/fragments/button/button.js'
 import { useFileUpload } from './useUploadFile.js'
 import { FileUploadItem } from './sub-components/file-upload-item.js'
@@ -52,8 +52,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange })
 
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
-      maxSize: maxFileSize,
-      accept: convertirMimesAObjetoAccept(allowedFileTypes ?? []),
       onDropAccepted: (acceptedFiles) => {
         handleDrop(acceptedFiles)
       },
@@ -136,7 +134,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               )}
               <Input
                 {...getInputProps({
-                  name,
                   id,
                   required,
                   disabled,
@@ -144,6 +141,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   multiple: false,
                   ...props,
                 })}
+                name={name}
                 aria-invalid={hasError}
                 aria-required={required}
                 aria-labelledby={label ? `${id}-label` : undefined}
