@@ -134,7 +134,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               )}
               <Input
                 {...getInputProps({
-                  name,
                   id,
                   required,
                   disabled,
@@ -142,6 +141,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   multiple: false,
                   ...props,
                 })}
+                name={name}
                 aria-invalid={hasError}
                 aria-required={required}
                 aria-labelledby={label ? `${id}-label` : undefined}
