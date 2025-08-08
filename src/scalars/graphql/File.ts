@@ -2,11 +2,11 @@ import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
 import type { GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql'
 
 export interface ScalarType {
-  input: 'Upload'
+  input: 'File'
   output: 'File'
 }
 
-export const type = 'FileUpload'
+export const type = 'File'
 
 export const typedef = 'scalar Upload'
 
