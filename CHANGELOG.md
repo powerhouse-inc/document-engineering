@@ -1,3 +1,16 @@
+# [1.27.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.26.1...v1.27.0) (2025-08-08)
+
+
+### Bug Fixes
+
+* **scalars:** fix the error in the scalar export ([7e91488](https://github.com/powerhouse-inc/document-engineering/commit/7e914883052487e5ed4b61960995f772d11b7e43))
+* **scalars:** pass the name to work in the withvalidation wrapper ([937d0f4](https://github.com/powerhouse-inc/document-engineering/commit/937d0f49c2c41ecfa2b5252c63e2ef1d095c8fe8))
+
+
+### Features
+
+* **scalars:** add new storie and allow show message error about size and allow types ([7aecc57](https://github.com/powerhouse-inc/document-engineering/commit/7aecc573a26e47d6fed237b425d0037ce77fae10))
+
 ## [1.26.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.26.0...v1.26.1) (2025-08-06)
 
 
