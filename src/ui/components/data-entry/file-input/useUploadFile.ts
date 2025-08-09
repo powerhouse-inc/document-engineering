@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react'
-
 interface UseFileUploadProps {
   value?: File | null
   defaultValue?: File | null
