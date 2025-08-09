@@ -61,7 +61,6 @@ const RenderCell = <T extends DataType>({
         ref={formRef}
         onSubmit={() => undefined}
         submitChangesOnly
-        // TODO: check if shouldUnregister is needed
         extraFormProps={{ mode: 'all', shouldUnregister: true }}
       >
         <div
