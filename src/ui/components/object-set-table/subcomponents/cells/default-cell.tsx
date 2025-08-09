@@ -5,6 +5,7 @@ interface DefaultTableCellProps extends React.HTMLAttributes<HTMLTableCellElemen
   isSelected: boolean
   isEditable: boolean
   isEditing?: boolean
+  hasErrors?: boolean
 }
 
 const DefaultTableCell: React.FC<DefaultTableCellProps> = ({
@@ -13,6 +14,7 @@ const DefaultTableCell: React.FC<DefaultTableCellProps> = ({
   isSelected,
   isEditable,
   isEditing = false,
+  hasErrors = false,
   ...props
 }) => {
   return (
@@ -21,7 +23,7 @@ const DefaultTableCell: React.FC<DefaultTableCellProps> = ({
         className={cn(
           'flex flex-1 items-center border border-transparent',
           !isEditing && 'py-2',
-          isSelected && (isEditable ? 'border-blue-900' : 'border-gray-400')
+          isSelected && (isEditable ? (hasErrors ? 'border-red-900' : 'border-blue-900') : 'border-gray-400')
         )}
       >
         <div className="w-full px-[12px] py-2">{children}</div>

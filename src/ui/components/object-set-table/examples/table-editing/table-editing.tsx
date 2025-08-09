@@ -6,6 +6,7 @@ import type { CellContext, ColumnDef, ObjectSetTableConfig, RowContext } from '.
 import { Icon } from '../../../icon/icon.js'
 import { confirm } from '../../../confirm/confirm.js'
 import { numberCellEditorFactory } from '../../subcomponents/default-cell-editors/number-editor.js'
+import { stringCellEditorFactory } from '../../subcomponents/default-cell-editors/string-editor.js'
 
 const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'columns' | 'data'>) => {
   const [data, setData] = useState<MockedPerson[]>(mockData)
@@ -34,6 +35,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           })
           return true
         },
+        renderCellEditor: stringCellEditorFactory({ maxLength: 10 }),
       },
       {
         field: 'status',
@@ -104,7 +106,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
               )}
             </div>
           ),
-        renderCellEditor: numberCellEditorFactory({ step: 100 }),
+        renderCellEditor: numberCellEditorFactory({ step: 100, minValue: 0 }),
         sortable: true,
       },
       {
@@ -192,14 +194,14 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
       minRowCount={10}
       actions={actions}
       {...props}
-      onDelete={(rows) => {
-        setData((prevData) => {
-          const newData = [...prevData]
-          const filteredData = newData.filter((row) => !rows.some((person) => person.email === row.email))
+      // onDelete={(rows) => {
+      //   setData((prevData) => {
+      //     const newData = [...prevData]
+      //     const filteredData = newData.filter((row) => !rows.some((person) => person.email === row.email))
 
-          return filteredData
-        })
-      }}
+      //     return filteredData
+      //   })
+      // }}
       onAdd={(data) => {
         const newPerson: MockedPerson = {
           firstName: '',

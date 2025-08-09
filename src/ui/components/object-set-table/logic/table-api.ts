@@ -105,6 +105,39 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     )
   }
 
+  thereAreErrors(): boolean {
+    const errors = this._getState().selectedRowErrors
+    return Array.isArray(errors) && errors.length > 0
+  }
+
+  async getErrors(row: number, checkValidity = true): Promise<string[]> {
+    const rowFormRefs = this._getState().dataFormReferences[row]
+    // ensure the form refs exists in case it is an early render, an empty or non editable row
+    if (!Array.isArray(rowFormRefs) || rowFormRefs.length === 0) return []
+
+    // if there are cells being edited, we need to trigger the validity check
+    if (checkValidity) {
+      await Promise.all(
+        rowFormRefs.map(async (ref) => {
+          if (ref?.current) {
+            await ref.current.trigger()
+          }
+        })
+      )
+    }
+
+    const errors = this._getState().dataFormReferences[row]?.map((ref) => {
+      const errors = ref?.current?.formState.errors
+      if (errors) {
+        const errorValues = Object.values(errors)
+        if (errorValues.length > 0) {
+          return errorValues[0]?.message
+        }
+      }
+    })
+    return errors.filter(Boolean) as string[]
+  }
+
   /**
    * Enters cell edit mode for the given cell
    *
@@ -113,6 +146,8 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    */
   enterCellEditMode(row: number, column: number) {
     if (!this.canEditCell(row, column)) throw new Error('Cell is not editable')
+
+    if (this.thereAreErrors()) return
 
     // restore the form value
     const formRef = this._getState().dataFormReferences[row][column]
@@ -142,14 +177,25 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @param save - Whether to save the changes made in the cell
    */
   async exitCellEditMode(save = true) {
-    // TODO: before exiting, check if the ${value} edited is valid
-
     // exit edit mode
     const selectedCell = this._getState().selectedCellIndex ?? {
       row: 0,
       column: 0,
     }
-    this.selection.selectCell(selectedCell.row, selectedCell.column)
+
+    const errors = await this.getErrors(selectedCell.row)
+    if (errors.length > 0 && save) {
+      this._getState().dispatch?.({
+        type: 'SET_SELECTED_ROW_ERRORS',
+        payload: { errors },
+      })
+      return
+    } else if (this._getState().selectedRowErrors) {
+      this._getState().dispatch?.({
+        type: 'SET_SELECTED_ROW_ERRORS',
+        payload: { errors: null },
+      })
+    }
 
     if (save) {
       const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
@@ -183,6 +229,11 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         moveToNextRow: true,
       })
       this.selection.selectCell(nextCell.row, nextCell.column)
+    } else {
+      this._getState().dispatch?.({
+        type: 'SELECT_CELL',
+        payload: { row: selectedCell.row, column: selectedCell.column },
+      })
     }
   }
 

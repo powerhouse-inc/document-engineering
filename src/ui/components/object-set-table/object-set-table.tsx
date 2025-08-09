@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo, useRef } from 'react'
 import { TableBody } from './subcomponents/body.js'
 import { getRenderFn } from './subcomponents/default-cell-renderers/get-render-fn.js'

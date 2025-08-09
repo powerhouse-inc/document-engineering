@@ -6,9 +6,10 @@ interface RowNumberCellProps {
   index: number
   handleSelectRowOnClick?: (event: React.MouseEvent<HTMLTableCellElement>) => void
   selected: boolean
+  hasErrors: boolean
 }
 
-const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnClick, selected }) => {
+const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnClick, selected, hasErrors }) => {
   const {
     config: { showRowNumbers, allowRowSelection, minRowHeight },
   } = useInternalTableState()
@@ -24,7 +25,7 @@ const RowNumberCell: React.FC<RowNumberCellProps> = ({ index, handleSelectRowOnC
       className={cn(
         'select-none border-r border-gray-300 text-center',
         allowRowSelection && 'cursor-pointer',
-        selected && 'bg-blue-900 text-white'
+        selected && !hasErrors && 'bg-blue-900 text-white'
       )}
       onClick={handleSelectRowOnClick}
     >

@@ -17,7 +17,7 @@ const useCellLogic = <T extends DataType>({
 }: UseCellLogicProps<T>) => {
   const {
     config,
-    state: { selectedCellIndex, isCellEditMode },
+    state: { selectedCellIndex, isCellEditMode, selectedRowErrors },
     api,
   } = useInternalTableState<T>()
 
@@ -39,7 +39,10 @@ const useCellLogic = <T extends DataType>({
         // if a cell is being edited but the cell being clicked is not the same
         // we need to save it before exiting edit mode and selecting a new cell
         if (api.isEditing()) {
-          void api.exitCellEditMode(true)
+          void api.exitCellEditMode(true).then(() => {
+            api.selection.selectCell(rowIndex, columnIndex)
+          })
+          return
         }
 
         if (event.detail === 2 && column.editable && !renderEmptyCell) {
@@ -55,12 +58,16 @@ const useCellLogic = <T extends DataType>({
 
   const formRef = renderEmptyCell ? null : api._getState().dataFormReferences[rowIndex]?.[columnIndex]
 
+  const hasErrors =
+    selectedCellIndex?.row === rowIndex && Array.isArray(selectedRowErrors) && selectedRowErrors.length > 0
+
   return {
     config,
     isThisCellSelected,
     isCellEditMode,
     handleCellClick,
     formRef,
+    hasErrors,
   }
 }
 
