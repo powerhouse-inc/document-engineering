@@ -1,4 +1,4 @@
-import React, { useCallback, useId } from 'react'
+import React, { useId } from 'react'
 import type { FileInputProps } from './types.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import { Icon } from '../../icon/icon.js'
@@ -56,19 +56,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
         handleDrop(acceptedFiles)
       },
     })
-
-    const mergedRef = useCallback(
-      (node: HTMLInputElement | null) => {
-        if (typeof ref === 'function') {
-          ref(node)
-        } else if (ref) {
-          ref.current = node
-        }
-
-        ;(inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node
-      },
-      [ref, inputRef]
-    )
 
     return (
       <div className="flex flex-col">
@@ -132,6 +119,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   </div>
                 </div>
               )}
+              <input ref={ref} type="text" hidden={true} name={name} />
               <Input
                 {...getInputProps({
                   id,
@@ -141,11 +129,10 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   multiple: false,
                   ...props,
                 })}
-                name={name}
                 aria-invalid={hasError}
                 aria-required={required}
                 aria-labelledby={label ? `${id}-label` : undefined}
-                ref={mergedRef}
+                ref={inputRef}
               />
             </div>
             {status === 'idle' && (
