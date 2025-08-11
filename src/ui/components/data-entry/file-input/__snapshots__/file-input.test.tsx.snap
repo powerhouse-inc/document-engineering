@@ -77,9 +77,8 @@ exports[`FileInput Component > should match snapshot 1`] = `
             />
           </div>
           <input
-            hidden=""
             name="file"
-            type="text"
+            type="hidden"
           />
           <input
             aria-invalid="false"
