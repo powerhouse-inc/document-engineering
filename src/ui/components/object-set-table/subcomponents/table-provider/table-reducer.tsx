@@ -22,6 +22,7 @@ interface TableState<T extends DataType = DataType> {
   showRowNumbers: boolean
   selectedRowIndexes: number[]
   lastSelectedRowIndex: number | null
+  selectedRowErrors: string[] | null
 
   selectedCellIndex: TableCellIndex | null
   isCellEditMode: boolean
@@ -81,6 +82,12 @@ type TableAction<T extends DataType = DataType> =
   | {
       type: 'ENTER_CELL_EDIT_MODE'
       payload: TableCellIndex
+    }
+  | {
+      type: 'SET_SELECTED_ROW_ERRORS'
+      payload: {
+        errors: string[] | null
+      }
     }
   // sorting
   | {
@@ -202,6 +209,12 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
         ...state,
         selectedCellIndex: action.payload,
         isCellEditMode: true,
+      }
+    }
+    case 'SET_SELECTED_ROW_ERRORS': {
+      return {
+        ...state,
+        selectedRowErrors: action.payload.errors,
       }
     }
     case 'SORT_COLUMN': {

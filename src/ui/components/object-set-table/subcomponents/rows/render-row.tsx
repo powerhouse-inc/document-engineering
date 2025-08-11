@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import type { DataType, IndexedData } from '../../types.js'
 import { RowNumberCell } from '../cells/row-number-cell.js'
 import { useInternalTableState } from '../table-provider/table-provider.js'
@@ -16,7 +16,7 @@ interface RenderRowProps<T extends DataType> {
 const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: RenderRowProps<T>) => {
   const {
     config,
-    state: { selectedRowIndexes, selectedCellIndex },
+    state: { selectedRowIndexes, selectedCellIndex, selectedRowErrors },
     api,
   } = useInternalTableState<T>()
 
@@ -76,7 +76,30 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
   const rowRef = useRef<HTMLTableRowElement>(null)
 
   // actions state management
-  const canShowActions = mode === 'default' && !!config.onDelete
+  const canShowActions = useMemo(() => {
+    if (selectedCellIndex?.row === rowIndex && Array.isArray(selectedRowErrors) && selectedRowErrors.length > 0) {
+      // we can not show the actions if a field is being edited and has errors
+      return false
+    }
+    return (
+      mode === 'default' &&
+      (!!config.onDelete ||
+        config.actions?.primary ||
+        (Array.isArray(config.actions?.secondary) && config.actions.secondary.length > 0))
+    )
+  }, [
+    selectedCellIndex?.row,
+    rowIndex,
+    selectedRowErrors,
+    mode,
+    config.onDelete,
+    config.actions?.primary,
+    config.actions?.secondary,
+  ])
+
+  const hasErrors =
+    selectedCellIndex?.row === rowIndex && Array.isArray(selectedRowErrors) && selectedRowErrors.length > 0
+
   const [actionsOpen, setActionsOpen] = useState(false)
   const [isSecondaryActionsOpen, setIsSecondaryActionsOpen] = useState(false)
   const handleRowMouseEnter = useCallback(() => {
@@ -106,6 +129,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
         index={mode === 'default' ? item.__index + 1 : rowIndex + 1}
         handleSelectRowOnClick={createSelectRowOnClickHandler(rowIndex)}
         selected={selectedRowIndexes.includes(rowIndex) || selectedCellIndex?.row === rowIndex}
+        hasErrors={hasErrors}
       />
 
       {/* render the cells */}
@@ -122,7 +146,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
         )
       })}
 
-      {(api.isEditable() || api.canDelete()) && <InformationCell />}
+      {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} />}
 
       {canShowActions && (
         <RowActions

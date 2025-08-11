@@ -44,6 +44,8 @@ export interface TableApiBase {
   canEditCell(row: number, column: number): boolean
   isEditing(): boolean
   isEditingCell(row: number, column: number): boolean
+  thereAreErrors(): boolean
+  getErrors(row: number, checkValidity?: boolean): Promise<string[]>
   enterCellEditMode(row: number, column: number): void
   exitCellEditMode(save?: boolean): Promise<void>
 

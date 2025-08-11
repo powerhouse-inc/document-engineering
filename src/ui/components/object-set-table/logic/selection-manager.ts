@@ -7,14 +7,14 @@ class SelectionManager<TData> implements TableSelectionManager {
    * Checks if the table allows row selection
    */
   canSelectRows() {
-    return this.api._getConfig().allowRowSelection ?? true
+    return !this.api.thereAreErrors() && (this.api._getConfig().allowRowSelection ?? true)
   }
 
   /**
    * Checks if the table allows cell selection
    */
   canSelectCells() {
-    return this.api._getConfig().allowRowSelection ?? true
+    return !this.api.thereAreErrors() && (this.api._getConfig().allowRowSelection ?? true)
   }
 
   /**
@@ -140,6 +140,8 @@ class SelectionManager<TData> implements TableSelectionManager {
    * Clears the selection of the current cell
    */
   clearCellSelection() {
+    if (this.api.thereAreErrors()) return
+
     this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
   }
 
@@ -147,6 +149,8 @@ class SelectionManager<TData> implements TableSelectionManager {
    * Clears the selection of the table
    */
   clear() {
+    if (this.api.thereAreErrors()) return
+
     this.api._getState().dispatch?.({ type: 'SELECT_CELL', payload: null })
   }
 }

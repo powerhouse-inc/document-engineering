@@ -20,7 +20,7 @@ const RenderCell = <T extends DataType>({
   columnIndex,
   renderEmptyCell = false,
 }: RenderCellProps<T>) => {
-  const { config, isThisCellSelected, isCellEditMode, handleCellClick, formRef } = useCellLogic({
+  const { config, isThisCellSelected, isCellEditMode, handleCellClick, formRef, hasErrors } = useCellLogic({
     column,
     rowIndex,
     columnIndex,
@@ -55,9 +55,23 @@ const RenderCell = <T extends DataType>({
       isSelected={isThisCellSelected}
       isEditable={column.editable ?? false}
       isEditing={isThisCellEditMode}
+      hasErrors={hasErrors}
     >
-      <Form ref={formRef} onSubmit={() => undefined} submitChangesOnly>
-        <div className={cn({ hidden: !isThisCellEditMode })}>
+      <Form
+        ref={formRef}
+        onSubmit={() => undefined}
+        submitChangesOnly
+        extraFormProps={{ mode: 'all', shouldUnregister: true }}
+      >
+        <div
+          className={cn(
+            { hidden: !isThisCellEditMode },
+            // errors and warnings messages
+            '[&_[data-type="error"]]:hidden [&_[data-type="warning"]]:hidden',
+            // character counter
+            '[&_[data-type="character-counter"]]:hidden'
+          )}
+        >
           {column.renderCellEditor?.(cellValue, () => null, cellContext)}
         </div>
         <div className={cn({ hidden: isThisCellEditMode })}>{column.renderCell?.(cellValue, cellContext)}</div>

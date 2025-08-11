@@ -11,6 +11,7 @@ export const numberCellEditorFactory = <T extends DataType>(
     return (
       <NumberField
         name={context.column.field}
+        autoComplete="off"
         className="max-w-full"
         autoFocus
         {...numberFieldProps}

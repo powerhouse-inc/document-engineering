@@ -27,7 +27,7 @@ export const FormMessageList: React.FC<FormMessageListProps> = ({ messages, type
   }
 
   return (
-    <ul className={cn('flex flex-col gap-1', className)} {...props}>
+    <ul data-type={type} className={cn('flex flex-col gap-1', className)} {...props}>
       {messages.map((message) => (
         <FormMessage
           key={message}

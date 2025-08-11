@@ -6,6 +6,7 @@ export const stringCellEditorFactory = <T extends DataType>(
 ) => {
   const StringCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
     const stringValue = typeof value === 'string' ? value : String(value ?? '')
+
     return (
       <StringField
         name={context.column.field}

@@ -40,6 +40,7 @@ const TableProvider = <T extends DataType = DataType>({ children, config, tableR
     selectedCellIndex: null,
     isCellEditMode: false,
     sortState: null,
+    selectedRowErrors: null,
   })
 
   useEffect(() => {
