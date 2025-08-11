@@ -37,7 +37,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       progress,
       onCancel,
       onReload,
-      onPreview,
+      showPreview,
       errorsUpload,
       status = 'idle',
       ...props
@@ -116,7 +116,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                       status={status}
                       onCancel={onCancel}
                       onReload={onReload}
-                      onPreview={onPreview}
+                      showPreview={showPreview}
                     />
                   </div>
                 </div>

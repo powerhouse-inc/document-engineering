@@ -15,7 +15,7 @@ interface FileUploadItemProps {
   mimeType?: string
   errorsUpload?: string[]
   status?: UploadFile
-  onPreview?: () => void
+  showPreview?: boolean
 }
 
 export const FileUploadItem = ({
@@ -28,7 +28,7 @@ export const FileUploadItem = ({
   mimeType = '',
   errorsUpload,
   status = 'idle',
-  onPreview,
+  showPreview,
 }: FileUploadItemProps) => {
   const showProgress = status === 'uploading' && progress !== undefined && progress >= 0 && progress < 100
   const showSuccess = status === 'success'
@@ -48,8 +48,7 @@ export const FileUploadItem = ({
 
   const handleOnPreview = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    // TODO: open preview modal
-    onPreview?.()
+    // TODO: open preview modal to show the file
   }
 
   return (
@@ -104,15 +103,15 @@ export const FileUploadItem = ({
             className="h-2 bg-gray-100 [&_[data-slot=progress-bar-indicator]]:bg-blue-600"
           />
         )}
-
-        {showSuccess && (
-          <div className="flex flex-row justify-between" role="status" aria-live="polite" aria-atomic="true">
-            <span className="text-green-700 text-xs leading-4.5 font-normal">{MESSAGES.success}</span>
+        <div className="flex flex-row justify-between" role="status" aria-live="polite" aria-atomic="true">
+          {showSuccess && <span className="text-green-700 text-xs leading-4.5 font-normal">{MESSAGES.success}</span>}
+          {showSuccess && showPreview && (
             <span className="text-blue-900 text-xs leading-4.5 font-normal" onClick={handleOnPreview}>
               {MESSAGES.preview}
             </span>
-          </div>
-        )}
+          )}
+        </div>
+
         {showError && (
           <div role="alert" aria-live="assertive" aria-atomic="true">
             <span className="text-red-900 text-xs leading-4.5 font-normal">{MESSAGES.error}</span>

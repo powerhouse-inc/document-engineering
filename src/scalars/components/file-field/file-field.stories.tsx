@@ -180,5 +180,6 @@ export const WithPreview: Story = {
     status: 'success',
     mimeType: 'image/png',
     progress: 100,
+    showPreview: true,
   },
 }
