@@ -3,6 +3,7 @@ import type { IconName } from '../../icon-components/index.js'
 export const MESSAGES = {
   success: 'Upload successful',
   error: 'Upload failed',
+  preview: 'Preview',
 }
 
 export const formatBytes = (bytes?: number, decimals = 2, binaryUnits = false): string => {

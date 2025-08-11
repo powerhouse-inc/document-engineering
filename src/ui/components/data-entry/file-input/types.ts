@@ -17,6 +17,7 @@ export interface FileInputProps
   onReload?: (e: React.MouseEvent<HTMLButtonElement>) => void
   errorsUpload?: string[]
   status?: UploadFile
+  showPreview?: boolean
 }
 
 export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'

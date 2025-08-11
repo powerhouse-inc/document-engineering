@@ -171,3 +171,15 @@ export const WithUploadedFile: Story = {
     progress: 90,
   },
 }
+
+export const WithPreview: Story = {
+  args: {
+    ...Default.args,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'success',
+    mimeType: 'image/png',
+    progress: 100,
+    showPreview: true,
+  },
+}

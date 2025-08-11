@@ -163,4 +163,18 @@ describe('FileInput Component', () => {
     const errorMessages = screen.getAllByText('Upload failed')
     expect(errorMessages).toHaveLength(2)
   })
+
+  it('should display Preview action when status is success and showPreview is true', () => {
+    render(
+      <FileInput
+        name="file"
+        label="Upload File"
+        status="success"
+        fileName="test.pdf"
+        fileSize={1024}
+        showPreview={true}
+      />
+    )
+    expect(screen.getByText('Preview')).toBeInTheDocument()
+  })
 })
