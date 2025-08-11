@@ -163,4 +163,16 @@ describe('FileInput Component', () => {
     const errorMessages = screen.getAllByText('Upload failed')
     expect(errorMessages).toHaveLength(2)
   })
+  it('should call onPreview when the preview action is clicked', () => {
+    const onPreview = vi.fn()
+    render(<FileInput status="success" onPreview={onPreview} />)
+    const previewAction = screen.getByText('Preview')
+    fireEvent.click(previewAction)
+
+    expect(onPreview).toHaveBeenCalledTimes(1)
+  })
+  it('should display Preview action when status is success', () => {
+    render(<FileInput name="file" label="Upload File" status="success" fileName="test.pdf" fileSize={1024} />)
+    expect(screen.getByText('Preview')).toBeInTheDocument()
+  })
 })
