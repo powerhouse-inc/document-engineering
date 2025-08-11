@@ -119,7 +119,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   </div>
                 </div>
               )}
-              <input ref={ref} type="text" hidden={true} name={name} />
+              <input ref={ref} type="hidden" name={name} />
               <Input
                 {...getInputProps({
                   id,
