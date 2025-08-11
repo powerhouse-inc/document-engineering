@@ -59,8 +59,5 @@ export { Button, buttonVariants } from './button/index.js'
 export { confirm, type ConfirmOptions } from './confirm/index.js'
 export { Icon, type IconProps, type IconName } from './icon/index.js'
 
-// export object set table and types
-export * from './object-set-table/index.js'
-
 // TODO: export tooltip once it is ready to be used outside the package
 // DO NOT export tooltip until it is ready to be used outside the package

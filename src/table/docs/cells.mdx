@@ -1,0 +1,156 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Cells" />
+
+# Cells
+
+## How cell values are produced
+
+Cells in `ObjectSetTable` follow a simple, flexible pipeline. You can override any step:
+
+```
+Raw Data → valueGetter → valueFormatter → renderCell → Display
+               ↓              ↓              ↓
+          Extract Value   Format Value   Render UI
+```
+
+- See the complete property reference in [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme).
+
+---
+
+## Built-in types and defaults
+
+`type` controls default alignment, rendering, editing, and sorting behavior for columns and cells. Each type has sensible defaults for these properties unless you specify custom ones.
+
+Defaults are applied automatically if you omit them. For the full matrix of available types and their defaults, see [Column Definition → Defaults](?path=/docs/data-display-object-set-table-docs-column-definition--readme#defaults-applied-by-objectsettable).
+
+Example:
+
+```tsx
+const columns = [
+  { field: 'name', type: 'string' },
+  { field: 'age', type: 'number' }, // right-aligned
+  { field: 'active', type: 'boolean' },
+]
+```
+
+---
+
+## Custom value processing
+
+Use the pipeline to derive and present values:
+
+```tsx
+{
+  field: 'salary',
+  valueGetter: (row) => row.annualSalary / 12,              // derive monthly
+  valueFormatter: (value) => `$${Number(value).toLocaleString()}`,
+  renderCell: (formatted) => <strong>{formatted}</strong>
+}
+```
+
+**Tip:** If `valueGetter` is provided, the `field` path is ignored for sourcing the value.
+
+---
+
+## Computed columns
+
+Create purely computed columns with `valueGetter`:
+
+```tsx
+{
+  field: 'computed',
+  title: 'Full Name',
+  valueGetter: (row) => `${row.firstName} ${row.lastName}`,
+}
+```
+
+---
+
+## Custom header rendering
+
+Customize headers with `renderHeader`:
+
+```tsx
+{
+  field: 'status',
+  renderHeader: (value: string) => (
+    <div className="flex items-center px-[12px] py-[15px] text-left text-[14px] font-medium leading-[14px] text-gray-500">
+      <span>{value}</span>
+      <TooltipProvider>
+        <Tooltip content="User status" side="right">
+          <Icon name="InfoSquare" size={16} className="ml-1 text-gray-500" />
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  )
+}
+```
+
+For header behavior and sorting indicators, see [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme) and [API → Sorting](?path=/docs/data-display-object-set-table-docs-api--readme#sorting-api).
+
+
+## Custom cell rendering
+
+Render any custom UI with `renderCell`:
+
+```tsx
+{
+  field: 'status',
+  renderCell: (value, context) => (
+    <div className="flex items-center gap-2">
+      <StatusIcon status={value as string} />
+      <span className={getStatusColor(value)}>{String(value)}</span>
+    </div>
+  )
+}
+```
+
+Note: Render non-table elements (e.g., `div`, `span`) to avoid invalid table markup.
+
+## Editing cells (inline)
+
+Enable editing per column with `editable: true`. Provide `renderCellEditor` and `onSave` for full control.
+
+See the [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme) doc for validation and save-flow patterns.
+
+---
+
+## The CellContext object
+
+`renderCell`, `renderHeader`, `valueGetter`, `valueFormatter`, `renderCellEditor`, and `onSave` receive a `CellContext<T>` with helpful metadata:
+
+```tsx
+interface CellContext<T> {
+  row: T
+  column: ColumnDef<T>
+  rowIndex: number
+  columnIndex: number
+  tableConfig: ObjectSetTableConfig<T>
+}
+```
+
+Use it for conditional styling and logic:
+
+```tsx
+{
+  field: 'priority',
+  renderCell: (value, context) => {
+    const isLastRow = context.rowIndex === context.tableConfig.data.length - 1
+    const isHigh = value === 'high'
+    return (
+      <span className={cn(isHigh && 'text-red-600 font-bold', isLastRow && 'border-b-2')}>
+        {String(value ?? '')}
+      </span>
+    )
+  },
+}
+```
+
+---
+
+## Related docs
+
+- [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): types, defaults, value pipeline, sorting
+- [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme): enabling editing, validation, and save flows
+- [API](?path=/docs/data-display-object-set-table-docs-api--readme): selection, addition/deletion, sorting, utilities

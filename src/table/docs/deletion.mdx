@@ -1,0 +1,60 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Deletion" />
+
+# Row Deletion
+
+Row deletion in `ObjectSetTable` is enabled by providing the `onDelete` prop. When enabled, users can remove one or multiple selected rows. Deletion is automatically blocked when the number of rows is less than or equal to `minRowCount` to preserve table layout and stability. See how row count works in [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme#row-height-and-count).
+
+## Quick start
+
+```tsx
+type Person = {
+  id: string
+  firstName: string
+  email: string
+}
+
+const [data, setData] = useState<Person[]>(initialData)
+
+<ObjectSetTable<Person>
+  data={data}
+  columns={columns}
+  onDelete={async (rowsToDelete) => {
+    // Remove the provided rows from your data source
+    setData((prev) => prev.filter((row) => !rowsToDelete.includes(row)))
+  }}
+/>
+```
+
+Notes:
+
+- Deletion is available only when `onDelete` is provided.
+- The table will not delete rows if the current row count is less than or equal to `minRowCount`. Learn more in [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme#row-height-and-count).
+
+## Interactions
+
+- The delete action appears within the row actions menu. See [Actions](?path=/docs/data-display-object-set-table-docs-actions--readme).
+- Deletion can also be triggered via keyboard shortcuts. See [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme).
+- Multiple selected rows can be deleted at once. For selection behavior, see [Rows → Row Selection](?path=/docs/data-display-object-set-table-docs-rows--readme#row-selection).
+
+## Programmatic control
+
+Use the public API via `apiRef` to check capabilities and perform deletions.
+
+```tsx
+// Check if deletion is currently allowed
+const canDelete = apiRef.current?.canDelete() ?? false
+
+// Delete currently selected rows
+const selectedIndexes = apiRef.current?.selection.getSelectedRowIndexes() ?? []
+await apiRef.current?.deleteRows(selectedIndexes)
+```
+
+See [API → Row Deletion](?path=/docs/data-display-object-set-table-docs-api--readme#row-deletion-api) for details.
+
+## Related docs
+
+- [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme): selection and `minRowCount`
+- [Actions](?path=/docs/data-display-object-set-table-docs-actions--readme): where the delete action appears
+- [API](?path=/docs/data-display-object-set-table-docs-api--readme#row-deletion-api): `canDelete`, `deleteRows`

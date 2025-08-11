@@ -1,0 +1,83 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Rows" />
+
+# Rows
+
+This page covers row-related behavior and configuration for `ObjectSetTable`.
+
+## Row properties
+
+| Property            | Type                                                       | Default  | Description                                                                          |
+| ------------------- | ---------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------ |
+| `allowRowSelection` | `boolean`                                                  | `true`   | Enables row selection via mouse and keyboard.                                        |
+| `showRowNumbers`    | `boolean`                                                  | `true`   | Shows a leading column with row numbers; also acts as a selection target.            |
+| `minRowCount`       | `number`                                                   | `0`      | Ensures the table renders at least this many rows by adding empty placeholder rows.  |
+| `minRowHeight`      | `number \| 'auto'`                                         | `'auto'` | Minimum pixel height for each row; affects all cells, including the row number cell. |
+| `onAdd`             | `(data: Record<string, unknown>) => Promise<void> \| void` | —        | Enables an insertion row at the bottom for adding items.                             |
+| `onDelete`          | `(rows: T[]) => Promise<void> \| void`                     | —        | Enables deletion UI and keyboard deletion of selected rows.                          |
+
+For column-level editing controls, see the Column Definition doc and the Editing doc:
+
+- See Column editing props in [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): `editable`, `onSave`, `renderCellEditor`.
+- See Editing for end-to-end editing patterns.
+
+## Row Selection
+
+```tsx
+<ObjectSetTable
+  data={data}
+  columns={columns}
+  allowRowSelection={true} // Enable row selection (default: true)
+/>
+```
+
+**Selection Interactions:**
+
+- **Click**: Select single row
+- **Ctrl/Cmd + Click**: Toggle row selection
+- **Shift + Click**: Select range of rows
+- **Header # cell**: Click to toggle "select all" when selection is enabled
+
+Programmatic selection methods are available via the table API (`apiRef`). See the [API docs: Selection Management](?path=/docs/data-display-object-set-table-docs-api--readme#selection-management-api).
+
+## Row Numbers
+
+```tsx
+<ObjectSetTable
+  data={data}
+  columns={columns}
+  showRowNumbers={true} // Show row numbers column (default: true)
+/>
+```
+
+Notes:
+
+- When `showRowNumbers` is `false` but `allowRowSelection` is `true`, the leading column remains for selection, but numbers are hidden.
+- The width of the header number cell adapts to the total row count to avoid truncation.
+
+## Row Height and Count
+
+Control table density and visual stability:
+
+```tsx
+<ObjectSetTable
+  data={data}
+  columns={columns}
+  minRowHeight={40} // pixels; 'auto' uses content height
+  minRowCount={10} // renders empty placeholder rows up to this count
+/>
+```
+
+Behavior details:
+
+- Empty rows are rendered to satisfy `minRowCount`. They are non-interactive placeholders.
+- If `onAdd` is provided (insertion row enabled), that insertion row counts toward `minRowCount`.
+
+---
+
+## Related docs
+
+- [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): types, default renderers, editors, and sorting
+- [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme): enabling editing, validation, and save flows
+- [API](?path=/docs/data-display-object-set-table-docs-api--readme): selection, addition, deletion, sorting, and utility methods

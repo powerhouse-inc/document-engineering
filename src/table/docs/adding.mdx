@@ -1,0 +1,82 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Adding" />
+
+# Adding Rows
+
+Enable row creation in `ObjectSetTable` by providing the `onAdd` prop. When present, an insertion row appears at the bottom. Users type into editable cells in that row; saving a cell calls `onAdd` with a partial payload for the last edited field.
+
+## Requirements
+
+- At least one column must be editable. See [Column Definition → Editing](?path=/docs/data-display-object-set-table-docs-column-definition--readme#editing).
+- Provide an `onAdd` handler. Without it, the insertion row is hidden.
+
+## Quick start
+
+```tsx
+type Person = {
+  firstName: string
+  email: string
+}
+
+const columns = [
+  { field: 'firstName', title: 'First name', editable: true },
+  { field: 'email', title: 'Email', editable: true },
+]
+
+const [data, setData] = useState<Person[]>([])
+
+<ObjectSetTable<Person>
+  data={data}
+  columns={columns}
+  onAdd={(partial) => {
+    // partial only includes the last saved field from the insertion row
+    const defaults: Person = { firstName: '', email: '' }
+    setData((prev) => [...prev, { ...defaults, ...(partial as Partial<Person>) }])
+  }}
+/> 
+```
+
+## How it works
+
+- The insertion row is rendered only when `onAdd` is provided.
+- It appears after the last data row and counts toward `minRowCount`. See [Rows → Row Height and Count](?path=/docs/data-display-object-set-table-docs-rows--readme#row-height-and-count).
+- Saving a cell in the insertion row triggers validation and then calls `onAdd` with `{ [field]: value }` for that cell.
+- The handler may be async; returning a promise is supported.
+- Each save in the insertion row invokes `onAdd`. Commonly, you create the new item on the first save and merge subsequent fields as needed.
+
+## Common patterns
+
+### Create with defaults
+
+```tsx
+onAdd={(partial) => {
+  const newRow: Person = { firstName: '', email: '', ...(partial as Partial<Person>) }
+  setData((prev) => [...prev, newRow])
+}}
+```
+
+### Persist asynchronously
+
+```tsx
+onAdd={async (partial) => {
+  const payload = partial as Partial<Person>
+  const created = await api.people.create(payload) // your API call
+  setData((prev) => [...prev, created])
+}}
+```
+
+For editing interactions (enter/commit/cancel, validation), see [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme).
+
+## Programmatic control
+
+Use the public API to check add state:
+
+- `canAdd()` and `isAdding()` — see [API → Row Addition](?path=/docs/data-display-object-set-table-docs-api--readme#row-addition-api)
+
+## Related docs
+
+- [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme): selection, row count/height
+- [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): types, editors, and `editable`
+- [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme): validation, save flows
+- [API](?path=/docs/data-display-object-set-table-docs-api--readme): programmatic methods (`canAdd`, `isAdding`)

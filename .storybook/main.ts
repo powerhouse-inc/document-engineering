@@ -1,6 +1,7 @@
 import type { StorybookConfig } from '@storybook/react-vite'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import remarkGfm from 'remark-gfm'
 
 const srcPath = fileURLToPath(new URL('../dist/src', import.meta.url))
 
@@ -12,7 +13,16 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/addon-themes',
     'storybook-addon-pseudo-states',
-    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
     '@chromatic-com/storybook',
   ],
   framework: {
@@ -27,7 +37,7 @@ const config: StorybookConfig = {
     autodocs: 'tag',
     defaultName: '_Readme',
   },
-  viteFinal: async config => {
+  viteFinal: async (config) => {
     const { mergeConfig } = await import('vite')
     const { default: tailwindcss } = await import('@tailwindcss/vite')
     return mergeConfig(config, {
