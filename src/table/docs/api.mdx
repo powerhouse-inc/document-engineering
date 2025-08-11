@@ -1,0 +1,148 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/API" />
+
+## Table API usage
+
+The `ObjectSetTable` component provides a comprehensive programmatic API through the `apiRef` prop, enabling external control over
+all table functionality including selection, editing, sorting, deletion, and row addition. This API serves as the foundation for all
+built-in table features, ensuring complete programmatic access to every capability available through the user interface.
+
+### Getting started
+
+```tsx
+import { useRef } from 'react'
+import type { TableApiBase } from './types'
+
+const MyComponent = () => {
+  const apiRef = useRef<TableApiBase>(null)
+
+  return <ObjectSetTable data={data} columns={columns} apiRef={apiRef} />
+}
+```
+
+---
+
+## Selection API
+
+The `selection` object controls both row and cell selection. For UX details like shortcuts, see [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme) and [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme).
+
+### Row selection
+
+- `selectRow(index: number)`: Select a single row and clear other row selections.
+- `toggleRow(index: number)`: Toggle selection state of a row.
+- `selectRange(from: number, to: number)`: Select a contiguous range of rows.
+- `selectFromLastActiveRow(index: number)`: Range-select from the last active row to `index`.
+- `selectAllRows()`: Select all rows (includes placeholder rows up to `minRowCount`). See [Rows → Row Height and Count](?path=/docs/data-display-object-set-table-docs-rows--readme#row-height-and-count).
+- `toggleSelectAll()`: Toggle between all selected and none.
+- `getSelectedRowIndexes(): number[]`: Get the current selected row indexes.
+
+Example:
+
+```tsx
+apiRef.current?.selection.selectRange(0, 2)
+```
+
+### Cell selection
+
+- `selectCell(row: number, column: number)`: Select a cell by coordinates.
+- `clearCellSelection()`: Clear the current cell selection.
+- `clear()`: Clear all selections (rows and cells).
+
+### Selection state
+
+- `canSelectRows(): boolean`: Whether row selection is enabled.
+- `canSelectCells(): boolean`: Whether cell selection is enabled.
+- `haveSelectedCells(): boolean`: Whether any cell is selected.
+
+---
+
+## Editing API
+
+For validation and editing patterns, see [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme) and [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme).
+
+- `isEditable(): boolean`: Returns true if at least one column is editable.
+- `canEditCell(row: number, column: number): boolean`: Whether a specific cell is editable.
+- `isEditing(): boolean`: Whether the table is currently in edit mode.
+- `isEditingCell(row: number, column: number): boolean`: Whether that exact cell is being edited.
+- `enterCellEditMode(row: number, column: number): void`: Enter edit mode for a cell. Throws if the cell is not editable.
+- `exitCellEditMode(save = true): Promise<void>`: Exit edit mode. When `save` is true, triggers validation and save.
+- `thereAreErrors(): boolean`: Whether the currently selected row has validation errors.
+- `getErrors(row: number, checkValidity = true): Promise<string[]>`: Returns the current error messages for a row. When `checkValidity` is true, triggers validation first.
+
+Example:
+
+```tsx
+apiRef.current?.enterCellEditMode(0, 1)
+await apiRef.current?.exitCellEditMode(true)
+```
+
+---
+
+## Row Deletion API
+
+End-to-end UX and confirmations are covered in [Deletion](?path=/docs/data-display-object-set-table-docs-deletion--readme).
+
+- `canDelete(): boolean`: True when the table was configured with `onDelete`.
+- `deleteRows(rows: number[], options?: { askConfirmation?: boolean; title?: string; description?: string }): Promise<void>`: Delete by row indexes. Shows a confirmation dialog by default.
+
+Example:
+
+```tsx
+const selected = apiRef.current?.selection.getSelectedRowIndexes() ?? []
+if (selected.length) {
+  await apiRef.current?.deleteRows(selected)
+}
+```
+
+---
+
+## Row Addition API
+
+For how the insertion row behaves and how to wire `onAdd`, see [Adding Rows](?path=/docs/data-display-object-set-table-docs-adding--readme).
+
+- `canAdd(): boolean`: True when the table was configured with `onAdd`.
+- `isAdding(): boolean`: True while the user is editing the insertion row (the special last row). Useful to detect add context during editing.
+
+Example:
+
+```tsx
+if (apiRef.current?.canAdd()) {
+  const adding = apiRef.current?.isAdding()
+  // e.g. show a small hint while the insertion row is being edited
+}
+```
+
+---
+
+## Sorting API
+
+For column sorting behavior and defaults, see [Sorting](?path=/docs/data-display-object-set-table-docs-sorting--readme).
+
+- `sortRows(columnIndex: number, direction: 'asc' | 'desc' | null): void`: Sort by column. Pass `null` to clear sorting.
+- `getCurrentSortInfo(): { columnIndex: number; direction: 'asc' | 'desc' } | null`: Current sorting info, or `null` if unsorted.
+
+Example:
+
+```tsx
+const direction = apiRef.current?.getCurrentSortInfo()?.direction === 'asc' ? 'desc' : 'asc'
+apiRef.current?.sortRows(0, direction)
+```
+
+---
+
+## General methods
+
+- `getHTMLTable(): HTMLTableElement | null`: Access the underlying `<table>` element.
+- `getTotalRowsCount(): number`: Total rendered rows including placeholders up to `minRowCount`. See [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme).
+
+---
+
+## Related docs
+
+- [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme): row properties, selection basics, row count/height
+- [Adding Rows](?path=/docs/data-display-object-set-table-docs-adding--readme)
+- [Deletion](?path=/docs/data-display-object-set-table-docs-deletion--readme)
+- [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme)
+- [Sorting](?path=/docs/data-display-object-set-table-docs-sorting--readme)
+- [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme)

@@ -23,6 +23,10 @@
       "types": "./dist/src/ui/index.d.ts",
       "import": "./dist/src/ui/index.js"
     },
+    "./table": {
+      "types": "./dist/src/table/index.d.ts",
+      "import": "./dist/src/table/index.js"
+    },
     "./graphql": {
       "types": "./dist/src/scalars/graphql/index.d.ts",
       "import": "./dist/src/scalars/graphql/index.js"
@@ -183,6 +187,7 @@
     "react-hook-form": "^7.53.0",
     "react-portal": "^4.3.0",
     "react-virtualized": "^9.22.6",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.0.2",
     "usehooks-ts": "^3.1.0",
     "viem": "^2.16.1",

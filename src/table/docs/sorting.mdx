@@ -1,0 +1,96 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Sorting" />
+
+# Sorting
+
+Sorting lets users order rows by any column you mark as sortable. Sorting is configured per-column and works via header clicks or programmatic API calls. This page focuses on how to enable and customize sorting for `ObjectSetTable`.
+
+## Sorting configuration
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `sortable` | `boolean` | `false` | Enables header click-to-sort for the column. |
+| `rowComparator` | `(a: unknown, b: unknown, context: SortableColumnContext<T>) => number` | Type-based comparator | Compare two values returned by the column's `valueGetter`. Return `< 0`, `0`, or `> 0`. |
+| `onSort` | `(context: SortableColumnContext<T>) => void` | `undefined` | Called after sorting changes (including when sorting is cleared). |
+
+For a full list of column properties, see [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme).
+
+## Basic usage
+
+```tsx
+const columns = [
+  { field: 'name', title: 'Name', sortable: true },
+  { field: 'amount', title: 'Amount', type: 'number', sortable: true },
+]
+
+<ObjectSetTable data={data} columns={columns} />
+```
+
+Header interaction cycles through: Asc → Desc → None. A sort indicator appears when `sortable` is `true`.
+
+## Defaults and behavior
+
+- **Default comparators**: Each column type has a built-in comparator optimized for that data type.
+- **Null handling**: `null` values are placed at the end when sorting.
+- **Unsorted state**: Clearing sort restores the original row order.
+- **Value source**: Comparisons use values from the column `valueGetter`. To sort by a computed value, provide a custom `valueGetter` in your column. See [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme).
+
+## Custom comparator
+
+Use `rowComparator` for custom rules (e.g., case-insensitive text, domain-specific ordering):
+
+```tsx
+const columns = [
+  {
+    field: 'category',
+    sortable: true,
+    rowComparator: (a, b) => String(a ?? '').localeCompare(String(b ?? ''), undefined, { sensitivity: 'base' }),
+  },
+]
+```
+
+## Sort callbacks
+
+Use `onSort` for side effects (analytics, remote queries, UI updates):
+
+```tsx
+const columns = [
+  {
+    field: 'amount',
+    title: 'Amount',
+    type: 'number',
+    sortable: true,
+    onSort: ({ sortState, columnDef }) => {
+      // sortState is { columnIndex, direction } or null when cleared
+      console.log('Sorted by', columnDef.field, '->', sortState)
+    },
+  },
+]
+```
+
+## Programmatic control
+
+You can sort via the table API using `apiRef`. See the [API docs](?path=/docs/data-display-object-set-table-docs-api--readme#sorting-api) for more.
+
+```tsx
+const apiRef = useRef<TableApiBase>(null)
+
+<ObjectSetTable data={data} columns={columns} apiRef={apiRef} />
+
+// Sort first column ascending
+apiRef.current?.sortRows(0, 'asc')
+
+// Clear sorting
+apiRef.current?.sortRows(0, null)
+
+// Read current sort info
+const info = apiRef.current?.getCurrentSortInfo() // { columnIndex, direction } | null
+```
+
+---
+
+## Related docs
+
+- [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): sorting props (`sortable`, `rowComparator`, `onSort`), value pipeline
+- [API](?path=/docs/data-display-object-set-table-docs-api--readme): programmatic sorting methods

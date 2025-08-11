@@ -1,0 +1,76 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Editing" />
+
+# Editing
+
+Inline editing in `ObjectSetTable` is enabled per column. You decide which columns are editable, how the editor looks, and how values are saved.
+
+## Quick start
+
+```tsx
+const columns = [
+  {
+    field: 'email',
+    title: 'Email',
+    editable: true, // opt-in per column
+  },
+]
+
+<ObjectSetTable data={data} columns={columns} />
+```
+
+When `editable` is `true`, the table provides a default editor based on the column `type`. See available types and defaults in [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme#built-in-types).
+
+---
+
+## Saving edits
+
+Use `onSave` to validate and persist changes. Return `true` to commit or `false` to reject and revert.
+
+```tsx
+{
+  field: 'email',
+  editable: true,
+  onSave: (newValue, context) => {
+    if (typeof newValue === 'string' && newValue.includes('@')) {
+      context.row.email = newValue
+      return true
+    }
+    return false
+  },
+}
+```
+
+> Note: If you omit `onSave`, a development-time default will directly write the value into `row[field]`. For production apps, provide your own `onSave` to control persistence.
+
+For the full column property reference, see [Column Definition → Editing](?path=/docs/data-display-object-set-table-docs-column-definition--readme#editing).
+
+## How users edit
+
+- See [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme) for starting, committing, and cancelling edits (Enter/Escape, arrow navigation, click behavior).
+
+---
+
+## Programmatic control
+
+Use the public API via `apiRef` for imperative control:
+
+```tsx
+// Enter edit mode for a specific cell
+apiRef.current?.enterCellEditMode(rowIndex, columnIndex)
+
+// Exit edit mode (save=true by default)
+apiRef.current?.exitCellEditMode(true)
+```
+
+See [API → Cell Editing](?path=/docs/data-display-object-set-table-docs-api--readme#cell-editing-api) for method details and additional helpers.
+
+---
+
+## Related docs
+
+- [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): types, defaults, property reference
+- [Cells](?path=/docs/data-display-object-set-table-docs-cells--readme): value pipeline and `CellContext`
+- [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme): interactions for editing
+- [API](?path=/docs/data-display-object-set-table-docs-api--readme): programmatic editing, selection, and utilities

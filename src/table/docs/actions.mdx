@@ -1,0 +1,104 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Actions" />
+
+# Actions
+
+Enable contextual actions that appear when hovering over table rows. Row actions provide a clean interface for performing operations on individual rows without cluttering the table interface.
+
+```tsx
+const actions = {
+  primary: {
+    label: 'Edit',
+    icon: <Icon name="BaseArrowRight" size={16} />,
+    callback: async (context: RowContext<Person>) => {
+      // Handle primary action
+      console.log('Redirecting to page for row:', context.row);
+    },
+  },
+  secondary: [
+    {
+      label: 'Duplicate',
+      callback: (context: RowContext<Person>) => {
+        // Handle secondary action
+        const newRow = { ...context.row, id: generateId() };
+        setData(prevData => [...prevData, newRow]);
+      },
+    },
+    {
+      label: 'Archive',
+      callback: async (context: RowContext<Person>) => {
+        // Handle archive action
+        await archiveUser(context.row.id);
+      },
+    },
+  ],
+};
+
+<ObjectSetTable
+  data={data}
+  columns={columns}
+  actions={actions}  // Enables row actions
+/>
+```
+
+**Row Actions Configuration:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `primary` | `RowAction<T>` | Single primary action displayed as main button |
+| `secondary` | `Array<Omit<RowAction<T>, 'icon'>>` | Secondary actions in dropdown menu |
+
+**RowAction Interface:**
+
+```tsx
+interface RowAction<T> {
+  label: string;                           // Action display name
+  callback: (context: RowContext<T>) => Promise<void> | void;  // Action handler
+  icon?: React.ReactNode;                  // Optional icon (primary only, recommended 16x16 pixels)
+}
+
+interface RowContext<T> {
+  row: T;                                  // Current row data
+  rowIndex: number;                        // Row position in table
+  tableConfig: ObjectSetTableConfig<T>;    // Full table configuration
+}
+```
+
+**Action Behavior:**
+- Actions appear on the right side of the table when hovering over a row
+- Primary action displays with its icon as a clickable button
+- Secondary actions appear in a dropdown menu triggered by a "more" button
+- Actions automatically hide when the mouse leaves the row area
+- Both action types receive the same `RowContext<T>` for consistent data access
+
+---
+
+## Row Actions Context
+
+Row actions receive a `RowContext<T>` object providing access to complete row information:
+
+```tsx
+{
+  primary: {
+    label: 'Edit User',
+    callback: (context) => {
+      // Access current row data
+      const user = context.row;
+
+      // Use row position for tracking
+      console.log(`Editing row ${context.rowIndex + 1}`);
+
+      // Access table configuration for conditional logic
+      const canEdit = context.tableConfig.columns
+        .some(col => col.editable);
+
+      if (canEdit) {
+        openEditDialog(user);
+      }
+    }
+  }
+}
+```
+
+

@@ -1,0 +1,59 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Keyboard Shortcuts" />
+
+# Keyboard Shortcuts
+
+Keyboard shortcuts apply to `ObjectSetTable` when a cell is selected (visible focus ring). While editing a cell, most keys go to the input itself; use Enter/Escape to finish.
+
+## Navigation (not editing)
+
+| Key | Action |
+|-----|--------|
+| Arrow Right/Left/Down/Up | Move the selected cell in the given direction |
+| Tab | Move to the next cell to the right; wraps to the first column of the next row |
+| Enter | Enter edit mode if the selected cell is editable |
+
+For selection behavior and row-level options, see [Rows → Row Selection](?path=/docs/data-display-object-set-table-docs-rows--readme#row-selection).
+
+## Editing mode
+
+| Key | Action |
+|-----|--------|
+| Enter | Save the current cell and move selection to the next row (same column) |
+| Escape | Cancel changes and exit edit mode (selection stays on the same cell) |
+
+How editing, validation, and saving work is covered in [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme).
+
+## Row selection (with mouse modifiers)
+
+| Gesture | Action |
+|---------|--------|
+| Click cell | Select cell |
+| Double‑click editable cell | Enter edit mode |
+| Click row number | Select that row |
+| Ctrl/Cmd + Click row/number | Toggle row selection |
+| Shift + Click row/number | Select a range of rows from last active row |
+| Click header # cell | Toggle select‑all when selection is enabled |
+
+Details about selection, row numbers, and minimum row count are in [Rows](?path=/docs/data-display-object-set-table-docs-rows--readme).
+
+## Deletion
+
+| Key | Action |
+|-----|--------|
+| Delete | Delete selected rows (when deletion is enabled). A confirmation dialog is shown. |
+
+Deletion requires the `onDelete` prop and never deletes placeholder rows added by `minRowCount`. See [Deletion](?path=/docs/data-display-object-set-table-docs-deletion--readme) and [Rows → Row Height and Count](?path=/docs/data-display-object-set-table-docs-rows--readme#row-height-and-count).
+
+## Adding
+
+When `onAdd` is provided, an insertion row appears at the bottom. The same editing shortcuts (Enter to save, Escape to cancel) apply there. See [Adding](?path=/docs/data-display-object-set-table-docs-adding--readme).
+
+---
+
+## Notes
+
+- Shortcuts are active when a cell is selected (focus is inside the table).
+- While editing a cell, arrow keys navigate within the editor input; use Enter/Escape to finish.
+- Shift+Tab navigation is not currently supported; use Arrow Left to move left.
