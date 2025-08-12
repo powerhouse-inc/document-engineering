@@ -1,3 +1,20 @@
+# [1.28.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.27.0...v1.28.0) (2025-08-12)
+
+
+### Bug Fixes
+
+* **scalars:** add boolean instead of function for the preview ([15b46cd](https://github.com/powerhouse-inc/document-engineering/commit/15b46cdf7aae20d82fc5240d8e0378a6a16b34c9))
+* **scalars:** update the test ([7be61f8](https://github.com/powerhouse-inc/document-engineering/commit/7be61f8d40019e2bc45ee5a9dfba9a0d7b5847d4))
+* **scalars:** update the test snapshot ([32a885a](https://github.com/powerhouse-inc/document-engineering/commit/32a885a53cda8c32d87c9714f44821db6607b7e5))
+
+
+### Features
+
+* **scalars:** add hidden input hatch for FileInput component value persistence ([4a9d074](https://github.com/powerhouse-inc/document-engineering/commit/4a9d07436ef180054291837cea629dd5a8be43eb))
+* **scalars:** add preview option for preview documents ([b8f32e8](https://github.com/powerhouse-inc/document-engineering/commit/b8f32e8d33dee451d1352b6190f172f41a38a681))
+* **table:** cell editor validation ([7a70a1a](https://github.com/powerhouse-inc/document-engineering/commit/7a70a1ad99aba9cd96a5928da7a945932a022e8a))
+* **table:** move table location & improve docs ([50442d1](https://github.com/powerhouse-inc/document-engineering/commit/50442d1c27e0c151d635a9b4a60d03791e2c20e1))
+
 # [1.27.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.26.1...v1.27.0) (2025-08-08)
 
 
