@@ -37,7 +37,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       progress,
       onCancel,
       onReload,
-      showPreview,
+      showPreview = false,
       errorsUpload,
       status = 'idle',
       ...props
@@ -50,12 +50,14 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
-    const { handleDrop, borderIndicator } = useFileUpload({ value, defaultValue, onChange })
+    const { handleDrop, borderIndicator, preview } = useFileUpload({ value, defaultValue, onChange })
 
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       onDropAccepted: (acceptedFiles) => {
         handleDrop(acceptedFiles)
       },
+      noClick: true,
+      noKeyboard: true,
     })
 
     return (
@@ -117,6 +119,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                       onCancel={onCancel}
                       onReload={onReload}
                       showPreview={showPreview}
+                      preview={preview}
                     />
                   </div>
                 </div>
