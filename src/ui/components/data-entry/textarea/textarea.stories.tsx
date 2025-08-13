@@ -16,6 +16,7 @@ import { Textarea } from './textarea.js'
  * > you can use the [StringField](?path=/docs/scalars-string-field--readme)
  * > component.
  */
+
 const meta = {
   title: 'Data Entry/Textarea',
   component: Textarea,
@@ -83,7 +84,6 @@ export const Default: Story = {
   args: {
     label: 'Comments',
     placeholder: 'Enter your comments',
-    rows: 3,
   },
 }
 
@@ -101,7 +101,6 @@ export const WithDescription: Story = {
     label: 'Comments',
     description: 'Please provide detailed feedback',
     placeholder: 'Enter your comments',
-    rows: 3,
   },
 }
 
@@ -110,7 +109,6 @@ export const Required: Story = {
     label: 'Comments',
     required: true,
     placeholder: 'Enter your comments',
-    rows: 3,
   },
 }
 
@@ -120,7 +118,6 @@ export const Disabled: Story = {
     disabled: true,
     defaultValue: 'This textarea is disabled and cannot be edited.',
     placeholder: 'Enter your comments',
-    rows: 3,
   },
 }
 
@@ -129,7 +126,6 @@ export const WithCharacterLimit: Story = {
     label: 'Comments',
     placeholder: 'Enter your comments',
     maxLength: 100,
-    rows: 3,
   },
 }
 
@@ -138,7 +134,6 @@ export const AutoExpand: Story = {
     label: 'Comments',
     placeholder: 'This textarea will expand as you type more content...',
     autoExpand: true,
-    rows: 2,
   },
 }
 
@@ -148,7 +143,6 @@ export const WithErrors: Story = {
     defaultValue: 'Too short',
     errors: ['Comments must be at least 20 characters long'],
     placeholder: 'Enter your comments',
-    rows: 3,
   },
 }
 
@@ -158,7 +152,6 @@ export const WithWarnings: Story = {
     defaultValue: 'Brief comment',
     warnings: ['Consider providing more detailed feedback'],
     placeholder: 'Enter your comments',
-    rows: 3,
   },
 }
 
@@ -167,13 +160,12 @@ export const SingleLine: Story = {
     label: 'Brief comment',
     placeholder: 'Enter a single line of text',
     multiline: false,
-    rows: 1,
   },
 }
 
 export const WithDifferencesAddition: Story = {
   args: {
-    label: 'Number difference addition',
+    label: 'With differences (addition)',
     value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
     baseValue: 'Dolor sit amet consectetur adipiscing elit quisque faucibus.',
     viewMode: 'addition',
@@ -181,7 +173,7 @@ export const WithDifferencesAddition: Story = {
 }
 export const WithDifferencesRemoval: Story = {
   args: {
-    label: 'Date difference removal',
+    label: 'With differences (removal)',
     value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
     baseValue: 'Dolor sit amet consectetur adipiscing elit quisque faucibus.',
     viewMode: 'removal',
@@ -189,7 +181,7 @@ export const WithDifferencesRemoval: Story = {
 }
 export const WithDifferencesMixed: Story = {
   args: {
-    label: 'Date difference mixed',
+    label: 'With differences (mixed)',
     value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
     baseValue: 'Dolor sit amet consectetur adipiscing elit quisque faucibus.',
     viewMode: 'mixed',
