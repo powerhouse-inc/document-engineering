@@ -8,10 +8,12 @@ import ArrowUp from './ArrowUp.js'
 import BarChart from './BarChart.js'
 import BaseArrowLeft from './BaseArrowLeft.js'
 import BaseArrowRight from './BaseArrowRight.js'
+import BookOpenText from './BookOpenText.js'
 import Braces from './Braces.js'
 import Branch from './Branch.js'
 import BrickGlobe from './BrickGlobe.js'
 import Briefcase from './Briefcase.js'
+import BrokenImage from './BrokenImage.js'
 import Calendar from './Calendar.js'
 import CalendarTime from './CalendarTime.js'
 import Caret from './Caret.js'
@@ -34,6 +36,7 @@ import Collapse from './Collapse.js'
 import Compass from './Compass.js'
 import Connect from './Connect.js'
 import ConnectSmall from './ConnectSmall.js'
+import ContentUnavailableIcon from './ContentUnavailableIcon.js'
 import Copy from './Copy.js'
 import Created from './Created.js'
 import CrossCircle from './CrossCircle.js'
@@ -68,6 +71,7 @@ import GlobeWww from './GlobeWww.js'
 import Hdd from './Hdd.js'
 import Hide from './Hide.js'
 import History from './History.js'
+import Image from './Image.js'
 import InfoSquare from './InfoSquare.js'
 import Link from './Link.js'
 import Linkedin from './Linkedin.js'
@@ -129,10 +133,12 @@ export const iconNames = [
   'BarChart',
   'BaseArrowLeft',
   'BaseArrowRight',
+  'BookOpenText',
   'Braces',
   'Branch',
   'BrickGlobe',
   'Briefcase',
+  'BrokenImage',
   'Calendar',
   'CalendarTime',
   'Caret',
@@ -155,6 +161,7 @@ export const iconNames = [
   'Compass',
   'Connect',
   'ConnectSmall',
+  'ContentUnavailableIcon',
   'Copy',
   'Created',
   'CrossCircle',
@@ -189,6 +196,7 @@ export const iconNames = [
   'Hdd',
   'Hide',
   'History',
+  'Image',
   'InfoSquare',
   'Link',
   'Linkedin',
@@ -252,10 +260,12 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   BarChart,
   BaseArrowLeft,
   BaseArrowRight,
+  BookOpenText,
   Braces,
   Branch,
   BrickGlobe,
   Briefcase,
+  BrokenImage,
   Calendar,
   CalendarTime,
   Caret,
@@ -278,6 +288,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Compass,
   Connect,
   ConnectSmall,
+  ContentUnavailableIcon,
   Copy,
   Created,
   CrossCircle,
@@ -312,6 +323,7 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Hdd,
   Hide,
   History,
+  Image,
   InfoSquare,
   Link,
   Linkedin,
