@@ -89,10 +89,10 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
               'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
               'h-full border-none rounded-l-md rounded-r-none',
               'bg-transparent focus:bg-transparent hover:bg-transparent',
-              'w-28',
+              'w-auto shrink-0',
               prefixProps?.className
             )}
-            contentClassName={cn('w-29', prefixProps?.contentClassName)}
+            contentClassName={cn('w-30', prefixProps?.contentClassName)}
           />
           <div className="flex items-center h-full border-l border-gray-300" />
           <Input
