@@ -1,4 +1,5 @@
 export interface MockedPerson {
+  id: string
   firstName: string | null
   walletAddress: string
   isActive: boolean
@@ -16,6 +17,7 @@ export interface MockedPerson {
 
 export const mockData: MockedPerson[] = [
   {
+    id: '1',
     firstName: 'Alice',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
@@ -31,6 +33,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
+    id: '2',
     firstName: 'Bob',
     walletAddress: '0x1234567890abcdef',
     isActive: false,
@@ -46,6 +49,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
+    id: '3',
     firstName: null,
     walletAddress: '0x1234567890abcdef',
     isActive: true,
@@ -61,6 +65,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
+    id: '4',
     firstName: 'Diana',
     walletAddress: '0x1234567890abcdef',
     isActive: false,
@@ -76,6 +81,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
+    id: '5',
     firstName: null,
     walletAddress: '0x1234567890abcdef',
     isActive: true,
@@ -91,6 +97,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
+    id: '6',
     firstName: 'Fiona',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
@@ -106,6 +113,7 @@ export const mockData: MockedPerson[] = [
     },
   },
   {
+    id: '7',
     firstName: 'Alex',
     walletAddress: '0x1234567890abcdef',
     isActive: true,
