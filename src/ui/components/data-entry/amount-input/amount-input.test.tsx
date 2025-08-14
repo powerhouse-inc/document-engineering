@@ -185,6 +185,7 @@ describe('AmountField Component', () => {
       />
     )
     expect(screen.getByLabelText('Amount Label')).toBeInTheDocument()
-    expect(screen.getByText('345')).toBeInTheDocument()
+    const input = screen.getByRole('spinbutton')
+    expect(input).toHaveValue('345')
   })
 })
