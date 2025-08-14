@@ -20,6 +20,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       value,
       defaultValue,
       onChange,
+      onKeyDown,
       disabled,
       required,
       errors,
@@ -39,15 +40,17 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
     const prefix = useUniqueId()
     const id = idProp ?? `${prefix}-phone-number-input`
 
-    const { options, selectValue, inputValue, handleSelectOnChange, handleInputOnChange } = usePhoneNumberInput({
-      value,
-      defaultValue,
-      onChange,
-      allowedCountries,
-      excludedCountries,
-      includeDependentAreas,
-      prefixOptionFormat,
-    })
+    const { options, selectValue, inputValue, handleSelectOnChange, handleInputOnChange, handleOnKeyDown } =
+      usePhoneNumberInput({
+        value,
+        defaultValue,
+        onChange,
+        onKeyDown,
+        allowedCountries,
+        excludedCountries,
+        includeDependentAreas,
+        prefixOptionFormat,
+      })
 
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const hasError = Array.isArray(errors) && errors.length > 0
@@ -86,9 +89,10 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
               'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
               'h-full border-none rounded-l-md rounded-r-none',
               'bg-transparent focus:bg-transparent hover:bg-transparent',
+              'w-28',
               prefixProps?.className
             )}
-            contentClassName={cn('w-30', prefixProps?.contentClassName)}
+            contentClassName={cn('w-29', prefixProps?.contentClassName)}
           />
           <div className="flex items-center h-full border-l border-gray-300" />
           <Input
@@ -97,6 +101,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
             placeholder={placeholder}
             value={inputValue}
             onChange={handleInputOnChange}
+            onKeyDown={handleOnKeyDown}
             disabled={disabled}
             aria-invalid={hasError}
             aria-label={!label ? 'Phone number input' : undefined}
@@ -107,6 +112,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
               'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
               'h-full border-none rounded-r-md rounded-l-none',
               'bg-transparent',
+              'flex-1',
               className
             )}
             {...props}

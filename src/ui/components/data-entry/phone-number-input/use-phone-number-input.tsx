@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CircleFlag } from 'react-circle-flags'
 import countries, { type Countries } from 'world-countries'
-import { type CountryCode, getCountryCallingCode } from 'libphonenumber-js'
+import parsePhoneNumber, { type CountryCode, getCountryCallingCode } from 'libphonenumber-js'
 import type { PhoneNumberInputProps } from './types.js'
 import type { SelectOption } from '../select/types.js'
 
@@ -9,6 +9,7 @@ interface UsePhoneNumberInputProps {
   value: PhoneNumberInputProps['value']
   defaultValue: PhoneNumberInputProps['defaultValue']
   onChange: PhoneNumberInputProps['onChange']
+  onKeyDown: PhoneNumberInputProps['onKeyDown']
   allowedCountries: PhoneNumberInputProps['allowedCountries']
   excludedCountries: PhoneNumberInputProps['excludedCountries']
   includeDependentAreas: PhoneNumberInputProps['includeDependentAreas']
@@ -28,18 +29,41 @@ const getCallingCode = (countryCode: string): string | null => {
   }
 }
 
+const parsePhoneValue = (rawValue: string) => {
+  if (rawValue === '') return null
+
+  const sanitizedValue = `+${rawValue.replace(/\D/g, '')}`
+  const parsedValue = parsePhoneNumber(sanitizedValue, { extract: false })
+
+  if (parsedValue?.isPossible() && parsedValue.country) {
+    const callingCode = `+${parsedValue.countryCallingCode}`
+    const selectValue = `${callingCode}-${parsedValue.country}`
+    const inputValue = parsedValue.nationalNumber
+    return { selectValue, inputValue }
+  }
+
+  return null
+}
+
 export const usePhoneNumberInput = ({
-  // TODO: implement value and defaultValue handling
-  // value,
-  // defaultValue,
+  value,
+  defaultValue,
   onChange,
+  onKeyDown,
   allowedCountries,
   excludedCountries,
   includeDependentAreas = false,
   prefixOptionFormat = 'FlagsAndNumbers',
 }: UsePhoneNumberInputProps) => {
-  const [selectValue, setSelectValue] = useState('')
-  const [inputValue, setInputValue] = useState('')
+  const [selectValue, setSelectValue] = useState(() => {
+    const parsedValue = parsePhoneValue(value ?? defaultValue ?? '')
+    return parsedValue?.selectValue ?? ''
+  })
+
+  const [inputValue, setInputValue] = useState(() => {
+    const parsedValue = parsePhoneValue(value ?? defaultValue ?? '')
+    return parsedValue?.inputValue ?? ''
+  })
 
   const options: SelectOption[] = useMemo(() => {
     const defaultOptions = (countries as unknown as Countries)
@@ -59,9 +83,6 @@ export const usePhoneNumberInput = ({
         switch (prefixOptionFormat) {
           case 'CodesOnly':
             label = countryCode
-            break
-          case 'NumbersOnly':
-            label = callingCode
             break
           case 'FlagsOnly':
             label = ''
@@ -115,15 +136,72 @@ export const usePhoneNumberInput = ({
 
   const handleInputOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newInputValue = e.target.value
+      const newInputValue = e.target.value.replace(/\D/g, '')
       setInputValue(newInputValue)
 
-      const callingCode = selectValue ? selectValue.split('-')[0] : ''
+      const callingCode = selectValue.split('-')[0]
       const fullValue = `${callingCode}${newInputValue}`
       onChange?.(fullValue)
     },
     [selectValue, onChange]
   )
+
+  const handleOnKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const isCopyShortcut =
+        (e.ctrlKey && (e.key === 'c' || e.key === 'C')) || (e.metaKey && (e.key === 'c' || e.key === 'C'))
+
+      const isCutShortcut =
+        (e.ctrlKey && (e.key === 'x' || e.key === 'X')) || (e.metaKey && (e.key === 'x' || e.key === 'X'))
+
+      const isPasteShortcut =
+        (e.ctrlKey && (e.key === 'v' || e.key === 'V')) || (e.metaKey && (e.key === 'v' || e.key === 'V'))
+
+      const isSelectAllShortcut =
+        (e.ctrlKey && (e.key === 'a' || e.key === 'A')) || (e.metaKey && (e.key === 'a' || e.key === 'A'))
+
+      const allowed = new Set([
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+        'Tab',
+        'Enter',
+        'Escape',
+      ])
+
+      const isDigit = /^[0-9]$/.test(e.key)
+
+      if (isCopyShortcut || isCutShortcut || isPasteShortcut || isSelectAllShortcut || allowed.has(e.key) || isDigit) {
+        onKeyDown?.(e)
+        return
+      }
+
+      e.preventDefault()
+      onKeyDown?.(e)
+    },
+    [onKeyDown]
+  )
+
+  useEffect(() => {
+    if (value !== undefined) {
+      if (value === '') {
+        setSelectValue('')
+        setInputValue('')
+        return
+      }
+
+      const parsedValue = parsePhoneValue(value)
+      if (parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
+        setSelectValue(parsedValue.selectValue)
+        setInputValue(parsedValue.inputValue)
+      }
+    }
+  }, [value, options])
 
   return {
     options,
@@ -131,5 +209,6 @@ export const usePhoneNumberInput = ({
     inputValue,
     handleSelectOnChange,
     handleInputOnChange,
+    handleOnKeyDown,
   }
 }

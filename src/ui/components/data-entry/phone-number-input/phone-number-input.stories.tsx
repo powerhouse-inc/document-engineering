@@ -69,10 +69,10 @@ const meta: Meta<typeof PhoneNumberInput> = {
     },
     prefixOptionFormat: {
       control: 'radio',
-      options: ['CodesOnly', 'NumbersOnly', 'FlagsOnly', 'FlagsAndCodes', 'FlagsAndNumbers'],
+      options: ['CodesOnly', 'FlagsOnly', 'FlagsAndCodes', 'FlagsAndNumbers'],
       description: 'How to display country options in the prefix dropdown',
       table: {
-        type: { summary: '"CodesOnly" | "NumbersOnly" | "FlagsOnly" | "FlagsAndCodes" | "FlagsAndNumbers"' },
+        type: { summary: '"CodesOnly" | "FlagsOnly" | "FlagsAndCodes" | "FlagsAndNumbers"' },
         defaultValue: { summary: '"FlagsAndNumbers"' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
@@ -91,3 +91,9 @@ export default meta
 type Story = StoryObj<typeof PhoneNumberInput>
 
 export const Default: Story = {}
+
+export const Filled: Story = {
+  args: {
+    defaultValue: '+14155552671',
+  },
+}
