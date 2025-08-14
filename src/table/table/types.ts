@@ -473,7 +473,7 @@ export interface ColumnDef<T extends DataType = DataType> extends SortableColumn
    * }
    * ```
    */
-  renderCellEditor?: RenderCellEditorFn<T, unknown>
+  renderCellEditor?: RenderCellEditorFn<T, unknown> | null
 
   /**
    * The width of the column. It accepts any valid CSS width value.

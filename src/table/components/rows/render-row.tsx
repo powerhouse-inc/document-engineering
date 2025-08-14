@@ -137,7 +137,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
         return (
           <RenderCell
             key={column.field}
-            rowItem={item.data}
+            rowItem={item}
             column={column}
             rowIndex={rowIndex}
             columnIndex={columnIndex}
