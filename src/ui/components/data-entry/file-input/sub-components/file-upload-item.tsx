@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { ProgressBar } from '../../../../../scalars/components/fragments/progress-bar/progress-bar.js'
 import { Icon } from '../../../icon/icon.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
 import type { UploadFile } from '../types.js'
 import { getIconKey, MESSAGES } from '../utils.js'
+import { AlertDialog, AlertDialogContent } from '../../../confirm/alert-dialog.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -16,6 +18,7 @@ interface FileUploadItemProps {
   errorsUpload?: string[]
   status?: UploadFile
   showPreview?: boolean
+  preview?: string
 }
 
 export const FileUploadItem = ({
@@ -29,7 +32,9 @@ export const FileUploadItem = ({
   errorsUpload,
   status = 'idle',
   showPreview,
+  preview,
 }: FileUploadItemProps) => {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const showProgress = status === 'uploading' && progress !== undefined && progress >= 0 && progress < 100
   const showSuccess = status === 'success'
   const showError = status === 'error'
@@ -48,7 +53,7 @@ export const FileUploadItem = ({
 
   const handleOnPreview = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    // TODO: open preview modal to show the file
+    setIsPreviewOpen(true)
   }
 
   return (
@@ -106,9 +111,14 @@ export const FileUploadItem = ({
         <div className="flex flex-row justify-between" role="status" aria-live="polite" aria-atomic="true">
           {showSuccess && <span className="text-green-700 text-xs leading-4.5 font-normal">{MESSAGES.success}</span>}
           {showSuccess && showPreview && (
-            <span className="text-blue-900 text-xs leading-4.5 font-normal" onClick={handleOnPreview}>
+            <button
+              type="button"
+              onClick={handleOnPreview}
+              className="text-blue-900 text-xs leading-4.5 font-normal"
+              aria-label="Open preview"
+            >
               {MESSAGES.preview}
-            </span>
+            </button>
           )}
         </div>
 
@@ -118,6 +128,16 @@ export const FileUploadItem = ({
           </div>
         )}
       </div>
+      {showPreview && (
+        <AlertDialog open={isPreviewOpen}>
+          <AlertDialogContent>
+            <div className="flex flex-col gap-2 w-[500px] h-[600px] mt-2">
+              {/* TODO: Add component to show the preview */}
+              <img src={preview} alt="preview" className="w-full h-full" />
+            </div>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
 
       {showErrorsUpload && <FormMessageList messages={errorsUpload} type="error" className="gap-0.5" />}
     </div>
