@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { PhoneNumberInput } from './phone-number-input.js'
@@ -57,6 +57,82 @@ describe('PhoneNumberInput Component', () => {
     await user.type(input, '4155552671')
     expect(onChange).toHaveBeenCalledTimes(10)
     expect(input).toHaveValue('4155552671')
+  })
+
+  it('should handle select value changes', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(<PhoneNumberInput name="phone" onChange={onChange} />)
+
+    const select = screen.getByRole('combobox')
+    await user.click(select)
+
+    const list = await screen.findByRole('dialog')
+    const search = within(list).getByRole('combobox')
+    await user.type(search, '33')
+
+    const option = await screen.findByRole('option', { name: '+33' })
+    await user.click(option)
+
+    expect(onChange).toHaveBeenLastCalledWith('+33')
+    expect(screen.getByRole('combobox')).toHaveTextContent('+33')
+  })
+
+  it('should handle defaultValue', async () => {
+    render(<PhoneNumberInput name="phone" defaultValue="+442079460000" />)
+
+    const input = screen.getByRole('textbox')
+    expect(input).toHaveValue('2079460000')
+
+    const select = screen.getByRole('combobox')
+    expect(select).toHaveTextContent('+44')
+
+    await userEvent.click(select)
+    const list = await screen.findByRole('dialog')
+    const search = within(list).getByRole('combobox')
+    await userEvent.type(search, '44')
+
+    const usOption = await screen.findByRole('option', { name: '+44' })
+    expect(usOption).toHaveAttribute('aria-selected', 'true')
+  })
+
+  it('should not allow letters on key down', async () => {
+    const onKeyDown = vi.fn()
+    render(<PhoneNumberInput name="phone" onKeyDown={onKeyDown} />)
+    const input = screen.getByRole('textbox')
+
+    await userEvent.click(input)
+    await userEvent.keyboard('a')
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1)
+    const eventArg = onKeyDown.mock.calls[0]?.[0] as React.KeyboardEvent<HTMLInputElement>
+    expect(eventArg.defaultPrevented).toBe(true)
+  })
+
+  it('should handle diferent prefix option formats', async () => {
+    const cases = [
+      { format: 'CodesOnly', expectedLength: 2 },
+      { format: 'FlagsOnly', expectedLength: 0 },
+      { format: 'FlagsAndCodes', expectedLength: 2 },
+      { format: 'FlagsAndNumbers', expectedLength: 2 },
+    ] as const
+
+    for (const c of cases) {
+      const { unmount } = render(<PhoneNumberInput name="phone" prefixOptionFormat={c.format} />)
+
+      const select = screen.getByRole('combobox')
+      await userEvent.click(select)
+
+      const list = await screen.findByRole('dialog')
+      const search = within(list).getByRole('combobox')
+      await userEvent.type(search, '+1')
+
+      const options = await screen.findAllByRole('option')
+      const [opt] = options
+      expect(opt.textContent?.length).toBe(c.expectedLength)
+
+      unmount()
+    }
   })
 
   it('should not invoke onChange on mount when it has a defaultValue', () => {

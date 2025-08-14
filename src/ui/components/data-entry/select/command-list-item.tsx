@@ -36,7 +36,8 @@ export const CommandListItem: React.FC<FavoriteOptionsProps> = ({
           <CommandItem
             tabIndex={tabIndex}
             key={`favorite-${opt.value}`}
-            value={opt.label}
+            keywords={[opt.label, opt.value]}
+            value={opt.value}
             onSelect={() => {
               if (!opt.disabled) {
                 toggleOption(opt.value)

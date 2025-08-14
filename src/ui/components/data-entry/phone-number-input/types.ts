@@ -2,7 +2,7 @@ import type React from 'react'
 import type { InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
 import type { SelectProps } from '../select/types.js'
 
-type PrefixOptionFormat = 'CodesOnly' | 'NumbersOnly' | 'FlagsOnly' | 'FlagsAndCodes' | 'FlagsAndNumbers'
+type PrefixOptionFormat = 'CodesOnly' | 'FlagsOnly' | 'FlagsAndCodes' | 'FlagsAndNumbers'
 
 interface PhoneNumberInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof InputBaseProps<string> | 'onChange'>,

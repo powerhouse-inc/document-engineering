@@ -177,6 +177,7 @@
     "focus-trap-react": "^11.0.3",
     "graphql": "^16.9.0",
     "graphql-upload": "^17.0.0",
+    "libphonenumber-js": "^1.12.11",
     "mime": "^4.0.7",
     "nanoid": "^5.0.9",
     "react-circle-flags": "^0.0.22",
