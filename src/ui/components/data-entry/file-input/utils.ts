@@ -1,5 +1,6 @@
 import mime from 'mime/lite'
 import type { IconName } from '../../icon-components/index.js'
+import { PREVIEW_STATUS, type PreviewStatus, type StatusConfig } from './types.js'
 export const MESSAGES = {
   success: 'Upload successful',
   error: 'Upload failed',
@@ -54,4 +55,28 @@ export const getIconKey = (mimeType: string): IconName => {
   }
 
   return iconName
+}
+
+export const STATUS_CONFIG: Record<PreviewStatus, StatusConfig> = {
+  [PREVIEW_STATUS.LOADING]: {
+    icon: 'BookOpenText',
+    title: 'Loading',
+    message: '',
+  },
+  [PREVIEW_STATUS.UNSUPPORTED_FORMAT]: {
+    icon: 'ContentUnavailableIcon',
+    title: 'Opss!',
+    message:
+      "It looks like we still don't support this format. (We are working on it) Please try to upload it with a different Format.",
+  },
+  [PREVIEW_STATUS.GENERIC_ERROR]: {
+    icon: 'ContentUnavailableIcon',
+    title: 'Opss!',
+    message: 'It looks like your file has an error.\nPlease try again',
+  },
+  [PREVIEW_STATUS.CORRUPTED_FILE]: {
+    icon: 'ContentUnavailableIcon',
+    title: '',
+    message: 'Your file is corrupted and cannot be shown in the preview',
+  },
 }
