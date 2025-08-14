@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { EmailInput } from '../../../ui/components/data-entry/email-input/index.js'
 import type { EmailInputProps } from '../../../ui/components/data-entry/email-input/types.js'

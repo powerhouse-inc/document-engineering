@@ -1,3 +1,5 @@
+'use client'
+
 import { CountryCodePicker } from '../../../ui/components/data-entry/country-code-picker/index.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
 import type { CountryCodeFieldProps } from './types.js'

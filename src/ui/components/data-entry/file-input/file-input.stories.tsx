@@ -77,6 +77,65 @@ const meta: Meta<typeof FileInput> = {
         category: StorybookControlCategory.DEFAULT,
       },
     },
+    fileName: {
+      control: 'text',
+      description: 'Name of the uploaded file',
+      table: {
+        type: { summary: 'string' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    fileSize: {
+      control: 'number',
+      description: 'Size of the uploaded file in bytes',
+      table: {
+        type: { summary: 'number' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    progress: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      if: { arg: 'status', eq: 'uploading' },
+      description: 'Upload progress percentage (0-100)',
+      table: {
+        type: { summary: 'number' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    onCancel: {
+      action: 'cancel',
+      description: 'Callback when cancel button is clicked',
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        type: { summary: 'function' },
+      },
+    },
+    onReload: {
+      action: 'reload',
+      description: 'Callback when reload button is clicked',
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        type: { summary: 'function' },
+      },
+    },
+    errorsUpload: {
+      control: 'object',
+      description: 'Array of upload error messages',
+      table: {
+        type: { summary: 'string[]' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    status: {
+      control: 'select',
+      options: ['idle', 'uploading', 'success', 'error'],
+      description: 'Current upload status',
+      defaultValue: 'idle',
+      table: {
+        type: { summary: 'UploadFile' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
     ...getValidationArgTypes({
       enabledArgTypes: {
         validators: false,
@@ -95,7 +154,33 @@ export const Default: Story = {
     name: 'file-input',
     label: 'Upload File',
     description: 'Click to chose files',
-    allowedFileTypes: ['xls', 'xlsx', 'png', 'docs'],
+    allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf', 'text/plain', 'application/epub+zip'],
     maxFileSize: 15728640,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'idle',
+  },
+}
+
+export const WithUploadedFile: Story = {
+  args: {
+    ...Default.args,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'uploading',
+    mimeType: 'image/png',
+    progress: 90,
+  },
+}
+
+export const WithPreview: Story = {
+  args: {
+    ...Default.args,
+    fileName: 'example.png',
+    fileSize: 256000,
+    status: 'success',
+    mimeType: 'image/png',
+    progress: 100,
+    showPreview: true,
   },
 }

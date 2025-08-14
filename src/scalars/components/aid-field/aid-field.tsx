@@ -1,3 +1,5 @@
+'use client'
+
 import { isAddress } from 'viem'
 import { AIDInput } from '../../../ui/components/data-entry/aid-input/index.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'

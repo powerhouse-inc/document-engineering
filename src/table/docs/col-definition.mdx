@@ -1,0 +1,225 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Column Definition" />
+
+# Column Definition
+
+The heart of `ObjectSetTable` is the column definition system. Each column is configured through a `ColumnDef<T>` object that controls the column's value sourcing, formatting, rendering, editing, and sorting.
+
+```tsx
+export interface ColumnDef<T> {
+  // required
+  field: string
+
+  // display
+  title?: string
+  renderHeader?: (value: string, context: CellContext<T>) => React.ReactNode
+  type?: ColumnType
+
+  // value pipeline
+  valueGetter?: (row: T, context: CellContext<T>) => unknown
+  valueFormatter?: (value: unknown, context: CellContext<T>) => string
+  renderCell?: (value: unknown, context: CellContext<T>) => React.ReactNode
+
+  // editing
+  editable?: boolean
+  onSave?: (newValue: unknown, context: CellContext<T>) => boolean
+  renderCellEditor?: (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => React.ReactNode
+
+  // layout
+  width?: React.CSSProperties['width']
+  minWidth?: React.CSSProperties['minWidth']
+  maxWidth?: React.CSSProperties['maxWidth']
+  align?: 'left' | 'center' | 'right'
+
+  // sorting
+  sortable?: boolean
+  rowComparator?: (a: unknown, b: unknown, context: SortableColumnContext<T>) => number
+  onSort?: (context: SortableColumnContext<T>) => void
+}
+```
+
+## Built-in types
+
+The table supports following built-in column types that determine default formatting, rendering, and editing behavior:
+
+| Type      | Scalar Component Rendered                                 |
+| --------- | --------------------------------------------------------- |
+| `string`  | [StringField](?path=/docs/scalars-string-field--readme)   |
+| `number`  | [NumberField](?path=/docs/scalars-number-field--readme)   |
+| `boolean` | [BooleanField](?path=/docs/scalars-boolean-field--readme) |
+
+## Defaults applied by ObjectSetTable
+
+Unless you explicitly set them, the table fills in sensible defaults based on the column `type` and other props:
+
+| Property                  | Default Value               | Description                                                                                                               |
+| ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `type`                    | `string`                    | Determines the data type of the column, which affects default formatting, rendering, editing behavior, and sorting logic. |
+| `align`                   | Depends on the `type` value | Controls the horizontal alignment of content within cells and headers (`left`, `center`, or `right`).                     |
+| `valueGetter`             | Reads from `field`          | Extracts the value from each row object for this column, with support for nested properties using dot-notation.           |
+| `valueFormatter`          | Converts to `string`        | Transforms the raw cell value into a string for display purposes, handling null/undefined values gracefully.              |
+| `renderHeader`            | Built-in header             | Renders the column header content, including the title text and optional sort indicators for sortable columns.            |
+| `renderCell`              | Built-in renderer           | Renders the cell content based on the column type, providing appropriate visual representation for different data types.  |
+| `editable`                | `false`                     | Determines whether cells in this column can be edited inline by users through double-click or keyboard interaction.       |
+| `onSave`                  | No set                      | Handles saving edited cell values back to the data source, with validation and persistence logic.                         |
+| `renderCellEditor`        | Built-in editor             | Provides the input component used when editing cells, with type-appropriate editors for different data types.             |
+| `sortable`                | `false`                     | Enables click-to-sort functionality on the column header, allowing users to sort the table by this column's values.       |
+| `rowComparator`           | Type-based comparator       | Defines how to compare two values when sorting, with appropriate logic for different data types and null handling.        |
+| `width/minWidth/maxWidth` | `auto`                      | Controls the column's sizing behavior, allowing for fixed widths or flexible sizing within specified constraints.         |
+
+## Property reference
+
+### Required
+
+| Property | Type     | Description                                                                |
+| -------- | -------- | -------------------------------------------------------------------------- |
+| `field`  | `string` | Field path in the row object. Dot-notation is supported for nested access. |
+
+### Display
+
+| Property       | Type                                                    | Default             | Description                                                               |
+| -------------- | ------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------- |
+| `title`        | `string`                                                | Capitalized `field` | Header text.                                                              |
+| `type`         | [See available types](#built-in-types)                  | `"string"`          | Determines default formatting, rendering, editor, and sorting.            |
+| `renderHeader` | `(value: string, context: CellContext<T>) => ReactNode` | Built-in header     | Custom header content (render with non-table elements like `div`/`span`). |
+| `align`        | `"left" \| "center" \| "right"`                         | See defaults above  | Horizontal alignment for cells and header.                                |
+
+### Layout
+
+**Recommendation:** Always set explicit column widths to prevent layout shifts. Without explicit widths, columns may resize unexpectedly when switching to edit mode or when
+cell values change, as the table automatically calculates widths based on content like a standard HTML table.
+
+| Property   | Type                              | Default  | Description                         |
+| ---------- | --------------------------------- | -------- | ----------------------------------- |
+| `width`    | `React.CSSProperties["width"]`    | `"auto"` | Column width (any valid CSS width). |
+| `minWidth` | `React.CSSProperties["minWidth"]` | `"auto"` | Minimum column width.               |
+| `maxWidth` | `React.CSSProperties["maxWidth"]` | `"auto"` | Maximum column width.               |
+
+### Value pipeline
+
+| Property         | Type                                                     | Default              | Description                                              |
+| ---------------- | -------------------------------------------------------- | -------------------- | -------------------------------------------------------- |
+| `valueGetter`    | `(row: T, context: CellContext<T>) => unknown`           | Field accessor       | Compute the value used by the column. Overrides `field`. |
+| `valueFormatter` | `(value: unknown, context: CellContext<T>) => string`    | Type-based formatter | Convert raw value to display text.                       |
+| `renderCell`     | `(value: unknown, context: CellContext<T>) => ReactNode` | Type-based renderer  | Custom cell rendering (use non-table elements).          |
+
+### Editing
+
+For detailed editing patterns, validation, and advanced editing scenarios, see the [Editing documentation](?path=/docs/data-display-object-set-table-docs-editing--readme).
+
+| Property           | Type                                                                                     | Default           | Description                                    |
+| ------------------ | ---------------------------------------------------------------------------------------- | ----------------- | ---------------------------------------------- |
+| `editable`         | `boolean`                                                                                | `false`           | Enables inline editing for the column.         |
+| `onSave`           | `(newValue: unknown, context: CellContext<T>) => boolean`                                | No set            | Persist changes. Return `true` if saved.       |
+| `renderCellEditor` | `(value: unknown, onChange: (v: unknown) => void, context: CellContext<T>) => ReactNode` | Type-based editor | Controlled editor component used when editing. |
+
+### Sorting
+
+For detailed sorting configuration, custom comparators, and advanced sorting scenarios, see the [Sorting documentation](?path=/docs/data-display-object-set-table-docs-sorting--readme).
+
+| Property        | Type                                                                    | Default               | Description                                      |
+| --------------- | ----------------------------------------------------------------------- | --------------------- | ------------------------------------------------ |
+| `sortable`      | `boolean`                                                               | `false`               | Enables sorting for the column.                  |
+| `rowComparator` | `(a: unknown, b: unknown, context: SortableColumnContext<T>) => number` | Type-based comparator | Compare two cell values; return `<0`, `0`, `>0`. |
+| `onSort`        | `(context: SortableColumnContext<T>) => void`                           | `undefined`           | Callback fired after sort state changes.         |
+
+> Note: When `sortable` is true, the header shows a sort indicator and toggles sort direction on click.
+
+---
+
+## Usage examples
+
+### Basic data display
+
+```tsx
+const data = [
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+]
+
+const columns = useMemo(
+  () => [
+    { field: 'name', title: 'Full Name' },
+    { field: 'email', title: 'Email Address' },
+  ],
+  []
+)
+
+<ObjectSetTable data={data} columns={columns} />
+```
+
+### Nested field access
+
+Use dot-notation to access nested properties:
+
+```tsx
+const data = [{ user: { name: 'John', address: { city: 'NYC', country: 'USA' } } }]
+
+const columns = [
+  { field: 'user.name', title: 'Name' },
+  { field: 'user.address.city', title: 'City' },
+  { field: 'user.address.country', title: 'Country' },
+]
+```
+
+### Custom value pipeline
+
+```tsx
+const columns = [
+  {
+    field: 'fullName',
+    title: 'Full Name',
+    valueGetter: (row) => `${row.firstName} ${row.lastName}`,
+    valueFormatter: (value) => String(value).toUpperCase(),
+    renderCell: (value) => <span className="font-medium">{value}</span>,
+  },
+]
+```
+
+### Editing with custom save
+
+```tsx
+const columns = [
+  {
+    field: 'taxRate',
+    title: 'Tax Rate',
+    type: 'number',
+    editable: true,
+    renderCellEditor: (value, onChange) => (
+      <Input
+        name={taxRate} // must be the same value of the `field` property
+        autoFocus
+        className="w-full"
+        type="number"
+        value={Number(value) || 0}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+    ),
+    onSave: (newValue, { row, column }) => {
+      // example: clamp and persist elsewhere
+      const clamped = Math.max(0, Math.min(1, Number(newValue)))
+      row[column.field] = clamped
+      return true
+    },
+  },
+]
+```
+
+### Sorting
+
+```tsx
+const columns = [
+  {
+    field: 'amount',
+    title: 'Amount',
+    type: 'number',
+    sortable: true,
+    rowComparator: (a, b) => Number(a ?? 0) - Number(b ?? 0),
+    onSort: ({ sortState }) => {
+      console.log('sorted', sortState)
+    },
+  },
+  { field: 'status', title: 'Status', sortable: true }, // uses default text comparator
+]
+```

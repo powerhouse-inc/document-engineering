@@ -16,6 +16,7 @@ import * as OLabel from './OLabel.js'
 import * as PHID from './PHID.js'
 import * as URLScalar from './URL.js'
 import type { BasePHScalar } from './types.js'
+import * as File from './File.js'
 
 // export types -- DO NOT REMOVE OR EDIT THIS COMMENT
 export type { ScalarType as AmountScalarType } from './Amount.js'
@@ -34,6 +35,7 @@ export type { ScalarType as OIDScalarType } from './OID.js'
 export type { ScalarType as OLabelScalarType } from './OLabel.js'
 export type { ScalarType as PHIDScalarType } from './PHID.js'
 export type { ScalarType as URLScalarType } from './URL.js'
+export type { ScalarType as FileScalarType } from './File.js'
 
 export {
   Amount,
@@ -49,6 +51,7 @@ export {
   DateTime,
   EmailAddress,
   EthereumAddress,
+  File,
   OID,
   OLabel,
   PHID,
@@ -72,6 +75,8 @@ export const customScalars: Record<string, BasePHScalar<any>> = {
   DateTime,
   EmailAddress,
   EthereumAddress,
+  // @ts-expect-error - it works this way
+  File,
   OID,
   OLabel,
   PHID,
@@ -96,6 +101,7 @@ export const resolvers = {
   AmountCurrency: AmountCurrency.scalar,
   AmountCrypto: AmountCrypto.scalar,
   Amount: Amount.scalar,
+  Upload: File.scalar,
 }
 
 export const typeDefs = [
@@ -116,6 +122,7 @@ export const typeDefs = [
   AmountCurrency.typedef,
   AmountCrypto.typedef,
   Amount.typedef,
+  File.typedef,
 ]
 
 export const generatorTypeDefs = {
@@ -136,6 +143,7 @@ export const generatorTypeDefs = {
   [AmountCurrency.config.name]: AmountCurrency.type,
   [AmountCrypto.config.name]: AmountCrypto.type,
   [Amount.config.name]: Amount.type,
+  [File.config.name]: File.type,
 }
 
 export const validationSchema = {
@@ -156,4 +164,5 @@ export const validationSchema = {
   [AmountCurrency.config.name]: AmountCurrency.stringSchema,
   [AmountCrypto.config.name]: AmountCrypto.stringSchema,
   [Amount.config.name]: Amount.stringSchema,
+  [File.config.name]: File.stringSchema,
 }

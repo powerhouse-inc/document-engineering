@@ -64,6 +64,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       minLength,
       name,
       onChange,
+      onKeyDown,
       placeholder,
       required,
       rows = 3,
@@ -109,7 +110,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     useResizeObserver({
       ref: textareaRef,
       onResize: () => {
-        if (value !== undefined && autoExpand) {
+        if (autoExpand) {
           adjustHeight()
         }
       },
@@ -122,14 +123,24 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         e.preventDefault()
       }
       // Call the original onKeyDown
-      props.onKeyDown?.(e)
+      onKeyDown?.(e)
+    }
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (autoExpand) {
+        adjustHeight()
+      }
+      // Call the original onChange
+      onChange?.(e)
     }
 
     useEffect(() => {
-      if (value !== undefined && autoExpand) {
+      if (autoExpand) {
         adjustHeight()
+      } else if (textareaRef.current) {
+        textareaRef.current.style.height = ''
       }
-    }, [value, autoExpand])
+    }, [autoExpand, multiline, rows, value])
 
     const transformers: TransformerType = useMemo(
       () => [
@@ -184,7 +195,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                 minLength={minLength}
                 placeholder={placeholder}
                 rows={multiline ? rows : 1}
-                onChange={onChange}
+                onChange={handleOnChange}
                 onKeyDown={handleKeyDown}
                 {...props}
               />

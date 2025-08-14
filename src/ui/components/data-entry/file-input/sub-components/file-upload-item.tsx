@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { ProgressBar } from '../../../../../scalars/components/fragments/progress-bar/progress-bar.js'
-import type { IconName } from '../../../icon-components/index.js'
 import { Icon } from '../../../icon/icon.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
 import type { UploadFile } from '../types.js'
-import { MESSAGES } from '../utils.js'
+import { getIconKey, MESSAGES } from '../utils.js'
+import { AlertDialog, AlertDialogContent } from '../../../confirm/alert-dialog.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -13,25 +14,47 @@ interface FileUploadItemProps {
   onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onReload?: (e: React.MouseEvent<HTMLButtonElement>) => void
   className?: string
-  icon?: IconName
+  mimeType?: string
   errorsUpload?: string[]
   status?: UploadFile
+  showPreview?: boolean
+  preview?: string
 }
 
 export const FileUploadItem = ({
-  fileName,
-  fileSize,
-  progress,
+  fileName = '',
+  fileSize = '',
+  progress = undefined,
   onCancel,
   onReload,
   className,
-  icon = 'DownloadFile',
+  mimeType = '',
   errorsUpload,
-  status,
+  status = 'idle',
+  showPreview,
+  preview,
 }: FileUploadItemProps) => {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const showProgress = status === 'uploading' && progress !== undefined && progress >= 0 && progress < 100
   const showSuccess = status === 'success'
   const showError = status === 'error'
+
+  const showErrorsUpload = Array.isArray(errorsUpload) && errorsUpload.length > 0
+
+  const handleOnCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    onCancel?.(e)
+  }
+
+  const handleOnReload = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    onReload?.(e)
+  }
+
+  const handleOnPreview = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    setIsPreviewOpen(true)
+  }
 
   return (
     <div
@@ -44,7 +67,7 @@ export const FileUploadItem = ({
     >
       <div className="flex items-start gap-2">
         <div className="flex flex-1 gap-2 ">
-          <Icon name={icon} size={36} />
+          <Icon name={getIconKey(mimeType)} size={36} />
 
           <div className="flex w-23 flex-col">
             <span className={cn('text-gray-900 text-xs font-medium leading-4.5', 'truncate')}>{fileName}</span>
@@ -58,7 +81,7 @@ export const FileUploadItem = ({
             {status === 'error' && (
               <button
                 type="button"
-                onClick={onReload}
+                onClick={handleOnReload}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Reload upload"
               >
@@ -68,7 +91,7 @@ export const FileUploadItem = ({
 
             <button
               type="button"
-              onClick={onCancel}
+              onClick={handleOnCancel}
               className="text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Cancel Upload"
             >
@@ -85,11 +108,38 @@ export const FileUploadItem = ({
             className="h-2 bg-gray-100 [&_[data-slot=progress-bar-indicator]]:bg-blue-600"
           />
         )}
-        {showSuccess && <span className="text-green-700 text-xs leading-4.5 font-normal">{MESSAGES.success}</span>}
-        {showError && <span className="text-red-900 text-xs leading-4.5 font-normal">{MESSAGES.error}</span>}
-      </div>
+        <div className="flex flex-row justify-between" role="status" aria-live="polite" aria-atomic="true">
+          {showSuccess && <span className="text-green-700 text-xs leading-4.5 font-normal">{MESSAGES.success}</span>}
+          {showSuccess && showPreview && (
+            <button
+              type="button"
+              onClick={handleOnPreview}
+              className="text-blue-900 text-xs leading-4.5 font-normal"
+              aria-label="Open preview"
+            >
+              {MESSAGES.preview}
+            </button>
+          )}
+        </div>
 
-      {errorsUpload && <FormMessageList messages={errorsUpload} type="error" className="gap-0.5" />}
+        {showError && (
+          <div role="alert" aria-live="assertive" aria-atomic="true">
+            <span className="text-red-900 text-xs leading-4.5 font-normal">{MESSAGES.error}</span>
+          </div>
+        )}
+      </div>
+      {showPreview && (
+        <AlertDialog open={isPreviewOpen}>
+          <AlertDialogContent>
+            <div className="flex flex-col gap-2 w-[500px] h-[600px] mt-2">
+              {/* TODO: Add component to show the preview */}
+              <img src={preview} alt="preview" className="w-full h-full" />
+            </div>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+
+      {showErrorsUpload && <FormMessageList messages={errorsUpload} type="error" className="gap-0.5" />}
     </div>
   )
 }

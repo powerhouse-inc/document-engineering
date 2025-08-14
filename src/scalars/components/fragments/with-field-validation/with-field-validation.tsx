@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useCallback, useEffect, useState } from 'react'
 import { Controller, useFormContext, useFormState } from 'react-hook-form'
 import type { FieldErrorHandling, InputBaseProps, ValidatorHandler } from '../../types.js'

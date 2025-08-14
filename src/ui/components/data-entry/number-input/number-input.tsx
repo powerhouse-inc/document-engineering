@@ -98,9 +98,8 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
                 preventLetterInput(e)
                 preventInvalidCharsAndHandleArrows(e)
               }}
-              value={value === undefined ? '' : value.toString()}
+              value={value !== undefined ? value.toString() : defaultValue !== undefined ? defaultValue.toString() : ''}
               onBlur={handleBlur}
-              defaultValue={defaultValue?.toString()}
               onChange={onChange}
               onPaste={blockInvalidPaste}
               ref={ref}
@@ -182,7 +181,7 @@ const NumberInputUncontroller = forwardRef<HTMLInputElement, InputNumberPropsWit
     const newValue = e.target.value
     setValue(newValue as unknown as number)
   }
-  return <NumberInputRaw {...props} value={value} onChange={handleChange} defaultValue={value} ref={ref} />
+  return <NumberInputRaw {...props} value={value} onChange={handleChange} ref={ref} />
 })
 NumberInputUncontroller.displayName = 'NumberInputUncontroller'
 

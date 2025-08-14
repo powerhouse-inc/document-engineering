@@ -87,7 +87,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             />
           </ValueTransformer>
           {typeof maxLength === 'number' && maxLength > 0 && (
-            <div className={cn('mt-[-6px] flex justify-end', hasContentBelow && '-mb-1')}>
+            <div data-type="character-counter" className={cn('mt-[-6px] flex justify-end', hasContentBelow && '-mb-1')}>
               <CharacterCounter maxLength={maxLength} value={value ?? ''} />
             </div>
           )}

@@ -185,6 +185,21 @@ const meta: Meta<typeof Sidebar> = {
         defaultValue: { summary: 'false' },
       },
     },
+    handleOnTitleClick: {
+      control: false,
+      description:
+        'Callback function triggered when the sidebar title is clicked. Use this to implement custom navigation logic.',
+      table: {
+        readonly: true,
+      },
+    },
+    isLoading: {
+      control: 'boolean',
+      description: 'Whether the sidebar is in a loading state, displaying skeleton items instead of actual content.',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+    },
   },
   args: {
     sidebarTitle: 'Title Sidebar',
@@ -243,6 +258,109 @@ export const WithinLayoutAndContent: Story = {
         <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Active Node: {activeNode}</p>
+        </div>
+      </main>
+    )
+  },
+}
+
+/**
+ * Example showing how to use the `handleOnTitleClick` callback to implement custom navigation.
+ * This allows developers to make the sidebar title clickable for custom navigation logic.
+ */
+export const WithCustomTitleNavigation: Story = {
+  args: {
+    showStatusFilter: true,
+  },
+  render: function WithCustomTitleNavigationRender(args) {
+    const [activeNode, setActiveNode] = useState<string>('4281ab93-ef4f-4974-988d-7dad149a693d')
+    const [navigationLog, setNavigationLog] = useState<string[]>([])
+
+    const onActiveNodeChange = useCallback((node: SidebarNode) => {
+      setActiveNode(node.id)
+    }, [])
+
+    const handleTitleClick = useCallback(() => {
+      const timestamp = new Date().toLocaleTimeString()
+      setNavigationLog((prev) => [...prev, `Title clicked at ${timestamp} - Navigate to root/home`])
+    }, [])
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar
+          className="sidebar"
+          {...args}
+          onActiveNodeChange={onActiveNodeChange}
+          activeNodeId={activeNode}
+          handleOnTitleClick={handleTitleClick}
+          sidebarTitle="Click me to go home!"
+        />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Active Node: {activeNode}</p>
+
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-50">Navigation Log:</h2>
+            <div className="mt-2 overflow-y-auto rounded border p-2 bg-white dark:bg-slate-700">
+              {navigationLog.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Click the sidebar title to see navigation events
+                </p>
+              ) : (
+                <ul className="text-sm text-gray-700 dark:text-gray-300">
+                  {navigationLog.map((log, index) => (
+                    <li key={index} className="py-1">
+                      {log}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
+
+/**
+ * Demonstrates the loading state of the sidebar when data is being fetched.
+ * The sidebar displays skeleton items with animated placeholders while preserving
+ * all other functionality like header, search bar, and footer content.
+ */
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+    showStatusFilter: true,
+  },
+  render: function LoadingRender(args) {
+    const [isLoading, setIsLoading] = useState(true)
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar className="sidebar" {...args} isLoading={isLoading} />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Sidebar Status: {isLoading ? 'Loading...' : 'Ready'}
+          </p>
+
+          <div className="mt-4">
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLoading(!isLoading)
+                }}
+                className="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
+              >
+                {isLoading ? 'Stop Loading' : 'Start Loading'}
+              </button>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Toggle loading state to see the skeleton animation
+              </p>
+            </div>
+          </div>
         </div>
       </main>
     )

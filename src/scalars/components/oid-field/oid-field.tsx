@@ -1,3 +1,5 @@
+'use client'
+
 import { OIDInput } from '../../../ui/components/data-entry/oid-input/index.js'
 import { withFieldValidation } from '../fragments/with-field-validation/index.js'
 import type { OIDFieldProps } from './types.js'

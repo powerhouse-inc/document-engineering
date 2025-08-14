@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import type { CheckboxProps } from '../../../ui/components/data-entry/checkbox/checkbox.js'
 import type { ToggleProps } from '../../../ui/components/data-entry/toggle/toggle.js'

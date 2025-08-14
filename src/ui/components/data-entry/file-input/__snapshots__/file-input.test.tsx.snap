@@ -19,10 +19,12 @@ exports[`FileInput Component > should match snapshot 1`] = `
         class="relative h-[148px]"
       >
         <div
-          class="absolute z-0 h-full w-full"
+          class="absolute z-0 h-full w-full text-gray-300"
+          data-state="idle"
+          data-testid="file-input-border"
         >
           <svg
-            class="w-full opacity-50"
+            class="w-full h-full opacity-50"
             fill="none"
             viewBox="0 0 251 152"
             xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +35,7 @@ exports[`FileInput Component > should match snapshot 1`] = `
             />
             <path
               d="M13.875 1V2H25.625V1H37.375V2H49.125V1H60.875V2H72.625V1H84.375V2H96.125V1H107.875V2H119.625V1H131.375V2H143.125V1H154.875V2H166.625V1H178.375V2H190.125V1H201.875V2H213.625V1H225.375V2H237.125V1H243C246.866 1 250 4.13401 250 8V13.667H249V25H250V36.333H249V47.667H250V59H249V70.333H250V81.667H249V93H250V104.333H249V115.667H250V127H249V138.333H250V144C250 147.866 246.866 151 243 151H237.125V150H225.375V151H213.625V150H201.875V151H190.125V150H178.375V151H166.625V150H154.875V151H143.125V150H131.375V151H119.625V150H107.875V151H96.125V150H84.375V151H72.625V150H60.875V151H49.125V150H37.375V151H25.625V150H13.875V151H8C4.13401 151 1 147.866 1 144V138.333H2V127H1V115.667H2V104.333H1V93H2V81.667H1V70.333H2V59H1V47.667H2V36.333H1V25H2V13.667H1V8L1.00879 7.63965C1.19633 3.94111 4.25486 1 8 1H13.875Z"
-              stroke="#D7D8D9"
+              stroke="currentColor"
               stroke-dasharray="12 12"
               stroke-width="2"
             />
@@ -75,11 +77,14 @@ exports[`FileInput Component > should match snapshot 1`] = `
             />
           </div>
           <input
+            name="file"
+            type="hidden"
+          />
+          <input
             aria-invalid="false"
             aria-labelledby=":r0:-file-label"
             class="flex h-9 w-full rounded-md text-sm font-normal leading-5 text-gray-900 dark:text-gray-50 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white px-3 py-2 font-sans placeholder:text-gray-500 dark:placeholder:text-gray-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-900 focus-visible:ring-offset-0 focus-visible:ring-offset-white dark:focus-visible:ring-charcoal-300 dark:focus-visible:ring-offset-charcoal-900 dark:focus:bg-charcoal-900 focus:bg-gray-50 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-50 disabled:text-gray-700 disabled:dark:border-charcoal-800 disabled:dark:bg-charcoal-900 disabled:dark:text-gray-300"
             id=":r0:-file"
-            name="file"
             style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
             tabindex="-1"
             type="file"
@@ -90,29 +95,31 @@ exports[`FileInput Component > should match snapshot 1`] = `
         >
           <button
             aria-label="Search File"
-            class="items-center justify-center gap-2 whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[1px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs has-[>svg]:px-3 inline-block h-10 bg-white border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-5 px-4 py-2 hover:bg-white hover:text-gray-500 hover:cursor-pointer"
-            data-slot="button"
+            class="items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 inline-block h-10 bg-white border border-[#E4E4E7] rounded-md text-gray-500 cursor-pointer text-sm font-medium leading-5 px-4 py-2 hover:bg-white hover:text-gray-500 hover:cursor-pointer"
             type="button"
           >
             Search File
           </button>
         </div>
       </div>
-      <div
-        class="flex flex-col gap-2 mt-2"
-      >
-        <span
-          class="text-gray-500 font-normal text-xs leading-4.5 truncate"
-        >
-          Supports: 
-        </span>
-        <span
-          class="text-gray-500 font-medium text-xs leading-4.5 truncate"
-        >
-          Max: 0 Bytes
-        </span>
-      </div>
     </div>
+    <div
+      class="flex flex-col gap-2 mt-2"
+    >
+      <span
+        class="text-gray-500 font-normal text-xs leading-4.5 truncate"
+      >
+        Supports: 
+      </span>
+      <span
+        class="text-gray-500 font-medium text-xs leading-4.5 truncate"
+      >
+        Max: 0 Bytes
+      </span>
+    </div>
+    <div
+      class="flex flex-col gap-2 mt-2"
+    />
   </div>
 </DocumentFragment>
 `;

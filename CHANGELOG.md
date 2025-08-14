@@ -1,3 +1,99 @@
+# [1.28.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.27.0...v1.28.0) (2025-08-12)
+
+
+### Bug Fixes
+
+* **scalars:** add boolean instead of function for the preview ([15b46cd](https://github.com/powerhouse-inc/document-engineering/commit/15b46cdf7aae20d82fc5240d8e0378a6a16b34c9))
+* **scalars:** update the test ([7be61f8](https://github.com/powerhouse-inc/document-engineering/commit/7be61f8d40019e2bc45ee5a9dfba9a0d7b5847d4))
+* **scalars:** update the test snapshot ([32a885a](https://github.com/powerhouse-inc/document-engineering/commit/32a885a53cda8c32d87c9714f44821db6607b7e5))
+
+
+### Features
+
+* **scalars:** add hidden input hatch for FileInput component value persistence ([4a9d074](https://github.com/powerhouse-inc/document-engineering/commit/4a9d07436ef180054291837cea629dd5a8be43eb))
+* **scalars:** add preview option for preview documents ([b8f32e8](https://github.com/powerhouse-inc/document-engineering/commit/b8f32e8d33dee451d1352b6190f172f41a38a681))
+* **table:** cell editor validation ([7a70a1a](https://github.com/powerhouse-inc/document-engineering/commit/7a70a1ad99aba9cd96a5928da7a945932a022e8a))
+* **table:** move table location & improve docs ([50442d1](https://github.com/powerhouse-inc/document-engineering/commit/50442d1c27e0c151d635a9b4a60d03791e2c20e1))
+
+# [1.27.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.26.1...v1.27.0) (2025-08-08)
+
+
+### Bug Fixes
+
+* **scalars:** fix the error in the scalar export ([7e91488](https://github.com/powerhouse-inc/document-engineering/commit/7e914883052487e5ed4b61960995f772d11b7e43))
+* **scalars:** pass the name to work in the withvalidation wrapper ([937d0f4](https://github.com/powerhouse-inc/document-engineering/commit/937d0f49c2c41ecfa2b5252c63e2ef1d095c8fe8))
+
+
+### Features
+
+* **scalars:** add new storie and allow show message error about size and allow types ([7aecc57](https://github.com/powerhouse-inc/document-engineering/commit/7aecc573a26e47d6fed237b425d0037ce77fae10))
+
+## [1.26.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.26.0...v1.26.1) (2025-08-06)
+
+
+### Bug Fixes
+
+* **scalars:** fix the export GraphQLUpload type from the correct path ([a72202c](https://github.com/powerhouse-inc/document-engineering/commit/a72202cb5fbcca67a9d1c8c84853d547ad7ce00e))
+
+# [1.26.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.25.0...v1.26.0) (2025-08-06)
+
+
+### Bug Fixes
+
+* add use client directive ([5f2ccf5](https://github.com/powerhouse-inc/document-engineering/commit/5f2ccf5004e1c816df51fd8f8cdd08b331e5be76))
+* **scalars:** add date-state and idTesing for check file select ([fc52715](https://github.com/powerhouse-inc/document-engineering/commit/fc5271547c4a1ffd84a2327c7e64bb90a7c95413))
+* **scalars:** add test for the upload item ([bea1eb3](https://github.com/powerhouse-inc/document-engineering/commit/bea1eb306ebc398b80eb979568fd9e16393e193e))
+* **scalars:** avoid warning caused by using both value and defaultValue ([9c0691d](https://github.com/powerhouse-inc/document-engineering/commit/9c0691d0ec610576d61b006f2d9a3f570a30c3b4))
+* **scalars:** fix default value in input ([f5448e4](https://github.com/powerhouse-inc/document-engineering/commit/f5448e43e376f3ec2f79a58d304988e2cf4cd1de))
+* **scalars:** improve name test and remove the unnecesary comments ([a4900b6](https://github.com/powerhouse-inc/document-engineering/commit/a4900b6029924f0122e813c970e1478887df8d72))
+* **scalars:** improve the stories in the input and field component ([49c9383](https://github.com/powerhouse-inc/document-engineering/commit/49c938354e9208c220f2fe4d92864a457fb927ee))
+* **scalars:** remove unnecesary code ([acf87fc](https://github.com/powerhouse-inc/document-engineering/commit/acf87fc6374c32806abf47f6704c6809a6871a57))
+* **scalars:** update the test ([24c446f](https://github.com/powerhouse-inc/document-engineering/commit/24c446ff0a7507504f78d1cfed3e4f8a0c0f07d7))
+
+
+### Features
+
+* **scalars:** add cancel function and improve the naming ([c540c55](https://github.com/powerhouse-inc/document-engineering/commit/c540c5548e65104b27e71366bd04cefc0175c6e8))
+* **scalars:** add file field component with value state indicator ([fa33e60](https://github.com/powerhouse-inc/document-engineering/commit/fa33e60a53346a0981ee78f4855e0a0b5d3cd563))
+* **scalars:** add function onrealod and test for it ([d89774d](https://github.com/powerhouse-inc/document-engineering/commit/d89774d9ff50bfcc5845934b07e885795defce85))
+* **scalars:** add image as icon and add stories for loading ([50f8929](https://github.com/powerhouse-inc/document-engineering/commit/50f89296a7b74b0d48e4ce6e27b415f4ce31292d))
+* **scalars:** add the item-upload and the props necessary for it ([1234482](https://github.com/powerhouse-inc/document-engineering/commit/1234482f482fc05f4c870579dc31b4099d358772))
+
+# [1.25.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.24.0...v1.25.0) (2025-08-04)
+
+
+### Features
+
+* **scalars:** add graphql-upload for the upload file scalar ([cddcf57](https://github.com/powerhouse-inc/document-engineering/commit/cddcf575ce0b3dd7879b92e87002ed2a0434dd7e))
+
+# [1.24.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.23.0...v1.24.0) (2025-08-02)
+
+
+### Bug Fixes
+
+* delete a test related to implementation details ([095eb29](https://github.com/powerhouse-inc/document-engineering/commit/095eb296b7ebf3b41417dcbea4dc76a7d241a783))
+* improve tests ([0c0bbab](https://github.com/powerhouse-inc/document-engineering/commit/0c0bbab235545a6df9ac4320d9c48be4e089a65b))
+* **scalars:** give a more descriptive name and avoid custom classes ([3420278](https://github.com/powerhouse-inc/document-engineering/commit/3420278dbe9d92bdc43f5e194d8cceca890a7402))
+* **scalars:** improve stories, and fix some conflcit with fixed values ([1ad1571](https://github.com/powerhouse-inc/document-engineering/commit/1ad1571189d7864ce744bf9a2c93dc064c6a3721))
+* **scalars:** improve the file componente using drag-and-drop library and improve accessibility ([03a6c6c](https://github.com/powerhouse-inc/document-engineering/commit/03a6c6c8f6f384eb06e77a37841c616457f79249))
+* **scalars:** improve the logic to show correct message ([5080f14](https://github.com/powerhouse-inc/document-engineering/commit/5080f140d3f228b9b7e66af3fa75c0d574513e7e))
+* **scalars:** improve the test ([b81cdff](https://github.com/powerhouse-inc/document-engineering/commit/b81cdff5dbcda71eb3f01ce5b46d7db01b5af806))
+* **scalars:** merge parent ref with dropZone to make botn to work with the input ([fec4eca](https://github.com/powerhouse-inc/document-engineering/commit/fec4eca5e667941bd257f710f2ca2d7525a1218c))
+* **scalars:** pass props to hook and remove props for accept from input ([cefb561](https://github.com/powerhouse-inc/document-engineering/commit/cefb56166c9287c4fbc256b9af80d463e8fd516d))
+* **scalars:** remove the comnent code ([5a1bb82](https://github.com/powerhouse-inc/document-engineering/commit/5a1bb82736e899fc69f53001ea4f9ac644119c55))
+* **scalars:** render correct element base if function its passed ([aa6ed13](https://github.com/powerhouse-inc/document-engineering/commit/aa6ed1304b68f055c95ddf055d779ebe1262f3ad))
+* **ui:** default label in stories ([945c33d](https://github.com/powerhouse-inc/document-engineering/commit/945c33d95e2f1a4aa477187f6c15a34d116eb405))
+* **ui:** remove utils.ts and improve types & code quality ([579ff2c](https://github.com/powerhouse-inc/document-engineering/commit/579ff2c65a49dfcd9fc3476b96da309b7ed87abb))
+
+
+### Features
+
+* add sidebar loading ([c6d2d70](https://github.com/powerhouse-inc/document-engineering/commit/c6d2d70a930a4f00e4cfdbf4f3ad3ab658073f05))
+* **scalars:** add basic for input file add test for it ([21cb3a1](https://github.com/powerhouse-inc/document-engineering/commit/21cb3a1c8cf4c823a7cc63bb837ec2d9d5155fa7))
+* **scalars:** add file-upload-item component ([0ca1501](https://github.com/powerhouse-inc/document-engineering/commit/0ca1501800c21896ec5089e8a6a3490b2db72215))
+* **scalars:** make sidebar title clickable ([45fc65c](https://github.com/powerhouse-inc/document-engineering/commit/45fc65ca2fd8d8da3bf6033810129abec129a288))
+* **ui:** add the base for PhoneNumberInput UI component ([37a0f6f](https://github.com/powerhouse-inc/document-engineering/commit/37a0f6fae7dab092ddad15199db635a709fc8aa1))
+
 # [1.23.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.22.0...v1.23.0) (2025-07-29)
 
 

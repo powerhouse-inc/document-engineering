@@ -1,3 +1,5 @@
+'use client'
+
 import { DatePicker } from '../../../ui/components/data-entry/date-picker/date-picker.js'
 import { withFieldValidation } from '../fragments/with-field-validation/with-field-validation.js'
 import type { DatePickerFieldProps } from './types.js'
