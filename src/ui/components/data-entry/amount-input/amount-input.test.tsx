@@ -172,4 +172,20 @@ describe('AmountField Component', () => {
       expect(screen.queryByTestId('amount-input-diff')).not.toBeInTheDocument()
     })
   })
+  it('should handle not passing units', () => {
+    render(
+      <AmountInput
+        label="Amount Label"
+        name="amount"
+        type="AmountCurrency"
+        value={{
+          value: '345',
+          unit: 'USD',
+        }}
+      />
+    )
+    expect(screen.getByLabelText('Amount Label')).toBeInTheDocument()
+    const input = screen.getByRole('spinbutton')
+    expect(input).toHaveValue('345')
+  })
 })

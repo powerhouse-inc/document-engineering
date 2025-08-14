@@ -69,6 +69,12 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @returns `true` if the cell can be edited, `false` otherwise
    */
   canEditCell(row: number, column: number): boolean {
+    const config = this._getConfig()
+    if (!!config.onAdd && row === config.data.length) {
+      // this is actually an insertion row, so we can ignore if the column is editable or not
+      return !!config.columns[column].renderCellEditor
+    }
+
     return this._getConfig().columns[column].editable ?? false
   }
 
@@ -189,7 +195,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         type: 'SET_SELECTED_ROW_ERRORS',
         payload: { errors },
       })
-      return
+      return // we can't exit edit mode if there are errors
     } else if (this._getState().selectedRowErrors) {
       this._getState().dispatch?.({
         type: 'SET_SELECTED_ROW_ERRORS',
@@ -197,8 +203,10 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       })
     }
 
+    const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
     if (save) {
-      const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
+      const isAddingRow = selectedCell.row === this._getState().data.length
+
       if (formRef) {
         const columnDef = this._getConfig().columns[selectedCell.column]
 
@@ -210,13 +218,12 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         const formData = formRef.current?.getValues()
         const value = formData?.[columnDef.field] as unknown
 
-        if (selectedCell.row === this._getState().data.length) {
+        if (isAddingRow) {
           await this._getConfig().onAdd?.({ [columnDef.field]: value })
-          return
+        } else {
+          // TODO: save only if the value changed
+          columnDef.onSave?.(value, this._createCellContext(selectedCell.row, selectedCell.column))
         }
-
-        // TODO: save only if the value changed
-        columnDef.onSave?.(value, this._createCellContext(selectedCell.row, selectedCell.column))
       }
 
       // the actual save is done in the form onSubmit callback
@@ -224,12 +231,16 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       const nextCell = getNextSelectedCell({
         direction: 'down',
         currentCell: selectedCell,
-        rowCount: this._getState().data.length,
+        rowCount: isAddingRow ? this._getState().data.length + 2 : this._getState().data.length,
         columnCount: this._getConfig().columns.length,
         moveToNextRow: true,
       })
       this.selection.selectCell(nextCell.row, nextCell.column)
     } else {
+      if (formRef) {
+        formRef.current?.reset()
+      }
+
       this._getState().dispatch?.({
         type: 'SELECT_CELL',
         payload: { row: selectedCell.row, column: selectedCell.column },

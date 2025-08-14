@@ -54,7 +54,10 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
             config.data[context.rowIndex][context.column.field as keyof T] = value as T[keyof T]
             return true
           }),
-        renderCellEditor: column.renderCellEditor ?? getCellEditorFn(column.type),
+        renderCellEditor:
+          // if getCellEditor is null, then we do not allow cell edition on the addition row
+          // if it is not null, even if it is not provided, we will use the default one
+          column.renderCellEditor ?? (column.renderCellEditor !== null ? getCellEditorFn(column.type) : null),
         // sorting
         sortable: column.sortable ?? false,
         rowComparator: column.rowComparator ?? defaultSortFns(column.type ?? defaultColumnType),

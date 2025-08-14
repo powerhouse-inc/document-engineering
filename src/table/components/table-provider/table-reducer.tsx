@@ -202,9 +202,6 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
       }
     }
     case 'ENTER_CELL_EDIT_MODE': {
-      if (!state.columns[action.payload.column].editable) {
-        throw new Error('Cell is not editable')
-      }
       return {
         ...state,
         selectedCellIndex: action.payload,

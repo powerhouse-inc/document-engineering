@@ -37,6 +37,7 @@ export const useAmountInput = ({
   units,
 }: UseAmountInputProps) => {
   const currentValue = value ?? defaultValue
+  const unitsArray = Array.isArray(units) ? units : []
 
   const baseValue = useMemo(() => {
     if (currentValue === undefined) {
@@ -148,7 +149,7 @@ export const useAmountInput = ({
   const isAmountWithoutUnit = type === 'Amount' && !isAmountWithUnit
 
   const isShowSelect =
-    (isAmountWithUnit && units && units.length > 0) ||
+    (isAmountWithUnit && unitsArray.length > 0) ||
     type === 'AmountFiat' ||
     type === 'AmountCrypto' ||
     type === 'AmountCurrency'
@@ -403,7 +404,7 @@ export const useAmountInput = ({
   const handleIsInputFocused = () => {
     setInputFocused(true)
   }
-  const options = units ?? getDefaultUnits(type)
+  const options = unitsArray.length > 0 ? unitsArray : getDefaultUnits(type)
   // Put the placeholder in case that value its not in the options
   const validatedValueSelect = valueSelect && options.some((unit) => unit.ticker === valueSelect) ? valueSelect : ''
   return {

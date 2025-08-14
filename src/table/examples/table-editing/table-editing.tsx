@@ -40,7 +40,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
       {
         field: 'status',
         width: 130,
-        editable: true,
+        editable: false,
         onSave: (value: unknown, context: CellContext<MockedPerson>) => {
           setData((prevData) => {
             const newData = [...prevData]
@@ -58,6 +58,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
               </span>
             </div>
           ),
+        // it is not editable, but we have the `renderCellEditor` property to render the editor when adding a new row
         renderCellEditor: (
           value: unknown,
           onChange: (newValue: 'active' | 'inactive') => void,
