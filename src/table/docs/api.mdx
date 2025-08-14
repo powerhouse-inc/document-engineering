@@ -101,7 +101,7 @@ if (selected.length) {
 
 For how the insertion row behaves and how to wire `onAdd`, see [Adding Rows](?path=/docs/data-display-object-set-table-docs-adding--readme).
 
-- `canAdd(): boolean`: True when the table was configured with `onAdd`.
+- `canAdd(): boolean`: True when the table was configured with `onAdd` **and** the current data length is less than `maxRowCount`. Returns `false` when the maximum row limit is reached.
 - `isAdding(): boolean`: True while the user is editing the insertion row (the special last row). Useful to detect add context during editing.
 
 Example:
@@ -110,6 +110,9 @@ Example:
 if (apiRef.current?.canAdd()) {
   const adding = apiRef.current?.isAdding()
   // e.g. show a small hint while the insertion row is being edited
+} else {
+  // Insertion row is hidden - either no onAdd handler or maxRowCount reached
+  console.log('Cannot add more rows - check onAdd handler and maxRowCount limit')
 }
 ```
 

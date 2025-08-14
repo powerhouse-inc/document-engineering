@@ -13,95 +13,111 @@ const meta = {
         language: 'tsx',
         format: true,
         code: `
-import { useMemo } from "react";
-import { cn } from "../../../../../scalars/index.js";
-import { mockData, type MockedPerson } from "../../mock-data.js";
-import { ObjectSetTable } from "../../object-set-table.js";
-import { ColumnDef } from "../../types.js";
-import { Icon } from "../../../icon/icon.js";
+import { useMemo, useState } from "react";
+import { cn, EnumField } from "../../../scalars/index.js";
+import { mockData, type MockedPerson } from "../../table/mock-data.js";
+import { ObjectSetTable } from "../../table/object-set-table.js";
+import type { CellContext, ColumnDef, ObjectSetTableConfig, RowContext } from "../../table/types.js";
+import { Icon } from "../../../ui/components/icon/icon.js";
+import { confirm } from "../../../ui/components/confirm/confirm.js";
 
-const CustomRenderingExample = () => {
-  const columns = useMemo<ColumnDef<MockedPerson>[]>(
+const TableEditingExample = () => {
+  const [data, setData] = useState<MockedPerson[]>(mockData);
+
+  const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
-        {
-          field: "firstName",
-          title: "User",
-          renderCell: (value: string, context) => (
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-800 font-semibold text-xs">
-                {value.charAt(0).toUpperCase()}
-              </div>
-              <span className="font-medium">{value}</span>
-            </div>
-          ),
+      {
+        field: "firstName",
+        title: "User",
+        editable: true,
+        sortable: true,
+        width: 140,
+        onSave: (value: unknown, context: CellContext<MockedPerson>) => {
+          setData((prevData) => {
+            const newData = [...prevData];
+            newData[context.rowIndex].firstName = value as string;
+            return newData;
+          });
+          return true;
         },
-        {
-          field: "status",
-          renderCell: (value: "active" | "inactive") => (
+      },
+      {
+        field: "status",
+        width: 130,
+        editable: false,
+        onSave: (value: unknown, context: CellContext<MockedPerson>) => {
+          setData((prevData) => {
+            const newData = [...prevData];
+            newData[context.rowIndex].status = value as "active" | "inactive";
+            return newData;
+          });
+          return true;
+        },
+        renderCell: (value?: "active" | "inactive") =>
+          !value ? null : (
             <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  "h-2 w-2 rounded-full",
-                  value === "active" ? "bg-green-500" : "bg-red-500"
-                )}
-              />
-              <span
-                className={cn(
-                  "font-medium",
-                  value === "active" ? "text-green-700" : "text-red-700"
-                )}
-              >
+              <div className={cn("h-2 w-2 rounded-full", value === "active" ? "bg-green-500" : "bg-red-500")} />
+              <span className={cn("font-medium", value === "active" ? "text-green-700" : "text-red-700")}>
                 {value.charAt(0).toUpperCase() + value.slice(1)}
               </span>
             </div>
           ),
+      },
+      {
+        field: "payment",
+        width: 140,
+        type: "number",
+        editable: true,
+        onSave: (value: unknown, context: CellContext<MockedPerson>) => {
+          setData((prevData) => {
+            const newData = [...prevData];
+            newData[context.rowIndex].payment = value as number;
+            return newData;
+          });
+          return true;
         },
-        {
-          field: "payment",
-          type: "number",
-          renderCell: (value: number) => (
-            <div className="flex items-center justify-end">
-              <span className="font-semibold text-gray-900">
-                \${value.toLocaleString()}
-              </span>
-              {value > 1000000 ? (
-                <Icon name="ArrowUp" size={16} className="ml-1 text-green-500" />
-              ) : (
-                <Icon
-                  name="ArrowUp"
-                  size={16}
-                  className="ml-1 text-red-500 rotate-180"
-                />
-              )}
-            </div>
-          ),
-        },
-        {
-          field: "isActive",
-          title: "Active",
-          renderCell: (value: boolean) => (
-            <div className="flex justify-center">
-              {value ? (
-                <Icon name="CheckCircle" size={20} className="text-green-500" />
-              ) : (
-                <Icon name="CrossCircle" size={20} className="text-red-500" />
-              )}
-            </div>
-          ),
-        },
-      ],
+      },
+    ],
     []
   );
 
   return (
     <ObjectSetTable<MockedPerson>
       columns={columns}
-      data={mockData.slice(0, 6)}
+      data={data}
+      minRowCount={10}  // Ensures table shows at least 10 rows
+      maxRowCount={15}  // Prevents adding more than 15 rows
+      onDelete={(rows) => {
+        setData((prevData) => {
+          const newData = [...prevData];
+          return newData.filter((row) => !rows.some((person) => person.id === row.id));
+        });
+      }}
+      onAdd={(data) => {
+        const newPerson: MockedPerson = {
+          id: crypto.randomUUID(),
+          firstName: "",
+          status: "inactive",
+          payment: 0,
+          isActive: false,
+          walletAddress: "",
+          email: "",
+          address: {
+            addressLine1: "",
+            addressLine2: "",
+            city: "",
+            state: "",
+            zip: "",
+          },
+          ...data,
+        };
+        setData((prevData) => [...prevData, newPerson]);
+      }}
     />
   );
 };
 
-export default CustomRenderingExample;
+export default TableEditingExample;
         `,
       },
     },
@@ -112,6 +128,44 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+/**
+ * The default editing example with minRowCount and maxRowCount configured.
+ * This table ensures a minimum of 10 rows are always visible and limits adding to a maximum of 15 rows.
+ */
 export const Default: Story = {
   args: {},
+}
+
+/**
+ * Demonstrates minRowCount behavior with a small dataset.
+ * Even with only 3 data items, the table displays 8 rows (5 empty placeholder rows are added).
+ */
+export const MinRowCountDemo: Story = {
+  args: {
+    minRowCount: 8,
+    maxRowCount: 20,
+  },
+}
+
+/**
+ * Demonstrates maxRowCount behavior by limiting the table to 12 rows maximum.
+ * Once 12 rows are reached, the add functionality becomes disabled.
+ * Try adding rows until you reach the limit to see the behavior.
+ */
+export const MaxRowCountDemo: Story = {
+  args: {
+    minRowCount: 5,
+    maxRowCount: 12,
+  },
+}
+
+/**
+ * Shows a table with no row count restrictions.
+ * Uses default values: minRowCount = 0 (no empty rows) and maxRowCount = Infinity (unlimited).
+ */
+export const UnrestrictedRowCount: Story = {
+  args: {
+    minRowCount: 0,
+    maxRowCount: undefined, // Uses default Infinity
+  },
 }
