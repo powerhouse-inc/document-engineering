@@ -1,20 +1,14 @@
 import { useMemo } from 'react'
-import type { ColumnDef, DataType } from '../../../table/types.js'
+import type { DataType } from '../../../table/types.js'
 import { isCellEqual } from '../../../table/utils.js'
 import { useInternalTableState } from '../../table-provider/table-provider.js'
 
-interface UseCellLogicProps<T extends DataType> {
-  column: ColumnDef<T>
+interface UseCellLogicProps {
   rowIndex: number
   columnIndex: number
   renderEmptyCell?: boolean
 }
-const useCellLogic = <T extends DataType>({
-  column,
-  rowIndex,
-  columnIndex,
-  renderEmptyCell = false,
-}: UseCellLogicProps<T>) => {
+const useCellLogic = <T extends DataType>({ rowIndex, columnIndex, renderEmptyCell = false }: UseCellLogicProps) => {
   const {
     config,
     state: { selectedCellIndex, isCellEditMode, selectedRowErrors },
@@ -45,7 +39,7 @@ const useCellLogic = <T extends DataType>({
           return
         }
 
-        if (event.detail === 2 && column.editable && !renderEmptyCell) {
+        if (event.detail === 2 && api.canEditCell(rowIndex, columnIndex) && !renderEmptyCell) {
           api.enterCellEditMode(rowIndex, columnIndex)
         } else {
           api.selection.selectCell(rowIndex, columnIndex)
@@ -54,7 +48,7 @@ const useCellLogic = <T extends DataType>({
     }
 
     return handler
-  }, [api, selectedCellIndex, rowIndex, columnIndex, column.editable, renderEmptyCell])
+  }, [api, selectedCellIndex, rowIndex, columnIndex, renderEmptyCell])
 
   const formRef = renderEmptyCell ? null : api._getState().dataFormReferences[rowIndex]?.[columnIndex]
 

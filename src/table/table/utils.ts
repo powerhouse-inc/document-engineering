@@ -220,8 +220,8 @@ export const createFormReferences = <T extends DataType = DataType>(
 
   for (let row = 0; row < rowCount; row++) {
     const refs: Array<React.RefObject<UseFormReturn> | null> = []
-    columnDefs.forEach((columnDef) => {
-      refs.push(columnDef.editable ? createRef<UseFormReturn>() : null)
+    columnDefs.forEach(() => {
+      refs.push(createRef<UseFormReturn>())
     })
     formReferences.push(refs)
   }
