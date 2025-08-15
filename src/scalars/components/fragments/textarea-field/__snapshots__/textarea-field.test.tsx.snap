@@ -30,6 +30,7 @@ exports[`TextareaField Component > should match snapshot with props 1`] = `
           id=":r1:-textarea"
           name="textarea"
           rows="3"
+          style="height: auto;"
         />
         <div
           class="mt-0.5 flex justify-end -mb-1"
