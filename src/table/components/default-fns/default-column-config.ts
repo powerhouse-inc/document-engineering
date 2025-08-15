@@ -7,6 +7,7 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
 
     case 'string':
     case 'boolean':
+    case 'url':
     default:
       return 'left'
   }

@@ -1,0 +1,324 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Cell Editors" />
+
+# Cell Editors
+
+Cell editors are the UI components that appear when a user enters edit mode for a table cell. The `ObjectSetTable` provides built-in cell editors for common data types, along with builder functions that allow you to customize these editors with the same props as their equivalent scalar components.
+
+## Overview
+
+Cell editors are responsible for:
+- Displaying the current cell value in an editable format
+- Handling user input and validation
+- Providing a consistent editing experience across the table
+
+The table automatically selects an appropriate editor based on the column's `type` property, but you can also provide custom editors for specialized needs.
+
+## Built-in Cell Editor Builders
+
+The table provides builder functions for common data types. These builders return cell editor functions that can be used with the `renderCellEditor` property on column definitions.
+
+**Note:** All the cell editor builders are available in `@powerhousedao/documen-engineering/table`
+
+- Strings: [buildStringCellEditor (default)](#buildstringcelleditor)
+- Number: [buildNumberCellEditor](#buildnumbercelleditor)
+- Boolean: [buildBooleanCellEditor](#buildbooleancelleditor)
+- URL: [buildUrlCellEditor](#buildurlcelleditor)
+
+### `buildStringCellEditor`
+
+Creates a string input editor using the `StringField` component.
+
+**Equivalent scalar:** [StringField](/docs/scalars-components-string-field--docs)
+
+```tsx
+import { buildStringCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildStringCellEditor({})
+
+// With customization
+renderCellEditor: buildStringCellEditor({ 
+  maxLength: 50,
+  placeholder: 'Enter text...',
+  variant: 'TextArea'
+})
+```
+
+### `buildNumberCellEditor`
+
+Creates a number input editor using the `NumberField` component.
+
+**Equivalent scalar:** [NumberField](/docs/scalars-components-number-field--docs)
+
+```tsx
+import { buildNumberCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildNumberCellEditor({})
+
+// With customization
+renderCellEditor: buildNumberCellEditor({ 
+  minValue: 0,
+  maxValue: 1000,
+  step: 10,
+  precision: 2
+})
+```
+
+### `buildBooleanCellEditor`
+
+Creates a boolean input editor using the `BooleanField` component.
+
+**Equivalent scalar:** [BooleanField](/docs/scalars-components-boolean-field--docs)
+
+```tsx
+import { buildBooleanCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildBooleanCellEditor({})
+
+// With customization
+renderCellEditor: buildBooleanCellEditor({ 
+  label: 'Active Status',
+  description: 'Toggle user active status'
+})
+```
+
+### `buildUrlCellEditor`
+
+Creates a URL input editor using the `UrlField` component.
+
+**Equivalent scalar:** [UrlField](/docs/scalars-components-url-field--docs)
+
+```tsx
+import { buildUrlCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildUrlCellEditor({})
+
+// With customization
+renderCellEditor: buildUrlCellEditor({ 
+  allowedProtocols: ['https', 'http'],
+  maxURLLength: 2000,
+  placeholder: 'Enter URL...'
+})
+```
+
+## How to Use Cell Editor Builders
+
+### 1. Import the builder function
+
+```tsx
+import { buildStringCellEditor, buildNumberCellEditor } from '@powerhousedao/document-engineering/table'
+```
+
+### 2. Configure the builder with scalar props
+
+Pass the same props you would use with the equivalent scalar component:
+
+```tsx
+const columns = [
+  {
+    field: 'firstName',
+    title: 'First Name',
+    editable: true,
+    renderCellEditor: buildStringCellEditor({
+      maxLength: 20,
+      placeholder: 'Enter first name',
+      required: true
+    })
+  },
+  {
+    field: 'age',
+    title: 'Age',
+    editable: true,
+    renderCellEditor: buildNumberCellEditor({
+      minValue: 0,
+      maxValue: 120,
+      step: 1
+    })
+  }
+]
+```
+
+### 3. Handle value saving
+
+Always provide an `onSave` function to handle the edited values:
+
+```tsx
+{
+  field: 'firstName',
+  editable: true,
+  renderCellEditor: buildStringCellEditor({ maxLength: 20 }),
+  onSave: (value, context) => {
+    // Validate and save the value
+    if (typeof value === 'string' && value.length > 0) {
+      context.row.firstName = value
+      return true // Commit the change
+    }
+    return false // Reject the change
+  }
+}
+```
+
+## Automatic Editor Selection
+
+If you don't specify a `renderCellEditor`, the table will automatically select an editor based on the column's `type` property:
+
+```tsx
+const columns = [
+  {
+    field: 'name',
+    type: 'string', // Uses buildStringCellEditor({})
+    editable: true
+  },
+  {
+    field: 'amount',
+    type: 'number', // Uses buildNumberCellEditor({})
+    editable: true
+  },
+  {
+    field: 'isActive',
+    type: 'boolean', // Uses buildBooleanCellEditor({})
+    editable: true
+  },
+  {
+    field: 'website',
+    type: 'url', // Uses buildUrlCellEditor({})
+    editable: true
+  }
+]
+```
+
+## Creating Custom Cell Editors
+
+For specialized editing needs, you can create custom cell editors. A cell editor function receives three parameters:
+
+```tsx
+type CellEditorFn<T> = (
+  value: unknown,           // Current cell value
+  onChange: (newValue: unknown) => void,  // Function to update the value
+  context: CellContext<T>   // Cell context with row, column, and table info
+) => React.ReactElement
+```
+
+### Example: Custom Enum Editor
+
+```tsx
+import { EnumField } from '@scalars/components/enum-field'
+
+const customEnumEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<MyDataType>) => {
+  return (
+    <EnumField
+      name={context.column.field}
+      autoFocus
+      options={[
+        { value: 'active', label: 'Active' },
+        { value: 'inactive', label: 'Inactive' },
+        { value: 'pending', label: 'Pending' }
+      ]}
+      variant="Select"
+      value={String(value)}
+      onChange={(value: string | string[]) => {
+        onChange(value as string)
+      }}
+    />
+  )
+}
+
+// Use in column definition
+{
+  field: 'status',
+  editable: true,
+  renderCellEditor: customEnumEditor
+}
+```
+
+### Example: Custom Date Editor
+
+```tsx
+import { DatePickerField } from '@scalars/components/date-picker-field'
+
+const customDateEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<MyDataType>) => {
+  return (
+    <DatePickerField
+      name={context.column.field}
+      autoFocus
+      value={value as string}
+      onChange={(date: string) => onChange(date)}
+    />
+  )
+}
+```
+
+## Best Practices
+
+### 1. Always provide `onSave`
+
+```tsx
+// Good
+{
+  field: 'email',
+  editable: true,
+  onSave: (value, context) => {
+    if (validateEmail(value)) {
+      context.row.email = value
+      return true
+    }
+    return false
+  }
+}
+
+// Avoid - uses development default
+{
+  field: 'email',
+  editable: true
+}
+```
+
+### 2. Use appropriate validation
+
+```tsx
+renderCellEditor: buildStringCellEditor({
+  maxLength: 100,
+  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Email validation
+  required: true
+})
+```
+
+### 3. Consider user experience
+
+```tsx
+renderCellEditor: buildStringCellEditor({
+  placeholder: 'Enter value...',
+  autoFocus: true, // Already handled by builders
+  className: 'max-w-full' // Ensure proper sizing
+})
+```
+
+### 4. Handle different data types
+
+```tsx
+const safeValue = (() => {
+  if (typeof value === 'string') return value
+  if (typeof value === 'number') return String(value)
+  return ''
+})()
+
+return (
+  <StringField
+    value={safeValue}
+    onChange={(e) => onChange(e.target.value)}
+  />
+)
+```
+
+## Related Documentation
+
+- [Editing](/docs/data-display-object-set-table-docs-editing--readme): General editing concepts and workflows
+- [Column Definition](/docs/data-display-object-set-table-docs-column-definition--readme): Column configuration and types
+- [Cells](/docs/data-display-object-set-table-docs-cells--readme): Cell rendering and context
+- [Keyboard Shortcuts](/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme): Editing interactions
+

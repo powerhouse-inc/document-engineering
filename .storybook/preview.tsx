@@ -28,6 +28,7 @@ const preview: Preview = {
                 'Rows',
                 'Cells',
                 'Editing',
+                'Cell Editors',
                 'Adding',
                 'Deletion',
                 'Sorting',

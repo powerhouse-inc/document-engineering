@@ -2,6 +2,7 @@ import type { ColumnType, RenderCellFn } from '../../table/types.js'
 import { renderBooleanCell } from './boolean-render.js'
 import { renderNumberCell } from './number-render.js'
 import { renderTextCell } from './text-render.js'
+import { renderUrlCell } from './url-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
@@ -11,6 +12,8 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderNumberCell
     case 'boolean':
       return renderBooleanCell
+    case 'url':
+      return renderUrlCell
     case undefined:
       return renderTextCell
     default:
