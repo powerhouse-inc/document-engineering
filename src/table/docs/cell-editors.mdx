@@ -9,6 +9,7 @@ Cell editors are the UI components that appear when a user enters edit mode for 
 ## Overview
 
 Cell editors are responsible for:
+
 - Displaying the current cell value in an editable format
 - Handling user input and validation
 - Providing a consistent editing experience across the table
@@ -43,40 +44,11 @@ Creates a string input editor using the `StringField` component.
 
 **Equivalent scalar:** [StringField](/docs/scalars-components-string-field--docs)
 
-```tsx
-import { buildStringCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildStringCellEditor({})
-
-// With customization
-renderCellEditor: buildStringCellEditor({ 
-  maxLength: 50,
-  placeholder: 'Enter text...',
-  variant: 'TextArea'
-})
-```
-
 ### `buildNumberCellEditor`
 
 Creates a number input editor using the `NumberField` component.
 
 **Equivalent scalar:** [NumberField](/docs/scalars-components-number-field--docs)
-
-```tsx
-import { buildNumberCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildNumberCellEditor({})
-
-// With customization
-renderCellEditor: buildNumberCellEditor({ 
-  minValue: 0,
-  maxValue: 1000,
-  step: 10,
-  precision: 2
-})
-```
 
 ### `buildBooleanCellEditor`
 
@@ -84,38 +56,11 @@ Creates a boolean input editor using the `BooleanField` component.
 
 **Equivalent scalar:** [BooleanField](/docs/scalars-components-boolean-field--docs)
 
-```tsx
-import { buildBooleanCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildBooleanCellEditor({})
-
-// With customization
-renderCellEditor: buildBooleanCellEditor({ 
-  label: 'Active Status',
-  description: 'Toggle user active status'
-})
-```
-
 ### `buildTimeCellEditor`
 
 Creates a time input editor using the `TimePickerField` component.
 
 **Equivalent scalar:** [TimePickerField](/docs/scalars-components-time-picker-field--docs)
-
-```tsx
-import { buildTimeCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildTimeCellEditor({})
-
-// With customization
-renderCellEditor: buildTimeCellEditor({ 
-  timeFormat: 'HH:mm',
-  timeIntervals: 15,
-  placeholder: 'Select time...'
-})
-```
 
 ### `buildDateCellEditor`
 
@@ -123,41 +68,11 @@ Creates a date input editor using the `DatePickerField` component.
 
 **Equivalent scalar:** [DatePickerField](/docs/scalars-components-date-picker-field--docs)
 
-```tsx
-import { buildDateCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildDateCellEditor({})
-
-// With customization
-renderCellEditor: buildDateCellEditor({ 
-  dateFormat: 'MM/dd/yyyy',
-  placeholder: 'Select date...',
-  minDate: new Date('2020-01-01'),
-  maxDate: new Date('2030-12-31')
-})
-```
-
 ### `buildDateTimeCellEditor`
 
 Creates a datetime input editor using the `DateTimePickerField` component.
 
 **Equivalent scalar:** [DateTimePickerField](/docs/scalars-components-date-time-picker-field--docs)
-
-```tsx
-import { buildDateTimeCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildDateTimeCellEditor({})
-
-// With customization
-renderCellEditor: buildDateTimeCellEditor({ 
-  dateFormat: 'MM/dd/yyyy',
-  timeFormat: 'HH:mm',
-  placeholder: 'Select date and time...',
-  timeIntervals: 15
-})
-```
 
 ### `buildUrlCellEditor`
 
@@ -165,39 +80,11 @@ Creates a URL input editor using the `UrlField` component.
 
 **Equivalent scalar:** [UrlField](/docs/scalars-components-url-field--docs)
 
-```tsx
-import { buildUrlCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildUrlCellEditor({})
-
-// With customization
-renderCellEditor: buildUrlCellEditor({ 
-  allowedProtocols: ['https', 'http'],
-  maxURLLength: 2000,
-  placeholder: 'Enter URL...'
-})
-```
-
 ### `buildEmailCellEditor`
 
 Creates an email input editor using the `EmailField` component.
 
 **Equivalent scalar:** [EmailField](/docs/scalars-components-email-field--docs)
-
-```tsx
-import { buildEmailCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildEmailCellEditor({})
-
-// With customization
-renderCellEditor: buildEmailCellEditor({ 
-  allowedDomains: ['example.com', 'company.org'],
-  placeholder: 'Enter email...',
-  required: true
-})
-```
 
 ### `buildPhidCellEditor`
 
@@ -205,37 +92,11 @@ Creates a PHID input editor using the `PhidField` component.
 
 **Equivalent scalar:** [PhidField](/docs/scalars-components-phid-field--docs)
 
-```tsx
-import { buildPhidCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildPhidCellEditor({})
-
-// With customization
-renderCellEditor: buildPhidCellEditor({ 
-  placeholder: 'Enter PHID...',
-  required: true
-})
-```
-
 ### `buildOidCellEditor`
 
 Creates an OID input editor using the `OidField` component.
 
 **Equivalent scalar:** [OidField](/docs/scalars-components-oid-field--docs)
-
-```tsx
-import { buildOidCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildOidCellEditor({})
-
-// With customization
-renderCellEditor: buildOidCellEditor({ 
-  placeholder: 'Enter OID...',
-  required: true
-})
-```
 
 ### `buildAidCellEditor`
 
@@ -243,42 +104,11 @@ Creates an AID input editor using the `AidField` component.
 
 **Equivalent scalar:** [AidField](/docs/scalars-components-aid-field--docs)
 
-```tsx
-import { buildAidCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildAidCellEditor({})
-
-// With customization
-renderCellEditor: buildAidCellEditor({ 
-  placeholder: 'Enter AID...',
-  required: true
-})
-```
-
 ### `buildEnumCellEditor`
 
 Creates an enum input editor using the `EnumField` component with `variant="Select"` to display as a dropdown instead of radio buttons.
 
 **Equivalent scalar:** [EnumField](/docs/scalars-components-enum-field--docs)
-
-```tsx
-import { buildEnumCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildEnumCellEditor({})
-
-// With customization
-renderCellEditor: buildEnumCellEditor({ 
-  options: [
-    { value: 'active', label: 'Active' },
-    { value: 'inactive', label: 'Inactive' },
-    { value: 'pending', label: 'Pending' }
-  ],
-  placeholder: 'Select status...',
-  required: true
-})
-```
 
 ### `buildCountryCellEditor`
 
@@ -286,61 +116,17 @@ Creates a country input editor using the `CountryCodeField` component.
 
 **Equivalent scalar:** [CountryCodeField](/docs/scalars-components-country-code-field--docs)
 
-```tsx
-import { buildCountryCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildCountryCellEditor({})
-
-// With customization
-renderCellEditor: buildCountryCellEditor({ 
-  placeholder: 'Select country...',
-  required: true,
-  allowedCountries: ['US', 'CA', 'MX'],
-  showFlagIcons: true,
-  enableSearch: true
-})
-```
-
 ### `buildCurrencyCellEditor`
 
 Creates a currency input editor using the `CurrencyCodeField` component.
 
 **Equivalent scalar:** [CurrencyCodeField](/docs/scalars-components-currency-code-field--docs)
 
-```tsx
-import { buildCurrencyCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildCurrencyCellEditor({})
-
-// With customization
-renderCellEditor: buildCurrencyCellEditor({ 
-  placeholder: 'Select currency...',
-  required: true
-})
-```
-
 ### `buildAmountCellEditor`
 
 Creates an amount input editor using the `AmountField` component.
 
 **Equivalent scalar:** [AmountField](/docs/scalars-components-amount-field--docs)
-
-```tsx
-import { buildAmountCellEditor } from '@powerhousedao/document-engineering/table'
-
-// Basic usage
-renderCellEditor: buildAmountCellEditor({})
-
-// With customization
-renderCellEditor: buildAmountCellEditor({ 
-  placeholder: 'Enter amount...',
-  precision: 2,
-  currencyPosition: 'right',
-  allowNegative: false
-})
-```
 
 ## How to Use Cell Editor Builders
 
@@ -363,8 +149,8 @@ const columns = [
     renderCellEditor: buildStringCellEditor({
       maxLength: 20,
       placeholder: 'Enter first name',
-      required: true
-    })
+      required: true,
+    }),
   },
   {
     field: 'age',
@@ -373,9 +159,9 @@ const columns = [
     renderCellEditor: buildNumberCellEditor({
       minValue: 0,
       maxValue: 120,
-      step: 1
-    })
-  }
+      step: 1,
+    }),
+  },
 ]
 ```
 
@@ -408,12 +194,12 @@ const columns = [
   {
     field: 'name',
     type: 'string', // Uses buildStringCellEditor({})
-    editable: true
+    editable: true,
   },
   {
     field: 'size',
     type: 'number', // Uses buildNumberCellEditor({})
-    editable: true
+    editable: true,
   },
 ]
 ```
@@ -424,9 +210,9 @@ For specialized editing needs, you can create custom cell editors. A cell editor
 
 ```tsx
 type CellEditorFn<T> = (
-  value: unknown,           // Current cell value
-  onChange: (newValue: unknown) => void,  // Function to update the value
-  context: CellContext<T>   // Cell context with row, column, and table info
+  value: unknown, // Current cell value
+  onChange: (newValue: unknown) => void, // Function to update the value
+  context: CellContext<T> // Cell context with row, column, and table info
 ) => React.ReactElement
 ```
 
@@ -510,7 +296,7 @@ const customDateEditor = (value: unknown, onChange: (newValue: unknown) => void,
 renderCellEditor: buildStringCellEditor({
   maxLength: 100,
   pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Email validation
-  required: true
+  required: true,
 })
 ```
 
@@ -520,7 +306,7 @@ renderCellEditor: buildStringCellEditor({
 renderCellEditor: buildStringCellEditor({
   placeholder: 'Enter value...',
   autoFocus: true, // Already handled by builders
-  className: 'max-w-full' // Ensure proper sizing
+  className: 'max-w-full', // Ensure proper sizing
 })
 ```
 
@@ -533,12 +319,7 @@ const safeValue = (() => {
   return ''
 })()
 
-return (
-  <StringField
-    value={safeValue}
-    onChange={(e) => onChange(e.target.value)}
-  />
-)
+return <StringField value={safeValue} onChange={(e) => onChange(e.target.value)} />
 ```
 
 ## Related Documentation
@@ -547,4 +328,3 @@ return (
 - [Column Definition](/docs/data-display-object-set-table-docs-column-definition--readme): Column configuration and types
 - [Cells](/docs/data-display-object-set-table-docs-cells--readme): Cell rendering and context
 - [Keyboard Shortcuts](/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme): Editing interactions
-
