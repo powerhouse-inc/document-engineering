@@ -28,6 +28,7 @@ The table provides builder functions for common data types. These builders retur
 - DateTime: [buildDateTimeCellEditor](#builddatetimecelleditor)
 - Time: [buildTimeCellEditor](#buildtimecelleditor)
 - URL: [buildUrlCellEditor](#buildurlcelleditor)
+- Email: [buildEmailCellEditor](#buildemailcelleditor)
 - PHID: [buildPhidCellEditor](#buildphidcelleditor)
 - OID: [buildOidCellEditor](#buildoidcelleditor)
 - AID: [buildAidCellEditor](#buildaidcelleditor)
@@ -171,6 +172,26 @@ renderCellEditor: buildUrlCellEditor({
   allowedProtocols: ['https', 'http'],
   maxURLLength: 2000,
   placeholder: 'Enter URL...'
+})
+```
+
+### `buildEmailCellEditor`
+
+Creates an email input editor using the `EmailField` component.
+
+**Equivalent scalar:** [EmailField](/docs/scalars-components-email-field--docs)
+
+```tsx
+import { buildEmailCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildEmailCellEditor({})
+
+// With customization
+renderCellEditor: buildEmailCellEditor({ 
+  allowedDomains: ['example.com', 'company.org'],
+  placeholder: 'Enter email...',
+  required: true
 })
 ```
 

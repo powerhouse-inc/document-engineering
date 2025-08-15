@@ -9,6 +9,7 @@ import { buildUrlCellEditor } from './url-editor.js'
 import { buildPhidCellEditor } from './phid-editor.js'
 import { buildOidCellEditor } from './oid-editor.js'
 import { buildAidCellEditor } from './aid-editor.js'
+import { buildEmailCellEditor } from './email-editor.js'
 
 export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType): RenderCellEditorFn<T, unknown> => {
   switch (type) {
@@ -32,6 +33,8 @@ export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType
       return buildOidCellEditor({})
     case 'aid':
       return buildAidCellEditor({})
+    case 'email':
+      return buildEmailCellEditor({})
     case undefined:
       return buildStringCellEditor({})
     default:

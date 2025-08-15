@@ -9,6 +9,7 @@ import { renderUrlCell } from './url-render.js'
 import { renderPhidCell } from './phid-render.js'
 import { renderOidCell } from './oid-render.js'
 import { renderAidCell } from './aid-render.js'
+import { renderEmailCell } from './email-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
@@ -32,6 +33,8 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderOidCell
     case 'aid':
       return renderAidCell
+    case 'email':
+      return renderEmailCell
     case undefined:
       return renderTextCell
     default:
