@@ -102,8 +102,14 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (textareaRef.current) {
         // Reset height to allow shrinking
         textareaRef.current.style.height = 'auto'
-        // Set to scrollHeight to expand based on content
-        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+
+        if (textareaRef.current.value === '') return
+
+        // Set to scrollHeight + border to expand based on content
+        const cs = getComputedStyle(textareaRef.current)
+        const border =
+          cs.boxSizing === 'border-box' ? parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) : 0
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight + border}px`
       }
     }
 
@@ -136,9 +142,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     useEffect(() => {
       if (autoExpand) {
-        adjustHeight()
+        requestAnimationFrame(adjustHeight)
       } else if (textareaRef.current) {
-        textareaRef.current.style.height = ''
+        textareaRef.current.style.height = 'auto'
       }
     }, [autoExpand, multiline, rows, value])
 
