@@ -11,6 +11,7 @@ import { renderOidCell } from './oid-render.js'
 import { renderAidCell } from './aid-render.js'
 import { renderEmailCell } from './email-render.js'
 import { renderEnumCell } from './enum-render.js'
+import { renderCurrencyCell } from './currency-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
@@ -38,6 +39,8 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderEmailCell
     case 'enum':
       return renderEnumCell
+    case 'currency':
+      return renderCurrencyCell
     case undefined:
       return renderTextCell
     default:

@@ -30,6 +30,7 @@ The table provides builder functions for common data types. These builders retur
 - URL: [buildUrlCellEditor](#buildurlcelleditor)
 - Email: [buildEmailCellEditor](#buildemailcelleditor)
 - Enum: [buildEnumCellEditor](#buildenumcelleditor)
+- Currency: [buildCurrencyCellEditor](#buildcurrencycelleditor)
 - PHID: [buildPhidCellEditor](#buildphidcelleditor)
 - OID: [buildOidCellEditor](#buildoidcelleditor)
 - AID: [buildAidCellEditor](#buildaidcelleditor)
@@ -273,6 +274,25 @@ renderCellEditor: buildEnumCellEditor({
     { value: 'pending', label: 'Pending' }
   ],
   placeholder: 'Select status...',
+  required: true
+})
+```
+
+### `buildCurrencyCellEditor`
+
+Creates a currency input editor using the `CurrencyCodeField` component.
+
+**Equivalent scalar:** [CurrencyCodeField](/docs/scalars-components-currency-code-field--docs)
+
+```tsx
+import { buildCurrencyCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildCurrencyCellEditor({})
+
+// With customization
+renderCellEditor: buildCurrencyCellEditor({ 
+  placeholder: 'Select currency...',
   required: true
 })
 ```

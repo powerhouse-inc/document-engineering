@@ -138,6 +138,7 @@ export type ColumnType =
   | 'aid'
   | 'email'
   | 'enum'
+  | 'currency'
 
 export interface CellContext<T extends DataType = DataType> {
   /**
