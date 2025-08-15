@@ -18,6 +18,7 @@ exports[`StringField > should match snapshot when multiline is true (textarea) 1
           id=":r3:-textarea"
           name="test"
           rows="3"
+          style="height: auto;"
         />
       </div>
     </div>
