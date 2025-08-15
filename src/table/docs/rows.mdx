@@ -8,14 +8,15 @@ This page covers row-related behavior and configuration for `ObjectSetTable`.
 
 ## Row properties
 
-| Property            | Type                                                       | Default  | Description                                                                          |
-| ------------------- | ---------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------ |
-| `allowRowSelection` | `boolean`                                                  | `true`   | Enables row selection via mouse and keyboard.                                        |
-| `showRowNumbers`    | `boolean`                                                  | `true`   | Shows a leading column with row numbers; also acts as a selection target.            |
-| `minRowCount`       | `number`                                                   | `0`      | Ensures the table renders at least this many rows by adding empty placeholder rows.  |
-| `minRowHeight`      | `number \| 'auto'`                                         | `'auto'` | Minimum pixel height for each row; affects all cells, including the row number cell. |
-| `onAdd`             | `(data: Record<string, unknown>) => Promise<void> \| void` | —        | Enables an insertion row at the bottom for adding items.                             |
-| `onDelete`          | `(rows: T[]) => Promise<void> \| void`                     | —        | Enables deletion UI and keyboard deletion of selected rows.                          |
+| Property            | Type                                                       | Default    | Description                                                                          |
+| ------------------- | ---------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------ |
+| `allowRowSelection` | `boolean`                                                  | `true`     | Enables row selection via mouse and keyboard.                                        |
+| `showRowNumbers`    | `boolean`                                                  | `true`     | Shows a leading column with row numbers; also acts as a selection target.            |
+| `minRowCount`       | `number`                                                   | `0`        | Ensures the table renders at least this many rows by adding empty placeholder rows.  |
+| `maxRowCount`       | `number`                                                   | `Infinity` | Limits the maximum number of rows. When reached, prevents adding new rows.           |
+| `minRowHeight`      | `number \| 'auto'`                                         | `'auto'`   | Minimum pixel height for each row; affects all cells, including the row number cell. |
+| `onAdd`             | `(data: Record<string, unknown>) => Promise<void> \| void` | —          | Enables an insertion row at the bottom for adding items.                             |
+| `onDelete`          | `(rows: T[]) => Promise<void> \| void`                     | —          | Enables deletion UI and keyboard deletion of selected rows.                          |
 
 For column-level editing controls, see the Column Definition doc and the Editing doc:
 
@@ -58,7 +59,7 @@ Notes:
 
 ## Row Height and Count
 
-Control table density and visual stability:
+Control table density, visual stability, and size limits:
 
 ```tsx
 <ObjectSetTable
@@ -66,13 +67,16 @@ Control table density and visual stability:
   columns={columns}
   minRowHeight={40} // pixels; 'auto' uses content height
   minRowCount={10} // renders empty placeholder rows up to this count
+  maxRowCount={50} // limits maximum rows; disables adding when reached
 />
 ```
 
 Behavior details:
 
-- Empty rows are rendered to satisfy `minRowCount`. They are non-interactive placeholders.
+- **minRowCount**: Empty rows are rendered to satisfy the minimum. They are non-interactive placeholders.
+- **maxRowCount**: When the data length reaches this limit, the add functionality is automatically disabled.
 - If `onAdd` is provided (insertion row enabled), that insertion row counts toward `minRowCount`.
+- Row count limits work together: deletion is prevented below `minRowCount`, addition is prevented above `maxRowCount`.
 
 ---
 

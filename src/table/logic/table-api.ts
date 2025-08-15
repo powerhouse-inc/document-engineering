@@ -283,7 +283,9 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @returns `true` if the table can be deleted, `false` otherwise
    */
   canDelete(): boolean {
-    return typeof this._getConfig().onDelete === 'function'
+    return (
+      typeof this._getConfig().onDelete === 'function' && this._getState().data.length > this._getConfig().minRowCount!
+    )
   }
 
   /**
@@ -309,6 +311,17 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
 
     const actualRows = rows.filter((rowIndex) => rowIndex < this._getState().data.length)
     const rowsData = actualRows.map((row) => this._getState().data[row].data)
+
+    const canDeleteThatMany = actualRows.length <= this._getState().data.length - (this._getConfig().minRowCount ?? 0)
+    if (!canDeleteThatMany) {
+      if (confirmationOptions.askConfirmation) {
+        await confirm({
+          title: 'Delete entries',
+          description: `You can not delete that many entries. The minimum number of entries is ${this._getConfig().minRowCount}.`,
+        })
+      }
+      return
+    }
 
     let confirmed = true
     if (confirmationOptions.askConfirmation) {
@@ -338,7 +351,9 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @returns `true` if the table can be added, `false` otherwise
    */
   canAdd(): boolean {
-    return typeof this._getConfig().onAdd === 'function'
+    return (
+      typeof this._getConfig().onAdd === 'function' && this._getState().data.length < this._getConfig().maxRowCount!
+    )
   }
 
   /**

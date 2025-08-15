@@ -64,6 +64,7 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
       })),
       width: config.width ?? 'auto',
       minRowCount: config.minRowCount ?? 0,
+      maxRowCount: config.maxRowCount ?? Infinity,
       minRowHeight: config.minRowHeight ?? 'auto',
       allowRowSelection: config.allowRowSelection ?? true,
       showRowNumbers: config.showRowNumbers ?? true,

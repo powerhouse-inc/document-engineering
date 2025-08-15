@@ -6,10 +6,13 @@ import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
 
 Enable row creation in `ObjectSetTable` by providing the `onAdd` prop. When present, an insertion row appears at the bottom. Users type into editable cells in that row; saving a cell calls `onAdd` with a partial payload for the last edited field.
 
+Row addition is automatically disabled when the table reaches the `maxRowCount` limit, ensuring controlled table size management.
+
 ## Requirements
 
 - At least one column must be editable. See [Column Definition → Editing](?path=/docs/data-display-object-set-table-docs-column-definition--readme#editing).
 - Provide an `onAdd` handler. Without it, the insertion row is hidden.
+- Optional: Set `maxRowCount` to limit the maximum number of rows that can be added.
 
 ## Quick start
 
@@ -29,6 +32,7 @@ const [data, setData] = useState<Person[]>([])
 <ObjectSetTable<Person>
   data={data}
   columns={columns}
+  maxRowCount={10} // Limit table to 10 rows maximum
   onAdd={(partial) => {
     // partial only includes the last saved field from the insertion row
     const defaults: Person = { firstName: '', email: '' }
@@ -41,6 +45,7 @@ const [data, setData] = useState<Person[]>([])
 
 - The insertion row is rendered only when `onAdd` is provided.
 - It appears after the last data row and counts toward `minRowCount`. See [Rows → Row Height and Count](?path=/docs/data-display-object-set-table-docs-rows--readme#row-height-and-count).
+- **Row count limits**: The insertion row is automatically hidden when `data.length >= maxRowCount`, preventing users from adding more rows.
 - Saving a cell in the insertion row triggers validation and then calls `onAdd` with `{ [field]: value }` for that cell.
 - The handler may be async; returning a promise is supported.
 - Each save in the insertion row invokes `onAdd`. Commonly, you create the new item on the first save and merge subsequent fields as needed.
@@ -65,6 +70,25 @@ onAdd={async (partial) => {
   setData((prev) => [...prev, created])
 }}
 ```
+
+### Limit table size with maxRowCount
+
+```tsx
+<ObjectSetTable<Person>
+  data={data}
+  columns={columns}
+  maxRowCount={100} // Prevent adding beyond 100 rows
+  onAdd={(partial) => {
+    const newRow: Person = { firstName: '', email: '', ...(partial as Partial<Person>) }
+    setData((prev) => [...prev, newRow])
+  }}
+/>
+```
+
+When `maxRowCount` is reached:
+- The insertion row is automatically hidden
+- Users cannot add more rows until some are deleted
+- The `canAdd()` API method returns `false`
 
 For editing interactions (enter/commit/cancel, validation), see [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme).
 
