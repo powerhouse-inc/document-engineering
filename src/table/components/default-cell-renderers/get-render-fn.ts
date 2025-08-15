@@ -6,6 +6,9 @@ import { renderNumberCell } from './number-render.js'
 import { renderTextCell } from './text-render.js'
 import { renderTimeCell } from './time-render.js'
 import { renderUrlCell } from './url-render.js'
+import { renderPhidCell } from './phid-render.js'
+import { renderOidCell } from './oid-render.js'
+import { renderAidCell } from './aid-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
@@ -23,6 +26,12 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderTimeCell
     case 'url':
       return renderUrlCell
+    case 'phid':
+      return renderPhidCell
+    case 'oid':
+      return renderOidCell
+    case 'aid':
+      return renderAidCell
     case undefined:
       return renderTextCell
     default:

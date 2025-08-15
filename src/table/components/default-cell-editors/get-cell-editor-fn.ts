@@ -6,6 +6,9 @@ import { buildNumberCellEditor } from './number-editor.js'
 import { buildStringCellEditor } from './string-editor.js'
 import { buildTimeCellEditor } from './time-editor.js'
 import { buildUrlCellEditor } from './url-editor.js'
+import { buildPhidCellEditor } from './phid-editor.js'
+import { buildOidCellEditor } from './oid-editor.js'
+import { buildAidCellEditor } from './aid-editor.js'
 
 export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType): RenderCellEditorFn<T, unknown> => {
   switch (type) {
@@ -23,6 +26,12 @@ export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType
       return buildTimeCellEditor({})
     case 'url':
       return buildUrlCellEditor({})
+    case 'phid':
+      return buildPhidCellEditor({})
+    case 'oid':
+      return buildOidCellEditor({})
+    case 'aid':
+      return buildAidCellEditor({})
     case undefined:
       return buildStringCellEditor({})
     default:

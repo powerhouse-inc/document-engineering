@@ -28,6 +28,9 @@ The table provides builder functions for common data types. These builders retur
 - DateTime: [buildDateTimeCellEditor](#builddatetimecelleditor)
 - Time: [buildTimeCellEditor](#buildtimecelleditor)
 - URL: [buildUrlCellEditor](#buildurlcelleditor)
+- PHID: [buildPhidCellEditor](#buildphidcelleditor)
+- OID: [buildOidCellEditor](#buildoidcelleditor)
+- AID: [buildAidCellEditor](#buildaidcelleditor)
 
 ### `buildStringCellEditor`
 
@@ -168,6 +171,63 @@ renderCellEditor: buildUrlCellEditor({
   allowedProtocols: ['https', 'http'],
   maxURLLength: 2000,
   placeholder: 'Enter URL...'
+})
+```
+
+### `buildPhidCellEditor`
+
+Creates a PHID input editor using the `PhidField` component.
+
+**Equivalent scalar:** [PhidField](/docs/scalars-components-phid-field--docs)
+
+```tsx
+import { buildPhidCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildPhidCellEditor({})
+
+// With customization
+renderCellEditor: buildPhidCellEditor({ 
+  placeholder: 'Enter PHID...',
+  required: true
+})
+```
+
+### `buildOidCellEditor`
+
+Creates an OID input editor using the `OidField` component.
+
+**Equivalent scalar:** [OidField](/docs/scalars-components-oid-field--docs)
+
+```tsx
+import { buildOidCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildOidCellEditor({})
+
+// With customization
+renderCellEditor: buildOidCellEditor({ 
+  placeholder: 'Enter OID...',
+  required: true
+})
+```
+
+### `buildAidCellEditor`
+
+Creates an AID input editor using the `AidField` component.
+
+**Equivalent scalar:** [AidField](/docs/scalars-components-aid-field--docs)
+
+```tsx
+import { buildAidCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildAidCellEditor({})
+
+// With customization
+renderCellEditor: buildAidCellEditor({ 
+  placeholder: 'Enter AID...',
+  required: true
 })
 ```
 
