@@ -2,6 +2,7 @@ import type { ColumnType, DataType, RenderCellEditorFn } from '../../table/types
 import { buildBooleanCellEditor } from './boolean-editor.js'
 import { buildNumberCellEditor } from './number-editor.js'
 import { buildStringCellEditor } from './string-editor.js'
+import { buildTimeCellEditor } from './time-editor.js'
 import { buildUrlCellEditor } from './url-editor.js'
 
 export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType): RenderCellEditorFn<T, unknown> => {
@@ -12,6 +13,8 @@ export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType
       return buildNumberCellEditor({})
     case 'boolean':
       return buildBooleanCellEditor({})
+    case 'time':
+      return buildTimeCellEditor({})
     case 'url':
       return buildUrlCellEditor({})
     case undefined:

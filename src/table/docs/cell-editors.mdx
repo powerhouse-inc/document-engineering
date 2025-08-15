@@ -24,6 +24,7 @@ The table provides builder functions for common data types. These builders retur
 - Strings: [buildStringCellEditor (default)](#buildstringcelleditor)
 - Number: [buildNumberCellEditor](#buildnumbercelleditor)
 - Boolean: [buildBooleanCellEditor](#buildbooleancelleditor)
+- Time: [buildTimeCellEditor](#buildtimecelleditor)
 - URL: [buildUrlCellEditor](#buildurlcelleditor)
 
 ### `buildStringCellEditor`
@@ -83,6 +84,26 @@ renderCellEditor: buildBooleanCellEditor({})
 renderCellEditor: buildBooleanCellEditor({ 
   label: 'Active Status',
   description: 'Toggle user active status'
+})
+```
+
+### `buildTimeCellEditor`
+
+Creates a time input editor using the `TimePickerField` component.
+
+**Equivalent scalar:** [TimePickerField](/docs/scalars-components-time-picker-field--docs)
+
+```tsx
+import { buildTimeCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildTimeCellEditor({})
+
+// With customization
+renderCellEditor: buildTimeCellEditor({ 
+  timeFormat: 'HH:mm',
+  timeIntervals: 15,
+  placeholder: 'Select time...'
 })
 ```
 
@@ -175,20 +196,10 @@ const columns = [
     editable: true
   },
   {
-    field: 'amount',
+    field: 'size',
     type: 'number', // Uses buildNumberCellEditor({})
     editable: true
   },
-  {
-    field: 'isActive',
-    type: 'boolean', // Uses buildBooleanCellEditor({})
-    editable: true
-  },
-  {
-    field: 'website',
-    type: 'url', // Uses buildUrlCellEditor({})
-    editable: true
-  }
 ]
 ```
 
