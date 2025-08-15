@@ -2,7 +2,7 @@ import { NumberField } from '../../../scalars/components/number-field/number-fie
 import type { NumberFieldProps } from '../../../scalars/components/number-field/types.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
-export const numberCellEditorFactory = <T extends DataType>(
+export const buildNumberCellEditor = <T extends DataType>(
   numberFieldProps: Omit<NumberFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const NumberCellEditor = (value: unknown, onChange: (newValue: unknown) => unknown, context: CellContext<T>) => {

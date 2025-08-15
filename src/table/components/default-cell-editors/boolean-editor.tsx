@@ -2,7 +2,7 @@ import { BooleanField, type BooleanFieldProps } from '../../../scalars/component
 import { cn } from '../../../scalars/lib/utils.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
-export const booleanCellEditorFactory = <T extends DataType>(
+export const buildBooleanCellEditor = <T extends DataType>(
   booleanFieldProps: Omit<BooleanFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const BooleanCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {

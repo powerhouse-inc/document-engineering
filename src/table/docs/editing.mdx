@@ -24,6 +24,30 @@ When `editable` is `true`, the table provides a default editor based on the colu
 
 ---
 
+## Cell Editors
+
+Cell editors are the UI components that appear when a user enters edit mode for a cell. The table provides built-in editors for common data types, and you can also create custom editors for specialized needs.
+
+### Built-in Editors
+
+The table automatically selects an appropriate editor based on the column's `type` property. For a complete list of available built-in editors and their configuration options, see [Cell Editors](?path=/docs/data-display-object-set-table-docs-cell-editors--readme).
+
+### Custom Editors
+
+You can provide custom editors by setting the `editor` property on your column definition:
+
+```tsx
+{
+  field: 'status',
+  editable: true,
+  editor: (props) => <CustomStatusEditor {...props} />
+}
+```
+
+Custom editors receive the current cell value, row data, and callbacks for saving or canceling the edit.
+
+---
+
 ## Saving edits
 
 Use `onSave` to validate and persist changes. Return `true` to commit or `false` to reject and revert.
@@ -71,6 +95,7 @@ See [API → Cell Editing](?path=/docs/data-display-object-set-table-docs-api--r
 ## Related docs
 
 - [Column Definition](?path=/docs/data-display-object-set-table-docs-column-definition--readme): types, defaults, property reference
+- [Cell Editors](?path=/docs/data-display-object-set-table-docs-cell-editors--readme): built-in editors and custom editor creation
 - [Cells](?path=/docs/data-display-object-set-table-docs-cells--readme): value pipeline and `CellContext`
 - [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme): interactions for editing
 - [API](?path=/docs/data-display-object-set-table-docs-api--readme): programmatic editing, selection, and utilities

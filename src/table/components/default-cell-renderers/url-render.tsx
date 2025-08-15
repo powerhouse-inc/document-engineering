@@ -1,0 +1,26 @@
+import { cn } from '../../../scalars/lib/utils.js'
+import type { CellContext, DataType } from '../../table/types.js'
+
+const renderUrlCell = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
+  const url = value?.toString() ?? ''
+
+  return (
+    <div
+      className={cn({
+        'text-right': context.column.align === 'right',
+        'text-center': context.column.align === 'center',
+        'text-left': context.column.align === 'left' || !context.column.align,
+      })}
+    >
+      {url ? (
+        <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+          {url}
+        </a>
+      ) : (
+        ''
+      )}
+    </div>
+  )
+}
+
+export { renderUrlCell }

@@ -5,8 +5,8 @@ import { ObjectSetTable } from '../../table/object-set-table.js'
 import type { CellContext, ColumnDef, ObjectSetTableConfig, RowContext } from '../../table/types.js'
 import { Icon } from '../../../ui/components/icon/icon.js'
 import { confirm } from '../../../ui/components/confirm/confirm.js'
-import { numberCellEditorFactory } from '../../components/default-cell-editors/number-editor.js'
-import { stringCellEditorFactory } from '../../components/default-cell-editors/string-editor.js'
+import { buildNumberCellEditor } from '../../components/default-cell-editors/number-editor.js'
+import { buildStringCellEditor } from '../../components/default-cell-editors/string-editor.js'
 
 const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'columns' | 'data'>) => {
   const [data, setData] = useState<MockedPerson[]>(mockData)
@@ -35,7 +35,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           })
           return true
         },
-        renderCellEditor: stringCellEditorFactory({ maxLength: 10 }),
+        renderCellEditor: buildStringCellEditor({ maxLength: 10 }),
       },
       {
         field: 'status',
@@ -107,7 +107,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
               )}
             </div>
           ),
-        renderCellEditor: numberCellEditorFactory({ step: 100, minValue: 0 }),
+        renderCellEditor: buildNumberCellEditor({ step: 100, minValue: 0 }),
         sortable: true,
       },
       {

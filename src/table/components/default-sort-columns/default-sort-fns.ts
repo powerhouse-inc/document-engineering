@@ -29,10 +29,22 @@ const defaultSortTextFn = (a: unknown, b: unknown) => {
 export const defaultSortFns = <T = unknown>(columnType: ColumnType): SortFn<T> => {
   switch (columnType) {
     case 'number':
+    case 'amount':
       return defaultSortNumberFn as SortFn<T>
 
     case 'boolean':
     case 'string':
+    case 'country':
+    case 'enum':
+    case 'currency':
+    case 'date':
+    case 'datetime':
+    case 'time':
+    case 'url':
+    case 'email':
+    case 'phid':
+    case 'oid':
+    case 'aid':
     default:
       return defaultSortTextFn as SortFn<T>
   }
