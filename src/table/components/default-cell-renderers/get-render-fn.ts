@@ -10,6 +10,7 @@ import { renderPhidCell } from './phid-render.js'
 import { renderOidCell } from './oid-render.js'
 import { renderAidCell } from './aid-render.js'
 import { renderEmailCell } from './email-render.js'
+import { renderEnumCell } from './enum-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
@@ -35,6 +36,8 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderAidCell
     case 'email':
       return renderEmailCell
+    case 'enum':
+      return renderEnumCell
     case undefined:
       return renderTextCell
     default:

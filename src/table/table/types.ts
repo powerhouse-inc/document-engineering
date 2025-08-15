@@ -137,6 +137,7 @@ export type ColumnType =
   | 'oid'
   | 'aid'
   | 'email'
+  | 'enum'
 
 export interface CellContext<T extends DataType = DataType> {
   /**

@@ -7,10 +7,15 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
 
     case 'string':
     case 'boolean':
+    case 'enum':
     case 'date':
     case 'datetime':
     case 'time':
     case 'url':
+    case 'email':
+    case 'phid':
+    case 'oid':
+    case 'aid':
     default:
       return 'left'
   }

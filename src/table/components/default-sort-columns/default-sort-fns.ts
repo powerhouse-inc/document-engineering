@@ -33,10 +33,15 @@ export const defaultSortFns = <T = unknown>(columnType: ColumnType): SortFn<T> =
 
     case 'boolean':
     case 'string':
+    case 'enum':
     case 'date':
     case 'datetime':
     case 'time':
     case 'url':
+    case 'email':
+    case 'phid':
+    case 'oid':
+    case 'aid':
     default:
       return defaultSortTextFn as SortFn<T>
   }

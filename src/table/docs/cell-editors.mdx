@@ -29,6 +29,7 @@ The table provides builder functions for common data types. These builders retur
 - Time: [buildTimeCellEditor](#buildtimecelleditor)
 - URL: [buildUrlCellEditor](#buildurlcelleditor)
 - Email: [buildEmailCellEditor](#buildemailcelleditor)
+- Enum: [buildEnumCellEditor](#buildenumcelleditor)
 - PHID: [buildPhidCellEditor](#buildphidcelleditor)
 - OID: [buildOidCellEditor](#buildoidcelleditor)
 - AID: [buildAidCellEditor](#buildaidcelleditor)
@@ -248,6 +249,30 @@ renderCellEditor: buildAidCellEditor({})
 // With customization
 renderCellEditor: buildAidCellEditor({ 
   placeholder: 'Enter AID...',
+  required: true
+})
+```
+
+### `buildEnumCellEditor`
+
+Creates an enum input editor using the `EnumField` component with `variant="Select"` to display as a dropdown instead of radio buttons.
+
+**Equivalent scalar:** [EnumField](/docs/scalars-components-enum-field--docs)
+
+```tsx
+import { buildEnumCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildEnumCellEditor({})
+
+// With customization
+renderCellEditor: buildEnumCellEditor({ 
+  options: [
+    { value: 'active', label: 'Active' },
+    { value: 'inactive', label: 'Inactive' },
+    { value: 'pending', label: 'Pending' }
+  ],
+  placeholder: 'Select status...',
   required: true
 })
 ```

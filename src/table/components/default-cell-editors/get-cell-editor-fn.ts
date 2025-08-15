@@ -10,6 +10,7 @@ import { buildPhidCellEditor } from './phid-editor.js'
 import { buildOidCellEditor } from './oid-editor.js'
 import { buildAidCellEditor } from './aid-editor.js'
 import { buildEmailCellEditor } from './email-editor.js'
+import { buildEnumCellEditor } from './enum-editor.js'
 
 export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType): RenderCellEditorFn<T, unknown> => {
   switch (type) {
@@ -35,6 +36,8 @@ export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType
       return buildAidCellEditor({})
     case 'email':
       return buildEmailCellEditor({})
+    case 'enum':
+      return buildEnumCellEditor({})
     case undefined:
       return buildStringCellEditor({})
     default:
