@@ -56,10 +56,9 @@ const TableProvider = <T extends DataType = DataType>({ children, config, tableR
 
   const stateRef = useRef(state)
   const configRef = useRef(config)
-  useEffect(() => {
-    stateRef.current = state
-    configRef.current = config
-  }, [state, config])
+
+  stateRef.current = state
+  configRef.current = config
 
   const [api, publicApi] = useMemo(() => {
     const internalApi = new TableApi<T>(tableRef, configRef, stateRef)

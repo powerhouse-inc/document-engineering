@@ -36,11 +36,21 @@ export interface ObjectSetTableConfig<T extends DataType> {
 
   /**
    * The minimum number of rows to display in the table. If the data is less than this number,
-   * the table will add empty rows to reach the minimum.
+   * the table will add empty rows to reach the minimum. Rows can not be removed if the data
+   * is less than the minimum.
    *
    * @default 0
    */
   minRowCount?: number
+
+  /**
+   * The maximum number of rows to display in the table. If the data is greater than this number,
+   * the table will add empty rows to reach the maximum. Rows can not be added if the data is
+   * greater than the maximum.
+   *
+   * @default Infinity
+   */
+  maxRowCount?: number
 
   /**
    * The minimum height in pixels of the rows.

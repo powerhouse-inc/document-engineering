@@ -124,6 +124,15 @@ const meta: Meta<typeof ObjectSetTable> = {
         defaultValue: { summary: '0' },
       },
     },
+    maxRowCount: {
+      control: 'number',
+      description:
+        'The maximum number of rows allowed in the table. When this limit is reached, the add functionality will be disabled to prevent exceeding the maximum.',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: 'Infinity' },
+      },
+    },
     minRowHeight: {
       control: 'text',
       description: 'The minimum height in pixels of the rows.',

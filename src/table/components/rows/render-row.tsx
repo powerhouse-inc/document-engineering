@@ -83,7 +83,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
     }
     return (
       mode === 'default' &&
-      (!!config.onDelete ||
+      (!!api.canDelete() ||
         config.actions?.primary ||
         (Array.isArray(config.actions?.secondary) && config.actions.secondary.length > 0))
     )
@@ -92,7 +92,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
     rowIndex,
     selectedRowErrors,
     mode,
-    config.onDelete,
+    api,
     config.actions?.primary,
     config.actions?.secondary,
   ])

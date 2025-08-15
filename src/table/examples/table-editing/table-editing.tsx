@@ -193,18 +193,20 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
       columns={columns}
       data={data}
       minRowCount={10}
+      maxRowCount={15}
       actions={actions}
       {...props}
       onDelete={(rows) => {
         setData((prevData) => {
           const newData = [...prevData]
-          const filteredData = newData.filter((row) => !rows.some((person) => person.email === row.email))
+          const filteredData = newData.filter((row) => !rows.some((person) => person.id === row.id))
 
           return filteredData
         })
       }}
       onAdd={(data) => {
         const newPerson: MockedPerson = {
+          id: crypto.randomUUID(),
           firstName: '',
           status: 'inactive',
           payment: 0,

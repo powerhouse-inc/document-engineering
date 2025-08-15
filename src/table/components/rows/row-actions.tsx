@@ -53,6 +53,10 @@ const RowActions = <T extends DataType>({
   }, [config, primaryAction, data, rowIndex])
 
   const deleteActions: Array<RowAction<T>> = useMemo(() => {
+    if (!api.canDelete()) {
+      return []
+    }
+
     return [
       {
         label: 'Delete',
@@ -65,13 +69,13 @@ const RowActions = <T extends DataType>({
       ...(state.selectedRowIndexes.length > 1 && state.selectedRowIndexes.includes(rowIndex)
         ? ([
             {
-              label: `Delete ${Math.min(state.selectedRowIndexes.length, state.defaultData.length)} selected rows`,
+              label: `Delete ${Math.min(state.selectedRowIndexes.length, state.data.length)} selected rows`,
               callback: async (_context) => api.deleteRows(state.selectedRowIndexes),
             },
           ] satisfies Array<RowAction<T>>)
         : []),
     ]
-  }, [api, data.__index, rowIndex, state.defaultData.length, state.selectedRowIndexes])
+  }, [api, data.__index, rowIndex, state.data.length, state.selectedRowIndexes])
 
   const hasSecondaryActions = !!secondaryActions || deleteActions.length > 0
   const haveOnlyOneAction = (!!primaryAction && !hasSecondaryActions) || (hasSecondaryActions && !primaryAction)
