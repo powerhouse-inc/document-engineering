@@ -1,3 +1,28 @@
+# [1.29.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.28.0...v1.29.0) (2025-08-15)
+
+
+### Bug Fixes
+
+* **scalars:** fix the export for status loading ([c5232f9](https://github.com/powerhouse-inc/document-engineering/commit/c5232f9f76dba2ab136672f782936a4ae3fc7003))
+* **scalars:** fix the test check value ([f7760de](https://github.com/powerhouse-inc/document-engineering/commit/f7760def35e50b6508291e00486dabecc9c05ad5))
+* **scalars:** fix the units error ([4d7044e](https://github.com/powerhouse-inc/document-engineering/commit/4d7044e55db4146096008ea8da7e05900397fcc0))
+* **scalars:** remove the with and height in the svg to made more flexible ([2961d43](https://github.com/powerhouse-inc/document-engineering/commit/2961d43242e3e3e2ee687997314aacb78566accf))
+* **ui:** adjusts Select widths ([5d09718](https://github.com/powerhouse-inc/document-engineering/commit/5d0971819e89467b5d9b8f10ef6fc4da116c600b))
+* **ui:** fix the "autoExpand" property behaviour ([81bb0ed](https://github.com/powerhouse-inc/document-engineering/commit/81bb0ed6419bd8e54a1935b16f6bda22e466f3c3))
+* **ui:** test snapshot ([d1caa93](https://github.com/powerhouse-inc/document-engineering/commit/d1caa9390d5356348d4d0d319e5be497fb90ce29))
+
+
+### Features
+
+* **scalars:** add logic for dialog to show the preview ([e3377dd](https://github.com/powerhouse-inc/document-engineering/commit/e3377dd2f30840c660d89c98ff34f194364de895))
+* **scalars:** add preview component and static bar ([578b836](https://github.com/powerhouse-inc/document-engineering/commit/578b83670b734cb0187d009423ff31ec1e01e983))
+* **scalars:** add preview component for image ([32f827e](https://github.com/powerhouse-inc/document-engineering/commit/32f827e761175f345fed2d28ad140bb58fde9650))
+* **scalars:** add svg for the preview placeholder component ([9d17b12](https://github.com/powerhouse-inc/document-engineering/commit/9d17b1270080677c9e6133b81f531f7dfdc33a52))
+* **scalars:** add types and genererate icons ([042f1e9](https://github.com/powerhouse-inc/document-engineering/commit/042f1e9fd9d92a3e7356da718e7f75380a359caa))
+* **table:** validate when adding new data ([c9e6463](https://github.com/powerhouse-inc/document-engineering/commit/c9e6463554b22e715ad9a96315659c7f534b77c7))
+* **ui:** add support for different prefix option formats, value and defaultValue ([4acaf89](https://github.com/powerhouse-inc/document-engineering/commit/4acaf896be51e8c4a5065ab7268e2b3ce49dd2ce))
+* **ui:** populate prefix Select ([8b7a7e1](https://github.com/powerhouse-inc/document-engineering/commit/8b7a7e10887e31948ad7ac32551d67fbd6789baf))
+
 # [1.28.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.27.0...v1.28.0) (2025-08-12)
 
 
