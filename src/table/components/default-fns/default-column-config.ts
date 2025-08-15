@@ -7,6 +7,7 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
 
     case 'string':
     case 'boolean':
+    case 'country':
     case 'enum':
     case 'currency':
     case 'date':

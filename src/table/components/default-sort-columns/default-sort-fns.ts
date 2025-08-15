@@ -33,6 +33,7 @@ export const defaultSortFns = <T = unknown>(columnType: ColumnType): SortFn<T> =
 
     case 'boolean':
     case 'string':
+    case 'country':
     case 'enum':
     case 'currency':
     case 'date':

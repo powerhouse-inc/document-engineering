@@ -1,5 +1,6 @@
 import type { ColumnType, RenderCellFn } from '../../table/types.js'
 import { renderBooleanCell } from './boolean-render.js'
+import { renderCountryCell } from './country-render.js'
 import { renderDateCell } from './date-render.js'
 import { renderDateTimeCell } from './datetime-render.js'
 import { renderNumberCell } from './number-render.js'
@@ -21,6 +22,8 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderNumberCell
     case 'boolean':
       return renderBooleanCell
+    case 'country':
+      return renderCountryCell
     case 'date':
       return renderDateCell
     case 'datetime':
