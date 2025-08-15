@@ -29,6 +29,7 @@ const defaultSortTextFn = (a: unknown, b: unknown) => {
 export const defaultSortFns = <T = unknown>(columnType: ColumnType): SortFn<T> => {
   switch (columnType) {
     case 'number':
+    case 'amount':
       return defaultSortNumberFn as SortFn<T>
 
     case 'boolean':

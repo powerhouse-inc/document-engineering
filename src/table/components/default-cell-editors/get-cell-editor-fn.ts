@@ -13,6 +13,7 @@ import { buildAidCellEditor } from './aid-editor.js'
 import { buildEmailCellEditor } from './email-editor.js'
 import { buildEnumCellEditor } from './enum-editor.js'
 import { buildCurrencyCellEditor } from './currency-editor.js'
+import { buildAmountCellEditor } from './amount-editor.js'
 
 export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType): RenderCellEditorFn<T, unknown> => {
   switch (type) {
@@ -44,6 +45,8 @@ export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType
       return buildEnumCellEditor({})
     case 'currency':
       return buildCurrencyCellEditor({})
+    case 'amount':
+      return buildAmountCellEditor({})
     case undefined:
       return buildStringCellEditor({})
     default:

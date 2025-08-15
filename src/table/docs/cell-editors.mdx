@@ -32,6 +32,7 @@ The table provides builder functions for common data types. These builders retur
 - Email: [buildEmailCellEditor](#buildemailcelleditor)
 - Enum: [buildEnumCellEditor](#buildenumcelleditor)
 - Currency: [buildCurrencyCellEditor](#buildcurrencycelleditor)
+- Amount: [buildAmountCellEditor](#buildamountcelleditor)
 - PHID: [buildPhidCellEditor](#buildphidcelleditor)
 - OID: [buildOidCellEditor](#buildoidcelleditor)
 - AID: [buildAidCellEditor](#buildaidcelleditor)
@@ -317,6 +318,27 @@ renderCellEditor: buildCurrencyCellEditor({})
 renderCellEditor: buildCurrencyCellEditor({ 
   placeholder: 'Select currency...',
   required: true
+})
+```
+
+### `buildAmountCellEditor`
+
+Creates an amount input editor using the `AmountField` component.
+
+**Equivalent scalar:** [AmountField](/docs/scalars-components-amount-field--docs)
+
+```tsx
+import { buildAmountCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildAmountCellEditor({})
+
+// With customization
+renderCellEditor: buildAmountCellEditor({ 
+  placeholder: 'Enter amount...',
+  precision: 2,
+  currencyPosition: 'right',
+  allowNegative: false
 })
 ```
 

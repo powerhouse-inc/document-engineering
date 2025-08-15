@@ -13,6 +13,7 @@ import { renderAidCell } from './aid-render.js'
 import { renderEmailCell } from './email-render.js'
 import { renderEnumCell } from './enum-render.js'
 import { renderCurrencyCell } from './currency-render.js'
+import { renderAmountCell } from './amount-render.js'
 
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
@@ -44,6 +45,8 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
       return renderEnumCell
     case 'currency':
       return renderCurrencyCell
+    case 'amount':
+      return renderAmountCell
     case undefined:
       return renderTextCell
     default:
