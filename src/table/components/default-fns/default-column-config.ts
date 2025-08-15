@@ -7,6 +7,8 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
 
     case 'string':
     case 'boolean':
+    case 'date':
+    case 'datetime':
     case 'time':
     case 'url':
     default:

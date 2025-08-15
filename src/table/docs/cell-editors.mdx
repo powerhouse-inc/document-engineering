@@ -24,6 +24,8 @@ The table provides builder functions for common data types. These builders retur
 - Strings: [buildStringCellEditor (default)](#buildstringcelleditor)
 - Number: [buildNumberCellEditor](#buildnumbercelleditor)
 - Boolean: [buildBooleanCellEditor](#buildbooleancelleditor)
+- Date: [buildDateCellEditor](#builddatecelleditor)
+- DateTime: [buildDateTimeCellEditor](#builddatetimecelleditor)
 - Time: [buildTimeCellEditor](#buildtimecelleditor)
 - URL: [buildUrlCellEditor](#buildurlcelleditor)
 
@@ -104,6 +106,48 @@ renderCellEditor: buildTimeCellEditor({
   timeFormat: 'HH:mm',
   timeIntervals: 15,
   placeholder: 'Select time...'
+})
+```
+
+### `buildDateCellEditor`
+
+Creates a date input editor using the `DatePickerField` component.
+
+**Equivalent scalar:** [DatePickerField](/docs/scalars-components-date-picker-field--docs)
+
+```tsx
+import { buildDateCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildDateCellEditor({})
+
+// With customization
+renderCellEditor: buildDateCellEditor({ 
+  dateFormat: 'MM/dd/yyyy',
+  placeholder: 'Select date...',
+  minDate: new Date('2020-01-01'),
+  maxDate: new Date('2030-12-31')
+})
+```
+
+### `buildDateTimeCellEditor`
+
+Creates a datetime input editor using the `DateTimePickerField` component.
+
+**Equivalent scalar:** [DateTimePickerField](/docs/scalars-components-date-time-picker-field--docs)
+
+```tsx
+import { buildDateTimeCellEditor } from '@powerhousedao/document-engineering/table'
+
+// Basic usage
+renderCellEditor: buildDateTimeCellEditor({})
+
+// With customization
+renderCellEditor: buildDateTimeCellEditor({ 
+  dateFormat: 'MM/dd/yyyy',
+  timeFormat: 'HH:mm',
+  placeholder: 'Select date and time...',
+  timeIntervals: 15
 })
 ```
 
