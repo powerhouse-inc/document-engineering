@@ -99,9 +99,7 @@ describe('CountryCodeField Component', () => {
 
   it('should handle both allowedCountries and excludedCountries props', async () => {
     const user = userEvent.setup()
-    renderWithForm(
-      <CountryCodeField {...defaultProps} allowedCountries={['US', 'GB', 'FR']} excludedCountries={['FR']} />
-    )
+    renderWithForm(<CountryCodeField {...defaultProps} allowedCountries={['US', 'GB']} excludedCountries={['FR']} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)

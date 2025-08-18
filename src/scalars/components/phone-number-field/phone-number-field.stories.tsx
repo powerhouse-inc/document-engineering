@@ -1,27 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { withForm } from '../../lib/decorators.js'
 import {
   getDefaultArgTypes,
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../../../scalars/lib/storybook-arg-types.js'
-import { PhoneNumberInput } from './phone-number-input.js'
+} from '../../lib/storybook-arg-types.js'
+import { PhoneNumberField } from './phone-number-field.js'
 
 /**
- * ## Phone number input component
+ * ## Phone number field component
  *
- * `PhoneNumberInput` is a specialized input component for handling phone numbers formatted according to the
- * <a href="https://www.itu.int/rec/T-REC-E.164-201011-I/en" target="_blank" rel="noopener noreferrer">ITU-T E.164</a> recommendation.
- *
- * > **Note:** This component does not have built-in validation. If you need built-in validation
- * > you can use the [PhoneNumberField](?path=/docs/scalars-phone-number-field--readme)
- * > component.
+ * `PhoneNumberField` is a specialized form component for handling phone numbers formatted according to the
+ * <a href="https://www.itu.int/rec/T-REC-E.164-201011-I/en" target="_blank" rel="noopener noreferrer">ITU-T E.164</a>
+ *  recommendation with built-in validation.
+ * It is based on [PhoneNumberInput](?path=/docs/data-entry-phone-number-input--readme) component.
  */
 
-const meta: Meta<typeof PhoneNumberInput> = {
-  title: 'Data Entry/Phone Number Input',
-  component: PhoneNumberInput,
+const meta: Meta<typeof PhoneNumberField> = {
+  title: 'Scalars/Phone Number Field',
+  component: PhoneNumberField,
   decorators: [
+    withForm,
     (Story) => (
       <div style={{ width: '280px', margin: '1rem auto 0' }}>
         <Story />
@@ -36,13 +36,7 @@ const meta: Meta<typeof PhoneNumberInput> = {
     ...getDefaultArgTypes(),
     ...PrebuiltArgTypes.placeholder,
     ...PrebuiltArgTypes.pattern,
-    ...getValidationArgTypes({
-      enabledArgTypes: {
-        validators: false,
-        showErrorOnBlur: false,
-        showErrorOnChange: false,
-      },
-    }),
+    ...getValidationArgTypes(),
 
     allowedCountries: {
       control: 'object',
@@ -97,14 +91,14 @@ const meta: Meta<typeof PhoneNumberInput> = {
     ...PrebuiltArgTypes.baseValue,
   },
   args: {
-    name: 'phone-number-input',
-    label: 'Phone number',
+    name: 'phone-number-field',
+    label: 'Phone number field',
   },
-} satisfies Meta<typeof PhoneNumberInput>
+} satisfies Meta<typeof PhoneNumberField>
 
 export default meta
 
-type Story = StoryObj<typeof PhoneNumberInput>
+type Story = StoryObj<typeof PhoneNumberField>
 
 export const Default: Story = {}
 

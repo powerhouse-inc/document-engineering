@@ -97,7 +97,7 @@ describe('CountryCodePicker Component', () => {
 
   it('should handle both allowedCountries and excludedCountries props', async () => {
     const user = userEvent.setup()
-    render(<CountryCodePicker {...defaultProps} allowedCountries={['US', 'GB', 'FR']} excludedCountries={['FR']} />)
+    render(<CountryCodePicker {...defaultProps} allowedCountries={['US', 'GB']} excludedCountries={['FR']} />)
 
     const select = screen.getByRole('combobox')
     await user.click(select)

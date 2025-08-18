@@ -51,13 +51,16 @@ const CountryCodePicker = React.forwardRef<HTMLButtonElement, CountryCodePickerP
       }))
       .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0))
 
+    const allowedCountriesArray = Array.isArray(allowedCountries) ? allowedCountries : undefined
+    const excludedCountriesArray = Array.isArray(excludedCountries) ? excludedCountries : undefined
+
     const options =
-      Array.isArray(allowedCountries) || Array.isArray(excludedCountries)
-        ? defaultOptions.filter(
-            (option) =>
-              (!allowedCountries || allowedCountries.includes(option.value)) &&
-              !excludedCountries?.includes(option.value)
-          )
+      allowedCountriesArray || excludedCountriesArray
+        ? defaultOptions.filter((option) => {
+            const isAllowedCountry = allowedCountriesArray ? allowedCountriesArray.includes(option.value) : true
+            const isExcludedCountry = excludedCountriesArray ? !excludedCountriesArray.includes(option.value) : true
+            return isAllowedCountry && isExcludedCountry
+          })
         : defaultOptions
 
     const selectedOption = options.find((option) => option.value === internalValue)

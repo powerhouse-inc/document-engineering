@@ -30,6 +30,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       includeDependentAreas,
       prefixOptionFormat = 'FlagsAndNumbers',
       prefixProps,
+      pattern,
       viewMode = 'edition',
       // TODO: implement diffs
       // baseValue,
@@ -107,6 +108,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
             aria-label={!label ? 'Phone number input' : undefined}
             aria-required={required}
             type="tel"
+            pattern={pattern?.source}
             className={cn(
               'focus:ring-0 focus:ring-offset-0',
               'outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
