@@ -152,10 +152,16 @@ const FileUploadItem = ({
           <VisuallyHidden>
             <AlertDialogDescription>Preview of the file</AlertDialogDescription>
           </VisuallyHidden>
-          <AlertDialogContent className="p-0 w-auto h-auto max-w-none">
+          <AlertDialogContent
+            className={cn('p-0 border-0 shadow-none bg-transparent max-w-none w-auto h-auto')}
+            style={{
+              width: typePreview === 'pdf' || typePreview === 'unknown' ? '500px' : '368px',
+              height: typePreview === 'pdf' || typePreview === 'unknown' ? '652px' : '384px',
+            }}
+          >
             {typePreview === 'pdf' && (
               <PreviewFilePreview
-                className="w-[500px] h-[652px]"
+                className="w-full h-full"
                 status={previewStatus}
                 onClose={handleOnCancelPreview}
                 preview={preview}
@@ -163,7 +169,7 @@ const FileUploadItem = ({
             )}
             {typePreview === 'image' && (
               <PreviewImagePreview
-                className="w-[368px] h-[384px]"
+                className="w-full h-full"
                 status={previewStatus}
                 onClose={handleOnCancelPreview}
                 preview={preview}
