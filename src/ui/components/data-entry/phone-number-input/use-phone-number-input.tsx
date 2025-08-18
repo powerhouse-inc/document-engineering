@@ -209,11 +209,9 @@ export const usePhoneNumberInput = ({
       if (parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
         setSelectValue(parsedValue.selectValue)
         setInputValue(parsedValue.inputValue)
-        const callingCode = parsedValue.selectValue.split('-')[0]
-        onChange?.(`${callingCode}${parsedValue.inputValue}`)
       }
     }
-  }, [value, options, onChange])
+  }, [value, options])
 
   return {
     options,
