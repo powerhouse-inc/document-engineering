@@ -17,6 +17,25 @@ const useGlobalTableKeyEvents = () => {
         if (e.key === 'Escape' && !!selectedCell) {
           void api.exitCellEditMode(false)
         }
+        if (e.key === 'Tab') {
+          e.preventDefault()
+          void api.getErrors(selectedCell?.row ?? 0, true).then((errors) => {
+            if (errors.length > 0) {
+              return
+            } else {
+              void api.exitCellEditMode(true).then(() => {
+                const nextCell = getNextSelectedCell({
+                  direction: 'right',
+                  currentCell: selectedCell,
+                  rowCount: api._getState().data.length,
+                  columnCount: api._getConfig().columns.length,
+                  moveToNextRow: true,
+                })
+                api.selection.selectCell(nextCell.row, nextCell.column)
+              })
+            }
+          })
+        }
       } else {
         if (e.key === 'Enter' && !!selectedCell && api.canEditCell(selectedCell.row, selectedCell.column)) {
           // prevent the form from being submitted when the cell enters in edit mode
