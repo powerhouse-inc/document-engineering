@@ -1,16 +1,17 @@
 import React, { useId } from 'react'
 import type { FileInputProps } from './types.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import { Icon } from '../../icon/icon.js'
 import FileBackground from '../../icon-components/FileBackground.js'
-import { Input } from '../../../../ui/components/data-entry/input/index.js'
-import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
-import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
+
 import { useDropzone } from 'react-dropzone'
 import { formatBytes, getExtensionsFromMimeTypes } from './utils.js'
 import { Button } from '../../../../scalars/components/fragments/button/button.js'
 import { useFileUpload } from './useUploadFile.js'
 import { FileUploadItem } from './sub-components/file-upload-item.js'
+import { Icon } from '../../icon/index.js'
+import { Input } from '../../../../ui/components/data-entry/input/index.js'
+import { FormLabel } from '../../../../scalars/components/fragments/form-label/form-label.js'
+import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 
 const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
@@ -50,14 +51,26 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const allowedFileTypesString = Array.isArray(allowedFileTypes) ? allowedFileTypes : []
 
-    const { handleDrop, borderIndicator, preview } = useFileUpload({ value, defaultValue, onChange })
-
+    const {
+      handleDrop,
+      borderIndicator,
+      preview,
+      handleCancelPreview,
+      handleOnPreview,
+      isPreviewOpen,
+      previewStatus,
+      typePreview,
+    } = useFileUpload({
+      value,
+      defaultValue,
+      onChange,
+    })
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       onDropAccepted: (acceptedFiles) => {
         handleDrop(acceptedFiles)
       },
-      noClick: true,
-      noKeyboard: true,
+      noClick: status !== 'idle',
+      noKeyboard: status !== 'idle',
     })
 
     return (
@@ -118,8 +131,14 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                       status={status}
                       onCancel={onCancel}
                       onReload={onReload}
-                      showPreview={showPreview}
+                      // Preview Props
                       preview={preview}
+                      showPreview={showPreview}
+                      handleOnCancelPreview={handleCancelPreview}
+                      isPreviewOpen={isPreviewOpen}
+                      handleOnPreview={() => void handleOnPreview()}
+                      previewStatus={previewStatus}
+                      typePreview={typePreview}
                     />
                   </div>
                 </div>

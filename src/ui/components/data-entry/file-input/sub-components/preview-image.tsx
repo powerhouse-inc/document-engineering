@@ -1,69 +1,33 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
-import { Icon } from '../../../icon/index.js'
 import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
-import { STATUS_CONFIG } from '../utils.js'
-import LoadingBar from './loading-bar.js'
-
-type ImagePreviewStatus = Exclude<PreviewStatus, typeof PREVIEW_STATUS.GENERIC_ERROR>
+import { PlaceHolderImage } from './place-holder-image.js'
+import PreviewHeader from './preview-header.js'
 
 interface FilePreviewStateProps {
-  status: ImagePreviewStatus
+  status: PreviewStatus
   onClose: () => void
-  title?: string
-  message?: string
+  className?: string
+  preview?: string
 }
 
-const PreviewImagePreview = ({
-  status,
-  onClose,
-  title: overrideTitle,
-  message: overrideMessage,
-}: FilePreviewStateProps) => {
-  const config = STATUS_CONFIG[status]
-
-  const isLoading = status === PREVIEW_STATUS.LOADING
-  const isCorrupted = status === PREVIEW_STATUS.CORRUPTED_FILE
-
-  const title = overrideTitle ?? config.title
-  const message = overrideMessage ?? config.message
-  const icon = config.icon
-
-  return (
-    <div className="flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,115,0.25)] px-6 py-4 gap-4 w-full h-full min-h-0">
-      <header className="flex justify-between items-center">
-        <span className={cn('text-gray-900 text-sm font-normal leading-4.5', isCorrupted && 'text-red-900')}>
-          Image Preview
-        </span>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close preview"
-          className="text-gray-400 hover:text-gray-600"
-        >
-          <Icon name="XmarkLight" size={16} className="text-gray-900" />
-        </button>
-      </header>
-
-      <div className="flex-1 min-h-0 flex flex-col items-center justify-center bg-gray-100 w-full overflow-auto rounded-md">
-        <div className="relative">
-          <Icon name={icon} size={128} className="text-gray-300" />
-        </div>
-
-        <div className="flex flex-col items-center justify-center gap-4">
-          {title && <h3 className="text-xl font-bold leading-6 text-gray-500">{title}</h3>}
-          {isLoading && <LoadingBar progress={50} className="w-[272px]" />}
-          {!isCorrupted && message && (
-            <p className="text-center text-sm text-gray-500 mx-auto max-w-[296px] whitespace-pre-line">{message}</p>
-          )}
+const PreviewImagePreview = ({ status, onClose, className, preview }: FilePreviewStateProps) => {
+  if (status === PREVIEW_STATUS.SUCCESS) {
+    return (
+      <div
+        className={cn(
+          'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,115,0.25)] px-6 py-4 gap-4 w-full h-full',
+          className
+        )}
+      >
+        <PreviewHeader status={status} onClose={onClose} title="Image Preview" />
+        <div className="flex justify-center items-center relative rounded-md overflow-hidden">
+          {preview && <img src={preview} alt="Preview" className="w-full h-full object-contain" />}
         </div>
       </div>
-      {isCorrupted && (
-        <div className=" border-gray-200">
-          <p className="text-xs text-red-900 font-normal leading-4.5">{message}</p>
-        </div>
-      )}
-    </div>
-  )
+    )
+  }
+
+  return <PlaceHolderImage status={status} onClose={onClose} className={className} />
 }
 
 export default PreviewImagePreview
