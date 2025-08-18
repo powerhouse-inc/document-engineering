@@ -5,7 +5,7 @@ import type { SelectProps } from '../select/types.js'
 type PrefixOptionFormat = 'CodesOnly' | 'FlagsOnly' | 'FlagsAndCodes' | 'FlagsAndNumbers'
 
 interface PhoneNumberInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof InputBaseProps<string> | 'onChange'>,
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof InputBaseProps<string> | 'onChange' | 'pattern'>,
     InputBaseProps<string>,
     Omit<WithDifference<string>, 'diffMode'> {
   onChange?: (value: string) => void
@@ -14,6 +14,7 @@ interface PhoneNumberInputProps
   includeDependentAreas?: boolean
   prefixOptionFormat?: PrefixOptionFormat
   prefixProps?: Pick<SelectProps, 'placeholder' | 'searchable' | 'className' | 'contentClassName'>
+  pattern?: RegExp
 }
 
 export type { PhoneNumberInputProps }

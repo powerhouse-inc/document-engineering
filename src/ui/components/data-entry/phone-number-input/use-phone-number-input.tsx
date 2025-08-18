@@ -61,8 +61,9 @@ export const usePhoneNumberInput = ({
   })
 
   const [inputValue, setInputValue] = useState(() => {
-    const parsedValue = parsePhoneValue(value ?? defaultValue ?? '')
-    return parsedValue?.inputValue ?? ''
+    const rawValue = value ?? defaultValue ?? ''
+    const parsedValue = parsePhoneValue(rawValue)
+    return parsedValue?.inputValue ?? rawValue.replace(/\D/g, '')
   })
 
   const options: SelectOption[] = useMemo(() => {
@@ -111,13 +112,16 @@ export const usePhoneNumberInput = ({
         return aCode - bCode
       })
 
+    const allowedCountriesArray = Array.isArray(allowedCountries) ? allowedCountries : undefined
+    const excludedCountriesArray = Array.isArray(excludedCountries) ? excludedCountries : undefined
+
     const filteredOptions =
-      Array.isArray(allowedCountries) || Array.isArray(excludedCountries)
+      allowedCountriesArray || excludedCountriesArray
         ? defaultOptions.filter((option) => {
             const countryCode = option.value.split('-')[1]
-            return (
-              (!allowedCountries || allowedCountries.includes(countryCode)) && !excludedCountries?.includes(countryCode)
-            )
+            const isAllowedCountry = allowedCountriesArray ? allowedCountriesArray.includes(countryCode) : true
+            const isExcludedCountry = excludedCountriesArray ? !excludedCountriesArray.includes(countryCode) : true
+            return isAllowedCountry && isExcludedCountry
           })
         : defaultOptions
 
@@ -127,23 +131,29 @@ export const usePhoneNumberInput = ({
   const handleSelectOnChange = useCallback(
     (newSelectValue: string) => {
       setSelectValue(newSelectValue)
+      setInputValue('')
       const callingCode = newSelectValue.split('-')[0]
-      const fullValue = `${callingCode}${inputValue}`
-      onChange?.(fullValue)
+      onChange?.(callingCode)
     },
-    [inputValue, onChange]
+    [onChange]
   )
 
   const handleInputOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newInputValue = e.target.value.replace(/\D/g, '')
-      setInputValue(newInputValue)
-
       const callingCode = selectValue.split('-')[0]
-      const fullValue = `${callingCode}${newInputValue}`
-      onChange?.(fullValue)
+      const parsedValue = parsePhoneValue(`${callingCode}${e.target.value}`)
+      if (parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
+        setSelectValue(parsedValue.selectValue)
+        setInputValue(parsedValue.inputValue)
+        const callingCode = parsedValue.selectValue.split('-')[0]
+        onChange?.(`${callingCode}${parsedValue.inputValue}`)
+      } else {
+        const newInputValue = e.target.value.replace(/\D/g, '')
+        setInputValue(newInputValue)
+        onChange?.(`${callingCode}${newInputValue}`)
+      }
     },
-    [selectValue, onChange]
+    [options, selectValue, onChange]
   )
 
   const handleOnKeyDown = useCallback(
