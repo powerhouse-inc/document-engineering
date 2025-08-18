@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CircleFlag } from 'react-circle-flags'
 import countries, { type Countries } from 'world-countries'
 import parsePhoneNumber, { type CountryCode, getCountryCallingCode } from 'libphonenumber-js'
@@ -10,10 +10,12 @@ interface UsePhoneNumberInputProps {
   defaultValue: PhoneNumberInputProps['defaultValue']
   onChange: PhoneNumberInputProps['onChange']
   onKeyDown: PhoneNumberInputProps['onKeyDown']
+  onBlur: PhoneNumberInputProps['onBlur']
   allowedCountries: PhoneNumberInputProps['allowedCountries']
   excludedCountries: PhoneNumberInputProps['excludedCountries']
   includeDependentAreas: PhoneNumberInputProps['includeDependentAreas']
   prefixOptionFormat: PhoneNumberInputProps['prefixOptionFormat']
+  externalRef?: React.ForwardedRef<HTMLInputElement>
 }
 
 const renderFlagIcon = (countryCode: string) => {
@@ -36,6 +38,11 @@ const parsePhoneValue = (rawValue: string) => {
   const parsedValue = parsePhoneNumber(sanitizedValue, { extract: false })
 
   if (parsedValue?.isPossible() && parsedValue.country) {
+    const expectedValue = `+${parsedValue.countryCallingCode}${parsedValue.nationalNumber}`
+    if (sanitizedValue !== expectedValue) {
+      return null // the number was corrected by the library, reject it
+    }
+
     const callingCode = `+${parsedValue.countryCallingCode}`
     const selectValue = `${callingCode}-${parsedValue.country}`
     const inputValue = parsedValue.nationalNumber
@@ -50,11 +57,25 @@ export const usePhoneNumberInput = ({
   defaultValue,
   onChange,
   onKeyDown,
+  onBlur,
   allowedCountries,
   excludedCountries,
   includeDependentAreas = false,
   prefixOptionFormat = 'FlagsAndNumbers',
+  externalRef,
 }: UsePhoneNumberInputProps) => {
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
+  const mergedRef = (node: HTMLInputElement | null) => {
+    inputRef.current = node
+    if (typeof externalRef === 'function') {
+      externalRef(node)
+    } else if (externalRef) {
+      externalRef.current = node
+    }
+  }
+
   const [selectValue, setSelectValue] = useState(() => {
     const parsedValue = parsePhoneValue(value ?? defaultValue ?? '')
     return parsedValue?.selectValue ?? ''
@@ -128,12 +149,48 @@ export const usePhoneNumberInput = ({
     return filteredOptions
   }, [allowedCountries, excludedCountries, includeDependentAreas, prefixOptionFormat])
 
+  const handleSelectBlur = useCallback(
+    (e: React.FocusEvent<HTMLButtonElement>) => {
+      setTimeout(() => {
+        const activeElement = document.activeElement
+        const container = containerRef.current
+
+        if (container && activeElement && container.contains(activeElement)) {
+          return
+        }
+
+        onBlur?.(e as React.FocusEvent<HTMLInputElement>)
+      }, 0)
+    },
+    [onBlur]
+  )
+
+  const handleInputBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      setTimeout(() => {
+        const activeElement = document.activeElement
+        const container = containerRef.current
+
+        if (container && activeElement && container.contains(activeElement)) {
+          return
+        }
+
+        onBlur?.(e)
+      }, 0)
+    },
+    [onBlur]
+  )
+
   const handleSelectOnChange = useCallback(
     (newSelectValue: string) => {
       setSelectValue(newSelectValue)
-      setInputValue('')
+
       const callingCode = newSelectValue.split('-')[0]
       onChange?.(callingCode)
+
+      if (newSelectValue !== '') {
+        inputRef.current?.focus()
+      }
     },
     [onChange]
   )
@@ -142,7 +199,7 @@ export const usePhoneNumberInput = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const callingCode = selectValue.split('-')[0]
       const parsedValue = parsePhoneValue(`${callingCode}${e.target.value}`)
-      if (parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
+      if (selectValue === '' && parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
         setSelectValue(parsedValue.selectValue)
         setInputValue(parsedValue.inputValue)
         const callingCode = parsedValue.selectValue.split('-')[0]
@@ -220,5 +277,9 @@ export const usePhoneNumberInput = ({
     handleSelectOnChange,
     handleInputOnChange,
     handleOnKeyDown,
+    handleSelectBlur,
+    handleInputBlur,
+    mergedRef,
+    containerRef,
   }
 }

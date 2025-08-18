@@ -21,6 +21,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       defaultValue,
       onChange,
       onKeyDown,
+      onBlur,
       disabled,
       required,
       errors,
@@ -41,17 +42,29 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
     const prefix = useUniqueId()
     const id = idProp ?? `${prefix}-phone-number-input`
 
-    const { options, selectValue, inputValue, handleSelectOnChange, handleInputOnChange, handleOnKeyDown } =
-      usePhoneNumberInput({
-        value,
-        defaultValue,
-        onChange,
-        onKeyDown,
-        allowedCountries,
-        excludedCountries,
-        includeDependentAreas,
-        prefixOptionFormat,
-      })
+    const {
+      options,
+      selectValue,
+      inputValue,
+      handleSelectOnChange,
+      handleInputOnChange,
+      handleOnKeyDown,
+      handleSelectBlur,
+      handleInputBlur,
+      mergedRef,
+      containerRef,
+    } = usePhoneNumberInput({
+      value,
+      defaultValue,
+      onChange,
+      onKeyDown,
+      onBlur,
+      allowedCountries,
+      excludedCountries,
+      includeDependentAreas,
+      prefixOptionFormat,
+      externalRef: ref,
+    })
 
     const hasWarning = Array.isArray(warnings) && warnings.length > 0
     const hasError = Array.isArray(errors) && errors.length > 0
@@ -69,6 +82,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
           </FormLabel>
         )}
         <div
+          ref={containerRef}
           className={cn(
             'relative flex items-center h-9 bg-white rounded-md border border-gray-300',
             'focus-within:ring-1 focus-within:ring-offset-0 focus-within:ring-gray-900'
@@ -84,6 +98,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
             onChange={(newValue) => {
               handleSelectOnChange(newValue as string)
             }}
+            onBlur={handleSelectBlur}
             placeholder={prefixProps?.placeholder ?? '+1'}
             className={cn(
               'focus:ring-0 focus:ring-offset-0',
@@ -97,12 +112,13 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
           />
           <div className="flex items-center h-full border-l border-gray-300" />
           <Input
-            ref={ref}
+            ref={mergedRef}
             id={id}
             placeholder={placeholder}
             value={inputValue}
             onChange={handleInputOnChange}
             onKeyDown={handleOnKeyDown}
+            onBlur={handleInputBlur}
             disabled={disabled}
             aria-invalid={hasError}
             aria-label={!label ? 'Phone number input' : undefined}
