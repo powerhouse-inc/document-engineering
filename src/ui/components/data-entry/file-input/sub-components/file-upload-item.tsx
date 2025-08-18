@@ -1,11 +1,19 @@
-import { useState } from 'react'
 import { cn } from '../../../../../scalars/lib/utils.js'
-import { ProgressBar } from '../../../../../scalars/components/fragments/progress-bar/progress-bar.js'
-import { Icon } from '../../../icon/icon.js'
+import { ProgressBar } from '../../../../../scalars/components/fragments/progress-bar/index.js'
+import { Icon } from '../../../icon/index.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
-import type { UploadFile } from '../types.js'
+import type { PreviewStatus, PreviewType, UploadFile } from '../types.js'
 import { getIconKey, MESSAGES } from '../utils.js'
-import { AlertDialog, AlertDialogContent } from '../../../confirm/alert-dialog.js'
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from '../../../confirm/alert-dialog.js'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import PreviewFilePreview from './preview-file.js'
+import PreviewImagePreview from './preview-image.js'
+import { UnsupportedFile } from './place-holder-unsupported.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -17,11 +25,18 @@ interface FileUploadItemProps {
   mimeType?: string
   errorsUpload?: string[]
   status?: UploadFile
+
+  // Preview Props
   showPreview?: boolean
   preview?: string
+  isPreviewOpen?: boolean
+  handleOnPreview?: () => void
+  handleOnCancelPreview?: () => void
+  previewStatus: PreviewStatus
+  typePreview: PreviewType
 }
 
-export const FileUploadItem = ({
+const FileUploadItem = ({
   fileName = '',
   fileSize = '',
   progress = undefined,
@@ -31,10 +46,16 @@ export const FileUploadItem = ({
   mimeType = '',
   errorsUpload,
   status = 'idle',
+
+  // Preview Props
   showPreview,
   preview,
+  isPreviewOpen,
+  handleOnPreview,
+  handleOnCancelPreview = () => null,
+  previewStatus,
+  typePreview,
 }: FileUploadItemProps) => {
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const showProgress = status === 'uploading' && progress !== undefined && progress >= 0 && progress < 100
   const showSuccess = status === 'success'
   const showError = status === 'error'
@@ -49,11 +70,6 @@ export const FileUploadItem = ({
   const handleOnReload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     onReload?.(e)
-  }
-
-  const handleOnPreview = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    setIsPreviewOpen(true)
   }
 
   return (
@@ -85,7 +101,7 @@ export const FileUploadItem = ({
                 className="text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Reload upload"
               >
-                <Icon name="Reload" size={16} className="text-gray-900" />
+                {/* <Icon name="Reload" size={16} className="text-gray-900" /> */}
               </button>
             )}
 
@@ -130,11 +146,31 @@ export const FileUploadItem = ({
       </div>
       {showPreview && (
         <AlertDialog open={isPreviewOpen}>
-          <AlertDialogContent>
-            <div className="flex flex-col gap-2 w-[500px] h-[600px] mt-2">
-              {/* TODO: Add component to show the preview */}
-              <img src={preview} alt="preview" className="w-full h-full" />
-            </div>
+          <VisuallyHidden>
+            <AlertDialogTitle>Preview</AlertDialogTitle>
+          </VisuallyHidden>
+          <VisuallyHidden>
+            <AlertDialogDescription>Preview of the file</AlertDialogDescription>
+          </VisuallyHidden>
+          <AlertDialogContent className="p-0 w-auto h-auto max-w-none">
+            {typePreview === 'pdf' && (
+              <PreviewFilePreview
+                className="w-[500px] h-[652px]"
+                status={previewStatus}
+                onClose={handleOnCancelPreview}
+                preview={preview}
+              />
+            )}
+            {typePreview === 'image' && (
+              <PreviewImagePreview
+                className="w-[368px] h-[384px]"
+                status={previewStatus}
+                onClose={handleOnCancelPreview}
+                preview={preview}
+              />
+            )}
+            {typePreview === 'unknown' && <UnsupportedFile status={previewStatus} onClose={handleOnCancelPreview} />}
+            {typePreview === 'audio' && <div>Recording</div>}
           </AlertDialogContent>
         </AlertDialog>
       )}
@@ -143,3 +179,7 @@ export const FileUploadItem = ({
     </div>
   )
 }
+
+FileUploadItem.displayName = 'FileUploadItem'
+
+export { FileUploadItem }

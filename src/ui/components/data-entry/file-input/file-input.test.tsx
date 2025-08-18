@@ -173,8 +173,9 @@ describe('FileInput Component', () => {
         fileName="test.pdf"
         fileSize={1024}
         showPreview={true}
+        preview="https://www.google.com"
       />
     )
-    expect(screen.getByText('Preview')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Preview/i })).toBeInTheDocument()
   })
 })

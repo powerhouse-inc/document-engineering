@@ -19,6 +19,7 @@ export interface FileInputProps
   errorsUpload?: string[]
   status?: UploadFile
   showPreview?: boolean
+  preview?: string
 }
 
 export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'
@@ -26,15 +27,17 @@ export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'
 export const PREVIEW_STATUS = {
   LOADING: 'loading',
   UNSUPPORTED_FORMAT: 'unsupported_format',
-  GENERIC_ERROR: 'generic_error',
   CORRUPTED_FILE: 'corrupted_file',
+  SUCCESS: 'success',
 } as const
 
 type ValueOf<T> = T[keyof T]
 export type PreviewStatus = ValueOf<typeof PREVIEW_STATUS>
 
 export interface StatusConfig {
-  icon: IconName
-  title: string
-  message: string
+  icon: IconName | undefined
+  title?: string
+  message?: string
 }
+
+export type PreviewType = 'pdf' | 'image' | 'audio' | 'unknown'

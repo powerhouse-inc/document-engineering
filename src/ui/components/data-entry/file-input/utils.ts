@@ -57,7 +57,7 @@ export const getIconKey = (mimeType: string): IconName => {
   return iconName
 }
 
-export const STATUS_CONFIG: Record<PreviewStatus, StatusConfig> = {
+export const STATUS_CONFIG_PDF: Record<PreviewStatus, StatusConfig> = {
   [PREVIEW_STATUS.LOADING]: {
     icon: 'BookOpenText',
     title: 'Loading',
@@ -69,14 +69,95 @@ export const STATUS_CONFIG: Record<PreviewStatus, StatusConfig> = {
     message:
       "It looks like we still don't support this format. (We are working on it) Please try to upload it with a different Format.",
   },
-  [PREVIEW_STATUS.GENERIC_ERROR]: {
-    icon: 'ContentUnavailableIcon',
-    title: 'Opss!',
-    message: 'It looks like your file has an error.\nPlease try again',
-  },
   [PREVIEW_STATUS.CORRUPTED_FILE]: {
     icon: 'ContentUnavailableIcon',
     title: '',
     message: 'Your file is corrupted and cannot be shown in the preview',
   },
+  [PREVIEW_STATUS.SUCCESS]: {
+    icon: undefined,
+    title: '',
+    message: '',
+  },
+}
+export const STATUS_CONFIG_IMAGE: Record<PreviewStatus, StatusConfig> = {
+  [PREVIEW_STATUS.LOADING]: {
+    icon: 'Image',
+    title: 'Loading',
+    message: '',
+  },
+  [PREVIEW_STATUS.UNSUPPORTED_FORMAT]: {
+    icon: 'BrokenImage',
+    title: 'Opss!',
+    message:
+      "It looks like we still don't support this format. (We are working on it) Please try to upload it with a different Format.",
+  },
+  [PREVIEW_STATUS.CORRUPTED_FILE]: {
+    icon: 'BrokenImage',
+    title: '',
+    message: 'Your file is corrupted and cannot be shown in the preview',
+  },
+  [PREVIEW_STATUS.SUCCESS]: {
+    icon: undefined,
+    title: '',
+    message: '',
+  },
+}
+
+const MIME_TYPE_TO_EXTENSION_IMAGE = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+}
+
+const MIME_TYPE_TO_EXTENSION_AUDIO = {
+  'audio/mpeg': 'mp3',
+  'audio/wav': 'wav',
+  'audio/ogg': 'ogg',
+  'audio/aac': 'aac',
+  'audio/m4a': 'm4a',
+}
+
+const MIME_TYPE_TO_EXTENSION_PDF = {
+  'application/pdf': 'pdf',
+}
+
+export const detectPreviewType = (mimeType?: string): 'pdf' | 'image' | 'audio' | 'unknown' => {
+  if (!mimeType) return 'unknown'
+  if (Object.keys(MIME_TYPE_TO_EXTENSION_IMAGE).includes(mimeType)) return 'image'
+  if (Object.keys(MIME_TYPE_TO_EXTENSION_AUDIO).includes(mimeType)) return 'audio'
+  if (Object.keys(MIME_TYPE_TO_EXTENSION_PDF).includes(mimeType)) return 'pdf'
+  return 'unknown'
+}
+
+export const validatePdfHeader = async (file: File) => {
+  const buffer = await file.arrayBuffer()
+  const text = new TextDecoder().decode(buffer)
+
+  const hasHeader = text.startsWith('%PDF-')
+  const hasEOF = text.includes('%%EOF')
+  const hasXref = text.includes('xref')
+  const hasTrailer = text.includes('trailer')
+
+  return hasHeader && hasEOF && hasXref && hasTrailer
+}
+
+export const validateImageHeader = async (file: File) => {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file)
+    const img = new Image()
+
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      resolve(true)
+    }
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      resolve(false)
+    }
+
+    img.src = url
+  })
 }
