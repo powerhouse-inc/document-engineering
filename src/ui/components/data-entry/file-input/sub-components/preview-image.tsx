@@ -1,6 +1,6 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
-import { PlaceHolderImage } from './place-holder-image.js'
+import { PlaceHolderImage } from './placeholder-image.js'
 import PreviewHeader from './preview-header.js'
 
 interface FilePreviewStateProps {

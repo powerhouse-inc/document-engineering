@@ -50,8 +50,9 @@ export const getIconKey = (mimeType: string): IconName => {
   let iconName: IconName = 'DownloadFile'
 
   const extension = mime.getExtension(mimeType)
-  if (extension) {
-    iconName = ICON_CODE_TO_NAME[extension.toUpperCase()]
+  const existsExtension = Object.keys(ICON_CODE_TO_NAME).includes(extension?.toUpperCase() ?? '')
+  if (existsExtension) {
+    iconName = ICON_CODE_TO_NAME[extension?.toUpperCase() ?? '']
   }
 
   return iconName
