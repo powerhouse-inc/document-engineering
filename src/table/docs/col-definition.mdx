@@ -43,11 +43,23 @@ export interface ColumnDef<T> {
 
 The table supports following built-in column types that determine default formatting, rendering, and editing behavior:
 
-| Type      | Scalar Component Rendered                                 |
-| --------- | --------------------------------------------------------- |
-| `string`  | [StringField](?path=/docs/scalars-string-field--readme)   |
-| `number`  | [NumberField](?path=/docs/scalars-number-field--readme)   |
-| `boolean` | [BooleanField](?path=/docs/scalars-boolean-field--readme) |
+| Type        | Scalar Component Rendered                                     |
+| ----------- | ------------------------------------------------------------- |
+| `string`    | [StringField](?path=/docs/scalars-string-field--readme)       |
+| `number`    | [NumberField](?path=/docs/scalars-number-field--readme)       |
+| `boolean`   | [BooleanField](?path=/docs/scalars-boolean-field--readme)     |
+| `country`   | [CountryCodeField](?path=/docs/scalars-country-code-field--readme) |
+| `date`      | [DatePickerField](?path=/docs/scalars-date-picker-field--readme) |
+| `datetime`  | [DateTimePickerField](?path=/docs/scalars-date-time-picker-field--readme) |
+| `time`      | [TimePickerField](?path=/docs/scalars-time-picker-field--readme) |
+| `url`       | [UrlField](?path=/docs/scalars-url-field--readme)             |
+| `email`     | [EmailField](?path=/docs/scalars-email-field--readme)         |
+| `enum`      | [EnumField](?path=/docs/scalars-enum-field--readme)           |
+| `currency`  | [CurrencyCodeField](?path=/docs/scalars-currency-code-field--readme) |
+| `amount`    | [AmountField](?path=/docs/scalars-amount-field--readme)             |
+| `phid`      | [PhidField](?path=/docs/scalars-phid-field--readme)           |
+| `oid`       | [OidField](?path=/docs/scalars-oid-field--readme)             |
+| `aid`       | [AidField](?path=/docs/scalars-aid-field--readme)             |
 
 ## Defaults applied by ObjectSetTable
 

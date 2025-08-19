@@ -5,6 +5,7 @@ import { getNextSelectedCell } from '../table/utils.js'
 import { SelectionManager } from './selection-manager.js'
 import type { ConfirmationOptions, PrivateTableApiBase, SortingInfo } from './types.js'
 import { confirm } from '../../ui/components/confirm/confirm.js'
+import { deepEqual } from '../../scalars/lib/deep-equal.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
@@ -132,16 +133,28 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       )
     }
 
-    const errors = this._getState().dataFormReferences[row]?.map((ref) => {
-      const errors = ref?.current?.formState.errors
-      if (errors) {
-        const errorValues = Object.values(errors)
-        if (errorValues.length > 0) {
-          return errorValues[0]?.message
+    const errors = this._getState()
+      .dataFormReferences[row]?.map((ref) => {
+        const errors = ref?.current?.formState.errors
+        if (errors) {
+          const errorValues = Object.values(errors)
+          if (errorValues.length > 0) {
+            return errorValues[0]?.message
+          }
         }
-      }
-    })
-    return errors.filter(Boolean) as string[]
+      })
+      .filter(Boolean) as string[]
+
+    // update the state if needed
+    const currentErrors = this._getState().selectedRowErrors
+    if (!deepEqual(currentErrors, errors)) {
+      this._getState().dispatch?.({
+        type: 'SET_SELECTED_ROW_ERRORS',
+        payload: { errors: errors.length > 0 ? errors : null },
+      })
+    }
+
+    return errors
   }
 
   /**
@@ -191,10 +204,6 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
 
     const errors = await this.getErrors(selectedCell.row)
     if (errors.length > 0 && save) {
-      this._getState().dispatch?.({
-        type: 'SET_SELECTED_ROW_ERRORS',
-        payload: { errors },
-      })
       return // we can't exit edit mode if there are errors
     } else if (this._getState().selectedRowErrors) {
       this._getState().dispatch?.({

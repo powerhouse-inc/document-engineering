@@ -1,7 +1,7 @@
 import { StringField, type StringFieldProps } from '../../../scalars/components/string-field/string-field.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
-export const stringCellEditorFactory = <T extends DataType>(
+export const buildStringCellEditor = <T extends DataType>(
   stringFieldProps: Omit<StringFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const StringCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {

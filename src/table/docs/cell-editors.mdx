@@ -1,0 +1,184 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Cell Editors" />
+
+# Cell Editors
+
+Cell editors are the input fields that appear when editing a table cell. The `ObjectSetTable` provides built-in cell editors for common data types, along with builder functions that let you customize these editors with the same props as their equivalent scalar components.
+
+## Quick Reference
+
+### Basic Editors
+
+- **String**: `buildStringCellEditor` - Text input
+- **Number**: `buildNumberCellEditor` - Number input
+- **Boolean**: `buildBooleanCellEditor` - Checkbox/toggle
+- **Enum**: `buildEnumCellEditor` - Dropdown select
+
+### Date & Time Editors
+
+- **Date**: `buildDateCellEditor` - Date picker
+- **DateTime**: `buildDateTimeCellEditor` - Date and time picker
+- **Time**: `buildTimeCellEditor` - Time picker
+
+### Specialized Editors
+
+- **Email**: `buildEmailCellEditor` - Email input with validation
+- **URL**: `buildUrlCellEditor` - URL input with validation
+- **Country**: `buildCountryCellEditor` - Country code selector
+- **Currency**: `buildCurrencyCellEditor` - Currency code selector
+- **Amount**: `buildAmountCellEditor` - Amount with currency
+- **PHID**: `buildPhidCellEditor` - PHID input
+- **OID**: `buildOidCellEditor` - Object ID input
+- **AID**: `buildAidCellEditor` - Account ID input
+
+## How to Use
+
+### 1. Import the builder
+
+```tsx
+import { buildStringCellEditor, buildNumberCellEditor } from '@powerhousedao/document-engineering/table'
+```
+
+### 2. Configure with scalar props
+
+```tsx
+const columns = [
+  {
+    field: 'firstName',
+    title: 'First Name',
+    editable: true,
+    renderCellEditor: buildStringCellEditor({
+      maxLength: 20,
+      placeholder: 'Enter first name',
+    }),
+  },
+  {
+    field: 'age',
+    title: 'Age',
+    editable: true,
+    renderCellEditor: buildNumberCellEditor({
+      minValue: 0,
+      maxValue: 120,
+      step: 1,
+    }),
+  },
+]
+```
+
+### 3. Handle saving
+
+```tsx
+{
+  field: 'firstName',
+  editable: true,
+  renderCellEditor: buildStringCellEditor({ maxLength: 20 }),
+  onSave: (value, context) => {
+    if (typeof value === 'string' && value.length > 0) {
+      context.row.firstName = value
+      return true // Commit the change
+    }
+    return false // Reject the change
+  }
+}
+```
+
+## Automatic Editor Selection
+
+If you don't specify a `renderCellEditor`, the table automatically selects an editor based on the column's `type`:
+
+```tsx
+const columns = [
+  {
+    field: 'name',
+    type: 'string', // Uses buildStringCellEditor({})
+    editable: true,
+  },
+  {
+    field: 'size',
+    type: 'number', // Uses buildNumberCellEditor({})
+    editable: true,
+  },
+]
+```
+
+## Builder Reference
+
+All builders accept the same props as their equivalent scalar components. See the individual scalar component documentation for available props.
+
+| Builder                   | Component           |
+| ------------------------- | ------------------- |
+| `buildStringCellEditor`   | StringField         |
+| `buildNumberCellEditor`   | NumberField         |
+| `buildBooleanCellEditor`  | BooleanField        |
+| `buildEnumCellEditor`     | EnumField           |
+| `buildDateCellEditor`     | DatePickerField     |
+| `buildDateTimeCellEditor` | DateTimePickerField |
+| `buildTimeCellEditor`     | TimePickerField     |
+| `buildEmailCellEditor`    | EmailField          |
+| `buildUrlCellEditor`      | UrlField            |
+| `buildCountryCellEditor`  | CountryCodeField    |
+| `buildCurrencyCellEditor` | CurrencyCodeField   |
+| `buildAmountCellEditor`   | AmountField         |
+| `buildPhidCellEditor`     | PhidField           |
+| `buildOidCellEditor`      | OidField            |
+| `buildAidCellEditor`      | AidField            |
+
+## Custom Cell Editors
+
+For specialized needs, create custom cell editors:
+
+```tsx
+type CellEditorFn<T> = (
+  value: unknown, // Current cell value
+  onChange: (newValue: unknown) => void, // Update function
+  context: CellContext<T> // Cell context
+) => React.ReactElement
+```
+
+## Best Practices
+
+### Always provide `onSave`
+
+```tsx
+// Good
+{
+  field: 'email',
+  editable: true,
+  onSave: (value, context) => {
+    if (validateEmail(value)) {
+      context.row.email = value
+      return true
+    }
+    return false
+  }
+}
+```
+
+### Consider user experience
+
+```tsx
+renderCellEditor: buildStringCellEditor({
+  placeholder: 'Enter value...',
+  className: 'max-w-full', // Ensure proper sizing
+})
+```
+
+## Common Issues
+
+### Editor not appearing
+
+- Check that `editable: true` is set on the column
+- Ensure `renderCellEditor` returns a valid React element
+
+### Values not saving
+
+- Always provide an `onSave` function
+- Return `true` from `onSave` to commit changes, `false` to reject
+
+## Related Documentation
+
+- [Editing](/docs/data-display-object-set-table-docs-editing--readme): General editing concepts
+- [Column Definition](/docs/data-display-object-set-table-docs-column-definition--readme): Column configuration
+- [Cells](/docs/data-display-object-set-table-docs-cells--readme): Cell rendering
+- [Keyboard Shortcuts](/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme): Editing interactions
