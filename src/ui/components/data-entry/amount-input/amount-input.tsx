@@ -74,6 +74,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
       units,
       includeCurrencySymbols,
       symbolPosition,
+      enableStepCarets = false,
       // Diff Props
       baseValue,
       viewMode = 'edition',
@@ -171,6 +172,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 onChange={handleOnChangeInput}
                 onFocus={handleIsInputFocused}
                 placeholder={placeholder}
+                enableStepCarets={enableStepCarets}
                 numericType={type === 'AmountCurrency' || type === 'AmountCrypto' ? 'BigInt' : 'Float'}
                 className={cn(
                   currencyPosition === 'left' && 'rounded-l-none border-l-[0.5px]',
