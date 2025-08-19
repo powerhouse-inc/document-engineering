@@ -1,4 +1,3 @@
-// import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
 import { Icon } from '../../../icon/icon.js'
 import PreviewHeader from './preview-header.js'
 import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
@@ -45,7 +44,6 @@ export const PlaceHolderAudio = ({ status, onClose, className }: PlaceHolderAudi
           <p className="text-xs text-red-900 font-normal leading-4.5">{config.message}</p>
         </div>
       )}
-
     </div>
   )
 }
