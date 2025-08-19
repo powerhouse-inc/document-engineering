@@ -38,4 +38,5 @@ export interface InputNumberProps
   className?: string
   pattern?: RegExp
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
+  enableStepCarets?: boolean
 }

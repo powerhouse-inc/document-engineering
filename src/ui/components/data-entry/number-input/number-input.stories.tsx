@@ -90,6 +90,15 @@ const meta = {
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
+    enableStepCarets: {
+      control: 'boolean',
+      description: 'Enable step carets',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
     ...PrebuiltArgTypes.placeholder,
     ...getValidationArgTypes({
       enabledArgTypes: {

@@ -35,6 +35,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
       trailingZeros = false,
       numericType = 'Float',
       precision = 0,
+      enableStepCarets = false,
       // Difference Props
       baseValue,
       viewMode = 'edition',
@@ -106,51 +107,53 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
               data-cast={isBigInt ? 'BigInt' : 'Number'}
               {...props}
             />
-            <div className="absolute inset-y-2 right-3 flex flex-col justify-center opacity-0 group-focus-within:opacity-100 transition-opacity">
-              <button
-                aria-label="Increment"
-                disabled={canIncrement}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                }}
-                type="button"
-                onClick={(e) => {
-                  stepValueHandler(e, 'increment')
-                  if (buttonRef.current) {
-                    buttonRef.current.focus()
-                  }
-                }}
-              >
-                <Icon
-                  size={10}
-                  name="ChevronDown"
-                  className={cn('rotate-180 text-gray-700 dark:text-gray-300', canIncrement && 'cursor-not-allowed')}
-                />
-              </button>
-              <button
-                aria-label="Decrement"
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                }}
-                disabled={canDecrement}
-                type="button"
-                onClick={(e) => {
-                  stepValueHandler(e, 'decrement')
-                  if (buttonRef.current) {
-                    buttonRef.current.focus()
-                  }
-                }}
-              >
-                <Icon
-                  size={10}
-                  name="ChevronDown"
-                  className={cn(
-                    'items-center justify-center text-gray-700 dark:text-gray-300',
-                    canDecrement && 'cursor-not-allowed'
-                  )}
-                />
-              </button>
-            </div>
+            {enableStepCarets && (
+              <div className="absolute inset-y-2 right-3 flex flex-col justify-center group-focus-within:opacity-100 transition-opacity">
+                <button
+                  aria-label="Increment"
+                  disabled={canIncrement}
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                  }}
+                  type="button"
+                  onClick={(e) => {
+                    stepValueHandler(e, 'increment')
+                    if (buttonRef.current) {
+                      buttonRef.current.focus()
+                    }
+                  }}
+                >
+                  <Icon
+                    size={10}
+                    name="ChevronDown"
+                    className={cn('rotate-180 text-gray-700 dark:text-gray-300', canIncrement && 'cursor-not-allowed')}
+                  />
+                </button>
+                <button
+                  aria-label="Decrement"
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                  }}
+                  disabled={canDecrement}
+                  type="button"
+                  onClick={(e) => {
+                    stepValueHandler(e, 'decrement')
+                    if (buttonRef.current) {
+                      buttonRef.current.focus()
+                    }
+                  }}
+                >
+                  <Icon
+                    size={10}
+                    name="ChevronDown"
+                    className={cn(
+                      'items-center justify-center text-gray-700 dark:text-gray-300',
+                      canDecrement && 'cursor-not-allowed'
+                    )}
+                  />
+                </button>
+              </div>
+            )}
           </div>
           {description && <FormDescription>{description}</FormDescription>}
           {warnings && <FormMessageList messages={warnings} type="warning" />}
