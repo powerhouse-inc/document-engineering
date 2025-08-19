@@ -1,3 +1,31 @@
+# [1.30.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.29.0...v1.30.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* **scalars & ui:** avoid calling onChange when mounting ([50607f4](https://github.com/powerhouse-inc/document-engineering/commit/50607f46efc6612c27889a27ffb49750660f9266))
+* **scalars:** test snapshots ([dad2904](https://github.com/powerhouse-inc/document-engineering/commit/dad290455b0c93db42045ba51edffd10c24fa0d3))
+* **ui:** edge cases for "autoExpand" in the Textarea ([4a02de2](https://github.com/powerhouse-inc/document-engineering/commit/4a02de2f7a57160fe98d304cc839463f76622db7))
+
+
+### Features
+
+* **scalars & ui:** adds PhoneNumberField component and improve PhoneNumberInput logic & configs ([a2824f3](https://github.com/powerhouse-inc/document-engineering/commit/a2824f310c6991b6209d4bcd7f7928c74d4e907f))
+* **scalars:** add correct heigh and with and fix the preview file ([3f02a9c](https://github.com/powerhouse-inc/document-engineering/commit/3f02a9c4100e3fd4ac9e453df23f0c03c0908104))
+* **scalars:** add preview pdf and image for success state ([3ad47e6](https://github.com/powerhouse-inc/document-engineering/commit/3ad47e6d540064271ff57b2494deb488ee9a7d46))
+* **scalars:** adds support for the "showErrorOnBlur" config and improves the logic ([5a622b0](https://github.com/powerhouse-inc/document-engineering/commit/5a622b016d49cad114e4e05f59280b7866acad5b))
+* **table:** add aid oid and phid types ([5533878](https://github.com/powerhouse-inc/document-engineering/commit/5533878582db6cecb67708eb8669b29cbec64491))
+* **table:** add amount type ([bb82407](https://github.com/powerhouse-inc/document-engineering/commit/bb82407432ca1f03297b7d9f49b8b94ea7874fde))
+* **table:** add cell editor validations and url type ([e22e92f](https://github.com/powerhouse-inc/document-engineering/commit/e22e92f50c743686a3f15da06e9eab552ccfa504))
+* **table:** add country type ([2fd4a2f](https://github.com/powerhouse-inc/document-engineering/commit/2fd4a2f17b2ff2ba042e1f581cadb338e860b177))
+* **table:** add currency type ([4e5ab16](https://github.com/powerhouse-inc/document-engineering/commit/4e5ab16e02d95cfd9d11ff5a301741209048f1df))
+* **table:** add date and datetime types ([033db18](https://github.com/powerhouse-inc/document-engineering/commit/033db18fd266eb7945e0c778a1b2ccfd5e1254bd))
+* **table:** add email type ([9b80a84](https://github.com/powerhouse-inc/document-engineering/commit/9b80a841882d7f8dab8b17115c3127a6abddfc38))
+* **table:** add enum type ([3dd4ed5](https://github.com/powerhouse-inc/document-engineering/commit/3dd4ed50dc34b3b1f648a97ae9df607135d20a52))
+* **table:** add max row count and validate it ([a1383b4](https://github.com/powerhouse-inc/document-engineering/commit/a1383b4ecee2883bb25617873b14785a1f97f7be))
+* **table:** add time type ([b459990](https://github.com/powerhouse-inc/document-engineering/commit/b459990058f03277111ff5452a39fc01a887821c))
+* **table:** save on tab ([619c4d5](https://github.com/powerhouse-inc/document-engineering/commit/619c4d5ce5e90cdaaab70697927db771307a58d5))
+
 # [1.29.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.28.0...v1.29.0) (2025-08-15)
 
 
