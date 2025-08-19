@@ -23,7 +23,7 @@ const PreviewAudioPreview = ({ status, onClose = () => null, preview, className 
 
         <div className="flex-1 flex items-center justify-center">
           <audio src={preview} controls className="w-full" aria-label="Audio player">
-            <p>Tu navegador no soporta la previsualización de audio.</p>
+            <p>Your browser does not support the audio preview.</p>
           </audio>
         </div>
       </div>
