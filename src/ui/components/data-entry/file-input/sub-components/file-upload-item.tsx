@@ -13,7 +13,8 @@ import {
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import PreviewFilePreview from './preview-file.js'
 import PreviewImagePreview from './preview-image.js'
-import { UnsupportedFile } from './place-holder-unsupported.js'
+import { UnsupportedFile } from './placeholder-unsupported.js'
+import PreviewAudioPreview from './preview-record.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -176,7 +177,14 @@ const FileUploadItem = ({
               />
             )}
             {typePreview === 'unknown' && <UnsupportedFile status={previewStatus} onClose={handleOnCancelPreview} />}
-            {typePreview === 'audio' && <div>Recording</div>}
+            {typePreview === 'audio' && (
+              <PreviewAudioPreview
+                className="w-full h-full"
+                status={previewStatus}
+                onClose={handleOnCancelPreview}
+                preview={preview}
+              />
+            )}
           </AlertDialogContent>
         </AlertDialog>
       )}

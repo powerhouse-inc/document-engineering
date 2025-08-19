@@ -1,6 +1,6 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
-import { PlaceHolderPdf } from './place-holder-pdf.js'
+import { PlaceHolderPdf } from './placeholder-pdf.js'
 import PreviewHeader from './preview-header.js'
 
 interface FilePreviewStateProps {
