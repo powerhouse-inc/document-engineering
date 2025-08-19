@@ -184,7 +184,6 @@ const FileUploadItem = ({
                 onClose={handleOnCancelPreview}
                 preview={preview}
               />
-
             )}
           </AlertDialogContent>
         </AlertDialog>
