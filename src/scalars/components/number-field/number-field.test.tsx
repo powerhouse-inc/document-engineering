@@ -156,7 +156,9 @@ describe('NumberField', () => {
   it('should increment the value when increment arrow button is clicked', async () => {
     const user = userEvent.setup()
 
-    renderWithForm(<NumberField label="Test Label" name="Label" value={5} step={1} onChange={mockOnChange} />)
+    renderWithForm(
+      <NumberField label="Test Label" name="Label" value={5} step={1} onChange={mockOnChange} enableStepCarets />
+    )
 
     const input = screen.getByRole('spinbutton')
     await user.click(input) // Simula el clic en el input
@@ -179,7 +181,9 @@ describe('NumberField', () => {
 
   it('should decrement value when decrement button is clicked', async () => {
     const user = userEvent.setup()
-    renderWithForm(<NumberField label="Test Label" name="Label" value={10} step={2} onChange={mockOnChange} />)
+    renderWithForm(
+      <NumberField label="Test Label" name="Label" value={10} step={2} onChange={mockOnChange} enableStepCarets />
+    )
     const input = screen.getByRole('spinbutton')
     await user.click(input)
     // Ensure that the input has focus
@@ -200,7 +204,15 @@ describe('NumberField', () => {
   it('should not exceed maxValue when increment button is clicked', async () => {
     const user = userEvent.setup()
     renderWithForm(
-      <NumberField label="Test Label" name="Label" value={10} maxValue={10} step={1} onChange={mockOnChange} />
+      <NumberField
+        label="Test Label"
+        name="Label"
+        value={10}
+        maxValue={10}
+        step={1}
+        onChange={mockOnChange}
+        enableStepCarets
+      />
     )
     const input = screen.getByRole('spinbutton')
     await user.click(input)
@@ -220,7 +232,15 @@ describe('NumberField', () => {
   it('should not go below minValue when decrement button is clicked', async () => {
     const user = userEvent.setup()
     renderWithForm(
-      <NumberField label="Test Label" name="Label" value={1} minValue={1} step={1} onChange={mockOnChange} />
+      <NumberField
+        label="Test Label"
+        name="Label"
+        value={1}
+        minValue={1}
+        step={1}
+        onChange={mockOnChange}
+        enableStepCarets
+      />
     )
     const input = screen.getByRole('spinbutton')
     await user.click(input)
@@ -369,6 +389,7 @@ describe('NumberField', () => {
         step={0.2}
         precision={1}
         onChange={mockOnChange}
+        enableStepCarets
       />
     )
 

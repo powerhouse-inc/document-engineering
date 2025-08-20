@@ -50,8 +50,9 @@ export const getIconKey = (mimeType: string): IconName => {
   let iconName: IconName = 'DownloadFile'
 
   const extension = mime.getExtension(mimeType)
-  if (extension) {
-    iconName = ICON_CODE_TO_NAME[extension.toUpperCase()]
+  const existsExtension = Object.keys(ICON_CODE_TO_NAME).includes(extension?.toUpperCase() ?? '')
+  if (existsExtension) {
+    iconName = ICON_CODE_TO_NAME[extension?.toUpperCase() ?? '']
   }
 
   return iconName
@@ -104,6 +105,54 @@ export const STATUS_CONFIG_IMAGE: Record<PreviewStatus, StatusConfig> = {
   },
 }
 
+export const STATUS_CONFIG_AUDIO: Record<PreviewStatus, StatusConfig> = {
+  [PREVIEW_STATUS.LOADING]: {
+    icon: 'ArrowFilledRight',
+    title: 'Loading',
+    message: '',
+  },
+  [PREVIEW_STATUS.UNSUPPORTED_FORMAT]: {
+    icon: 'ArrowFilledRight',
+    title: 'Opss!',
+    message:
+      "It looks like we still don't support this format. (We are working on it) Please try to upload it with a different Format.",
+  },
+  [PREVIEW_STATUS.CORRUPTED_FILE]: {
+    icon: 'BrokenImage',
+    title: '',
+    message: 'Your audio is corrupted and cannot be shown in the preview',
+  },
+  [PREVIEW_STATUS.SUCCESS]: {
+    icon: undefined,
+    title: '',
+    message: '',
+  },
+}
+
+export const STATUS_CONFIG_VIDEO: Record<PreviewStatus, StatusConfig> = {
+  [PREVIEW_STATUS.LOADING]: {
+    icon: 'ArrowFilledRight',
+    title: 'Loading',
+    message: '',
+  },
+  [PREVIEW_STATUS.UNSUPPORTED_FORMAT]: {
+    icon: 'Reload',
+    title: 'Opss!',
+    message:
+      "It looks like we still don't support this format. (We are working on it) Please try to upload it with a different Format.",
+  },
+  [PREVIEW_STATUS.CORRUPTED_FILE]: {
+    icon: 'Reload',
+    title: '',
+    message: 'Your video is corrupted and cannot be shown in the preview',
+  },
+  [PREVIEW_STATUS.SUCCESS]: {
+    icon: undefined,
+    title: '',
+    message: '',
+  },
+}
+
 const MIME_TYPE_TO_EXTENSION_IMAGE = {
   'image/jpeg': 'jpg',
   'image/png': 'png',
@@ -123,11 +172,18 @@ const MIME_TYPE_TO_EXTENSION_PDF = {
   'application/pdf': 'pdf',
 }
 
-export const detectPreviewType = (mimeType?: string): 'pdf' | 'image' | 'audio' | 'unknown' => {
+const MIME_TYPE_TO_EXTENSION_VIDEO = {
+  'video/mp4': 'mp4',
+  'video/webm': 'webm',
+  'video/ogg': 'ogg',
+}
+
+export const detectPreviewType = (mimeType?: string): 'pdf' | 'image' | 'audio' | 'video' | 'unknown' => {
   if (!mimeType) return 'unknown'
   if (Object.keys(MIME_TYPE_TO_EXTENSION_IMAGE).includes(mimeType)) return 'image'
   if (Object.keys(MIME_TYPE_TO_EXTENSION_AUDIO).includes(mimeType)) return 'audio'
   if (Object.keys(MIME_TYPE_TO_EXTENSION_PDF).includes(mimeType)) return 'pdf'
+  if (Object.keys(MIME_TYPE_TO_EXTENSION_VIDEO).includes(mimeType)) return 'video'
   return 'unknown'
 }
 
@@ -160,4 +216,39 @@ export const validateImageHeader = async (file: File) => {
 
     img.src = url
   })
+}
+
+export const validateAudio = async (file: File): Promise<boolean> => {
+  const audioContext = new AudioContext()
+  const arrayBuffer = await file.arrayBuffer()
+  await audioContext.decodeAudioData(arrayBuffer)
+  return true
+}
+
+export const validateVideo = async (file: File): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file)
+    const video = document.createElement('video')
+
+    video.src = url
+    video.preload = 'metadata'
+
+    video.onloadedmetadata = () => {
+      URL.revokeObjectURL(url)
+      resolve(true)
+    }
+
+    video.onerror = () => {
+      URL.revokeObjectURL(url)
+      resolve(false)
+    }
+  })
+}
+
+export const previewSizeStyles = {
+  pdf: { width: '500px', height: '652px' },
+  unknown: { width: '500px', height: '652px' },
+  video: { width: '600px', height: '340px' },
+  image: { width: '368px', height: '384px' },
+  audio: { width: '368px', height: '384px' },
 }

@@ -1,6 +1,6 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
-import { PlaceHolderPdf } from './place-holder-pdf.js'
+import { PlaceHolderPdf } from './placeholder-pdf.js'
 import PreviewHeader from './preview-header.js'
 
 interface FilePreviewStateProps {
@@ -10,7 +10,7 @@ interface FilePreviewStateProps {
   status: PreviewStatus
 }
 
-const PreviewFilePreview = ({ status, onClose = () => null, preview, className }: FilePreviewStateProps) => {
+const PreviewFile = ({ status, onClose = () => null, preview, className }: FilePreviewStateProps) => {
   if (status === PREVIEW_STATUS.SUCCESS && preview) {
     return (
       <div
@@ -39,4 +39,4 @@ const PreviewFilePreview = ({ status, onClose = () => null, preview, className }
   return <PlaceHolderPdf status={status} onClose={onClose} className={cn('w-full h-full', className)} />
 }
 
-export default PreviewFilePreview
+export default PreviewFile

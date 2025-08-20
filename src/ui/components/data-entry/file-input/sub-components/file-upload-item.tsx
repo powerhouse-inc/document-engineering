@@ -3,7 +3,7 @@ import { ProgressBar } from '../../../../../scalars/components/fragments/progres
 import { Icon } from '../../../icon/index.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
 import type { PreviewStatus, PreviewType, UploadFile } from '../types.js'
-import { getIconKey, MESSAGES } from '../utils.js'
+import { getIconKey, MESSAGES, previewSizeStyles } from '../utils.js'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -11,9 +11,11 @@ import {
   AlertDialogTitle,
 } from '../../../confirm/alert-dialog.js'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
-import PreviewFilePreview from './preview-file.js'
-import PreviewImagePreview from './preview-image.js'
-import { UnsupportedFile } from './place-holder-unsupported.js'
+import PreviewFile from './preview-file.js'
+import PreviewImage from './preview-image.js'
+import { UnsupportedFile } from './placeholder-unsupported.js'
+import PreviewAudio from './preview-audio.js'
+import PreviewVideo from './preview-video.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -72,6 +74,22 @@ const FileUploadItem = ({
     onReload?.(e)
   }
 
+  const previewComponents = {
+    pdf: PreviewFile,
+    image: PreviewImage,
+    audio: PreviewAudio,
+    video: PreviewVideo,
+    unknown: UnsupportedFile,
+  }
+
+  const PreviewComponent = previewComponents[typePreview]
+  const commonPreviewProps = {
+    className: 'w-full h-full',
+    status: previewStatus,
+    onClose: handleOnCancelPreview,
+    preview,
+  }
+
   return (
     <div
       className={cn(
@@ -101,7 +119,7 @@ const FileUploadItem = ({
                 className="text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Reload upload"
               >
-                {/* <Icon name="Reload" size={16} className="text-gray-900" /> */}
+                <Icon name="Reload" size={16} className="text-gray-900" />
               </button>
             )}
 
@@ -144,6 +162,7 @@ const FileUploadItem = ({
           </div>
         )}
       </div>
+
       {showPreview && (
         <AlertDialog open={isPreviewOpen}>
           <VisuallyHidden>
@@ -154,29 +173,9 @@ const FileUploadItem = ({
           </VisuallyHidden>
           <AlertDialogContent
             className={cn('p-0 border-0 shadow-none bg-transparent max-w-none w-auto h-auto')}
-            style={{
-              width: typePreview === 'pdf' || typePreview === 'unknown' ? '500px' : '368px',
-              height: typePreview === 'pdf' || typePreview === 'unknown' ? '652px' : '384px',
-            }}
+            style={previewSizeStyles[typePreview]}
           >
-            {typePreview === 'pdf' && (
-              <PreviewFilePreview
-                className="w-full h-full"
-                status={previewStatus}
-                onClose={handleOnCancelPreview}
-                preview={preview}
-              />
-            )}
-            {typePreview === 'image' && (
-              <PreviewImagePreview
-                className="w-full h-full"
-                status={previewStatus}
-                onClose={handleOnCancelPreview}
-                preview={preview}
-              />
-            )}
-            {typePreview === 'unknown' && <UnsupportedFile status={previewStatus} onClose={handleOnCancelPreview} />}
-            {typePreview === 'audio' && <div>Recording</div>}
+            <PreviewComponent {...commonPreviewProps} />
           </AlertDialogContent>
         </AlertDialog>
       )}

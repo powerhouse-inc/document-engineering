@@ -1,6 +1,6 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
-import { PlaceHolderImage } from './place-holder-image.js'
+import { PlaceHolderImage } from './placeholder-image.js'
 import PreviewHeader from './preview-header.js'
 
 interface FilePreviewStateProps {
@@ -10,7 +10,7 @@ interface FilePreviewStateProps {
   preview?: string
 }
 
-const PreviewImagePreview = ({ status, onClose, className, preview }: FilePreviewStateProps) => {
+const PreviewImage = ({ status, onClose, className, preview }: FilePreviewStateProps) => {
   if (status === PREVIEW_STATUS.SUCCESS) {
     return (
       <div
@@ -30,4 +30,4 @@ const PreviewImagePreview = ({ status, onClose, className, preview }: FilePrevie
   return <PlaceHolderImage status={status} onClose={onClose} className={className} />
 }
 
-export default PreviewImagePreview
+export default PreviewImage

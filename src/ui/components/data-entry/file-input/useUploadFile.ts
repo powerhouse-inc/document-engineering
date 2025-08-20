@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { PREVIEW_STATUS, type PreviewStatus } from './types.js'
-import { detectPreviewType, validateImageHeader, validatePdfHeader } from './utils.js'
+import { detectPreviewType, validateAudio, validateImageHeader, validatePdfHeader, validateVideo } from './utils.js'
 
 interface UseFileUploadProps {
   value?: File | null
@@ -11,7 +11,8 @@ interface UseFileUploadProps {
 const mapValidator = {
   ['pdf']: validatePdfHeader,
   ['image']: validateImageHeader,
-  ['audio']: async () => Promise.resolve(true),
+  ['audio']: validateAudio,
+  ['video']: validateVideo,
   ['unknown']: async () => Promise.resolve(false),
 }
 
@@ -40,10 +41,11 @@ export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadPr
   const typePreview = detectPreviewType(file?.type)
 
   const handleOnPreview = async () => {
+    if (!file) return
     setIsPreviewOpen(true)
     setPreviewStatus(PREVIEW_STATUS.LOADING)
 
-    if (!file || typePreview === 'unknown') {
+    if (typePreview === 'unknown') {
       setPreviewStatus(PREVIEW_STATUS.UNSUPPORTED_FORMAT)
       return
     }
