@@ -40,4 +40,4 @@ export interface StatusConfig {
   message?: string
 }
 
-export type PreviewType = 'pdf' | 'image' | 'audio' | 'unknown'
+export type PreviewType = 'pdf' | 'image' | 'audio' | 'video' | 'unknown'

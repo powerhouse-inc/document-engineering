@@ -10,7 +10,7 @@ interface FilePreviewStateProps {
   preview?: string
 }
 
-const PreviewImagePreview = ({ status, onClose, className, preview }: FilePreviewStateProps) => {
+const PreviewImage = ({ status, onClose, className, preview }: FilePreviewStateProps) => {
   if (status === PREVIEW_STATUS.SUCCESS) {
     return (
       <div
@@ -30,4 +30,4 @@ const PreviewImagePreview = ({ status, onClose, className, preview }: FilePrevie
   return <PlaceHolderImage status={status} onClose={onClose} className={className} />
 }
 
-export default PreviewImagePreview
+export default PreviewImage
