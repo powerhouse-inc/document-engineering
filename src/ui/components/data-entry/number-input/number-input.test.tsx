@@ -61,7 +61,7 @@ describe('NumberInput', () => {
 
   it('should decrement value when decrement button is clicked', async () => {
     const user = userEvent.setup()
-    render(<NumberInput label="Test Label" name="Label" value={10} step={2} onChange={mockOnChange} />)
+    render(<NumberInput label="Test Label" name="Label" value={10} step={2} onChange={mockOnChange} enableStepCarets />)
     const input = screen.getByRole('spinbutton')
     await user.click(input)
     // Ensure that the input has focus
@@ -81,7 +81,17 @@ describe('NumberInput', () => {
 
   it('should not exceed maxValue when increment button is clicked', async () => {
     const user = userEvent.setup()
-    render(<NumberInput label="Test Label" name="Label" value={10} maxValue={10} step={1} onChange={mockOnChange} />)
+    render(
+      <NumberInput
+        label="Test Label"
+        name="Label"
+        value={10}
+        maxValue={10}
+        step={1}
+        onChange={mockOnChange}
+        enableStepCarets
+      />
+    )
     const input = screen.getByRole('spinbutton')
     await user.click(input)
     // Ensure that the input has focus
@@ -99,7 +109,17 @@ describe('NumberInput', () => {
 
   it('should not go below minValue when decrement button is clicked', async () => {
     const user = userEvent.setup()
-    render(<NumberInput label="Test Label" name="Label" value={1} minValue={1} step={1} onChange={mockOnChange} />)
+    render(
+      <NumberInput
+        label="Test Label"
+        name="Label"
+        value={1}
+        minValue={1}
+        step={1}
+        onChange={mockOnChange}
+        enableStepCarets
+      />
+    )
     const input = screen.getByRole('spinbutton')
     await user.click(input)
     // Ensure that the input has focus
@@ -182,11 +202,11 @@ describe('NumberInput', () => {
     expect(input).toHaveValue('10')
   })
 
-  // // Test for step
+  // Test for step
   it('should increment the value when increment arrow button is clicked', async () => {
     const user = userEvent.setup()
 
-    render(<NumberInput label="Test Label" name="Label" value={5} step={1} onChange={mockOnChange} />)
+    render(<NumberInput label="Test Label" name="Label" value={5} step={1} onChange={mockOnChange} enableStepCarets />)
 
     const input = screen.getByRole('spinbutton')
     await user.click(input) // Simula el clic en el input
@@ -217,6 +237,7 @@ describe('NumberInput', () => {
         step={1}
         onChange={mockOnChange}
         numericType="Float"
+        enableStepCarets
       />
     )
     const input = screen.getByRole('spinbutton')
@@ -239,6 +260,7 @@ describe('NumberInput', () => {
         step={1}
         onChange={mockOnChange}
         numericType="Int"
+        enableStepCarets
       />
     )
     const input = screen.getByRole('spinbutton')
@@ -305,6 +327,16 @@ describe('NumberInput', () => {
 
       rerender(<NumberInput label="Test Label" name="Label" onChange={mockOnChange} />)
       expect(input).toHaveValue('')
+    })
+
+    it('should show carets when enableStepCarets is true', () => {
+      render(<NumberInput label="Test Label" name="Label" enableStepCarets />)
+
+      const incrementButton = screen.getByRole('button', { name: /Increment/i })
+      const decrementButton = screen.getByRole('button', { name: /Decrement/i })
+
+      expect(incrementButton).toBeInTheDocument()
+      expect(decrementButton).toBeInTheDocument()
     })
   })
 })
