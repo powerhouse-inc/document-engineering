@@ -113,3 +113,30 @@ export const Filled: Story = {
     defaultValue: '+14155552671',
   },
 }
+
+export const WithDifferencesAddition: Story = {
+  args: {
+    label: 'Phone number addition',
+    defaultValue: '+14155552671',
+    baseValue: '+442072705238',
+    viewMode: 'addition',
+  },
+}
+
+export const WithDifferencesRemoval: Story = {
+  args: {
+    label: 'Phone number removal',
+    defaultValue: '+14155552671',
+    baseValue: '+442072705238',
+    viewMode: 'removal',
+  },
+}
+
+export const WithDifferencesMixed: Story = {
+  args: {
+    label: 'Phone number mixed',
+    defaultValue: '+14155552671',
+    baseValue: '+442072705238',
+    viewMode: 'mixed',
+  },
+}
