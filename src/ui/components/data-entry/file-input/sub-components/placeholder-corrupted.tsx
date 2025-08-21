@@ -16,7 +16,7 @@ export const PlaceHolderCorrupted = ({ onClose, className, typePreview }: PlaceH
   return (
     <div
       className={cn(
-        'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,115,0.25)] px-6 py-4 gap-4 h-[652px] w-[500px]',
+        'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,115,0.25)] px-6 py-4 gap-4 w-full h-full',
         className
       )}
     >
@@ -27,7 +27,7 @@ export const PlaceHolderCorrupted = ({ onClose, className, typePreview }: PlaceH
         </div>
       </div>
 
-      <div className=" border-gray-200">
+      <div className="border-gray-200">
         <p className="text-xs text-red-900 font-normal leading-4.5">
           Your file is corrupted and cannot be shown in the preview
         </p>
