@@ -53,7 +53,7 @@ const meta: Meta<typeof FileInput> = {
     },
     allowedFileTypes: {
       control: 'object',
-      description: 'Allowed file types',
+      description: 'Array of allowed MIME types for upload (e.g., ["image/png", "application/pdf"]).',
       table: {
         type: { summary: 'string[]' },
         category: StorybookControlCategory.DEFAULT,
@@ -61,7 +61,7 @@ const meta: Meta<typeof FileInput> = {
     },
     maxFileSize: {
       control: 'number',
-      description: 'Maximum file size',
+      description: 'Maximum allowed file size in bytes.',
       table: {
         type: { summary: 'number' },
         category: StorybookControlCategory.DEFAULT,
@@ -70,16 +70,28 @@ const meta: Meta<typeof FileInput> = {
     dragAndDropEnabled: {
       control: 'boolean',
       defaultValue: true,
-      description: 'Drag and drop enabled',
+      description: 'Enables or disables the drag-and-drop functionality.',
       table: {
         defaultValue: { summary: 'true' },
         type: { summary: 'boolean' },
         category: StorybookControlCategory.DEFAULT,
       },
     },
+
+    status: {
+      control: 'select',
+      options: ['idle', 'uploading', 'success', 'error'],
+      description: 'Controls the visual state of the upload item, determining which UI is rendered.',
+      defaultValue: 'idle',
+      table: {
+        type: { summary: "'idle' | 'uploading' | 'success' | 'error'" },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        defaultValue: { summary: 'idle' },
+      },
+    },
     fileName: {
       control: 'text',
-      description: 'Name of the uploaded file',
+      description: 'The name of the file to display. Must be provided once the file is selected.',
       table: {
         type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
@@ -87,55 +99,64 @@ const meta: Meta<typeof FileInput> = {
     },
     fileSize: {
       control: 'number',
-      description: 'Size of the uploaded file in bytes',
+      description: 'The file size in bytes. The component formats it automatically (KB, MB).',
       table: {
         type: { summary: 'number' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
+    mimeType: {
+      control: 'text',
+      description: 'The MIME type of the file (e.g., "image/png"), used to display the correct icon.',
+      table: {
+        type: { summary: 'string' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
     progress: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
       if: { arg: 'status', eq: 'uploading' },
-      description: 'Upload progress percentage (0-100)',
+      description: 'The upload progress (0-100). Only visible when status is "uploading".',
       table: {
         type: { summary: 'number' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    onCancel: {
-      action: 'cancel',
-      description: 'Callback when cancel button is clicked',
+    showPreview: {
+      control: 'boolean',
+      description: 'If true, displays the "Preview" button when the status is "success".',
+      defaultValue: false,
       table: {
+        type: { summary: 'boolean' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
-        type: { summary: 'function' },
-      },
-    },
-    onReload: {
-      action: 'reload',
-      description: 'Callback when reload button is clicked',
-      table: {
-        category: StorybookControlCategory.COMPONENT_SPECIFIC,
-        type: { summary: 'function' },
+        defaultValue: { summary: 'false' },
       },
     },
     errorsUpload: {
       control: 'object',
-      description: 'Array of upload error messages',
+      description: 'List of error messages to display if status is "error".',
       table: {
         type: { summary: 'string[]' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
-    status: {
-      control: 'select',
-      options: ['idle', 'uploading', 'success', 'error'],
-      description: 'Current upload status',
-      defaultValue: 'idle',
+    onCancel: {
+      action: 'cancel',
+      description: 'Callback function invoked when the cancel button (X) is pressed.',
       table: {
-        type: { summary: 'UploadFile' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        type: { summary: '(e: MouseEvent) => void' },
       },
     },
+    onReload: {
+      action: 'reload',
+      description: 'Callback function to retry the upload. Only visible if status is "error".',
+      table: {
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+        type: { summary: '(e: MouseEvent) => void' },
+      },
+    },
+
     ...getValidationArgTypes({
       enabledArgTypes: {
         validators: false,
