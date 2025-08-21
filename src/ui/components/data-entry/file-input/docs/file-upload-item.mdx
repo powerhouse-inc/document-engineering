@@ -1,0 +1,179 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Entry/File Input/Docs/File Upload Item" />
+
+# File Upload Item
+
+This page covers the `FileUploadItem` component, which is an **internal component** that automatically renders inside `FileInput` to display file upload status and progress.
+
+## Overview
+
+`FileUploadItem` is **NOT a component you use directly** in your code. It's an internal sub-component of `FileInput` that automatically renders when:
+
+- A file has been selected
+- The file is being uploaded to the backend
+- The upload has been completed (successful or with error)
+
+## When It Appears
+
+The `FileUploadItem` automatically appears in these situations:
+
+1. **File Selected**: When the user selects a file, it appears with `idle` status
+2. **Upload in Progress**: During the POST process to the backend, shows progress with `uploading` status
+3. **Upload Successful**: After a successful upload, shows confirmation with `success` status
+4. **Upload Error**: If the upload fails, shows errors with `error` status
+
+## How It Works
+
+### Automatic Flow
+
+```tsx
+// 1. User selects file
+<FileField name="document" />
+
+// 2. FileInput automatically renders FileUploadItem when:
+//    - status !== 'idle'
+//    - fileName is present
+//    - fileSize is present
+
+// 3. Component automatically updates based on state
+```
+
+### Component States
+
+The `FileUploadItem` automatically handles these states:
+
+- **`idle`**: File selected, ready to upload
+- **`uploading`**: Upload in progress with progress bar
+- **`success`**: Upload successful with preview option
+- **`error`**: Upload error with retry options
+
+## Configuration in FileField
+
+For the `FileUploadItem` to work correctly, you must provide these props to `FileField`:
+
+```tsx
+<FileField
+  name="profilePicture"
+  description="Drop your file here"
+  maxFileSize={20000000} 
+  required
+  // Props needed for FileUploadItem
+  status={uploadStatus}        // Upload status
+  progress={uploadProgress}    // Progress (0-100)
+  fileName={selectedFile?.name}
+  fileSize={selectedFile?.size}
+  mimeType={selectedFile?.type}
+  errorsUpload={uploadErrors}
+  showPreview={true}
+  onCancel={handleCancelUpload}
+  onReload={handleRetryUpload}
+/>
+```
+
+## Complete Implementation Example
+
+```tsx
+import { useState } from 'react'
+import { FileField } from '@your-org/scalars'
+
+const DocumentUpload = () => {
+  const [uploadStatus, setUploadStatus] = useState('idle')
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [uploadErrors, setUploadErrors] = useState([])
+  const [selectedFile, setSelectedFile] = useState(null)
+
+  const handleFileUpload = async (file) => {
+    setSelectedFile(file)
+    setUploadStatus('uploading')
+    setUploadProgress(0)
+    setUploadErrors([])
+
+    try {
+      // Simulate backend upload
+      const formData = new FormData()
+      formData.append('file', file)
+      
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+        onUploadProgress: (progressEvent) => {
+          const progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          )
+          setUploadProgress(progress)
+        }
+      })
+
+      if (response.ok) {
+        setUploadStatus('success')
+        setUploadProgress(100)
+      } else {
+        throw new Error('Upload failed')
+      }
+    } catch (error) {
+      setUploadStatus('error')
+      setUploadErrors([error.message])
+    }
+  }
+
+  const handleCancel = () => {
+    setUploadStatus('idle')
+    setUploadProgress(0)
+    setSelectedFile(null)
+    setUploadErrors([])
+  }
+
+  const handleRetry = () => {
+    if (selectedFile) {
+      handleFileUpload(selectedFile)
+    }
+  }
+
+  return (
+    <FileField
+      name="document"
+      label="Upload Document"
+      description="Drop your file here"
+      required
+      maxFileSize={20000000}
+      // FileUploadItem automatically renders with these props
+      status={uploadStatus}
+      progress={uploadProgress}
+      fileName={selectedFile?.name}
+      fileSize={selectedFile?.size}
+      mimeType={selectedFile?.type}
+      errorsUpload={uploadErrors}
+      showPreview={true}
+      onCancel={handleCancel}
+      onReload={handleRetry}
+    />
+  )
+}
+```
+
+## Component Features
+
+### Automatic Rendering
+
+- **No need to import it**: It's automatically included in `FileInput`
+- **Conditionally displayed**: Only appears when `status !== 'idle'`
+- **Automatically updates**: Responds to prop changes
+
+### Integrated Functionality
+
+- **MIME type icons**: Automatically detects file type
+- **Progress bar**: Shows progress during upload
+- **Error handling**: Displays errors and retry options
+- **File preview**: Allows previewing successfully uploaded files
+- **Accessibility**: Includes appropriate ARIA labels and roles
+
+## Important Notes
+
+⚠️ **Don't use `<FileUploadItem>` directly** - It's an internal component
+
+✅ **Use `<FileField>` or `<FileInput>`** - They handle the `FileUploadItem` logic
+
+✅ **Provide necessary props** - For the component to work correctly
+
+✅ **Handle upload states** - The component responds to changes in `status` and `progress`
