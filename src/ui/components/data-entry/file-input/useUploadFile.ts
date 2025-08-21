@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { PREVIEW_STATUS, type PreviewStatus } from './types.js'
-import { detectPreviewType, validateAudio, validateImageHeader, validatePdfHeader, validateVideo } from './utils.js'
+import { detectPreviewType, getPreviewComponentFromError, validateFileForPreview } from './utils.js'
+import useFetchQuery from './useFetchQuery.js'
+import type { PreviewStatus } from './types.js'
 
 interface UseFileUploadProps {
   value?: File | null
@@ -8,19 +9,30 @@ interface UseFileUploadProps {
   onChange?: (file: File | null) => void
 }
 
-const mapValidator = {
-  ['pdf']: validatePdfHeader,
-  ['image']: validateImageHeader,
-  ['audio']: validateAudio,
-  ['video']: validateVideo,
-  ['unknown']: async () => Promise.resolve(false),
-}
-
 export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadProps) => {
   const [file, setFile] = useState<File | null>(value ?? defaultValue ?? null)
   const [preview, setPreview] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const [previewStatus, setPreviewStatus] = useState<PreviewStatus>(PREVIEW_STATUS.LOADING)
+
+  const queryFn = useCallback(async () => {
+    if (!file) return Promise.reject(new Error('No hay archivo seleccionado'))
+    return validateFileForPreview(file)
+  }, [file])
+  const { data, isLoading, error } = useFetchQuery(queryFn, {
+    enabled: isPreviewOpen && !!file,
+  })
+
+  const getPreviewStatus = (): PreviewStatus => {
+    if (!isPreviewOpen) return 'idle'
+    if (isLoading) return 'loading'
+    if (error) {
+      const errorType = getPreviewComponentFromError(error)
+      return errorType || 'unsupported_file'
+    }
+    if (data === 'success') return 'success'
+    return 'idle'
+  }
+  const previewStatus = getPreviewStatus()
 
   const handleDrop = useCallback(
     (acceptedFiles?: File[]) => {
@@ -38,38 +50,7 @@ export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadPr
     setIsPreviewOpen(false)
   }
 
-  const typePreview = detectPreviewType(file?.type)
-
-  const handleOnPreview = async () => {
-    if (!file) return
-    setIsPreviewOpen(true)
-    setPreviewStatus(PREVIEW_STATUS.LOADING)
-
-    if (typePreview === 'unknown') {
-      setPreviewStatus(PREVIEW_STATUS.UNSUPPORTED_FORMAT)
-      return
-    }
-
-    const validator = mapValidator[typePreview]
-
-    try {
-      const isValid = await validator(file)
-
-      if (!isValid) {
-        setPreviewStatus(PREVIEW_STATUS.CORRUPTED_FILE)
-        return
-      }
-
-      if (!preview) {
-        setPreviewStatus(PREVIEW_STATUS.CORRUPTED_FILE)
-        return
-      }
-      await new Promise((res) => setTimeout(res, 2000))
-      setPreviewStatus(PREVIEW_STATUS.SUCCESS)
-    } catch {
-      setPreviewStatus(PREVIEW_STATUS.CORRUPTED_FILE)
-    }
-  }
+  const typePreview = detectPreviewType(file ?? undefined)
 
   useEffect(() => {
     return () => {
@@ -81,6 +62,11 @@ export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadPr
 
   const borderIndicator = file ? 'text-blue-900' : 'text-gray-300'
 
+  const handleOnPreview = () => {
+    if (!file) return
+    setIsPreviewOpen(true)
+  }
+
   return {
     handleDrop,
     file,
@@ -91,7 +77,6 @@ export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadPr
     handleOnPreview,
     isPreviewOpen,
     previewStatus,
-    setPreviewStatus,
     typePreview,
   }
 }

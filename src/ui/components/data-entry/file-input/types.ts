@@ -26,13 +26,12 @@ export type UploadFile = 'idle' | 'uploading' | 'success' | 'error'
 
 export const PREVIEW_STATUS = {
   LOADING: 'loading',
-  UNSUPPORTED_FORMAT: 'unsupported_format',
+  UNSUPPORTED_FILE: 'unsupported_file',
   CORRUPTED_FILE: 'corrupted_file',
   SUCCESS: 'success',
 } as const
 
-type ValueOf<T> = T[keyof T]
-export type PreviewStatus = ValueOf<typeof PREVIEW_STATUS>
+export type PreviewStatus = 'idle' | 'loading' | 'success' | 'corrupted_file' | 'unsupported_file'
 
 export interface StatusConfig {
   icon: IconName | undefined
@@ -40,4 +39,4 @@ export interface StatusConfig {
   message?: string
 }
 
-export type PreviewType = 'pdf' | 'image' | 'audio' | 'video' | 'unknown'
+export type PreviewType = 'pdf' | 'image' | 'audio' | 'video'
