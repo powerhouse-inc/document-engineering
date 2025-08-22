@@ -11,7 +11,7 @@ const PreviewAudio = ({ onClose = () => null, preview, className }: AudioPreview
   return (
     <div
       className={cn(
-        'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,15,0.25)] px-6 py-4 gap-4 w-full',
+        'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,15,0.25)] px-6 py-4 gap-4 w-full h-full',
         className
       )}
     >

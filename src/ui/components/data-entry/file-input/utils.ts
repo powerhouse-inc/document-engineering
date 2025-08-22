@@ -1,6 +1,6 @@
 import mime from 'mime/lite'
 import type { IconName } from '../../icon-components/index.js'
-import type { PreviewType } from './types.js'
+import type { PreviewStatus, PreviewType } from './types.js'
 export const MESSAGES = {
   success: 'Upload successful',
   error: 'Upload failed',
@@ -235,5 +235,26 @@ export const getBrokenFileIcon = (type: PreviewType): IconName => {
       return 'BrokenVideo'
     default:
       return 'ContentUnavailableIcon'
+  }
+}
+
+export const getContainerDimensions = (status: PreviewStatus, typePreview?: PreviewType): string => {
+  if (status !== 'success') {
+    return 'w-[600px] h-[652px]'
+  }
+
+  switch (typePreview) {
+    case 'pdf':
+      return 'w-[500px] h-[652px]'
+    case 'video':
+      return 'w-[600px] h-[340px]'
+    case 'image':
+      return 'w-[368px] h-[384px]'
+    case 'audio':
+      return 'w-[368px] h-[384px]'
+    case undefined:
+      return 'w-[500px] h-[652px]'
+    default:
+      return 'w-[500px] h-[652px]'
   }
 }

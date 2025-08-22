@@ -86,14 +86,6 @@ const FileUploadItemExample = () => {
                   label="Upload Document"
                   description="Choose your document"
                   required
-                  allowedFileTypes={[
-                    'image/png',
-                    'image/jpg',
-                    'image/jpeg',
-                    'application/pdf',
-                    'text/plain',
-                    'application/epub+zip',
-                  ]}
                   maxFileSize={15728640}
                   dragAndDropEnabled={true}
                   // File upload state props
