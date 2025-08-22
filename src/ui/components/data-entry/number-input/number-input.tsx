@@ -111,7 +111,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
               <div className="absolute inset-y-2 right-3 flex flex-col justify-center group-focus-within:opacity-100 transition-opacity">
                 <button
                   aria-label="Increment"
-                  disabled={canIncrement}
+                  disabled={canIncrement || props.disabled}
                   onMouseDown={(e) => {
                     e.preventDefault()
                   }}
@@ -126,7 +126,10 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
                   <Icon
                     size={10}
                     name="ChevronDown"
-                    className={cn('rotate-180 text-gray-700 dark:text-gray-300', canIncrement && 'cursor-not-allowed')}
+                    className={cn(
+                      'rotate-180 text-gray-700 dark:text-gray-300',
+                      (canIncrement || props.disabled) && 'cursor-not-allowed'
+                    )}
                   />
                 </button>
                 <button
@@ -134,7 +137,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
                   onMouseDown={(e) => {
                     e.preventDefault()
                   }}
-                  disabled={canDecrement}
+                  disabled={canDecrement || props.disabled}
                   type="button"
                   onClick={(e) => {
                     stepValueHandler(e, 'decrement')
@@ -148,7 +151,7 @@ const NumberInputRaw = forwardRef<HTMLInputElement, InputNumberPropsWithDifferen
                     name="ChevronDown"
                     className={cn(
                       'items-center justify-center text-gray-700 dark:text-gray-300',
-                      canDecrement && 'cursor-not-allowed'
+                      (canDecrement || props.disabled) && 'cursor-not-allowed'
                     )}
                   />
                 </button>

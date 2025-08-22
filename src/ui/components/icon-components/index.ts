@@ -13,7 +13,9 @@ import Braces from './Braces.js'
 import Branch from './Branch.js'
 import BrickGlobe from './BrickGlobe.js'
 import Briefcase from './Briefcase.js'
+import BrokenAudio from './BrokenAudio.js'
 import BrokenImage from './BrokenImage.js'
+import BrokenVideo from './BrokenVideo.js'
 import Calendar from './Calendar.js'
 import CalendarTime from './CalendarTime.js'
 import Caret from './Caret.js'
@@ -87,7 +89,9 @@ import PeopleFill from './PeopleFill.js'
 import Person from './Person.js'
 import Pin from './Pin.js'
 import PinFilled from './PinFilled.js'
+import PlaceholderAudio from './PlaceholderAudio.js'
 import PlaceholderImage from './PlaceholderImage.js'
+import PlaceholderVideo from './PlaceholderVideo.js'
 import Plus from './Plus.js'
 import PlusCircle from './PlusCircle.js'
 import PlusSquare from './PlusSquare.js'
@@ -138,7 +142,9 @@ export const iconNames = [
   'Branch',
   'BrickGlobe',
   'Briefcase',
+  'BrokenAudio',
   'BrokenImage',
+  'BrokenVideo',
   'Calendar',
   'CalendarTime',
   'Caret',
@@ -212,7 +218,9 @@ export const iconNames = [
   'Person',
   'Pin',
   'PinFilled',
+  'PlaceholderAudio',
   'PlaceholderImage',
+  'PlaceholderVideo',
   'Plus',
   'PlusCircle',
   'PlusSquare',
@@ -265,7 +273,9 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Branch,
   BrickGlobe,
   Briefcase,
+  BrokenAudio,
   BrokenImage,
+  BrokenVideo,
   Calendar,
   CalendarTime,
   Caret,
@@ -339,7 +349,9 @@ export const iconComponents: Record<IconName, (props: Props) => React.JSX.Elemen
   Person,
   Pin,
   PinFilled,
+  PlaceholderAudio,
   PlaceholderImage,
+  PlaceholderVideo,
   Plus,
   PlusCircle,
   PlusSquare,

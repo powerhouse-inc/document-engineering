@@ -1,9 +1,10 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { Icon } from '../../../icon/index.js'
-import { PREVIEW_STATUS, type PreviewStatus } from '../types.js'
+
+type HeaderStatus = 'idle' | 'error'
 
 interface PreviewHeaderProps {
-  status: PreviewStatus
+  status: HeaderStatus
   onClose: () => void
   title?: string
 }
@@ -11,12 +12,7 @@ interface PreviewHeaderProps {
 const PreviewHeader = ({ status, onClose, title = 'File Preview' }: PreviewHeaderProps) => {
   return (
     <header className="flex justify-between items-center">
-      <span
-        className={cn(
-          'text-gray-900 text-sm font-normal leading-4.5',
-          status === PREVIEW_STATUS.CORRUPTED_FILE && 'text-red-900'
-        )}
-      >
+      <span className={cn('text-gray-900 text-sm font-normal leading-4.5', status === 'error' && 'text-red-900')}>
         {title}
       </span>
       <button type="button" onClick={onClose} aria-label="Close preview" className="text-gray-400 hover:text-gray-600">

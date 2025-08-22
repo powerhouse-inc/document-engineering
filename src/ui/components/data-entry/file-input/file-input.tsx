@@ -136,7 +136,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                       showPreview={showPreview}
                       handleOnCancelPreview={handleCancelPreview}
                       isPreviewOpen={isPreviewOpen}
-                      handleOnPreview={() => void handleOnPreview()}
+                      handleOnPreview={handleOnPreview}
                       previewStatus={previewStatus}
                       typePreview={typePreview}
                     />

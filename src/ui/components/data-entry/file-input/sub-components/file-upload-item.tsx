@@ -2,7 +2,7 @@ import { cn } from '../../../../../scalars/lib/utils.js'
 import { ProgressBar } from '../../../../../scalars/components/fragments/progress-bar/index.js'
 import { Icon } from '../../../icon/index.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
-import type { PreviewStatus, PreviewType, UploadFile } from '../types.js'
+import type { PreviewType, UploadFile } from '../types.js'
 import { getIconKey, MESSAGES, previewSizeStyles } from '../utils.js'
 import {
   AlertDialog,
@@ -13,9 +13,11 @@ import {
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import PreviewFile from './preview-file.js'
 import PreviewImage from './preview-image.js'
-import { UnsupportedFile } from './placeholder-unsupported.js'
 import PreviewAudio from './preview-audio.js'
 import PreviewVideo from './preview-video.js'
+import { PlaceHolderUnsupported } from './placeholder-unsupported.js'
+import { PlaceHolderLoading } from './placeholder-loading.js'
+import { PlaceHolderCorrupted } from './placeholder-corrupted.js'
 
 interface FileUploadItemProps {
   fileName?: string
@@ -34,8 +36,8 @@ interface FileUploadItemProps {
   isPreviewOpen?: boolean
   handleOnPreview?: () => void
   handleOnCancelPreview?: () => void
-  previewStatus: PreviewStatus
-  typePreview: PreviewType
+  previewStatus: 'idle' | 'loading' | 'success' | 'corrupted_file' | 'unsupported_file'
+  typePreview?: PreviewType
 }
 
 const FileUploadItem = ({
@@ -74,15 +76,6 @@ const FileUploadItem = ({
     onReload?.(e)
   }
 
-  const previewComponents = {
-    pdf: PreviewFile,
-    image: PreviewImage,
-    audio: PreviewAudio,
-    video: PreviewVideo,
-    unknown: UnsupportedFile,
-  }
-
-  const PreviewComponent = previewComponents[typePreview]
   const commonPreviewProps = {
     className: 'w-full h-full',
     status: previewStatus,
@@ -173,9 +166,29 @@ const FileUploadItem = ({
           </VisuallyHidden>
           <AlertDialogContent
             className={cn('p-0 border-0 shadow-none bg-transparent max-w-none w-auto h-auto')}
-            style={previewSizeStyles[typePreview]}
+            style={{
+              width: previewSizeStyles[typePreview ?? 'unsupported_file'].width,
+              height: previewSizeStyles[typePreview ?? 'unsupported_file'].height,
+            }}
           >
-            <PreviewComponent {...commonPreviewProps} />
+            {previewStatus === 'loading' && (
+              <PlaceHolderLoading onClose={handleOnCancelPreview} typePreview={typePreview ?? 'pdf'} />
+            )}
+
+            {previewStatus === 'corrupted_file' && (
+              <PlaceHolderCorrupted onClose={handleOnCancelPreview} typePreview={typePreview ?? 'pdf'} />
+            )}
+
+            {previewStatus === 'unsupported_file' && <PlaceHolderUnsupported onClose={handleOnCancelPreview} />}
+
+            {previewStatus === 'success' && (
+              <>
+                {typePreview === 'pdf' && <PreviewFile {...commonPreviewProps} />}
+                {typePreview === 'image' && <PreviewImage {...commonPreviewProps} />}
+                {typePreview === 'audio' && <PreviewAudio {...commonPreviewProps} />}
+                {typePreview === 'video' && <PreviewVideo {...commonPreviewProps} />}
+              </>
+            )}
           </AlertDialogContent>
         </AlertDialog>
       )}

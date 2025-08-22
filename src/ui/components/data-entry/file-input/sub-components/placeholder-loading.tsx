@@ -1,12 +1,17 @@
 import PreviewHeader from './preview-header.js'
+import LoadingBar from './loading-bar.js'
 import { cn } from '../../../../../scalars/lib/utils.js'
 import { Icon } from '../../../icon/index.js'
+import type { PreviewType } from '../types.js'
+import { getIconLoading } from '../utils.js'
 
 interface PlaceHolderPdfProps {
   onClose: () => void
+  typePreview: PreviewType
 }
 
-export const PlaceHolderUnsupported = ({ onClose }: PlaceHolderPdfProps) => {
+export const PlaceHolderLoading = ({ onClose, typePreview }: PlaceHolderPdfProps) => {
+  const iconLoading = getIconLoading(typePreview)
   return (
     <div className="flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(37, 44, 56, 0.25)] px-6 py-4 gap-4  border border-gray-200 h-[652px] w-[500px]">
       <PreviewHeader status="idle" onClose={onClose} />
@@ -16,16 +21,12 @@ export const PlaceHolderUnsupported = ({ onClose }: PlaceHolderPdfProps) => {
         )}
       >
         <div className="relative">
-          <Icon name="ContentUnavailableIcon" size={256} className="text-gray-300" />
+          <Icon name={iconLoading} size={256} className="text-gray-300" />
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4">
-          <h3 className="text-xl font-bold leading-6 text-gray-500">Opss!</h3>
-
-          <p className="text-center text-sm text-gray-500 mx-auto max-w-[375px] whitespace-pre-line">
-            It looks like we still don&apos;t support this format. (We are working on it) Please try to upload it with a
-            different Format.
-          </p>
+          <h3 className="text-xl font-bold leading-6 text-gray-500">Loading</h3>
+          <LoadingBar progress={50} className="w-[375px]" />
         </div>
       </div>
     </div>
