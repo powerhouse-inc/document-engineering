@@ -70,12 +70,10 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
     const hasError = Array.isArray(errors) && errors.length > 0
 
     if (viewMode !== 'edition') {
-      const callingCode = selectValue.split('-')[0]
-      const currentValue = `${callingCode}${inputValue}`
-
       return (
         <PhoneNumberInputDiff
-          value={currentValue}
+          selectValue={selectValue}
+          inputValue={inputValue}
           baseValue={baseValue}
           viewMode={viewMode}
           label={label}

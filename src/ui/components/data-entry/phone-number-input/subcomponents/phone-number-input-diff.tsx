@@ -5,7 +5,8 @@ import type { SelectOption } from '../../select/types.js'
 import type { PhoneNumberInputProps } from '../types.js'
 
 interface PhoneNumberInputDiffProps extends Omit<WithDifference<string>, 'diffMode'> {
-  value: string
+  selectValue: string
+  inputValue: string
   label: PhoneNumberInputProps['label']
   required: PhoneNumberInputProps['required']
   options: SelectOption[]
@@ -13,7 +14,8 @@ interface PhoneNumberInputDiffProps extends Omit<WithDifference<string>, 'diffMo
 }
 
 const PhoneNumberInputDiff = ({
-  value,
+  selectValue,
+  inputValue,
   label,
   required,
   options,
@@ -30,7 +32,8 @@ const PhoneNumberInputDiff = ({
       )}
       <SplittedPhoneNumberDiff
         baseValue={baseValue}
-        value={value}
+        selectValue={selectValue}
+        inputValue={inputValue}
         viewMode={viewMode}
         options={options}
         prefixOptionFormat={prefixOptionFormat}

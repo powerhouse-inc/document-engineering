@@ -6,14 +6,16 @@ import type { SelectOption } from '../../select/types.js'
 import type { PhoneNumberInputProps } from '../types.js'
 
 interface SplittedPhoneNumberDiffProps extends Omit<WithDifference<string>, 'diffMode'> {
-  value: string
+  selectValue: string
+  inputValue: string
   options: SelectOption[]
   prefixOptionFormat: PhoneNumberInputProps['prefixOptionFormat']
 }
 
 const SplittedPhoneNumberDiff = ({
   baseValue,
-  value,
+  selectValue,
+  inputValue,
   viewMode,
   options,
   prefixOptionFormat,
@@ -22,20 +24,22 @@ const SplittedPhoneNumberDiff = ({
     <InputDiff className={cn('group')} data-testid="phone-number-input-diff">
       {viewMode === 'mixed' ? (
         <>
-          <div className={cn('flex flex-1 items-center gap-2 truncate [&>span]:truncate')}>
+          <div className={cn('flex flex-1 items-center truncate [&>span]:truncate')}>
             <PhoneNumberDiff
               baseValue={baseValue}
-              value={value}
+              selectValue={selectValue}
+              inputValue={inputValue}
               viewMode="removal"
               options={options}
               prefixOptionFormat={prefixOptionFormat}
             />
           </div>
           <div className={cn('mx-3 w-px bg-gray-300 self-stretch')} />
-          <div className={cn('flex flex-1 items-center gap-2 truncate [&>span]:truncate')}>
+          <div className={cn('flex flex-1 items-center truncate [&>span]:truncate')}>
             <PhoneNumberDiff
               baseValue={baseValue}
-              value={value}
+              selectValue={selectValue}
+              inputValue={inputValue}
               viewMode="addition"
               options={options}
               prefixOptionFormat={prefixOptionFormat}
@@ -43,10 +47,11 @@ const SplittedPhoneNumberDiff = ({
           </div>
         </>
       ) : (
-        <div className={cn('flex flex-1 items-center gap-2 truncate [&>span]:truncate')}>
+        <div className={cn('flex flex-1 items-center truncate [&>span]:truncate')}>
           <PhoneNumberDiff
             baseValue={baseValue}
-            value={value}
+            selectValue={selectValue}
+            inputValue={inputValue}
             viewMode={viewMode}
             options={options}
             prefixOptionFormat={prefixOptionFormat}

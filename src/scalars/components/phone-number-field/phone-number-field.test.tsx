@@ -206,7 +206,106 @@ describe('PhoneNumberField Component', () => {
     expect(screen.getByText('PR')).toBeInTheDocument()
   })
 
-  it('should validate phone number format on submit', async () => {
-    // TODO: Implement this test
+  describe('phone number validation on submit', () => {
+    it('should reject invalid phone number', async () => {
+      const mockOnSubmit = vi.fn()
+      const user = userEvent.setup()
+
+      renderWithForm(
+        <>
+          <PhoneNumberField name="phone" />
+          <button type="submit">Submit</button>
+        </>,
+        mockOnSubmit
+      )
+
+      const input = screen.getByRole('textbox')
+      const submitButton = screen.getByText('Submit')
+
+      await user.type(input, '123456789012345678') // 18 digits
+      await user.click(submitButton)
+      await waitFor(() => {
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+        expect(input).toHaveAttribute('aria-invalid', 'true')
+      })
+    })
+
+    it('should accept empty value if not required', async () => {
+      const mockOnSubmit = vi.fn()
+      const user = userEvent.setup()
+
+      renderWithForm(
+        <>
+          <PhoneNumberField name="phone" />
+          <button type="submit">Submit</button>
+        </>,
+        mockOnSubmit
+      )
+
+      const submitButton = screen.getByText('Submit')
+
+      await user.click(submitButton)
+      await waitFor(() => {
+        expect(mockOnSubmit).toHaveBeenCalledWith({
+          phone: null,
+        })
+      })
+    })
+
+    it('should accept valid US phone number', async () => {
+      const mockOnSubmit = vi.fn()
+      const user = userEvent.setup()
+
+      renderWithForm(
+        <>
+          <PhoneNumberField name="phone" />
+          <button type="submit">Submit</button>
+        </>,
+        mockOnSubmit
+      )
+
+      const input = screen.getByRole('textbox')
+      const submitButton = screen.getByText('Submit')
+
+      await user.type(input, '14155552671')
+      await user.click(submitButton)
+      await waitFor(() => {
+        expect(mockOnSubmit).toHaveBeenCalledWith({
+          phone: '+14155552671',
+        })
+      })
+    })
+
+    it('should accept valid Spanish phone number', async () => {
+      const mockOnSubmit = vi.fn()
+      const user = userEvent.setup()
+
+      renderWithForm(
+        <>
+          <PhoneNumberField name="phone" />
+          <button type="submit">Submit</button>
+        </>,
+        mockOnSubmit
+      )
+
+      const input = screen.getByRole('textbox')
+      const select = screen.getByRole('combobox')
+      const submitButton = screen.getByText('Submit')
+
+      await user.click(select)
+      const list = await screen.findByRole('dialog')
+      const search = within(list).getByRole('combobox')
+      await user.type(search, '34')
+      const spainOption = await screen.findByRole('option', { name: '+34' })
+      await user.click(spainOption)
+
+      await user.type(input, '912345678')
+      await user.click(submitButton)
+      await waitFor(() => {
+        expect(mockOnSubmit).toHaveBeenCalledWith({
+          phone: '+34912345678',
+        })
+      })
+    })
   })
 })
