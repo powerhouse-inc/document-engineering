@@ -34,12 +34,12 @@ const getCallingCode = (countryCode: string): string | null => {
 const parsePhoneValue = (rawValue: string) => {
   if (rawValue === '') return null
 
-  const sanitizedValue = `+${rawValue.replace(/\D/g, '')}`
-  const parsedValue = parsePhoneNumber(sanitizedValue, { extract: false })
+  const withPlusValue = `${rawValue.startsWith('+') ? '' : '+'}${rawValue}`
+  const parsedValue = parsePhoneNumber(withPlusValue, { extract: false })
 
   if (parsedValue?.isPossible() && parsedValue.country) {
     const expectedValue = `+${parsedValue.countryCallingCode}${parsedValue.nationalNumber}`
-    if (sanitizedValue !== expectedValue) {
+    if (withPlusValue !== expectedValue) {
       return null // the number was corrected by the library, reject it
     }
 
@@ -66,6 +66,8 @@ export const usePhoneNumberInput = ({
 }: UsePhoneNumberInputProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const isInternalChangeRef = useRef(false)
+  const lastCursorPositionRef = useRef(0)
 
   const mergedRef = (node: HTMLInputElement | null) => {
     inputRef.current = node
@@ -84,7 +86,7 @@ export const usePhoneNumberInput = ({
   const [inputValue, setInputValue] = useState(() => {
     const rawValue = value ?? defaultValue ?? ''
     const parsedValue = parsePhoneValue(rawValue)
-    return parsedValue?.inputValue ?? rawValue.replace(/\D/g, '')
+    return parsedValue?.inputValue ?? rawValue
   })
 
   const options: SelectOption[] = useMemo(() => {
@@ -186,31 +188,43 @@ export const usePhoneNumberInput = ({
       setSelectValue(newSelectValue)
 
       const callingCode = newSelectValue.split('-')[0]
-      onChange?.(callingCode)
 
-      if (newSelectValue !== '') {
-        inputRef.current?.focus()
-      }
+      isInternalChangeRef.current = true
+      onChange?.(`${callingCode}${inputValue}`)
+
+      inputRef.current?.focus()
     },
-    [onChange]
+    [inputValue, onChange]
   )
 
   const handleInputOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const callingCode = selectValue.split('-')[0]
-      const parsedValue = parsePhoneValue(`${callingCode}${e.target.value}`)
+      // save cursor position
+      lastCursorPositionRef.current = e.target.selectionStart ?? 0
+
+      let callingCode = selectValue.split('-')[0]
+      let inputValueToProcess = e.target.value.replace(/\D/g, '')
+      if (selectValue === '' && inputValueToProcess.startsWith('00')) {
+        inputValueToProcess = `+${inputValueToProcess.substring(2)}`
+      }
+      const parsedValue = parsePhoneValue(`${callingCode}${inputValueToProcess}`)
+
       if (selectValue === '' && parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
         setSelectValue(parsedValue.selectValue)
         setInputValue(parsedValue.inputValue)
-        const callingCode = parsedValue.selectValue.split('-')[0]
+        callingCode = parsedValue.selectValue.split('-')[0]
+
+        isInternalChangeRef.current = true
         onChange?.(`${callingCode}${parsedValue.inputValue}`)
       } else {
         const newInputValue = e.target.value.replace(/\D/g, '')
         setInputValue(newInputValue)
+
+        isInternalChangeRef.current = true
         onChange?.(`${callingCode}${newInputValue}`)
       }
     },
-    [options, selectValue, onChange]
+    [selectValue, options, onChange]
   )
 
   const handleOnKeyDown = useCallback(
@@ -256,6 +270,11 @@ export const usePhoneNumberInput = ({
 
   useEffect(() => {
     if (value !== undefined) {
+      if (isInternalChangeRef.current) {
+        isInternalChangeRef.current = false
+        return
+      }
+
       if (value === '') {
         setSelectValue('')
         setInputValue('')
@@ -266,9 +285,20 @@ export const usePhoneNumberInput = ({
       if (parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
         setSelectValue(parsedValue.selectValue)
         setInputValue(parsedValue.inputValue)
+      } else {
+        setSelectValue('')
+        setInputValue(value)
       }
     }
   }, [value, options])
+
+  // restore cursor position after input value change
+  useEffect(() => {
+    if (inputRef.current && lastCursorPositionRef.current > 0) {
+      const position = Math.min(lastCursorPositionRef.current, inputValue.length)
+      inputRef.current.setSelectionRange(position, position)
+    }
+  }, [inputValue])
 
   return {
     options,

@@ -8,6 +8,7 @@ import { FormGroup } from '../../../../scalars/components/fragments/form-group/i
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
 import type { PhoneNumberInputProps } from './types.js'
+import { PhoneNumberInputDiff } from './subcomponents/phone-number-input-diff.js'
 
 const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProps>(
   (
@@ -33,8 +34,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       prefixProps,
       pattern,
       viewMode = 'edition',
-      // TODO: implement diffs
-      // baseValue,
+      baseValue,
       ...props
     },
     ref
@@ -70,8 +70,18 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
     const hasError = Array.isArray(errors) && errors.length > 0
 
     if (viewMode !== 'edition') {
-      // TODO: implement PhoneNumberInputDiff
-      return null
+      return (
+        <PhoneNumberInputDiff
+          selectValue={selectValue}
+          inputValue={inputValue}
+          baseValue={baseValue}
+          viewMode={viewMode}
+          label={label}
+          required={required}
+          options={options}
+          prefixOptionFormat={prefixOptionFormat}
+        />
+      )
     }
 
     return (
