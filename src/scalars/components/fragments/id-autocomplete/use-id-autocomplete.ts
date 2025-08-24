@@ -75,6 +75,7 @@ export function useIdAutocomplete({
               } else {
                 setSelectedOption(undefined)
                 setIsPopoverOpen(true)
+                setCommandValue(newOptions[0]?.value ?? '')
               }
               setIsLoading(false)
             })
@@ -140,7 +141,7 @@ export function useIdAutocomplete({
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
-      if (!open) {
+      if (open) {
         setCommandValue(options[0]?.value ?? '')
       }
       setIsPopoverOpen(open)
