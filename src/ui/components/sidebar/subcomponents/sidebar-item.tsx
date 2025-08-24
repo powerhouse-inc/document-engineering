@@ -119,7 +119,8 @@ export const SidebarItem = ({
               // line between pinned items
               pinnedMode &&
                 'after:absolute after:-top-2.5 after:left-[15px] after:h-4 after:w-px after:bg-gray-300 hover:bg-gray-50 first:group-first/sidebar-item-wrapper:after:hidden dark:hover:bg-slate-600',
-              isActive && 'font-medium text-gray-900 dark:text-gray-50'
+              isActive &&
+                'font-medium text-gray-900 dark:text-gray-50 bg-gray-200 hover:bg-gray-200 dark:bg-charcoal-900 dark:hover:bg-charcoal-900'
             )}
             onClick={handleClick}
           >

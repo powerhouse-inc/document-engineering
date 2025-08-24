@@ -3,7 +3,7 @@ import { ProgressBar } from '../../../../../scalars/components/fragments/progres
 import { Icon } from '../../../icon/index.js'
 import { FormMessageList } from '../../../../../scalars/components/fragments/form-message/message-list.js'
 import type { PreviewType, UploadFile } from '../types.js'
-import { getIconKey, MESSAGES, previewSizeStyles } from '../utils.js'
+import { getContainerDimensions, getIconKey, MESSAGES } from '../utils.js'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -165,11 +165,10 @@ const FileUploadItem = ({
             <AlertDialogDescription>Preview of the file</AlertDialogDescription>
           </VisuallyHidden>
           <AlertDialogContent
-            className={cn('p-0 border-0 shadow-none bg-transparent max-w-none w-auto h-auto')}
-            style={{
-              width: previewSizeStyles[typePreview ?? 'unsupported_file'].width,
-              height: previewSizeStyles[typePreview ?? 'unsupported_file'].height,
-            }}
+            className={cn(
+              'p-0 border-0 shadow-none bg-transparent max-w-none',
+              getContainerDimensions(previewStatus, typePreview)
+            )}
           >
             {previewStatus === 'loading' && (
               <PlaceHolderLoading onClose={handleOnCancelPreview} typePreview={typePreview ?? 'pdf'} />

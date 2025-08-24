@@ -8,7 +8,7 @@ interface PlaceHolderPdfProps {
 
 export const PlaceHolderUnsupported = ({ onClose }: PlaceHolderPdfProps) => {
   return (
-    <div className="flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(37, 44, 56, 0.25)] px-6 py-4 gap-4  border border-gray-200 h-[652px] w-[500px]">
+    <div className="flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(37, 44, 56, 0.25)] px-6 py-4 gap-4 border border-gray-200 w-full h-full">
       <PreviewHeader status="idle" onClose={onClose} />
       <div
         className={cn(

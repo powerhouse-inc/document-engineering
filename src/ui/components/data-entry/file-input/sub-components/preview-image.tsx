@@ -11,12 +11,12 @@ const PreviewImage = ({ onClose, className, preview }: FilePreviewStateProps) =>
   return (
     <div
       className={cn(
-        'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,115,0.25)] px-6 py-4 gap-4 w-[368px] h-[384px]',
+        'flex flex-col bg-white rounded-md shadow-[1px_4px_15px_0px_rgba(74,88,115,0.25)] px-6 py-4 gap-4 w-full h-full',
         className
       )}
     >
       <PreviewHeader status="idle" onClose={onClose} title="Image Preview" />
-      <div className="flex justify-center items-center relative rounded-md overflow-hidden">
+      <div className="flex-1 flex justify-center items-center relative rounded-md overflow-hidden">
         {preview && <img src={preview} alt="Preview" className="w-full h-full object-contain" />}
       </div>
     </div>
