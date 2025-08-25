@@ -31,6 +31,7 @@ export { UrlInput, type PlatformIcon, type UrlInputProps } from './data-entry/ur
 export { EmailInput, type EmailInputProps } from './data-entry/email-input/index.js'
 export { PasswordInput, type PasswordInputProps } from './data-entry/password-input/index.js'
 export { FileInput, type FileInputProps } from './data-entry/file-input/index.js'
+export { PhoneNumberInput, type PhoneNumberInputProps } from './data-entry/phone-number-input/index.js'
 
 // dropdown
 export {
