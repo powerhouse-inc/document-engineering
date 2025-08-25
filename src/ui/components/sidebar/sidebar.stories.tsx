@@ -200,6 +200,24 @@ const meta: Meta<typeof Sidebar> = {
         defaultValue: { summary: 'false' },
       },
     },
+    rootNodesSortType: {
+      control: 'select',
+      options: ['none', 'alphabetical', 'natural'],
+      description: 'The type of sorting to apply to the root nodes only. Children nodes preserve their original order.',
+      table: {
+        defaultValue: { summary: 'none' },
+      },
+    },
+    rootNodesSortOrder: {
+      control: 'select',
+      options: ['asc', 'desc'],
+      description:
+        'The sort order direction for root nodes (ascending or descending). Only applicable when rootNodesSortType is not "none".',
+      table: {
+        defaultValue: { summary: 'asc' },
+      },
+      if: { arg: 'rootNodesSortType', neq: 'none' },
+    },
   },
   args: {
     sidebarTitle: 'Title Sidebar',

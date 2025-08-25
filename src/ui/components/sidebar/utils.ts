@@ -1,4 +1,5 @@
-import type { NodeStatus, SidebarNode } from './types.js'
+import naturalCompare from 'natural-compare-lite'
+import type { NodeStatus, RootNodesSortOrder, RootNodesSortType, SidebarNode } from './types.js'
 
 /**
  * Search for nodes that match a search term
@@ -282,4 +283,42 @@ export const triggerEvent = (
   })
 
   ;(element ?? document).dispatchEvent(event)
+}
+
+/**
+ * Sort only the root nodes based on the specified sort type and order.
+ * Children nodes are preserved in their original order and structure.
+ * @param nodes - The array of root nodes to sort
+ * @param sortType - The type of sorting to apply (only to root level)
+ * @param sortOrder - The order direction (ascending or descending)
+ * @returns A new sorted array of root nodes with children preserved
+ */
+export const sortRootNodes = (
+  nodes: SidebarNode[],
+  sortType: RootNodesSortType,
+  sortOrder: RootNodesSortOrder
+): SidebarNode[] => {
+  if (sortType === 'none') {
+    return [...nodes]
+  }
+
+  const sortedNodes = [...nodes].sort((a, b) => {
+    let comparison = 0
+
+    switch (sortType) {
+      case 'alphabetical':
+        comparison = a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+        break
+      case 'natural':
+        comparison = naturalCompare(a.title, b.title)
+        break
+      default:
+        return 0
+    }
+
+    return sortOrder === 'desc' ? -comparison : comparison
+  })
+
+  // Return sorted nodes preserving children as-is
+  return sortedNodes.map((node) => ({ ...node }))
 }

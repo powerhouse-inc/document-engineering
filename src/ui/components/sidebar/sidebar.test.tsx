@@ -272,4 +272,136 @@ describe('Sidebar Component', () => {
       expect(asFragment()).toMatchSnapshot()
     })
   })
+
+  describe('Root Nodes Sorting', () => {
+    const testNodes = [
+      {
+        id: '1',
+        title: 'Zebra',
+        children: [
+          { id: '1.1', title: 'Child 10', children: [] },
+          { id: '1.2', title: 'Child 2', children: [] },
+        ],
+      },
+      { id: '2', title: 'Apple', children: [] },
+      { id: '3', title: 'File 10', children: [] },
+      { id: '4', title: 'File 2', children: [] },
+    ]
+
+    it('should keep original order when sorting is disabled (default)', async () => {
+      render(
+        <SidebarProvider nodes={testNodes}>
+          <Sidebar />
+        </SidebarProvider>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText('Zebra')).toBeInTheDocument()
+        expect(screen.getByText('Apple')).toBeInTheDocument()
+        expect(screen.getByText('File 10')).toBeInTheDocument()
+        expect(screen.getByText('File 2')).toBeInTheDocument()
+      })
+
+      const sidebarItems = [
+        screen.getByText('Zebra'),
+        screen.getByText('Apple'),
+        screen.getByText('File 10'),
+        screen.getByText('File 2'),
+      ]
+
+      // Check that they appear in DOM order
+      for (let i = 0; i < sidebarItems.length - 1; i++) {
+        expect(sidebarItems[i].compareDocumentPosition(sidebarItems[i + 1])).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+      }
+    })
+
+    it('should sort root nodes alphabetically in ascending order', async () => {
+      render(
+        <SidebarProvider nodes={testNodes}>
+          <Sidebar rootNodesSortType="alphabetical" />
+        </SidebarProvider>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText('Zebra')).toBeInTheDocument()
+        expect(screen.getByText('Apple')).toBeInTheDocument()
+        expect(screen.getByText('File 10')).toBeInTheDocument()
+        expect(screen.getByText('File 2')).toBeInTheDocument()
+      })
+
+      // Verify alphabetical order: Apple, File 10, File 2, Zebra
+      const sidebarItems = [
+        screen.getByText('Apple'),
+        screen.getByText('File 10'),
+        screen.getByText('File 2'),
+        screen.getByText('Zebra'),
+      ]
+
+      for (let i = 0; i < sidebarItems.length - 1; i++) {
+        expect(sidebarItems[i].compareDocumentPosition(sidebarItems[i + 1])).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+      }
+    })
+
+    it('should sort root nodes naturally in ascending order (handles numbers correctly)', async () => {
+      render(
+        <SidebarProvider nodes={testNodes}>
+          <Sidebar rootNodesSortType="natural" />
+        </SidebarProvider>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText('Zebra')).toBeInTheDocument()
+        expect(screen.getByText('Apple')).toBeInTheDocument()
+        expect(screen.getByText('File 10')).toBeInTheDocument()
+        expect(screen.getByText('File 2')).toBeInTheDocument()
+      })
+
+      // Verify natural order: Apple, File 2, File 10, Zebra (natural: 2 before 10)
+      const sidebarItems = [
+        screen.getByText('Apple'),
+        screen.getByText('File 2'),
+        screen.getByText('File 10'),
+        screen.getByText('Zebra'),
+      ]
+
+      for (let i = 0; i < sidebarItems.length - 1; i++) {
+        expect(sidebarItems[i].compareDocumentPosition(sidebarItems[i + 1])).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+      }
+    })
+
+    it('should preserve children order when sorting root nodes', async () => {
+      render(
+        <SidebarProvider nodes={testNodes}>
+          <Sidebar rootNodesSortType="natural" defaultLevel={2} />
+        </SidebarProvider>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText('Zebra')).toBeInTheDocument()
+        expect(screen.getByText('Apple')).toBeInTheDocument()
+        expect(screen.getByText('File 10')).toBeInTheDocument()
+        expect(screen.getByText('File 2')).toBeInTheDocument()
+        expect(screen.getByText('Child 10')).toBeInTheDocument()
+        expect(screen.getByText('Child 2')).toBeInTheDocument()
+      })
+
+      // Verify root nodes are sorted naturally: Apple, File 2, File 10, Zebra
+      const rootItems = [
+        screen.getByText('Apple'),
+        screen.getByText('File 2'),
+        screen.getByText('File 10'),
+        screen.getByText('Zebra'),
+      ]
+
+      for (let i = 0; i < rootItems.length - 1; i++) {
+        expect(rootItems[i].compareDocumentPosition(rootItems[i + 1])).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+      }
+
+      const child10 = screen.getByText('Child 10')
+      const child2 = screen.getByText('Child 2')
+
+      // "Child 10" should appear before "Child 2" in DOM (original order preserved)
+      expect(child10.compareDocumentPosition(child2)).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+    })
+  })
 })
