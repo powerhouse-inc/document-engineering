@@ -9,6 +9,7 @@ import type {
 } from '../../table/types.js'
 import type { UseFormReturn } from 'react-hook-form'
 import { createFormReferences } from '../../table/utils.js'
+import { sortData } from '../../lib/sort-utils.js'
 
 interface TableState<T extends DataType = DataType> {
   dispatch?: React.Dispatch<TableAction<T>>
@@ -42,6 +43,7 @@ type TableAction<T extends DataType = DataType> =
   | {
       type: 'SET_DATA'
       payload: T[]
+      tableConfig?: ObjectSetTableConfig<T>
     }
   | {
       type: 'UPDATE_COLUMN'
@@ -113,13 +115,23 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
         dataFormReferences: createFormReferences(state.data.length + 1, action.payload),
       }
     }
-    case 'SET_DATA':
+    case 'SET_DATA': {
+      const indexedData = action.payload.map((data, index) => ({ data, __index: index }))
+
+      // If we have an active sort state and tableConfig, sort the new data accordingly
+      let finalData = indexedData
+      if (state.sortState && action.tableConfig) {
+        const sortColumn = state.columns[state.sortState.columnIndex]
+        finalData = sortData(indexedData, state.sortState, sortColumn, action.tableConfig)
+      }
+
       return {
         ...state,
-        data: action.payload.map((data, index) => ({ data, __index: index })),
+        data: finalData,
         defaultData: action.payload,
         dataFormReferences: createFormReferences(action.payload.length + 1, state.columns),
       }
+    }
     case 'UPDATE_COLUMN':
       return {
         ...state,
@@ -217,67 +229,23 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
     case 'SORT_COLUMN': {
       const column = state.columns[action.payload.columnIndex]
       const sortDirection = action.payload.direction
-      const sortFn = column.rowComparator
 
-      if (sortDirection === null) {
-        // do not sort the data, just use the default unsorted data
-        const nextData = [...state.defaultData].map((data, index) => ({ data, __index: index }))
-        if (column.onSort) {
-          column.onSort({
-            tableConfig: action.payload.tableConfig,
-            columnDef: column,
-            data: nextData.map((item) => item.data),
-            sortState: null,
-          })
-        }
-        return {
-          ...state,
-          data: nextData,
-          sortState: null,
-        }
-      }
+      // Create indexed data from defaultData
+      const indexedData = [...state.defaultData].map((data, index) => ({ data, __index: index }))
 
-      const sortState: SortState = {
-        columnIndex: action.payload.columnIndex,
-        direction: sortDirection,
-      }
+      // Create sortState (null if direction is null)
+      const sortState: SortState | null =
+        sortDirection === null
+          ? null
+          : {
+              columnIndex: action.payload.columnIndex,
+              direction: sortDirection,
+            }
 
-      const sortedData: Array<IndexedData<T>> = [...state.defaultData]
-        .map((data, index) => ({ data, __index: index }))
-        .sort((rowA, rowB) => {
-          const columnValueA = column.valueGetter!(rowA.data, {
-            row: rowA.data,
-            rowIndex: -1,
-            column,
-            columnIndex: action.payload.columnIndex,
-            tableConfig: action.payload.tableConfig,
-          })
-          const columnValueB = column.valueGetter!(rowB.data, {
-            row: rowB.data,
-            rowIndex: -1,
-            column,
-            columnIndex: action.payload.columnIndex,
-            tableConfig: action.payload.tableConfig,
-          })
+      // Use the sort utility function
+      const sortedData = sortData(indexedData, sortState, column, action.payload.tableConfig)
 
-          // ensure null values are at the end
-          if (columnValueA !== null && columnValueB === null) {
-            return -1
-          }
-          if (columnValueA === null && columnValueB !== null) {
-            return 1
-          }
-
-          const sortIndex = sortFn!(columnValueA, columnValueB, {
-            tableConfig: action.payload.tableConfig,
-            columnDef: column,
-            data: state.data.map((item) => item.data),
-            sortState,
-          })
-
-          return sortDirection === 'asc' ? sortIndex : -sortIndex
-        })
-
+      // Call onSort callback if provided
       if (column.onSort) {
         column.onSort({
           tableConfig: action.payload.tableConfig,
