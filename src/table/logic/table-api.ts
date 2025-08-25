@@ -230,8 +230,21 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         if (isAddingRow) {
           await this._getConfig().onAdd?.({ [columnDef.field]: value })
         } else {
-          // TODO: save only if the value changed
-          columnDef.onSave?.(value, this._createCellContext(selectedCell.row, selectedCell.column))
+          // if the value did not change, we don't need to save it
+          const originalValue = columnDef.valueGetter?.(
+            this._getState().data[selectedCell.row].data,
+            this._createCellContext(this._getState().data[selectedCell.row].__index, selectedCell.column)
+          )
+          if (value === originalValue) {
+            this.selection.selectCell(selectedCell.row, selectedCell.column)
+            return
+          }
+
+          // the value changed, so we need to save it
+          columnDef.onSave?.(
+            value,
+            this._createCellContext(this._getState().data[selectedCell.row].__index, selectedCell.column)
+          )
         }
       }
 
@@ -264,14 +277,9 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @param direction - The direction to sort the rows. Null if the sorting should be removed
    */
   async sortRows(columnIndex: number, direction: SortDirection | null) {
-    // exit selection before sorting
-    if (this._getState().selectedCellIndex) {
-      if (this.isEditing()) {
-        await this.exitCellEditMode(true)
-        this.selection.clear()
-      } else {
-        // this.selection.clear()
-      }
+    if (this.isEditing()) {
+      await this.exitCellEditMode(true)
+      this.selection.clear()
     }
 
     this._getState().dispatch?.({
