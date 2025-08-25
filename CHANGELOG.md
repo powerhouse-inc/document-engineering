@@ -1,3 +1,29 @@
+# [1.31.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.30.0...v1.31.0) (2025-08-25)
+
+
+### Bug Fixes
+
+* **scalars & ui:** improve logic ([198e3e6](https://github.com/powerhouse-inc/document-engineering/commit/198e3e643962f0f48a7c4f02db5bc77cc5968e88))
+* **scalars:** add correct dimensions for each type file ([dbedcba](https://github.com/powerhouse-inc/document-engineering/commit/dbedcba505416ff8a05152a46ad4d924ad89346e))
+* **scalars:** disable the carrets when disable props is true ([c88bb7a](https://github.com/powerhouse-inc/document-engineering/commit/c88bb7a1b360835da4a6cfab91bad1e185b0dbc3))
+* **scalars:** fix lint error in the preview ([31fd528](https://github.com/powerhouse-inc/document-engineering/commit/31fd5289d5288d418dc6df55a2f76af7ffa2d449))
+* **scalars:** fix the lint error ([ce426e1](https://github.com/powerhouse-inc/document-engineering/commit/ce426e11b524ebc80a0e201f4f917a8b455ac0ef))
+* **scalars:** improve the docs in the file input with upload props ([775da59](https://github.com/powerhouse-inc/document-engineering/commit/775da5982faaf42900f407426a2b86ca20d4eaf5))
+* **scalars:** remove the unnecesary comment and fix the lint error ([6e15dc5](https://github.com/powerhouse-inc/document-engineering/commit/6e15dc5c4a96aadea1298c4f8afc9bdea3d9dd27))
+* **scalars:** translate audio preview fallback text to English ([dd4af23](https://github.com/powerhouse-inc/document-engineering/commit/dd4af2399faa1f00d5754a88169d29a5933829c0))
+
+
+### Features
+
+* **scalars & ui:** add support for displaying differences ([8fbfa6b](https://github.com/powerhouse-inc/document-engineering/commit/8fbfa6b24972e8820714d645bc941aaba17154b0))
+* **scalars:** add background and color to the selected node in the side bar ([12ea2cd](https://github.com/powerhouse-inc/document-engineering/commit/12ea2cdb85983c5f7e79fdc2af81571f4b711720))
+* **scalars:** add hook handle logic for each file ([57d032e](https://github.com/powerhouse-inc/document-engineering/commit/57d032e8d3a99cff3e70dcb661cf5a0aacc5096a))
+* **scalars:** add phone number validation ([593c5e5](https://github.com/powerhouse-inc/document-engineering/commit/593c5e575618f7013df4ee7fa8da126eeef1afb5))
+* **scalars:** add preview for video and audio add some validations ([cab671c](https://github.com/powerhouse-inc/document-engineering/commit/cab671ca3d88dd1ef405d3791989561d68dc77ea))
+* **scalars:** add support for the audio record ([3298870](https://github.com/powerhouse-inc/document-engineering/commit/3298870f5bd1ecf48d89f611902c4d6cfe6eaaff))
+* **scalars:** add svg and remove unnecesary files ([74554a6](https://github.com/powerhouse-inc/document-engineering/commit/74554a66e38be3705635d6a9069567ba708751d7))
+* **scalars:** make-the-increment-decrement-carets-configurable ([858deb1](https://github.com/powerhouse-inc/document-engineering/commit/858deb1cda4f9c465887ca860260a7d26b97317e))
+
 # [1.30.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.29.0...v1.30.0) (2025-08-19)
 
 
