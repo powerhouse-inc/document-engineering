@@ -46,9 +46,9 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
         const tableState = api._getState()
         if (tableState.sortState?.columnIndex === columnIndex) {
           const nextDirection = tableState.sortState.direction === 'asc' ? 'desc' : null
-          api.sortRows(columnIndex, nextDirection)
+          void api.sortRows(columnIndex, nextDirection)
         } else {
-          api.sortRows(columnIndex, 'asc')
+          void api.sortRows(columnIndex, 'asc')
         }
       }
 

@@ -263,7 +263,17 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    * @param columnIndex - The index of the column to sort
    * @param direction - The direction to sort the rows. Null if the sorting should be removed
    */
-  sortRows(columnIndex: number, direction: SortDirection | null) {
+  async sortRows(columnIndex: number, direction: SortDirection | null) {
+    // exit selection before sorting
+    if (this._getState().selectedCellIndex) {
+      if (this.isEditing()) {
+        await this.exitCellEditMode(true)
+        this.selection.clear()
+      } else {
+        // this.selection.clear()
+      }
+    }
+
     this._getState().dispatch?.({
       type: 'SORT_COLUMN',
       payload: { columnIndex, direction, tableConfig: this._getConfig() },
