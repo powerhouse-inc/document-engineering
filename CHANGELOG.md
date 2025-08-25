@@ -1,3 +1,16 @@
+# [1.32.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.31.0...v1.32.0) (2025-08-25)
+
+
+### Bug Fixes
+
+* **scalars & ui:** fix IdAutocomplete focus ([2461bc9](https://github.com/powerhouse-inc/document-engineering/commit/2461bc90eb823f797fc2e3aa90185a04cfbc7b35))
+* **ui:** disabled state on PasswordInput ([5c09c19](https://github.com/powerhouse-inc/document-engineering/commit/5c09c195db48af7dc56f24b8fd9f1d3fc1c914b4))
+
+
+### Features
+
+* **scalars & ui:** export PhoneNumberInput and PhoneNumberField to be used outside of the lib ([2230ba3](https://github.com/powerhouse-inc/document-engineering/commit/2230ba38238fec58c34cd44188feccddf7bc4ae5))
+
 # [1.31.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.30.0...v1.31.0) (2025-08-25)
 
 
