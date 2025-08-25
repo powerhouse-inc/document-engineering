@@ -155,10 +155,16 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                 {...(!!label && { 'data-label': label })}
                 {...props}
               />
-              <div className={cn('absolute right-3 top-1/2 flex size-4 -translate-y-1/2 items-center')}>
+              <div
+                className={cn(
+                  'absolute right-3 top-1/2 flex size-4 -translate-y-1/2 items-center',
+                  disabled && 'pointer-events-none'
+                )}
+              >
                 <button
                   type="button"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  disabled={disabled}
                   onClick={() => {
                     setShowPassword(!showPassword)
                   }}
