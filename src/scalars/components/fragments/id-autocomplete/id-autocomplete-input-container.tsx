@@ -1,6 +1,5 @@
 import { Icon } from '../../../../ui/components/icon/index.js'
 import { cn } from '../../../../scalars/lib/index.js'
-import { Command as CommandPrimitive } from 'cmdk'
 import React, { useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { Input } from '../../../../ui/components/data-entry/input/index.js'
@@ -71,59 +70,63 @@ const IdAutocompleteInputContainer = React.forwardRef<HTMLInputElement, IdAutoco
     return (
       <div className={cn('group relative')}>
         <ValueTransformer transformers={transformers}>
-          <CommandPrimitive.Input asChild>
-            <Input
-              id={id}
-              name={name}
-              value={value}
-              className={cn('pr-9', className)}
-              disabled={disabled}
-              onChange={onChange}
-              onBlur={onBlur}
-              onClick={(e) => {
-                const input = e.target as HTMLInputElement
-                if (!(isLoading || haveFetchError) && !selectedOption && input.value !== '') {
-                  handleOpenChange?.(true)
-                }
-                onClick?.(e)
-              }}
-              onKeyDown={(e) => {
-                onKeyDown?.(e)
-                const isOptionsRelatedKey = ['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)
+          <Input
+            id={id}
+            name={name}
+            value={value}
+            className={cn('pr-9', className)}
+            disabled={disabled}
+            onChange={onChange}
+            onBlur={onBlur}
+            onClick={(e) => {
+              const input = e.target as HTMLInputElement
+              if (!(isLoading || haveFetchError) && !selectedOption && input.value !== '') {
+                handleOpenChange?.(true)
+              }
+              onClick?.(e)
+            }}
+            onKeyDown={(e) => {
+              onKeyDown?.(e)
+              const isOptionsRelatedKey = ['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)
 
-                if (e.key === 'Enter' && isPopoverOpen && optionsLength === 0) {
-                  handleOpenChange?.(false)
-                  e.preventDefault()
-                  return
-                }
-                if (!(isOptionsRelatedKey && isPopoverOpen && optionsLength > 0)) {
-                  e.stopPropagation()
-                }
-              }}
-              onMouseDown={(e) => {
-                const input = e.target as HTMLInputElement
-                if (!input.contains(document.activeElement)) {
-                  // wait for the next tick to ensure the focus occurs first
-                  requestAnimationFrame(() => {
-                    input.select()
-                  })
-                }
-                onMouseDown?.(e)
-              }}
-              onPaste={(e) => {
-                handlePaste?.(e)
-                onPaste?.(e)
-              }}
-              placeholder={placeholder}
-              aria-invalid={hasError}
-              aria-label={!label ? 'Id Autocomplete' : undefined}
-              aria-required={required}
-              aria-expanded={isPopoverOpen}
-              maxLength={maxLength}
-              {...props}
-              ref={ref}
-            />
-          </CommandPrimitive.Input>
+              if (e.key === 'Enter' && isPopoverOpen && optionsLength === 0) {
+                handleOpenChange?.(false)
+                e.preventDefault()
+                return
+              }
+              if (!(isOptionsRelatedKey && isPopoverOpen && optionsLength > 0)) {
+                e.stopPropagation()
+              }
+            }}
+            onMouseDown={(e) => {
+              const input = e.target as HTMLInputElement
+              if (!input.contains(document.activeElement)) {
+                // wait for the next tick to ensure the focus occurs first
+                requestAnimationFrame(() => {
+                  input.select()
+                })
+              }
+              onMouseDown?.(e)
+            }}
+            onPaste={(e) => {
+              handlePaste?.(e)
+              onPaste?.(e)
+            }}
+            placeholder={placeholder}
+            aria-invalid={hasError}
+            aria-label={!label ? 'Id Autocomplete' : undefined}
+            aria-required={required}
+            aria-expanded={isPopoverOpen}
+            aria-autocomplete="list"
+            autoComplete="off"
+            autoCorrect="off"
+            maxLength={maxLength}
+            role="combobox"
+            spellCheck={false}
+            type="text"
+            {...props}
+            ref={ref}
+          />
         </ValueTransformer>
         <div
           className={cn(
