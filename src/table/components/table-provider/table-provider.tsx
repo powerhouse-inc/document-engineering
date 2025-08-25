@@ -47,8 +47,9 @@ const TableProvider = <T extends DataType = DataType>({ children, config, tableR
     dispatch({
       type: 'SET_DATA',
       payload: config.data,
+      tableConfig: config,
     })
-  }, [config.data])
+  }, [config])
 
   useEffect(() => {
     dispatch({ type: 'SET_DISPATCH', payload: dispatch })

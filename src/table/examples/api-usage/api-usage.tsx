@@ -127,7 +127,7 @@ const ApiUsageExample = () => {
               variant="primary"
               onClick={() => {
                 const direction = apiRef.current?.getCurrentSortInfo()?.direction === 'asc' ? 'desc' : 'asc'
-                apiRef.current?.sortRows(0, direction)
+                void apiRef.current?.sortRows(0, direction)
               }}
             >
               Sort by Name

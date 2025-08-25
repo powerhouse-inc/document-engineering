@@ -122,7 +122,7 @@ if (apiRef.current?.canAdd()) {
 
 For column sorting behavior and defaults, see [Sorting](?path=/docs/data-display-object-set-table-docs-sorting--readme).
 
-- `sortRows(columnIndex: number, direction: 'asc' | 'desc' | null): void`: Sort by column. Pass `null` to clear sorting.
+- `sortRows(columnIndex: number, direction: 'asc' | 'desc' | null): Promise<void>`: Sort by column. Pass `null` to clear sorting.
 - `getCurrentSortInfo(): { columnIndex: number; direction: 'asc' | 'desc' } | null`: Current sorting info, or `null` if unsorted.
 
 Example:
