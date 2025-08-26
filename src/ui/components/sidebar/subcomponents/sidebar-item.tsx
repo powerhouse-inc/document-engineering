@@ -139,9 +139,8 @@ export const SidebarItem = ({
                       'min-w-4',
                       node.isExpanded && node.children && node.children.length > 0 ? '' : '-rotate-90',
                       node.children === undefined || node.children.length === 0
-                        ? 'text-gray-300 dark:text-gray-700'
-                        : 'text-gray-700 dark:text-gray-400',
-                      (node.children === undefined || node.children.length === 0) && 'sidebar__item-caret--no-children'
+                        ? 'text-gray-300 dark:text-gray-700 sidebar__item-caret--no-children'
+                        : 'text-gray-700 dark:text-gray-400'
                     )}
                   />
                 </div>
@@ -172,10 +171,9 @@ export const SidebarItem = ({
                     'absolute top-1/2 flex -translate-y-1/2 items-center justify-center',
                     hasStatus ? 'right-8' : 'right-2',
                     isPinned
-                      ? 'text-gray-700 hover:text-blue-900 dark:text-gray-50 dark:hover:text-blue-900'
+                      ? 'text-gray-700 hover:text-blue-900 dark:text-gray-50 dark:hover:text-blue-900 sidebar__item-pin--active'
                       : 'invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50',
-                    'sidebar__item-pin',
-                    isPinned && 'sidebar__item-pin--active'
+                    'sidebar__item-pin'
                   )}
                   onClick={handleTogglePin}
                 >
