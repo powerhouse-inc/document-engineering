@@ -45,10 +45,58 @@ const columns = [
   {
     field: 'category',
     sortable: true,
-    rowComparator: (a, b) => String(a ?? '').localeCompare(String(b ?? ''), undefined, { sensitivity: 'base' }),
+    rowComparator: (a, b, context) => {
+      // Simple case-insensitive comparison
+      return String(a ?? '').localeCompare(String(b ?? ''), undefined, { sensitivity: 'base' })
+    },
+  },
+  {
+    field: 'priority',
+    sortable: true,
+    rowComparator: (a, b, context) => {
+      // Use context for more complex sorting logic
+      const { sortState, columnDef, data } = context
+      
+      // Custom priority ordering: high -> medium -> low
+      const priorityOrder = { high: 3, medium: 2, low: 1 }
+      const aValue = priorityOrder[a as keyof typeof priorityOrder] ?? 0
+      const bValue = priorityOrder[b as keyof typeof priorityOrder] ?? 0
+      
+      // Access sort direction for custom behavior
+      const multiplier = sortState?.direction === 'desc' ? -1 : 1
+      return (aValue - bValue) * multiplier
+    },
   },
 ]
 ```
+
+## SortableColumnContext
+
+Both `rowComparator` and `onSort` functions receive a `SortableColumnContext` object with rich information about the sorting operation:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `tableConfig` | `ObjectSetTableConfig<T>` | The complete table configuration including all columns, data, and settings. |
+| `columnDef` | `ColumnDef<T>` | The column definition for the column being sorted. |
+| `data` | `T[]` | The current data array. In `onSort`, this is the newly sorted data. In `rowComparator`, this is the original data. |
+| `sortState` | `SortState \| null` | Current sort information with `columnIndex` and `direction` ('asc' or 'desc'), or `null` when sorting is cleared. |
+
+### SortState properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `columnIndex` | `number` | The index of the column being sorted (0-based). |
+| `direction` | `'asc' \| 'desc'` | The sort direction. |
+
+### Context usage scenarios
+
+The `SortableColumnContext` enables advanced sorting behaviors:
+
+- **Multi-column awareness**: Access `tableConfig.columns` to implement sorting that considers other columns
+- **Data-driven sorting**: Use the full `data` array to implement relative comparisons (e.g., percentile-based sorting)
+- **Conditional logic**: Check `sortState.direction` to customize ascending vs descending behavior
+- **Cross-column dependencies**: Use `columnDef` to access the current column's configuration and adapt sorting accordingly
+- **State management**: In `onSort`, access the newly sorted `data` to update external state or trigger side effects
 
 ## Sort callbacks
 
@@ -61,9 +109,24 @@ const columns = [
     title: 'Amount',
     type: 'number',
     sortable: true,
-    onSort: ({ sortState, columnDef }) => {
+    onSort: ({ sortState, columnDef, data, tableConfig }) => {
       // sortState is { columnIndex, direction } or null when cleared
       console.log('Sorted by', columnDef.field, '->', sortState)
+      
+      // Access the sorted data
+      console.log('First sorted row:', data[0])
+      
+      // Access other table configuration
+      console.log('Total columns:', tableConfig.columns.length)
+      
+      // Trigger analytics or remote updates
+      if (sortState) {
+        analytics.track('table_sorted', {
+          column: columnDef.field,
+          direction: sortState.direction,
+          rowCount: data.length
+        })
+      }
     },
   },
 ]
