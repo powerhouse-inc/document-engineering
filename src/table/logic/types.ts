@@ -58,7 +58,7 @@ export interface TableApiBase {
   isAdding(): boolean
 
   // sorting
-  sortRows(columnIndex: number, direction: SortDirection | null): void
+  sortRows(columnIndex: number, direction: SortDirection | null): Promise<void>
   getCurrentSortInfo(): SortingInfo | null
 }
 
