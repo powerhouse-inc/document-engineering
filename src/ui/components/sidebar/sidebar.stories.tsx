@@ -244,6 +244,14 @@ const meta: Meta<typeof Sidebar> = {
         defaultValue: { summary: 'false' },
       },
     },
+    nodeStyles: {
+      control: 'object',
+      description:
+        'Array of custom styles to apply to specific nodes by ID. Each NodeIdStyle object contains an `id` to identify the node and a `className` for custom styling.',
+      table: {
+        defaultValue: { summary: 'NodeIdStyle[]' },
+      },
+    },
   },
   args: {
     sidebarTitle: 'Title Sidebar',
@@ -449,6 +457,73 @@ export const WithCustomStyles: Story = {
   },
 }
 
+export const WithCustomTargetElement: Story = {
+  args: {
+    showStatusFilter: true,
+  },
+  render: function WithCustomTitleNavigationRender(args) {
+    const [activeNode, setActiveNode] = useState<string>('4281ab93-ef4f-4974-988d-7dad149a693d')
+    const [navigationLog, setNavigationLog] = useState<string[]>([])
+
+    const onActiveNodeChange = useCallback((node: SidebarNode) => {
+      setActiveNode(node.id)
+    }, [])
+
+    const handleTitleClick = useCallback(() => {
+      const timestamp = new Date().toLocaleTimeString()
+      setNavigationLog((prev) => [...prev, `Title clicked at ${timestamp} - Navigate to root/home`])
+    }, [])
+
+    // Example of custom styles for specific nodes
+    const nodeStyles = [
+      {
+        id: '515005a1-b60d-4f83-90e2-a88fe4ccc0cd',
+        className: 'bg-red-900 text-white hover:!bg-red-800',
+      },
+      {
+        id: 'e2d90c40-79eb-47d5-a6cc-b92f4b53b997',
+        className: 'bg-blue-900 text-white hover:!bg-blue-800',
+      },
+    ]
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar
+          className="sidebar"
+          {...args}
+          onActiveNodeChange={onActiveNodeChange}
+          activeNodeId={activeNode}
+          handleOnTitleClick={handleTitleClick}
+          sidebarTitle="Click me to go home!"
+          nodeStyles={nodeStyles}
+        />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Active Node: {activeNode}</p>
+
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-50">Navigation Log:</h2>
+            <div className="mt-2 overflow-y-auto rounded border p-2 bg-white dark:bg-slate-700">
+              {navigationLog.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Click the sidebar title to see navigation events
+                </p>
+              ) : (
+                <ul className="text-sm text-gray-700 dark:text-gray-300">
+                  {navigationLog.map((log, index) => (
+                    <li key={index} className="py-1">
+                      {log}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
 /**
  * Demonstrates the loading state of the sidebar when data is being fetched.
  * The sidebar displays skeleton items with animated placeholders while preserving

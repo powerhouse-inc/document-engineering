@@ -7,17 +7,20 @@ import { SidebarItem } from './sidebar-item.js'
 import { useSidebar } from './sidebar-provider/index.js'
 import { SidebarSkeleton } from './sidebar-skeleton.js'
 import { useEffect, useState } from 'react'
+import type { NodeIdStyle } from '../types.js'
 
 interface SidebarContentAreaProps {
   allowPinning?: boolean
   allowCollapsingInactiveNodes?: boolean
   isLoading?: boolean
+  nodeStyles?: NodeIdStyle[]
 }
 
 export const SidebarContentArea = ({
   allowPinning,
   allowCollapsingInactiveNodes,
   isLoading,
+  nodeStyles = [],
 }: SidebarContentAreaProps) => {
   const {
     flattenedNodes,
@@ -50,6 +53,7 @@ export const SidebarContentArea = ({
         onChange={onActiveNodeChange}
         style={style}
         allowCollapsingInactiveNodes={allowCollapsingInactiveNodes}
+        nodeStyles={nodeStyles}
       />
     )
   }
