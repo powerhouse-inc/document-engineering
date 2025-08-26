@@ -8,7 +8,7 @@ import { SidebarHeader } from './subcomponents/sidebar-header.js'
 import { SidebarPinningArea } from './subcomponents/sidebar-pinning-area.js'
 import { useSidebar } from './subcomponents/sidebar-provider/index.js'
 import { SidebarSearch } from './subcomponents/sidebar-search/index.js'
-import type { RootNodesSortOrder, RootNodesSortType, SidebarNode } from './types.js'
+import type { NodeSortComparisonFn, NodeSortOrder, NodeSortType, SidebarNode } from './types.js'
 import { useSidebarResize } from './use-sidebar-resize.js'
 import { triggerEvent } from './utils.js'
 
@@ -97,17 +97,23 @@ export interface SidebarProps {
    */
   isLoading?: boolean
   /**
-   * The type of sorting to apply to the root nodes.
-   * Children nodes preserve their original order.
+   * The type of sorting to apply to all nodes recursively.
+   * Affects all levels of the tree hierarchy.
    * @default 'none'
    */
-  rootNodesSortType?: RootNodesSortType
+  nodeSortType?: NodeSortType
   /**
-   * The order direction for sorting root nodes (ascending or descending).
-   * Only applicable when rootNodesSortType is not 'none'.
+   * The order direction for sorting nodes (ascending or descending).
+   * Only applicable when nodeSortType is not 'none' or undefined.
    * @default 'asc'
    */
-  rootNodesSortOrder?: RootNodesSortOrder
+  nodeSortOrder?: NodeSortOrder
+  /**
+   * Custom comparison function for sorting nodes.
+   * Required when nodeSortType is 'custom'.
+   * Should return -1, 0, or 1 for comparison results.
+   */
+  nodeSortCompareFn?: NodeSortComparisonFn
 }
 
 /**
@@ -133,8 +139,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   className,
   handleOnTitleClick,
   isLoading = false,
-  rootNodesSortType = 'none',
-  rootNodesSortOrder = 'asc',
+  nodeSortType = 'none',
+  nodeSortOrder = 'asc',
+  nodeSortCompareFn,
 }) => {
   const { sidebarRef, startResizing, isResizing, isSidebarOpen, handleToggleSidebar } = useSidebarResize({
     defaultWidth: initialWidth,
@@ -150,27 +157,36 @@ export const Sidebar: React.FC<SidebarProps> = ({
     syncActiveNodeId,
     setActiveNodeChangeCallback,
     nodes: providerNodes,
-    rootNodesSortType: currentSortType,
-    rootNodesSortOrder: currentSortOrder,
+    nodeSortType: currentSortType,
+    nodeSortOrder: currentSortOrder,
   } = useSidebar()
 
   // Sync external nodes and sorting with internal state
   useEffect(() => {
     if (nodes) {
-      setNodes(nodes, rootNodesSortType, rootNodesSortOrder)
+      setNodes(nodes, nodeSortType, nodeSortOrder, nodeSortCompareFn)
     }
-  }, [nodes, setNodes, rootNodesSortType, rootNodesSortOrder])
+  }, [nodes, setNodes, nodeSortType, nodeSortOrder, nodeSortCompareFn])
 
   // Sync provider-managed nodes and sorting with internal state
   useEffect(() => {
     if (
       !nodes &&
       providerNodes.length > 0 &&
-      (rootNodesSortType !== currentSortType || rootNodesSortOrder !== currentSortOrder)
+      (nodeSortType !== currentSortType || nodeSortOrder !== currentSortOrder)
     ) {
-      setNodes(providerNodes, rootNodesSortType, rootNodesSortOrder)
+      setNodes(providerNodes, nodeSortType, nodeSortOrder, nodeSortCompareFn)
     }
-  }, [nodes, providerNodes, setNodes, rootNodesSortType, rootNodesSortOrder, currentSortType, currentSortOrder])
+  }, [
+    nodes,
+    providerNodes,
+    setNodes,
+    nodeSortType,
+    nodeSortOrder,
+    nodeSortCompareFn,
+    currentSortType,
+    currentSortOrder,
+  ])
 
   // Initialize default expanded level on mount
   useEffect(() => {

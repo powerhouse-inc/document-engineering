@@ -15,9 +15,10 @@ import {
 import type { List } from 'react-virtualized'
 import {
   type FlattenedNode,
+  type NodeSortComparisonFn,
+  type NodeSortOrder,
+  type NodeSortType,
   NodeStatus,
-  type RootNodesSortOrder,
-  type RootNodesSortType,
   type SidebarNode,
 } from '../../types.js'
 import {
@@ -27,7 +28,7 @@ import {
   getOpenLevels,
   isOpenLevel,
   nodesSearch,
-  sortRootNodes,
+  sortNodes,
 } from '../../utils.js'
 import { initialSidebarState, SidebarActionType, sidebarReducer, type SidebarState } from './sidebar-reducer.js'
 
@@ -43,8 +44,9 @@ interface SidebarContextType {
   activeSearchIndex: number
   activeNodeId?: string
   isStatusFilterEnabled: boolean
-  rootNodesSortType: RootNodesSortType
-  rootNodesSortOrder: RootNodesSortOrder
+  nodeSortType: NodeSortType
+  nodeSortOrder: NodeSortOrder
+  nodeSortCompareFn?: NodeSortComparisonFn
   virtualListRef: RefObject<List>
   toggleNode: (nodeId: string) => void
   openNode: (nodeId: string, openPath?: boolean, scrollTo?: boolean) => void
@@ -54,7 +56,12 @@ interface SidebarContextType {
   changeSearchTerm: (newTerm: string) => void
   nextSearchResult: () => void
   previousSearchResult: () => void
-  setNodes: (newNodes: SidebarNode[], sortType?: RootNodesSortType, sortOrder?: RootNodesSortOrder) => void
+  setNodes: (
+    newNodes: SidebarNode[],
+    sortType?: NodeSortType,
+    sortOrder?: NodeSortOrder,
+    compareFn?: NodeSortComparisonFn
+  ) => void
   syncActiveNodeId: (nodeId?: string) => void
   onActiveNodeChange: (node: SidebarNode) => void
   setActiveNodeChangeCallback: (callback: (node: SidebarNode) => void) => void
@@ -73,8 +80,9 @@ const SidebarContext = createContext<SidebarContextType>({
   activeSearchIndex: 0,
   activeNodeId: undefined,
   isStatusFilterEnabled: false,
-  rootNodesSortType: 'none',
-  rootNodesSortOrder: 'asc',
+  nodeSortType: 'none',
+  nodeSortOrder: 'asc',
+  nodeSortCompareFn: undefined,
   virtualListRef: createRef<List>(),
   toggleNode: () => undefined,
   openNode: () => undefined,
@@ -128,13 +136,14 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
         NodeStatus.DUPLICATED,
       ])
     }
-    return sortRootNodes(roots, _state.rootNodesSortType, _state.rootNodesSortOrder)
+    return sortNodes(roots, _state.nodeSortType, _state.nodeSortOrder, _state.nodeSortCompareFn)
   }, [
     _state.nodes,
     _state.pinnedNodePath,
     _state.isStatusFilterEnabled,
-    _state.rootNodesSortType,
-    _state.rootNodesSortOrder,
+    _state.nodeSortType,
+    _state.nodeSortOrder,
+    _state.nodeSortCompareFn,
   ])
 
   const flattenTree = useCallback(
@@ -370,10 +379,10 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
   }, [activeSearchIndex, openPathToNode])
 
   const setNodes = useCallback(
-    (newNodes: SidebarNode[], sortType?: RootNodesSortType, sortOrder?: RootNodesSortOrder) => {
+    (newNodes: SidebarNode[], sortType?: NodeSortType, sortOrder?: NodeSortOrder, compareFn?: NodeSortComparisonFn) => {
       dispatch({
         type: SidebarActionType.SET_NODES,
-        payload: { nodes: newNodes, sortType, sortOrder },
+        payload: { nodes: newNodes, sortType, sortOrder, compareFn },
       })
     },
     [dispatch]
@@ -402,8 +411,9 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
         isSearching: _state.isSearching,
         activeSearchIndex,
         isStatusFilterEnabled: _state.isStatusFilterEnabled,
-        rootNodesSortType: _state.rootNodesSortType,
-        rootNodesSortOrder: _state.rootNodesSortOrder,
+        nodeSortType: _state.nodeSortType,
+        nodeSortOrder: _state.nodeSortOrder,
+        nodeSortCompareFn: _state.nodeSortCompareFn,
         virtualListRef,
         toggleNode,
         openNode,

@@ -273,14 +273,14 @@ describe('Sidebar Component', () => {
     })
   })
 
-  describe('Root Nodes Sorting', () => {
+  describe('Nodes Sorting', () => {
     const testNodes = [
       {
         id: '1',
         title: 'Zebra',
         children: [
-          { id: '1.1', title: 'Child 10', children: [] },
-          { id: '1.2', title: 'Child 2', children: [] },
+          { id: '1.1', title: 'Child 2', children: [] },
+          { id: '1.2', title: 'Child 10', children: [] },
         ],
       },
       { id: '2', title: 'Apple', children: [] },
@@ -315,10 +315,10 @@ describe('Sidebar Component', () => {
       }
     })
 
-    it('should sort root nodes alphabetically in ascending order', async () => {
+    it('should sort nodes alphabetically in ascending order', async () => {
       render(
         <SidebarProvider nodes={testNodes}>
-          <Sidebar rootNodesSortType="alphabetical" />
+          <Sidebar nodeSortType="alphabetical" />
         </SidebarProvider>
       )
 
@@ -342,10 +342,10 @@ describe('Sidebar Component', () => {
       }
     })
 
-    it('should sort root nodes naturally in ascending order (handles numbers correctly)', async () => {
+    it('should sort nodes naturally in ascending order (handles numbers correctly)', async () => {
       render(
         <SidebarProvider nodes={testNodes}>
-          <Sidebar rootNodesSortType="natural" />
+          <Sidebar nodeSortType="natural" />
         </SidebarProvider>
       )
 
@@ -369,10 +369,10 @@ describe('Sidebar Component', () => {
       }
     })
 
-    it('should preserve children order when sorting root nodes', async () => {
+    it('should sort nodes naturally in descending order', async () => {
       render(
         <SidebarProvider nodes={testNodes}>
-          <Sidebar rootNodesSortType="natural" defaultLevel={2} />
+          <Sidebar nodeSortType="natural" defaultLevel={2} nodeSortOrder="desc" />
         </SidebarProvider>
       )
 
@@ -381,16 +381,16 @@ describe('Sidebar Component', () => {
         expect(screen.getByText('Apple')).toBeInTheDocument()
         expect(screen.getByText('File 10')).toBeInTheDocument()
         expect(screen.getByText('File 2')).toBeInTheDocument()
-        expect(screen.getByText('Child 10')).toBeInTheDocument()
         expect(screen.getByText('Child 2')).toBeInTheDocument()
+        expect(screen.getByText('Child 10')).toBeInTheDocument()
       })
 
-      // Verify root nodes are sorted naturally: Apple, File 2, File 10, Zebra
+      // Verify nodes are sorted naturally in descending order: Zebra, File 10, File 2, Apple
       const rootItems = [
-        screen.getByText('Apple'),
-        screen.getByText('File 2'),
-        screen.getByText('File 10'),
         screen.getByText('Zebra'),
+        screen.getByText('File 10'),
+        screen.getByText('File 2'),
+        screen.getByText('Apple'),
       ]
 
       for (let i = 0; i < rootItems.length - 1; i++) {
@@ -400,8 +400,81 @@ describe('Sidebar Component', () => {
       const child10 = screen.getByText('Child 10')
       const child2 = screen.getByText('Child 2')
 
-      // "Child 10" should appear before "Child 2" in DOM (original order preserved)
+      // Children nodes should also be sorted naturally in descending order: "Child 10" before "Child 2"
       expect(child10.compareDocumentPosition(child2)).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+    })
+
+    it('should sort nodes using custom comparison function', async () => {
+      // Custom function that sorts by string length first, then alphabetically
+      const customSortFunction = (valueA: string, valueB: string): -1 | 0 | 1 => {
+        const lengthComparison = valueA.length - valueB.length
+        if (lengthComparison !== 0) {
+          return lengthComparison < 0 ? -1 : 1
+        }
+        // If lengths are equal, sort alphabetically
+        const alphabetical = valueA.toLowerCase().localeCompare(valueB.toLowerCase())
+        return alphabetical < 0 ? -1 : alphabetical > 0 ? 1 : 0
+      }
+
+      render(
+        <SidebarProvider nodes={testNodes}>
+          <Sidebar nodeSortType="custom" nodeSortCompareFn={customSortFunction} />
+        </SidebarProvider>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText('Zebra')).toBeInTheDocument()
+        expect(screen.getByText('Apple')).toBeInTheDocument()
+        expect(screen.getByText('File 10')).toBeInTheDocument()
+        expect(screen.getByText('File 2')).toBeInTheDocument()
+      })
+
+      // Custom sorting by length: Apple (5), Zebra (5), File 2 (6), File 10 (7)
+      // When lengths are equal (Apple vs Zebra), sort alphabetically: Apple before Zebra
+      const sidebarItems = [
+        screen.getByText('Apple'),
+        screen.getByText('Zebra'),
+        screen.getByText('File 2'),
+        screen.getByText('File 10'),
+      ]
+
+      for (let i = 0; i < sidebarItems.length - 1; i++) {
+        expect(sidebarItems[i].compareDocumentPosition(sidebarItems[i + 1])).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+      }
+    })
+
+    it('should handle custom sorting function with descending order', async () => {
+      // Custom function that sorts by string length
+      const customSortFunction = (valueA: string, valueB: string): -1 | 0 | 1 => {
+        const lengthComparison = valueA.length - valueB.length
+        return lengthComparison < 0 ? -1 : lengthComparison > 0 ? 1 : 0
+      }
+
+      render(
+        <SidebarProvider nodes={testNodes}>
+          <Sidebar nodeSortType="custom" nodeSortOrder="desc" nodeSortCompareFn={customSortFunction} />
+        </SidebarProvider>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText('Zebra')).toBeInTheDocument()
+        expect(screen.getByText('Apple')).toBeInTheDocument()
+        expect(screen.getByText('File 10')).toBeInTheDocument()
+        expect(screen.getByText('File 2')).toBeInTheDocument()
+      })
+
+      // With descending order: File 10 (7), File 2 (6), Zebra (5), Apple (5)
+      // "Apple" and "Zebra" both have length 5, so they maintain their original relative order
+      const sidebarItems = [
+        screen.getByText('File 10'),
+        screen.getByText('File 2'),
+        screen.getByText('Zebra'),
+        screen.getByText('Apple'),
+      ]
+
+      for (let i = 0; i < sidebarItems.length - 1; i++) {
+        expect(sidebarItems[i].compareDocumentPosition(sidebarItems[i + 1])).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+      }
     })
   })
 })

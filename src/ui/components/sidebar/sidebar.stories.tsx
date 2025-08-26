@@ -200,23 +200,31 @@ const meta: Meta<typeof Sidebar> = {
         defaultValue: { summary: 'false' },
       },
     },
-    rootNodesSortType: {
+    nodeSortType: {
       control: 'select',
-      options: ['none', 'alphabetical', 'natural'],
-      description: 'The type of sorting to apply to the root nodes only. Children nodes preserve their original order.',
+      options: ['none', 'alphabetical', 'natural', 'custom'],
+      description: 'The type of sorting to apply to all nodes recursively. Affects all levels of the tree hierarchy.',
       table: {
         defaultValue: { summary: 'none' },
       },
     },
-    rootNodesSortOrder: {
+    nodeSortOrder: {
       control: 'select',
       options: ['asc', 'desc'],
       description:
-        'The sort order direction for root nodes (ascending or descending). Only applicable when rootNodesSortType is not "none".',
+        'The sort order direction for nodes (ascending or descending). Only applicable when nodeSortType is not "none" or undefined.',
       table: {
         defaultValue: { summary: 'asc' },
       },
-      if: { arg: 'rootNodesSortType', neq: 'none' },
+      if: { arg: 'nodeSortType', neq: 'none' },
+    },
+    nodeSortCompareFn: {
+      control: false,
+      description: 'Custom comparison function for sorting nodes. Required when nodeSortType is "custom".',
+      table: {
+        readonly: true,
+        type: { summary: '(valueA: string, valueB: string) => -1 | 0 | 1' },
+      },
     },
   },
   args: {
@@ -378,6 +386,50 @@ export const Loading: Story = {
                 Toggle loading state to see the skeleton animation
               </p>
             </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
+
+/**
+ * Demonstrates how to use a custom sorting function for nodes.
+ * This example shows sorting by string length (shorter titles first) then alphabetically if lengths are equal.
+ */
+export const WithCustomSorting: Story = {
+  args: {
+    nodeSortType: 'custom',
+    nodeSortOrder: 'asc',
+    defaultLevel: 2,
+  },
+  render: function WithCustomSortingRender(args) {
+    // Custom sorting function that sorts by title length first, then alphabetically
+    const customSortFunction = useCallback((valueA: string, valueB: string): -1 | 0 | 1 => {
+      const lengthComparison = valueA.length - valueB.length
+      if (lengthComparison !== 0) {
+        return lengthComparison < 0 ? -1 : 1
+      }
+      // If lengths are equal, sort alphabetically
+      const alphabetical = valueA.toLowerCase().localeCompare(valueB.toLowerCase())
+      return alphabetical < 0 ? -1 : alphabetical > 0 ? 1 : 0
+    }, [])
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar className="sidebar" {...args} nodeSortCompareFn={customSortFunction} />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Custom Sorting</h1>
+          <div className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <p>
+              <strong>nodeSortType:</strong> {`"${args.nodeSortType}"`}
+            </p>
+            <p>
+              <strong>nodeSortOrder:</strong> {`"${args.nodeSortOrder}"`}
+            </p>
+            <p>
+              <strong>nodeSortCompareFn:</strong> Sorts by string length, then alphabetically if lengths are equal
+            </p>
           </div>
         </div>
       </main>

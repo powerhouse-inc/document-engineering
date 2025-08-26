@@ -21,8 +21,9 @@ export interface SidebarNode {
   className?: string
 }
 
-export type RootNodesSortType = 'none' | 'alphabetical' | 'natural'
-export type RootNodesSortOrder = 'asc' | 'desc'
+export type NodeSortComparisonFn = (valueA: string, valueB: string) => -1 | 0 | 1
+export type NodeSortType = 'none' | 'alphabetical' | 'natural' | 'custom'
+export type NodeSortOrder = 'asc' | 'desc'
 
 export interface FlattenedNode extends SidebarNode {
   depth: number
