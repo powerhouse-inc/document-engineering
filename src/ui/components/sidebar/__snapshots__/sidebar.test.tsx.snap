@@ -3,10 +3,10 @@
 exports[`Sidebar Component > Loading State > should match snapshot in loading state 1`] = `
 <DocumentFragment>
   <aside
-    class="group peer relative flex h-svh max-h-screen flex-col bg-gray-50 shadow-lg transition-[width] duration-75 ease-linear dark:bg-slate-600"
+    class="group peer relative flex h-svh max-h-screen flex-col bg-gray-50 shadow-lg transition-[width] duration-75 ease-linear dark:bg-slate-600 sidebar__container"
   >
     <header
-      class="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600"
+      class="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600 sidebar__header"
     >
       <div
         class="flex items-center gap-2 truncate"
@@ -36,14 +36,14 @@ exports[`Sidebar Component > Loading State > should match snapshot in loading st
         class="flex select-none items-center gap-2"
       >
         <div
-          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50"
+          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50 sidebar__header-macro-item"
           role="button"
           tabindex="2"
         >
           1
         </div>
         <div
-          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50"
+          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50 sidebar__header-macro-item"
           role="button"
           tabindex="2"
         >
@@ -313,10 +313,10 @@ exports[`Sidebar Component > Loading State > should match snapshot in loading st
 exports[`Sidebar Component > should match snapshot 1`] = `
 <DocumentFragment>
   <aside
-    class="group peer relative flex h-svh max-h-screen flex-col bg-gray-50 shadow-lg transition-[width] duration-75 ease-linear dark:bg-slate-600"
+    class="group peer relative flex h-svh max-h-screen flex-col bg-gray-50 shadow-lg transition-[width] duration-75 ease-linear dark:bg-slate-600 sidebar__container"
   >
     <header
-      class="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600"
+      class="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600 sidebar__header"
     >
       <div
         class="flex items-center gap-2 truncate"
@@ -346,14 +346,14 @@ exports[`Sidebar Component > should match snapshot 1`] = `
         class="flex select-none items-center gap-2"
       >
         <div
-          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50"
+          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50 sidebar__header-macro-item"
           role="button"
           tabindex="2"
         >
           1
         </div>
         <div
-          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50"
+          class="w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200 hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50 sidebar__header-macro-item"
           role="button"
           tabindex="2"
         >
@@ -374,7 +374,7 @@ exports[`Sidebar Component > should match snapshot 1`] = `
             style="padding-left: 0px;"
           >
             <div
-              class="group/sidebar-item dark:hover:bg-charcoal-900 relative flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 hover:pr-6"
+              class="group/sidebar-item dark:hover:bg-charcoal-900 relative flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 hover:pr-6 sidebar__item"
               id="sidebar-item-1"
               tabindex="0"
             >
@@ -382,7 +382,7 @@ exports[`Sidebar Component > should match snapshot 1`] = `
                 class="flex max-w-full items-center gap-2"
               >
                 <div
-                  class="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200"
+                  class="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret"
                 >
                   <svg
                     class="min-w-4 -rotate-90 text-gray-700 dark:text-gray-400"
@@ -399,40 +399,40 @@ exports[`Sidebar Component > should match snapshot 1`] = `
                   </svg>
                 </div>
                 <div
-                  class="truncate text-sm leading-5"
+                  class="truncate text-sm leading-5 sidebar__item-title"
                 >
                   <span>
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     N
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     o
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     d
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     e
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                      
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     1
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                   </span>
                 </div>
                 <div
-                  class="absolute top-1/2 flex -translate-y-1/2 items-center justify-center right-2 invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50"
+                  class="absolute top-1/2 flex -translate-y-1/2 items-center justify-center right-2 invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50 sidebar__item-pin"
                 >
                   <svg
                     fill="none"
@@ -458,7 +458,7 @@ exports[`Sidebar Component > should match snapshot 1`] = `
             style="padding-left: 0px;"
           >
             <div
-              class="group/sidebar-item dark:hover:bg-charcoal-900 relative flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 hover:pr-6"
+              class="group/sidebar-item dark:hover:bg-charcoal-900 relative flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 hover:pr-6 sidebar__item"
               id="sidebar-item-2"
               tabindex="0"
             >
@@ -466,10 +466,10 @@ exports[`Sidebar Component > should match snapshot 1`] = `
                 class="flex max-w-full items-center gap-2"
               >
                 <div
-                  class="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200"
+                  class="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret"
                 >
                   <svg
-                    class="min-w-4 -rotate-90 text-gray-300 dark:text-gray-700"
+                    class="min-w-4 -rotate-90 text-gray-300 dark:text-gray-700 sidebar__item-caret--no-children"
                     fill="currentcolor"
                     height="16"
                     viewBox="0 0 16 16"
@@ -483,40 +483,40 @@ exports[`Sidebar Component > should match snapshot 1`] = `
                   </svg>
                 </div>
                 <div
-                  class="truncate text-sm leading-5"
+                  class="truncate text-sm leading-5 sidebar__item-title"
                 >
                   <span>
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     N
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     o
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     d
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     e
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                      
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                     2
                     <span
-                      class="bg-gray-300 dark:bg-charcoal-800"
+                      class="bg-gray-300 dark:bg-charcoal-800 sidebar__item-title"
                     />
                   </span>
                 </div>
                 <div
-                  class="absolute top-1/2 flex -translate-y-1/2 items-center justify-center right-2 invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50"
+                  class="absolute top-1/2 flex -translate-y-1/2 items-center justify-center right-2 invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50 sidebar__item-pin"
                 >
                   <svg
                     fill="none"

@@ -24,7 +24,11 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
   const baseTitleClasses = 'truncate text-sm font-semibold text-gray-700 dark:text-gray-300'
   if (handleOnTitleClick) {
     titleElement = (
-      <button type="button" className={cn(baseTitleClasses, 'cursor-pointer')} onClick={handleOnTitleClick}>
+      <button
+        type="button"
+        className={cn(baseTitleClasses, 'cursor-pointer sidebar__header-title')}
+        onClick={handleOnTitleClick}
+      >
         {sidebarTitle}
       </button>
     )
@@ -33,7 +37,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
   }
 
   return (
-    <header className="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600">
+    <header className="flex items-center justify-between gap-2 border-b border-gray-300 bg-gray-50 p-4 dark:border-gray-800 dark:bg-slate-600 sidebar__header">
       <div className="flex items-center gap-2 truncate">
         {sidebarIcon}
         {titleElement}
@@ -53,7 +57,8 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
                   'w-[26px] rounded-lg bg-slate-50 p-1 text-center text-xs text-slate-100 dark:bg-gray-900 dark:text-slate-200',
                   !isDisabled &&
                     'hover:bg-slate-100 hover:text-slate-200 dark:hover:bg-gray-600 dark:hover:text-slate-50',
-                  isDisabled && 'cursor-not-allowed bg-gray-100 text-[#E2E4E7] dark:bg-[#252728] dark:text-slate-500'
+                  isDisabled && 'cursor-not-allowed bg-gray-100 text-[#E2E4E7] dark:bg-[#252728] dark:text-slate-500',
+                  'sidebar__header-macro-item'
                 )}
                 onClick={() => {
                   if (!isDisabled) {
