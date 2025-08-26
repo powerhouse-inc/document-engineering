@@ -6,6 +6,7 @@ import { SelectionManager } from './selection-manager.js'
 import type { ConfirmationOptions, PrivateTableApiBase, SortingInfo } from './types.js'
 import { confirm } from '../../ui/components/confirm/confirm.js'
 import { deepEqual } from '../../scalars/lib/deep-equal.js'
+import { isEmpty } from '../../scalars/lib/is-empty.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
@@ -228,6 +229,13 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         const value = formData?.[columnDef.field] as unknown
 
         if (isAddingRow) {
+          // if the value is empty we need to prevent calling the onAdd callback
+          const isValueEmpty = typeof value !== 'boolean' || isEmpty(value)
+          if (isValueEmpty) {
+            this.selection.selectCell(selectedCell.row, selectedCell.column)
+            return
+          }
+
           await this._getConfig().onAdd?.({ [columnDef.field]: value })
         } else {
           // if the value did not change, we don't need to save it
