@@ -179,7 +179,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       className={cn(
         'group peer relative flex h-svh max-h-screen flex-col bg-gray-50 shadow-lg transition-[width] duration-75 ease-linear dark:bg-slate-600',
         isResizing && 'transition-none',
-        className
+        className,
+        'sidebar__container'
       )}
     >
       {isSidebarOpen && (
