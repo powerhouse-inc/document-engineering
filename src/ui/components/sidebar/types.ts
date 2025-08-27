@@ -25,7 +25,3 @@ export interface FlattenedNode extends SidebarNode {
   depth: number
   isExpanded: boolean
 }
-export interface NodeIdStyle {
-  id: string
-  className: string
-}

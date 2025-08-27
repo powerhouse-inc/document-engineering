@@ -134,7 +134,10 @@ describe('Sidebar Component', () => {
     await waitFor(() => {
       const pinnedNode = screen.getByText('Node with custom class')
       expect(pinnedNode).toBeInTheDocument()
-      expect(pinnedNode).toHaveClass('custom-node-class', 'text-blue-500')
+
+      // The custom className should be applied to the parent sidebar item container
+      const sidebarItemContainer = pinnedNode.closest('.sidebar__item')
+      expect(sidebarItemContainer).toHaveClass('custom-node-class', 'text-blue-500')
     })
   })
 

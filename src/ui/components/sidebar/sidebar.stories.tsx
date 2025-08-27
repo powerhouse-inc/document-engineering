@@ -244,14 +244,6 @@ const meta: Meta<typeof Sidebar> = {
         defaultValue: { summary: 'false' },
       },
     },
-    nodeStyles: {
-      control: 'object',
-      description:
-        'Array of custom styles to apply to specific nodes by ID. Each NodeIdStyle object contains an `id` to identify the node and a `className` for custom styling.',
-      table: {
-        defaultValue: { summary: 'NodeIdStyle[]' },
-      },
-    },
   },
   args: {
     sidebarTitle: 'Title Sidebar',
@@ -474,28 +466,32 @@ export const WithCustomTargetElement: Story = {
       setNavigationLog((prev) => [...prev, `Title clicked at ${timestamp} - Navigate to root/home`])
     }, [])
 
-    // Example of custom styles for specific nodes
-    const nodeStyles = [
-      {
-        id: '515005a1-b60d-4f83-90e2-a88fe4ccc0cd',
-        className: 'bg-red-900 text-white hover:!bg-red-800',
-      },
-      {
-        id: 'e2d90c40-79eb-47d5-a6cc-b92f4b53b997',
-        className: 'bg-blue-900 text-white hover:!bg-blue-800',
-      },
-    ]
+    const stylesToApply: Record<string, string> = {
+      '4281ab93-ef4f-4974-988d-7dad149a693d': 'bg-red-900 text-white hover:!bg-red-800',
+      'f85e197f-9fd7-48ed-abe9-5d2c1b22475a': 'bg-blue-900 text-white hover:!bg-blue-800',
+      'c4be9c5e-520d-4e9c-b29e-3adcc8071452': 'bg-purple-900 text-white hover:!bg-purple-800',
+      'eca5e587-79e3-480b-b70d-dd25697c9e1f': 'bg-green-900 text-white hover:!bg-green-800',
+    }
+    const applyStylesRecursively = (node: SidebarNode): SidebarNode => {
+      return {
+        ...node,
+        className: stylesToApply[node.id] || node.className,
+        children: node.children?.map(applyStylesRecursively),
+      }
+    }
+
+    const nodes = (mockedTree as SidebarNode[]).map(applyStylesRecursively)
 
     return (
       <main className="flex h-svh w-full">
         <Sidebar
+          nodes={nodes}
           className="sidebar"
           {...args}
           onActiveNodeChange={onActiveNodeChange}
           activeNodeId={activeNode}
           handleOnTitleClick={handleTitleClick}
           sidebarTitle="Click me to go home!"
-          nodeStyles={nodeStyles}
         />
         <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>

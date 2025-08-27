@@ -8,7 +8,7 @@ import { SidebarHeader } from './subcomponents/sidebar-header.js'
 import { SidebarPinningArea } from './subcomponents/sidebar-pinning-area.js'
 import { useSidebar } from './subcomponents/sidebar-provider/index.js'
 import { SidebarSearch } from './subcomponents/sidebar-search/index.js'
-import type { NodeIdStyle, SidebarNode } from './types.js'
+import type { SidebarNode } from './types.js'
 import { useSidebarResize } from './use-sidebar-resize.js'
 import { triggerEvent } from './utils.js'
 
@@ -96,11 +96,6 @@ export interface SidebarProps {
    * @default false
    */
   isLoading?: boolean
-
-  /**
-   * Array of custom styles to apply to specific nodes by ID
-   */
-  nodeStyles?: NodeIdStyle[]
 }
 
 /**
@@ -126,7 +121,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   className,
   handleOnTitleClick,
   isLoading = false,
-  nodeStyles = [],
 }) => {
   const { sidebarRef, startResizing, isResizing, isSidebarOpen, handleToggleSidebar } = useSidebarResize({
     defaultWidth: initialWidth,
@@ -203,7 +197,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             allowPinning={allowPinning}
             allowCollapsingInactiveNodes={allowCollapsingInactiveNodes}
             isLoading={isLoading}
-            nodeStyles={nodeStyles}
           />
           {showSearchBar && <SidebarSearch showStatusFilter={showStatusFilter} />}
           {extraFooterContent && (

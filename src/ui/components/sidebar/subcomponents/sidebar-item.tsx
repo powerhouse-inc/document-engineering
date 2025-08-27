@@ -7,7 +7,7 @@ import { useEllipsis } from '../../../../scalars/hooks/useEllipsis.js'
 import { isEmpty } from '../../../../scalars/lib/is-empty.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import { Tooltip, TooltipProvider } from '../../tooltip/index.js'
-import { type FlattenedNode, type NodeIdStyle, NodeStatus, type SidebarNode } from '../types.js'
+import { type FlattenedNode, NodeStatus, type SidebarNode } from '../types.js'
 import { StatusIcon } from './status-icon.js'
 
 interface SidebarItemProps {
@@ -24,7 +24,6 @@ interface SidebarItemProps {
   style?: React.CSSProperties
   onChange?: (node: SidebarNode) => void
   allowCollapsingInactiveNodes?: boolean
-  nodeStyles?: NodeIdStyle[]
 }
 
 const TOOLTIP_DELAY = 700
@@ -44,7 +43,6 @@ export const SidebarItem = ({
   style,
   onChange,
   allowCollapsingInactiveNodes = false,
-  nodeStyles = [],
 }: SidebarItemProps) => {
   const paddingLeft = node.depth * 24
   const isSearchActive = searchResults.length > 0 && searchResults[activeSearchIndex].id === node.id
@@ -97,12 +95,6 @@ export const SidebarItem = ({
   const ellipsisRef = useRef<HTMLDivElement>(null)
   const hasEllipsis = useEllipsis(ellipsisRef)
 
-  // Get custom styles for this specific node
-  const customNodeStyles = useMemo(() => {
-    const customStyle = nodeStyles.find((nodeStyle) => nodeStyle.id === node.id)
-    return customStyle?.className ?? ''
-  }, [node.id, nodeStyles])
-
   return (
     <TooltipProvider>
       <Tooltip
@@ -130,17 +122,14 @@ export const SidebarItem = ({
               isActive &&
                 'font-medium text-gray-900 dark:text-gray-50 bg-gray-200 hover:bg-gray-200 dark:bg-charcoal-900 dark:hover:bg-charcoal-900 sidebar__item--active',
               'sidebar__item',
-              customNodeStyles
+              node.className
             )}
             onClick={handleClick}
           >
             <div className="flex max-w-full items-center gap-2">
               {!pinnedMode && (
                 <div
-                  className={cn(
-                    '-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret',
-                    customNodeStyles
-                  )}
+                  className={cn('-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret')}
                   onClick={handleCaretClick}
                 >
                   <CaretDown
@@ -173,7 +162,7 @@ export const SidebarItem = ({
                 searchTerm={searchTerm}
                 isSearchActive={isSearchActive}
                 pinnedMode={pinnedMode}
-                className={cn(node.className, 'sidebar__item-title')}
+                className="sidebar__item-title"
               />
 
               {allowPinning && (
