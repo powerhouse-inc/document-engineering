@@ -246,23 +246,22 @@ const meta: Meta<typeof Sidebar> = {
     },
     nodeSortType: {
       control: 'select',
-      options: ['none', 'alphabetical', 'natural'],
+      options: ['alphabetical', 'natural'],
       description:
-        'The type of sorting to apply to all nodes recursively. Can be "none", "alphabetical", "natural" or a custom comparison function. Affects all levels of the tree hierarchy.',
+        'The type of sorting to apply to all nodes recursively. Can be "alphabetical", "natural" or a custom comparison function. Affects all levels of the tree hierarchy.',
       table: {
-        defaultValue: { summary: 'none' },
-        type: { summary: '"none" | "alphabetical" | "natural" | ((valueA: string, valueB: string) => -1 | 0 | 1)' },
+        type: { summary: '"alphabetical" | "natural" | ((valueA: string, valueB: string) => -1 | 0 | 1)' },
       },
     },
     nodeSortOrder: {
       control: 'select',
       options: ['asc', 'desc'],
-      description:
-        'The sort order direction for nodes (ascending or descending). Only applicable when nodeSortType is not "none" or undefined.',
+      description: 'Sort order of nodes (ascending or descending). Only applicable when nodeSortType is defined.',
       table: {
-        defaultValue: { summary: 'asc' },
+        defaultValue: { summary: '"asc"' },
+        type: { summary: '"asc" | "desc"' },
       },
-      if: { arg: 'nodeSortType', neq: 'none' },
+      if: { arg: 'nodeSortType', exists: true },
     },
   },
   args: {
@@ -590,7 +589,6 @@ export const Loading: Story = {
  */
 export const WithCustomSorting: Story = {
   args: {
-    nodeSortOrder: 'asc',
     defaultLevel: 2,
   },
   render: function WithCustomSortingRender(args) {
@@ -607,19 +605,18 @@ export const WithCustomSorting: Story = {
 
     return (
       <main className="flex h-svh w-full">
-        <Sidebar className="sidebar" {...args} nodeSortType={customSortFunction} />
+        <Sidebar className="sidebar" {...args} nodeSortType={args.nodeSortType ?? customSortFunction} />
         <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Custom Sorting</h1>
           <div className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>
               <strong>nodeSortType:</strong>{' '}
-              {args.nodeSortType === undefined ? 'Custom Function' : args.nodeSortType.toString()}
+              {args.nodeSortType === undefined
+                ? 'Custom Function (sorts in ascending order by string length, then alphabetically if lengths are equal)'
+                : args.nodeSortType.toString()}
             </p>
             <p>
-              <strong>nodeSortOrder:</strong> {`"${args.nodeSortOrder}"`}
-            </p>
-            <p>
-              <strong>Function Description:</strong> Sorts by string length, then alphabetically if lengths are equal
+              <strong>nodeSortOrder:</strong> {args.nodeSortOrder ?? 'asc'}
             </p>
           </div>
         </div>

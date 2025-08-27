@@ -37,7 +37,7 @@ interface SidebarContextType {
   activeSearchIndex: number
   activeNodeId?: string
   isStatusFilterEnabled: boolean
-  nodeSortType: NodeSortType
+  nodeSortType?: NodeSortType
   nodeSortOrder: NodeSortOrder
   virtualListRef: RefObject<List>
   toggleNode: (nodeId: string) => void
@@ -67,7 +67,7 @@ const SidebarContext = createContext<SidebarContextType>({
   activeSearchIndex: 0,
   activeNodeId: undefined,
   isStatusFilterEnabled: false,
-  nodeSortType: 'none',
+  nodeSortType: undefined,
   nodeSortOrder: 'asc',
   virtualListRef: createRef<List>(),
   toggleNode: () => undefined,
@@ -122,7 +122,10 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
         NodeStatus.DUPLICATED,
       ])
     }
-    return sortNodes(roots, _state.nodeSortType, _state.nodeSortOrder)
+    if (_state.nodeSortType !== undefined) {
+      return sortNodes(roots, _state.nodeSortType, _state.nodeSortOrder)
+    }
+    return roots
   }, [_state.nodes, _state.pinnedNodePath, _state.isStatusFilterEnabled, _state.nodeSortType, _state.nodeSortOrder])
 
   const flattenTree = useCallback(

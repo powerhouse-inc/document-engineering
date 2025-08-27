@@ -12,7 +12,7 @@ export interface SidebarState {
   activeSearchIndex: number
   activeNodeId?: string
   isStatusFilterEnabled: boolean
-  nodeSortType: NodeSortType
+  nodeSortType?: NodeSortType
   nodeSortOrder: NodeSortOrder
 }
 
@@ -28,7 +28,7 @@ export const initialSidebarState: SidebarState = {
   activeSearchIndex: 0,
   activeNodeId: undefined,
   isStatusFilterEnabled: false,
-  nodeSortType: 'none',
+  nodeSortType: undefined,
   nodeSortOrder: 'asc',
 }
 
@@ -133,7 +133,7 @@ interface SetExpandedNodesAction {
 
 interface SetNodeSortTypeAction {
   type: SidebarActionType.SET_NODES_SORT_TYPE
-  payload: NodeSortType
+  payload: NodeSortType | undefined
 }
 
 interface SetNodeSortOrderAction {

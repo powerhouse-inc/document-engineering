@@ -22,7 +22,7 @@ export interface SidebarNode {
 }
 
 export type NodeSortComparisonFn = (valueA: string, valueB: string) => -1 | 0 | 1
-export type NodeSortType = 'none' | 'alphabetical' | 'natural' | NodeSortComparisonFn
+export type NodeSortType = 'alphabetical' | 'natural' | NodeSortComparisonFn
 export type NodeSortOrder = 'asc' | 'desc'
 
 export interface FlattenedNode extends SidebarNode {
