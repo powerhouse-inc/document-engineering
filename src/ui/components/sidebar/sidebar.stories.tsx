@@ -5,6 +5,7 @@ import mockedTree from './mocked_tree.json'
 import { Sidebar } from './sidebar.js'
 import { SidebarProvider } from './subcomponents/sidebar-provider/index.js'
 import type { SidebarNode } from './types.js'
+import { cn } from '#scalars/lib/utils.js'
 
 /**
  * The `Sidebar` component can be used within a page layout to provide a sidebar navigation.
@@ -46,6 +47,7 @@ import type { SidebarNode } from './types.js'
  * The `icon` and `expandedIcon` properties are optional and can be used to display an icon in the sidebar item.
  * This icons must be one of the [available icons](?path=/docs/powerhouse-iconography--readme)
  *
+ *
  * ## Sidebar Events
  *
  * The `Sidebar` component emits the following custom events:
@@ -79,7 +81,49 @@ import type { SidebarNode } from './types.js'
  *   };
  * }, []);
  * ```
+ *  ## Customization
+ * The sidebar can be customized using the `className` prop which accepts a string of Tailwind classes.
+ * Each class should follow the format `[&_.sidebar\\_\\_{element}]:{tailwind-classes}`.
+ *
+ * Base classes available for customization:
+ * - .sidebar__container: Main sidebar container
+ * - .sidebar__item: Individual sidebar item
+ * - .sidebar__item--active: Active sidebar item
+ * - .sidebar__item-title: Item title text
+ * - .sidebar__item-caret: Expand/collapse caret button
+ * - .sidebar__item-caret--no-children: Caret for items without children
+ * - .sidebar__item-pin: Pin button for items
+ * - .sidebar__item-pin--active: Active pin button
+ * - .sidebar__header: Sidebar header container
+ * - .sidebar__header-title: Header title text
+ * - .sidebar__header-macro-item: Macro item in header
+ * - .sidebar__pinning-area: Pinned items area
+ *
+ * ## Example Usage
+ *
+ *
+ * ```tsx
+ * import { Sidebar } from './sidebar'
+ *
+ * function MyCustomSidebar() {
+ *   return (
+ *     <Sidebar
+ *       className={String.raw`
+ *         [&_.sidebar\\_\\_item]:bg-blue-500
+ *         [&_.sidebar\\_\\_item]:text-white
+ *         [&_.sidebar\\_\\_item--active]:bg-green-500
+ *         [&_.sidebar\\_\\_item--active]:text-black
+ *         [&_.sidebar\\_\\_item-caret]:bg-yellow-500
+ *         [&_.sidebar\\_\\_item-pin]:fill-red-500
+ *         [&_.sidebar\\_\\_header]:bg-red-500
+ *         [&_.sidebar\\_\\_header-title]:text-white
+ *       `}
+ *     />
+ *   )
+ * }
+ * ```
  */
+
 const meta: Meta<typeof Sidebar> = {
   title: 'Navigation/Sidebar',
   component: Sidebar,
@@ -309,6 +353,88 @@ export const WithCustomTitleNavigation: Story = {
       <main className="flex h-svh w-full">
         <Sidebar
           className="sidebar"
+          {...args}
+          onActiveNodeChange={onActiveNodeChange}
+          activeNodeId={activeNode}
+          handleOnTitleClick={handleTitleClick}
+          sidebarTitle="Click me to go home!"
+        />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Active Node: {activeNode}</p>
+
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-50">Navigation Log:</h2>
+            <div className="mt-2 overflow-y-auto rounded border p-2 bg-white dark:bg-slate-700">
+              {navigationLog.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Click the sidebar title to see navigation events
+                </p>
+              ) : (
+                <ul className="text-sm text-gray-700 dark:text-gray-300">
+                  {navigationLog.map((log, index) => (
+                    <li key={index} className="py-1">
+                      {log}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
+
+export const WithCustomStyles: Story = {
+  args: {
+    showStatusFilter: true,
+  },
+  render: function WithCustomTitleNavigationRender(args) {
+    const [activeNode, setActiveNode] = useState<string>('4281ab93-ef4f-4974-988d-7dad149a693d')
+    const [navigationLog, setNavigationLog] = useState<string[]>([])
+
+    const onActiveNodeChange = useCallback((node: SidebarNode) => {
+      setActiveNode(node.id)
+    }, [])
+
+    const handleTitleClick = useCallback(() => {
+      const timestamp = new Date().toLocaleTimeString()
+      setNavigationLog((prev) => [...prev, `Title clicked at ${timestamp} - Navigate to root/home`])
+    }, [])
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar
+          className={cn(
+            'sidebar',
+            String.raw`
+            [&_.sidebar\\_\\_item]:bg-blue-50
+            [&_.sidebar\\_\\_item]:border-blue-200
+            [&_.sidebar\\_\\_item]:text-blue-800
+            [&_.sidebar\\_\\_item--active]:bg-emerald-50
+            [&_.sidebar\\_\\_item--active]:border-emerald-300
+            [&_.sidebar\\_\\_item--active]:text-emerald-800
+            [&_.sidebar\\_\\_item-caret]:bg-amber-50
+            [&_.sidebar\\_\\_item-caret]:border-amber-200
+            [&_.sidebar\\_\\_item-caret]:text-amber-700
+            [&_.sidebar\\_\\_item-title]:text-slate-900
+
+            [&_.sidebar\\_\\_item-pin]:fill-rose-500
+            [&_.sidebar\\_\\_item-pin]:text-rose-600
+            [&_.sidebar\\_\\_item-pin--active]:fill-emerald-500
+            [&_.sidebar\\_\\_item-pin--active]:text-emerald-600
+            [&_.sidebar\\_\\_item-caret--no-children]:text-slate-400 dark:text-slate-500
+            [&_.sidebar\\_\\_header]:bg-slate-100
+            [&_.sidebar\\_\\_header]:text-slate-800
+            [&_.sidebar\\_\\_header-title]:text-slate-900
+            [&_.sidebar\\_\\_header-macro-item]:bg-indigo-50
+            [&_.sidebar\\_\\_header-macro-item]:text-indigo-800
+            [&_.sidebar\\_\\_pinning-area]:bg-amber-50
+            [&_.sidebar\\_\\_pinning-area]:text-amber-800
+             `
+          )}
           {...args}
           onActiveNodeChange={onActiveNodeChange}
           activeNodeId={activeNode}

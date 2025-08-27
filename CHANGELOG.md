@@ -1,3 +1,20 @@
+# [1.33.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.32.0...v1.33.0) (2025-08-27)
+
+
+### Bug Fixes
+
+* editing when data is sorted ([18fc98a](https://github.com/powerhouse-inc/document-engineering/commit/18fc98a772e7747ea13e78ea3c20005a1a5a6c3f))
+* keep sort on editing ([4b390a0](https://github.com/powerhouse-inc/document-engineering/commit/4b390a055f64d14a45777e6b7740934595bdfd9f))
+* **scalars:** remove duplications when apply the custom classes ([5c254a0](https://github.com/powerhouse-inc/document-engineering/commit/5c254a07fadaa58e1e329d75f3327c5d41a12bbb))
+* **scalars:** remove the duplicate is active className ([2430362](https://github.com/powerhouse-inc/document-engineering/commit/24303621f6942254bdc4da48652c265fc94208fe))
+* **table:** selected number header when the table is empty ([25c08f4](https://github.com/powerhouse-inc/document-engineering/commit/25c08f45ac52ffe4c5088693fcb0fcb7db0c5c43))
+
+
+### Features
+
+* prevent adding using empty values ([1106995](https://github.com/powerhouse-inc/document-engineering/commit/1106995903237caa9047a3acf16e82cac89138da))
+* **scalars:** add custom class for styled the sideBar ([4521e47](https://github.com/powerhouse-inc/document-engineering/commit/4521e47aa96465f6f20d995b5dcfe54b1f42026f))
+
 # [1.32.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.31.0...v1.32.0) (2025-08-25)
 
 

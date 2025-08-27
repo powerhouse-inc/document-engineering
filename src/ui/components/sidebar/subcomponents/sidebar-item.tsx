@@ -120,14 +120,15 @@ export const SidebarItem = ({
               pinnedMode &&
                 'after:absolute after:-top-2.5 after:left-[15px] after:h-4 after:w-px after:bg-gray-300 hover:bg-gray-50 first:group-first/sidebar-item-wrapper:after:hidden dark:hover:bg-slate-600',
               isActive &&
-                'font-medium text-gray-900 dark:text-gray-50 bg-gray-200 hover:bg-gray-200 dark:bg-charcoal-900 dark:hover:bg-charcoal-900'
+                'font-medium text-gray-900 dark:text-gray-50 bg-gray-200 hover:bg-gray-200 dark:bg-charcoal-900 dark:hover:bg-charcoal-900 sidebar__item--active',
+              'sidebar__item'
             )}
             onClick={handleClick}
           >
             <div className="flex max-w-full items-center gap-2">
               {!pinnedMode && (
                 <div
-                  className="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200"
+                  className="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret"
                   onClick={handleCaretClick}
                 >
                   <CaretDown
@@ -137,7 +138,7 @@ export const SidebarItem = ({
                       'min-w-4',
                       node.isExpanded && node.children && node.children.length > 0 ? '' : '-rotate-90',
                       node.children === undefined || node.children.length === 0
-                        ? 'text-gray-300 dark:text-gray-700'
+                        ? 'text-gray-300 dark:text-gray-700 sidebar__item-caret--no-children'
                         : 'text-gray-700 dark:text-gray-400'
                     )}
                   />
@@ -160,7 +161,7 @@ export const SidebarItem = ({
                 searchTerm={searchTerm}
                 isSearchActive={isSearchActive}
                 pinnedMode={pinnedMode}
-                className={node.className}
+                className={cn(node.className, 'sidebar__item-title')}
               />
 
               {allowPinning && (
@@ -169,8 +170,9 @@ export const SidebarItem = ({
                     'absolute top-1/2 flex -translate-y-1/2 items-center justify-center',
                     hasStatus ? 'right-8' : 'right-2',
                     isPinned
-                      ? 'text-gray-700 hover:text-blue-900 dark:text-gray-50 dark:hover:text-blue-900'
-                      : 'invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50'
+                      ? 'text-gray-700 hover:text-blue-900 dark:text-gray-50 dark:hover:text-blue-900 sidebar__item-pin--active'
+                      : 'invisible text-gray-300 hover:text-gray-700 group-hover/sidebar-item:visible dark:text-gray-700 dark:hover:text-gray-50',
+                    'sidebar__item-pin'
                   )}
                   onClick={handleTogglePin}
                 >

@@ -22,7 +22,7 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
     api.selection.toggleSelectAll()
   }, [config.allowRowSelection, api.selection])
 
-  const isAllRowsSelected = selectedRowIndexes.length === api.getTotalRowsCount()
+  const isAllRowsSelected = api.getTotalRowsCount() !== 0 && selectedRowIndexes.length === api.getTotalRowsCount()
 
   const columnHeaders = useMemo(() => {
     return columns.map((column, columnIndex) => {
