@@ -121,14 +121,15 @@ export const SidebarItem = ({
                 'after:absolute after:-top-2.5 after:left-[15px] after:h-4 after:w-px after:bg-gray-300 hover:bg-gray-50 first:group-first/sidebar-item-wrapper:after:hidden dark:hover:bg-slate-600',
               isActive &&
                 'font-medium text-gray-900 dark:text-gray-50 bg-gray-200 hover:bg-gray-200 dark:bg-charcoal-900 dark:hover:bg-charcoal-900 sidebar__item--active',
-              'sidebar__item'
+              'sidebar__item',
+              node.className
             )}
             onClick={handleClick}
           >
             <div className="flex max-w-full items-center gap-2">
               {!pinnedMode && (
                 <div
-                  className="-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret"
+                  className={cn('-m-2 -mr-1 h-full rounded-md py-2 pl-2 pr-1 hover:bg-gray-200 sidebar__item-caret')}
                   onClick={handleCaretClick}
                 >
                   <CaretDown
@@ -161,7 +162,7 @@ export const SidebarItem = ({
                 searchTerm={searchTerm}
                 isSearchActive={isSearchActive}
                 pinnedMode={pinnedMode}
-                className={cn(node.className, 'sidebar__item-title')}
+                className="sidebar__item-title"
               />
 
               {allowPinning && (

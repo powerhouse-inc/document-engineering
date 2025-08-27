@@ -469,6 +469,77 @@ export const WithCustomStyles: Story = {
   },
 }
 
+export const WithCustomTargetElement: Story = {
+  args: {
+    showStatusFilter: true,
+  },
+  render: function WithCustomTitleNavigationRender(args) {
+    const [activeNode, setActiveNode] = useState<string>('4281ab93-ef4f-4974-988d-7dad149a693d')
+    const [navigationLog, setNavigationLog] = useState<string[]>([])
+
+    const onActiveNodeChange = useCallback((node: SidebarNode) => {
+      setActiveNode(node.id)
+    }, [])
+
+    const handleTitleClick = useCallback(() => {
+      const timestamp = new Date().toLocaleTimeString()
+      setNavigationLog((prev) => [...prev, `Title clicked at ${timestamp} - Navigate to root/home`])
+    }, [])
+
+    const stylesToApply: Record<string, string> = {
+      '4281ab93-ef4f-4974-988d-7dad149a693d': 'bg-red-900 text-white hover:!bg-red-800',
+      'f85e197f-9fd7-48ed-abe9-5d2c1b22475a': 'bg-blue-900 text-white hover:!bg-blue-800',
+      'c4be9c5e-520d-4e9c-b29e-3adcc8071452': 'bg-purple-900 text-white hover:!bg-purple-800',
+      'eca5e587-79e3-480b-b70d-dd25697c9e1f': 'bg-green-900 text-white hover:!bg-green-800',
+    }
+    const applyStylesRecursively = (node: SidebarNode): SidebarNode => {
+      return {
+        ...node,
+        className: stylesToApply[node.id] || node.className,
+        children: node.children?.map(applyStylesRecursively),
+      }
+    }
+
+    const nodes = (mockedTree as SidebarNode[]).map(applyStylesRecursively)
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar
+          nodes={nodes}
+          className="sidebar"
+          {...args}
+          onActiveNodeChange={onActiveNodeChange}
+          activeNodeId={activeNode}
+          handleOnTitleClick={handleTitleClick}
+          sidebarTitle="Click me to go home!"
+        />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Content Area</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Active Node: {activeNode}</p>
+
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-50">Navigation Log:</h2>
+            <div className="mt-2 overflow-y-auto rounded border p-2 bg-white dark:bg-slate-700">
+              {navigationLog.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Click the sidebar title to see navigation events
+                </p>
+              ) : (
+                <ul className="text-sm text-gray-700 dark:text-gray-300">
+                  {navigationLog.map((log, index) => (
+                    <li key={index} className="py-1">
+                      {log}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
 /**
  * Demonstrates the loading state of the sidebar when data is being fetched.
  * The sidebar displays skeleton items with animated placeholders while preserving
