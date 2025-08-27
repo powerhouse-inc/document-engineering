@@ -226,12 +226,12 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         }
 
         const formData = formRef.current?.getValues()
+        formRef.current?.reset()
         const value = formData?.[columnDef.field] as unknown
 
         if (isAddingRow) {
           // if the value is empty we need to prevent calling the onAdd callback
-          const isValueEmpty = typeof value !== 'boolean' || isEmpty(value)
-          if (isValueEmpty) {
+          if (isEmpty(value)) {
             this.selection.selectCell(selectedCell.row, selectedCell.column)
             return
           }
