@@ -1,4 +1,4 @@
-import type { NodeSortComparisonFn, NodeSortOrder, NodeSortType, SidebarNode } from '../../types.js'
+import type { NodeSortOrder, NodeSortType, SidebarNode } from '../../types.js'
 
 // State interface
 export interface SidebarState {
@@ -14,7 +14,6 @@ export interface SidebarState {
   isStatusFilterEnabled: boolean
   nodeSortType: NodeSortType
   nodeSortOrder: NodeSortOrder
-  nodeSortCompareFn?: NodeSortComparisonFn
 }
 
 // Initial state
@@ -31,7 +30,6 @@ export const initialSidebarState: SidebarState = {
   isStatusFilterEnabled: false,
   nodeSortType: 'none',
   nodeSortOrder: 'asc',
-  nodeSortCompareFn: undefined,
 }
 
 // Action types
@@ -63,7 +61,6 @@ interface SetNodesAction {
     nodes: SidebarNode[]
     sortType?: NodeSortType
     sortOrder?: NodeSortOrder
-    compareFn?: NodeSortComparisonFn
   }
 }
 
@@ -174,7 +171,6 @@ export const sidebarReducer = (state: SidebarState = initialSidebarState, action
         nodes: action.payload.nodes,
         nodeSortType: action.payload.sortType ?? state.nodeSortType,
         nodeSortOrder: action.payload.sortOrder ?? state.nodeSortOrder,
-        nodeSortCompareFn: action.payload.compareFn ?? state.nodeSortCompareFn,
       }
     }
 

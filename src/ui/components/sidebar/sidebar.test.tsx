@@ -418,7 +418,7 @@ describe('Sidebar Component', () => {
 
       render(
         <SidebarProvider nodes={testNodes}>
-          <Sidebar nodeSortType="custom" nodeSortCompareFn={customSortFunction} />
+          <Sidebar nodeSortType={customSortFunction} />
         </SidebarProvider>
       )
 
@@ -452,7 +452,7 @@ describe('Sidebar Component', () => {
 
       render(
         <SidebarProvider nodes={testNodes}>
-          <Sidebar nodeSortType="custom" nodeSortOrder="desc" nodeSortCompareFn={customSortFunction} />
+          <Sidebar nodeSortType={customSortFunction} nodeSortOrder="desc" />
         </SidebarProvider>
       )
 

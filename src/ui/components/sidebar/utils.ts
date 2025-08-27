@@ -1,5 +1,5 @@
 import naturalCompare from 'natural-compare-lite'
-import type { NodeSortComparisonFn, NodeSortOrder, NodeSortType, NodeStatus, SidebarNode } from './types.js'
+import type { NodeSortOrder, NodeSortType, NodeStatus, SidebarNode } from './types.js'
 
 /**
  * Search for nodes that match a search term
@@ -288,17 +288,11 @@ export const triggerEvent = (
 /**
  * Sort nodes recursively at all levels based on the specified sort type and order.
  * @param nodes - The array of nodes to sort
- * @param sortType - The type of sorting to apply (to all levels)
+ * @param sortType - The type of sorting to apply (string or function)
  * @param sortOrder - The order direction (ascending or descending)
- * @param customCompareFn - Custom comparison function (required when sortType is 'custom')
  * @returns A new sorted array of nodes
  */
-export const sortNodes = (
-  nodes: SidebarNode[],
-  sortType: NodeSortType,
-  sortOrder: NodeSortOrder,
-  customCompareFn?: NodeSortComparisonFn
-): SidebarNode[] => {
+export const sortNodes = (nodes: SidebarNode[], sortType: NodeSortType, sortOrder: NodeSortOrder): SidebarNode[] => {
   if (sortType === 'none') {
     return [...nodes]
   }
@@ -306,22 +300,21 @@ export const sortNodes = (
   const sortedNodes = [...nodes].sort((a, b) => {
     let comparison = 0
 
-    switch (sortType) {
-      case 'alphabetical':
-        comparison = a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-        break
-      case 'natural':
-        comparison = naturalCompare(a.title, b.title)
-        break
-      case 'custom':
-        if (!customCompareFn) {
-          console.warn('Custom sort function is required when sortType is "custom"')
+    if (typeof sortType === 'function') {
+      // Custom comparison function
+      comparison = sortType(a.title, b.title)
+    } else {
+      // Built-in sorting types
+      switch (sortType) {
+        case 'alphabetical':
+          comparison = a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+          break
+        case 'natural':
+          comparison = naturalCompare(a.title, b.title)
+          break
+        default:
           return 0
-        }
-        comparison = customCompareFn(a.title, b.title)
-        break
-      default:
-        return 0
+      }
     }
 
     return sortOrder === 'desc' ? -comparison : comparison
@@ -329,6 +322,6 @@ export const sortNodes = (
 
   return sortedNodes.map((node) => ({
     ...node,
-    children: node.children ? sortNodes(node.children, sortType, sortOrder, customCompareFn) : undefined,
+    children: node.children ? sortNodes(node.children, sortType, sortOrder) : undefined,
   }))
 }
