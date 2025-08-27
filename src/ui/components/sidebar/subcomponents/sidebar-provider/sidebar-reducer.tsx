@@ -1,4 +1,4 @@
-import type { SidebarNode } from '../../types.js'
+import type { NodeSortOrder, NodeSortType, SidebarNode } from '../../types.js'
 
 // State interface
 export interface SidebarState {
@@ -12,6 +12,8 @@ export interface SidebarState {
   activeSearchIndex: number
   activeNodeId?: string
   isStatusFilterEnabled: boolean
+  nodeSortType: NodeSortType
+  nodeSortOrder: NodeSortOrder
 }
 
 // Initial state
@@ -26,6 +28,8 @@ export const initialSidebarState: SidebarState = {
   activeSearchIndex: 0,
   activeNodeId: undefined,
   isStatusFilterEnabled: false,
+  nodeSortType: 'none',
+  nodeSortOrder: 'asc',
 }
 
 // Action types
@@ -46,12 +50,18 @@ export enum SidebarActionType {
   SET_FLATTENED_NODES = 'SET_FLATTENED_NODES',
   SET_PINNED_NODE_PATH = 'SET_PINNED_NODE_PATH',
   SET_EXPANDED_NODES = 'SET_EXPANDED_NODES',
+  SET_NODES_SORT_TYPE = 'SET_NODES_SORT_TYPE',
+  SET_NODES_SORT_ORDER = 'SET_NODES_SORT_ORDER',
 }
 
 // Action interfaces
 interface SetNodesAction {
   type: SidebarActionType.SET_NODES
-  payload: SidebarNode[]
+  payload: {
+    nodes: SidebarNode[]
+    sortType?: NodeSortType
+    sortOrder?: NodeSortOrder
+  }
 }
 
 interface ToggleNodeAction {
@@ -121,6 +131,16 @@ interface SetExpandedNodesAction {
   payload: Set<string>
 }
 
+interface SetNodeSortTypeAction {
+  type: SidebarActionType.SET_NODES_SORT_TYPE
+  payload: NodeSortType
+}
+
+interface SetNodeSortOrderAction {
+  type: SidebarActionType.SET_NODES_SORT_ORDER
+  payload: NodeSortOrder
+}
+
 // Union type for all actions
 export type SidebarAction =
   | SetNodesAction
@@ -138,6 +158,8 @@ export type SidebarAction =
   | ToggleStatusFilterAction
   | SetPinnedNodePathAction
   | SetExpandedNodesAction
+  | SetNodeSortTypeAction
+  | SetNodeSortOrderAction
 
 // Reducer function
 export const sidebarReducer = (state: SidebarState = initialSidebarState, action: SidebarAction): SidebarState => {
@@ -146,7 +168,9 @@ export const sidebarReducer = (state: SidebarState = initialSidebarState, action
       return {
         ...state,
         pinnedNodePath: [],
-        nodes: action.payload,
+        nodes: action.payload.nodes,
+        nodeSortType: action.payload.sortType ?? state.nodeSortType,
+        nodeSortOrder: action.payload.sortOrder ?? state.nodeSortOrder,
       }
     }
 
@@ -248,6 +272,18 @@ export const sidebarReducer = (state: SidebarState = initialSidebarState, action
       return {
         ...state,
         expandedNodes: action.payload,
+      }
+
+    case SidebarActionType.SET_NODES_SORT_TYPE:
+      return {
+        ...state,
+        nodeSortType: action.payload,
+      }
+
+    case SidebarActionType.SET_NODES_SORT_ORDER:
+      return {
+        ...state,
+        nodeSortOrder: action.payload,
       }
 
     default:

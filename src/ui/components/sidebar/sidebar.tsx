@@ -8,7 +8,7 @@ import { SidebarHeader } from './subcomponents/sidebar-header.js'
 import { SidebarPinningArea } from './subcomponents/sidebar-pinning-area.js'
 import { useSidebar } from './subcomponents/sidebar-provider/index.js'
 import { SidebarSearch } from './subcomponents/sidebar-search/index.js'
-import type { SidebarNode } from './types.js'
+import type { NodeSortOrder, NodeSortType, SidebarNode } from './types.js'
 import { useSidebarResize } from './use-sidebar-resize.js'
 import { triggerEvent } from './utils.js'
 
@@ -96,6 +96,19 @@ export interface SidebarProps {
    * @default false
    */
   isLoading?: boolean
+  /**
+   * The type of sorting to apply to all nodes recursively.
+   * Can be 'none', 'alphabetical', 'natural', or a custom comparison function.
+   * Affects all levels of the tree hierarchy.
+   * @default 'none'
+   */
+  nodeSortType?: NodeSortType
+  /**
+   * The order direction for sorting nodes (ascending or descending).
+   * Only applicable when nodeSortType is not 'none' or undefined.
+   * @default 'asc'
+   */
+  nodeSortOrder?: NodeSortOrder
 }
 
 /**
@@ -121,6 +134,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   className,
   handleOnTitleClick,
   isLoading = false,
+  nodeSortType = 'none',
+  nodeSortOrder = 'asc',
 }) => {
   const { sidebarRef, startResizing, isResizing, isSidebarOpen, handleToggleSidebar } = useSidebarResize({
     defaultWidth: initialWidth,
@@ -128,14 +143,35 @@ export const Sidebar: React.FC<SidebarProps> = ({
     maxWidth,
   })
 
-  const { pinnedNodePath, setNodes, openLevel, togglePin, syncActiveNodeId, setActiveNodeChangeCallback } = useSidebar()
+  const {
+    pinnedNodePath,
+    setNodes,
+    openLevel,
+    togglePin,
+    syncActiveNodeId,
+    setActiveNodeChangeCallback,
+    nodes: providerNodes,
+    nodeSortType: currentSortType,
+    nodeSortOrder: currentSortOrder,
+  } = useSidebar()
 
-  // Sync external nodes with internal state when provided
+  // Sync external nodes and sorting with internal state
   useEffect(() => {
     if (nodes) {
-      setNodes(nodes)
+      setNodes(nodes, nodeSortType, nodeSortOrder)
     }
-  }, [nodes, setNodes])
+  }, [nodes, setNodes, nodeSortType, nodeSortOrder])
+
+  // Sync provider-managed nodes and sorting with internal state
+  useEffect(() => {
+    if (
+      !nodes &&
+      providerNodes.length > 0 &&
+      (nodeSortType !== currentSortType || nodeSortOrder !== currentSortOrder)
+    ) {
+      setNodes(providerNodes, nodeSortType, nodeSortOrder)
+    }
+  }, [nodes, providerNodes, setNodes, nodeSortType, nodeSortOrder, currentSortType, currentSortOrder])
 
   // Initialize default expanded level on mount
   useEffect(() => {

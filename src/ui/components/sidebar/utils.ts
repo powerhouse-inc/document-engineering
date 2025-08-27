@@ -1,4 +1,5 @@
-import type { NodeStatus, SidebarNode } from './types.js'
+import naturalCompare from 'natural-compare-lite'
+import type { NodeSortOrder, NodeSortType, NodeStatus, SidebarNode } from './types.js'
 
 /**
  * Search for nodes that match a search term
@@ -282,4 +283,45 @@ export const triggerEvent = (
   })
 
   ;(element ?? document).dispatchEvent(event)
+}
+
+/**
+ * Sort nodes recursively at all levels based on the specified sort type and order.
+ * @param nodes - The array of nodes to sort
+ * @param sortType - The type of sorting to apply (string or function)
+ * @param sortOrder - The order direction (ascending or descending)
+ * @returns A new sorted array of nodes
+ */
+export const sortNodes = (nodes: SidebarNode[], sortType: NodeSortType, sortOrder: NodeSortOrder): SidebarNode[] => {
+  if (sortType === 'none') {
+    return [...nodes]
+  }
+
+  const sortedNodes = [...nodes].sort((a, b) => {
+    let comparison = 0
+
+    if (typeof sortType === 'function') {
+      // Custom comparison function
+      comparison = sortType(a.title, b.title)
+    } else {
+      // Built-in sorting types
+      switch (sortType) {
+        case 'alphabetical':
+          comparison = a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+          break
+        case 'natural':
+          comparison = naturalCompare(a.title, b.title)
+          break
+        default:
+          return 0
+      }
+    }
+
+    return sortOrder === 'desc' ? -comparison : comparison
+  })
+
+  return sortedNodes.map((node) => ({
+    ...node,
+    children: node.children ? sortNodes(node.children, sortType, sortOrder) : undefined,
+  }))
 }

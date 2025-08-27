@@ -13,8 +13,16 @@ import {
   useState,
 } from 'react'
 import type { List } from 'react-virtualized'
-import { type FlattenedNode, NodeStatus, type SidebarNode } from '../../types.js'
-import { filterStatuses, getMaxDepth, getNodePath, getOpenLevels, isOpenLevel, nodesSearch } from '../../utils.js'
+import { type FlattenedNode, type NodeSortOrder, type NodeSortType, NodeStatus, type SidebarNode } from '../../types.js'
+import {
+  filterStatuses,
+  getMaxDepth,
+  getNodePath,
+  getOpenLevels,
+  isOpenLevel,
+  nodesSearch,
+  sortNodes,
+} from '../../utils.js'
 import { initialSidebarState, SidebarActionType, sidebarReducer, type SidebarState } from './sidebar-reducer.js'
 
 interface SidebarContextType {
@@ -29,6 +37,8 @@ interface SidebarContextType {
   activeSearchIndex: number
   activeNodeId?: string
   isStatusFilterEnabled: boolean
+  nodeSortType: NodeSortType
+  nodeSortOrder: NodeSortOrder
   virtualListRef: RefObject<List>
   toggleNode: (nodeId: string) => void
   openNode: (nodeId: string, openPath?: boolean, scrollTo?: boolean) => void
@@ -38,7 +48,7 @@ interface SidebarContextType {
   changeSearchTerm: (newTerm: string) => void
   nextSearchResult: () => void
   previousSearchResult: () => void
-  setNodes: (newNodes: SidebarNode[]) => void
+  setNodes: (newNodes: SidebarNode[], sortType?: NodeSortType, sortOrder?: NodeSortOrder) => void
   syncActiveNodeId: (nodeId?: string) => void
   onActiveNodeChange: (node: SidebarNode) => void
   setActiveNodeChangeCallback: (callback: (node: SidebarNode) => void) => void
@@ -57,6 +67,8 @@ const SidebarContext = createContext<SidebarContextType>({
   activeSearchIndex: 0,
   activeNodeId: undefined,
   isStatusFilterEnabled: false,
+  nodeSortType: 'none',
+  nodeSortOrder: 'asc',
   virtualListRef: createRef<List>(),
   toggleNode: () => undefined,
   openNode: () => undefined,
@@ -110,8 +122,8 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
         NodeStatus.DUPLICATED,
       ])
     }
-    return roots
-  }, [_state.nodes, _state.pinnedNodePath, _state.isStatusFilterEnabled])
+    return sortNodes(roots, _state.nodeSortType, _state.nodeSortOrder)
+  }, [_state.nodes, _state.pinnedNodePath, _state.isStatusFilterEnabled, _state.nodeSortType, _state.nodeSortOrder])
 
   const flattenTree = useCallback(
     (nodes: SidebarNode[]): FlattenedNode[] => {
@@ -346,8 +358,11 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
   }, [activeSearchIndex, openPathToNode])
 
   const setNodes = useCallback(
-    (newNodes: SidebarNode[]) => {
-      dispatch({ type: SidebarActionType.SET_NODES, payload: newNodes })
+    (newNodes: SidebarNode[], sortType?: NodeSortType, sortOrder?: NodeSortOrder) => {
+      dispatch({
+        type: SidebarActionType.SET_NODES,
+        payload: { nodes: newNodes, sortType, sortOrder },
+      })
     },
     [dispatch]
   )
@@ -375,6 +390,8 @@ const SidebarProvider = ({ children, nodes: initialNodes }: SidebarProviderProps
         isSearching: _state.isSearching,
         activeSearchIndex,
         isStatusFilterEnabled: _state.isStatusFilterEnabled,
+        nodeSortType: _state.nodeSortType,
+        nodeSortOrder: _state.nodeSortOrder,
         virtualListRef,
         toggleNode,
         openNode,

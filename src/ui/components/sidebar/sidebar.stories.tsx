@@ -244,6 +244,26 @@ const meta: Meta<typeof Sidebar> = {
         defaultValue: { summary: 'false' },
       },
     },
+    nodeSortType: {
+      control: 'select',
+      options: ['none', 'alphabetical', 'natural'],
+      description:
+        'The type of sorting to apply to all nodes recursively. Can be "none", "alphabetical", "natural" or a custom comparison function. Affects all levels of the tree hierarchy.',
+      table: {
+        defaultValue: { summary: 'none' },
+        type: { summary: '"none" | "alphabetical" | "natural" | ((valueA: string, valueB: string) => -1 | 0 | 1)' },
+      },
+    },
+    nodeSortOrder: {
+      control: 'select',
+      options: ['asc', 'desc'],
+      description:
+        'The sort order direction for nodes (ascending or descending). Only applicable when nodeSortType is not "none" or undefined.',
+      table: {
+        defaultValue: { summary: 'asc' },
+      },
+      if: { arg: 'nodeSortType', neq: 'none' },
+    },
   },
   args: {
     sidebarTitle: 'Title Sidebar',
@@ -486,6 +506,50 @@ export const Loading: Story = {
                 Toggle loading state to see the skeleton animation
               </p>
             </div>
+          </div>
+        </div>
+      </main>
+    )
+  },
+}
+
+/**
+ * Demonstrates how to use a custom sorting function for nodes.
+ * This example shows sorting by string length (shorter titles first) then alphabetically if lengths are equal.
+ */
+export const WithCustomSorting: Story = {
+  args: {
+    nodeSortOrder: 'asc',
+    defaultLevel: 2,
+  },
+  render: function WithCustomSortingRender(args) {
+    // Custom sorting function that sorts by title length first, then alphabetically
+    const customSortFunction = useCallback((valueA: string, valueB: string): -1 | 0 | 1 => {
+      const lengthComparison = valueA.length - valueB.length
+      if (lengthComparison !== 0) {
+        return lengthComparison < 0 ? -1 : 1
+      }
+      // If lengths are equal, sort alphabetically
+      const alphabetical = valueA.toLowerCase().localeCompare(valueB.toLowerCase())
+      return alphabetical < 0 ? -1 : alphabetical > 0 ? 1 : 0
+    }, [])
+
+    return (
+      <main className="flex h-svh w-full">
+        <Sidebar className="sidebar" {...args} nodeSortType={customSortFunction} />
+        <div style={{ width: 'calc(100% - var(--sidebar-width))' }} className="flex-1 bg-gray-50 p-4 dark:bg-slate-800">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Custom Sorting</h1>
+          <div className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <p>
+              <strong>nodeSortType:</strong>{' '}
+              {args.nodeSortType === undefined ? 'Custom Function' : args.nodeSortType.toString()}
+            </p>
+            <p>
+              <strong>nodeSortOrder:</strong> {`"${args.nodeSortOrder}"`}
+            </p>
+            <p>
+              <strong>Function Description:</strong> Sorts by string length, then alphabetically if lengths are equal
+            </p>
           </div>
         </div>
       </main>
