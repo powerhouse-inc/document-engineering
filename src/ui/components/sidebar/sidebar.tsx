@@ -98,15 +98,15 @@ export interface SidebarProps {
   isLoading?: boolean
   /**
    * The type of sorting to apply to all nodes recursively.
-   * Can be 'none', 'alphabetical', 'natural', or a custom comparison function.
+   * Can be "alphabetical", "natural", or a custom comparison function.
+   * When undefined, nodes maintain their original order.
    * Affects all levels of the tree hierarchy.
-   * @default 'none'
    */
   nodeSortType?: NodeSortType
   /**
-   * The order direction for sorting nodes (ascending or descending).
-   * Only applicable when nodeSortType is not 'none' or undefined.
-   * @default 'asc'
+   * The order direction for sorting nodes ("asc" or "desc").
+   * Only applicable when nodeSortType is defined.
+   * @default "asc"
    */
   nodeSortOrder?: NodeSortOrder
 }
@@ -134,7 +134,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   className,
   handleOnTitleClick,
   isLoading = false,
-  nodeSortType = 'none',
+  nodeSortType,
   nodeSortOrder = 'asc',
 }) => {
   const { sidebarRef, startResizing, isResizing, isSidebarOpen, handleToggleSidebar } = useSidebarResize({

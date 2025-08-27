@@ -291,7 +291,7 @@ describe('Sidebar Component', () => {
       { id: '4', title: 'File 2', children: [] },
     ]
 
-    it('should keep original order when sorting is disabled (default)', async () => {
+    it('should keep original order when sorting is not specified', async () => {
       render(
         <SidebarProvider nodes={testNodes}>
           <Sidebar />

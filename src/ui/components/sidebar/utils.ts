@@ -288,15 +288,11 @@ export const triggerEvent = (
 /**
  * Sort nodes recursively at all levels based on the specified sort type and order.
  * @param nodes - The array of nodes to sort
- * @param sortType - The type of sorting to apply (string or function)
- * @param sortOrder - The order direction (ascending or descending)
+ * @param sortType - The type of sorting to apply ("alphabetical", "natural" or a custom comparison function)
+ * @param sortOrder - The order direction ("asc" or "desc")
  * @returns A new sorted array of nodes
  */
 export const sortNodes = (nodes: SidebarNode[], sortType: NodeSortType, sortOrder: NodeSortOrder): SidebarNode[] => {
-  if (sortType === 'none') {
-    return [...nodes]
-  }
-
   const sortedNodes = [...nodes].sort((a, b) => {
     let comparison = 0
 
