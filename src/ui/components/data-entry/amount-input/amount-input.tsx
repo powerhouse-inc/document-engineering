@@ -158,7 +158,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
             {isShowSelect && currencyPosition === 'left' && (
               <div className="border-l-[1px] border-gray-300 h-full flex items-center" />
             )}
-            <div className={cn('relative flex items-center')}>
+            <div className={cn('relative flex flex-1 items-center')}>
               <NumberInput
                 name=""
                 step={step}
@@ -175,6 +175,7 @@ const AmountInputController = forwardRef<HTMLInputElement, AmountInputProps>(
                 enableStepCarets={enableStepCarets}
                 numericType={type === 'AmountCurrency' || type === 'AmountCrypto' ? 'BigInt' : 'Float'}
                 className={cn(
+                  'w-full',
                   currencyPosition === 'left' && 'rounded-l-none border-l-[0.5px]',
                   currencyPosition === 'right' && 'rounded-r-none border-r-[0.5px]',
                   isPercent && 'rounded-md pr-7',
