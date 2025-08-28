@@ -1,3 +1,22 @@
+# [1.34.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.33.0...v1.34.0) (2025-08-28)
+
+
+### Bug Fixes
+
+* **scalars:** add custom styles for nodes in sidebar ([e7beea7](https://github.com/powerhouse-inc/document-engineering/commit/e7beea73c48a1c15c24852e707ac095bfe2420b7))
+* **scalars:** fix amount when the description its to large ([972eb80](https://github.com/powerhouse-inc/document-engineering/commit/972eb8094ca9620fe67305eb9de787b93a533ef9))
+* **scalars:** remove unnecesary code and use the className of each node ([e88153b](https://github.com/powerhouse-inc/document-engineering/commit/e88153b4386f38c332acb2b48364d9ba90f2cc9e))
+* **sidebar:** improve types, logic and story variant related to nodes sorting ([f6583b6](https://github.com/powerhouse-inc/document-engineering/commit/f6583b6f6b4c5b99bae1111c9f82e4ae97973136))
+* **table:** saving non empty values was detected as empty ([8af6bc1](https://github.com/powerhouse-inc/document-engineering/commit/8af6bc1e837182d0e5062ddeccf1206ef6b7bee4))
+* **test:** adjust a test case description ([8855d8d](https://github.com/powerhouse-inc/document-engineering/commit/8855d8d300e13a42c3ab988215bef7007bd77dd2))
+
+
+### Features
+
+* **sidebar:** allow a custom sorting function as nodeSortType ([7d2dbfc](https://github.com/powerhouse-inc/document-engineering/commit/7d2dbfc6dd2b7dc7579b39492cfab8d7bf32dd51))
+* **ui:** add support for recursive and custom sorting ([726333c](https://github.com/powerhouse-inc/document-engineering/commit/726333c1be420ef0fee50ca0f9ba1ec22d25a8f8))
+* **ui:** add support for sorting root nodes in the sidebar ([92e92a0](https://github.com/powerhouse-inc/document-engineering/commit/92e92a0b751c85f01b331606268bc49b9dde30db))
+
 # [1.33.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.32.0...v1.33.0) (2025-08-27)
 
 
