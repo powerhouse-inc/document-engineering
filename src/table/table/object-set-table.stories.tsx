@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
 import { mockData, type MockedPerson } from './mock-data.js'
 import { ObjectSetTable } from './object-set-table.js'
 import ComputedColumnsExample from '../examples/computed-columns/computed-columns.js'
 import CustomRenderingExample from '../examples/custom-rendering/custom-rendering.js'
 import TableEditingExample from '../examples/table-editing/table-editing.js'
+import RowReorderingExample from '../examples/row-reordering/row-reordering.js'
 
 /**
  * The `ObjectSetTable` is a flexible, type-safe data table for rendering and editing collections of objects. It supports inline cell editing, row selection, row addition/deletion, custom cell/header rendering, sorting, and a programmatic API for advanced control.
@@ -16,7 +18,7 @@ import TableEditingExample from '../examples/table-editing/table-editing.js'
  * - [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme)
  * - [Adding](?path=/docs/data-display-object-set-table-docs-adding--readme)
  * - [Deletion](?path=/docs/data-display-object-set-table-docs-deletion--readme)
- * - [Sorting](?path=/docs/data-display-object-set-table-docs-sorting--readme)
+ * - [Sorting & Reordering](?path=/docs/data-display-object-set-table-docs-sorting--readme)
  * - [Actions](?path=/docs/data-display-object-set-table-docs-actions--readme)
  * - [API](?path=/docs/data-display-object-set-table-docs-api--readme)
  * - [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme)
@@ -170,6 +172,16 @@ const meta: Meta<typeof ObjectSetTable> = {
         readonly: true,
       },
     },
+    onReorder: {
+      control: false,
+      description:
+        'Function called when rows are reordered via drag and drop. Enables row reordering functionality when provided. Cannot be used together with sortable columns.',
+      table: {
+        type: { summary: '(rows: T[], targetRowIndex: number) => Promise<void> | void' },
+        defaultValue: { summary: 'undefined' },
+        readonly: true,
+      },
+    },
     apiRef: {
       control: false,
       description: 'Reference to the table API for programmatic control.',
@@ -245,6 +257,15 @@ export const EditableTable: StoryObj = {
  * Shows how to configure hover-based contextual actions for individual rows.
  * The primary action displays with an icon, while secondary actions appear in a dropdown menu.
  */
+/**
+ * Demonstrates row reordering functionality using drag and drop.
+ * Shows how to enable row reordering and handle the reorder callback.
+ * Note: Row reordering is incompatible with sortable columns.
+ */
+export const RowReordering: StoryObj = {
+  render: (args) => <RowReorderingExample {...args} />,
+}
+
 export const RowActions: Story = {
   args: {
     columns: [

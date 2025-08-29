@@ -4,6 +4,7 @@ import type { CellContext, ColumnDef } from '../table/types.js'
 import { getColumnTitle } from '../table/utils.js'
 import { HeaderNumberTd } from './header/header-number-td.js'
 import { useInternalTableState } from './table-provider/table-provider.js'
+import { useRowDrag } from '../hooks/useRowDrag.js'
 
 interface TableHeaderProps {
   columns: Array<ColumnDef<any>>
@@ -66,9 +67,19 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
     })
   }, [api, columns, config])
 
+  const { canDrag, draggingOver, onDragOver, onDragLeave, onDrop } = useRowDrag(-1)
+
   return (
     <thead>
-      <tr className={cn('border-gray-300', !selectedRowIndexes.includes(0) && 'border-b')}>
+      <tr
+        className={cn(
+          !selectedRowIndexes.includes(0) && 'border-b',
+          draggingOver ? 'border-b-1 border-blue-500' : 'border-gray-300'
+        )}
+        onDragOver={canDrag ? onDragOver : undefined}
+        onDragLeave={canDrag ? onDragLeave : undefined}
+        onDrop={canDrag ? onDrop : undefined}
+      >
         <HeaderNumberTd isAllRowsSelected={isAllRowsSelected} handleSelectAllRows={handleSelectAllRows} />
         {columnHeaders}
       </tr>
