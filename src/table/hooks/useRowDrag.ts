@@ -56,14 +56,6 @@ export const useRowDrag = (rowIndex: number) => {
     [api.selection, rowIndex]
   )
 
-  // TODO: is this needed, if not remove it
-  /**
-   * The user is dragging a row over a row
-   */
-  const onDragEnter = useCallback((event: React.DragEvent<HTMLTableRowElement>) => {
-    event.preventDefault()
-  }, [])
-
   /**
    * The user leaved a row while dragging
    */
@@ -106,7 +98,6 @@ export const useRowDrag = (rowIndex: number) => {
     canDrag,
     draggingOver,
     onDragStart,
-    onDragEnter,
     onDragLeave,
     onDragOver,
     onDrop,
