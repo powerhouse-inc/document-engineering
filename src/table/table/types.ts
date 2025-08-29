@@ -74,6 +74,14 @@ export interface ObjectSetTableConfig<T extends DataType> {
   onAdd?: (data: Record<string, unknown>) => Promise<void> | void
 
   /**
+   * A function that is called when a row is reordered.
+   *
+   * @param rows The rows that are being reordered.
+   * @param targetRowIndex The index of the row that the rows are being reordered to.
+   */
+  onReorder?: (rows: T[], targetRowIndex: number) => void | Promise<void>
+
+  /**
    * The actions to display in the table when the rows are hovered.
    */
   actions?: ActionConfig<T>

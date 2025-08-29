@@ -6,6 +6,8 @@ import { TableRow } from './table-row.js'
 import { RenderCell } from '../cells/render-cell/render-cell.js'
 import { InformationCell } from '../cells/information-cell.js'
 import { RowActions } from './row-actions.js'
+import { useRowDrag } from '../../hooks/useRowDrag.js'
+import { cn } from '../../../scalars/index.js'
 
 interface RenderRowProps<T extends DataType> {
   item: IndexedData<T>
@@ -115,6 +117,8 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
     setIsSecondaryActionsOpen(false)
   }, [])
 
+  const { canDrag, draggingOver, ...eventHandlers } = useRowDrag(rowIndex)
+
   return (
     <TableRow
       ref={rowRef}
@@ -123,6 +127,10 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
       onMouseDown={handleMouseDown}
       onMouseEnter={handleRowMouseEnter}
       onMouseLeave={handleRowMouseLeave}
+      // rows drag and drop handlers
+      draggable={canDrag}
+      {...eventHandlers}
+      className={cn(draggingOver === rowIndex && canDrag && 'border-b-1 border-blue-900')}
     >
       {/* The row number cell handles internally if it needs to be rendered or not */}
       <RowNumberCell

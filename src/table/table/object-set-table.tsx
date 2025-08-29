@@ -23,6 +23,7 @@ import { getCellEditorFn } from '../components/default-cell-editors/get-cell-edi
  * @param showRowNumbers Whether to show row numbers.
  * @param onAdd Function called when a new row is added. Enables insertion row when provided.
  * @param onDelete Function called when rows are deleted. Enables deletion functionality when provided.
+ * @param onReorder Function called when rows are reordered. Enables row reordering functionality when provided.
  * @param apiRef Reference to the table API for programmatic control.
  */
 const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableConfig<T>) => {
@@ -31,6 +32,14 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
    */
   const extendedConfig = useMemo(() => {
     const defaultColumnType: ColumnType = 'string'
+
+    const hasConflicts = typeof config.onReorder === 'function' && config.columns.some((column) => column.sortable)
+    if (hasConflicts) {
+      throw new Error(
+        'onReorder and sortable columns are not compatible. Please, either remove the onReorder prop or do not set the sortable prop on any column.'
+      )
+    }
+
     const _config: ObjectSetTableConfig<T> = {
       ...config,
       columns: config.columns.map((column) => ({
