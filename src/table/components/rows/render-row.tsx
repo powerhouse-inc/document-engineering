@@ -129,8 +129,8 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
       onMouseLeave={handleRowMouseLeave}
       // rows drag and drop handlers
       draggable={canDrag}
-      {...(canDrag ? eventHandlers : {})}
-      className={cn(draggingOver === rowIndex && canDrag ? 'border-b-1 border-blue-900' : '')}
+      {...eventHandlers}
+      className={cn(draggingOver === rowIndex && canDrag && 'border-b-1 border-blue-900')}
     >
       {/* The row number cell handles internally if it needs to be rendered or not */}
       <RowNumberCell

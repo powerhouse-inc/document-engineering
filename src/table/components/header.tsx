@@ -10,6 +10,8 @@ interface TableHeaderProps {
   columns: Array<ColumnDef<any>>
 }
 
+const HEADER_ROW_INDEX = -1
+
 const TableHeader = ({ columns }: TableHeaderProps) => {
   const {
     config,
@@ -67,7 +69,7 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
     })
   }, [api, columns, config])
 
-  const { canDrag, draggingOver, onDragOver, onDragLeave, onDrop } = useRowDrag(-1)
+  const { draggingOver, onDragOver, onDragLeave, onDrop } = useRowDrag(HEADER_ROW_INDEX)
 
   return (
     <thead>
@@ -76,9 +78,9 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
           !selectedRowIndexes.includes(0) && 'border-b',
           draggingOver ? 'border-b-1 border-blue-500' : 'border-gray-300'
         )}
-        onDragOver={canDrag ? onDragOver : undefined}
-        onDragLeave={canDrag ? onDragLeave : undefined}
-        onDrop={canDrag ? onDrop : undefined}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
       >
         <HeaderNumberTd isAllRowsSelected={isAllRowsSelected} handleSelectAllRows={handleSelectAllRows} />
         {columnHeaders}

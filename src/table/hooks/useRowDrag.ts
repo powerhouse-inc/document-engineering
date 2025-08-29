@@ -97,9 +97,9 @@ export const useRowDrag = (rowIndex: number) => {
   return {
     canDrag,
     draggingOver,
-    onDragStart,
-    onDragLeave,
-    onDragOver,
-    onDrop,
+    onDragStart: canDrag ? onDragStart : undefined,
+    onDragLeave: canDrag ? onDragLeave : undefined,
+    onDragOver: canDrag ? onDragOver : undefined,
+    onDrop: canDrag ? onDrop : undefined,
   }
 }
