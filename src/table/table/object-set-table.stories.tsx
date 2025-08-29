@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
 import { mockData, type MockedPerson } from './mock-data.js'
 import { ObjectSetTable } from './object-set-table.js'
 import ComputedColumnsExample from '../examples/computed-columns/computed-columns.js'
