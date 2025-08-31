@@ -2,9 +2,9 @@ import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
 
 <Meta title="Data Display/Object Set Table/Docs/Sorting" />
 
-# Sorting
+# Sorting & Reordering
 
-Sorting lets users order rows by any column you mark as sortable. Sorting is configured per-column and works via header clicks or programmatic API calls. This page focuses on how to enable and customize sorting for `ObjectSetTable`.
+Sorting lets users order rows by any column you mark as sortable. Sorting is configured per-column and works via header clicks or programmatic API calls. Additionally, the table supports drag-and-drop row reordering for manual row arrangement. This page focuses on how to enable and customize both sorting and reordering for `ObjectSetTable`.
 
 ## Sorting configuration
 
@@ -150,6 +150,96 @@ apiRef.current?.sortRows(0, null)
 // Read current sort info
 const info = apiRef.current?.getCurrentSortInfo() // { columnIndex, direction } | null
 ```
+
+## Row reordering
+
+Row reordering provides an alternative to sorting by enabling manual drag-and-drop arrangement of table rows. When enabled, users can drag rows to reposition them within the table.
+
+### Configuration
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `onReorder` | `(rows: T[], targetRowIndex: number) => Promise<void> \| void` | `undefined` | Function called when rows are reordered. Enables drag-and-drop reordering when provided. |
+
+### Basic usage
+
+```tsx
+const [data, setData] = useState(originalData)
+
+const handleReorder = (rows: Person[], targetRowIndex: number) => {
+  setData((prevData) => {
+    // Extract rows that are not being moved
+    const left: Person[] = []
+    const right: Person[] = []
+
+    prevData.forEach((row, index) => {
+      if (!rows.some((incomingRow) => incomingRow.id === row.id)) {
+        if (index <= targetRowIndex) {
+          left.push(row)
+        } else {
+          right.push(row)
+        }
+      }
+    })
+
+    // Insert the reordered rows at the target position
+    return [...left, ...rows, ...right]
+  })
+}
+
+const columns = [
+  { field: 'name', title: 'Name' },
+  { field: 'email', title: 'Email' },
+  // Note: No sortable: true here
+]
+
+<ObjectSetTable 
+  data={data} 
+  columns={columns} 
+  onReorder={handleReorder}
+/>
+```
+
+### Reorder behavior
+
+- **Drag handle**: Rows become draggable when `onReorder` is provided
+- **Multi-row support**: Selected rows can be reordered together
+- **Visual feedback**: Drag indicators show valid drop zones
+- **Target index**: The `targetRowIndex` is relative to the original array position
+
+### ⚠️ Important: Conflict with sorting
+
+**Row reordering and column sorting are mutually exclusive features.** You cannot use both simultaneously:
+
+```tsx
+// ❌ This will cause a conflict warning
+const columns = [
+  { field: 'name', sortable: true }, // sortable: true
+]
+
+<ObjectSetTable 
+  data={data} 
+  columns={columns} 
+  onReorder={handleReorder} // Cannot use with sortable columns
+/>
+```
+
+```tsx
+// ✅ Choose one approach
+// Option 1: Use sorting only
+const columns = [
+  { field: 'name', sortable: true },
+]
+<ObjectSetTable data={data} columns={columns} />
+
+// Option 2: Use reordering only  
+const columns = [
+  { field: 'name' }, // no sortable property
+]
+<ObjectSetTable data={data} columns={columns} onReorder={handleReorder} />
+```
+
+**Why the conflict exists**: Sorting automatically reorders rows based on data values, while manual reordering preserves user-defined order. These two approaches fundamentally conflict with each other's row positioning logic.
 
 ---
 
