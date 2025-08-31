@@ -126,55 +126,144 @@ All builders accept the same props as their equivalent scalar components. See th
 
 ## Custom Cell Editors
 
-For specialized needs, create custom cell editors:
+The table system provides built-in cell editors for common data types, but you can create custom cell editors for specialized use cases.
+
+### Understanding the Architecture
+
+Cell editors in this table system are built on a three-layer architecture:
+
+1. **Scalar Components**: Base form field components (StringField, NumberField, etc.)
+2. **Form Integration**: All editors work within a react-hook-form context
+3. **Table Integration**: Editors are wrapped in a Form component within each table cell
+
+### Custom Cell Editor Function Signature
 
 ```tsx
-type CellEditorFn<T> = (
-  value: unknown, // Current cell value
-  onChange: (newValue: unknown) => void, // Update function
-  context: CellContext<T> // Cell context
-) => React.ReactElement
+type RenderCellEditorFn<TData extends DataType, TCellValue> = (
+  value: TCellValue,                    // Current cell value
+  onChange: (newValue: TCellValue) => void, // Update function  
+  context: CellContext<TData>          // Cell context with row, column, table info
+) => React.ReactNode
 ```
 
-## Best Practices
+### Key Requirements for Custom Editors
 
-### Always provide `onSave`
+#### 1. Must be Controlled Components
+Cell editors must accept `value` and `onChange` props to work properly:
+
+#### 2. Must Use the `field` as the `name` Prop
+The `name` prop must match the column's `field` property for react-hook-form integration:
+
+#### 3. Must Work Inside Form Component
+All cell editors are wrapped in a Form component that uses react-hook-form. Your custom editor must be compatible with this form context.
+
+### Using Any Input Library with React Hook Form
+
+For components that are not part of this library's scalar system, you can use the `register` function from react-hook-form. Since all cell editors are wrapped in a Form component, you have access to the react-hook-form context.
+
+#### Basic HTML Input Example
 
 ```tsx
-// Good
-{
-  field: 'email',
-  editable: true,
-  onSave: (value, context) => {
-    if (validateEmail(value)) {
-      context.row.email = value
-      return true
-    }
-    return false
-  }
+import { useFormContext } from 'react-hook-form'
+import { cn, type CellContext } from '@powerhousedao/document-engineering/table'
+
+const CustomTextInputEditor = ({
+  value,
+  onChange,
+  context,
+  placeholder,
+  maxLength,
+}: {
+  value: unknown
+  onChange: (newValue: unknown) => void
+  context: CellContext<YourDataType>
+  placeholder?: string
+  maxLength?: number
+}) => {
+  const { register } = useFormContext()
+  const inputValue = typeof value === 'string' ? value : (value?.toString() ?? '')
+
+  return (
+    <input
+      {...register(context.column.field, {
+        // value and onChange are required in order to work properly
+        value: inputValue,
+        onChange,
+        // you can use react-hook-form built-in validation, it itegrates automatically with the table
+        validate: (value) => {
+          if (typeof value === 'string' && value.length > 10) {
+            return 'Value must be less than 10 characters'
+          }
+          return true
+        },
+      })}
+      type="text"
+      placeholder={placeholder}
+      autoFocus
+      className={cn(
+        'w-full px-2 py-1 text-sm border border-gray-300 rounded-md',
+        'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+        'bg-white text-gray-900 placeholder-gray-500'
+      )}
+    />
+  )
 }
 ```
 
-### Consider user experience
+#### Creating Builder Functions
+
+Editors can be created using the cell editor signature directly, but creating builders gives you the flexibility to reuse them with different parameters:
 
 ```tsx
-renderCellEditor: buildStringCellEditor({
-  placeholder: 'Enter value...',
-  className: 'max-w-full', // Ensure proper sizing
-})
+const buildCustomHTMLInputEditor = (placeholder?: string, maxLength?: number) => {
+  const editor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<YourDataType>) => {
+    return (
+      <CustomTextInputEditor
+        value={value}
+        onChange={onChange}
+        context={context}
+        placeholder={placeholder}
+        maxLength={maxLength}
+      />
+    )
+  }
+  editor.displayName = 'CustomHTMLInputEditor'
+  return editor
+}
+
+// Usage in column definition
+const columns = [
+  {
+    field: 'firstName',
+    title: 'First Name',
+    editable: true,
+    renderCellEditor: buildCustomHTMLInputEditor('Enter first name...', 50),
+    onSave: (value, context) => {
+      if (typeof value === 'string' && value.trim().length > 0) {
+        context.row.firstName = value.trim()
+        return true
+      }
+      return false
+    }
+  }
+]
 ```
 
-## Common Issues
+> **💡 See it in action:** Check out the [Custom Cell Editors Example](/docs/data-display-object-set-table-examples-custom-cell-editors--default) for a complete working implementation.
 
-### Editor not appearing
+### Key Points for Custom Editors
 
-- Check that `editable: true` is set on the column
-- Ensure `renderCellEditor` returns a valid React element
+#### Use React Hook Form Features
+- Leverage `register()` for form integration and validation
+- Use validation rules like `pattern`, `validate`, `min`, `max`, etc.
+- Access form context with `useFormContext()`
 
-### Values not saving
+#### Consider User Experience
+- Always include `autoFocus` for immediate editing
+- Provide helpful placeholders and appropriate input types
+- Use proper styling and accessibility attributes
 
-- Always provide an `onSave` function
-- Return `true` from `onSave` to commit changes, `false` to reject
+
 
 ## Related Documentation
 
