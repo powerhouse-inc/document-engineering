@@ -7,8 +7,8 @@ import { FormDescription } from '../../../../scalars/components/fragments/form-d
 import { FormGroup } from '../../../../scalars/components/fragments/form-group/index.js'
 import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
 import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
-import type { PhoneNumberInputProps } from './types.js'
 import { PhoneNumberInputDiff } from './subcomponents/phone-number-input-diff.js'
+import type { PhoneNumberInputProps } from './types.js'
 
 const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProps>(
   (
@@ -23,6 +23,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       onChange,
       onKeyDown,
       onBlur,
+      onFocus,
       disabled,
       required,
       errors,
@@ -48,9 +49,10 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       inputValue,
       handleSelectOnChange,
       handleInputOnChange,
-      handleOnKeyDown,
-      handleSelectBlur,
-      handleInputBlur,
+      handleInputOnKeyDown,
+      handleSelectOnBlur,
+      handleInputOnBlur,
+      handleInputOnFocus,
       mergedRef,
       containerRef,
     } = usePhoneNumberInput({
@@ -59,6 +61,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       onChange,
       onKeyDown,
       onBlur,
+      onFocus,
       allowedCountries,
       excludedCountries,
       includeDependentAreas,
@@ -87,7 +90,16 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
     return (
       <FormGroup>
         {!!label && (
-          <FormLabel htmlFor={id} disabled={disabled} hasError={hasError} required={required}>
+          <FormLabel
+            htmlFor={id}
+            disabled={disabled}
+            hasError={hasError}
+            required={required}
+            onClick={(e) => {
+              e.preventDefault()
+              ;(e.target as HTMLLabelElement).control?.focus()
+            }}
+          >
             {label}
           </FormLabel>
         )}
@@ -108,7 +120,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
             onChange={(newValue) => {
               handleSelectOnChange(newValue as string)
             }}
-            onBlur={handleSelectBlur}
+            onBlur={handleSelectOnBlur}
             placeholder={prefixProps?.placeholder ?? '+1'}
             className={cn(
               'focus:ring-0 focus:ring-offset-0',
@@ -127,8 +139,9 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
             placeholder={placeholder}
             value={inputValue}
             onChange={handleInputOnChange}
-            onKeyDown={handleOnKeyDown}
-            onBlur={handleInputBlur}
+            onKeyDown={handleInputOnKeyDown}
+            onBlur={handleInputOnBlur}
+            onFocus={handleInputOnFocus}
             disabled={disabled}
             aria-invalid={hasError}
             aria-label={!label ? 'Phone number input' : undefined}

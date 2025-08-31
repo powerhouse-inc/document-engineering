@@ -83,7 +83,7 @@ describe('PhoneNumberField Component', () => {
     renderWithForm(<PhoneNumberField name="phone" defaultValue="+442079460000" />)
 
     const input = screen.getByRole('textbox')
-    expect(input).toHaveValue('2079460000')
+    expect(input).toHaveValue('20 7946 0000')
 
     const select = screen.getByRole('combobox')
     expect(select).toHaveTextContent('+44')
@@ -307,5 +307,15 @@ describe('PhoneNumberField Component', () => {
         })
       })
     })
+  })
+
+  it('should position cursor at end when auto-detecting country', async () => {
+    const user = userEvent.setup()
+    renderWithForm(<PhoneNumberField name="phone" />)
+
+    const input: HTMLInputElement = screen.getByRole('textbox')
+    await user.type(input, '14155552671')
+
+    expect(input.selectionStart).toBe(12)
   })
 })
