@@ -73,9 +73,6 @@ const useGlobalTableKeyEvents = () => {
       }
     }
 
-    // TODO: check if adding a listener to the document for the cases when the focus trap is not active, or we will need to wire up the focus trap
-    // to get it here and activate it when the user press escape or exit the edit mode
-
     api.getHTMLTable()?.addEventListener('keydown', handleKeyDown)
     document.addEventListener('keydown', handleDeleteRows)
     return () => {
