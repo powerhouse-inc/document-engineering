@@ -8,7 +8,7 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
     state: { selectedCellIndex },
     api,
   } = useInternalTableState()
-  const ref = useRef<HTMLTableElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(ref, (event) => {
     const { x, y } = (event.target as HTMLElement).getBoundingClientRect()
@@ -24,6 +24,7 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
 
     if (api.selection.haveSelectedCells()) {
       if (api.isEditing()) {
+        event.preventDefault()
         void api.exitCellEditMode(true)
         return // do not clear the cell selection
       }
@@ -31,10 +32,15 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
     }
   })
 
-  //   return children;
   return (
     <div ref={ref}>
-      <FocusTrap active={!!selectedCellIndex} focusTrapOptions={{ allowOutsideClick: true }}>
+      <FocusTrap
+        active={!!selectedCellIndex}
+        focusTrapOptions={{
+          allowOutsideClick: true,
+          escapeDeactivates: false,
+        }}
+      >
         {children}
       </FocusTrap>
     </div>

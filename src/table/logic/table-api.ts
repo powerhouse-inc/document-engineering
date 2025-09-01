@@ -271,10 +271,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         formRef.current?.reset()
       }
 
-      this._getState().dispatch?.({
-        type: 'SELECT_CELL',
-        payload: { row: selectedCell.row, column: selectedCell.column },
-      })
+      this.selection.selectCell(selectedCell.row, selectedCell.column)
     }
   }
 
