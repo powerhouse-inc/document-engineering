@@ -3,6 +3,7 @@ import parsePhoneNumber from 'libphonenumber-js'
 import { CircleFlag } from 'react-circle-flags'
 import { cn } from '../../../../../scalars/lib/index.js'
 import { type Change, diffSentences } from 'diff'
+import { formatPhoneNumber } from '../utils.js'
 import type { WithDifference } from '../../../../../scalars/components/types.js'
 import type { SelectOption } from '../../select/types.js'
 import type { PhoneNumberInputProps } from '../types.js'
@@ -67,9 +68,14 @@ const PhoneNumberDiff = ({
   }, [selectValue, baseValueParsed.selectValue])
 
   const diffNumber = useMemo(() => {
-    const baseNumber = baseValueParsed.inputValue
-    return diffSentences(baseNumber, inputValue)
-  }, [inputValue, baseValueParsed.inputValue])
+    let formattedBaseInputValue = baseValueParsed.inputValue
+    if (baseValueParsed.selectValue !== '' && baseValueParsed.inputValue !== '') {
+      const baseCallingCode = baseValueParsed.selectValue.split('-')[0]
+      formattedBaseInputValue = formatPhoneNumber(baseCallingCode, baseValueParsed.inputValue)
+    }
+
+    return diffSentences(formattedBaseInputValue, inputValue)
+  }, [inputValue, baseValueParsed])
 
   // Render individual diff parts
   const renderDiffPart = (part: Change, index: number) => {

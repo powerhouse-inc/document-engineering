@@ -82,7 +82,7 @@ describe('PhoneNumberInput Component', () => {
     render(<PhoneNumberInput name="phone" defaultValue="+442079460000" />)
 
     const input = screen.getByRole('textbox')
-    expect(input).toHaveValue('2079460000')
+    expect(input).toHaveValue('20 7946 0000')
 
     const select = screen.getByRole('combobox')
     expect(select).toHaveTextContent('+44')
@@ -201,5 +201,48 @@ describe('PhoneNumberInput Component', () => {
     expect(onChange).toHaveBeenCalledWith('+1')
 
     expect(screen.getByText('PR')).toBeInTheDocument()
+  })
+
+  it('should position cursor at end when auto-detecting country', async () => {
+    const user = userEvent.setup()
+    render(<PhoneNumberInput name="phone" />)
+
+    const input: HTMLInputElement = screen.getByRole('textbox')
+    await user.type(input, '14155552671')
+
+    expect(input.selectionStart).toBe(12)
+  })
+
+  describe('viewMode and diffs', () => {
+    it('should not render diff component by default', () => {
+      render(<PhoneNumberInput name="phone" />)
+      expect(screen.queryByTestId('phone-number-input-diff')).not.toBeInTheDocument()
+    })
+
+    it('should not render diff component when viewMode is explicitly set to edition', () => {
+      render(<PhoneNumberInput name="phone" viewMode="edition" />)
+      expect(screen.queryByTestId('phone-number-input-diff')).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is addition', () => {
+      render(<PhoneNumberInput name="phone" viewMode="addition" value="+14155552671" baseValue="+442079460000" />)
+      expect(screen.getByTestId('phone-number-input-diff')).toBeInTheDocument()
+      expect(screen.getByText('415 555 2671')).toBeInTheDocument()
+      expect(screen.queryByText('20 7946 0000')).not.toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is removal', () => {
+      render(<PhoneNumberInput name="phone" viewMode="removal" value="+14155552671" baseValue="+442079460000" />)
+      expect(screen.getByTestId('phone-number-input-diff')).toBeInTheDocument()
+      expect(screen.queryByText('415 555 2671')).not.toBeInTheDocument()
+      expect(screen.getByText('20 7946 0000')).toBeInTheDocument()
+    })
+
+    it('should render diff component when viewMode is mixed', () => {
+      render(<PhoneNumberInput name="phone" viewMode="mixed" value="+14155552671" baseValue="+442079460000" />)
+      expect(screen.getByTestId('phone-number-input-diff')).toBeInTheDocument()
+      expect(screen.getByText('415 555 2671')).toBeInTheDocument()
+      expect(screen.getByText('20 7946 0000')).toBeInTheDocument()
+    })
   })
 })
