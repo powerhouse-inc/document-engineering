@@ -134,6 +134,13 @@ class SelectionManager<TData> implements TableSelectionManager {
       type: 'SELECT_CELL',
       payload: { row: rowIndex, column: columnIndex },
     })
+
+    const td = this.api
+      .getHTMLTable()
+      ?.querySelector(`tr:nth-child(${rowIndex + 1}) td:nth-child(${columnIndex + 2})`) as HTMLTableCellElement | null
+    if (td) {
+      td.focus()
+    }
   }
 
   /**
