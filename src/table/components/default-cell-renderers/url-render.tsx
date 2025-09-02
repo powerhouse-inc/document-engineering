@@ -13,7 +13,12 @@ const renderUrlCell = <T extends DataType = DataType>(value: unknown, context: C
       })}
     >
       {url ? (
-        <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-900 hover:underline focus-visible:outline-none"
+        >
           {url}
         </a>
       ) : (

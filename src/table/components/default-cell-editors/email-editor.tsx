@@ -5,7 +5,7 @@ export const buildEmailCellEditor = <T extends DataType>(
   emailFieldProps: Omit<EmailFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const EmailCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
-    const emailValue = typeof value === 'string' ? value : String(value ?? '')
+    const emailValue = typeof value === 'string' ? value : (value?.toString() ?? '')
 
     return (
       <EmailField
