@@ -4,12 +4,20 @@ import type { SelectProps } from './types.js'
 interface UseSelectProps {
   options?: SelectProps['options']
   multiple?: boolean
+  searchable?: boolean
   defaultValue?: string | string[]
   value?: string | string[]
   onChange?: (value: string | string[]) => void
 }
 
-export function useSelect({ options = [], multiple = false, defaultValue, value, onChange }: UseSelectProps) {
+export function useSelect({
+  options = [],
+  multiple = false,
+  searchable = false,
+  defaultValue,
+  value,
+  onChange,
+}: UseSelectProps) {
   const isInternalChange = useRef(false)
   const commandListRef = useRef<HTMLDivElement>(null)
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -48,15 +56,19 @@ export function useSelect({ options = [], multiple = false, defaultValue, value,
           ? selectedValues.filter((v) => v !== optionValue)
           : [...selectedValues, optionValue]
       } else {
-        newValues = selectedValues[0] === optionValue ? [] : [optionValue]
+        if (selectedValues[0] === optionValue && !searchable) {
+          setIsPopoverOpen(false)
+          return
+        }
 
+        newValues = selectedValues[0] === optionValue ? [] : [optionValue]
         setIsPopoverOpen(false)
       }
 
       setSelectedValues(newValues)
       onChange?.(multiple ? newValues : (newValues[0] ?? ''))
     },
-    [multiple, selectedValues, onChange]
+    [multiple, searchable, selectedValues, onChange]
   )
 
   const handleClear = useCallback(() => {
