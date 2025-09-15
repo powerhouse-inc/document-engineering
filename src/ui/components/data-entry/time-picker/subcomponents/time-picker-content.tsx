@@ -45,20 +45,21 @@ const TimePickerContent: React.FC<TimePickerContentProps> = ({
   setSelectedTimeZone,
   timeZone,
 }) => {
+  const props = {
+    name: '',
+    options: timeZonesOptions,
+    disabled: isDisableSelect,
+    searchable: true,
+    placeholder: 'Select a timezone',
+    className: 'w-full',
+    selectionIcon: 'checkmark',
+    value: timeZone || selectedTimeZone,
+    onChange: setSelectedTimeZone,
+    ...selectProps,
+  }
   return (
     <div className={cn('relative mx-auto w-full', 'time-picker__content')}>
-      <Select
-        name=""
-        options={timeZonesOptions}
-        disabled={isDisableSelect}
-        searchable={true}
-        placeholder="Select a timezone"
-        className="w-full"
-        selectionIcon="checkmark"
-        value={timeZone || selectedTimeZone}
-        onChange={setSelectedTimeZone}
-        {...selectProps}
-      />
+      <Select {...(props as SelectProps)} />
 
       {is12HourFormat && <TimePeriodSelector selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />}
       <div
