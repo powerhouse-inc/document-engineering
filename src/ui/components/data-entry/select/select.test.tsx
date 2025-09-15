@@ -80,6 +80,26 @@ describe('Select Component', () => {
     expect(onChangeMock).toHaveBeenCalledTimes(1)
   })
 
+  it('should clear selection when re-selecting the same option and clearable is true (default)', async () => {
+    const onChangeMock = vi.fn()
+    const user = userEvent.setup()
+
+    render(<Select name="select" options={defaultOptions} onChange={onChangeMock} />)
+
+    await user.click(screen.getByRole('combobox'))
+    await user.click(screen.getByText('Option 1'))
+
+    expect(onChangeMock).toHaveBeenCalledWith('1')
+    expect(screen.getByText('Option 1')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('combobox'))
+    await user.click(screen.getByRole('option', { name: 'Option 1' }))
+
+    expect(screen.queryByText('Option 1')).not.toBeInTheDocument()
+    expect(onChangeMock).toHaveBeenLastCalledWith('')
+    expect(onChangeMock).toHaveBeenCalledTimes(2)
+  })
+
   // Search Functionality Tests
   it('should show search input when searchable is true', async () => {
     const user = userEvent.setup()
