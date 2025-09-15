@@ -103,6 +103,7 @@ const meta: Meta<typeof EnumField> = {
         type: { summary: 'boolean' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
+      if: { arg: 'variant', neq: 'RadioGroup' },
     },
 
     selectionIcon: {
@@ -117,6 +118,7 @@ const meta: Meta<typeof EnumField> = {
         defaultValue: { summary: '"auto"' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
+      if: { arg: 'variant', neq: 'RadioGroup' },
     },
 
     selectionIconPosition: {
@@ -138,6 +140,18 @@ const meta: Meta<typeof EnumField> = {
         type: { summary: 'boolean' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
+      if: { arg: 'variant', neq: 'RadioGroup' },
+    },
+
+    clearable: {
+      control: 'boolean',
+      description: 'Whether the selected option can be deselected by clicking it again. Only applies to single select.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'true' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+      if: { arg: 'multiple', truthy: false },
     },
 
     ...getValidationArgTypes(),

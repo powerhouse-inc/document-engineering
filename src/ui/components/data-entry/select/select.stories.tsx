@@ -156,6 +156,17 @@ const meta: Meta<typeof Select> = {
       },
     },
 
+    clearable: {
+      control: 'boolean',
+      description: 'Whether the selected option can be deselected by clicking it again. Only applies to single select.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'true' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+      if: { arg: 'multiple', truthy: false },
+    },
+
     contentAlign: {
       control: 'select',
       description: 'Alignment of the dropdown',
@@ -329,6 +340,16 @@ export const Searchable: Story = {
     options: defaultOptions,
     placeholder: 'Select an icon name',
     searchable: true,
+  },
+}
+
+export const NotClearable: Story = {
+  args: {
+    label: 'Not clearable select',
+    description: 'Once selected, the option cannot be deselected by clicking it again',
+    options: defaultOptions,
+    placeholder: 'Select an option',
+    clearable: false,
   },
 }
 
