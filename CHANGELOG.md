@@ -1,3 +1,10 @@
+## [1.35.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.35.0...v1.35.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **select:** maintain selection when re-selecting the same option ([f4943bc](https://github.com/powerhouse-inc/document-engineering/commit/f4943bce24b5e5a6e7269c1a3680d008e627274e))
+
 # [1.35.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.34.0...v1.35.0) (2025-09-11)
 
 
