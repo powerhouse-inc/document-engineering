@@ -4,7 +4,7 @@ import type { SelectProps } from './types.js'
 interface UseSelectProps {
   options?: SelectProps['options']
   multiple?: boolean
-  searchable?: boolean
+  clearable?: boolean
   defaultValue?: string | string[]
   value?: string | string[]
   onChange?: (value: string | string[]) => void
@@ -13,7 +13,7 @@ interface UseSelectProps {
 export function useSelect({
   options = [],
   multiple = false,
-  searchable = false,
+  clearable = true,
   defaultValue,
   value,
   onChange,
@@ -56,7 +56,7 @@ export function useSelect({
           ? selectedValues.filter((v) => v !== optionValue)
           : [...selectedValues, optionValue]
       } else {
-        if (selectedValues[0] === optionValue && !searchable) {
+        if (selectedValues[0] === optionValue && !clearable) {
           setIsPopoverOpen(false)
           return
         }
@@ -68,7 +68,7 @@ export function useSelect({
       setSelectedValues(newValues)
       onChange?.(multiple ? newValues : (newValues[0] ?? ''))
     },
-    [multiple, searchable, selectedValues, onChange]
+    [multiple, clearable, selectedValues, onChange]
   )
 
   const handleClear = useCallback(() => {

@@ -41,6 +41,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       selectionIcon = 'auto',
       selectionIconPosition = 'left',
       searchable,
+      clearable = true,
 
       // display props
       description,
@@ -65,7 +66,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       useSelect({
         options: allOptions,
         multiple,
-        searchable,
+        clearable,
         defaultValue,
         value,
         onChange,

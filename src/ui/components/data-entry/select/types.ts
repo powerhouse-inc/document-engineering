@@ -13,18 +13,29 @@ interface SelectBaseProps {
   options?: SelectOption[]
   favoriteOptions?: SelectOption[]
   placeholder?: string
-  multiple?: boolean
   searchable?: boolean
   onChange?: (value: string | string[]) => void
   contentAlign?: 'start' | 'end' | 'center'
 }
 
+type SingleSelectProps = SelectBaseProps & {
+  multiple?: false
+  clearable?: boolean
+}
+
+type MultiSelectProps = SelectBaseProps & {
+  multiple: true
+  clearable?: never
+}
+
+type SelectCoreProps = SingleSelectProps | MultiSelectProps
+
 type SelectConfigProps =
-  | (SelectBaseProps & {
+  | (SelectCoreProps & {
       selectionIcon?: 'auto'
       selectionIconPosition?: 'left'
     })
-  | (SelectBaseProps & {
+  | (SelectCoreProps & {
       selectionIcon: 'checkmark'
       selectionIconPosition?: 'left' | 'right'
     })

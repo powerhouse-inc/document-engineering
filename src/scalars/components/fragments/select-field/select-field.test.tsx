@@ -62,11 +62,11 @@ describe('SelectField Component', () => {
     expect(onChangeMock).not.toHaveBeenCalled()
   })
 
-  it('should maintain selection when re-selecting the same option', async () => {
+  it('should maintain selection when re-selecting the same option and clearable is false', async () => {
     const onChangeMock = vi.fn()
     const user = userEvent.setup()
 
-    renderWithForm(<SelectField name="select" options={defaultOptions} onChange={onChangeMock} />)
+    renderWithForm(<SelectField name="select" options={defaultOptions} onChange={onChangeMock} clearable={false} />)
 
     await user.click(screen.getByRole('combobox'))
     await user.click(screen.getByText('Option 1'))
