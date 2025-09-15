@@ -65,6 +65,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       useSelect({
         options: allOptions,
         multiple,
+        searchable,
         defaultValue,
         value,
         onChange,
