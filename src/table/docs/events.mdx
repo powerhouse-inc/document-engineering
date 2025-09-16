@@ -8,6 +8,8 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 
 ### Available Events
 
+#### Editing Events
+
 | Event | When | Key Payload Fields |
 |-------|------|-------------------|
 | `table:editing:start` | Cell enters edit mode | `currentValue`, `isAddingRow` |
@@ -17,12 +19,30 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 | `table:editing:validationSuccess` | Validation passes | `value` |
 | `table:editing:validationErrorChange` | Error state changes | `previousErrors[]`, `currentErrors[]` |
 
-**Common Payload Fields (all events):**
+#### Delete Events
+
+| Event | When | Key Payload Fields |
+|-------|------|-------------------|
+| `table:delete:start` | Delete operation begins | `rowIndexes[]`, `rowsData[]`, `rowCount`, `requiresConfirmation` |
+| `table:delete:confirm` | User confirms deletion | `rowIndexes[]`, `rowsData[]`, `rowCount`, `confirmationDetails` |
+| `table:delete:success` | Deletion completed successfully | `rowIndexes[]`, `rowsData[]`, `rowCount`, `remainingRowCount` |
+| `table:delete:cancel` | Deletion cancelled | `rowIndexes[]`, `rowsData[]`, `rowCount`, `reason` |
+| `table:delete:error` | Deletion failed | `rowIndexes[]`, `rowsData[]`, `rowCount`, `error` |
+
+**Common Payload Fields:**
+
+*Editing Events:*
 - `timestamp: Date` - When event occurred
 - `rowIndex: number` - Row position (0-based)  
 - `cell: { row, column }` - Cell coordinates
 - `columnDef: ColumnDef<TData>` - Column configuration
 - `rowData?: TData` - Complete row data (optional)
+
+*Delete Events:*
+- `timestamp: Date` - When event occurred
+- `rowIndexes: number[]` - Array of row positions being deleted
+- `rowsData: TData[]` - Array of complete row data being deleted
+- `rowCount: number` - Number of rows being deleted
 
 ---
 
