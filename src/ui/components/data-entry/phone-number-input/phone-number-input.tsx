@@ -17,7 +17,7 @@ const PhoneNumberInput = React.forwardRef<HTMLInputElement, PhoneNumberInputProp
       className,
       label,
       description,
-      placeholder = '4155552671',
+      placeholder = '415 555 2671',
       value,
       defaultValue,
       onChange,
