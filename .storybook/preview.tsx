@@ -33,6 +33,7 @@ const preview: Preview = {
                 'Deletion',
                 'Sorting',
                 'Actions',
+                'Events',
                 'API',
                 'Keyboard Shortcuts',
               ],

@@ -19,6 +19,7 @@ import RowReorderingExample from '../examples/row-reordering/row-reordering.js'
  * - [Deletion](?path=/docs/data-display-object-set-table-docs-deletion--readme)
  * - [Sorting & Reordering](?path=/docs/data-display-object-set-table-docs-sorting--readme)
  * - [Actions](?path=/docs/data-display-object-set-table-docs-actions--readme)
+ * - [Events](?path=/docs/data-display-object-set-table-docs-events--readme)
  * - [API](?path=/docs/data-display-object-set-table-docs-api--readme)
  * - [Keyboard Shortcuts](?path=/docs/data-display-object-set-table-docs-keyboard-shortcuts--readme)
  *

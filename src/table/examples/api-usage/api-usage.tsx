@@ -9,7 +9,7 @@ import { Form } from '../../../scalars/components/form/form.js'
 import { NumberField } from '../../../scalars/components/number-field/number-field.js'
 
 const ApiUsageExample = () => {
-  const apiRef = useRef<TableApiBase>(null)
+  const apiRef = useRef<TableApiBase<MockedPerson>>(null)
   const columns = useMemo<Array<ColumnDef<MockedPerson>>>(
     () => [
       { field: 'firstName', title: 'Name', sortable: true },

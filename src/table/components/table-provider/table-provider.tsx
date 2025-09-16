@@ -10,7 +10,7 @@ interface TableContextValue<T extends DataType = DataType> {
   config: ObjectSetTableConfig<T>
   state: TableState<T>
   api: PrivateTableApiBase<T>
-  publicApi: TableApiBase
+  publicApi: TableApiBase<T>
 }
 
 const TableContext = createContext<TableContextValue<DataType> | null>(null)
@@ -71,6 +71,11 @@ const TableProvider = <T extends DataType = DataType>({ children, config, tableR
 
     return [internalApi, publicApi]
   }, [config.apiRef, tableRef])
+
+  // Update event manager element reference when table ref becomes available
+  useEffect(() => {
+    api.updateEventManagerElement()
+  }, [api])
 
   return (
     <TableContext.Provider
