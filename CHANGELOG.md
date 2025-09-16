@@ -1,3 +1,16 @@
+# [1.36.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.35.1...v1.36.0) (2025-09-15)
+
+
+### Bug Fixes
+
+* build errors ([af75cc0](https://github.com/powerhouse-inc/document-engineering/commit/af75cc073224b018208628230035410a8a891745))
+* **select:** improve tests ([88045c2](https://github.com/powerhouse-inc/document-engineering/commit/88045c2e75e558d208ead3a2a3877ea433bb4a1e))
+
+
+### Features
+
+* **select:** add "clearable" prop ([5ae0795](https://github.com/powerhouse-inc/document-engineering/commit/5ae07955a77e66702bce855358dfa64709968b3c))
+
 ## [1.35.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.35.0...v1.35.1) (2025-09-15)
 
 
