@@ -1,7 +1,7 @@
 import type { TableApiBase } from '../logic/types.js'
 
 export interface ObjectSetTableConfig<T extends DataType> {
-  apiRef?: React.MutableRefObject<TableApiBase | null>
+  apiRef?: React.MutableRefObject<TableApiBase<T> | null>
 
   /**
    * The columns to display in the table.

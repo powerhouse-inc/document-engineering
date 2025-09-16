@@ -7,9 +7,11 @@ import type { ConfirmationOptions, PrivateTableApiBase, SortingInfo } from './ty
 import { confirm } from '../../ui/components/confirm/confirm.js'
 import { deepEqual } from '../../scalars/lib/deep-equal.js'
 import { isEmpty } from '../../scalars/lib/is-empty.js'
+import { TableEventManager } from '../events/index.js'
 
 class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly selection: SelectionManager<TData>
+  public readonly eventManager: TableEventManager<TData>
 
   constructor(
     private readonly tableRef: RefObject<HTMLTableElement>,
@@ -17,6 +19,12 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     private readonly stateRef: RefObject<TableState<TData>>
   ) {
     this.selection = new SelectionManager<TData>(this)
+    this.eventManager = new TableEventManager<TData>()
+
+    // Set the table element reference when available
+    if (this.tableRef.current) {
+      this.eventManager.setElement(this.tableRef.current)
+    }
   }
 
   _getConfig(): ObjectSetTableConfig<TData> {
@@ -44,6 +52,16 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
    */
   getHTMLTable(): HTMLTableElement | null {
     return this.tableRef.current
+  }
+
+  /**
+   * Updates the event manager's element reference
+   * Called when the table element becomes available
+   */
+  updateEventManagerElement(): void {
+    if (this.tableRef.current) {
+      this.eventManager.setElement(this.tableRef.current)
+    }
   }
 
   /**
@@ -148,7 +166,36 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
 
     // update the state if needed
     const currentErrors = this._getState().selectedRowErrors
-    if (!deepEqual(currentErrors, errors)) {
+    const previousErrors = currentErrors ?? []
+
+    if (!deepEqual(previousErrors, errors)) {
+      // Trigger validation error change event for the currently selected cell
+      const selectedCell = this._getState().selectedCellIndex
+      if (selectedCell) {
+        const columnDef = this._getConfig().columns[selectedCell.column]
+        const formRef = this._getState().dataFormReferences[selectedCell.row]?.[selectedCell.column]
+        let currentValue: unknown = undefined
+
+        if (formRef) {
+          const formData = formRef.current?.getValues()
+          currentValue = formData?.[columnDef.field] as unknown
+        }
+
+        this.eventManager.triggerValidationErrorChange({
+          cell: selectedCell,
+          rowIndex: selectedCell.row,
+          rowData: this._getState().data[selectedCell.row]?.data,
+          columnDef,
+          previousErrors,
+          currentErrors: errors,
+          value: currentValue,
+          validationContext: {
+            hasErrors: errors.length > 0,
+            errorCount: errors.length,
+          },
+        })
+      }
+
       this._getState().dispatch?.({
         type: 'SET_SELECTED_ROW_ERRORS',
         payload: { errors: errors.length > 0 ? errors : null },
@@ -173,12 +220,25 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     const formRef = this._getState().dataFormReferences[row][column]
     const columnDef = this._getConfig().columns[column]
     const stateData = this._getState().data
+    const isAddingRow = row === this._getState().data.length
+
+    let currentValue: unknown = undefined
     // if stateData[row] is undefined is probably because we're inserting a new row
     // or because the row is empty, so we don't need to restore the value at all
     if (formRef && stateData[row]) {
-      const originalValue = columnDef.valueGetter?.(stateData[row]?.data, this._createCellContext(row, column))
-      formRef.current?.setValue(columnDef.field, originalValue)
+      currentValue = columnDef.valueGetter?.(stateData[row]?.data, this._createCellContext(row, column))
+      formRef.current?.setValue(columnDef.field, currentValue)
     }
+
+    // Trigger editing start event
+    this.eventManager.triggerEditingStart({
+      cell: { row, column },
+      rowIndex: row,
+      rowData: stateData[row]?.data,
+      columnDef,
+      currentValue,
+      isAddingRow,
+    })
 
     this._getState().dispatch?.({
       type: 'ENTER_CELL_EDIT_MODE',
@@ -203,8 +263,31 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       column: 0,
     }
 
+    const columnDef = this._getConfig().columns[selectedCell.column]
+    const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
+    let finalValue: unknown = undefined
+
+    // Get current form value for event reporting
+    if (formRef) {
+      const formData = formRef.current?.getValues()
+      finalValue = formData?.[columnDef.field] as unknown
+    }
+
     const errors = await this.getErrors(selectedCell.row)
     if (errors.length > 0 && save) {
+      // Trigger validation error event
+      this.eventManager.triggerValidationError({
+        cell: selectedCell,
+        rowIndex: selectedCell.row,
+        rowData: this._getState().data[selectedCell.row]?.data,
+        columnDef,
+        errors,
+        value: finalValue,
+        validationContext: {
+          hasErrors: true,
+          errorCount: errors.length,
+        },
+      })
       return // we can't exit edit mode if there are errors
     } else if (this._getState().selectedRowErrors) {
       this._getState().dispatch?.({
@@ -213,38 +296,95 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       })
     }
 
-    const formRef = this._getState().dataFormReferences[selectedCell.row][selectedCell.column]
     if (save) {
       const isAddingRow = selectedCell.row === this._getState().data.length
 
       if (formRef) {
-        const columnDef = this._getConfig().columns[selectedCell.column]
-
         const isValid = await formRef.current?.trigger()
         if (!isValid) {
+          // Additional validation failed, trigger validation error
+          const validationErrors = await this.getErrors(selectedCell.row, false)
+          this.eventManager.triggerValidationError({
+            cell: selectedCell,
+            rowIndex: selectedCell.row,
+            rowData: this._getState().data[selectedCell.row]?.data,
+            columnDef,
+            errors: validationErrors,
+            value: finalValue,
+            validationContext: {
+              hasErrors: true,
+              errorCount: validationErrors.length,
+            },
+          })
           return
         }
+
+        // Validation success
+        this.eventManager.triggerValidationSuccess({
+          cell: selectedCell,
+          rowIndex: selectedCell.row,
+          rowData: this._getState().data[selectedCell.row]?.data,
+          columnDef,
+          value: finalValue,
+          validationContext: {
+            hasErrors: false,
+            errorCount: 0,
+          },
+        })
 
         const formData = formRef.current?.getValues()
         formRef.current?.reset()
         const value = formData?.[columnDef.field] as unknown
 
+        let oldValue: unknown = undefined
+        if (!isAddingRow && this._getState().data[selectedCell.row]) {
+          oldValue = columnDef.valueGetter?.(
+            this._getState().data[selectedCell.row].data,
+            this._createCellContext(this._getState().data[selectedCell.row].__index, selectedCell.column)
+          )
+        }
+
         if (isAddingRow) {
           // if the value is empty we need to prevent calling the onAdd callback
           if (isEmpty(value)) {
             this.selection.selectCell(selectedCell.row, selectedCell.column)
+            // Trigger exit event (cancelled)
+            this.eventManager.triggerEditingExit({
+              cell: selectedCell,
+              rowIndex: selectedCell.row,
+              rowData: undefined, // No row data for new row
+              columnDef,
+              saved: false,
+              finalValue: value,
+            })
             return
           }
 
           await this._getConfig().onAdd?.({ [columnDef.field]: value })
+
+          // Trigger save event for new row
+          this.eventManager.triggerEditingSave({
+            cell: selectedCell,
+            rowIndex: selectedCell.row,
+            rowData: undefined, // No row data for new row yet
+            columnDef,
+            oldValue: undefined,
+            newValue: value,
+            isAddingRow: true,
+          })
         } else {
           // if the value did not change, we don't need to save it
-          const originalValue = columnDef.valueGetter?.(
-            this._getState().data[selectedCell.row].data,
-            this._createCellContext(this._getState().data[selectedCell.row].__index, selectedCell.column)
-          )
-          if (value === originalValue) {
+          if (value === oldValue) {
             this.selection.selectCell(selectedCell.row, selectedCell.column)
+            // Trigger exit event (no changes)
+            this.eventManager.triggerEditingExit({
+              cell: selectedCell,
+              rowIndex: selectedCell.row,
+              rowData: this._getState().data[selectedCell.row]?.data,
+              columnDef,
+              saved: false,
+              finalValue: value,
+            })
             return
           }
 
@@ -253,6 +393,17 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
             value,
             this._createCellContext(this._getState().data[selectedCell.row].__index, selectedCell.column)
           )
+
+          // Trigger save event for existing row
+          this.eventManager.triggerEditingSave({
+            cell: selectedCell,
+            rowIndex: selectedCell.row,
+            rowData: this._getState().data[selectedCell.row]?.data,
+            columnDef,
+            oldValue,
+            newValue: value,
+            isAddingRow: false,
+          })
         }
       }
 
@@ -276,6 +427,16 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
         payload: { row: selectedCell.row, column: selectedCell.column },
       })
     }
+
+    // Always trigger exit event at the end
+    this.eventManager.triggerEditingExit({
+      cell: selectedCell,
+      rowIndex: selectedCell.row,
+      rowData: this._getState().data[selectedCell.row]?.data,
+      columnDef,
+      saved: save,
+      finalValue,
+    })
   }
 
   /**

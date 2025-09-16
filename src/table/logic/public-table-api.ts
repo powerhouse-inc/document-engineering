@@ -5,7 +5,7 @@ import type { PrivateTableApiBase, TableApiBase } from './types.js'
  * The proxy automatically filters out private methods (those starting with '_')
  * and provides access only to the public interface.
  */
-function createPublicTableApi<TData>(privateApi: PrivateTableApiBase<TData>): TableApiBase {
+function createPublicTableApi<TData>(privateApi: PrivateTableApiBase<TData>): TableApiBase<TData> {
   const mutedMethods = ['_getConfig', '_getState', '_createCellContext']
 
   return new Proxy(privateApi, {
@@ -48,7 +48,7 @@ function createPublicTableApi<TData>(privateApi: PrivateTableApiBase<TData>): Ta
       // Filter out private properties from Object.keys(), etc.
       return Reflect.ownKeys(target).filter((key) => typeof key !== 'string' || !mutedMethods.includes(key))
     },
-  }) as TableApiBase
+  }) as TableApiBase<TData>
 }
 
 export { createPublicTableApi }

@@ -1,5 +1,6 @@
 import type { CellContext, ObjectSetTableConfig, SortDirection } from '../table/types.js'
 import type { TableState } from '../components/table-provider/table-reducer.js'
+import type { TableEventManager } from '../events/index.js'
 
 export interface SortingInfo {
   columnIndex: number
@@ -31,9 +32,10 @@ export interface TableSelectionManager {
   clear(): void
 }
 
-export interface TableApiBase {
+export interface TableApiBase<TData = unknown> {
   // properties
   selection: TableSelectionManager
+  eventManager: TableEventManager<TData>
 
   // methods
   getHTMLTable(): HTMLTableElement | null
@@ -62,7 +64,7 @@ export interface TableApiBase {
   getCurrentSortInfo(): SortingInfo | null
 }
 
-export interface PrivateTableApiBase<TData> extends TableApiBase {
+export interface PrivateTableApiBase<TData> extends TableApiBase<TData> {
   _getConfig(): ObjectSetTableConfig<TData>
   _getState(): TableState<TData>
   _createCellContext(row: number, column: number): CellContext<TData>
