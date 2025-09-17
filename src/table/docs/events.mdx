@@ -1,0 +1,157 @@
+import { Meta, Source, Canvas, Controls } from '@storybook/blocks'
+
+<Meta title="Data Display/Object Set Table/Docs/Events" />
+
+## Events
+
+The Table dispatches DOM events for all operations. Events are type-safe and include detailed context.
+
+### Available Events
+
+| Event | When | Key Payload Fields |
+|-------|------|-------------------|
+| `table:editing:start` | Cell enters edit mode | `currentValue`, `isAddingRow` |
+| `table:editing:save` | Cell edit saved | `oldValue`, `newValue`, `isAddingRow` |
+| `table:editing:exit` | Exit edit mode | `saved` (boolean), `finalValue` |
+| `table:editing:validationError` | Validation fails | `errors[]`, `value` |
+| `table:editing:validationSuccess` | Validation passes | `value` |
+| `table:editing:validationErrorChange` | Error state changes | `previousErrors[]`, `currentErrors[]` |
+
+**Common Payload Fields (all events):**
+- `timestamp: Date` - When event occurred
+- `rowIndex: number` - Row position (0-based)  
+- `cell: { row, column }` - Cell coordinates
+- `columnDef: ColumnDef<TData>` - Column configuration
+- `rowData?: TData` - Complete row data (optional)
+
+---
+
+## Usage
+
+### Basic Setup
+
+```tsx
+import { useEffect, useRef } from 'react'
+import type { TableApiBase, TableEventMap } from '@powerhousedao/document-engineering'
+
+const MyComponent = () => {
+  const apiRef = useRef<TableApiBase<MyDataType>>(null)
+
+  useEffect(() => {
+    const tableElement = apiRef.current?.getHTMLTable()
+    if (!tableElement) return
+
+    const handleSave = ((event: CustomEvent<TableEventMap<MyDataType>['table:editing:save']>) => {
+      const { columnDef, oldValue, newValue } = event.detail
+      console.log(`${columnDef.field}: ${oldValue} → ${newValue}`)
+    }) as EventListener
+
+    tableElement.addEventListener('table:editing:save', handleSave)
+    return () => tableElement.removeEventListener('table:editing:save', handleSave)
+  }, [])
+
+  return <ObjectSetTable data={data} columns={columns} apiRef={apiRef} />
+}
+```
+
+### Multiple Events
+
+```tsx
+useEffect(() => {
+  const tableElement = apiRef.current?.getHTMLTable()
+  if (!tableElement) return
+
+  const handlers = {
+    'table:editing:start': (e: CustomEvent) => {
+      const { columnDef, isAddingRow } = e.detail
+      setEditingState({ field: columnDef.field, isNew: isAddingRow })
+    },
+    'table:editing:save': (e: CustomEvent) => {
+      const { columnDef, newValue } = e.detail
+      syncToAPI(columnDef.field, newValue)
+    },
+    'table:editing:validationError': (e: CustomEvent) => {
+      const { cell, errors } = e.detail
+      showErrors(`${cell.row}-${cell.column}`, errors)
+    }
+  } as const
+
+  // Register all
+  Object.entries(handlers).forEach(([event, handler]) => {
+    tableElement.addEventListener(event, handler as EventListener)
+  })
+
+  // Cleanup all
+  return () => {
+    Object.entries(handlers).forEach(([event, handler]) => {
+      tableElement.removeEventListener(event, handler as EventListener)
+    })
+  }
+}, [])
+```
+
+---
+
+## Common Patterns
+
+### Data Sync
+```tsx
+const handleSave = ((event: CustomEvent) => {
+  const { rowData, newValue, columnDef } = event.detail
+  updateAPI(rowData.id, columnDef.field, newValue)
+}) as EventListener
+```
+
+### Validation UI
+```tsx
+const [errors, setErrors] = useState<Record<string, string[]>>({})
+
+const handleValidationChange = ((event: CustomEvent) => {
+  const { cell, currentErrors } = event.detail
+  const key = `${cell.row}-${cell.column}`
+  setErrors(prev => ({ ...prev, [key]: currentErrors }))
+}) as EventListener
+```
+
+### Activity Logging
+```tsx
+const handleAnyEdit = ((event: CustomEvent) => {
+  const { columnDef, timestamp } = event.detail
+  logActivity(`Edited ${columnDef.field} at ${timestamp}`)
+}) as EventListener
+```
+
+---
+
+## Event Types
+
+All events extend base interfaces and include validation context when relevant:
+
+```tsx
+interface BaseTableEvent {
+  timestamp: Date
+}
+
+interface BaseCellEvent<TData> extends BaseTableEvent {
+  rowIndex: number
+  cell: { row: number; column: number }
+  columnDef: ColumnDef<TData>
+  rowData?: TData
+}
+
+interface ValidationContext {
+  hasErrors: boolean
+  errorCount: number
+  validationRules?: string[]
+}
+```
+
+**Future Events:** The system is extensible for row operations, column operations, and table-level events.
+
+---
+
+## Related Docs
+
+- [API Reference](?path=/docs/data-display-object-set-table-docs-api--readme): Full API documentation
+- [Editing](?path=/docs/data-display-object-set-table-docs-editing--readme): Cell editing and validation
+- [Events Example](?path=/story/data-display-object-set-table-examples-events--default): Live event logging demo
