@@ -8,7 +8,8 @@ export interface FileInputProps
   allowedFileTypes?: string[]
   maxFileSize?: number
   dragAndDropEnabled?: boolean
-  onChange?: (file: File | null) => void
+  onChange?: (file: File | null | string) => void
+  isBase64Encoded?: boolean
   // Item Props
   fileName?: string
   mimeType?: string
