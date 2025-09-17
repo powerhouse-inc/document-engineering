@@ -161,7 +161,7 @@ const meta: Meta<typeof FileField> = {
       description: 'If true, the file is encoded in base64.',
       table: {
         type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
+        defaultValue: { summary: 'false' },
         category: StorybookControlCategory.COMPONENT_SPECIFIC,
       },
     },
