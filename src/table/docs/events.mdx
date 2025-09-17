@@ -19,6 +19,14 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 | `table:editing:validationSuccess` | Validation passes | `value` |
 | `table:editing:validationErrorChange` | Error state changes | `previousErrors[]`, `currentErrors[]` |
 
+#### Insert Events
+
+| Event | When | Key Payload Fields |
+|-------|------|-------------------|
+| `table:insert:start` | User starts editing insertion row | `field`, `currentRowCount` |
+| `table:insert:success` | New row insertion completed | `insertedData`, `field`, `newRowCount`, `insertedRowIndex` |
+| `table:insert:cancel` | Insertion cancelled | `field`, `cancelledValue`, `reason` |
+
 #### Delete Events
 
 | Event | When | Key Payload Fields |
@@ -37,6 +45,13 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 - `cell: { row, column }` - Cell coordinates
 - `columnDef: ColumnDef<TData>` - Column configuration
 - `rowData?: TData` - Complete row data (optional)
+
+*Insert Events:*
+- `timestamp: Date` - When event occurred
+- `field: string` - Field being edited/inserted
+- `cell: { row, column }` - Cell coordinates (insertion row)
+- `columnDef: ColumnDef<TData>` - Column configuration
+- `rowData?: TData` - Row data (undefined for insertion row)
 
 *Delete Events:*
 - `timestamp: Date` - When event occurred
@@ -93,6 +108,18 @@ useEffect(() => {
     'table:editing:validationError': (e: CustomEvent) => {
       const { cell, errors } = e.detail
       showErrors(`${cell.row}-${cell.column}`, errors)
+    },
+    'table:insert:start': (e: CustomEvent) => {
+      const { field, currentRowCount } = e.detail
+      console.log(`Starting to add new row via ${field} field (${currentRowCount} rows currently)`)
+    },
+    'table:insert:success': (e: CustomEvent) => {
+      const { insertedData, field, newRowCount } = e.detail
+      console.log(`New row added via ${field}:`, insertedData, `(${newRowCount} rows total)`)
+    },
+    'table:insert:cancel': (e: CustomEvent) => {
+      const { field, reason } = e.detail
+      console.log(`Insertion cancelled for ${field}: ${reason}`)
     }
   } as const
 

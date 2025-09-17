@@ -295,6 +295,60 @@ export interface DeleteErrorEvent<TData = unknown> extends BaseTableEvent {
 }
 
 /**
+ * Event triggered when a new row insertion starts
+ */
+export interface InsertStartEvent<TData = unknown> extends BaseCellEvent<TData> {
+  /**
+   * The field being edited in the insertion row
+   */
+  field: string
+  /**
+   * The current row count before insertion
+   */
+  currentRowCount: number
+}
+
+/**
+ * Event triggered when a new row insertion is successfully completed
+ */
+export interface InsertSuccessEvent<_TData = unknown> extends BaseTableEvent {
+  /**
+   * The data that was passed to the onAdd callback
+   */
+  insertedData: Record<string, unknown>
+  /**
+   * The field that was saved to trigger the insertion
+   */
+  field: string
+  /**
+   * The new row count after insertion
+   */
+  newRowCount: number
+  /**
+   * The row index where the new row was inserted
+   */
+  insertedRowIndex: number
+}
+
+/**
+ * Event triggered when a new row insertion is cancelled
+ */
+export interface InsertCancelEvent<TData = unknown> extends BaseCellEvent<TData> {
+  /**
+   * The field that was being edited when insertion was cancelled
+   */
+  field: string
+  /**
+   * The value that was being entered (may be empty)
+   */
+  cancelledValue: unknown
+  /**
+   * Reason for cancellation
+   */
+  reason: 'user_cancelled' | 'empty_value' | 'validation_failed'
+}
+
+/**
  * Union type of all possible table event payloads
  */
 export type TableEventPayload<TData = unknown> =
@@ -309,6 +363,9 @@ export type TableEventPayload<TData = unknown> =
   | DeleteSuccessEvent<TData>
   | DeleteCancelEvent<TData>
   | DeleteErrorEvent<TData>
+  | InsertStartEvent<TData>
+  | InsertSuccessEvent<TData>
+  | InsertCancelEvent<TData>
 
 /**
  * Mapping of event names to their payload types
@@ -325,6 +382,9 @@ export interface TableEventMap<TData = unknown> {
   'table:delete:success': DeleteSuccessEvent<TData>
   'table:delete:cancel': DeleteCancelEvent<TData>
   'table:delete:error': DeleteErrorEvent<TData>
+  'table:insert:start': InsertStartEvent<TData>
+  'table:insert:success': InsertSuccessEvent<TData>
+  'table:insert:cancel': InsertCancelEvent<TData>
 }
 
 /**
