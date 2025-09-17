@@ -156,6 +156,15 @@ const meta: Meta<typeof FileInput> = {
         type: { summary: '(e: MouseEvent) => void' },
       },
     },
+    isBase64Encoded: {
+      control: 'boolean',
+      description: 'If true, the file is encoded in base64.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: StorybookControlCategory.COMPONENT_SPECIFIC,
+      },
+    },
 
     ...getValidationArgTypes({
       enabledArgTypes: {
