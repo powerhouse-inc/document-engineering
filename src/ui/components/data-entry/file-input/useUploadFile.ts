@@ -7,10 +7,10 @@ interface UseFileUploadProps {
   value?: File | null
   defaultValue?: File | null
   onChange?: (file: File | null | string) => void
-  isBase64Encoded?: boolean
+  submitAsBase64?: boolean
 }
 
-export const useFileUpload = ({ value, defaultValue, onChange, isBase64Encoded }: UseFileUploadProps) => {
+export const useFileUpload = ({ value, defaultValue, onChange, submitAsBase64 }: UseFileUploadProps) => {
   const [file, setFile] = useState<File | null>(value ?? defaultValue ?? null)
   const [preview, setPreview] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -43,14 +43,14 @@ export const useFileUpload = ({ value, defaultValue, onChange, isBase64Encoded }
       const preview = URL.createObjectURL(file)
       setPreview(preview)
       setFile(file)
-      if (isBase64Encoded) {
+      if (submitAsBase64) {
         const base64 = await fileToBase64(file)
         onChange?.(base64 as string)
       } else {
         onChange?.(file)
       }
     },
-    [isBase64Encoded, onChange]
+    [submitAsBase64, onChange]
   )
 
   const handleCancelPreview = () => {
