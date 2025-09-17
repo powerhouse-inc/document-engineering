@@ -34,18 +34,19 @@ const RenderCell = <T extends DataType>({
     return <EmptyCell column={column} isSelected={isThisCellSelected} onClick={handleCellClick} />
   }
 
+  const isThisCellEditMode = isCellEditMode && isThisCellSelected
+
   const cellContext: CellContext<T> = {
     row: rowItem.data,
     column,
     rowIndex,
     columnIndex,
     tableConfig: config,
+    isEditMode: isThisCellEditMode,
   }
 
   // get and format the cell value
   const cellValue = column.valueFormatter?.(column.valueGetter?.(rowItem.data, cellContext), cellContext)
-
-  const isThisCellEditMode = isCellEditMode && isThisCellSelected
 
   const isAddingRow = rowIndex === config.data.length
 

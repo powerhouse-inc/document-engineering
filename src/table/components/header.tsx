@@ -35,6 +35,7 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
         column,
         columnIndex,
         tableConfig: config,
+        isEditMode: false,
       }
 
       const style: React.CSSProperties = {
