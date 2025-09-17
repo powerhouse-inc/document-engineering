@@ -139,6 +139,39 @@ const EventsExample = () => {
       addEventLog('delete:error', `Deletion failed for ${rowCount} row(s): ${error.message}`, event.detail)
     }) as EventListener
 
+    // Insert event handlers
+    const handleInsertStart = ((event: CustomEvent<TableEventMap<MockedPerson>['table:insert:start']>) => {
+      const { field, currentRowCount } = event.detail
+      addEventLog(
+        'insert:start',
+        `Starting to add new row via ${field} field (${currentRowCount} rows currently)`,
+        event.detail
+      )
+    }) as EventListener
+
+    const handleInsertSuccess = ((event: CustomEvent<TableEventMap<MockedPerson>['table:insert:success']>) => {
+      const { insertedData, field, newRowCount, insertedRowIndex } = event.detail
+      addEventLog(
+        'insert:success',
+        `New row added via ${field}: ${JSON.stringify(insertedData)} (${newRowCount} rows total, inserted at index ${insertedRowIndex})`,
+        event.detail
+      )
+    }) as EventListener
+
+    const handleInsertCancel = ((event: CustomEvent<TableEventMap<MockedPerson>['table:insert:cancel']>) => {
+      const { field, cancelledValue, reason } = event.detail
+      const reasonText = {
+        user_cancelled: 'User cancelled',
+        empty_value: 'Empty value',
+        validation_failed: 'Validation failed',
+      }[reason]
+      addEventLog(
+        'insert:cancel',
+        `Insertion cancelled for ${field}: ${reasonText} (value: ${String(cancelledValue)})`,
+        event.detail
+      )
+    }) as EventListener
+
     const tableElement = api.getHTMLTable()!
     tableElement.addEventListener('table:editing:start', handleEditingStart)
     tableElement.addEventListener('table:editing:save', handleEditingSave)
@@ -146,6 +179,9 @@ const EventsExample = () => {
     tableElement.addEventListener('table:editing:validationError', handleValidationError)
     tableElement.addEventListener('table:editing:validationSuccess', handleValidationSuccess)
     tableElement.addEventListener('table:editing:validationErrorChange', handleValidationErrorChange)
+    tableElement.addEventListener('table:insert:start', handleInsertStart)
+    tableElement.addEventListener('table:insert:success', handleInsertSuccess)
+    tableElement.addEventListener('table:insert:cancel', handleInsertCancel)
     tableElement.addEventListener('table:delete:start', handleDeleteStart)
     tableElement.addEventListener('table:delete:confirm', handleDeleteConfirm)
     tableElement.addEventListener('table:delete:success', handleDeleteSuccess)
@@ -160,6 +196,9 @@ const EventsExample = () => {
       tableElement.removeEventListener('table:editing:validationError', handleValidationError)
       tableElement.removeEventListener('table:editing:validationSuccess', handleValidationSuccess)
       tableElement.removeEventListener('table:editing:validationErrorChange', handleValidationErrorChange)
+      tableElement.removeEventListener('table:insert:start', handleInsertStart)
+      tableElement.removeEventListener('table:insert:success', handleInsertSuccess)
+      tableElement.removeEventListener('table:insert:cancel', handleInsertCancel)
       tableElement.removeEventListener('table:delete:start', handleDeleteStart)
       tableElement.removeEventListener('table:delete:confirm', handleDeleteConfirm)
       tableElement.removeEventListener('table:delete:success', handleDeleteSuccess)
@@ -169,8 +208,6 @@ const EventsExample = () => {
   }, [])
 
   const handleAdd = (newRowData: Record<string, unknown>) => {
-    addEventLog('onAdd', `New row added with data: ${JSON.stringify(newRowData)}`, newRowData)
-
     // Simulate adding the new row to the data
     const newRow: MockedPerson = {
       id: Math.random().toString(),
@@ -181,7 +218,7 @@ const EventsExample = () => {
       email: (newRowData.email as string) || 'new@example.com',
       status: 'active',
       address: {
-        addressLine1: (newRowData.address as MockedPerson['address']).addressLine1 || '123 New St',
+        addressLine1: '',
         addressLine2: '',
         city: 'New City',
         state: 'NY',
@@ -293,8 +330,6 @@ const EventsExample = () => {
           onDelete={handleDelete}
           //   onReorder={handleReorder}
           actions={actions}
-          allowRowSelection={true}
-          showRowNumbers={true}
         />
       </div>
 

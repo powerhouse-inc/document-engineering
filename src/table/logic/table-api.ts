@@ -240,6 +240,18 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       isAddingRow,
     })
 
+    // Trigger insert start event if this is an insertion row
+    if (isAddingRow) {
+      this.eventManager.triggerInsertStart({
+        cell: { row, column },
+        rowIndex: row,
+        rowData: undefined, // No row data for insertion row
+        columnDef,
+        field: columnDef.field,
+        currentRowCount: this._getState().data.length,
+      })
+    }
+
     this._getState().dispatch?.({
       type: 'ENTER_CELL_EDIT_MODE',
       payload: { row, column },
@@ -348,6 +360,18 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
           // if the value is empty we need to prevent calling the onAdd callback
           if (isEmpty(value)) {
             this.selection.selectCell(selectedCell.row, selectedCell.column)
+
+            // Trigger insert cancel event
+            this.eventManager.triggerInsertCancel({
+              cell: selectedCell,
+              rowIndex: selectedCell.row,
+              rowData: undefined, // No row data for new row
+              columnDef,
+              field: columnDef.field,
+              cancelledValue: value,
+              reason: 'empty_value',
+            })
+
             // Trigger exit event (cancelled)
             this.eventManager.triggerEditingExit({
               cell: selectedCell,
@@ -361,6 +385,14 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
           }
 
           await this._getConfig().onAdd?.({ [columnDef.field]: value })
+
+          // Trigger insert success event
+          this.eventManager.triggerInsertSuccess({
+            insertedData: { [columnDef.field]: value },
+            field: columnDef.field,
+            newRowCount: this._getState().data.length + 1,
+            insertedRowIndex: this._getState().data.length,
+          })
 
           // Trigger save event for new row
           this.eventManager.triggerEditingSave({
@@ -420,6 +452,21 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     } else {
       if (formRef) {
         formRef.current?.reset()
+      }
+
+      // Check if this was an insertion row cancellation
+      const isAddingRow = selectedCell.row === this._getState().data.length
+      if (isAddingRow) {
+        // Trigger insert cancel event
+        this.eventManager.triggerInsertCancel({
+          cell: selectedCell,
+          rowIndex: selectedCell.row,
+          rowData: undefined, // No row data for new row
+          columnDef,
+          field: columnDef.field,
+          cancelledValue: finalValue,
+          reason: 'user_cancelled',
+        })
       }
 
       this._getState().dispatch?.({

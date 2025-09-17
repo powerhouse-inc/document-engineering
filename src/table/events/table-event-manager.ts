@@ -7,6 +7,9 @@ import type {
   EditingExitEvent,
   EditingSaveEvent,
   EditingStartEvent,
+  InsertCancelEvent,
+  InsertStartEvent,
+  InsertSuccessEvent,
   TableEventMap,
   ValidationErrorChangeEvent,
   ValidationErrorEvent,
@@ -162,6 +165,36 @@ export class TableEventManager<TData = unknown> {
    */
   triggerDeleteError(payload: Omit<DeleteErrorEvent<TData>, 'timestamp'>): void {
     this.triggerEvent('table:delete:error', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when a new row insertion starts
+   */
+  triggerInsertStart(payload: Omit<InsertStartEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:insert:start', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when a new row insertion is successfully completed
+   */
+  triggerInsertSuccess(payload: Omit<InsertSuccessEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:insert:success', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when a new row insertion is cancelled
+   */
+  triggerInsertCancel(payload: Omit<InsertCancelEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:insert:cancel', {
       ...payload,
       timestamp: new Date(),
     })
