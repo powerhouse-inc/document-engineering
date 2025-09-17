@@ -130,4 +130,16 @@ describe('TextareaField Component', () => {
       expect(textarea).toHaveValue('Initial')
     })
   })
+
+  describe('Autofocus Behavior', () => {
+    it('should position the cursor at the end when the textarea is auto focused', async () => {
+      renderWithForm(<TextareaField name="textarea" value="Test content" autoFocus />)
+      const textarea = screen.getByRole<HTMLTextAreaElement>('textbox')
+
+      await waitFor(() => {
+        expect(textarea.selectionStart).toBe(12) // Length of "Test content"
+        expect(textarea.selectionEnd).toBe(12)
+      })
+    })
+  })
 })

@@ -20,6 +20,8 @@ export const getCellEditorFn = <T extends DataType = DataType>(type?: ColumnType
   switch (type) {
     case 'string':
       return buildStringCellEditor({})
+    case 'string-multiline':
+      return buildStringCellEditor({ multiline: true })
     case 'number':
       return buildNumberCellEditor({})
     case 'boolean':

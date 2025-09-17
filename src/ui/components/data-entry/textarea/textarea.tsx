@@ -1,6 +1,6 @@
 import { sharedValueTransformers } from '../../../../scalars/lib/shared-value-transformers.js'
 import { cn } from '../../../../scalars/lib/utils.js'
-import React, { useEffect, useId, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useId, useMemo, useRef } from 'react'
 import { useResizeObserver } from 'usehooks-ts'
 import { CharacterCounter } from '../../../../scalars/components/fragments/character-counter/index.js'
 import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
@@ -50,6 +50,7 @@ const textareaBaseStyles = cn(
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
+      autoFocus,
       autoComplete,
       autoExpand,
       multiline = true,
@@ -65,6 +66,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       name,
       onChange,
       onKeyDown,
+      onFocus,
       placeholder,
       required,
       rows = 3,
@@ -128,7 +130,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (!multiline && e.key === 'Enter') {
         e.preventDefault()
       }
-      // Call the original onKeyDown
       onKeyDown?.(e)
     }
 
@@ -136,9 +137,22 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (autoExpand) {
         adjustHeight()
       }
-      // Call the original onChange
       onChange?.(e)
     }
+
+    const handleOnFocus = useCallback(
+      (e: React.FocusEvent<HTMLTextAreaElement>) => {
+        // Position the cursor at the end when the textarea is auto focused
+        if (autoFocus && e.target.value !== '') {
+          const length = e.target.value.length
+          setTimeout(() => {
+            e.target.setSelectionRange(length, length)
+          }, 0)
+        }
+        onFocus?.(e)
+      },
+      [autoFocus, onFocus]
+    )
 
     useEffect(() => {
       if (autoExpand) {
@@ -203,6 +217,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                 rows={multiline ? rows : 1}
                 onChange={handleOnChange}
                 onKeyDown={handleKeyDown}
+                onFocus={handleOnFocus}
                 {...props}
               />
             </ValueTransformer>
