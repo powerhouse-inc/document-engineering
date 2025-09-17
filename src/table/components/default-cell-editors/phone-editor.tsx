@@ -1,5 +1,4 @@
-import { PhoneNumberField } from '../../../scalars/components/phone-number-field/index.js'
-import type { PhoneNumberFieldProps } from '../../../scalars/components/phone-number-field/types.js'
+import { PhoneNumberField, type PhoneNumberFieldProps } from '../../../scalars/components/phone-number-field/index.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildPhoneCellEditor = <T extends DataType>(

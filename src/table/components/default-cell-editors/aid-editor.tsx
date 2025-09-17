@@ -1,5 +1,4 @@
-import { AIDField } from '../../../scalars/components/aid-field/index.js'
-import type { AIDFieldProps } from '../../../scalars/components/aid-field/types.js'
+import { AIDField, type AIDFieldProps } from '../../../scalars/components/aid-field/index.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildAidCellEditor = <T extends DataType>(

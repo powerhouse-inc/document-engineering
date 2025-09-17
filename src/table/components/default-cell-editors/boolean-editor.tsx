@@ -1,5 +1,5 @@
-import { BooleanField, type BooleanFieldProps } from '../../../scalars/components/boolean-field/boolean-field.js'
 import { cn } from '../../../scalars/lib/utils.js'
+import { BooleanField, type BooleanFieldProps } from '../../../scalars/components/boolean-field/boolean-field.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildBooleanCellEditor = <T extends DataType>(

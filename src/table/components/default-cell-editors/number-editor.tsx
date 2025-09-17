@@ -1,5 +1,4 @@
-import { NumberField } from '../../../scalars/components/number-field/index.js'
-import type { NumberFieldProps } from '../../../scalars/components/number-field/types.js'
+import { NumberField, type NumberFieldProps } from '../../../scalars/components/number-field/index.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildNumberCellEditor = <T extends DataType>(
