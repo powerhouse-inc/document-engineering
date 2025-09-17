@@ -178,6 +178,123 @@ export interface ValidationErrorChangeEvent<TData = unknown> extends BaseCellEve
 }
 
 /**
+ * Event triggered when a delete operation starts
+ */
+export interface DeleteStartEvent<TData = unknown> extends BaseTableEvent {
+  /**
+   * The row indexes that are being deleted
+   */
+  rowIndexes: number[]
+  /**
+   * The row data that is being deleted
+   */
+  rowsData: TData[]
+  /**
+   * The number of rows being deleted
+   */
+  rowCount: number
+  /**
+   * Whether confirmation is required
+   */
+  requiresConfirmation: boolean
+}
+
+/**
+ * Event triggered when user confirms the deletion
+ */
+export interface DeleteConfirmEvent<TData = unknown> extends BaseTableEvent {
+  /**
+   * The row indexes that are being deleted
+   */
+  rowIndexes: number[]
+  /**
+   * The row data that is being deleted
+   */
+  rowsData: TData[]
+  /**
+   * The number of rows being deleted
+   */
+  rowCount: number
+  /**
+   * Confirmation details (title, description used in dialog)
+   */
+  confirmationDetails?: {
+    title: string
+    description: string
+  }
+}
+
+/**
+ * Event triggered when deletion is successfully completed
+ */
+export interface DeleteSuccessEvent<TData = unknown> extends BaseTableEvent {
+  /**
+   * The row indexes that were deleted
+   */
+  rowIndexes: number[]
+  /**
+   * The row data that was deleted
+   */
+  rowsData: TData[]
+  /**
+   * The number of rows that were deleted
+   */
+  rowCount: number
+  /**
+   * The remaining row count after deletion
+   */
+  remainingRowCount: number
+}
+
+/**
+ * Event triggered when deletion is cancelled
+ */
+export interface DeleteCancelEvent<TData = unknown> extends BaseTableEvent {
+  /**
+   * The row indexes that were going to be deleted
+   */
+  rowIndexes: number[]
+  /**
+   * The row data that was going to be deleted
+   */
+  rowsData: TData[]
+  /**
+   * The number of rows that were going to be deleted
+   */
+  rowCount: number
+  /**
+   * Reason for cancellation (user cancelled, validation failed, etc.)
+   */
+  reason: 'user_cancelled' | 'validation_failed' | 'permission_denied'
+}
+
+/**
+ * Event triggered when deletion fails due to an error
+ */
+export interface DeleteErrorEvent<TData = unknown> extends BaseTableEvent {
+  /**
+   * The row indexes that were being deleted
+   */
+  rowIndexes: number[]
+  /**
+   * The row data that was being deleted
+   */
+  rowsData: TData[]
+  /**
+   * The number of rows that were being deleted
+   */
+  rowCount: number
+  /**
+   * The error that occurred
+   */
+  error: Error
+  /**
+   * Additional error context
+   */
+  errorContext?: Record<string, unknown>
+}
+
+/**
  * Union type of all possible table event payloads
  */
 export type TableEventPayload<TData = unknown> =
@@ -187,6 +304,11 @@ export type TableEventPayload<TData = unknown> =
   | ValidationErrorEvent<TData>
   | ValidationSuccessEvent<TData>
   | ValidationErrorChangeEvent<TData>
+  | DeleteStartEvent<TData>
+  | DeleteConfirmEvent<TData>
+  | DeleteSuccessEvent<TData>
+  | DeleteCancelEvent<TData>
+  | DeleteErrorEvent<TData>
 
 /**
  * Mapping of event names to their payload types
@@ -198,6 +320,11 @@ export interface TableEventMap<TData = unknown> {
   'table:editing:validationError': ValidationErrorEvent<TData>
   'table:editing:validationSuccess': ValidationSuccessEvent<TData>
   'table:editing:validationErrorChange': ValidationErrorChangeEvent<TData>
+  'table:delete:start': DeleteStartEvent<TData>
+  'table:delete:confirm': DeleteConfirmEvent<TData>
+  'table:delete:success': DeleteSuccessEvent<TData>
+  'table:delete:cancel': DeleteCancelEvent<TData>
+  'table:delete:error': DeleteErrorEvent<TData>
 }
 
 /**

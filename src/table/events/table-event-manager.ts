@@ -1,4 +1,9 @@
 import type {
+  DeleteCancelEvent,
+  DeleteConfirmEvent,
+  DeleteErrorEvent,
+  DeleteStartEvent,
+  DeleteSuccessEvent,
   EditingExitEvent,
   EditingSaveEvent,
   EditingStartEvent,
@@ -107,6 +112,56 @@ export class TableEventManager<TData = unknown> {
    */
   triggerValidationErrorChange(payload: Omit<ValidationErrorChangeEvent<TData>, 'timestamp'>): void {
     this.triggerEvent('table:editing:validationErrorChange', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when a delete operation starts
+   */
+  triggerDeleteStart(payload: Omit<DeleteStartEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:delete:start', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when user confirms the deletion
+   */
+  triggerDeleteConfirm(payload: Omit<DeleteConfirmEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:delete:confirm', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when deletion is successfully completed
+   */
+  triggerDeleteSuccess(payload: Omit<DeleteSuccessEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:delete:success', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when deletion is cancelled
+   */
+  triggerDeleteCancel(payload: Omit<DeleteCancelEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:delete:cancel', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when deletion fails due to an error
+   */
+  triggerDeleteError(payload: Omit<DeleteErrorEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:delete:error', {
       ...payload,
       timestamp: new Date(),
     })
