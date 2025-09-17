@@ -19,6 +19,7 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
     case 'phid':
     case 'oid':
     case 'aid':
+    case 'phone':
     default:
       return 'left'
   }
