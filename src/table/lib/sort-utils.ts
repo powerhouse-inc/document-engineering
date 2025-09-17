@@ -19,6 +19,7 @@ export const sortData = <T extends DataType = DataType>(
       column: columnDef,
       columnIndex: -1,
       tableConfig,
+      isEditMode: false,
     })
     const columnValueB = columnDef.valueGetter!(rowB.data, {
       row: rowB.data,
@@ -26,6 +27,7 @@ export const sortData = <T extends DataType = DataType>(
       column: columnDef,
       columnIndex: -1,
       tableConfig,
+      isEditMode: false,
     })
 
     // ensure null values are at the end

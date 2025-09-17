@@ -176,6 +176,11 @@ export interface CellContext<T extends DataType = DataType> {
    * The table configuration.
    */
   tableConfig: ObjectSetTableConfig<T>
+
+  /**
+   * Whether the cell is currently in edit mode.
+   */
+  isEditMode: boolean
 }
 
 /**

@@ -42,6 +42,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
       rowIndex: row,
       columnIndex: column,
       tableConfig: this._getConfig(),
+      isEditMode: this.isEditingCell(row, column),
     }
   }
 
