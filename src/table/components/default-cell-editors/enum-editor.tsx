@@ -2,23 +2,23 @@ import { SelectField, type SelectFieldProps } from '../../../scalars/components/
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildEnumCellEditor = <T extends DataType>(
-  selectFieldProps: Omit<SelectFieldProps, 'name' | 'value' | 'onChange' | 'selectionIcon' | 'selectionIconPosition'>
+  selectFieldProps: Omit<SelectFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const EnumCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
-    const enumValue = typeof value === 'string' ? value : String(value ?? '')
+    const enumValue = typeof value === 'string' ? value : (value?.toString() ?? '')
 
-    return (
-      <SelectField
-        name={context.column.field}
-        className="max-w-full"
-        autoFocus
-        {...selectFieldProps}
-        value={enumValue}
-        onChange={(newValue) => {
-          onChange(newValue)
-        }}
-      />
-    )
+    const props = {
+      name: context.column.field,
+      className: 'max-w-full',
+      autoFocus: true,
+      ...selectFieldProps,
+      value: enumValue,
+      onChange: (newValue: string | string[]) => {
+        onChange(newValue)
+      },
+    }
+
+    return <SelectField {...(props as SelectFieldProps)} />
   }
 
   return EnumCellEditor

@@ -1,3 +1,39 @@
+# [1.36.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.35.1...v1.36.0) (2025-09-15)
+
+
+### Bug Fixes
+
+* build errors ([af75cc0](https://github.com/powerhouse-inc/document-engineering/commit/af75cc073224b018208628230035410a8a891745))
+* **select:** improve tests ([88045c2](https://github.com/powerhouse-inc/document-engineering/commit/88045c2e75e558d208ead3a2a3877ea433bb4a1e))
+
+
+### Features
+
+* **select:** add "clearable" prop ([5ae0795](https://github.com/powerhouse-inc/document-engineering/commit/5ae07955a77e66702bce855358dfa64709968b3c))
+
+## [1.35.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.35.0...v1.35.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **select:** maintain selection when re-selecting the same option ([f4943bc](https://github.com/powerhouse-inc/document-engineering/commit/f4943bce24b5e5a6e7269c1a3680d008e627274e))
+
+# [1.35.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.34.0...v1.35.0) (2025-09-11)
+
+
+### Bug Fixes
+
+* remove unused event in d&d ([2324fbf](https://github.com/powerhouse-inc/document-engineering/commit/2324fbfdf053d28eba1a63c684467e40e775c418))
+* **table:** focus loss after edition exit ([77fe4af](https://github.com/powerhouse-inc/document-engineering/commit/77fe4afea16a219baafa97270e6fe8e62188e493))
+* **table:** improve default renders and editors ([1fe5f56](https://github.com/powerhouse-inc/document-engineering/commit/1fe5f5668fc2c03309c1e4b7ba01ef0ca998039f))
+* **table:** linting ([a42a0f6](https://github.com/powerhouse-inc/document-engineering/commit/a42a0f63b7ad7ea02a2c47ae68b08277bc3535de))
+
+
+### Features
+
+* **table:** add row reorder" ([db646ce](https://github.com/powerhouse-inc/document-engineering/commit/db646ce11a4b115b1b4339d056ad1e539bc67bd9))
+* **ui & scalars:** format the phone input value as the user types if a country is selected ([e0de15c](https://github.com/powerhouse-inc/document-engineering/commit/e0de15c6b4d7d21732e8dc050673c6226921c018))
+
 # [1.34.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.33.0...v1.34.0) (2025-08-28)
 
 

@@ -58,6 +58,7 @@ const TimePickerContent: React.FC<TimePickerContentProps> = ({
         value={timeZone || selectedTimeZone}
         onChange={setSelectedTimeZone}
         {...selectProps}
+        multiple={false}
       />
 
       {is12HourFormat && <TimePeriodSelector selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />}

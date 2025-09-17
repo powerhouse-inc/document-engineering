@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CircleFlag } from 'react-circle-flags'
 import countries, { type Countries } from 'world-countries'
-import parsePhoneNumber, { type CountryCode, getCountryCallingCode } from 'libphonenumber-js'
+import {
+  countDigitsBeforeCursor,
+  formatPhoneNumber,
+  getCallingCode,
+  mapCursorPositionToFormattedText,
+  parsePhoneValue,
+  removePhoneNumberFormat,
+} from './utils.js'
 import type { PhoneNumberInputProps } from './types.js'
 import type { SelectOption } from '../select/types.js'
 
@@ -11,6 +18,7 @@ interface UsePhoneNumberInputProps {
   onChange: PhoneNumberInputProps['onChange']
   onKeyDown: PhoneNumberInputProps['onKeyDown']
   onBlur: PhoneNumberInputProps['onBlur']
+  onFocus: PhoneNumberInputProps['onFocus']
   allowedCountries: PhoneNumberInputProps['allowedCountries']
   excludedCountries: PhoneNumberInputProps['excludedCountries']
   includeDependentAreas: PhoneNumberInputProps['includeDependentAreas']
@@ -22,42 +30,13 @@ const renderFlagIcon = (countryCode: string) => {
   return <CircleFlag className="size-4" countryCode={countryCode.toLowerCase()} height={16} />
 }
 
-const getCallingCode = (countryCode: string): string | null => {
-  try {
-    const callingCode = getCountryCallingCode(countryCode as CountryCode)
-    return `+${callingCode}`
-  } catch {
-    return null
-  }
-}
-
-const parsePhoneValue = (rawValue: string) => {
-  if (rawValue === '') return null
-
-  const withPlusValue = `${rawValue.startsWith('+') ? '' : '+'}${rawValue}`
-  const parsedValue = parsePhoneNumber(withPlusValue, { extract: false })
-
-  if (parsedValue?.isPossible() && parsedValue.country) {
-    const expectedValue = `+${parsedValue.countryCallingCode}${parsedValue.nationalNumber}`
-    if (withPlusValue !== expectedValue) {
-      return null // the number was corrected by the library, reject it
-    }
-
-    const callingCode = `+${parsedValue.countryCallingCode}`
-    const selectValue = `${callingCode}-${parsedValue.country}`
-    const inputValue = parsedValue.nationalNumber
-    return { selectValue, inputValue }
-  }
-
-  return null
-}
-
 export const usePhoneNumberInput = ({
   value,
   defaultValue,
   onChange,
   onKeyDown,
   onBlur,
+  onFocus,
   allowedCountries,
   excludedCountries,
   includeDependentAreas = false,
@@ -79,14 +58,21 @@ export const usePhoneNumberInput = ({
   }
 
   const [selectValue, setSelectValue] = useState(() => {
-    const parsedValue = parsePhoneValue(value ?? defaultValue ?? '')
+    const parsedValue = parsePhoneValue(defaultValue ?? '')
     return parsedValue?.selectValue ?? ''
   })
 
   const [inputValue, setInputValue] = useState(() => {
-    const rawValue = value ?? defaultValue ?? ''
+    const rawValue = defaultValue ?? ''
     const parsedValue = parsePhoneValue(rawValue)
-    return parsedValue?.inputValue ?? rawValue
+
+    if (parsedValue) {
+      const callingCode = parsedValue.selectValue.split('-')[0]
+      const formattedValue = formatPhoneNumber(callingCode, parsedValue.inputValue)
+      return formattedValue
+    }
+
+    return rawValue
   })
 
   const options: SelectOption[] = useMemo(() => {
@@ -151,7 +137,7 @@ export const usePhoneNumberInput = ({
     return filteredOptions
   }, [allowedCountries, excludedCountries, includeDependentAreas, prefixOptionFormat])
 
-  const handleSelectBlur = useCallback(
+  const handleSelectOnBlur = useCallback(
     (e: React.FocusEvent<HTMLButtonElement>) => {
       setTimeout(() => {
         const activeElement = document.activeElement
@@ -167,7 +153,7 @@ export const usePhoneNumberInput = ({
     [onBlur]
   )
 
-  const handleInputBlur = useCallback(
+  const handleInputOnBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       setTimeout(() => {
         const activeElement = document.activeElement
@@ -189,8 +175,21 @@ export const usePhoneNumberInput = ({
 
       const callingCode = newSelectValue.split('-')[0]
 
+      if (inputValue !== '') {
+        const unformattedInputValue = removePhoneNumberFormat(inputValue)
+
+        if (newSelectValue === '') {
+          lastCursorPositionRef.current = unformattedInputValue.length
+          setInputValue(unformattedInputValue)
+        } else {
+          const formattedInputValue = formatPhoneNumber(callingCode, unformattedInputValue)
+          lastCursorPositionRef.current = formattedInputValue.length
+          setInputValue(formattedInputValue)
+        }
+      }
+
       isInternalChangeRef.current = true
-      onChange?.(`${callingCode}${inputValue}`)
+      onChange?.(`${callingCode}${removePhoneNumberFormat(inputValue)}`)
 
       inputRef.current?.focus()
     },
@@ -199,35 +198,72 @@ export const usePhoneNumberInput = ({
 
   const handleInputOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      // save cursor position
-      lastCursorPositionRef.current = e.target.selectionStart ?? 0
+      const currentCursorPosition = e.target.selectionStart ?? 0
+      const previousUnformattedValue = removePhoneNumberFormat(inputValue)
 
       let callingCode = selectValue.split('-')[0]
-      let inputValueToProcess = e.target.value.replace(/\D/g, '')
-      if (selectValue === '' && inputValueToProcess.startsWith('00')) {
-        inputValueToProcess = `+${inputValueToProcess.substring(2)}`
+      let currentUnformattedValue = removePhoneNumberFormat(e.target.value)
+
+      // handle '00' prefix conversion to '+'
+      if (selectValue === '' && currentUnformattedValue.startsWith('00')) {
+        currentUnformattedValue = `+${currentUnformattedValue.substring(2)}`
       }
-      const parsedValue = parsePhoneValue(`${callingCode}${inputValueToProcess}`)
 
-      if (selectValue === '' && parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
-        setSelectValue(parsedValue.selectValue)
-        setInputValue(parsedValue.inputValue)
-        callingCode = parsedValue.selectValue.split('-')[0]
+      const parsedPhoneNumber = parsePhoneValue(`${callingCode}${currentUnformattedValue}`)
+
+      // auto-detect country when none is selected and it is a possible phone number
+      if (selectValue === '' && parsedPhoneNumber && options.some((o) => o.value === parsedPhoneNumber.selectValue)) {
+        setSelectValue(parsedPhoneNumber.selectValue)
+        callingCode = parsedPhoneNumber.selectValue.split('-')[0]
+
+        const autoFormattedValue = formatPhoneNumber(callingCode, parsedPhoneNumber.inputValue)
+        lastCursorPositionRef.current = autoFormattedValue.length
+        setInputValue(autoFormattedValue)
 
         isInternalChangeRef.current = true
-        onChange?.(`${callingCode}${parsedValue.inputValue}`)
+        onChange?.(`${callingCode}${parsedPhoneNumber.inputValue}`)
       } else {
-        const newInputValue = e.target.value.replace(/\D/g, '')
-        setInputValue(newInputValue)
+        // apply real-time formatting
+        let formattedValue = currentUnformattedValue
+        if (selectValue !== '' && currentUnformattedValue !== '') {
+          formattedValue = formatPhoneNumber(callingCode, currentUnformattedValue)
+        }
+
+        // handle cursor position after formatting
+        const unformattedLengthDifference = currentUnformattedValue.length - previousUnformattedValue.length
+        const isLargeInsertion = unformattedLengthDifference > 1
+        const isRemoval = unformattedLengthDifference < 0
+
+        let targetCursorPositionInUnformatted = 0
+
+        if (isRemoval) {
+          // count how many digits are before the cursor in the current input value
+          targetCursorPositionInUnformatted = countDigitsBeforeCursor(e.target.value, currentCursorPosition)
+        } else if (isLargeInsertion) {
+          // count digits before cursor in the new formatted value
+          targetCursorPositionInUnformatted = countDigitsBeforeCursor(formattedValue, currentCursorPosition)
+        } else {
+          // use cursor position directly for single character insertion
+          targetCursorPositionInUnformatted = Math.min(currentCursorPosition, currentUnformattedValue.length)
+        }
+
+        const finalCursorPosition = mapCursorPositionToFormattedText(
+          currentUnformattedValue,
+          formattedValue,
+          targetCursorPositionInUnformatted
+        )
+
+        lastCursorPositionRef.current = finalCursorPosition
+        setInputValue(formattedValue)
 
         isInternalChangeRef.current = true
-        onChange?.(`${callingCode}${newInputValue}`)
+        onChange?.(`${callingCode}${currentUnformattedValue}`)
       }
     },
-    [selectValue, options, onChange]
+    [selectValue, options, onChange, inputValue]
   )
 
-  const handleOnKeyDown = useCallback(
+  const handleInputOnKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       const isCopyShortcut =
         (e.ctrlKey && (e.key === 'c' || e.key === 'C')) || (e.metaKey && (e.key === 'c' || e.key === 'C'))
@@ -268,6 +304,17 @@ export const usePhoneNumberInput = ({
     [onKeyDown]
   )
 
+  const handleInputOnFocus = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      if (e.relatedTarget !== null) {
+        inputRef.current?.setSelectionRange(e.target.value.length, e.target.value.length)
+      }
+
+      onFocus?.(e)
+    },
+    [onFocus]
+  )
+
   useEffect(() => {
     if (value !== undefined) {
       if (isInternalChangeRef.current) {
@@ -284,9 +331,14 @@ export const usePhoneNumberInput = ({
       const parsedValue = parsePhoneValue(value)
       if (parsedValue && options.some((o) => o.value === parsedValue.selectValue)) {
         setSelectValue(parsedValue.selectValue)
-        setInputValue(parsedValue.inputValue)
+
+        const callingCode = parsedValue.selectValue.split('-')[0]
+        const formattedInputValue = formatPhoneNumber(callingCode, parsedValue.inputValue)
+        lastCursorPositionRef.current = formattedInputValue.length
+        setInputValue(formattedInputValue)
       } else {
         setSelectValue('')
+        lastCursorPositionRef.current = value.length
         setInputValue(value)
       }
     }
@@ -294,7 +346,7 @@ export const usePhoneNumberInput = ({
 
   // restore cursor position after input value change
   useEffect(() => {
-    if (inputRef.current && lastCursorPositionRef.current > 0) {
+    if (inputRef.current) {
       const position = Math.min(lastCursorPositionRef.current, inputValue.length)
       inputRef.current.setSelectionRange(position, position)
     }
@@ -306,9 +358,10 @@ export const usePhoneNumberInput = ({
     inputValue,
     handleSelectOnChange,
     handleInputOnChange,
-    handleOnKeyDown,
-    handleSelectBlur,
-    handleInputBlur,
+    handleInputOnKeyDown,
+    handleSelectOnBlur,
+    handleInputOnBlur,
+    handleInputOnFocus,
     mergedRef,
     containerRef,
   }
