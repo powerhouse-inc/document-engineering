@@ -37,21 +37,15 @@ export const useFileUpload = ({ value, defaultValue, onChange, isBase64Encoded }
   const previewStatus = getPreviewStatus()
 
   const handleDrop = useCallback(
-    (acceptedFiles?: File[]) => {
+    async (acceptedFiles?: File[]) => {
       if (!acceptedFiles || acceptedFiles.length === 0) return
       const file = acceptedFiles[0]
       const preview = URL.createObjectURL(file)
       setPreview(preview)
       setFile(file)
       if (isBase64Encoded) {
-        const base64 = fileToBase64(file)
-        base64
-          .then((base64) => {
-            onChange?.(base64 as string)
-          })
-          .catch((_error) => {
-            throw new Error('Error converting file to Base64')
-          })
+        const base64 = await fileToBase64(file)
+        onChange?.(base64 as string)
       } else {
         onChange?.(file)
       }

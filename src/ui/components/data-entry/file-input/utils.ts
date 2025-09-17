@@ -153,7 +153,7 @@ const fileValidators = {
 }
 export const detectPreviewType = (file?: File | string): 'pdf' | 'image' | 'audio' | 'video' | undefined => {
   if (!file) return undefined
-  const fileToValidate = file instanceof File ? file : dataUrlToFile(file)
+  const fileToValidate = normalizeToFile(file)
   if (!fileToValidate) return undefined
   const mimeType = fileToValidate.type
   if (Object.keys(MIME_TYPE_TO_EXTENSION_IMAGE).includes(mimeType)) return 'image'
@@ -206,7 +206,7 @@ export const previewSizeStyles = {
 
 export const validateFileForPreview = async (file?: File | string) => {
   if (!file) return
-  const fileToValidate = file instanceof File ? file : dataUrlToFile(file)
+  const fileToValidate = normalizeToFile(file)
   const typePreview = detectPreviewType(fileToValidate ?? undefined)
   if (!typePreview) {
     throw new Error('unsupported_file')
@@ -274,6 +274,19 @@ export const getContainerDimensions = (status: PreviewStatus, typePreview?: Prev
 }
 
 /**
+ * Normalizes an input (File or Data URL) to a File object.
+ * @param input - The value to normalize.
+ * @returns A File object or null if the conversion fails.
+ */
+export const normalizeToFile = (input: File | string | null | undefined): File | null => {
+  if (!input) return null
+  if (input instanceof File) {
+    return input
+  }
+  return dataUrlToFile(input)
+}
+
+/**
  * Converts a File object to a Base64 string.
  * @param file - The file to convert.
  * @returns A promise that resolves with the Base64 string.
@@ -296,33 +309,66 @@ export const isFile = (value: File | string): value is File => {
 }
 
 /**
- * Checks if a string is valid base64.
- * @param str - The string to check.
- * @returns True if it's valid base64.
+ * Validates if a string is in valid Base64 format.
+ *
+ * This function checks if the provided string conforms to the Base64 encoding standard
+ * (RFC 4648). It handles both raw Base64 strings and Data URLs (data:type/subtype;base64,data).
+ *
+ * @param str - The string to validate
+ * @returns `true` if the string is valid Base64, `false` otherwise
+ *
+ * @example
+ * ```typescript
+ * isBase64('SGVsbG8gV29ybGQ=') // true - valid base64
+ * isBase64('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...') // true - data URL
+ * isBase64('Hello World') // false - not base64
+ * isBase64('SGVsbG8gV29ybGQ===') // false - invalid padding
+ * isBase64('') // false - empty string
+ * ```
+ *
  */
 export const isBase64 = (str: string): boolean => {
-  try {
-    return btoa(atob(str)) === str
-  } catch {
+  if (typeof str !== 'string' || str.length === 0) {
     return false
   }
+
+  // Extract base64 data from Data URL if present
+  const base64Data = str.includes(',') ? str.split(',')[1] : str
+
+  // Base64 strings must have length that is a multiple of 4
+  if (base64Data.length % 4 !== 0) {
+    return false
+  }
+
+  // Check for valid base64 characters: A-Z, a-z, 0-9, +, /, and padding =
+  const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/
+
+  // Additional validation: padding can only be 0, 1, or 2 characters
+  const paddingCount = (base64Data.match(/=/g) ?? []).length
+  if (paddingCount > 2) {
+    return false
+  }
+
+  return base64Regex.test(base64Data)
 }
 
-/**
- * Gets the MIME type from a base64 string.
- * @param base64 - The base64 string.
- * @returns The MIME type or null if it cannot be extracted.
- */
 export const getMimeTypeFromBase64 = (base64: string): string | null => {
   const match = base64.match(/^data:([^;]+);base64,/)
   return match ? match[1] : null
 }
 
 export const getBase64Size = (base64: string): number => {
-  // Remove the data:mime/type;base64 prefix if it exists
+  if (!base64 || typeof base64 !== 'string') return 0
+
   const base64Data = base64.includes(',') ? base64.split(',')[1] : base64
-  // Calculate the approximate size (base64 is ~33% larger than the original binary)
-  return Math.floor((base64Data.length * 3) / 4)
+  let padding = 0
+  if (base64Data.endsWith('==')) {
+    padding = 2
+  } else if (base64Data.endsWith('=')) {
+    padding = 1
+  }
+
+  return (base64Data.length * 3) / 4 - padding
 }
 
 export const getMimeType = (value: File | string): string | null => {
@@ -344,13 +390,12 @@ export const getFileSize = (value: File | string): number => {
   return getBase64Size(value)
 }
 
-/**
- * Converts a Data URL (base64 string) to a File object.
- * @param dataUrl - The string in Data URL format.
- * @param fileName - Optional. The filename to generate. If not provided, one is generated.
- * @returns A File object or null if the conversion fails.
- */
-export const dataUrlToFile = (dataUrl: string, fileName?: string): File | null => {
+// /**
+//  * Converts a Data URL (base64 string) to a File object.
+//  * @param dataUrl - The string in Data URL format.
+//  * @returns A File object or null if the conversion fails.
+//  */
+export const dataUrlToFile = (dataUrl: string): File | null => {
   const mimeType = getMimeTypeFromBase64(dataUrl)
 
   if (!mimeType) {
@@ -374,18 +419,11 @@ export const dataUrlToFile = (dataUrl: string, fileName?: string): File | null =
     }
     const byteArray = new Uint8Array(byteNumbers)
 
-    // Generate a filename if one is not provided.
-    let finalFileName = fileName
-    if (!finalFileName) {
-      // Extract the extension from the MIME type (e.g. 'image/png' -> 'png')
-      const extension = mimeType.split('/')[1] || 'bin'
-      finalFileName = `file_${Date.now()}.${extension}`
-    }
+    const extension = mimeType.split('/')[1] || 'bin'
+    const finalFileName = `file_${Date.now()}.${extension}`
 
-    // Create a File
     return new File([byteArray], finalFileName, { type: mimeType, lastModified: Date.now() })
-  } catch (error) {
-    console.error('Error decoding base64 string:', error)
+  } catch (_error) {
     return null
   }
 }
