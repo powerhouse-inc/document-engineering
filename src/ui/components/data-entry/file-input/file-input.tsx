@@ -30,6 +30,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       defaultValue,
       dragAndDropEnabled = true,
       onChange,
+      isBase64Encoded = false,
 
       // Item Props
       fileName,
@@ -64,10 +65,11 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       value,
       defaultValue,
       onChange,
+      isBase64Encoded,
     })
     const { getInputProps, getRootProps, open, inputRef } = useDropzone({
       onDropAccepted: (acceptedFiles) => {
-        handleDrop(acceptedFiles)
+        void handleDrop(acceptedFiles)
       },
       noClick: status !== 'idle',
       noKeyboard: status !== 'idle',

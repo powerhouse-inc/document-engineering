@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
-import { detectPreviewType, getPreviewComponentFromError, validateFileForPreview } from './utils.js'
+import { detectPreviewType, fileToBase64, getPreviewComponentFromError, validateFileForPreview } from './utils.js'
 import useFetchQuery from './useFetchQuery.js'
 import type { PreviewStatus } from './types.js'
 
 interface UseFileUploadProps {
   value?: File | null
   defaultValue?: File | null
-  onChange?: (file: File | null) => void
+  onChange?: (file: File | null | string) => void
+  isBase64Encoded?: boolean
 }
 
-export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadProps) => {
+export const useFileUpload = ({ value, defaultValue, onChange, isBase64Encoded }: UseFileUploadProps) => {
   const [file, setFile] = useState<File | null>(value ?? defaultValue ?? null)
   const [preview, setPreview] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -18,6 +19,7 @@ export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadPr
     if (!file) return Promise.reject(new Error('No hay archivo seleccionado'))
     return validateFileForPreview(file)
   }, [file])
+
   const { data, isLoading, error } = useFetchQuery(queryFn, {
     enabled: isPreviewOpen && !!file,
   })
@@ -35,15 +37,20 @@ export const useFileUpload = ({ value, defaultValue, onChange }: UseFileUploadPr
   const previewStatus = getPreviewStatus()
 
   const handleDrop = useCallback(
-    (acceptedFiles?: File[]) => {
+    async (acceptedFiles?: File[]) => {
       if (!acceptedFiles || acceptedFiles.length === 0) return
       const file = acceptedFiles[0]
       const preview = URL.createObjectURL(file)
       setPreview(preview)
       setFile(file)
-      onChange?.(file)
+      if (isBase64Encoded) {
+        const base64 = await fileToBase64(file)
+        onChange?.(base64 as string)
+      } else {
+        onChange?.(file)
+      }
     },
-    [onChange]
+    [isBase64Encoded, onChange]
   )
 
   const handleCancelPreview = () => {
