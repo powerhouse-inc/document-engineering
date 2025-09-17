@@ -135,6 +135,7 @@ export interface RowAction<T extends DataType> {
 
 export type ColumnType =
   | 'string'
+  | 'string-multiline'
   | 'number'
   | 'boolean'
   | 'url'

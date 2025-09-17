@@ -4,7 +4,8 @@ import { renderCountryCell } from './country-render.js'
 import { renderDateCell } from './date-render.js'
 import { renderDateTimeCell } from './datetime-render.js'
 import { renderNumberCell } from './number-render.js'
-import { renderTextCell } from './text-render.js'
+import { renderStringCell } from './string-render.js'
+import { renderStringMultilineCell } from './string-multiline-render.js'
 import { renderTimeCell } from './time-render.js'
 import { renderUrlCell } from './url-render.js'
 import { renderPhidCell } from './phid-render.js'
@@ -19,7 +20,9 @@ import { renderPhoneCell } from './phone-render.js'
 const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
   switch (type) {
     case 'string':
-      return renderTextCell
+      return renderStringCell
+    case 'string-multiline':
+      return renderStringMultilineCell
     case 'number':
       return renderNumberCell
     case 'boolean':
@@ -51,9 +54,9 @@ const getRenderFn = <T>(type: ColumnType | undefined): RenderCellFn<T> => {
     case 'phone':
       return renderPhoneCell
     case undefined:
-      return renderTextCell
+      return renderStringCell
     default:
-      return renderTextCell
+      return renderStringCell
   }
 }
 

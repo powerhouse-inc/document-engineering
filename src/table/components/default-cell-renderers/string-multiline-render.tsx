@@ -1,10 +1,10 @@
 import { cn } from '../../../scalars/lib/utils.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
-const renderTextCell = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
+const renderStringMultilineCell = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
   return (
     <div
-      className={cn({
+      className={cn('whitespace-pre-wrap', {
         'text-right': context.column.align === 'right',
         'text-center': context.column.align === 'center',
         'text-left': context.column.align === 'left' || !context.column.align,
@@ -15,4 +15,4 @@ const renderTextCell = <T extends DataType = DataType>(value: unknown, context: 
   )
 }
 
-export { renderTextCell }
+export { renderStringMultilineCell }

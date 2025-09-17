@@ -7,6 +7,7 @@ const defaultColumnAlignment = (columnType: ColumnType): ColumnAlignment => {
       return 'right'
 
     case 'string':
+    case 'string-multiline':
     case 'boolean':
     case 'country':
     case 'enum':
