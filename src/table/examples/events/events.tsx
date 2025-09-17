@@ -35,7 +35,6 @@ const EventsExample = () => {
     setEventLogs([])
   }
 
-  // Set up event listeners for table editing events
   useEffect(() => {
     const api = apiRef.current
     if (!api) return
@@ -98,6 +97,48 @@ const EventsExample = () => {
       addEventLog('editing:validationErrorChange', details, event.detail)
     }) as EventListener
 
+    // Delete event handlers
+    const handleDeleteStart = ((event: CustomEvent<TableEventMap<MockedPerson>['table:delete:start']>) => {
+      const { rowCount, requiresConfirmation } = event.detail
+      addEventLog(
+        'delete:start',
+        `Starting deletion of ${rowCount} row(s)${requiresConfirmation ? ' (confirmation required)' : ''}`,
+        event.detail
+      )
+    }) as EventListener
+
+    const handleDeleteConfirm = ((event: CustomEvent<TableEventMap<MockedPerson>['table:delete:confirm']>) => {
+      const { rowCount, confirmationDetails } = event.detail
+      const details = confirmationDetails
+        ? `User confirmed deletion of ${rowCount} row(s) - "${confirmationDetails.title}"`
+        : `User confirmed deletion of ${rowCount} row(s)`
+      addEventLog('delete:confirm', details, event.detail)
+    }) as EventListener
+
+    const handleDeleteSuccess = ((event: CustomEvent<TableEventMap<MockedPerson>['table:delete:success']>) => {
+      const { rowCount, remainingRowCount } = event.detail
+      addEventLog(
+        'delete:success',
+        `Successfully deleted ${rowCount} row(s). ${remainingRowCount} rows remaining.`,
+        event.detail
+      )
+    }) as EventListener
+
+    const handleDeleteCancel = ((event: CustomEvent<TableEventMap<MockedPerson>['table:delete:cancel']>) => {
+      const { rowCount, reason } = event.detail
+      const reasonText = {
+        user_cancelled: 'User cancelled',
+        validation_failed: 'Validation failed',
+        permission_denied: 'Permission denied',
+      }[reason]
+      addEventLog('delete:cancel', `Deletion cancelled: ${reasonText} (${rowCount} row(s))`, event.detail)
+    }) as EventListener
+
+    const handleDeleteError = ((event: CustomEvent<TableEventMap<MockedPerson>['table:delete:error']>) => {
+      const { rowCount, error } = event.detail
+      addEventLog('delete:error', `Deletion failed for ${rowCount} row(s): ${error.message}`, event.detail)
+    }) as EventListener
+
     const tableElement = api.getHTMLTable()!
     tableElement.addEventListener('table:editing:start', handleEditingStart)
     tableElement.addEventListener('table:editing:save', handleEditingSave)
@@ -105,6 +146,11 @@ const EventsExample = () => {
     tableElement.addEventListener('table:editing:validationError', handleValidationError)
     tableElement.addEventListener('table:editing:validationSuccess', handleValidationSuccess)
     tableElement.addEventListener('table:editing:validationErrorChange', handleValidationErrorChange)
+    tableElement.addEventListener('table:delete:start', handleDeleteStart)
+    tableElement.addEventListener('table:delete:confirm', handleDeleteConfirm)
+    tableElement.addEventListener('table:delete:success', handleDeleteSuccess)
+    tableElement.addEventListener('table:delete:cancel', handleDeleteCancel)
+    tableElement.addEventListener('table:delete:error', handleDeleteError)
 
     return () => {
       // Cleanup event listeners
@@ -114,6 +160,11 @@ const EventsExample = () => {
       tableElement.removeEventListener('table:editing:validationError', handleValidationError)
       tableElement.removeEventListener('table:editing:validationSuccess', handleValidationSuccess)
       tableElement.removeEventListener('table:editing:validationErrorChange', handleValidationErrorChange)
+      tableElement.removeEventListener('table:delete:start', handleDeleteStart)
+      tableElement.removeEventListener('table:delete:confirm', handleDeleteConfirm)
+      tableElement.removeEventListener('table:delete:success', handleDeleteSuccess)
+      tableElement.removeEventListener('table:delete:cancel', handleDeleteCancel)
+      tableElement.removeEventListener('table:delete:error', handleDeleteError)
     }
   }, [])
 
@@ -141,8 +192,6 @@ const EventsExample = () => {
   }
 
   const handleDelete = (rows: MockedPerson[]) => {
-    addEventLog('onDelete', `${rows.length} row(s) deleted`, rows)
-
     // Remove the deleted rows from the data
     const deletedIds = rows.map((row) => row.id)
     setData((prev) => prev.filter((row) => !deletedIds.includes(row.id)))

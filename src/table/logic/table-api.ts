@@ -505,6 +505,14 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     const actualRows = rows.filter((rowIndex) => rowIndex < this._getState().data.length)
     const rowsData = actualRows.map((row) => this._getState().data[row].data)
 
+    // Trigger delete start event
+    this.eventManager.triggerDeleteStart({
+      rowIndexes: actualRows,
+      rowsData,
+      rowCount: actualRows.length,
+      requiresConfirmation: confirmationOptions.askConfirmation ?? true,
+    })
+
     const canDeleteThatMany = actualRows.length <= this._getState().data.length - (this._getConfig().minRowCount ?? 0)
     if (!canDeleteThatMany) {
       if (confirmationOptions.askConfirmation) {
@@ -513,17 +521,32 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
           description: `You can not delete that many entries. The minimum number of entries is ${this._getConfig().minRowCount}.`,
         })
       }
+
+      // Trigger delete cancel event for validation failure
+      this.eventManager.triggerDeleteCancel({
+        rowIndexes: actualRows,
+        rowsData,
+        rowCount: actualRows.length,
+        reason: 'validation_failed',
+      })
       return
     }
 
     let confirmed = true
+    let confirmationDetails: { title: string; description: string } | undefined
+
     if (confirmationOptions.askConfirmation) {
       const count = actualRows.length
+      const title = confirmationOptions.title ?? 'Delete entries'
+      const description =
+        confirmationOptions.description ??
+        `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`
+
+      confirmationDetails = { title, description }
+
       confirmed = await confirm({
-        title: confirmationOptions.title ?? 'Delete entries',
-        description:
-          confirmationOptions.description ??
-          `Are you sure you want to delete ${count} selected ${count === 1 ? 'entry' : 'entries'}?`,
+        title,
+        description,
         confirmLabel: 'Continue',
         confirmVariant: 'default',
         cancelLabel: 'Cancel',
@@ -532,8 +555,43 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
     }
 
     if (confirmed) {
-      await this._getConfig().onDelete?.(rowsData)
-      this.selection.clear()
+      // Trigger delete confirm event
+      this.eventManager.triggerDeleteConfirm({
+        rowIndexes: actualRows,
+        rowsData,
+        rowCount: actualRows.length,
+        confirmationDetails,
+      })
+
+      try {
+        await this._getConfig().onDelete?.(rowsData)
+        this.selection.clear()
+
+        // Trigger delete success event
+        this.eventManager.triggerDeleteSuccess({
+          rowIndexes: actualRows,
+          rowsData,
+          rowCount: actualRows.length,
+          remainingRowCount: this._getState().data.length,
+        })
+      } catch (error) {
+        // Trigger delete error event
+        this.eventManager.triggerDeleteError({
+          rowIndexes: actualRows,
+          rowsData,
+          rowCount: actualRows.length,
+          error: error as Error,
+        })
+        throw error // Re-throw to maintain existing error handling behavior
+      }
+    } else {
+      // Trigger delete cancel event for user cancellation
+      this.eventManager.triggerDeleteCancel({
+        rowIndexes: actualRows,
+        rowsData,
+        rowCount: actualRows.length,
+        reason: 'user_cancelled',
+      })
     }
   }
 
