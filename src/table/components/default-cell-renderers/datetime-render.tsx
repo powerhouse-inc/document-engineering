@@ -7,11 +7,11 @@ const renderDateTimeCell = <T extends DataType = DataType>(value: unknown, conte
 
     try {
       const date = new Date(dateValue as string | Date)
-      if (isNaN(date.getTime())) return String(dateValue)
+      if (isNaN(date.getTime())) return typeof dateValue === 'string' ? dateValue : ''
 
       return date.toLocaleString()
     } catch {
-      return String(dateValue)
+      return typeof dateValue === 'string' ? dateValue : ''
     }
   }
 

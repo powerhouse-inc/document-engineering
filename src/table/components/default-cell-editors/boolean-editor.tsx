@@ -1,5 +1,5 @@
-import { BooleanField, type BooleanFieldProps } from '../../../scalars/components/boolean-field/boolean-field.js'
 import { cn } from '../../../scalars/lib/utils.js'
+import { BooleanField, type BooleanFieldProps } from '../../../scalars/components/boolean-field/boolean-field.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildBooleanCellEditor = <T extends DataType>(
@@ -18,10 +18,14 @@ export const buildBooleanCellEditor = <T extends DataType>(
 
     return (
       <div
-        className={cn('flex [&_button]:!mr-0', {
-          'justify-center': context.column.align === 'center',
-          'justify-end': context.column.align === 'right',
-        })}
+        className={cn(
+          {
+            'justify-center': context.column.align === 'center',
+            'justify-end': context.column.align === 'right',
+          },
+          'flex w-full',
+          !booleanFieldProps.label && '[&_button]:!mr-0'
+        )}
       >
         <BooleanField
           autoFocus
@@ -29,7 +33,7 @@ export const buildBooleanCellEditor = <T extends DataType>(
           name={context.column.field}
           {...booleanFieldProps}
           value={booleanValue}
-          onChange={(value: boolean) => {
+          onChange={(value) => {
             onChange(value)
           }}
         />

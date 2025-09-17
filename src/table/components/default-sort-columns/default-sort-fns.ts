@@ -45,6 +45,7 @@ export const defaultSortFns = <T = unknown>(columnType: ColumnType): SortFn<T> =
     case 'phid':
     case 'oid':
     case 'aid':
+    case 'phone':
     default:
       return defaultSortTextFn as SortFn<T>
   }

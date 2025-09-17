@@ -57,24 +57,6 @@ export const usePhoneNumberInput = ({
     }
   }
 
-  const [selectValue, setSelectValue] = useState(() => {
-    const parsedValue = parsePhoneValue(defaultValue ?? '')
-    return parsedValue?.selectValue ?? ''
-  })
-
-  const [inputValue, setInputValue] = useState(() => {
-    const rawValue = defaultValue ?? ''
-    const parsedValue = parsePhoneValue(rawValue)
-
-    if (parsedValue) {
-      const callingCode = parsedValue.selectValue.split('-')[0]
-      const formattedValue = formatPhoneNumber(callingCode, parsedValue.inputValue)
-      return formattedValue
-    }
-
-    return rawValue
-  })
-
   const options: SelectOption[] = useMemo(() => {
     const defaultOptions = (countries as unknown as Countries)
       .filter(
@@ -136,6 +118,26 @@ export const usePhoneNumberInput = ({
 
     return filteredOptions
   }, [allowedCountries, excludedCountries, includeDependentAreas, prefixOptionFormat])
+
+  const getInitialValues = useCallback((rawValue: string, availableOptions: SelectOption[]) => {
+    if (rawValue === '') return { selectValue: '', inputValue: '' }
+
+    const parsedValue = parsePhoneValue(rawValue)
+    if (parsedValue && availableOptions.some((o) => o.value === parsedValue.selectValue)) {
+      const callingCode = parsedValue.selectValue.split('-')[0]
+      const formattedValue = formatPhoneNumber(callingCode, parsedValue.inputValue)
+      return {
+        selectValue: parsedValue.selectValue,
+        inputValue: formattedValue,
+      }
+    }
+
+    return { selectValue: '', inputValue: rawValue }
+  }, [])
+
+  const initialValues = getInitialValues(defaultValue ?? '', options)
+  const [selectValue, setSelectValue] = useState(initialValues.selectValue)
+  const [inputValue, setInputValue] = useState(initialValues.inputValue)
 
   const handleSelectOnBlur = useCallback(
     (e: React.FocusEvent<HTMLButtonElement>) => {
