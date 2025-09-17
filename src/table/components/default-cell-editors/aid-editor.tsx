@@ -1,4 +1,4 @@
-import { AIDField } from '../../../scalars/components/aid-field/aid-field.js'
+import { AIDField } from '../../../scalars/components/aid-field/index.js'
 import type { AIDFieldProps } from '../../../scalars/components/aid-field/types.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
@@ -19,7 +19,7 @@ export const buildAidCellEditor = <T extends DataType>(
           fetchOptionsCallback={fetchOptionsCallback}
           {...restProps}
           value={aidValue}
-          onChange={(value: string) => {
+          onChange={(value) => {
             onChange(value)
           }}
         />
@@ -42,7 +42,7 @@ export const buildAidCellEditor = <T extends DataType>(
         autoComplete={false}
         {...restProps}
         value={aidValue}
-        onChange={(value: string) => {
+        onChange={(value) => {
           onChange(value)
         }}
       />

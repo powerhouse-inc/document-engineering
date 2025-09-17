@@ -5,7 +5,7 @@ export const buildDateCellEditor = <T extends DataType>(
   datePickerFieldProps: Omit<DatePickerFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const DateCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
-    const dateValue = value ? String(value) : ''
+    const dateValue = typeof value === 'string' ? value : (value?.toString() ?? '')
 
     return (
       <DatePickerField

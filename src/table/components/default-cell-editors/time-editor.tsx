@@ -5,7 +5,7 @@ export const buildTimeCellEditor = <T extends DataType>(
   timeFieldProps: Omit<TimeFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const TimeCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
-    const timeValue = typeof value === 'string' ? value : String(value ?? '')
+    const timeValue = typeof value === 'string' ? value : (value?.toString() ?? '')
 
     return (
       <TimePickerField

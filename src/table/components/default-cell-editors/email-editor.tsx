@@ -1,4 +1,4 @@
-import { EmailField, type EmailFieldProps } from '../../../scalars/components/email-field/email-field.js'
+import { EmailField, type EmailFieldProps } from '../../../scalars/components/email-field/index.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildEmailCellEditor = <T extends DataType>(

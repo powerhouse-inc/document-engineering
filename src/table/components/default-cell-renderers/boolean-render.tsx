@@ -1,5 +1,5 @@
 import { cn } from '../../../scalars/lib/utils.js'
-import { Checkbox } from '../../../ui/components/data-entry/checkbox/checkbox.js'
+import { Checkbox } from '../../../ui/components/data-entry/checkbox/index.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 const renderBooleanCell = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
@@ -11,7 +11,7 @@ const renderBooleanCell = <T extends DataType = DataType>(value: unknown, contex
           'justify-center': context.column.align === 'center',
           'justify-start': context.column.align === 'left' || !context.column.align,
         },
-        'flex w-full'
+        'flex w-full [&_button]:!mr-0'
       )}
     >
       <Checkbox value={String(value) === 'true'} disabled={true} />

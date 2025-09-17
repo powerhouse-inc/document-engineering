@@ -1,4 +1,4 @@
-import { UrlField, type UrlFieldProps } from '../../../scalars/components/url-field/url-field.js'
+import { UrlField, type UrlFieldProps } from '../../../scalars/components/url-field/index.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildUrlCellEditor = <T extends DataType>(

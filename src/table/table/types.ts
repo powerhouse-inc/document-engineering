@@ -149,6 +149,7 @@ export type ColumnType =
   | 'currency'
   | 'country'
   | 'amount'
+  | 'phone'
 
 export interface CellContext<T extends DataType = DataType> {
   /**
