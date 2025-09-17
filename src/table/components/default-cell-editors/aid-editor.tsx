@@ -1,11 +1,12 @@
 import { AIDField, type AIDFieldProps } from '../../../scalars/components/aid-field/index.js'
+import { normalizeStringValue } from './utils.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildAidCellEditor = <T extends DataType>(
   aidFieldProps: Omit<AIDFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const AidCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
-    const aidValue = typeof value === 'string' ? value : (value?.toString() ?? '')
+    const aidValue = normalizeStringValue(value)
 
     if (aidFieldProps.autoComplete !== false && aidFieldProps.fetchOptionsCallback) {
       const { autoComplete: _, fetchOptionsCallback, ...restProps } = aidFieldProps

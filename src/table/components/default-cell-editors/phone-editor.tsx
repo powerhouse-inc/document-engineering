@@ -1,11 +1,12 @@
 import { PhoneNumberField, type PhoneNumberFieldProps } from '../../../scalars/components/phone-number-field/index.js'
+import { normalizeStringValue } from './utils.js'
 import type { CellContext, DataType } from '../../table/types.js'
 
 export const buildPhoneCellEditor = <T extends DataType>(
   phoneNumberFieldProps: Omit<PhoneNumberFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
   const PhoneNumberCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
-    const phoneValue = typeof value === 'string' ? value : (value?.toString() ?? '')
+    const phoneValue = normalizeStringValue(value)
 
     return (
       <PhoneNumberField
