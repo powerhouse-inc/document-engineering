@@ -172,6 +172,37 @@ const EventsExample = () => {
       )
     }) as EventListener
 
+    // Sort event handlers
+    const handleSortChange = ((event: CustomEvent<TableEventMap<MockedPerson>['table:sort:change']>) => {
+      const { columnDef, previousDirection, newDirection, previousColumnIndex } = event.detail
+      const directionText = (dir: string | null) => {
+        switch (dir) {
+          case 'asc':
+            return 'ascending'
+          case 'desc':
+            return 'descending'
+          case null:
+            return 'none'
+          default:
+            return 'none'
+        }
+      }
+
+      let details = `Sort changed for column "${columnDef.field}"`
+      if (previousColumnIndex !== null && previousColumnIndex !== event.detail.columnIndex) {
+        details += ` (switched from column ${previousColumnIndex})`
+      }
+      details += `: ${directionText(previousDirection)} → ${directionText(newDirection)}`
+
+      addEventLog('sort:change', details, event.detail)
+    }) as EventListener
+
+    const handleSortClear = ((event: CustomEvent<TableEventMap<MockedPerson>['table:sort:clear']>) => {
+      const { columnDef, previousSortState } = event.detail
+      const directionText = previousSortState.direction === 'asc' ? 'ascending' : 'descending'
+      addEventLog('sort:clear', `Sort cleared for column "${columnDef.field}" (was ${directionText})`, event.detail)
+    }) as EventListener
+
     const tableElement = api.getHTMLTable()!
     tableElement.addEventListener('table:editing:start', handleEditingStart)
     tableElement.addEventListener('table:editing:save', handleEditingSave)
@@ -187,6 +218,8 @@ const EventsExample = () => {
     tableElement.addEventListener('table:delete:success', handleDeleteSuccess)
     tableElement.addEventListener('table:delete:cancel', handleDeleteCancel)
     tableElement.addEventListener('table:delete:error', handleDeleteError)
+    tableElement.addEventListener('table:sort:change', handleSortChange)
+    tableElement.addEventListener('table:sort:clear', handleSortClear)
 
     return () => {
       // Cleanup event listeners
@@ -204,6 +237,8 @@ const EventsExample = () => {
       tableElement.removeEventListener('table:delete:success', handleDeleteSuccess)
       tableElement.removeEventListener('table:delete:cancel', handleDeleteCancel)
       tableElement.removeEventListener('table:delete:error', handleDeleteError)
+      tableElement.removeEventListener('table:sort:change', handleSortChange)
+      tableElement.removeEventListener('table:sort:clear', handleSortClear)
     }
   }, [])
 

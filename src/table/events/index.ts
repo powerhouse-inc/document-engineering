@@ -19,6 +19,8 @@ export type {
   InsertStartEvent,
   InsertSuccessEvent,
   InsertCancelEvent,
+  SortChangeEvent,
+  SortClearEvent,
   TableEventPayload,
   TableEventMap,
   TableEventListener,

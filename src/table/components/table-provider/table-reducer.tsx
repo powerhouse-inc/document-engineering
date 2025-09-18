@@ -10,6 +10,15 @@ import type {
 import type { UseFormReturn } from 'react-hook-form'
 import { createFormReferences } from '../../table/utils.js'
 import { sortData } from '../../lib/sort-utils.js'
+import type { SortChangeEvent, SortClearEvent } from '../../events/types.js'
+
+/**
+ * Interface for event manager methods used in sorting actions
+ */
+interface SortEventManager<TData> {
+  triggerSortChange(payload: Omit<SortChangeEvent<TData>, 'timestamp'>): void
+  triggerSortClear(payload: Omit<SortClearEvent<TData>, 'timestamp'>): void
+}
 
 interface TableState<T extends DataType = DataType> {
   dispatch?: React.Dispatch<TableAction<T>>
@@ -98,6 +107,7 @@ type TableAction<T extends DataType = DataType> =
         columnIndex: number
         direction: SortDirection | null
         tableConfig: ObjectSetTableConfig<T>
+        eventManager: SortEventManager<T>
       }
     }
 
@@ -229,6 +239,7 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
     case 'SORT_COLUMN': {
       const column = state.columns[action.payload.columnIndex]
       const sortDirection = action.payload.direction
+      const previousSortState = state.sortState
 
       // Create indexed data from defaultData
       const indexedData = [...state.defaultData].map((data, index) => ({ data, __index: index }))
@@ -244,6 +255,26 @@ const tableReducer = <T extends DataType = DataType>(state: TableState<T>, actio
 
       // Use the sort utility function
       const sortedData = sortData(indexedData, sortState, column, action.payload.tableConfig)
+
+      action.payload.eventManager.triggerSortChange({
+        columnIndex: action.payload.columnIndex,
+        columnDef: column,
+        previousDirection: previousSortState?.direction ?? null,
+        newDirection: sortDirection,
+        previousColumnIndex: previousSortState?.columnIndex ?? null,
+        sortState,
+        dataCount: state.defaultData.length,
+      })
+
+      // Trigger sort clear event if sorting is being cleared
+      if (sortDirection === null && previousSortState !== null) {
+        action.payload.eventManager.triggerSortClear({
+          columnIndex: action.payload.columnIndex,
+          columnDef: column,
+          previousSortState,
+          dataCount: state.defaultData.length,
+        })
+      }
 
       // Call onSort callback if provided
       if (column.onSort) {
