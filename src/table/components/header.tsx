@@ -36,7 +36,7 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
           rowIndex: -1, // the header row has no row
           row: undefined,
           column,
-          columnIndex, // Use the original index directly
+          columnIndex,
           tableConfig: config,
           isEditMode: false,
         }

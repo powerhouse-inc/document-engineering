@@ -125,7 +125,6 @@ export const getNextSelectedCell = (options: GetNextSelectedCellOptions): TableC
 
   const { row, column } = currentCell
 
-  // Helper function to find next visible column
   const getNextVisibleColumn = (startIndex: number, direction: 'left' | 'right'): number => {
     if (!columns) return startIndex
 
@@ -141,7 +140,6 @@ export const getNextSelectedCell = (options: GetNextSelectedCellOptions): TableC
     return startIndex
   }
 
-  // Helper function to find first visible column
   const getFirstVisibleColumn = (): number => {
     if (!columns) return 0
     for (let i = 0; i < columns.length; i++) {
@@ -150,7 +148,6 @@ export const getNextSelectedCell = (options: GetNextSelectedCellOptions): TableC
     return 0
   }
 
-  // Helper function to find last visible column
   const getLastVisibleColumn = (): number => {
     if (!columns) return columnCount - 1
     for (let i = columns.length - 1; i >= 0; i--) {

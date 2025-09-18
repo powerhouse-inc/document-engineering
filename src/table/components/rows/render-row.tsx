@@ -150,7 +150,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
               rowItem={item}
               column={column}
               rowIndex={rowIndex}
-              columnIndex={columnIndex} // Use the original index directly
+              columnIndex={columnIndex}
               renderEmptyCell={mode === 'empty'}
             />
           )
