@@ -28,46 +28,50 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
   const isAllRowsSelected = api.getTotalRowsCount() !== 0 && selectedRowIndexes.length === api.getTotalRowsCount()
 
   const columnHeaders = useMemo(() => {
-    return columns.map((column, columnIndex) => {
-      const cellContext: CellContext<any> = {
-        rowIndex: -1, // the header row has no row
-        row: undefined,
-        column,
-        columnIndex,
-        tableConfig: config,
-        isEditMode: false,
-      }
+    return columns
+      .map((column, columnIndex) => {
+        if (column.hidden) return null // the columns is hidden
 
-      const style: React.CSSProperties = {
-        width: column.width ?? 'auto',
-        minWidth: column.minWidth ?? 'auto',
-        maxWidth: column.maxWidth ?? column.width ?? 'auto',
-      }
-
-      const onSort = () => {
-        if (!column.sortable) return
-
-        const tableState = api._getState()
-        if (tableState.sortState?.columnIndex === columnIndex) {
-          const nextDirection = tableState.sortState.direction === 'asc' ? 'desc' : null
-          void api.sortRows(columnIndex, nextDirection)
-        } else {
-          void api.sortRows(columnIndex, 'asc')
+        const cellContext: CellContext<any> = {
+          rowIndex: -1, // the header row has no row
+          row: undefined,
+          column,
+          columnIndex, // Use the original index directly
+          tableConfig: config,
+          isEditMode: false,
         }
-      }
 
-      return (
-        <th
-          className={cn('group/header-cell', column.sortable ? 'cursor-pointer' : '')}
-          style={style}
-          key={column.field}
-          onClick={onSort}
-        >
-          {/* the `renderHeader` function should be intialized with a default value at this point */}
-          {column.renderHeader!(getColumnTitle(column), cellContext)}
-        </th>
-      )
-    })
+        const style: React.CSSProperties = {
+          width: column.width ?? 'auto',
+          minWidth: column.minWidth ?? 'auto',
+          maxWidth: column.maxWidth ?? column.width ?? 'auto',
+        }
+
+        const onSort = () => {
+          if (!column.sortable) return
+
+          const tableState = api._getState()
+          if (tableState.sortState?.columnIndex === columnIndex) {
+            const nextDirection = tableState.sortState.direction === 'asc' ? 'desc' : null
+            void api.sortRows(columnIndex, nextDirection)
+          } else {
+            void api.sortRows(columnIndex, 'asc')
+          }
+        }
+
+        return (
+          <th
+            className={cn('group/header-cell', column.sortable ? 'cursor-pointer' : '')}
+            style={style}
+            key={column.field}
+            onClick={onSort}
+          >
+            {/* the `renderHeader` function should be intialized with a default value at this point */}
+            {column.renderHeader!(getColumnTitle(column), cellContext)}
+          </th>
+        )
+      })
+      .filter(Boolean) // Filter out null values/hidden columns
   }, [api, columns, config])
 
   const { draggingOver, onDragOver, onDragLeave, onDrop } = useRowDrag(HEADER_ROW_INDEX)

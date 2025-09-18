@@ -86,7 +86,7 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
     return (
       mode === 'default' &&
       (!!api.canDelete() ||
-        config.actions?.primary ||
+        !!config.actions?.primary ||
         (Array.isArray(config.actions?.secondary) && config.actions.secondary.length > 0))
     )
   }, [
@@ -139,23 +139,25 @@ const RenderRow = <T extends DataType>({ item, rowIndex, mode = 'default' }: Ren
         selected={selectedRowIndexes.includes(rowIndex) || selectedCellIndex?.row === rowIndex}
         hasErrors={hasErrors}
       />
-
       {/* render the cells */}
-      {config.columns.map((column, columnIndex) => {
-        return (
-          <RenderCell
-            key={column.field}
-            rowItem={item}
-            column={column}
-            rowIndex={rowIndex}
-            columnIndex={columnIndex}
-            renderEmptyCell={mode === 'empty'}
-          />
-        )
-      })}
+      {config.columns
+        .map((column, columnIndex) => {
+          if (column.hidden) return null // the columns is hidden
 
+          return (
+            <RenderCell
+              key={column.field}
+              rowItem={item}
+              column={column}
+              rowIndex={rowIndex}
+              columnIndex={columnIndex} // Use the original index directly
+              renderEmptyCell={mode === 'empty'}
+            />
+          )
+        })
+        .filter(Boolean)}
+      {/* Filter out null values/hidden columns */}
       {(api.isEditable() || api.canDelete()) && <InformationCell rowIndex={rowIndex} />}
-
       {canShowActions && (
         <RowActions
           data={item}
