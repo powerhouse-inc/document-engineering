@@ -156,7 +156,7 @@ const meta: Meta<typeof FileInput> = {
         type: { summary: '(e: MouseEvent) => void' },
       },
     },
-    isBase64Encoded: {
+    submitAsBase64: {
       control: 'boolean',
       description: 'If true, the file is encoded in base64.',
       table: {
