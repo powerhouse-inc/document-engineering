@@ -37,6 +37,13 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 | `table:delete:cancel` | Deletion cancelled | `rowIndexes[]`, `rowsData[]`, `rowCount`, `reason` |
 | `table:delete:error` | Deletion failed | `rowIndexes[]`, `rowsData[]`, `rowCount`, `error` |
 
+#### Sort Events
+
+| Event | When | Key Payload Fields |
+|-------|------|-------------------|
+| `table:sort:change` | Column sort direction changes | `columnIndex`, `columnDef`, `previousDirection`, `newDirection`, `previousColumnIndex`, `sortState`, `dataCount` |
+| `table:sort:clear` | Column sorting is cleared | `columnIndex`, `columnDef`, `previousSortState`, `dataCount` |
+
 **Common Payload Fields:**
 
 *Editing Events:*
@@ -58,6 +65,12 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 - `rowIndexes: number[]` - Array of row positions being deleted
 - `rowsData: TData[]` - Array of complete row data being deleted
 - `rowCount: number` - Number of rows being deleted
+
+*Sort Events:*
+- `timestamp: Date` - When event occurred
+- `columnIndex: number` - Column position (0-based)
+- `columnDef: ColumnDef<TData>` - Column configuration
+- `dataCount: number` - Total number of rows in the table
 
 ---
 

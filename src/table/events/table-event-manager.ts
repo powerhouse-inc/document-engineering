@@ -10,6 +10,8 @@ import type {
   InsertCancelEvent,
   InsertStartEvent,
   InsertSuccessEvent,
+  SortChangeEvent,
+  SortClearEvent,
   TableEventMap,
   ValidationErrorChangeEvent,
   ValidationErrorEvent,
@@ -195,6 +197,26 @@ export class TableEventManager<TData = unknown> {
    */
   triggerInsertCancel(payload: Omit<InsertCancelEvent<TData>, 'timestamp'>): void {
     this.triggerEvent('table:insert:cancel', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when column sort direction changes
+   */
+  triggerSortChange(payload: Omit<SortChangeEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:sort:change', {
+      ...payload,
+      timestamp: new Date(),
+    })
+  }
+
+  /**
+   * Triggers when column sorting is cleared
+   */
+  triggerSortClear(payload: Omit<SortClearEvent<TData>, 'timestamp'>): void {
+    this.triggerEvent('table:sort:clear', {
       ...payload,
       timestamp: new Date(),
     })

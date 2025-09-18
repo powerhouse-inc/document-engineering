@@ -349,6 +349,62 @@ export interface InsertCancelEvent<TData = unknown> extends BaseCellEvent<TData>
 }
 
 /**
+ * Event triggered when column sort direction changes
+ */
+export interface SortChangeEvent<TData = unknown> extends BaseColumnEvent {
+  /**
+   * The column index where the sort change occurred
+   */
+  columnIndex: number
+  /**
+   * The column definition for the sorted column
+   */
+  columnDef: ColumnDef<TData>
+  /**
+   * The previous sort direction (null if no previous sort)
+   */
+  previousDirection: 'asc' | 'desc' | null
+  /**
+   * The new sort direction (null if sorting is being cleared)
+   */
+  newDirection: 'asc' | 'desc' | null
+  /**
+   * The previous column index that was sorted (null if no previous sort)
+   */
+  previousColumnIndex: number | null
+  /**
+   * The current sort state (null if no sorting is applied)
+   */
+  sortState: { columnIndex: number; direction: 'asc' | 'desc' } | null
+  /**
+   * The total number of rows in the table
+   */
+  dataCount: number
+}
+
+/**
+ * Event triggered when column sorting is cleared
+ */
+export interface SortClearEvent<TData = unknown> extends BaseColumnEvent {
+  /**
+   * The column index where the sort was cleared
+   */
+  columnIndex: number
+  /**
+   * The column definition for the column that was sorted
+   */
+  columnDef: ColumnDef<TData>
+  /**
+   * The previous sort state that was cleared
+   */
+  previousSortState: { columnIndex: number; direction: 'asc' | 'desc' }
+  /**
+   * The total number of rows in the table
+   */
+  dataCount: number
+}
+
+/**
  * Union type of all possible table event payloads
  */
 export type TableEventPayload<TData = unknown> =
@@ -366,6 +422,8 @@ export type TableEventPayload<TData = unknown> =
   | InsertStartEvent<TData>
   | InsertSuccessEvent<TData>
   | InsertCancelEvent<TData>
+  | SortChangeEvent<TData>
+  | SortClearEvent<TData>
 
 /**
  * Mapping of event names to their payload types
@@ -385,6 +443,8 @@ export interface TableEventMap<TData = unknown> {
   'table:insert:start': InsertStartEvent<TData>
   'table:insert:success': InsertSuccessEvent<TData>
   'table:insert:cancel': InsertCancelEvent<TData>
+  'table:sort:change': SortChangeEvent<TData>
+  'table:sort:clear': SortClearEvent<TData>
 }
 
 /**

@@ -498,7 +498,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
 
     this._getState().dispatch?.({
       type: 'SORT_COLUMN',
-      payload: { columnIndex, direction, tableConfig: this._getConfig() },
+      payload: { columnIndex, direction, tableConfig: this._getConfig(), eventManager: this.eventManager },
     })
   }
 
