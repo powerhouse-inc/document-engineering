@@ -10,63 +10,67 @@ The Table dispatches DOM events for all operations. Events are type-safe and inc
 
 #### Editing Events
 
-| Event | When | Key Payload Fields |
-|-------|------|-------------------|
-| `table:editing:start` | Cell enters edit mode | `currentValue`, `isAddingRow` |
-| `table:editing:save` | Cell edit saved | `oldValue`, `newValue`, `isAddingRow` |
-| `table:editing:exit` | Exit edit mode | `saved` (boolean), `finalValue` |
-| `table:editing:validationError` | Validation fails | `errors[]`, `value` |
-| `table:editing:validationSuccess` | Validation passes | `value` |
-| `table:editing:validationErrorChange` | Error state changes | `previousErrors[]`, `currentErrors[]` |
+| Event                                 | When                  | Key Payload Fields                    |
+| ------------------------------------- | --------------------- | ------------------------------------- |
+| `table:editing:start`                 | Cell enters edit mode | `currentValue`, `isAddingRow`         |
+| `table:editing:save`                  | Cell edit saved       | `oldValue`, `newValue`, `isAddingRow` |
+| `table:editing:exit`                  | Exit edit mode        | `saved` (boolean), `finalValue`       |
+| `table:editing:validationError`       | Validation fails      | `errors[]`, `value`                   |
+| `table:editing:validationSuccess`     | Validation passes     | `value`                               |
+| `table:editing:validationErrorChange` | Error state changes   | `previousErrors[]`, `currentErrors[]` |
 
 #### Insert Events
 
-| Event | When | Key Payload Fields |
-|-------|------|-------------------|
-| `table:insert:start` | User starts editing insertion row | `field`, `currentRowCount` |
-| `table:insert:success` | New row insertion completed | `insertedData`, `field`, `newRowCount`, `insertedRowIndex` |
-| `table:insert:cancel` | Insertion cancelled | `field`, `cancelledValue`, `reason` |
+| Event                  | When                              | Key Payload Fields                                         |
+| ---------------------- | --------------------------------- | ---------------------------------------------------------- |
+| `table:insert:start`   | User starts editing insertion row | `field`, `currentRowCount`                                 |
+| `table:insert:success` | New row insertion completed       | `insertedData`, `field`, `newRowCount`, `insertedRowIndex` |
+| `table:insert:cancel`  | Insertion cancelled               | `field`, `cancelledValue`, `reason`                        |
 
 #### Delete Events
 
-| Event | When | Key Payload Fields |
-|-------|------|-------------------|
-| `table:delete:start` | Delete operation begins | `rowIndexes[]`, `rowsData[]`, `rowCount`, `requiresConfirmation` |
-| `table:delete:confirm` | User confirms deletion | `rowIndexes[]`, `rowsData[]`, `rowCount`, `confirmationDetails` |
-| `table:delete:success` | Deletion completed successfully | `rowIndexes[]`, `rowsData[]`, `rowCount`, `remainingRowCount` |
-| `table:delete:cancel` | Deletion cancelled | `rowIndexes[]`, `rowsData[]`, `rowCount`, `reason` |
-| `table:delete:error` | Deletion failed | `rowIndexes[]`, `rowsData[]`, `rowCount`, `error` |
+| Event                  | When                            | Key Payload Fields                                               |
+| ---------------------- | ------------------------------- | ---------------------------------------------------------------- |
+| `table:delete:start`   | Delete operation begins         | `rowIndexes[]`, `rowsData[]`, `rowCount`, `requiresConfirmation` |
+| `table:delete:confirm` | User confirms deletion          | `rowIndexes[]`, `rowsData[]`, `rowCount`, `confirmationDetails`  |
+| `table:delete:success` | Deletion completed successfully | `rowIndexes[]`, `rowsData[]`, `rowCount`, `remainingRowCount`    |
+| `table:delete:cancel`  | Deletion cancelled              | `rowIndexes[]`, `rowsData[]`, `rowCount`, `reason`               |
+| `table:delete:error`   | Deletion failed                 | `rowIndexes[]`, `rowsData[]`, `rowCount`, `error`                |
 
 #### Sort Events
 
-| Event | When | Key Payload Fields |
-|-------|------|-------------------|
+| Event               | When                          | Key Payload Fields                                                                                               |
+| ------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `table:sort:change` | Column sort direction changes | `columnIndex`, `columnDef`, `previousDirection`, `newDirection`, `previousColumnIndex`, `sortState`, `dataCount` |
-| `table:sort:clear` | Column sorting is cleared | `columnIndex`, `columnDef`, `previousSortState`, `dataCount` |
+| `table:sort:clear`  | Column sorting is cleared     | `columnIndex`, `columnDef`, `previousSortState`, `dataCount`                                                     |
 
 **Common Payload Fields:**
 
-*Editing Events:*
+_Editing Events:_
+
 - `timestamp: Date` - When event occurred
-- `rowIndex: number` - Row position (0-based)  
+- `rowIndex: number` - Row position (0-based)
 - `cell: { row, column }` - Cell coordinates
 - `columnDef: ColumnDef<TData>` - Column configuration
 - `rowData?: TData` - Complete row data (optional)
 
-*Insert Events:*
+_Insert Events:_
+
 - `timestamp: Date` - When event occurred
 - `field: string` - Field being edited/inserted
 - `cell: { row, column }` - Cell coordinates (insertion row)
 - `columnDef: ColumnDef<TData>` - Column configuration
 - `rowData?: TData` - Row data (undefined for insertion row)
 
-*Delete Events:*
+_Delete Events:_
+
 - `timestamp: Date` - When event occurred
 - `rowIndexes: number[]` - Array of row positions being deleted
 - `rowsData: TData[]` - Array of complete row data being deleted
 - `rowCount: number` - Number of rows being deleted
 
-*Sort Events:*
+_Sort Events:_
+
 - `timestamp: Date` - When event occurred
 - `columnIndex: number` - Column position (0-based)
 - `columnDef: ColumnDef<TData>` - Column configuration
@@ -133,7 +137,7 @@ useEffect(() => {
     'table:insert:cancel': (e: CustomEvent) => {
       const { field, reason } = e.detail
       console.log(`Insertion cancelled for ${field}: ${reason}`)
-    }
+    },
   } as const
 
   // Register all
@@ -149,64 +153,6 @@ useEffect(() => {
   }
 }, [])
 ```
-
----
-
-## Common Patterns
-
-### Data Sync
-```tsx
-const handleSave = ((event: CustomEvent) => {
-  const { rowData, newValue, columnDef } = event.detail
-  updateAPI(rowData.id, columnDef.field, newValue)
-}) as EventListener
-```
-
-### Validation UI
-```tsx
-const [errors, setErrors] = useState<Record<string, string[]>>({})
-
-const handleValidationChange = ((event: CustomEvent) => {
-  const { cell, currentErrors } = event.detail
-  const key = `${cell.row}-${cell.column}`
-  setErrors(prev => ({ ...prev, [key]: currentErrors }))
-}) as EventListener
-```
-
-### Activity Logging
-```tsx
-const handleAnyEdit = ((event: CustomEvent) => {
-  const { columnDef, timestamp } = event.detail
-  logActivity(`Edited ${columnDef.field} at ${timestamp}`)
-}) as EventListener
-```
-
----
-
-## Event Types
-
-All events extend base interfaces and include validation context when relevant:
-
-```tsx
-interface BaseTableEvent {
-  timestamp: Date
-}
-
-interface BaseCellEvent<TData> extends BaseTableEvent {
-  rowIndex: number
-  cell: { row: number; column: number }
-  columnDef: ColumnDef<TData>
-  rowData?: TData
-}
-
-interface ValidationContext {
-  hasErrors: boolean
-  errorCount: number
-  validationRules?: string[]
-}
-```
-
-**Future Events:** The system is extensible for row operations, column operations, and table-level events.
 
 ---
 
