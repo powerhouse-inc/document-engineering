@@ -55,7 +55,7 @@ const HeaderNumberTd: React.FC<HeaderNumberTdProps> = ({
         isAllRowsSelected && 'bg-blue-900 text-white',
         className
       )}
-      style={{ width: elementWidth, minWidth: elementWidth }}
+      style={{ width: elementWidth, minWidth: elementWidth, maxWidth: elementWidth }}
       onClick={handleSelectAllRows}
       {...props}
     >

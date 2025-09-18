@@ -32,6 +32,9 @@ export interface ColumnDef<T> {
   maxWidth?: React.CSSProperties['maxWidth']
   align?: 'left' | 'center' | 'right'
 
+  // visibility
+  hidden?: boolean
+
   // sorting
   sortable?: boolean
   rowComparator?: (a: unknown, b: unknown, context: SortableColumnContext<T>) => number
@@ -81,6 +84,7 @@ Unless you explicitly set them, the table fills in sensible defaults based on th
 | `sortable`                | `false`                     | Enables click-to-sort functionality on the column header, allowing users to sort the table by this column's values.       |
 | `rowComparator`           | Type-based comparator       | Defines how to compare two values when sorting, with appropriate logic for different data types and null handling.        |
 | `width/minWidth/maxWidth` | `auto`                      | Controls the column's sizing behavior, allowing for fixed widths or flexible sizing within specified constraints.         |
+| `hidden`                  | `false`                     | Controls column visibility. When `true`, the column is hidden from display but remains in the configuration.           |
 
 ## Property reference
 
@@ -109,6 +113,12 @@ cell values change, as the table automatically calculates widths based on conten
 | `width`    | `React.CSSProperties["width"]`    | `"auto"` | Column width (any valid CSS width). |
 | `minWidth` | `React.CSSProperties["minWidth"]` | `"auto"` | Minimum column width.               |
 | `maxWidth` | `React.CSSProperties["maxWidth"]` | `"auto"` | Maximum column width.               |
+
+### Visibility
+
+| Property | Type      | Default | Description                                                                                    |
+| -------- | --------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `hidden` | `boolean` | `false` | Controls column visibility. When `true`, the column is hidden from display but remains in the configuration. |
 
 ### Value pipeline
 
@@ -236,4 +246,25 @@ const columns = [
   },
   { field: 'status', title: 'Status', sortable: true }, // uses default text comparator
 ]
+```
+
+### Column Visibility
+
+```tsx
+const [hiddenColumns, setHiddenColumns] = useState(['email'])
+
+const columns = [
+  { field: 'name', title: 'Name', hidden: hiddenColumns.includes('name') },
+  { field: 'email', title: 'Email', hidden: hiddenColumns.includes('email') },
+  { field: 'status', title: 'Status', hidden: hiddenColumns.includes('status') },
+]
+
+// Toggle column visibility
+const toggleColumn = (field: string) => {
+  setHiddenColumns(prev => 
+    prev.includes(field) 
+      ? prev.filter(f => f !== field)
+      : [...prev, field]
+  )
+}
 ```

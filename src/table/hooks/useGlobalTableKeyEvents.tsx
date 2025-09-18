@@ -24,12 +24,14 @@ const useGlobalTableKeyEvents = () => {
               return
             } else {
               void api.exitCellEditMode(true).then(() => {
+                if (!selectedCell) return
                 const nextCell = getNextSelectedCell({
                   direction: 'right',
                   currentCell: selectedCell,
                   rowCount: api._getState().data.length,
                   columnCount: api._getConfig().columns.length,
                   moveToNextRow: true,
+                  columns: api._getConfig().columns,
                 })
                 api.selection.selectCell(nextCell.row, nextCell.column)
               })
@@ -45,6 +47,7 @@ const useGlobalTableKeyEvents = () => {
 
         // arrow keys
         if (['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Tab'].includes(e.key)) {
+          if (!selectedCell) return
           const direction = getDirectionFromKey(e.key)
           const nextCell = getNextSelectedCell({
             direction,
@@ -52,11 +55,13 @@ const useGlobalTableKeyEvents = () => {
             rowCount: api._getState().data.length,
             columnCount: api._getConfig().columns.length,
             moveToNextRow: e.key === 'Tab',
+            columns: api._getConfig().columns,
           })
+          api.selection.selectCell(nextCell.row, nextCell.column)
+
           if (e.key === 'Tab') {
             e.preventDefault()
           }
-          api.selection.selectCell(nextCell.row, nextCell.column)
         }
       }
     }

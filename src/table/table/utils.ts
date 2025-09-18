@@ -21,7 +21,7 @@ export const getColumnTitle = <T extends DataType = DataType>(column: ColumnDef<
   }
 
   // Handle dot notation by taking only the last part
-  const fieldName = column.field.split('.').pop() || column.field
+  const fieldName = column.field.split('.').pop() ?? column.field
 
   // this is a humanized version of the field name handling camelCase, snake_case and kebab-case
   // Handle different cases by inserting spaces
@@ -93,6 +93,10 @@ interface GetNextSelectedCellOptions {
    * Whether to move to the next row when the current cell is at the last column.
    */
   moveToNextRow?: boolean
+  /**
+   * Optional columns array to handle hidden columns. If provided, navigation will skip hidden columns.
+   */
+  columns?: Array<{ hidden?: boolean }>
 }
 
 /**
@@ -107,39 +111,79 @@ interface GetNextSelectedCellOptions {
  * ```
  */
 export const getNextSelectedCell = (options: GetNextSelectedCellOptions): TableCellIndex => {
-  const { direction, currentCell, rowCount, columnCount, moveToNextRow = false } = options
+  const { direction, currentCell, rowCount, columnCount, moveToNextRow = false, columns } = options
 
   if (!currentCell) {
-    // if there is no current cell, we're going to select the first cell
+    // if there is no current cell, we're going to select the first visible cell
+    if (columns) {
+      for (let i = 0; i < columns.length; i++) {
+        if (!columns[i].hidden) return { row: 0, column: i }
+      }
+    }
     return { row: 0, column: 0 }
   }
 
   const { row, column } = currentCell
 
+  const getNextVisibleColumn = (startIndex: number, direction: 'left' | 'right'): number => {
+    if (!columns) return startIndex
+
+    if (direction === 'right') {
+      for (let i = startIndex + 1; i < columns.length; i++) {
+        if (!columns[i].hidden) return i
+      }
+    } else {
+      for (let i = startIndex - 1; i >= 0; i--) {
+        if (!columns[i].hidden) return i
+      }
+    }
+    return startIndex
+  }
+
+  const getFirstVisibleColumn = (): number => {
+    if (!columns) return 0
+    for (let i = 0; i < columns.length; i++) {
+      if (!columns[i].hidden) return i
+    }
+    return 0
+  }
+
+  const getLastVisibleColumn = (): number => {
+    if (!columns) return columnCount - 1
+    for (let i = columns.length - 1; i >= 0; i--) {
+      if (!columns[i].hidden) return i
+    }
+    return columnCount - 1
+  }
+
   switch (direction) {
-    case 'right':
-      if (column < columnCount - 1) {
-        return { row, column: column + 1 }
+    case 'right': {
+      const nextVisibleColumn = getNextVisibleColumn(column, 'right')
+      if (nextVisibleColumn !== column) {
+        return { row, column: nextVisibleColumn }
       } else {
         if (moveToNextRow) {
-          return { row: (row + 1) % rowCount, column: 0 }
+          return { row: (row + 1) % rowCount, column: getFirstVisibleColumn() }
         } else {
-          return { row, column: columnCount - 1 }
+          return { row, column: getLastVisibleColumn() }
         }
       }
-    case 'left':
-      if (column > 0) {
-        return { row, column: column - 1 }
+    }
+    case 'left': {
+      const prevVisibleColumn = getNextVisibleColumn(column, 'left')
+      if (prevVisibleColumn !== column) {
+        return { row, column: prevVisibleColumn }
       } else {
         if (moveToNextRow) {
           return {
             row: row === 0 ? rowCount - 1 : row - 1,
-            column: columnCount - 1,
+            column: getLastVisibleColumn(),
           }
         } else {
-          return { row, column: 0 }
+          return { row, column: getFirstVisibleColumn() }
         }
       }
+    }
     case 'down':
       if (row < rowCount - 1) {
         return { row: row + 1, column }

@@ -542,6 +542,13 @@ export interface ColumnDef<T extends DataType = DataType> extends SortableColumn
    * @default "left"
    */
   align?: ColumnAlignment
+
+  /**
+   * Whether the column is hidden from display.
+   *
+   * @default false
+   */
+  hidden?: boolean
 }
 
 export type ColumnAlignment = 'left' | 'center' | 'right'
