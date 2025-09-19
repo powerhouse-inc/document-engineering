@@ -17,11 +17,14 @@ const renderDateTimeCell = <T extends DataType = DataType>(value: unknown, conte
 
   return (
     <div
-      className={cn({
-        'text-right': context.column.align === 'right',
-        'text-center': context.column.align === 'center',
-        'text-left': context.column.align === 'left' || !context.column.align,
-      })}
+      className={cn(
+        {
+          'text-right': context.column.align === 'right',
+          'text-center': context.column.align === 'center',
+          'text-left': context.column.align === 'left' || !context.column.align,
+        },
+        'font-semibold'
+      )}
     >
       {formatDateTime(value)}
     </div>

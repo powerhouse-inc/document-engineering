@@ -11,18 +11,17 @@ const renderUrlCell = <T extends DataType = DataType>(value: unknown, context: C
         'text-center': context.column.align === 'center',
         'text-left': context.column.align === 'left' || !context.column.align,
       })}
+      style={{ maxWidth: context.column.maxWidth ?? context.column.width }}
     >
-      {url ? (
+      {url && (
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-900 hover:underline focus-visible:outline-none"
+          className="text-blue-900 hover:underline focus-visible:outline-none truncate block"
         >
           {url}
         </a>
-      ) : (
-        ''
       )}
     </div>
   )

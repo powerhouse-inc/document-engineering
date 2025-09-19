@@ -3,8 +3,12 @@ const defaultValueFormatter = (value: unknown) => {
     return ''
   }
 
-  // it is ok if the value is an object and we get something like `[object Object]`
-  // in such case, the developer would have to use a custom value formatter
+  // Handle Amount objects by preserving them instead of converting to string
+  if (typeof value === 'object' && 'value' in value) {
+    return value
+  }
+
+  // For other values, convert to string
   return String(value)
 }
 
