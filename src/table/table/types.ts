@@ -259,17 +259,20 @@ export type ValueGetterFn<T extends DataType = DataType> = (row: T, context: Cel
  * @param value The value to format.
  * @param context The cell context.
  *
- * @default The value is converted to a string.
+ * @default For most types, the value is converted to a string. For amount type, objects and numbers are preserved.
  *
  * @example
  * ```ts
- * const taxRateValueFormatter = (value: unknown) => {
+ * const taxRateValueFormatter = (value: unknown, context: CellContext<T>) => {
  *  if (typeof value !== "number") return value?.toString() ?? "N/A";
  *  return `${value * 100}%`;
  * };
  * ```
  */
-export type ValueFormatterFn<T extends DataType = DataType> = (value: unknown, context: CellContext<T>) => string
+export type ValueFormatterFn<T extends DataType = DataType> = (
+  value: unknown,
+  context: CellContext<T>
+) => string | object | number
 
 /**
  * A function that renders a cell.
