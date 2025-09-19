@@ -10,7 +10,7 @@ export const buildEnumCellEditor = <T extends DataType>(
 
     const props = {
       name: context.column.field,
-      className: 'max-w-full',
+      style: { maxWidth: context.column.maxWidth ?? context.column.width ?? '100%' },
       autoFocus: true,
       ...selectFieldProps,
       value: enumValue,
