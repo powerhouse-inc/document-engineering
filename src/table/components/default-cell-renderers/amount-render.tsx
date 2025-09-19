@@ -1,4 +1,5 @@
 import { cn } from '../../../scalars/lib/utils.js'
+import { getTextAlignmentClasses } from './utils.js'
 import type { CellContext, DataType } from '../../table/types.js'
 import type { Amount } from '../../../ui/components/data-entry/amount-input/types.js'
 
@@ -19,20 +20,7 @@ const renderAmountCell = <T extends DataType = DataType>(value: unknown, context
     return ''
   }
 
-  return (
-    <div
-      className={cn(
-        {
-          'text-right': context.column.align === 'right',
-          'text-center': context.column.align === 'center',
-          'text-left': context.column.align === 'left' || !context.column.align,
-        },
-        'font-semibold'
-      )}
-    >
-      {formatAmount(value)}
-    </div>
-  )
+  return <div className={cn(getTextAlignmentClasses(context), 'font-semibold')}>{formatAmount(value)}</div>
 }
 
 export { renderAmountCell }
