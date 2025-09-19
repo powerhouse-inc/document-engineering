@@ -9,7 +9,7 @@ export const buildAidCellEditor = <T extends DataType>(
     const aidValue = normalizeStringValue(value)
 
     if (aidFieldProps.autoComplete !== false && aidFieldProps.fetchOptionsCallback) {
-      const { autoComplete: _, fetchOptionsCallback, ...restProps } = aidFieldProps
+      const { autoComplete: _1, fetchOptionsCallback, ...restProps } = aidFieldProps
 
       return (
         <AIDField

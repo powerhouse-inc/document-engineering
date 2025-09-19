@@ -1,10 +1,18 @@
-const defaultValueFormatter = (value: unknown) => {
+import type { CellContext, DataType } from '../../table/types.js'
+
+const defaultValueFormatter = <T extends DataType = DataType>(value: unknown, context: CellContext<T>) => {
   if (value === null || value === undefined) {
     return ''
   }
 
-  // it is ok if the value is an object and we get something like `[object Object]`
-  // in such case, the developer would have to use a custom value formatter
+  // For amount type, preserve objects and numbers
+  if (context.column.type === 'amount') {
+    if (typeof value === 'object' || typeof value === 'number') {
+      return value
+    }
+  }
+
+  // For other values, convert to string
   return String(value)
 }
 

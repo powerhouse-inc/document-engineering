@@ -125,7 +125,7 @@ cell values change, as the table automatically calculates widths based on conten
 | Property         | Type                                                     | Default              | Description                                              |
 | ---------------- | -------------------------------------------------------- | -------------------- | -------------------------------------------------------- |
 | `valueGetter`    | `(row: T, context: CellContext<T>) => unknown`           | Field accessor       | Compute the value used by the column. Overrides `field`. |
-| `valueFormatter` | `(value: unknown, context: CellContext<T>) => string`    | Type-based formatter | Convert raw value to display text.                       |
+| `valueFormatter` | `(value: unknown, context: CellContext<T>) => string \| object \| number` | Type-based formatter | Convert raw value to display format. Returns string for most types, preserves objects and numbers for amount type. |
 | `renderCell`     | `(value: unknown, context: CellContext<T>) => ReactNode` | Type-based renderer  | Custom cell rendering (use non-table elements).          |
 
 ### Editing
