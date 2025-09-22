@@ -1,3 +1,35 @@
+# [1.37.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.36.0...v1.37.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **doc:** scape union type in col-definition.mdx ([4838f1a](https://github.com/powerhouse-inc/document-engineering/commit/4838f1a76bbca172b5568dfbc77662856b85a360))
+* **file:** chage the name of base64 prop to make it more clear ([f5c0573](https://github.com/powerhouse-inc/document-engineering/commit/f5c0573d0c2b2cea984d53d12a505d7c225a5d89))
+* **file:** improve the utils functions and let deafault for basa64 ([d57f7cf](https://github.com/powerhouse-inc/document-engineering/commit/d57f7cf59642b348d2b73ad97a85329a36b9584d))
+* **scalars:** correct the value in the stories ([5a565f3](https://github.com/powerhouse-inc/document-engineering/commit/5a565f3c60dc73a5604850f6c5bc39c13ed59af6))
+* **table:** fix eslint errors ([c3034c0](https://github.com/powerhouse-inc/document-engineering/commit/c3034c0eedac737bdf389e8e432476ed23d9e109))
+* **table:** improve default cell renderers and editors ([f8fc8cd](https://github.com/powerhouse-inc/document-engineering/commit/f8fc8cd02f04ddfaeb6bbbb73f3daf7f8b1ca48b))
+* **table:** improve default cell renderers and editors ([9f42681](https://github.com/powerhouse-inc/document-engineering/commit/9f426819a8ad85cebc5a7e6cb4c53ff6cba66328))
+* **table:** improve default enum render & editor styles ([96660d2](https://github.com/powerhouse-inc/document-engineering/commit/96660d2390419ebb28cacd748945d908089285b0))
+* **table:** improve imports in some default editors ([cd61afd](https://github.com/powerhouse-inc/document-engineering/commit/cd61afdd08ab6e375f0380ac3bbac79674fbc7b4))
+* **table:** improve string default editor & renderer ([fc8a76b](https://github.com/powerhouse-inc/document-engineering/commit/fc8a76b2981b0b84388a318bc787b1561271285a))
+* **table:** improve url default editor ([b4495a0](https://github.com/powerhouse-inc/document-engineering/commit/b4495a082e9047568ce097525bcc11b0d0d95bb7))
+* **table:** improve value normalization in default editors ([b152c00](https://github.com/powerhouse-inc/document-engineering/commit/b152c00eaa237ea76097df1d2b288d06d134965c))
+* **table:** linting errors ([6820b0f](https://github.com/powerhouse-inc/document-engineering/commit/6820b0f1106a7e372330e5107e2664e1a5a41c60))
+* **table:** linting errors ([52eabc4](https://github.com/powerhouse-inc/document-engineering/commit/52eabc439685a390e3bf6b12f72e2d20df3cf6f1))
+* **ui:** display the default input placeholder formatted in Phone Number Input ([d09c9a7](https://github.com/powerhouse-inc/document-engineering/commit/d09c9a7032ab564cfb39d9fb1c190e1efd6884a8))
+* **ui:** fix snapshots ([6cb07f2](https://github.com/powerhouse-inc/document-engineering/commit/6cb07f2438ac940e10cae1fe6893327e8e6767f9))
+
+
+### Features
+
+* **file:** add props for convert file to base64 ([904285c](https://github.com/powerhouse-inc/document-engineering/commit/904285cd1f2c5469a9d2946392bb9ae4918323c4))
+* **table:** add column visibility functionality with examples ([7a9bbc2](https://github.com/powerhouse-inc/document-engineering/commit/7a9bbc2e50f6c41ee8355875f0e143360975b850))
+* **table:** add event support for sort state changes ([39782e1](https://github.com/powerhouse-inc/document-engineering/commit/39782e18715eba1a05348c00958c72732fa00369))
+* **table:** add insertion events to complement deletion events ([93ec8cf](https://github.com/powerhouse-inc/document-engineering/commit/93ec8cf72a8b7fedb1ee165ee5bef1f976965485))
+* **table:** editing events ([25923ec](https://github.com/powerhouse-inc/document-engineering/commit/25923ec30035c96a68089daac2f6e3de4abde7bb))
+* **table:** implement deletion event handling system ([07d1a32](https://github.com/powerhouse-inc/document-engineering/commit/07d1a3260df636b285ec7d272eb213080393819d))
+
 # [1.36.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.35.1...v1.36.0) (2025-09-15)
 
 
