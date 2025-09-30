@@ -7,6 +7,7 @@ export interface MockedPerson {
   email: string
   status: 'active' | 'inactive'
   address: {
+    country: string
     addressLine1: string
     addressLine2: string
     city: string
@@ -25,11 +26,12 @@ export const mockData: MockedPerson[] = [
     email: 'alice@example.com',
     status: 'active',
     address: {
+      country: 'US',
       addressLine1: '123 Main St',
       addressLine2: 'Apt 1',
-      city: 'Anytown',
+      city: 'San Francisco',
       state: 'CA',
-      zip: '12345',
+      zip: '94102',
     },
   },
   {
@@ -41,11 +43,12 @@ export const mockData: MockedPerson[] = [
     email: 'bob@example.com',
     status: 'inactive',
     address: {
-      addressLine1: '123 Main St',
-      addressLine2: 'Apt 1',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
+      country: 'CA',
+      addressLine1: '456 Queen St',
+      addressLine2: 'Suite 200',
+      city: 'Toronto',
+      state: 'ON',
+      zip: 'M5H 2M9',
     },
   },
   {
@@ -57,11 +60,12 @@ export const mockData: MockedPerson[] = [
     email: 'charlie@example.com',
     status: 'active',
     address: {
-      addressLine1: '123 Main St',
-      addressLine2: 'Apt 1',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
+      country: 'ES',
+      addressLine1: 'Calle Gran Vía 123',
+      addressLine2: '3º B',
+      city: 'Madrid',
+      state: 'Madrid',
+      zip: '28013',
     },
   },
   {
@@ -73,11 +77,12 @@ export const mockData: MockedPerson[] = [
     email: 'diana@example.com',
     status: 'inactive',
     address: {
-      addressLine1: '123 Main St',
-      addressLine2: 'Apt 1',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
+      country: 'GB',
+      addressLine1: '10 Downing Street',
+      addressLine2: 'Westminster',
+      city: 'London',
+      state: 'England',
+      zip: 'SW1A 2AA',
     },
   },
   {
@@ -89,11 +94,12 @@ export const mockData: MockedPerson[] = [
     email: 'edward@example.com',
     status: 'active',
     address: {
-      addressLine1: '123 Main St',
-      addressLine2: 'Apt 1',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
+      country: 'DE',
+      addressLine1: 'Unter den Linden 1',
+      addressLine2: 'Haus 2',
+      city: 'Berlin',
+      state: 'Berlin',
+      zip: '10117',
     },
   },
   {
@@ -105,11 +111,12 @@ export const mockData: MockedPerson[] = [
     email: 'fiona@example.com',
     status: 'inactive',
     address: {
-      addressLine1: '123 Main St',
-      addressLine2: 'Apt 1',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
+      country: 'FR',
+      addressLine1: '123 Avenue des Champs-Élysées',
+      addressLine2: 'Appartement 4B',
+      city: 'Paris',
+      state: 'Île-de-France',
+      zip: '75008',
     },
   },
   {
@@ -121,11 +128,12 @@ export const mockData: MockedPerson[] = [
     email: 'alex@example.com',
     status: 'inactive',
     address: {
-      addressLine1: '123 Main St',
-      addressLine2: 'Apt 1',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
+      country: 'JP',
+      addressLine1: '1-1-1 Shibuya',
+      addressLine2: 'Shibuya Sky 15F',
+      city: 'Tokyo',
+      state: 'Tokyo',
+      zip: '150-0002',
     },
   },
 ]

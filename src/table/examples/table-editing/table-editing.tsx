@@ -145,6 +145,20 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
             </div>
           ),
       },
+      {
+        field: 'country',
+        type: 'country',
+        editable: true,
+        valueGetter: (row: MockedPerson) => row.address.country,
+        onSave: (value: unknown, context: CellContext<MockedPerson>) => {
+          setData((prevData) => {
+            const newData = [...prevData]
+            newData[context.rowIndex].address.country = value as string
+            return newData
+          })
+          return true
+        },
+      },
     ],
     []
   )
@@ -214,6 +228,7 @@ const TableEditingExample = (props: Omit<ObjectSetTableConfig<MockedPerson>, 'co
           walletAddress: '',
           email: '',
           address: {
+            country: '',
             addressLine1: '',
             addressLine2: '',
             city: '',

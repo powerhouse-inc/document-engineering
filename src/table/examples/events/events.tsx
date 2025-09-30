@@ -253,6 +253,7 @@ const EventsExample = () => {
       email: (newRowData.email as string) || 'new@example.com',
       status: 'active',
       address: {
+        country: 'US',
         addressLine1: '',
         addressLine2: '',
         city: 'New City',

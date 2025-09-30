@@ -4,7 +4,7 @@ import type { CellContext, DataType } from '../../table/types.js'
 export const buildCountryCellEditor = <T extends DataType>(
   countryFieldProps: Omit<CountryCodeFieldProps, 'name' | 'value' | 'onChange'>
 ) => {
-  const CountryCellEditor = (value: unknown, onChange: (newValue: unknown) => void, context: CellContext<T>) => {
+  const CountryCellEditor = (value: unknown, _onChange: (newValue: unknown) => void, context: CellContext<T>) => {
     const countryValue = typeof value === 'string' ? value : String(value ?? '')
 
     return (
@@ -13,10 +13,7 @@ export const buildCountryCellEditor = <T extends DataType>(
         className="max-w-full"
         autoFocus
         {...countryFieldProps}
-        value={countryValue}
-        onChange={(value: string) => {
-          onChange(value)
-        }}
+        defaultValue={countryValue}
       />
     )
   }
