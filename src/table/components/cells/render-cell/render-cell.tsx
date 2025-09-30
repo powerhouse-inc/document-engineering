@@ -1,4 +1,4 @@
-import type { CellContext, ColumnDef, DataType, IndexedData } from '../../../table/types.js'
+import type { ColumnDef, DataType, IndexedData } from '../../../table/types.js'
 import { DefaultTableCell } from '../default-cell.js'
 import { Form } from '../../../../scalars/components/form/form.js'
 import { cn } from '../../../../scalars/lib/utils.js'
@@ -20,7 +20,18 @@ const RenderCell = <T extends DataType>({
   columnIndex,
   renderEmptyCell = false,
 }: RenderCellProps<T>) => {
-  const { config, isThisCellSelected, isCellEditMode, handleCellClick, formRef, hasErrors } = useCellLogic<T>({
+  const {
+    isThisCellSelected,
+    isThisCellEditMode,
+    handleCellClick,
+    formRef,
+    hasErrors,
+    cellContext,
+    cellValue,
+    isAddingRow,
+  } = useCellLogic<T>({
+    rowItem,
+    column,
     rowIndex,
     columnIndex,
     renderEmptyCell,
@@ -33,22 +44,6 @@ const RenderCell = <T extends DataType>({
   if (renderEmptyCell) {
     return <EmptyCell column={column} isSelected={isThisCellSelected} onClick={handleCellClick} />
   }
-
-  const isThisCellEditMode = isCellEditMode && isThisCellSelected
-
-  const cellContext: CellContext<T> = {
-    row: rowItem.data,
-    column,
-    rowIndex,
-    columnIndex,
-    tableConfig: config,
-    isEditMode: isThisCellEditMode,
-  }
-
-  // get and format the cell value
-  const cellValue = column.valueFormatter?.(column.valueGetter?.(rowItem.data, cellContext), cellContext)
-
-  const isAddingRow = rowIndex === config.data.length
 
   return (
     <DefaultTableCell
