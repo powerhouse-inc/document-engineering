@@ -242,6 +242,7 @@ const CustomCellEditorsExample = (props: Omit<ObjectSetTableConfig<MockedPerson>
             walletAddress: '',
             email: '',
             address: {
+              country: '',
               addressLine1: '',
               addressLine2: '',
               city: '',
