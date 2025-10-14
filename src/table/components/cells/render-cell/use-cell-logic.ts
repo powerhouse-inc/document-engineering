@@ -1,14 +1,22 @@
 import { useMemo } from 'react'
-import type { DataType } from '../../../table/types.js'
+import type { CellContext, ColumnDef, DataType, IndexedData } from '../../../table/types.js'
 import { isCellEqual } from '../../../table/utils.js'
 import { useInternalTableState } from '../../table-provider/table-provider.js'
 
-interface UseCellLogicProps {
+interface UseCellLogicProps<T extends DataType> {
+  rowItem: IndexedData<T>
+  column: ColumnDef<T>
   rowIndex: number
   columnIndex: number
   renderEmptyCell?: boolean
 }
-const useCellLogic = <T extends DataType>({ rowIndex, columnIndex, renderEmptyCell = false }: UseCellLogicProps) => {
+const useCellLogic = <T extends DataType>({
+  rowItem,
+  column,
+  rowIndex,
+  columnIndex,
+  renderEmptyCell = false,
+}: UseCellLogicProps<T>) => {
   const {
     config,
     state: { selectedCellIndex, isCellEditMode, selectedRowErrors },
@@ -55,13 +63,40 @@ const useCellLogic = <T extends DataType>({ rowIndex, columnIndex, renderEmptyCe
   const hasErrors =
     selectedCellIndex?.row === rowIndex && Array.isArray(selectedRowErrors) && selectedRowErrors.length > 0
 
+  const isThisCellEditMode = isCellEditMode && isThisCellSelected
+
+  const cellContext: CellContext<T> = useMemo(
+    () => ({
+      row: rowItem.data,
+      column,
+      rowIndex,
+      columnIndex,
+      tableConfig: config,
+      isEditMode: isThisCellEditMode,
+    }),
+    [rowItem.data, column, rowIndex, columnIndex, config, isThisCellEditMode]
+  )
+
+  // get and format the cell value
+  const cellValue = useMemo(() => {
+    return rowIndex < config.data.length
+      ? column.valueFormatter?.(column.valueGetter?.(rowItem.data, cellContext), cellContext)
+      : undefined
+  }, [rowIndex, config.data.length, column, rowItem.data, cellContext])
+
+  const isAddingRow = rowIndex === config.data.length
+
   return {
     config,
     isThisCellSelected,
     isCellEditMode,
+    isThisCellEditMode,
     handleCellClick,
     formRef,
     hasErrors,
+    cellContext,
+    cellValue,
+    isAddingRow,
   }
 }
 

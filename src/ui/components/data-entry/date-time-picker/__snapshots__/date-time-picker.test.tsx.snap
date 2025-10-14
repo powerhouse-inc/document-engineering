@@ -17,7 +17,7 @@ exports[`DateTimePicker > should match the snapshot 1`] = `
         class="flex w-full rounded-md text-sm focus-within:ring-ring dark:ring-charcoal-300 ring-gray-900 focus-within:ring-1 focus-within:ring-offset-0 dark:border-charcoal-700 dark:bg-charcoal-900 border border-gray-300 bg-white focus:[&_.input-field]:bg-transparent dark:focus-within:hover:bg-charcoal-900 focus-within:hover:cursor-default focus-within:hover:bg-white base-picker__input [&.base-picker\\\\_\\\\_popover]:px-4 [&.base-picker\\\\_\\\\_popover]:pt-3 [&.base-picker\\\\_\\\\_popover]:pb-6 undefined"
       >
         <button
-          aria-controls="radix-:r0:"
+          aria-controls="radix-_r_0_"
           aria-expanded="false"
           aria-haspopup="dialog"
           class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground pl-3 pr-2 z-1 focus:text-selected-foreground focus:bg-none button-ghost focus:outline-none focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:ring-gray-900"

@@ -16,7 +16,7 @@ interface RowActionsProps<T extends DataType> {
   open: boolean
   data: IndexedData<T>
   rowIndex: number
-  rowRef: React.RefObject<HTMLTableRowElement>
+  rowRef: React.RefObject<HTMLTableRowElement | null>
   primaryAction?: RowAction<T>
   secondaryActions?: Array<RowAction<T>>
 

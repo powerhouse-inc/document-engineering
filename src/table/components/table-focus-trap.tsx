@@ -1,5 +1,5 @@
 import { FocusTrap } from 'focus-trap-react'
-import { useRef } from 'react'
+import { type RefObject, useRef } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useInternalTableState } from './table-provider/table-provider.js'
 
@@ -8,9 +8,9 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
     state: { selectedCellIndex },
     api,
   } = useInternalTableState()
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
 
-  useOnClickOutside(ref, (event) => {
+  useOnClickOutside(ref as RefObject<HTMLDivElement>, (event) => {
     const { x, y } = (event.target as HTMLElement).getBoundingClientRect()
 
     // if the click was inside the table, we don't need to do anything
@@ -19,6 +19,15 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
     if (tableRect) {
       if (x >= tableRect.left && x <= tableRect.right && y >= tableRect.top && y <= tableRect.bottom) {
         return
+      } else {
+        // the focus trap is over the table, but the portal elements like dropdowns, tooltips, etc. are mounted
+        // outside the table in the DOM which causes a focus trap deactivation if clicked in those portal elements
+        // we need to detect if the click was in a portal element, and if so, we handle it as if it was inside the table
+        const portal = document.querySelector('[data-radix-popper-content-wrapper]')
+        if (portal?.contains(event.target as Node)) {
+          // the click was inside the portal element
+          return
+        }
       }
     }
 

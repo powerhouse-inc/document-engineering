@@ -20,7 +20,7 @@ export const buildAmountCellEditor = <T extends DataType>(
         type="Amount"
         {...amountFieldProps}
         value={amountValue as Amount}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChange(e.target.value)
         }}
       />

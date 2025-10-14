@@ -92,7 +92,7 @@ export const SidebarItem = ({
   )
 
   // Check if the title has ellipsis to determine if the tooltip should be delayed
-  const ellipsisRef = useRef<HTMLDivElement>(null)
+  const ellipsisRef = useRef<HTMLDivElement | null>(null)
   const hasEllipsis = useEllipsis(ellipsisRef)
 
   return (
@@ -150,6 +150,7 @@ export const SidebarItem = ({
                 typeof IconComponent === 'string' ? (
                   <Icon name={IconComponent} size={16} className="min-w-4" />
                 ) : (
+                  // @ts-expect-error -- this is a workaround
                   cloneElement(IconComponent, { className: 'min-w-4 w-4' })
                 )
               ) : pinnedMode ? (

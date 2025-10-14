@@ -34,12 +34,12 @@ exports[`Tabs Components > should TabsContent  match snapshot 1`] = `
     dir="ltr"
   >
     <div
-      aria-labelledby="radix-:r2:-trigger-tab1"
+      aria-labelledby="radix-_r_2_-trigger-tab1"
       class="ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
       data-orientation="horizontal"
       data-state="inactive"
       hidden=""
-      id="radix-:r2:-content-tab1"
+      id="radix-_r_2_-content-tab1"
       role="tabpanel"
       tabindex="0"
     />
@@ -62,13 +62,13 @@ exports[`Tabs Components > should TabsTrigger match snapshot 1`] = `
       tabindex="0"
     >
       <button
-        aria-controls="radix-:r3:-content-tab1"
+        aria-controls="radix-_r_3_-content-tab1"
         aria-selected="false"
         class="ring-offset-background focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow"
         data-orientation="horizontal"
         data-radix-collection-item=""
         data-state="inactive"
-        id="radix-:r3:-trigger-tab1"
+        id="radix-_r_3_-trigger-tab1"
         role="tab"
         tabindex="-1"
         type="button"

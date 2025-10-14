@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
  * @param ref - The ref of the element to detect ellipsis on
  * @returns Whether the element's text is truncated with ellipsis
  */
-export const useEllipsis = <T extends HTMLElement>(ref: React.RefObject<T>): boolean => {
+export const useEllipsis = <T extends HTMLElement>(ref: React.RefObject<T | null>): boolean => {
   const [hasEllipsis, setHasEllipsis] = useState(false)
 
   useEffect(() => {

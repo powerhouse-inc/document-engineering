@@ -1,22 +1,28 @@
-import React, { useId, useMemo, useRef } from 'react'
-import { Input } from '../../../../ui/components/data-entry/input/index.js'
-import { sharedValueTransformers } from '../../../lib/shared-value-transformers.js'
-import { cn } from '../../../lib/utils.js'
-import { Command } from '../command/index.js'
-import { FormDescription } from '../form-description/index.js'
-import { FormGroup } from '../form-group/index.js'
-import { FormLabel } from '../form-label/index.js'
-import { FormMessageList } from '../form-message/index.js'
-import { Popover, PopoverAnchor, PopoverContent } from '../popover/index.js'
-import ValueTransformer, { type TransformerType } from '../value-transformer/index.js'
+import { forwardRef, useId, useMemo, useRef } from 'react'
+import { Input } from '@powerhousedao/document-engineering/ui/components/data-entry/input/index.js'
+import { sharedValueTransformers } from '@powerhousedao/document-engineering/scalars/lib/shared-value-transformers.js'
+import { cn } from '@powerhousedao/document-engineering/scalars/lib/utils.js'
+import { Command } from '@powerhousedao/document-engineering/scalars/components/fragments/command/index.js'
+import { FormDescription } from '@powerhousedao/document-engineering/scalars/components/fragments/form-description/index.js'
+import { FormGroup } from '@powerhousedao/document-engineering/scalars/components/fragments/form-group/index.js'
+import { FormLabel } from '@powerhousedao/document-engineering/scalars/components/fragments/form-label/index.js'
+import { FormMessageList } from '@powerhousedao/document-engineering/scalars/components/fragments/form-message/index.js'
+import {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+} from '@powerhousedao/document-engineering/scalars/components/fragments/popover/index.js'
+import ValueTransformer, {
+  type TransformerType,
+} from '@powerhousedao/document-engineering/scalars/components/fragments/value-transformer/index.js'
 import { IdAutocompleteInputContainer } from './id-autocomplete-input-container.js'
-import { IdAutocompleteListOption } from './id-autocomplete-list-option.js'
+import { IdAutocompleteListOption } from '@powerhousedao/document-engineering/scalars/components/fragments/id-autocomplete/id-autocomplete-list-option.js'
 import { IdAutocompleteList } from './id-autocomplete-list.js'
 import { IdAutocompleteDiff } from './id-autocomplete-diff.js'
 import type { IdAutocompleteProps } from './types.js'
 import { useIdAutocomplete } from './use-id-autocomplete.js'
 
-const IdAutocomplete = React.forwardRef<HTMLInputElement, IdAutocompleteProps>(
+const IdAutocomplete = forwardRef<HTMLInputElement, IdAutocompleteProps>(
   (
     {
       id: idProp,

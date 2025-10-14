@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { NumberInput } from './number-input'
+import { NumberInput } from './number-input.js'
 import { userEvent } from '@testing-library/user-event'
-import { MAX_SAFE_INTEGER } from '../../../../scalars/components/number-field/number-field-validations.js'
+import { MAX_SAFE_INTEGER } from '@powerhousedao/document-engineering/scalars/components/number-field/number-field-validations.js'
 
 describe('NumberInput', () => {
   const mockOnChange = vi.fn()

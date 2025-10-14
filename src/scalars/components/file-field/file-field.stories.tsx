@@ -4,9 +4,9 @@ import {
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../lib/storybook-arg-types.js'
+} from '@powerhousedao/document-engineering/scalars/lib/storybook-arg-types.js'
 import { FileField } from './file-field.js'
-import { withForm } from '#scalars/lib/decorators.js'
+import { withForm } from '@powerhousedao/document-engineering/scalars/lib/decorators.js'
 
 /**
  *

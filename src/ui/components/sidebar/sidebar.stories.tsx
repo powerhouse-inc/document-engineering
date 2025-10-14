@@ -1,11 +1,12 @@
 import { Icon } from '../../components/icon/index.js'
 import type { Meta, StoryObj } from '@storybook/react'
 import { useCallback, useState } from 'react'
+// @ts-expect-error JSON file
 import mockedTree from './mocked_tree.json'
 import { Sidebar } from './sidebar.js'
 import { SidebarProvider } from './subcomponents/sidebar-provider/index.js'
 import type { SidebarNode } from './types.js'
-import { cn } from '#scalars/lib/utils.js'
+import { cn } from '@powerhousedao/document-engineering/scalars/lib/utils.js'
 
 /**
  * The `Sidebar` component can be used within a page layout to provide a sidebar navigation.

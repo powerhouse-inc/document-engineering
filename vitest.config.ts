@@ -1,26 +1,12 @@
-import path from 'node:path'
 import { defineConfig } from 'vitest/config'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [tsconfigPaths()],
+  plugins: [react(), tailwindcss()],
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: ['./setupTests.js'],
-    pool: 'vmThreads',
-    deps: {
-      web: {
-        transformAssets: true,
-      },
-    },
-  },
-  resolve: {
-    alias: {
-      '#assets': path.resolve(__dirname, 'src', 'assets'),
-      '#scalars': path.resolve(__dirname, 'src', 'scalars'),
-      '#ui': path.resolve(__dirname, 'src', 'ui'),
-      '#graphql': path.resolve(__dirname, 'src', 'scalars', 'graphql'),
-    },
+    setupFiles: ['./setupTests.ts'],
   },
 })

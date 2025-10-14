@@ -1,7 +1,7 @@
 import { Icon } from '../../icon/index.js'
 import { cn } from '../../../../scalars/lib/utils.js'
 import type { WithDifference } from '../../../../scalars/components/types.js'
-import { useCallback, useState } from 'react'
+import { type JSX, useCallback, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { Tooltip, TooltipProvider } from '../../../../ui/components/tooltip/tooltip.js'
 import { InputDiff } from './subcomponent/input-diff.js'

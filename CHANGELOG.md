@@ -1,3 +1,15 @@
+# [1.38.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.37.0...v1.38.0) (2025-09-30)
+
+
+### Bug Fixes
+
+* **table:** add missing country property to address objects in examples ([0f2c633](https://github.com/powerhouse-inc/document-engineering/commit/0f2c63328aa613ce346b38a370b0896e6612e8d9))
+
+
+### Features
+
+* **table:** enhance country cell editing and focus management ([67c484b](https://github.com/powerhouse-inc/document-engineering/commit/67c484b65ba939403692fb8455cc94e4911f9309))
+
 # [1.37.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.36.0...v1.37.0) (2025-09-22)
 
 

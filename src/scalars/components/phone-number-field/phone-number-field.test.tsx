@@ -130,6 +130,7 @@ describe('PhoneNumberField Component', () => {
 
       const options = await screen.findAllByRole('option')
       const [opt] = options
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       expect(opt.textContent?.length).toBe(c.expectedLength)
 
       unmount()

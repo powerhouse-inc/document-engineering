@@ -19,7 +19,7 @@ export function useSelect({
   onChange,
 }: UseSelectProps) {
   const isInternalChange = useRef(false)
-  const commandListRef = useRef<HTMLDivElement>(null)
+  const commandListRef = useRef<HTMLDivElement | null>(null)
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [selectedValues, setSelectedValues] = useState<string[]>(() => {
     const initialValue = value ?? defaultValue ?? []

@@ -14,7 +14,7 @@ import type { SelectProps } from './types.js'
 
 interface ContentProps {
   searchable?: boolean
-  commandListRef: React.RefObject<HTMLDivElement>
+  commandListRef: React.RefObject<HTMLDivElement | null>
   multiple?: boolean
   selectedValues: string[]
   selectionIcon: 'auto' | 'checkmark'

@@ -3,8 +3,8 @@ import type { TimeSelectorProps } from '../type.js'
 import { BOTTOM_THRESHOLD_OFFSET, CENTERING_TIMEOUT_MS, TOP_THRESHOLD_OFFSET } from './time-selector.constants.js'
 
 interface UseTimeSelectorProps extends TimeSelectorProps {
-  containerRef: React.RefObject<HTMLDivElement>
-  selectedRef: React.RefObject<HTMLButtonElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
+  selectedRef: React.RefObject<HTMLButtonElement | null>
 }
 
 interface UseTimeSelectorReturn {

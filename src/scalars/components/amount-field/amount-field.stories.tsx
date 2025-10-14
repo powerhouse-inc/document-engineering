@@ -7,7 +7,8 @@ import {
   StorybookControlCategory,
 } from '../../lib/storybook-arg-types.js'
 import { AmountField } from './amount-field.js'
-import { commonFiatCurrencies } from '#ui/components/data-entry/currency-code-picker/index.js'
+import { commonFiatCurrencies } from '@powerhousedao/document-engineering/ui/components/data-entry/currency-code-picker/defaults.js'
+
 const mappedFiatCurrencies = commonFiatCurrencies.map((currency) => ({
   ...currency,
   label: currency.ticker,

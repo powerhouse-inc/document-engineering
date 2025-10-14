@@ -255,17 +255,17 @@ export const isCellEqual = (cell1: TableCellIndex | null, cell2: TableCellIndex 
 export const createFormReferences = <T extends DataType = DataType>(
   rowCount: number,
   columnDefs: Array<ColumnDef<T>>
-): Array<Array<React.RefObject<UseFormReturn> | null>> => {
+): Array<Array<React.RefObject<UseFormReturn | null> | null>> => {
   if (rowCount === 0 || columnDefs.length === 0) {
     return []
   }
 
-  const formReferences: Array<Array<React.RefObject<UseFormReturn> | null>> = []
+  const formReferences: Array<Array<React.RefObject<UseFormReturn | null> | null>> = []
 
   for (let row = 0; row < rowCount; row++) {
-    const refs: Array<React.RefObject<UseFormReturn> | null> = []
+    const refs: Array<React.RefObject<UseFormReturn | null> | null> = []
     columnDefs.forEach(() => {
-      refs.push(createRef<UseFormReturn>())
+      refs.push(createRef<UseFormReturn | null>())
     })
     formReferences.push(refs)
   }

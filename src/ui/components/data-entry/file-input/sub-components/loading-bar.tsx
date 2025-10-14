@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { cn } from '../../../../../scalars/lib/utils.js'
 
 interface LoadingBarProps {
