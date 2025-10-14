@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { act, render, screen, waitFor } from '@testing-library/react'
-import {userEvent} from '@testing-library/user-event'
+import { userEvent } from '@testing-library/user-event'
 
 import { Icon } from '../../components/icon/index.js'
 import { Sidebar } from './sidebar.js'

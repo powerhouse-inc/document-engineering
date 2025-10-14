@@ -1,12 +1,16 @@
 import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [],
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: ['./setupTests.ts'],
+    pool: 'vmThreads',
+    setupFiles: ['./setupTests.js'],
+    deps: {
+      web: {
+        transformAssets: true,
+      },
+    },
   },
 })
