@@ -87,7 +87,7 @@ export class TableCellPage extends BaseTablePage {
     if (!cell) return 'unknown'
 
     // Try to infer type from content
-    const text = cell.textContent?.trim() ?? ''
+    const text = (cell.textContent || '').trim()
 
     if (text === 'true' || text === 'false') return 'boolean'
     if (!isNaN(Number(text)) && text !== '') return 'number'

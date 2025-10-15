@@ -33,7 +33,7 @@ export class TableRowPage extends BaseTablePage {
 
     // First cell is typically the row number
     const firstCell = this.getCellsInRow(row)[0]
-    return firstCell.textContent?.trim() ?? ''
+    return (firstCell.textContent || '').trim()
   }
 
   /**
@@ -63,7 +63,7 @@ export class TableRowPage extends BaseTablePage {
    */
   findRowIndexByText(text: string): number {
     const rows = this.getTableRows()
-    return rows.findIndex((row) => row.textContent?.includes(text))
+    return rows.findIndex((row) => (row.textContent || '').includes(text))
   }
 
   /**
@@ -73,7 +73,7 @@ export class TableRowPage extends BaseTablePage {
     const row = this.getRowByIndex(rowIndex)
     if (!row) return false
 
-    return row.textContent?.includes(text) ?? false
+    return (row.textContent || '').includes(text)
   }
 
   /**

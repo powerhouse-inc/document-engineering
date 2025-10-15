@@ -99,7 +99,7 @@ export class BaseTablePage {
    */
   getCellText(rowIndex: number, columnIndex: number): string {
     const cell = this.getCellByIndex(rowIndex, columnIndex)
-    return cell?.textContent?.trim() ?? ''
+    return cell ? (cell.textContent || '').trim() : ''
   }
 
   /**
@@ -107,7 +107,7 @@ export class BaseTablePage {
    */
   getHeaderCellText(columnIndex: number): string {
     const headerCell = this.getHeaderCellByIndex(columnIndex)
-    return headerCell?.textContent?.trim() ?? ''
+    return headerCell ? (headerCell.textContent || '').trim() : ''
   }
 
   /**
@@ -141,7 +141,7 @@ export class BaseTablePage {
    * Gets all column headers as an array of strings
    */
   getColumnHeaders(): string[] {
-    return this.getHeaderCells().map((cell) => cell.textContent?.trim() ?? '')
+    return this.getHeaderCells().map((cell) => (cell.textContent || '').trim())
   }
 
   /**
@@ -149,7 +149,7 @@ export class BaseTablePage {
    */
   findRowByText(text: string): HTMLElement | null {
     const rows = this.getTableRows()
-    return rows.find((row) => row.textContent?.includes(text)) ?? null
+    return rows.find((row) => (row.textContent || '').includes(text)) ?? null
   }
 
   /**
@@ -159,6 +159,6 @@ export class BaseTablePage {
     const row = this.getRowByIndex(rowIndex)
     if (!row) return []
 
-    return this.getCellsInRow(row).map((cell) => cell.textContent?.trim() ?? '')
+    return this.getCellsInRow(row).map((cell) => (cell.textContent || '').trim())
   }
 }

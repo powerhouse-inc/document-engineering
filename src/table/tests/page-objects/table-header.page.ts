@@ -31,10 +31,10 @@ export class TableHeaderPage extends BaseTablePage {
     const headerCell = this.getHeaderCellByIndex(columnIndex)
     if (!headerCell) return false
 
-    // Check for sort indicators or clickable elements
-    const hasSortIcon = headerCell.querySelector('[data-testid*="sort"], .sort-icon, .sort-indicator') !== null
-    const hasClickable = headerCell.querySelector('button, [role="button"], .sortable') !== null
-    const hasSortClass = headerCell.classList.contains('sortable') || headerCell.classList.contains('cursor-pointer')
+    // Check for sort indicators (SVG elements) or clickable elements
+    const hasSortIcon = headerCell.querySelector('svg') !== null
+    const hasClickable = headerCell.querySelector('button, [role="button"]') !== null
+    const hasSortClass = headerCell.classList.contains('cursor-pointer')
 
     return hasSortIcon || hasClickable || hasSortClass
   }
@@ -46,15 +46,16 @@ export class TableHeaderPage extends BaseTablePage {
     const headerCell = this.getHeaderCellByIndex(columnIndex)
     if (!headerCell) return null
 
-    // Look for sort direction indicators
-    const sortIcon = headerCell.querySelector('[data-testid*="sort"], .sort-icon, .sort-indicator')
+    // Look for sort direction indicators in the SVG
+    const sortIcon = headerCell.querySelector('svg')
     if (!sortIcon) return null
 
-    const classes = Array.from(sortIcon.classList)
-    const text = sortIcon.textContent?.toLowerCase() ?? ''
+    const classString = sortIcon.className as string
 
-    if (classes.includes('asc') || text.includes('asc') || text.includes('↑')) return 'asc'
-    if (classes.includes('desc') || text.includes('desc') || text.includes('↓')) return 'desc'
+    // Check for ascending indicator: [&_path:last-child]:stroke-gray-900
+    if (classString.includes('[&_path:last-child]:stroke-gray-900')) return 'asc'
+    // Check for descending indicator: [&_path:first-child]:stroke-gray-900
+    if (classString.includes('[&_path:first-child]:stroke-gray-900')) return 'desc'
 
     return null
   }
