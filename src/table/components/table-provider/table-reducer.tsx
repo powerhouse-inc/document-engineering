@@ -27,7 +27,7 @@ interface TableState<T extends DataType = DataType> {
 
   columns: Array<ColumnDef<T>>
   data: Array<IndexedData<T>>
-  dataFormReferences: Array<Array<React.RefObject<UseFormReturn> | null>>
+  dataFormReferences: Array<Array<React.RefObject<UseFormReturn | null> | null>>
   allowRowSelection: boolean
   showRowNumbers: boolean
   selectedRowIndexes: number[]

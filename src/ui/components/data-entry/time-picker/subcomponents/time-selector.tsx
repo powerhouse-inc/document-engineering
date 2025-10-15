@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { useRef } from 'react'
-import { Button } from '../../../../../scalars/components/fragments/button/index.js'
-import { cn } from '../../../../../scalars/lib/utils.js'
+import { Button } from '@powerhousedao/document-engineering/scalars/components/fragments/button/index.js'
+import { cn } from '@powerhousedao/document-engineering/scalars/lib/utils.js'
 import type { TimeSelectorProps } from '../type.js'
 import { useTimeSelector } from './use-time-selector.js'
 
 const TimeSelector: React.FC<TimeSelectorProps> = ({ options, selectedValue, onSelect, isCyclic = true }) => {
-  const selectedRef = React.useRef<HTMLButtonElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const selectedRef = React.useRef<HTMLButtonElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   const { displayOptions, handleExplicitSelection } = useTimeSelector({
     options,

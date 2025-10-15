@@ -136,8 +136,9 @@ function ValueTransformer({ transformers, children }: ValueTransformerProps) {
     }
   }, [transformers])
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- this is a workaround
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return React.cloneElement(children, {
+    // @ts-expect-error -- this is a workaround
     ...children.props,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
       // apply transformers on change

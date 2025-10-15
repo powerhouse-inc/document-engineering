@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { DateTimePickerField } from './date-time-picker-field'
+import { userEvent } from '@testing-library/user-event'
+import { DateTimePickerField } from './date-time-picker-field.js'
 import { vi } from 'vitest'
-import { renderWithForm } from '#scalars/lib/testing'
+import { renderWithForm } from '@powerhousedao/document-engineering/scalars/lib/testing.js'
 import type { ChangeEvent } from 'react'
 
 describe('DateTimePickerField', () => {

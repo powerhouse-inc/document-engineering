@@ -1,16 +1,20 @@
-import { sharedValueTransformers } from '../../../../scalars/lib/shared-value-transformers.js'
-import { cn } from '../../../../scalars/lib/utils.js'
-import React, { useCallback, useEffect, useId, useMemo, useRef } from 'react'
+import { sharedValueTransformers } from '@powerhousedao/document-engineering/scalars/lib/shared-value-transformers.js'
+import { cn } from '@powerhousedao/document-engineering/scalars/lib/utils.js'
+import { forwardRef, type RefObject, useCallback, useEffect, useId, useMemo, useRef } from 'react'
 import { useResizeObserver } from 'usehooks-ts'
-import { CharacterCounter } from '../../../../scalars/components/fragments/character-counter/index.js'
-import { FormDescription } from '../../../../scalars/components/fragments/form-description/index.js'
-import { FormGroup } from '../../../../scalars/components/fragments/form-group/index.js'
-import { FormLabel } from '../../../../scalars/components/fragments/form-label/index.js'
-import { FormMessageList } from '../../../../scalars/components/fragments/form-message/index.js'
+import { CharacterCounter } from '@powerhousedao/document-engineering/scalars/components/fragments/character-counter/index.js'
+import { FormDescription } from '@powerhousedao/document-engineering/scalars/components/fragments/form-description/index.js'
+import { FormGroup } from '@powerhousedao/document-engineering/scalars/components/fragments/form-group/index.js'
+import { FormLabel } from '@powerhousedao/document-engineering/scalars/components/fragments/form-label/index.js'
+import { FormMessageList } from '@powerhousedao/document-engineering/scalars/components/fragments/form-message/index.js'
 import ValueTransformer, {
   type TransformerType,
-} from '../../../../scalars/components/fragments/value-transformer/index.js'
-import type { DiffMode, InputBaseProps, WithDifference } from '../../../../scalars/components/types.js'
+} from '@powerhousedao/document-engineering/scalars/components/fragments/value-transformer/index.js'
+import type {
+  DiffMode,
+  InputBaseProps,
+  WithDifference,
+} from '@powerhousedao/document-engineering/scalars/components/types.js'
 import type { CommonTextProps } from '../text-input/types.js'
 import SplittedTextareaDiff from './subcomponent/splitted-textarea-diff.js'
 
@@ -47,7 +51,7 @@ const textareaBaseStyles = cn(
   'disabled:dark:border-charcoal-800 disabled:dark:bg-charcoal-900 disabled:dark:text-gray-300'
 )
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
       autoFocus,
@@ -116,7 +120,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     }
 
     useResizeObserver({
-      ref: textareaRef,
+      ref: textareaRef as RefObject<HTMLElement>,
       onResize: () => {
         if (autoExpand) {
           adjustHeight()

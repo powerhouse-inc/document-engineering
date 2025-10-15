@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { DateTimePicker } from './date-time-picker'
+import { userEvent } from '@testing-library/user-event'
+import { DateTimePicker } from './date-time-picker.js'
 import { vi } from 'vitest'
 import type { ChangeEvent, FocusEvent } from 'react'
 

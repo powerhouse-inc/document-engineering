@@ -1,5 +1,5 @@
-import { roundMinute } from '../time-picker/utils'
-import { parseDateTimeValueToInput } from './utils'
+import { roundMinute } from '../time-picker/utils.js'
+import { parseDateTimeValueToInput } from './utils.js'
 
 describe('parseDateTimeValueToInput', () => {
   it('should return an empty string if no date or time value is provided', () => {

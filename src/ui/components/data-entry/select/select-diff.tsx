@@ -2,6 +2,7 @@ import { FormGroup, FormLabel } from '../../../../scalars/components/fragments/i
 import { SplittedInputDiff } from '../input/splitted-input-diff.js'
 import type { WithDifference } from '../../../../scalars/components/types.js'
 import type { SelectProps } from './types.js'
+import type { JSX } from 'react'
 
 interface SelectDiffProps extends Omit<WithDifference<string>, 'diffMode'> {
   value: string

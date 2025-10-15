@@ -4,8 +4,8 @@ import {
   getValidationArgTypes,
   PrebuiltArgTypes,
   StorybookControlCategory,
-} from '../../../../scalars/lib/storybook-arg-types.js'
-import { TimePicker } from './time-picker'
+} from '@powerhousedao/document-engineering/scalars/lib/storybook-arg-types.js'
+import { TimePicker } from './time-picker.js'
 
 /**
  * The `TimePicker` component provides an input field for selecting times.
