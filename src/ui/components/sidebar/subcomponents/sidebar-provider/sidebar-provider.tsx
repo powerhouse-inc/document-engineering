@@ -39,7 +39,7 @@ interface SidebarContextType {
   isStatusFilterEnabled: boolean
   nodeSortType?: NodeSortType
   nodeSortOrder: NodeSortOrder
-  virtualListRef: RefObject<List>
+  virtualListRef: RefObject<List | null>
   toggleNode: (nodeId: string) => void
   openNode: (nodeId: string, openPath?: boolean, scrollTo?: boolean) => void
   closeNode: (nodeId: string) => void

@@ -1,7 +1,7 @@
 import { cn } from '../../../../../scalars/lib/utils.js'
 import type { WithDifference } from '../../../../../scalars/components/types.js'
 import { type Change, diffSentences, diffWords } from 'diff'
-import { useMemo } from 'react'
+import { type JSX, useMemo } from 'react'
 
 interface TextDiffProps extends WithDifference<string> {
   value: string

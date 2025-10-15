@@ -12,4 +12,5 @@ const NumberField = withFieldValidation<NumberFieldProps>(NumberInput, {
 })
 
 NumberField.displayName = 'NumberField'
-export { NumberField, NumberFieldProps }
+export { NumberField }
+export type { NumberFieldProps }

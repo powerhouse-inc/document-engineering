@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { DatePicker } from './date-picker'
+import { userEvent } from '@testing-library/user-event'
+import { DatePicker } from './date-picker.js'
 import { addDays, format } from 'date-fns'
 
 // Helper function to get a date relative to today

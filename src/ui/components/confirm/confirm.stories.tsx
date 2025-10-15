@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { confirm, type ConfirmOptions } from './confirm.js'
-import { Button } from '../../../scalars/components/fragments/button/index.js'
+import { Button } from '../button/button.js'
 
 /**
  * A confirmation dialog component that provides a simple way to ask users for confirmation
@@ -51,11 +51,6 @@ const meta: Meta<typeof confirm> = {
     cancelLabel: {
       description: 'The label for the cancel button',
       control: 'text',
-    },
-    variant: {
-      description: 'The visual variant of the confirm button',
-      control: 'select',
-      options: ['default', 'destructive'],
     },
   },
 }

@@ -14,7 +14,7 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
   public readonly eventManager: TableEventManager<TData>
 
   constructor(
-    private readonly tableRef: RefObject<HTMLTableElement>,
+    private readonly tableRef: RefObject<HTMLTableElement | null>,
     private readonly configRef: RefObject<ObjectSetTableConfig<TData>>,
     private readonly stateRef: RefObject<TableState<TData>>
   ) {
@@ -28,11 +28,11 @@ class TableApi<TData> implements PrivateTableApiBase<TData> {
   }
 
   _getConfig(): ObjectSetTableConfig<TData> {
-    return this.configRef.current!
+    return this.configRef.current
   }
 
   _getState(): TableState<TData> {
-    return this.stateRef.current!
+    return this.stateRef.current
   }
 
   _createCellContext(row: number, column: number): CellContext<TData> {

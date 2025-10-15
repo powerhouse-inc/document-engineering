@@ -1,5 +1,5 @@
 import { FocusTrap } from 'focus-trap-react'
-import { useRef } from 'react'
+import { type RefObject, useRef } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useInternalTableState } from './table-provider/table-provider.js'
 
@@ -8,9 +8,9 @@ const TableFocusTrap = ({ children }: { children: React.ReactNode }) => {
     state: { selectedCellIndex },
     api,
   } = useInternalTableState()
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
 
-  useOnClickOutside(ref, (event) => {
+  useOnClickOutside(ref as RefObject<HTMLDivElement>, (event) => {
     const { x, y } = (event.target as HTMLElement).getBoundingClientRect()
 
     // if the click was inside the table, we don't need to do anything

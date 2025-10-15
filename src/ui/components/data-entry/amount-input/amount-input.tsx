@@ -12,7 +12,7 @@ import type { Amount, AmountInputPropsGeneric, AmountValue } from './types.js'
 import { useAmountInput } from './use-amount-input.js'
 import { NumberInput } from '../number-input/index.js'
 import type { InputNumberProps } from '../number-input/types.js'
-import type { WithDifference } from '#scalars'
+import type { WithDifference } from '@powerhousedao/document-engineering/scalars'
 import { AmountInputDiff } from './subcomponents/amount-input-diff.js'
 
 type AdditionalProps = Omit<InputNumberProps, 'onChange' | 'onBlur' | 'precision' | 'value' | 'defaultValue'> & {

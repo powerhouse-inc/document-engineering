@@ -7,7 +7,7 @@ exports[`RadioGroup Component > should match snapshot 1`] = `
     aria-label="Radio group"
     class="flex flex-col gap-2 radio-group"
     dir="ltr"
-    id=":r0:-radio-group"
+    id="_r_0_-radio-group"
     role="radiogroup"
     style="outline-color: none; outline-style: none; outline-width: initial;"
     tabindex="0"
@@ -23,7 +23,7 @@ exports[`RadioGroup Component > should match snapshot 1`] = `
         class="group peer aspect-square size-4 rounded-full border border-gray-800 dark:border-gray-400 hover:border-gray-900 dark:hover:border-gray-50"
         data-radix-collection-item=""
         data-state="unchecked"
-        id=":r0:-radio-0-1"
+        id="_r_0_-radio-0-1"
         role="radio"
         tabindex="-1"
         type="button"
@@ -31,7 +31,7 @@ exports[`RadioGroup Component > should match snapshot 1`] = `
       />
       <label
         class="inline-flex items-center text-sm font-medium leading-[22px] text-gray-900 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-slate-50 cursor-pointer peer-hover:text-gray-900 dark:peer-hover:text-gray-50"
-        for=":r0:-radio-0-1"
+        for="_r_0_-radio-0-1"
       >
         Option 1
       </label>
@@ -47,7 +47,7 @@ exports[`RadioGroup Component > should match snapshot 1`] = `
         class="group peer aspect-square size-4 rounded-full border border-gray-800 dark:border-gray-400 hover:border-gray-900 dark:hover:border-gray-50"
         data-radix-collection-item=""
         data-state="unchecked"
-        id=":r0:-radio-1-2"
+        id="_r_0_-radio-1-2"
         role="radio"
         tabindex="-1"
         type="button"
@@ -55,7 +55,7 @@ exports[`RadioGroup Component > should match snapshot 1`] = `
       />
       <label
         class="inline-flex items-center text-sm font-medium leading-[22px] text-gray-900 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-slate-50 cursor-pointer peer-hover:text-gray-900 dark:peer-hover:text-gray-50"
-        for=":r0:-radio-1-2"
+        for="_r_0_-radio-1-2"
       >
         Option 2
       </label>

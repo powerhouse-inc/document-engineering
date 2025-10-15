@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { renderWithForm } from '../../lib/testing.js'
-import { EmailField } from './email-field'
+import { userEvent } from '@testing-library/user-event'
+import { renderWithForm } from '@powerhousedao/document-engineering/scalars/lib/testing.js'
+import { EmailField } from './email-field.js'
 
 describe('EmailField', () => {
   it('should match snapshot', () => {

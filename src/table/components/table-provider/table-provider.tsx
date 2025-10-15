@@ -1,4 +1,14 @@
-import { type Context, createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
+import {
+  type Context,
+  createContext,
+  type ReactNode,
+  type RefObject,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react'
 import type { DataType, ObjectSetTableConfig } from '../../table/types.js'
 import { tableReducer, type TableState } from './table-reducer.js'
 import { createPublicTableApi } from '../../logic/public-table-api.js'
@@ -24,7 +34,7 @@ interface TableProviderProps<T extends DataType = DataType> {
   /**
    * Ref to the table element
    */
-  tableRef: React.RefObject<HTMLTableElement>
+  tableRef: React.RefObject<HTMLTableElement | null>
 }
 
 const TableProvider = <T extends DataType = DataType>({ children, config, tableRef }: TableProviderProps<T>) => {
@@ -62,7 +72,7 @@ const TableProvider = <T extends DataType = DataType>({ children, config, tableR
   configRef.current = config
 
   const [api, publicApi] = useMemo(() => {
-    const internalApi = new TableApi<T>(tableRef, configRef, stateRef)
+    const internalApi = new TableApi<T>(tableRef as RefObject<HTMLTableElement>, configRef, stateRef)
     const publicApi = createPublicTableApi(internalApi)
 
     if (config.apiRef) {
