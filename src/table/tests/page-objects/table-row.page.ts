@@ -140,4 +140,135 @@ export class TableRowPage extends BaseTablePage {
     const rect = row.getBoundingClientRect()
     return rect.top >= 0 && rect.bottom <= window.innerHeight
   }
+
+  /**
+   * Gets all action buttons in a row (from the portal)
+   */
+  getRowActionButtons(_rowIndex: number): HTMLElement[] {
+    // Actions are rendered in a portal, so we need to look in the document body
+    const actionContainers = document.querySelectorAll('.fixed.z-5')
+    const buttons: HTMLElement[] = []
+
+    actionContainers.forEach((container) => {
+      const actionButtons = container.querySelectorAll('.cursor-pointer')
+      buttons.push(...(Array.from(actionButtons) as HTMLElement[]))
+    })
+
+    return buttons
+  }
+
+  /**
+   * Gets the primary action button for a row
+   */
+  getPrimaryActionButton(_rowIndex: number): HTMLElement | null {
+    // Look for the cursor-pointer element that is NOT a dropdown trigger
+    const portalElements = document.querySelectorAll('.fixed.z-5')
+    for (const portal of portalElements) {
+      // Only look in visible portals (the one that's currently hovered)
+      if (portal.classList.contains('hidden')) {
+        continue
+      }
+
+      const buttons = portal.querySelectorAll('.cursor-pointer')
+      for (const button of buttons) {
+        // Skip dropdown trigger buttons - look for the one that's not the dropdown trigger
+        if (
+          button.getAttribute('data-slot') === 'dropdown-menu-trigger' ||
+          button.getAttribute('aria-haspopup') === 'menu'
+        ) {
+          continue
+        }
+        // This should be the primary action button
+        return button as HTMLElement
+      }
+    }
+    return null
+  }
+
+  /**
+   * Gets the secondary actions dropdown trigger button
+   */
+  getSecondaryActionsButton(_rowIndex: number): HTMLElement | null {
+    // Look for the cursor-pointer element that has a dropdown trigger or vertical dots icon
+    const portalElements = document.querySelectorAll('.fixed.z-5')
+    for (const portal of portalElements) {
+      // Only look in visible portals (the one that's currently hovered)
+      if (portal.classList.contains('hidden')) {
+        continue
+      }
+
+      const buttons = portal.querySelectorAll('.cursor-pointer')
+      for (const button of buttons) {
+        // Check if this button has dropdown attributes or vertical dots icon
+        if (
+          button.getAttribute('data-slot') === 'dropdown-menu-trigger' ||
+          button.getAttribute('aria-haspopup') === 'menu'
+        ) {
+          return button as HTMLElement
+        }
+      }
+    }
+    return null
+  }
+
+  /**
+   * Checks if row actions are visible (in the DOM)
+   */
+  isRowActionsVisible(_rowIndex: number): boolean {
+    // Actions are rendered in portals, so we need to check if any portal elements exist
+    // For now, we'll check if any portal elements exist since we can't easily distinguish between rows
+    const portalElements = document.querySelectorAll('.fixed.z-5')
+    return portalElements.length > 0
+  }
+
+  /**
+   * Clicks the primary action button for a row
+   */
+  clickPrimaryAction(rowIndex: number): void {
+    const primaryButton = this.getPrimaryActionButton(rowIndex)
+    if (primaryButton) {
+      primaryButton.click()
+    }
+  }
+
+  /**
+   * Clicks the secondary actions dropdown trigger
+   */
+  clickSecondaryActionsButton(rowIndex: number): void {
+    const secondaryButton = this.getSecondaryActionsButton(rowIndex)
+    if (secondaryButton) {
+      secondaryButton.click()
+    }
+  }
+
+  /**
+   * Gets all items in the secondary actions dropdown menu
+   */
+  getSecondaryActionItems(): HTMLElement[] {
+    const dropdownMenu = document.querySelector('[role="menu"]')
+    if (!dropdownMenu) return []
+
+    const menuItems = dropdownMenu.querySelectorAll('[role="menuitem"]')
+    return Array.from(menuItems) as HTMLElement[]
+  }
+
+  /**
+   * Clicks a specific secondary action by label
+   */
+  clickSecondaryAction(actionLabel: string): void {
+    const menuItems = this.getSecondaryActionItems()
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+    const targetItem = menuItems.find((item) => item.textContent && item.textContent.includes(actionLabel))
+    if (targetItem) {
+      targetItem.click()
+    }
+  }
+
+  /**
+   * Checks if the secondary actions dropdown is open
+   */
+  isSecondaryActionsDropdownOpen(): boolean {
+    const dropdownMenu = document.querySelector('[role="menu"]')
+    return dropdownMenu !== null
+  }
 }
