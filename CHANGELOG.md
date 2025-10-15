@@ -1,3 +1,19 @@
+# [1.39.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.38.0...v1.39.0) (2025-10-15)
+
+
+### Bug Fixes
+
+* another typo ([4b5b223](https://github.com/powerhouse-inc/document-engineering/commit/4b5b223e1f34c1ba753bf3961a16f8257b10a1b2))
+* typo in workflow ([e429154](https://github.com/powerhouse-inc/document-engineering/commit/e429154d8c419aa7c0b12b8c4ec04fa7a0b322cf))
+
+
+### Features
+
+* remove redundant steps in check pr workflow ([034280f](https://github.com/powerhouse-inc/document-engineering/commit/034280f9b6e14838e43cdca68f87ecf4d4bd1998))
+* revert vitest config change ([78d913d](https://github.com/powerhouse-inc/document-engineering/commit/78d913d2980153f5b2154d7f23a11c6b5a2e0814))
+* update configs ([bb10b26](https://github.com/powerhouse-inc/document-engineering/commit/bb10b261fd0f40585bbc512ec3359ca21a2d69b5))
+* update lockfile ([36a3b07](https://github.com/powerhouse-inc/document-engineering/commit/36a3b07f3fef2d80fcabd107aed5cda341497a01))
+
 # [1.38.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.37.0...v1.38.0) (2025-09-30)
 
 
