@@ -13,6 +13,7 @@ import { defaultColumnAlignment } from '../components/default-fns/default-column
 import { defaultHeaderRenderer } from '../components/default-header-renderers/default-header-renderer.js'
 import { defaultSortFns } from '../components/default-sort-columns/default-sort-fns.js'
 import { getCellEditorFn } from '../components/default-cell-editors/get-cell-editor-fn.js'
+import { defaultCellOnSave } from '../components/default-fns/default-cell-on-save.js'
 
 /**
  * The ObjectSetTable component is a table component that displays a list of objects.
@@ -51,18 +52,7 @@ const ObjectSetTable = <T extends DataType = DataType>(config: ObjectSetTableCon
         renderHeader: column.renderHeader ?? defaultHeaderRenderer,
         renderCell: column.renderCell ?? getRenderFn(column.type),
         editable: column.editable ?? false,
-        // TODO: move the default onSave to a utility function
-        onSave:
-          column.onSave ??
-          ((value, context) => {
-            if (import.meta.env.DEV) {
-              // This is a warning that is only shown in development mode for better DX
-              // eslint-disable-next-line no-console
-              console.warn(`onSave is not implemented for column %c${column.field}`, 'font-weight: bold')
-            }
-            config.data[context.rowIndex][context.column.field as keyof T] = value as T[keyof T]
-            return true
-          }),
+        onSave: column.onSave ?? defaultCellOnSave,
         renderCellEditor:
           // if getCellEditor is null, then we do not allow cell edition on the addition row
           // if it is not null, even if it is not provided, we will use the default one
