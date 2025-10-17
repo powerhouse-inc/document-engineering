@@ -58,6 +58,18 @@ To include the package's styles:
 import '@powerhousedao/document-engineering/style.css';
 ```
 
+#### Font Requirements
+
+This package uses the **Inter** font family. You must include it in your HTML `<head>` section:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+```
+
+The `preconnect` links optimize font loading performance by establishing early connections to Google Fonts servers.
+
 ## Import Maps
 
 Within the project, the following import maps are available:

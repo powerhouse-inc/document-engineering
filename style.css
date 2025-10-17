@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "tailwind-scrollbar";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: 'Inter', sans-serif;
 
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.145 0 0);
@@ -110,18 +109,13 @@
   --color-charcoal-900: hsl(220 17% 17%);
   --color-transparent: transparent;
   --shadow-modal:
-    0px 0px 24px 4px rgba(0, 0, 0, 0.05),
-    0px 44px 48px -12px rgba(0, 0, 0, 0.15), 0px 2px 8px 0px rgba(0, 0, 0, 0.05);
+    0px 0px 24px 4px rgba(0, 0, 0, 0.05), 0px 44px 48px -12px rgba(0, 0, 0, 0.15), 0px 2px 8px 0px rgba(0, 0, 0, 0.05);
   --shadow-tab: 0px 16px 16px -4px rgba(0, 0, 0, 0.1);
-  --shadow-sidebar:
-    0px 33px 32px -16px rgba(0, 0, 0, 0.1), 0px 0px 16px 4px rgba(0, 0, 0, 0.04);
+  --shadow-sidebar: 0px 33px 32px -16px rgba(0, 0, 0, 0.1), 0px 0px 16px 4px rgba(0, 0, 0, 0.04);
   --shadow-tooltip:
-    0px 2px 8px 0px rgba(0, 0, 0, 0.05),
-    0px 44px 48px -12px rgba(0, 0, 0, 0.15),
-    0px 0px 24px 4px rgba(0, 0, 0, 0.05);
+    0px 2px 8px 0px rgba(0, 0, 0, 0.05), 0px 44px 48px -12px rgba(0, 0, 0, 0.15), 0px 0px 24px 4px rgba(0, 0, 0, 0.05);
   --shadow-button:
-    0px -1px 1px 0px rgba(0, 0, 0, 0.04) inset,
-    0px 2px 0px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -1px 1px 0px rgba(0, 0, 0, 0.04) inset, 0px 2px 0px 0px rgba(255, 255, 255, 0.25) inset,
     0px 4px 8px -4px rgba(0, 0, 0, 0.1);
 
   --animate-fade-in: fadeIn 0.3s ease-in-out;
@@ -220,7 +214,7 @@ html:has(dialog[open]) {
   overflow: hidden;
 }
 
-.checkbox-container input[type="checkbox"] {
+.checkbox-container input[type='checkbox'] {
   accent-color: var(--color-gray-900);
 }
 
@@ -250,15 +244,15 @@ html:has(dialog[open]) {
 }
 /* Toastify end */
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   margin: 0;
 }
 /* Remove the increment/decrement buttons in Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -289,7 +283,7 @@ input[type="number"] {
   height: 1px;
 }
 @-moz-document url-prefix() {
-   .object-set-table__td {
-        height: 100%;
-    }
+  .object-set-table__td {
+    height: 100%;
+  }
 }
