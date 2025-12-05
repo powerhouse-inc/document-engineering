@@ -140,7 +140,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               onDayClick={handleDayClick}
               className={cn(
                 'w-full',
-                'p-0',
+                'p-0 bg-white dark:bg-slate-600',
                 // dark
                 'dark:text-gray-500',
                 // custom styles
