@@ -1,3 +1,17 @@
+# [1.40.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.39.0...v1.40.0) (2025-12-08)
+
+
+### Bug Fixes
+
+* **date-picker:** add the color for the container ([ccb53e3](https://github.com/powerhouse-inc/document-engineering/commit/ccb53e3660405cbde073ba96d24d407da0482398))
+* move Google Fonts from CSS [@import](https://github.com/import) to HTML link tags ([d81adde](https://github.com/powerhouse-inc/document-engineering/commit/d81addea69e721250b3d5c570b31aaaf132056bb))
+
+
+### Features
+
+* **table:** add comprehensive row actions testing ([0fb0a36](https://github.com/powerhouse-inc/document-engineering/commit/0fb0a36b15589ed35219c4b96951b16002a2c783))
+* **table:** add comprehensive sorting tests ([c37a853](https://github.com/powerhouse-inc/document-engineering/commit/c37a853a1dfbb8863a5817543751c62df2ef53d9))
+
 # [1.39.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.38.0...v1.39.0) (2025-10-15)
 
 
