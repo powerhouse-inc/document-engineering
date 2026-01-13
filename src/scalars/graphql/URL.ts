@@ -10,9 +10,9 @@ export const type = 'string'
 
 export const typedef = 'scalar URL'
 
-export const schema = z.string().url()
+export const schema = z.url()
 
-export const stringSchema = 'z.string().url()'
+export const stringSchema = 'z.url()'
 
 const urlValidation = (value: unknown): string => {
   if (typeof value !== 'string') {

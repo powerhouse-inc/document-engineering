@@ -10,9 +10,9 @@ export const type = 'string' // TS type in string form
 
 export const typedef = 'scalar EmailAddress'
 
-export const schema = z.string().email()
+export const schema = z.email()
 
-export const stringSchema = 'z.string().email()'
+export const stringSchema = 'z.email()'
 
 const emailValidation = (value: unknown): string => {
   if (typeof value !== 'string') {
