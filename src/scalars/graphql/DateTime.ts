@@ -10,9 +10,9 @@ export const type = 'string'
 
 export const typedef = 'scalar DateTime'
 
-export const schema = z.string().datetime()
+export const schema = z.iso.datetime()
 
-export const stringSchema = 'z.string().datetime()'
+export const stringSchema = 'z.iso.datetime()'
 
 const datetimeValidation = (value: unknown): string => {
   if (typeof value !== 'string') {
