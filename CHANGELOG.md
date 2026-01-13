@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.40.0...v1.40.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* upgrade zod to v4 for security patches ([1f06edd](https://github.com/powerhouse-inc/document-engineering/commit/1f06edde2037fda5a57a9195e9eb6fccb3b2a708))
+
 # [1.40.0](https://github.com/powerhouse-inc/document-engineering/compare/v1.39.0...v1.40.0) (2025-12-08)
 
 
