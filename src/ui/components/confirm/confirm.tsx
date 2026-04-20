@@ -1,4 +1,4 @@
-import { confirmable, type ConfirmDialogProps, createConfirmation } from 'react-confirm'
+import { confirmable, type ConfirmDialogProps, createConfirmation } from './imperative-confirm.js'
 import {
   AlertDialog,
   AlertDialogAction,

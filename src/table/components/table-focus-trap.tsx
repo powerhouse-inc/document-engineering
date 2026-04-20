@@ -1,4 +1,4 @@
-import { FocusTrap } from 'focus-trap-react'
+import { FocusTrap } from './focus-trap.js'
 import { type RefObject, useRef } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useInternalTableState } from './table-provider/table-provider.js'

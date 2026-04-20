@@ -77,9 +77,9 @@ importers:
       diff:
         specifier: ^7.0.0
         version: 7.0.0
-      focus-trap-react:
-        specifier: ^11.0.3
-        version: 11.0.4(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      focus-trap:
+        specifier: ^7.6.5
+        version: 7.6.5
       graphql:
         specifier: ^16.9.0
         version: 16.11.0
@@ -101,9 +101,6 @@ importers:
       react-circle-flags:
         specifier: ^0.0.22
         version: 0.0.22(react@19.2.0)
-      react-confirm:
-        specifier: ^0.4.0
-        version: 0.4.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-day-picker:
         specifier: 9.4.3
         version: 9.4.3(react@19.2.0)
@@ -3182,14 +3179,6 @@ packages:
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
 
-  focus-trap-react@11.0.4:
-    resolution: {integrity: sha512-tC7jC/yqeAqhe4irNIzdyDf9XCtGSeECHiBSYJBO/vIN0asizbKZCt8TarB6/XqIceu42ajQ/U4lQJ9pZlWjrg==}
-    peerDependencies:
-      '@types/react': ^18.0.0 || ^19.0.0
-      '@types/react-dom': ^18.0.0 || ^19.0.0
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-
   focus-trap@7.6.5:
     resolution: {integrity: sha512-7Ke1jyybbbPZyZXFxEftUtxFGLMpE2n6A+z//m4CRDlj0hW+o3iYSmh8nFlYMurOiJVDmJRilUQtJr08KfIxlg==}
 
@@ -4579,12 +4568,6 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.0.0 || 17.x || 18.x || 19.x
-
-  react-confirm@0.4.0:
-    resolution: {integrity: sha512-peth60TScaciyUyM1Wu9JDnf6j/04L8AqV2EBzt/ebGGoD3Y9Ari+PEI6ei6Sqnoz9/cRAtAdtroD+JQyxjKKA==}
-    peerDependencies:
-      react: '>=18.x'
-      react-dom: '>=18.x'
 
   react-day-picker@9.4.3:
     resolution: {integrity: sha512-kQmn7lBR6fHCjaDhW6ByzTMeZUgsBSvIKJLaUKq5xTuJcg2UqHiFAjrPLk/owQS/NzsnSgyGL/bhoi0Z7g+r3w==}
@@ -8800,15 +8783,6 @@ snapshots:
 
   flatted@3.3.3: {}
 
-  focus-trap-react@11.0.4(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
-    dependencies:
-      '@types/react': 19.2.2
-      '@types/react-dom': 19.2.2(@types/react@19.2.2)
-      focus-trap: 7.6.5
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
-      tabbable: 6.2.0
-
   focus-trap@7.6.5:
     dependencies:
       tabbable: 6.2.0
@@ -10235,11 +10209,6 @@ snapshots:
   react-circle-flags@0.0.22(react@19.2.0):
     dependencies:
       react: 19.2.0
-
-  react-confirm@0.4.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
-    dependencies:
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
 
   react-day-picker@9.4.3(react@19.2.0):
     dependencies:
