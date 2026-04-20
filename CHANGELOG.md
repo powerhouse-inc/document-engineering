@@ -1,3 +1,10 @@
+## [1.40.2](https://github.com/powerhouse-inc/document-engineering/compare/v1.40.1...v1.40.2) (2026-04-20)
+
+
+### Bug Fixes
+
+* replace react-confirm and focus-trap-react with ESM-native equivalents ([d25fe82](https://github.com/powerhouse-inc/document-engineering/commit/d25fe82abaff628f8401449bf37f6e3fa4ac1fb4))
+
 ## [1.40.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.40.0...v1.40.1) (2026-04-20)
 
 
