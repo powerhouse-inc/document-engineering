@@ -1,3 +1,11 @@
+## [1.40.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.40.0...v1.40.1) (2026-04-20)
+
+
+### Bug Fixes
+
+* replace react-confirm and focus-trap-react with ESM-native equivalents ([d25fe82](https://github.com/powerhouse-inc/document-engineering/commit/d25fe82abaff628f8401449bf37f6e3fa4ac1fb4))
+* upgrade zod to v4 for security patches ([a3516d4](https://github.com/powerhouse-inc/document-engineering/commit/a3516d4b9b9041d004bdbc42ed1409c87847c45d))
+
 ## [1.40.1](https://github.com/powerhouse-inc/document-engineering/compare/v1.40.0...v1.40.1) (2026-01-13)
 
 
